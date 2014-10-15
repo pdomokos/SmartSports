@@ -1,0 +1,121 @@
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "config";
+
+html {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  display: block;
+  min-width: 1020px;
+  font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif;
+  color: $default_font_color;
+  background-color: #fff;
+}
+
+.clearfix::before {
+  display: table;
+  content: "";
+}
+.clearfix::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+.content {
+  width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contenthead-spaceonly {
+  position: relative;
+  margin-bottom: 20px;
+
+  padding-bottom: 20px;
+}
+
+.browser-subnav {
+  background-color: whitesmoke;
+}
+
+.browser-subnav-item+.browser-subnav-item {
+  margin-left: -1px;
+}
+.browser-subnav-item:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.browser-subnav-item:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.browser-subnav-item {
+  position: relative;
+  float: left;
+  padding: 7px 14px;
+  font-weight: bold;
+  color: #666;
+  border: 1px solid #e5e5e5;
+  cursor: pointer;
+}
+
+.browser-subnav-item.selected {
+  z-index: 2;
+  color: #fff;
+  background-color: $default_blue;
+  border-color: $default_blue;
+}
+.browser-subnav-item.selected:hover {
+
+  color: #fff;
+  background-color: #4183c4;
+}
+.browser-subnav-item:hover {
+  color: #666;
+  background-color: #f5f5f5;
+}
+
+
+.userinfo-container {
+  display: table;
+}
+.userinfo {
+  display: table-cell;
+}
+
+.userinfo p.title {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  padding-top: 0;
+  margin: 0;
+}
+.userinfo p.detail {
+  color: #666;
+  font-weight: normal;
+  padding-top: 0;
+  margin: 0;
+}
+
+.usericon {
+  vertical-align: middle;
+  color: $default_blue;
+  padding-right: 6px;
+}

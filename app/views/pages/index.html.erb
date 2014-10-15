@@ -1,0 +1,49 @@
+<% content_for :title, "SmartSports" %>
+
+<div class="content clearfix">
+
+    <!--<div class="contenthead-spaceonly"></div>-->
+
+    <div id="browser-menu-tab" class="browser-content clearfix">
+        <div class="browser-subnav clearfix">
+            <div class="userinfo-container left">
+                <i class="fa fa-user fa-3x usericon"></i>
+                <div class="userinfo">
+                    <p class="title">Balint Domokos</p>
+                    <p class="detail">Active since 1 month</p>
+                </div>
+            </div>
+            <div class="browser-links right">
+                <%= link_to "", {:href => "#", :class => "browser-subnav-item selected ", :id => "dashboard-button"}  do %>
+                    <i class="fa fa-home fa-2x"></i>
+                    <div>Dashboard</div>
+                <% end %>
+                <%= link_to "", { :href => "#", :class => "browser-subnav-item" , :id => "measurements-button"} do %>
+                    <i class="fa fa-stethoscope fa-2x"></i>
+                    <div>Health</div>
+                <%end %>
+                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "activities-button"} do %>
+                    <i class="fa fa-bicycle fa-2x"></i>
+                    <div>Training</div>
+                <% end %>
+                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "capture-button"} do %>
+                    <i class="fa fa-cutlery fa-2x"></i>
+                    <div>Lifestyle</div>
+                <%end %>
+                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "reports-button"} do %>
+                    <i class="fa fa-bar-chart fa-2x"></i>
+                    <div>Genetics</div>
+                <%end %>
+                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "friends-button"} do %>
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <div>Settings</div>
+                <%end %>
+            </div>
+
+        </div>
+
+        <div id="browser-list-header-tab" class="browser-list-header clearfix">
+
+        </div>
+    </div>
+</div>
