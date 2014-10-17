@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   get 'pages/index'
   get 'pages/health'
+  get 'pages/training'
+  get 'pages/lifestyle'
+  get 'pages/genetics'
+  get 'pages/settings'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

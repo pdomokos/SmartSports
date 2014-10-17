@@ -22,27 +22,27 @@
                 </div>
             </div>
             <div class="browser-links right">
-                <%= link_to "", {:href => "#", :class => "browser-subnav-item selected ", :id => "dashboard-button"}  do %>
+                <%= link_to "", {:href => "/pages/index", :class => "browser-subnav-item selected ", :id => "dashboard-button"}  do %>
                     <i class="fa fa-home fa-2x"></i>
                     <div>Dashboard</div>
                 <% end %>
-                <%= link_to "", { :href => "#", :class => "browser-subnav-item" , :id => "measurements-button"} do %>
+                <%= link_to "", { :href => "/pages/health", :class => "browser-subnav-item" , :id => "health-button"} do %>
                     <i class="fa fa-stethoscope fa-2x"></i>
                     <div>Health</div>
                 <%end %>
-                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "activities-button"} do %>
+                <%= link_to "", {:href => "/pages/training", :class => "browser-subnav-item" , :id => "training-button"} do %>
                     <i class="fa fa-bicycle fa-2x"></i>
                     <div>Training</div>
                 <% end %>
-                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "capture-button"} do %>
+                <%= link_to "", {:href => "/pages/lifestyle", :class => "browser-subnav-item" , :id => "lifestyle-button"} do %>
                     <i class="fa fa-cutlery fa-2x"></i>
                     <div>Lifestyle</div>
                 <%end %>
-                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "reports-button"} do %>
+                <%= link_to "", {:href => "/pages/genetics", :class => "browser-subnav-item" , :id => "genetics-button"} do %>
                     <i class="fa fa-bar-chart fa-2x"></i>
                     <div>Genetics</div>
                 <%end %>
-                <%= link_to "", {:href => "#", :class => "browser-subnav-item" , :id => "friends-button"} do %>
+                <%= link_to "", {:href => "/pages/settings", :class => "browser-subnav-item" , :id => "settings-button"} do %>
                     <i class="fa fa-cogs fa-2x"></i>
                     <div>Settings</div>
                 <%end %>
@@ -54,6 +54,9 @@
 
         </div>
     </div>
+    <script type="text/javascript">
+        pages_menu();
+    </script>
 
     <%= yield %>
 </div>

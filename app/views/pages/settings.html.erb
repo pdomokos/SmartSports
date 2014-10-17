@@ -1,0 +1,11 @@
+<% if current_user %>
+<ul>
+    <li><%= link_to "Edit Profile", edit_user_path(current_user.id) %></li>
+    <li><%= link_to "Logout", :logout, method: :post %></li>
+</ul>
+
+<% end %>
+
+<script type="text/javascript">
+    settings_loaded();
+</script>
