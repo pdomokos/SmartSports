@@ -2,6 +2,14 @@
 <ul>
     <li><%= link_to "Edit Profile", edit_user_path(current_user.id) %></li>
     <li><%= link_to "Logout", :logout, method: :post %></li>
+
+    <% if current_user.connection_id %>
+        <li><a href='/pages/training'>Sync Moves</a></li>
+        <li><a href='/pages/destroy'>Disconnect Moves</a></li>
+    <% else %>
+        <li><a href='/auth/moves'>Sign in to Moves</a></li>
+    <% end %>
+
 </ul>
 
 <% end %>

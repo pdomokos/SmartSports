@@ -1,3 +1,28 @@
+<p>
+    <strong>Profile:</strong>
+    <%= @moves.profile %>
+</p>
+
+<p>
+    <strong>Summary:</strong>
+    <%= @moves.daily_summary(:pastDays => 3) %>
+</p>
+
+<p>
+    <strong>Places:</strong>
+    <%= @moves.daily_places(:pastDays => 3) %>
+</p>
+
+<p>
+    <strong>Storyline:</strong>
+    <%= @moves.daily_storyline(:pastDays => 3) %>
+</p>
+
+<p>
+    <strong>Activity list:</strong>
+    <%= @moves.daily_activities(:pastDays => 3) %>
+</p>
+
 <script type="text/javascript">
     training_loaded();
 </script>

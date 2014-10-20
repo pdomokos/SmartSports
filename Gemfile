@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 
 gem 'font-awesome-sass'
 gem 'sorcery'
+
+gem 'moves'
+gem 'omniauth-moves'

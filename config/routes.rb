@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'pages/genetics'
   get 'pages/settings'
 
+  get 'pages/destroy'
+  get '/auth/:provider/callback' => 'pages#training'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
