@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  source: MyString
+  date: 2014-10-21 09:43:01
+  activity: MyString
+  group: MyString
+  duration: 1
+  distance: 1
+  steps: 1
+  calories: 1
+  last_update: 2014-10-21 09:43:01
+
+two:
+  user_id: 1
+  source: MyString
+  date: 2014-10-21 09:43:01
+  activity: MyString
+  group: MyString
+  duration: 1
+  distance: 1
+  steps: 1
+  calories: 1
+  last_update: 2014-10-21 09:43:01

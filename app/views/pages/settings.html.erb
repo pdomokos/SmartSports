@@ -1,19 +1,51 @@
-<% if current_user %>
-<ul>
-    <li><%= link_to "Edit Profile", edit_user_path(current_user.id) %></li>
-    <li><%= link_to "Logout", :logout, method: :post %></li>
+<div class="settings-block">
+    <div class="columns">
+        <div class="column one-half">
+            <div class="boxed-group">
+                <h3>Moves</h3>
+                <div class="boxed-group-inner">
+                    <p>Active since 2014-10-01</p>
+                    <p id="moves-sync-status">Synced 1 day ago</p>
+                    <% if current_user.connection_id %>
+                        <p><%= link_to "Sync Moves", "#", :class => "button primary", :id => "sync-moves-button" %>
+                        <%= link_to "Disconnect", "#", :class => "button danger", :id => "disconnect-moves-button" %>
+                        </p>
+                        <!--<p><a href='/pages/training'>Sync Moves</a></p>-->
+                        <!--<p><a href='/pages/destroy'>Disconnect Moves</a></p>-->
+                    <% else %>
+                        <p><%= link_to "Sign in to Moves", "/auth/moves", :class => "button primary", :id => "signin-moves-button" %></p>
+                        <!--<p><a href='/auth/moves'>Sign in to Moves</a></p>-->
 
-    <% if current_user.connection_id %>
-        <li><a href='/pages/training'>Sync Moves</a></li>
-        <li><a href='/pages/destroy'>Disconnect Moves</a></li>
-    <% else %>
-        <li><a href='/auth/moves'>Sign in to Moves</a></li>
-    <% end %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
 
-</ul>
-
-<% end %>
-
+        <div class="column one-half">
+            <div class="boxed-group">
+                <h3>Settings</h3>
+                <ul class="boxed-group-inner table-list nomargin-top">
+                    <li class="table-list-item">
+                        <div class="table-list-cell table-list-cell-type">
+                            <i class="fa fa-cog"></i>
+                        </div>
+                        <div class="table-list-cell">
+                            <%= link_to "Edit Profile", edit_user_path(current_user.id), :class => "title-link" %>
+                        </div>
+                    </li>
+                    <li class="table-list-item">
+                        <div class="table-list-cell table-list-cell-type">
+                            <i class="fa fa-sign-out"></i>
+                        </div>
+                        <div class="table-list-cell">
+                            <%= link_to "Logout", logout_path, :class => "title-link", :method => 'post' %>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     settings_loaded();
 </script>
