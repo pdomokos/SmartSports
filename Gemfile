@@ -41,5 +41,10 @@ gem 'spring',        group: :development
 gem 'font-awesome-sass'
 gem 'sorcery'
 
+gem 'omniauth-oauth'
+
 gem 'moves'
 gem 'omniauth-moves'
+
+gem 'simplificator-withings'
+gem 'omniauth-withings'

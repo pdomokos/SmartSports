@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  belongs_to :connection
+  has_many :connections
   authenticates_with_sorcery!
   validates :password, length: { minimum: 3 }
   validates :password, confirmation: true

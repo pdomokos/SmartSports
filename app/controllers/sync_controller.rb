@@ -1,19 +1,13 @@
 class SyncController < ApplicationController
   def sync_moves
 
-    if current_user.connection_id != nil
-      sess = { "access_token" => Connection.find(current_user.connection_id).data}
+    movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
+    if movesconn != nil
+      sess = { "access_token" => movesconn.data}
     else
       auth = request.env['omniauth.auth']
-      conn = Connection.new
-      conn.name = 'moves'
-      #TODO strore full auth_hash string in connection.data, not only moves access token
-      #conn.data = auth.inspect
-      conn.data = auth['credentials']['token']
-      conn.save!
-      current_user.connection_id = conn.id
+      current_user.connection.create(name: 'moves', data: auth['credentials']['token'], user_id: current_user.id )
       current_user.save(validate: false)
-
       sess = { "access_token" => auth['credentials']['token']}
     end
     status = do_sync_moves(sess)

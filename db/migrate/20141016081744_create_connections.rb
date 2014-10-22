@@ -3,7 +3,7 @@ class CreateConnections < ActiveRecord::Migration
     create_table :connections do |t|
       t.string :name
       t.string :type
-      t.string :data
+      t.text :data
 
       t.timestamps
     end

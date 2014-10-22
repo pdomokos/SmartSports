@@ -16,6 +16,22 @@
     </div>
 </div>
 
+<p>
+    <strong>Moves:</strong>
+</p>
+<% if @moves %>
+    <%= @moves.profile %>
+    <%= @moves.daily_summary(:pastDays => 3) %>
+<% end %>
+
+<p>
+       <strong>Withings:</strong>
+</p>
+<% if @user %>
+    <%= @user.measurement_groups(:per_page => 10, :page => 1, :end_at => Time.now) %>
+    <%= @user.get_activities %>
+<% end %>
+
 <script type="text/javascript">
     training_loaded();
 </script>

@@ -15,11 +15,13 @@ Rails.application.routes.draw do
   get 'pages/genetics'
   get 'pages/settings'
 
-  get 'pages/destroy'
 
   get 'sync/sync_moves'
 
-  get '/auth/:provider/callback' => 'pages#training'
+  get 'pages/mdestroy'
+  get 'pages/wdestroy'
+  get '/auth/moves/callback' => 'pages#movescb'
+  get '/auth/withings/callback' => 'pages#withingscb'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
