@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get 'user_sessions/destroy'
 
   resources :user_sessions
-  resources :users
+  resources :users do
+    resources :activities
+  end
 
   get 'pages/index'
   get 'pages/health'

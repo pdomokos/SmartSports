@@ -1,4 +1,5 @@
 <div class="training-block">
+    <input type="hidden" id="current_user_id" value="<%=@uid%>">
     <div class="columns">
         <div class="column one-half">
             <%= render 'moves_daily' %>
@@ -11,7 +12,8 @@
     </div>
     <div class="boxed-group">
         <h3>Moves weekly</h3>
-        <div class="boxed-group-inner">
+        <div id="moves-chart" class="boxed-group-inner">
+
         </div>
     </div>
 </div>

@@ -59,6 +59,7 @@ class PagesController < ApplicationController
   end
 
   def training
+    @uid = current_user.id
 
     respond_to do |format|
       format.html

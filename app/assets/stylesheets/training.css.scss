@@ -41,3 +41,36 @@
   font-size: 16px;
   padding-bottom: 2px;
 }
+
+
+// d3
+
+#moves-chart {
+  padding: 0;
+}
+
+.axis {
+  font-family: arial; font-size:0.6em;
+}
+
+path {
+  fill:none;
+  stroke:black;
+  stroke-width:2px;
+}
+
+.tick {
+  fill:none;
+  stroke:black;
+}
+
+circle{
+  stroke:black;
+  stroke-width:0.5px;
+}
+circle.walking {
+  fill:DeepPink;
+}
+circle.running{
+  fill:MediumSeaGreen;
+}

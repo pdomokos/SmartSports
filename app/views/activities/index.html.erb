@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <th>username</th>
+        <th>source</th>
+        <th>date</th>
+        <th>group</th>
+        <th>duration</th>
+        <th>steps</th>
+        <th>distance</th>
+        <th>calories</th>
+    </tr>
+    <% for a in @activities %>
+
+        <tr>
+            <td><%= a.user.name %></td>
+            <td><%= a.source %></td>
+            <td><%= a.date %></td>
+            <td><%= a.group %></td>
+            <td><%= a.duration %></td>
+            <td><%= a.steps %></td>
+            <td><%= a.distance %></td>
+            <td><%= a.calories %></td>
+        </tr>
+
+    <% end %>
+</table>
