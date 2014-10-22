@@ -1,0 +1,43 @@
+.training-block {
+  margin-top: 20px;
+}
+
+.meas-col {
+  display: block;
+  //  line-height: 0;
+  content: "";
+  width: 33%;
+  float: left;
+}
+.meas-col:last-child .meas-block {
+  text-align: right;
+}
+.meas-col:last-child .meas-block .meas-val {
+  padding-right: 0;
+}
+.meas-col:after {
+  clear: both;
+}
+
+.meas-center {
+  text-align: center;
+}
+.meas-block {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+}
+
+.meas-val {
+  color: #494847;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 8px 8px 8px 0;
+}
+
+.meas-small {
+  font-size: 16px;
+  padding-bottom: 2px;
+}

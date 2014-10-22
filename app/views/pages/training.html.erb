@@ -1,27 +1,20 @@
-<p>
-    <strong>Profile:</strong>
-    <%= @profile %>
-</p>
+<div class="training-block">
+    <div class="columns">
+        <div class="column one-half">
+            <%= render 'moves_daily' %>
 
-<!--<p>-->
-    <!--<strong>Summary:</strong>-->
-    <!--<%= @summary %>-->
-<!--</p>-->
 
-<!--<p>-->
-    <!--<strong>Places:</strong>-->
-    <!--<%= @moves.daily_places(:pastDays => 3) %>-->
-<!--</p>-->
-
-<!--<p>-->
-    <!--<strong>Storyline:</strong>-->
-    <!--<%= @moves.daily_storyline(:pastDays => 3) %>-->
-<!--</p>-->
-
-<!--<p>-->
-    <!--<strong>Activity list:</strong>-->
-    <!--<%= @moves.daily_activities(:pastDays => 3) %>-->
-<!--</p>-->
+        </div>
+        <div class="column one-half">
+            <%= render 'moves_weekly' %>
+        </div>
+    </div>
+    <div class="boxed-group">
+        <h3>Moves weekly</h3>
+        <div class="boxed-group-inner">
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     training_loaded();
