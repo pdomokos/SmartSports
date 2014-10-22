@@ -21,7 +21,7 @@ class PagesController < ApplicationController
     if auth
       #TODO strore full auth_hash string in connection.data, not only moves access token
       u = User.find(current_user.id)
-      conn  = u.connections.create(name: 'moves', data: auth['credentials']['token'], user_id: u.id)
+      conn  = u.connections.create(name: 'moves', data: auth['credentials']['token'].to_json, user_id: u.id)
       conn.save!
       redirect_to :controller => 'pages', :action => 'training'
     else
@@ -36,7 +36,7 @@ class PagesController < ApplicationController
       data = { "uid" => params[:userid],"acc_key" => auth['credentials']['token'],"acc_secret" => auth['credentials']['secret']}
       #TODO strore full auth_hash string in connection.data, not only withing uid,token,secret
       u = User.find(current_user.id)
-      conn  = u.connections.create(name: 'withings', data: data, user_id: u.id)
+      conn  = u.connections.create(name: 'withings', data: data.to_json, user_id: u.id)
       conn.save!
       redirect_to :controller => 'pages', :action => 'training'
     else
@@ -47,14 +47,7 @@ class PagesController < ApplicationController
 
 
   def training
-    @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
-    @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
-    if @withingsconn
-      @user =  Withings::User.authenticate(@withingsconn.data['uid'], @withingsconn.data['acc_key'], @withingsconn.data['acc_secret'])
-    end
-    if @movesconn
-      @moves = Moves::Client.new(@movesconn.data)
-    end
+
     respond_to do |format|
       format.html
       format.json
@@ -69,6 +62,10 @@ class PagesController < ApplicationController
 
   def wdestroy
     #TODO delete current_user connection where name = withings
+    withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
+    if withings_conn
+      withings_conn.destroy!
+    end
     redirect_to pages_settings_path
   end
 

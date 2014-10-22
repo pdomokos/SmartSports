@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
 
   get 'sync/sync_moves'
+  get 'sync/sync_withings'
 
   get 'pages/mdestroy'
   get 'pages/wdestroy'

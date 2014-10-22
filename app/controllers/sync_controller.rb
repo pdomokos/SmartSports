@@ -1,6 +1,5 @@
 class SyncController < ApplicationController
   def sync_moves
-
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if movesconn != nil
       sess = { "access_token" => movesconn.data}
@@ -14,6 +13,22 @@ class SyncController < ApplicationController
 
     respond_to do |format|
       format.json { render json: {:status => status}}
+    end
+  end
+
+  def sync_withings
+    withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
+    connection_data = JSON.parse(withings_conn.data)
+    if withings_conn
+      withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['acc_key'], connection_data['acc_secret'])
+      meas = withings_user.measurement_groups(:per_page => 10, :page => 1, :end_at => Time.now)
+      result = { :status => "OK", :activities => withings_user.get_activities(), :meas => meas}
+      # TODO save to database
+    else
+      result = { :status => "ERR"}
+    end
+    respond_to do |format|
+      format.json { render json: result}
     end
   end
 
