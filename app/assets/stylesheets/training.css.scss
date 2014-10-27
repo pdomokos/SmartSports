@@ -1,3 +1,12 @@
+//header
+h3 span.detail {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+}
+
+//graph
+
 .training-block {
   margin-top: 20px;
 }
@@ -49,9 +58,6 @@
   padding: 0;
 }
 
-.axis {
-  font-family: arial; font-size:0.6em;
-}
 
 path {
   fill:none;
@@ -59,18 +65,51 @@ path {
   stroke-width:2px;
 }
 
-.tick {
-  fill:none;
-  stroke:black;
-}
+//.tick {
+//  fill:none;
+//  stroke:black;
+//}
 
-circle{
-  stroke:black;
-  stroke-width:0.5px;
+rect{
+//  stroke:black;
+//  stroke-width:0.5px;
+
 }
-circle.walking {
-  fill:DeepPink;
+rect.walking {
+  fill:#ffac29;
 }
-circle.running{
-  fill:MediumSeaGreen;
+rect.cycling {
+  fill:#fe6420;
+}
+rect.running{
+  fill:#fe201b;
+}
+rect.selected{
+  fill:#ccc;
+}
+//axis
+
+.axis path{
+  fill:none;
+  stroke: #c0c0c0;
+}
+//.axis {
+//  font-size:8pt;
+//  font-family:sans-serif;
+//}
+.axis text {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+  cursor: default;
+  line-height: 14px;
+  fill: #666;
+}
+.tick text {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+  cursor: default;
+  line-height: 14px;
+  fill: #666;
 }
