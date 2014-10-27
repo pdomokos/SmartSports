@@ -48,3 +48,6 @@ gem 'omniauth-moves'
 
 gem 'simplificator-withings'
 gem 'omniauth-withings'
+
+gem 'fitgem'
+gem 'omniauth-fitbit'

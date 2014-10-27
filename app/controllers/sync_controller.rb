@@ -32,6 +32,22 @@ class SyncController < ApplicationController
     end
   end
 
+  def sync_fitbit
+    fitbit_conn = Connection.where(user_id: current_user.id, name: 'fitbit').first
+    connection_data = JSON.parse(fitbit_conn.data)
+    if fitbit_conn
+      client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'], :consumer_key => ENV['FITBIT_KEY'], :consumer_secret => ENV['FITBIT_SECRET'])
+      userinfo = client.user_info
+      result = { :status => "OK", :userinfo => userinfo}
+      # TODO save to database
+    else
+      result = { :status => "ERR"}
+    end
+    respond_to do |format|
+      format.json { render json: result}
+    end
+  end
+
   private
 
   def do_sync_moves(sess)

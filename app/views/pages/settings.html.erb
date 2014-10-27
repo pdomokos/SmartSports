@@ -33,6 +33,21 @@
                     <% end %>
                 </div>
             </div>
+
+            <div class="boxed-group">
+                <h3>Fitbit</h3>
+                <div class="boxed-group-inner">
+                    <p>Active since 2014-10-01</p>
+                    <p id="fitbit-sync-status">Synced 1 day ago</p>
+                    <% if @fitbitconn %>
+                        <p><%= link_to "Sync Fitbit", "#", :class => "button primary", :id => "sync-fitbit-button" %>
+                            <%= link_to "Disconnect", "/pages/fdestroy", :class => "button danger", :id => "disconnect-fitbit-button" %>
+                        </p>
+                    <% else %>
+                        <p><%= link_to "Sign in to Fitbit", "/auth/fitbit", :class => "button primary", :id => "signin-fitbit-button" %></p>
+                    <% end %>
+                </div>
+            </div>
         </div>
 
         <div class="column one-half">

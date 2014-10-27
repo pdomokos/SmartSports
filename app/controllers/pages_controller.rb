@@ -3,11 +3,9 @@ class PagesController < ApplicationController
   require 'rubygems'
   require 'withings'
 
-  Withings.consumer_key = ENV['WITHINGS_KEY']
-  Withings.consumer_secret = ENV['WITHINGS_SECRET']
-
   @movesconn = nil
   @withingsconn = nil
+  @fitbitconn = nil
 
   def index
   end
@@ -45,6 +43,20 @@ class PagesController < ApplicationController
     end
   end
 
+  def fitbitcb
+    auth = request.env['omniauth.auth']
+    if auth
+      data = {"secret" => auth['credentials']['secret'],"token" => auth['credentials']['token']}
+      #TODO strore full auth_hash string in connection.data, not only withing uid,token,secret
+      u = User.find(current_user.id)
+      conn  = u.connections.create(name: 'fitbit', data: data.to_json, user_id: u.id)
+      conn.save!
+      redirect_to :controller => 'pages', :action => 'training'
+    else
+      #TODO please sign in first message
+      redirect_to pages_settings_path
+    end
+  end
 
   def training
 
@@ -56,15 +68,25 @@ class PagesController < ApplicationController
   end
 
   def mdestroy
-    #TODO delete current_user connection where name = moves
+    moves_conn = Connection.where(user_id: current_user.id, name: 'moves').first
+    if moves_conn
+      moves_conn.destroy!
+    end
     redirect_to pages_settings_path
   end
 
   def wdestroy
-    #TODO delete current_user connection where name = withings
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
     if withings_conn
       withings_conn.destroy!
+    end
+    redirect_to pages_settings_path
+  end
+
+  def fdestroy
+    fitbit_conn = Connection.where(user_id: current_user.id, name: 'fitbit').first
+    if fitbit_conn
+      fitbit_conn.destroy!
     end
     redirect_to pages_settings_path
   end
@@ -80,6 +102,7 @@ class PagesController < ApplicationController
   def settings
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
+    @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
   end
 
 end

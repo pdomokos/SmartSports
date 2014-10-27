@@ -18,11 +18,14 @@ Rails.application.routes.draw do
 
   get 'sync/sync_moves'
   get 'sync/sync_withings'
+  get 'sync/sync_fitbit'
 
   get 'pages/mdestroy'
   get 'pages/wdestroy'
+  get 'pages/fdestroy'
   get '/auth/moves/callback' => 'pages#movescb'
   get '/auth/withings/callback' => 'pages#withingscb'
+  get '/auth/fitbit/callback' => 'pages#fitbitcb'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

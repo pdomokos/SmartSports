@@ -41,6 +41,8 @@ GEM
     execjs (2.2.1)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    fitgem (0.10.0)
+      oauth
     font-awesome-sass (4.2.0)
       sass (~> 3.2)
     hashie (3.3.1)
@@ -78,6 +80,9 @@ GEM
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
+    omniauth-fitbit (1.0.4)
+      multi_xml
+      omniauth-oauth (~> 1.0)
     omniauth-moves (0.0.2)
       multi_json (~> 1.0)
       omniauth (~> 1.0)
@@ -163,10 +168,12 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  fitgem
   font-awesome-sass
   jbuilder (~> 2.0)
   jquery-rails
   moves
+  omniauth-fitbit
   omniauth-moves
   omniauth-oauth
   omniauth-withings
