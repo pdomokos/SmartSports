@@ -113,3 +113,8 @@ rect.selected{
   line-height: 14px;
   fill: #666;
 }
+.axis line {
+  fill: none;
+  stroke: #666;
+  shape-rendering: crispEdges;
+}

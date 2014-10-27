@@ -9,23 +9,27 @@ draw_moves_chart = (data) ->
   console.log "draw_moves_chart"
   console.log data
 
-  margin = 50
+  conv_to_km(data.walking)
+  conv_to_km(data.running)
+  conv_to_km(data.cycling)
+
+  margin = {top: 30, right: 50, bottom: 50, left: 30}
   aspect = 300/700
-  width = $("#moves-chart").parent().width()-2*margin
-  height = aspect*width-2*margin
+  width = $("#moves-chart").parent().width()-margin.left-margin.right
+  height = aspect*width-margin.top-margin.bottom
 
   datanum = get_data_size(data)
 
-  barwidth = width/datanum/3-2
+  barwidth = width/(datanum)/3-2
 
   console.log "bw = "+barwidth
   moves_chart = $("#moves-chart")[0]
   svg = d3.select(moves_chart)
     .append("svg")
-      .attr("width", width+2*margin)
-      .attr("height", height+2*margin)
+      .attr("width", width+margin.left+margin.right)
+      .attr("height", height+margin.top+margin.bottom)
     .append("g")
-      .attr("transform", "translate("+margin+","+margin+")")
+      .attr("transform", "translate("+margin.left+","+margin.top+")")
 
   time_extent = d3.extent( data.walking.concat(data.running).concat(data.cycling), (d) ->
     Date.parse(d.date) )
@@ -33,7 +37,7 @@ draw_moves_chart = (data) ->
   time_extent[0] = time_extent[0]-(2*60*60*1000)
   time_extent[1] = time_extent[1]+(2*60*60*1000)
 
-  time_scale = d3.time.scale().domain(time_extent).range([0, width])
+  time_scale = d3.time.scale().domain(time_extent).range([0, width-40])
 
   y_extent_km = d3.extent( data.running.concat(data.cycling), (d) ->
     d.distance
@@ -46,6 +50,7 @@ draw_moves_chart = (data) ->
   )
   y_scale_steps = d3.scale.linear().domain(y_extent_steps).range([height, 0])
   console.log y_extent_steps
+
 
   svg
     .selectAll("rect.walking")
@@ -68,27 +73,31 @@ draw_moves_chart = (data) ->
     .append("rect")
     .attr("class", "cycling")
 
-  svg.selectAll("rect.walking")
-    .attr("x", (d) -> time_scale(Date.parse(d.date))-barwidth)
-    .attr("width", (d) -> barwidth)
-    .attr("y", (d) -> y_scale_steps(d.steps))
-    .attr("height", (d) -> height-y_scale_steps(d.steps))
-
-  svg.selectAll("rect.running")
-  .attr("x", (d) -> time_scale(Date.parse(d.date))+barwidth)
-  .attr("width", (d) -> barwidth)
-  .attr("y", (d) -> y_scale_km(d.distance))
-  .attr("height", (d) -> height-y_scale_km(d.distance))
-
-
   svg.selectAll("rect.cycling")
   .attr("x", (d) -> time_scale(Date.parse(d.date)))
   .attr("width", (d) -> barwidth)
   .attr("y", (d) -> y_scale_km(d.distance))
   .attr("height", (d) -> height-y_scale_km(d.distance))
 
+  svg.selectAll("rect.walking")
+    .attr("x", (d) -> time_scale(Date.parse(d.date))+barwidth)
+    .attr("width", (d) -> barwidth)
+    .attr("y", (d) -> y_scale_steps(d.steps))
+    .attr("height", (d) -> height-y_scale_steps(d.steps))
+
+  svg.selectAll("rect.running")
+  .attr("x", (d) -> time_scale(Date.parse(d.date))+2*barwidth)
+  .attr("width", (d) -> barwidth)
+  .attr("y", (d) -> y_scale_km(d.distance))
+  .attr("height", (d) -> height-y_scale_km(d.distance))
+
+
+
+
   time_axis = d3.svg.axis()
     .scale(time_scale)
+    .ticks(d3.time.days)
+    .tickSize(8, 0)
   svg
     .append("g")
     .attr("class", "x axis")
@@ -98,8 +107,8 @@ draw_moves_chart = (data) ->
     select(".x.axis")
     .append("text")
     .text("Date")
-    .attr("x", (width / 2) - margin)
-    .attr("y", margin / 1.5);
+    .attr("x", (width / 2) - margin.right)
+    .attr("y", margin.bottom / 1.5);
 
 
   y_axis_steps = d3.svg.axis()
@@ -136,7 +145,7 @@ draw_moves_chart = (data) ->
       if act_type == "walking"
         act_value = d.steps.toString() + " steps"
       else
-        act_value = (d.distance/1000).toString()+" km"
+        act_value = (d.distance).toString()+" km"
       d3.select("#training-detail").html(act_date+" "+act_type+" "+act_value)
 
   ).on("mouseout", (d) ->
@@ -154,3 +163,7 @@ get_data_size = (data) ->
   datanum = Object.keys(h).length
   console.log datanum
   return datanum
+
+conv_to_km = (data) ->
+  for d in data
+    d.distance = d.distance/1000
