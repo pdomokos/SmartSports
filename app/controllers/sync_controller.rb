@@ -69,7 +69,7 @@ class SyncController < ApplicationController
             for rec in sItem do
               puts "rec[#{i}]=#{rec}"
               act = Activity.new( user_id: current_user.id, source: 'moves', date: currDate, activity:  rec['activity'], group: rec['group'], duration: rec['duration'],
-                  distance: rec['distance'], steps: rec['steps'], last_update: lastUpdate)
+                  distance: rec['distance'], steps: rec['steps'], calories: rec['calories'], last_update: lastUpdate)
               act.save!
               puts "saved #{i} to db"
               i = i + 1

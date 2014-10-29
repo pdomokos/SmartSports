@@ -7,13 +7,46 @@
   d3.json(actions_url, draw_moves_chart)
 
 fmt = d3.time.format("%Y-%m-%d")
+fmt_day = d3.time.format("%Y-%m-%d %a")
+fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
 data = []
+
+@get_monday = (date_ymd) ->
+  console.log "getmonday: "+date_ymd
+  d = new Date(Date.parse(date_ymd))
+  console.log d
+  dow = d.getDay()
+  dow2 = if (dow==0) then 6 else (dow-1)
+  console.log "dow2="+dow2
+  console.log "newdate="+(d.getDate()-dow2)
+  d.setDate(d.getDate()-dow2)
+  d.setHours(0)
+  d.setMinutes(0)
+  d.setSeconds(0)
+  console.log new Date(d)
+  return new Date(d)
+
+@get_sunday = (date_ymd) ->
+  d = new Date(Date.parse(date_ymd))
+  dow = d.getDay()
+  dow2 = if (dow==0) then 6 else (dow-1)
+
+  d.setDate(d.getDate()+6-dow2)
+  d.setHours(23)
+  d.setMinutes(59)
+  d.setSeconds(59)
+  return new Date(d)
 
 #
 # Drawing the monthly chart
 #
 draw_moves_chart = (jsondata) ->
   console.log "draw_moves_chart"
+
+  datanum = get_data_size(jsondata)
+  if datanum==0
+    console.log "No data"
+    return
 
   data = proc_training_data("2014", "10", jsondata)
   console.log data
@@ -23,7 +56,6 @@ draw_moves_chart = (jsondata) ->
   width = $("#moves-chart").parent().width()-margin.left-margin.right
   height = aspect*width-margin.top-margin.bottom
 
-  datanum = get_data_size(data)
   barwidth = width/(datanum)/3-2
 
   moves_chart = $("#moves-chart")[0]
@@ -88,8 +120,6 @@ draw_moves_chart = (jsondata) ->
     .attr("y", (d) -> y_scale_km(d.distance))
     .attr("height", (d) -> height-y_scale_km(d.distance))
 
-
-
   time_axis = d3.svg.axis()
     .scale(time_scale)
     .tickSize(8, 0)
@@ -140,7 +170,7 @@ draw_moves_chart = (jsondata) ->
       d3.select(this)
         .classed("selected", true)
 
-      act_date =  fmt(new Date(Date.parse(d.date)))
+      act_date =  fmt_day(new Date(Date.parse(d.date)))
       act_type = d.group
       if act_type == "walking"
         act_value = d.steps.toString() + " steps"
@@ -158,18 +188,47 @@ draw_moves_chart = (jsondata) ->
     daily = get_daily_activities(sel_date)
     console.log("DAILY "+sel_date)
     console.log(daily)
-    $("#steps-walked-daily").html(daily['walking'].steps)
-    $("#km-running-daily").html(daily['running'].distance)
-    $("#km-cycling-daily").html(daily['cycling'].distance)
+    $("#steps-walked-daily").html(get_sum_measure(daily, 'steps', ['walking']))
+    $("#km-running-daily").html(get_sum_measure(daily, 'distance', ['running']).toFixed(2))
+    $("#km-cycling-daily").html(get_sum_measure(daily, 'distance', ['cycling']).toFixed(2))
+    $("#calories-daily").html(get_sum_measure(daily, 'calories', ['walking', 'running', 'cycling']))
+    $("#distance-daily").html(get_sum_measure(daily, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
+    duration_sec = get_sum_measure(daily, 'duration', ['walking', 'running', 'cycling'])
+    timestr = get_hour(duration_sec)+"h "+get_min(duration_sec)+"min"
+    $("#duration-daily").html(timestr)
+
+    weekly = get_week_activities(sel_date)
+    console.log sel_date
+    console.log @get_monday(sel_date)
+#    $("#moves-weekly-date").html(fmt(@get_monday(sel_date)+" - "+fmt(@get_sunday(sel_date))))
+    $("#steps-walked-weekly").html(get_sum_measure(weekly, 'steps', ['walking']))
+
   )
+
+test = () ->
+  date_ymd = "2014-10-11"
+  d = new Date(Date.parse(date_ymd))
+  dow = d.getDay()
+  dow = (dow==0 ? 6: (dow-1))
+  d.setDate(d.getDate()-dow)
+  d
+
+
+get_hour = (sec) ->
+  Math.floor(sec/60.0/60.0).toString()
+
+get_min = (sec) ->
+  Math.floor((sec%(60*60))/60).toString()
 
 get_data_size = (data) ->
   h = {}
-  for d in data.walking.concat(data.running.concat(data.cycling))
+  walking = if data.walking then data.walking else []
+  running = if data.running then data.running else []
+  cycling = if data.cycling then data.cycling else []
+  for d in walking.concat(running.concat(cycling))
     curr = fmt(new Date(Date.parse(d.date)))
     h[curr] = true
   datanum = Object.keys(h).length
-  console.log datanum
   return datanum
 
 days_in_month = (year, month) ->
@@ -213,14 +272,38 @@ proc_training_data = (year, month, data) ->
   return result
 
 get_daily_activities = (date) ->
-  result = {}
-  for d in data.walking.concat(data.running.concat(data.cycling))
+  result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
+  walking = if data.walking then data.walking else []
+  running = if data.running then data.running else []
+  cycling = if data.cycling then data.cycling else []
+  transport = if data.transport then data.transport else []
+
+  for d in walking.concat(running.concat(cycling.concat(transport)))
     if fmt(new Date(Date.parse(d.date))) == date
-      result[d.group] = d
-  if not result['walking']
-    result['walking'] = 0
-  if not result['running']
-    result['running'] = 0
-  if not result['cycling']
-    result['cycling'] = 0
+      result[d.group].push(d)
+  return result
+
+get_sum_measure = (dat, measure, activity_types) ->
+  console.log "get_sum_measure"
+  console.log dat
+  result = 0.0
+  for k in activity_types
+    if dat[k]
+      for item in dat[k]
+        result = result + item[measure]
+  return result
+
+get_week_activities = (date_ymd) ->
+  result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
+  walking = if data.walking then data.walking else []
+  running = if data.running then data.running else []
+  cycling = if data.cycling then data.cycling else []
+  transport = if data.transport then data.transport else []
+  monday = @get_monday(date_ymd)
+  sunday = @get_sunday(date_ymd)
+  console.log "from="+fmt_hms(monday)+" to="+fmt_hms(sunday)
+  for d in walking.concat(running.concat(cycling.concat(transport)))
+    curr = new Date(Date.parse(d.date))
+    if curr > monday and curr<=sunday
+      result[d.group].push(d)
   return result

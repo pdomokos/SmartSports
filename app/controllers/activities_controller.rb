@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
       month = params[:month].to_i
       numdays = Time.days_in_month(month, year)
       from = "#{year}-#{month}-01 00:00:00"
-      to = "#{year}-#{month}-numdays 23:59:59"
+      to = "#{year}-#{month}-#{numdays} 23:59:59"
       @activities = @activities.where("date between '#{from}' and '#{to}'")
     end
 
