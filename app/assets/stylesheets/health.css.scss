@@ -1,0 +1,27 @@
+.axis path{
+  fill:none;
+  stroke: #c0c0c0;
+}
+.axis {
+  font-size:8pt;
+  font-family:sans-serif;
+}
+.axis text {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+  cursor: default;
+  line-height: 14px;
+  fill: #666;
+}
+.tick {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+  cursor: default;
+  line-height: 14px;
+  fill: #666;
+}
+circle {
+  fill: rgb(47, 181, 233)
+}

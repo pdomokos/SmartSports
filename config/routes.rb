@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   resources :users do
     resources :activities
   end
-
+  resources :users do
+    resources :measurements
+  end
   get 'pages/index'
   get 'pages/health'
   get 'pages/training'

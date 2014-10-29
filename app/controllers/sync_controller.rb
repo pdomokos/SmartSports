@@ -1,4 +1,8 @@
 class SyncController < ApplicationController
+
+  Withings.consumer_key = ENV['WITHINGS_KEY']
+  Withings.consumer_secret = ENV['WITHINGS_SECRET']
+
   def sync_moves
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if movesconn != nil
@@ -18,17 +22,14 @@ class SyncController < ApplicationController
 
   def sync_withings
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
-    connection_data = JSON.parse(withings_conn.data)
     if withings_conn
-      withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['acc_key'], connection_data['acc_secret'])
-      meas = withings_user.measurement_groups(:per_page => 10, :page => 1, :end_at => Time.now)
-      result = { :status => "OK", :activities => withings_user.get_activities(), :meas => meas}
-      # TODO save to database
+      connection_data = JSON.parse(withings_conn.data)
+      status = do_sync_withings(connection_data)
     else
-      result = { :status => "ERR"}
+      status = "ERR"
     end
     respond_to do |format|
-      format.json { render json: result}
+      format.json { render json: {:status => status}}
     end
   end
 
@@ -83,6 +84,22 @@ class SyncController < ApplicationController
       end
 
       currDate = currDate+1.day
+    end
+    return "OK"
+  end
+
+  def do_sync_withings(connection_data)
+    dateFormat = "%Y-%m-%d %H:%M:%S"
+    withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['acc_key'], connection_data['acc_secret'])
+    meas = withings_user.measurement_groups(:per_page => 10, :page => 1, :end_at => Time.now)
+    for item in meas do
+      currDate = item.taken_at.strftime(dateFormat)
+      t1 = currDate.to_datetime
+      if Measurement.where("user_id=#{current_user.id} and date = :taken_at",{taken_at: t1}).size == 0
+        measurement = Measurement.new( user_id: current_user.id, source: 'withings', date: t1, diastolicbp: item.diastolic_blood_pressure, systolicbp: item.systolic_blood_pressure, pulse: item.heart_pulse )
+        measurement.save!
+        puts 'item saved'
+      end
     end
     return "OK"
   end

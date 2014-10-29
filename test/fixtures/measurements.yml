@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  source: MyString
+  date: 2014-10-27 16:37:26
+  diastolicbp: 1
+  systolicbp: 1
+  pulse: 1
+  SPO2: 1
+
+two:
+  user_id: 1
+  source: MyString
+  date: 2014-10-27 16:37:26
+  diastolicbp: 1
+  systolicbp: 1
+  pulse: 1
+  SPO2: 1

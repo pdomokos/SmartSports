@@ -11,7 +11,6 @@ class PagesController < ApplicationController
   end
 
   def health
-
   end
 
   def movescb

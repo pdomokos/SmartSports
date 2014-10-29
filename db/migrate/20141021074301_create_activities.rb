@@ -10,6 +10,7 @@ class CreateActivities < ActiveRecord::Migration
       t.float :distance
       t.integer :steps
       t.float :calories
+      t.float :elevation
       t.datetime :last_update
 
       t.timestamps
