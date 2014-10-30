@@ -1,6 +1,17 @@
 <div class="boxed-group">
-    <h3><img src="<%= asset_path('moves-logo-206x206.png')%>" width="16px" height="16px"> Moves daily  <span class="detail" id="moves-daily-date"></span></h3>
+    <h3><img src="<%= asset_path('moves-logo-206x206.png')%>" width="16px" height="16px"> Activity
+        <div class="right">
+            <span class="minibutton right">Today</span>
+            <span class="minibutton right">Weekly</span>
+        </div>
+    </h3>
+
     <div class="boxed-group-inner clearfix">
+        <div class="chart-nav">
+            <div class="nav-arrow-left arrow" id="moves-left-arrow"><i class="fa fa-chevron-left"></i></div>
+            <div class="nav-arrow-centered" id="moves-chart-date">2014-10-11</div>
+            <div class="nav-arrow-right arrow" id="moves-right-arrow"><i class="fa fa-chevron-right"></i></div>
+        </div>
         <div class="meas-col">
             <div class="meas-block">
                 <div id="steps-walked-daily" class="meas-val">
@@ -52,4 +63,6 @@
             </div>
         </div>
     </div>
+
+    <div id="moves-chart" class="boxed-group-inner chart"></div>
 </div>

@@ -1,4 +1,6 @@
 <div class="boxed-group">
+    <input type="hidden" id="moves-curr-date" />
+    <input type="hidden" id="moves-is-weekly" value="no"/>
     <h3><img src="<%= asset_path('moves-logo-206x206.png')%>" width="16px" height="16px"> Moves weekly <span class="detail" id="moves-weekly-date"></span></h3>
     <div class="boxed-group-inner clearfix">
         <div class="meas-col">
@@ -19,7 +21,7 @@
                 </div>
             </div>
             <div class="meas-block">
-                <div id="km-run-weekly" class="meas-val">
+                <div id="km-running-weekly" class="meas-val">
                     6
                 </div>
                 <div class="meas-annot">

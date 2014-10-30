@@ -1,3 +1,5 @@
+@import "config";
+
 //header
 h3 span.detail {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
@@ -117,4 +119,52 @@ rect.selected{
   fill: none;
   stroke: #666;
   shape-rendering: crispEdges;
+}
+
+.chart {
+  border-top: 0;
+}
+
+
+.minibutton {
+  padding: 0 10px;
+  line-height: 24px;
+
+  position: relative;
+  display: inline-block;
+//  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #eee;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  background-repeat: repeat-x;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+}
+
+.chart-nav .arrow {
+  color: $hover_color;
+}
+.chart-nav:after {
+  clear: both;
+}
+
+.nav-arrow-left {
+  width: 20%;
+  float: left;
+}
+.nav-arrow-right {
+  width: 20%;
+  float: left;
+  text-align: right;
+}
+.nav-arrow-centered {
+  text-align: center;
+  width: 60%;
+  float: left;
 }
