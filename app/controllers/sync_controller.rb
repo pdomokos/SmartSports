@@ -91,8 +91,10 @@ class SyncController < ApplicationController
   def do_sync_withings(connection_data)
     dateFormat = "%Y-%m-%d %H:%M:%S"
     withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['acc_key'], connection_data['acc_secret'])
-    meas = withings_user.measurement_groups(:per_page => 10, :page => 1, :end_at => Time.now)
+    meas = withings_user.measurement_groups(:end_at => Time.now)
     for item in meas do
+      puts 'aaa'
+      puts item
       currDate = item.taken_at.strftime(dateFormat)
       t1 = currDate.to_datetime
       if Measurement.where("user_id=#{current_user.id} and date = :taken_at",{taken_at: t1}).size == 0
