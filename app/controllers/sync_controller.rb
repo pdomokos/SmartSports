@@ -57,7 +57,7 @@ class SyncController < ApplicationController
     puts @profile
     currDate = Date.parse(@profile['firstDate'])
     today = Date.today()
-    while currDate < today
+    while currDate <= today
       if Activity.where("user_id= #{current_user.id} and (date between '#{currDate} 00:00:00' and '#{currDate} 23:59:59' )").size == 0
         puts "syncing #{currDate}"
         summary = @moves.daily_summary(currDate.strftime(dateFormat))

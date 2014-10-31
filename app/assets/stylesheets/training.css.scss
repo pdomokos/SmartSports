@@ -39,6 +39,10 @@ h3 span.detail {
   box-sizing: border-box;
   width: 100%;
   min-height: 30px;
+  border-left: 6px solid white;
+}
+.meas-block.selected {
+  border-left: 6px solid $hover_color;
 }
 
 .meas-val {
@@ -67,16 +71,6 @@ path {
   stroke-width:2px;
 }
 
-//.tick {
-//  fill:none;
-//  stroke:black;
-//}
-
-rect{
-//  stroke:black;
-//  stroke-width:0.5px;
-
-}
 rect.walking {
   fill:#ffac29;
 }
@@ -89,16 +83,13 @@ rect.running{
 rect.selected{
   fill:#ccc;
 }
-//axis
+
 
 .axis path{
   fill:none;
   stroke: #c0c0c0;
 }
-//.axis {
-//  font-size:8pt;
-//  font-family:sans-serif;
-//}
+
 .axis text {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -121,10 +112,13 @@ rect.selected{
   shape-rendering: crispEdges;
 }
 
+text.warn {
+  fill: red;
+}
+
 .chart {
   border-top: 0;
 }
-
 
 .minibutton {
   padding: 0 10px;
@@ -147,8 +141,9 @@ rect.selected{
   border-radius: 3px;
 }
 
-.chart-nav .arrow {
+.arrow {
   color: $hover_color;
+  cursor: pointer;
 }
 .chart-nav:after {
   clear: both;
@@ -167,4 +162,18 @@ rect.selected{
   text-align: center;
   width: 60%;
   float: left;
+}
+
+
+path.line {
+  fill: none;
+  stroke: #666;
+//  stroke: #49EE3F;
+//  stroke: black;
+  stroke-width: 1.5px;
+}
+
+path.area {
+//  fill: #e7e7e7;
+  fill: lightgreen;
 }

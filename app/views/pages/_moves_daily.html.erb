@@ -1,37 +1,38 @@
-<div class="boxed-group">
+<div id="moves-group" class="boxed-group">
+    <input type="hidden" class="curr-date" />
+    <input type="hidden" class="curr-meas" value="walking"/>
+    <input type="hidden" class="is-weekly" value="no"/>
+
     <h3><img src="<%= asset_path('moves-logo-206x206.png')%>" width="16px" height="16px"> Activity
         <div class="right">
-            <span class="minibutton right">Today</span>
-            <span class="minibutton right">Weekly</span>
+            <span id="moves-today-button" class="minibutton right">Today</span>
+            <span id="moves-week-button" class="minibutton right">Weekly</span>
         </div>
     </h3>
 
     <div class="boxed-group-inner clearfix">
         <div class="chart-nav">
-            <div class="nav-arrow-left arrow" id="moves-left-arrow"><i class="fa fa-chevron-left"></i></div>
-            <div class="nav-arrow-centered" id="moves-chart-date">2014-10-11</div>
-            <div class="nav-arrow-right arrow" id="moves-right-arrow"><i class="fa fa-chevron-right"></i></div>
+            <div class="nav-arrow-left"><i id="moves-left-arrow" class="fa fa-chevron-left arrow"></i></div>
+            <div class="nav-arrow-centered" id="moves-chart-date"></div>
+            <div class="nav-arrow-right"><i id="moves-right-arrow" class="fa fa-chevron-right arrow"></i></div>
         </div>
         <div class="meas-col">
-            <div class="meas-block">
-                <div id="steps-walked-daily" class="meas-val">
-                    1234
+            <div class="meas-block selected">
+                <div class="meas-val steps">
                 </div>
                 <div class="meas-annot">
                     Steps Walking
                 </div>
             </div>
             <div class="meas-block">
-                <div id="km-cycling-daily" class="meas-val">
-                    12
+                <div class="meas-val km-cycling">
                 </div>
                 <div class="meas-annot">
                     Km Cycling
                 </div>
             </div>
             <div class="meas-block">
-                <div id="km-running-daily" class="meas-val">
-                    6
+                <div class="meas-val km-running">
                 </div>
                 <div class="meas-annot">
                     Km Running
@@ -40,29 +41,37 @@
         </div>
 
         <div class="meas-col meas-center">
-            <div class="meas-val">
+            <div class="meas-val avg-percent">
                 10%
             </div>
-            <div class="meas-annot">
+            <div class="meas-annot avg-description">
                 of weekly average
             </div>
         </div>
 
         <div class="meas-col">
             <div class="meas-block">
-                <div id="calories-daily" class="meas-val">1234</div>
+                <div class="meas-val calories"></div>
                 <div class="meas-annot">Calories</div>
             </div>
             <div class="meas-block">
-                <div id="distance-daily" class="meas-val">12 km</div>
-                <div class="meas-annot">distance</div>
+                <div class="meas-val distance"></div>
+                <div class="meas-annot">Km distance</div>
             </div>
             <div class="meas-block">
-                <div id="duration-daily" class="meas-val meas-small">1h 6min</div>
-                <div class="meas-annot">activity</div>
+                <div class="meas-val meas-small duration"></div>
+                <div class="meas-annot">Activity</div>
             </div>
         </div>
     </div>
 
-    <div id="moves-chart" class="boxed-group-inner chart"></div>
+    <div id="moves-chart" class="boxed-group-inner chart">
+        <svg id="moves-chart-svg">
+        </svg>
+    </div>
+
+    <div id="moves-trend" class="boxed-group-inner chart">
+        <svg id="moves-trend-svg">
+        </svg>
+    </div>
 </div>
