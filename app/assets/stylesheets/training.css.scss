@@ -112,6 +112,14 @@ rect.selected{
   shape-rendering: crispEdges;
 }
 
+line.sel {
+  stroke: $hover_color;
+}
+rect.sel {
+  fill: $hover_color;
+  opacity: 0.5;
+}
+
 text.warn {
   fill: red;
 }
