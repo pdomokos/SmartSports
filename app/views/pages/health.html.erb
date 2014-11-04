@@ -1,7 +1,49 @@
 <div class="health-block">
-    <input type="hidden" id="current_user_id" value="<%=@current_user.id%>">
+    <input type="hidden" id="current_user_id" value="<%= @current_user.id %>">
+
     <div id='chart-div'></div>
     <div id='blood-pressure-chart-div'></div>
+
+    <div class="columns">
+        <div class="column one-half">
+            <div class="boxed-group">
+                <div class="toolbox">
+                    <div class="toolbox-inner">
+                        <div id="activity-form" class="activity-form hidden">
+                            <%= render 'activities/activity_form'  %>
+                        </div>
+                        <div id="measurement-form" class="measurement-form hidden">
+                            <%= render 'measurements/measurement_form'  %>
+                        </div>
+                    </div>
+
+                    <div class="toolbox-control">
+                        <div class="toolbox-item">
+                            <div class="toolbox-item-icon">
+                                <i class="fa fa-5x fa-tachometer test"></i>
+                            </div>
+
+                            <div class="toolbox-item-link">
+                                <button id="new-activity-form-button" class="button primary">Create Activity</button>
+                            </div>
+                        </div>
+
+                        <div class="toolbox-item">
+                            <div class="toolbox-item-icon">
+                                <i class="fa fa-5x fa-heart test"></i>
+                            </div>
+
+                            <div class="toolbox-item-link">
+                                <button id="new-measurement-form-button" class="button primary">Create Measurement</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script type="text/javascript">

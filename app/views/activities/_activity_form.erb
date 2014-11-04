@@ -1,0 +1,31 @@
+<form id="new-activity-form">
+
+    <input type="hidden" id="user_id" name="activity[user_id]" value="<%= @current_user.id %>">
+    <input type="hidden" id="source" name="activity[source]" value="smartsport">
+
+    <p>
+        <label for="activity">Activity</label><br>
+        <input id="activity" name="activity[activity]" type="text" />
+    </p>
+    <p>
+        <label for="group">Group</label><br>
+        <input id="group" name="activity[group]" type="text" />
+    </p>
+    <p>
+        <label for="distance">Distance</label><br>
+        <input id="distance" name="activity[distance]" type="text" />
+    </p>
+    <p>
+        <label for="duration">Duration</label><br>
+        <input id="duration" name="activity[duration]" type="text" />
+    </p>
+    <p>
+        <label for="date">Date</label><br>
+        <input id="date" name="activity[date]" type="text" value="<%= DateTime.current %>"/>
+    </p>
+
+    <p>
+        <button id="new-activity-button" type="submit">Save activity</button>
+    </p>
+
+</form>

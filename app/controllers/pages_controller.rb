@@ -11,6 +11,8 @@ class PagesController < ApplicationController
   end
 
   def health
+    @activity = Activity.new
+    @measurement = Measurement.new
   end
 
   def movescb

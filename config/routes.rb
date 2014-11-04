@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get 'pages/genetics'
   get 'pages/settings'
 
+  resources :activities
+  resources :measurements
+
 
   get 'sync/sync_moves'
   get 'sync/sync_withings'

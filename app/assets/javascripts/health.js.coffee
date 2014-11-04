@@ -1,5 +1,21 @@
 @health_loaded = () ->
   reset_ui()
+  $("#new-activity-form-button").click (event) ->
+    console.log 'started show activity'
+    $("#measurement-form").addClass("hidden")
+    $("#activity-form").removeClass("hidden")
+
+  $("#new-measurement-form-button").click (event) ->
+    console.log 'started show meas'
+    $("#activity-form").addClass("hidden")
+    $("#measurement-form").removeClass("hidden")
+
+  $("#new-activity-button").click (event) ->
+    new_activity_submit_handler(event)
+
+  $("#new-measurement-button").click (event) ->
+    new_measurement_submit_handler(event)
+
   $("#health-button").addClass("selected")
   uid = $("#current_user_id")[0].value
   console.log uid
@@ -69,7 +85,7 @@ draw_withings_chart = (data) ->
   .call(y_axis)
 
   d3.select(d3div).select(".x.axis").append("text")
-  .text("Date of measurement").attr("x", (width / 2) - margin)
+  .text("Date of measurements").attr("x", (width / 2) - margin)
   .attr("y", margin / 1.5)
   d3.select(d3div).select(".y.axis")
   .append("text").text("Heart rate")
@@ -118,6 +134,7 @@ draw_withings_chart2 = (data) ->
   console.log 'y_extent: ' + y_extent
 
   ldata = create_lines(y_extent)
+  console.log ldata
 
   d3.select(d3div).select("svg").selectAll("line").data(ldata).enter().append("svg:line").
   attr("x1", time_scale(time_extent[0])).
@@ -146,7 +163,7 @@ draw_withings_chart2 = (data) ->
   .call(y_axis)
 
   d3.select(d3div).select(".x.axis").append("text")
-  .text("Date of measurement").attr("x", (width / 2) - margin)
+  .text("Date of measurements").attr("x", (width / 2) - margin)
   .attr("y", margin / 1.5)
   d3.select(d3div).select(".y.axis")
   .append("text").text("Blood pressure")
@@ -170,12 +187,13 @@ draw_withings_chart2 = (data) ->
 
 
   d3.select(d3div).select("svg").selectAll("line").data(cldata).enter().append("svg:line")
-  .attr("x1", (d) -> time_scale(new Date(d.date)))
+  .attr("x1", (d) -> time_scale( Date.parse(d.date)))
   .attr("y1", (d) -> y_scale(d.yg))
-  .attr("x2", (d) -> time_scale(new Date(d.date)))
+  .attr("x2", (d) -> time_scale(Date.parse(d.date)))
   .attr("y2", (d) -> y_scale(d.yy))
   .attr("stroke", (d) -> d.color)
   .attr("stroke-width", 3)
+
 
 
   container.append("svg:line")
@@ -215,3 +233,31 @@ create_circle_lines = (data) ->
   for i in [0...data.length]
     ret.push({yg: data[i].systolicbp, yy: data[i].diastolicbp, date: data[i].date, color: col})
   return ret
+
+@new_activity_submit_handler = (event) ->
+  event.preventDefault()
+  values = $("#new-activity-form").serialize()
+  $.ajax '/activities',
+    type: 'POST',
+    data: values,
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "CREATE activity AJAX Error: #{textStatus}"
+
+    success: (data, textStatus, jqXHR) ->
+      console.log "CREATE measurements  Successful AJAX call"
+      console.log data
+
+@new_measurement_submit_handler = (event) ->
+  event.preventDefault()
+  values = $("#new-measurement-form").serialize()
+  $.ajax '/measurements',
+    type: 'POST',
+    data: values,
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "CREATE activity AJAX Error: #{textStatus}"
+
+    success: (data, textStatus, jqXHR) ->
+      console.log "CREATE measurements  Successful AJAX call"
+      console.log data

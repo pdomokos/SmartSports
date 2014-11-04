@@ -1,0 +1,27 @@
+<form id="new-measurement-form">
+
+    <input type="hidden" id="user_id" name="measurement[user_id]" value="<%= @current_user.id %>">
+    <input type="hidden" id="source" name="measurement[source]" value="smartsport">
+
+    <p>
+        <label for="systolic">Systolic</label><br>
+        <input id="systolic" name="measurement[systolicbp]" type="text" />
+    </p>
+    <p>
+        <label for="diastolic">Diastolic</label><br>
+        <input id="diastolic" name="measurement[diastolicbp]" type="text" />
+    </p>
+    <p>
+        <label for="pulse">Pulse</label><br>
+        <input id="pulse" name="measurement[pulse]" type="text" />
+    </p>
+    <p>
+        <label for="date">Date</label><br>
+        <input id="date" name="measurement[date]" type="text" value="<%= DateTime.current %>"/>
+    </p>
+    <p>
+        <button id="new-measurement-button" type="submit">Save measurement</button>
+    </p>
+</form>
+
+
