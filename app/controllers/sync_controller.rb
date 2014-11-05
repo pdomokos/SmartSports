@@ -1,7 +1,7 @@
 class SyncController < ApplicationController
 
-  Withings.consumer_key = ENV['WITHINGS_KEY']
-  Withings.consumer_secret = ENV['WITHINGS_SECRET']
+  Withings.consumer_key = APP_CONFIG['WITHINGS_KEY']
+  Withings.consumer_secret = APP_CONFIG['WITHINGS_SECRET']
 
   def sync_moves
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first

@@ -34,4 +34,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  APP_CONFIG = YAML.load_file(ENV['HOME']+'/.smartsport_connection_data')[::Rails.env]
 end
