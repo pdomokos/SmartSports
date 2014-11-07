@@ -18,8 +18,11 @@ class ActivitiesController < ApplicationController
 
    def index
     user_id = params[:user_id]
-
-    @activities = Activity.where("user_id = #{user_id}").order(:date)
+    source = params[:source]
+    @activities = Activity.where("user_id = #{user_id}")
+    if source
+      @activities = @activities.where("source = '#{source}'")
+    end
     if params[:year] and params[:month]
       year = params[:year].to_i
       month = params[:month].to_i
@@ -29,16 +32,19 @@ class ActivitiesController < ApplicationController
       @activities = @activities.where("date between '#{from}' and '#{to}'")
     end
 
+    @activities = @activities.order(:date)
     activity_map = Hash.new { |hash, key| hash[key] = [] }
     for act in @activities do
-      if act['group'] != 'transport'
+      if !act['group'].nil?
         activity_map[act['group']].append(act)
+      else
+        activity_map['walking'].append(act)
       end
     end
 
     respond_to do |format|
       format.html
-      format.json {render json: activity_map}
+      format.json {render json: {:source => source, :activities =>activity_map } }
     end
    end
 

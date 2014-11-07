@@ -41,9 +41,9 @@ class TrendChart extends BaseChart
       .attr("y", self.height/2)
 
 
-    walking = @data.walking
-    cycling = @data.cycling
-    running = @data.running
+    walking = if @data.walking then @data.walking else []
+    cycling = if @data.cycling then @data.cycling else []
+    running = if @data.running then @data.running else []
 
     @time_extent = d3.extent(walking.concat(running.concat(cycling)), (d) -> Date.parse(d.date))
     console.log @time_extent

@@ -9,14 +9,14 @@ class ActivityChart extends BaseChart
   draw: (date, meas) ->
     self = this
     date_ymd = @data_helper.fmt(date)
-    console.log "draw_activity_chart "+date_ymd+" -> "+meas
-    $("#moves-group input.curr-date")[0].value = date_ymd
+    console.log "draw_activity_chart ["+@chart_element+"] " +date_ymd+" -> "+meas
+
+    $("#"+@chart_element+" input.curr-date")[0].value = date_ymd
 
     currdata = @data_helper.get_week_activities(date_ymd)
-    console.log currdata
     margin = {top: 30, right: 10, bottom: 40, left: 50}
     aspect = 400/700
-    width = $("#moves-chart").parent().width()-margin.left-margin.right
+    width = $("#"+@chart_element).parent().width()-margin.left-margin.right
     @height = aspect*width-margin.top-margin.bottom
     barwidth = width/14.0
 
@@ -29,7 +29,7 @@ class ActivityChart extends BaseChart
     if showdata.length==0
       console.log "no data"
 
-    svg = d3.select($("#moves-chart-svg")[0])
+    svg = d3.select($("#"+@chart_element+" svg.activity-chart-svg")[0])
     svg = svg
       .attr("width", width+margin.left+margin.right)
       .attr("height", self.height+margin.top+margin.bottom)
@@ -46,9 +46,7 @@ class ActivityChart extends BaseChart
 
     time_padding = 8*60*60*1000
     time_extent = [@data_helper.get_monday(date_ymd).getTime()-time_padding, @data_helper.get_sunday(date_ymd).getTime()-time_padding]
-    console.log date_ymd
     console.log "draw_activity_chart time extent="+ new Date(time_extent[0])+" - "+ new Date(time_extent[1])
-    console.log "monday="+@fmt(new Date(@data_helper.get_monday(date_ymd).getTime()-time_padding))
     @time_scale = d3.time.scale().domain(time_extent).range([0, width])
 
     if meas=='walking'
@@ -93,34 +91,34 @@ class ActivityChart extends BaseChart
       .scale(y_scale)
       .orient("left")
       svg
-      .append("g")
-      .attr("class", "y axis steps")
-      .attr("transform", "translate(0, 0)")
-      .call(y_axis_steps)
+        .append("g")
+        .attr("class", "y axis steps")
+        .attr("transform", "translate(0, 0)")
+        .call(y_axis_steps)
       svg.select(".y.axis.steps")
-      .append("text")
-      .text("Distance (steps)")
-      .attr("x", -30)
-      .attr("y", -10)
+        .append("text")
+        .text("Distance (steps)")
+        .attr("x", -30)
+        .attr("y", -10)
     else
       y_axis_km = d3.svg.axis()
       .scale(y_scale)
       .orient("left")
       svg
-      .append("g")
-      .attr("class", "y axis km")
-      .attr("transform", "translate(0, 0)")
-      .call(y_axis_km)
+        .append("g")
+        .attr("class", "y axis km")
+        .attr("transform", "translate(0, 0)")
+        .call(y_axis_km)
       svg.select(".y.axis.km")
-      .append("text")
-      .text("Distance (km)")
-      .attr("x", -20)
-      .attr("y", -10)
+        .append("text")
+        .text("Distance (km)")
+        .attr("x", -20)
+        .attr("y", -10)
 
     d3.selectAll("rect")
     .on("mouseover", (d) ->
       d3.select(this)
-      .classed("selected", true)
+        .classed("selected", true)
 
       act_date =  self.data_helper.fmt_day(new Date(Date.parse(d.date)))
       act_type = d.group
@@ -128,7 +126,8 @@ class ActivityChart extends BaseChart
         act_value = d.steps.toString() + " steps"
       else
         act_value = (d.distance).toString()+" km"
-      d3.select("#training-detail").html(act_date+" "+act_type+" "+act_value)
+      console.log self.chart_element
+      $("#"+self.chart_element+" span.training-detail").html(act_date+" "+act_type+" "+act_value)
 
     ).on("mouseout", (d) ->
       d3.select(this)
@@ -137,7 +136,7 @@ class ActivityChart extends BaseChart
     ).on("click", (d) ->
       sel_date = self.data_helper.fmt(new Date(Date.parse(d.date)))
       self.update_daily(sel_date)
-      $("#moves-group input.curr-date")[0].value = sel_date
+      $("#"+@chart_element+" input.curr-date")[0].value = sel_date
       self.show_selection()
       if self.callback
         self.callback(d)
@@ -147,7 +146,7 @@ class ActivityChart extends BaseChart
     @callback = cb
 
   show_selection: ->
-    currdate = Date.parse($("#moves-group input.curr-date")[0].value)
+    currdate = Date.parse($("#"+@chart_element+" input.curr-date")[0].value)
     console.log "show selection " + currdate
 
     self = this
@@ -161,12 +160,12 @@ class ActivityChart extends BaseChart
       .attr("y2", self.height)
 
   update_daily: (sel_date) ->
-    $("#moves-group input.is-weekly")[0].value = ""
+    $("#"+@chart_element+" input.is-weekly")[0].value = ""
     today = @data_helper.fmt(new Date(Date.now()))
     if today==sel_date
-      $("#moves-chart-date").html("Today")
+      $("#"+@chart_element+" div#chart-date").html("Today")
     else
-      $("#moves-chart-date").html(@data_helper.fmt_words(new Date(Date.parse(sel_date))))
+      $("#"+@chart_element+" div#chart-date").html(@data_helper.fmt_words(new Date(Date.parse(sel_date))))
     daily = @data_helper.get_daily_activities(sel_date)
     $("#moves-group div.steps").html(@data_helper.get_sum_measure(daily, 'steps', ['walking']))
     $("#moves-group div.km-running").html(@data_helper.get_sum_measure(daily, 'distance', ['running']).toFixed(2))

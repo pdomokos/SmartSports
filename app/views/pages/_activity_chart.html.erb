@@ -1,12 +1,13 @@
-<div id="moves-group" class="boxed-group">
+<div id="<%= connection_name %>-container" class="boxed-group connection-block">
+    <input type="hidden" class="connection-name" value="<%= connection_name %>"/>
     <input type="hidden" class="curr-date" />
     <input type="hidden" class="curr-meas" value="walking"/>
     <input type="hidden" class="is-weekly" value="no"/>
 
-    <h3><img src="<%= asset_path('moves-logo-206x206.png')%>" width="16px" height="16px"> Activity
+    <h3><img src="<%= asset_path( connection_name +"-logo.png")%>" width="24px" height="24px"> Activity <span class="detail training-detail"></span>
         <div class="right">
-            <span id="moves-today-button" class="minibutton right">Today</span>
-            <span id="moves-week-button" class="minibutton right">Weekly</span>
+            <span id="today-button" class="minibutton right">Today</span>
+            <span id="week-button" class="minibutton right">Weekly</span>
         </div>
     </h3>
 
@@ -65,13 +66,13 @@
         </div>
     </div>
 
-    <div id="moves-chart" class="boxed-group-inner chart">
-        <svg id="moves-chart-svg">
+    <div class="boxed-group-inner chart activity-chart">
+        <svg class="activity-chart-svg">
         </svg>
     </div>
 
-    <div id="moves-trend" class="boxed-group-inner chart">
-        <svg id="moves-trend-svg">
+    <div class="boxed-group-inner chart activity-trend">
+        <svg id="activity-trend-svg">
         </svg>
     </div>
 </div>

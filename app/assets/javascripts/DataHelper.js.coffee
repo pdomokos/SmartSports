@@ -6,9 +6,12 @@ class DataHelper
     @fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
 
   proc_training_data: () ->
-    @conv_to_km(@data.walking)
-    @conv_to_km(@data.running)
-    @conv_to_km(@data.cycling)
+    if @data.walking
+      @conv_to_km(@data.walking)
+    if @data.running
+      @conv_to_km(@data.running)
+    if @data.cycling
+      @conv_to_km(@data.cycling)
 
   get_daily_activities: (date) ->
     result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
@@ -19,7 +22,10 @@ class DataHelper
 
     for d in walking.concat(running.concat(cycling.concat(transport)))
       if @fmt(new Date(Date.parse(d.date))) == date
-        result[d.group].push(d)
+        if d.group
+          result[d.group].push(d)
+        else
+          result['walking'].push(d)
     return result
 
   get_week_activities: (date_ymd) ->
@@ -35,7 +41,10 @@ class DataHelper
     for d in walking.concat(running.concat(cycling.concat(transport)))
       curr = new Date(Date.parse(d.date))
       if curr > monday and curr<=sunday
-        result[d.group].push(d)
+        if d.group
+          result[d.group].push(d)
+        else
+          result['walking'].push(d)
     return result
 
 

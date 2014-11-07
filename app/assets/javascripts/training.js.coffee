@@ -8,8 +8,12 @@
 
   $("#training-button").addClass("selected")
   uid = $("#current_user_id")[0].value
-  actions_url = "/users/"+uid+"/activities.json"
-  d3.json(actions_url, data_received)
+
+  for elem in $("#training-container div.connection-block")
+    console.log elem.id
+    conn =  $("#"+elem.id+" input.connection-name")[0].value
+    actions_url = "/users/"+uid+"/activities.json?source="+conn
+    d3.json(actions_url, data_received)
 
 fmt = d3.time.format("%Y-%m-%d")
 fmt_words = d3.time.format("%Y %b %e")
@@ -26,7 +30,10 @@ trend_chart = null
 activity_chart = null
 
 data_received = (jsondata) ->
-
+  source = jsondata.source
+  console.log "DATA_RECEIVED "+source
+  jsondata = jsondata.activities
+  console.log jsondata
   data_helper = new DataHelper(jsondata)
   datanum = data_helper.get_data_size()
   if datanum==0
@@ -40,7 +47,7 @@ data_received = (jsondata) ->
 
   console.log "calling trend_chart.draw "+fmt(d)
 
-  activity_chart = new ActivityChart("moves-chart", jsondata, data_helper)
+  activity_chart = new ActivityChart(source+"-container", jsondata, data_helper)
   activity_chart.draw(d, "walking")
   activity_chart.update_daily(data_helper.fmt(d))
   activity_chart.set_callback(selection_callback)

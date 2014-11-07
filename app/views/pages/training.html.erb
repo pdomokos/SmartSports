@@ -1,15 +1,20 @@
-<div class="training-block">
+<div class="training-block" id="training-container">
     <input type="hidden" id="current_user_id" value="<%=@uid%>">
     <div class="columns">
         <div class="column one-half">
-            <%= render 'moves_daily' %>
-
+            <% if @conn.size > 0 %>
+                <% for i in (0..@conn.size-1).select {|it| it%2==0} %>
+                    <%= render partial: 'activity_chart', locals: { :connection_name => @conn[i].name} %>
+                <% end %>
+            <% end %>
         </div>
 
         <div class="column one-half">
-            <div id="training-chart-2" class="boxed-group">
-
-            </div>
+            <% if @conn.size > 1 %>
+                <% for i in (1..@conn.size-1).select {|it| it%2==1} %>
+                    <%= render partial: 'activity_chart', locals: { :connection_name => @conn[i].name} %>
+                <% end %>
+            <% end %>
         </div>
     </div>
     <!--<div class="boxed-group">-->
