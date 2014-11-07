@@ -101,6 +101,10 @@ class PagesController < ApplicationController
 
   end
 
+  def friendship
+    @friendship = Friendship.new
+  end
+
   def settings
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first

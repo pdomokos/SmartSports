@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105151906) do
+ActiveRecord::Schema.define(version: 20141107082109) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 20141105151906) do
   end
 
   add_index "connections", ["name"], name: "index_connection_on_name", unique: true
+
+  create_table "friendships", force: true do |t|
+    t.integer  "user1_id"
+    t.integer  "user2_id"
+    t.boolean  "authorized"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "friendships", ["user1_id", "user2_id"], name: "index_friendships_on_user1_id_and_user2_id"
 
   create_table "measurements", force: true do |t|
     t.integer  "user_id"

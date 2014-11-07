@@ -1,0 +1,13 @@
+<form id="new-friendship-form">
+
+    <input type="hidden" id="user" name="friendship[user1_id]" value="<%= @current_user.id %>">
+    <input type="hidden" id="auth" name="friendship[authorized]" value="false">
+
+    <p>
+        <label for="friend">Friend id</label><br>
+        <input id="friend" name="friendship[user2_id]" type="integer"/>
+    </p>
+    <p>
+        <button id="new-friendship-button" type="submit">Send request</button>
+    </p>
+</form>
