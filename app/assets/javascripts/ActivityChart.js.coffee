@@ -173,7 +173,7 @@ class ActivityChart extends BaseChart
     $("#moves-group div.km-cycling").html(@data_helper.get_sum_measure(daily, 'distance', ['cycling']).toFixed(2))
     $("#moves-group div.calories").html(@data_helper.get_sum_measure(daily, 'calories', ['walking', 'running', 'cycling']))
     $("#moves-group div.distance").html(@data_helper.get_sum_measure(daily, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
-    duration_sec = @data_helper.get_sum_measure(daily, 'duration', ['walking', 'running', 'cycling'])
+    duration_sec = @data_helper.get_sum_measure(daily, 'total_duration', ['walking', 'running', 'cycling'])
     timestr = @data_helper.get_hour(duration_sec)+"h "+@data_helper.get_min(duration_sec)+"min"
     $("#moves-group div.duration").html(timestr)
 
@@ -189,7 +189,7 @@ class ActivityChart extends BaseChart
     $("#moves-group div.km-cycling").html(@data_helper.get_sum_measure(weekly, 'distance', ['cycling']).toFixed(2))
     $("#moves-group div.calories").html(@data_helper.get_sum_measure(weekly, 'calories', ['walking', 'running', 'cycling']))
     $("#moves-group div.distance").html(@data_helper.get_sum_measure(weekly, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
-    duration_sec = @data_helper.get_sum_measure(weekly, 'duration', ['walking', 'running', 'cycling'])
+    duration_sec = @data_helper.get_sum_measure(weekly, 'total_duration', ['walking', 'running', 'cycling'])
     timestr = @data_helper.get_hour(duration_sec)+"h "+@data_helper.get_min(duration_sec)+"min"
     $("#moves-group div.duration").html(timestr)
 
