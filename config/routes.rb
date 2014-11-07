@@ -18,10 +18,11 @@ Rails.application.routes.draw do
   get 'pages/lifestyle'
   get 'pages/genetics'
   get 'pages/settings'
+  get 'pages/friendship'
 
   resources :activities
   resources :measurements
-
+  resources :friendships
 
   get 'sync/sync_moves'
   get 'sync/sync_withings'
