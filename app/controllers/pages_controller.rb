@@ -18,9 +18,9 @@ class PagesController < ApplicationController
   def movescb
     auth = request.env['omniauth.auth']
     if auth
-      #TODO strore full auth_hash string in connection.data, not only moves access token
       u = User.find(current_user.id)
-      conn  = u.connections.create(name: 'moves', data: auth['credentials']['token'].to_json, user_id: u.id)
+      data = auth['credentials']
+      conn  = u.connections.create(name: 'moves', data: data.to_json, user_id: u.id)
       conn.save!
       redirect_to :controller => 'pages', :action => 'training'
     else
@@ -32,8 +32,8 @@ class PagesController < ApplicationController
   def withingscb
     auth = request.env['omniauth.auth']
     if auth
-      data = { "uid" => params[:userid],"acc_key" => auth['credentials']['token'],"acc_secret" => auth['credentials']['secret']}
-      #TODO strore full auth_hash string in connection.data, not only withing uid,token,secret
+      data = auth['credentials']
+      data.merge!({"uid" => params[:userid]})
       u = User.find(current_user.id)
       conn  = u.connections.create(name: 'withings', data: data.to_json, user_id: u.id)
       conn.save!
@@ -47,8 +47,7 @@ class PagesController < ApplicationController
   def fitbitcb
     auth = request.env['omniauth.auth']
     if auth
-      data = {"secret" => auth['credentials']['secret'],"token" => auth['credentials']['token']}
-      #TODO strore full auth_hash string in connection.data, not only withing uid,token,secret
+      data = auth['credentials']
       u = User.find(current_user.id)
       conn  = u.connections.create(name: 'fitbit', data: data.to_json, user_id: u.id)
       conn.save!

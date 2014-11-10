@@ -8,7 +8,7 @@ class SyncController < ApplicationController
   def sync_moves
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if movesconn != nil
-      sess = { "access_token" => movesconn.data}
+      sess = JSON.parse(movesconn.data)
     else
       auth = request.env['omniauth.auth']
       current_user.connection.create(name: 'moves', data: auth['credentials']['token'], user_id: current_user.id )
@@ -40,9 +40,10 @@ class SyncController < ApplicationController
   def sync_fitbit
     dateFormat = "%Y-%m-%d"
     fitbit_conn = Connection.where(user_id: current_user.id, name: 'fitbit').first
-    connection_data = JSON.parse(fitbit_conn.data)
     if fitbit_conn
-      client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'], :consumer_key => ENV['FITBIT_KEY'], :consumer_secret => ENV['FITBIT_SECRET'])
+      connection_data = JSON.parse(fitbit_conn.data)
+      client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'],
+                                  :consumer_key => APP_CONFIG['FITBIT_KEY'], :consumer_secret => APP_CONFIG['FITBIT_SECRET'])
       userinfo = client.user_info
       member_since = userinfo['user']['memberSince']
 
@@ -57,8 +58,9 @@ class SyncController < ApplicationController
       while currdate <= now
         act = client.activities_on_date(currdate)
         remove_activities_on_date(current_user.id, "fitbit", currdate.strftime(dateFormat))
-        save_fitbit_act(act, currdate)
-        saved.push(act)
+        if save_fitbit_act(act, currdate)
+          saved.push(act)
+        end
         currdate = currdate+1.day
       end
 
@@ -75,7 +77,7 @@ class SyncController < ApplicationController
 
   def do_sync_moves(sess)
     dateFormat = "%Y-%m-%d"
-    @moves = Moves::Client.new(sess["access_token"])
+    @moves = Moves::Client.new(sess["token"])
     @profile = @moves.profile['profile']
     puts @profile
     currDate = Date.parse(@profile['firstDate'])
@@ -132,7 +134,7 @@ class SyncController < ApplicationController
   def do_sync_withings(connection_data)
     dateFormat = "%Y-%m-%d %H:%M:%S"
     dateFormat_ymd = "%Y-%m-%d"
-    withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['acc_key'], connection_data['acc_secret'])
+    withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
     meas = withings_user.measurement_groups(:end_at => Time.now)
     for item in meas do
       currDate = item.taken_at.strftime(dateFormat)
@@ -205,28 +207,36 @@ class SyncController < ApplicationController
   end
 
   def save_fitbit_act(rec, date)
+
     summary = rec['summary']
     lightly = summary['lightlyActiveMinutes']
     very = summary['veryActiveMinutes']
     fairly = summary['fairlyActiveMinutes']
     total = lightly+very+fairly
     distance_total = summary['distances'].select { |it| it['activity']=='total'}
-    isFinal = false
-    if date < Date.today()
-      isFinal = true
+    distance_total = distance_total[0]['distance']
+    if distance_total >0.0 and summary['steps']>0
+      isFinal = false
+      if date < Date.today()
+        isFinal = true
+      end
+      new_act =  Activity.new( user_id: current_user.id, source: 'fitbit', date: date,
+          total_duration: total,
+          soft_duration: lightly,
+          moderate_duration: fairly,
+          hard_duration: very,
+          distance: distance_total,
+          steps: summary['steps'],
+          calories: summary['activityCalories'],
+          elevation: summary['elevation'],
+          synced_at: DateTime.now(),
+          sync_final: isFinal
+      )
+      new_act.save!
+      return true
+    else
+      return false
     end
-    new_act =  Activity.new( user_id: current_user.id, source: 'fitbit', date: date,
-        total_duration: total,
-        soft_duration: lightly,
-        moderate_duration: fairly,
-        hard_duration: very,
-        distance: distance_total[0]['distance'],
-        steps: summary['steps'],
-        calories: summary['activityCalories'],
-        elevation: summary['elevation'],
-        synced_at: DateTime.now(),
-        sync_final: isFinal
-    )
-    new_act.save!
   end
+
 end
