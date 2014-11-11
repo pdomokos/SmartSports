@@ -1,9 +1,8 @@
 #= require BaseChart
 
 class TrendChart extends BaseChart
-  constructor: (@chart_element, data, @data_helper) ->
+  constructor: (@connection, @chart_element, data, @data_helper) ->
     super(data)
-    console.log "constructing trend chart..."
 
   draw: (date, meas) ->
     self = this
@@ -18,14 +17,13 @@ class TrendChart extends BaseChart
     showdata = @data.walking
     y_domain_getter = (d) -> d.steps
     if meas!="walking"
-      console.log "meas = "+meas
       showdata = @data[meas]
       y_domain_getter = (d) -> d.distance
 
-    if showdata.length==0
+    if !showdata or showdata.length==0
       console.log "trends no data"
 
-    svg = d3.select($("#"+@chart_element+"-svg")[0])
+    svg = d3.select($("#"+@chart_element+" svg.activity-trend-svg")[0])
     svg = svg
     .attr("width", width+margin.left+margin.right)
     .attr("height", self.height+margin.top+margin.bottom)
@@ -46,8 +44,6 @@ class TrendChart extends BaseChart
     running = if @data.running then @data.running else []
 
     @time_extent = d3.extent(walking.concat(running.concat(cycling)), (d) -> Date.parse(d.date))
-    console.log @time_extent
-    console.log new Date(@time_extent[0]) + " !-! " + new Date(@time_extent[1])
 
     @time_scale = d3.time.scale().domain(@time_extent).range([0, width])
     x_getter = (d) -> return(self.time_scale(Date.parse(d.date)))
@@ -79,7 +75,7 @@ class TrendChart extends BaseChart
     #    .attr("height", trend_height);
 
     svg.
-      selectAll("circle")
+      selectAll("#"+@chart_element+" svg.activity-trend-svgcircle")
       .data(showdata)
       .enter()
       .append("circle")
@@ -135,14 +131,11 @@ class TrendChart extends BaseChart
     sunday.setHours(23)
     sunday.setMinutes(59)
     sunday.setSeconds(59)
-    console.log new Date(@time_extent[0]) + " <-> " + new Date(@time_extent[1])
-    console.log monday + " - " + sunday
     if sunday.getTime() > @time_extent[1]
       sunday = new Date(@time_extent[1])
 
-    console.log monday + " - " + sunday
-    svg_trend = d3.select($("#moves-trend-svg g:first-child")[0])
-    d3.selectAll($("#moves-trend-svg rect.sel")).remove()
+    svg_trend = d3.select($("#"+@chart_element+" svg.activity-trend-svg g:first-child")[0])
+    d3.selectAll($("#"+@chart_element+" svg.activity-trend-svg rect.sel")).remove()
     svg_trend.append("svg:rect")
       .attr("class", "sel")
       .attr("x", (self.time_scale(monday.getTime())))

@@ -4,18 +4,21 @@
     <input type="hidden" class="curr-meas" value="walking"/>
     <input type="hidden" class="is-weekly" value="no"/>
 
-    <h3><img src="<%= asset_path( connection_name +"-logo.png")%>" width="24px" height="24px"> Activity <span class="detail training-detail"></span>
+    <h3>
+        <img src="<%= asset_path( connection_name +"-logo.png")%>" width="24px" height="24px" class="left">
+        <div class="training-type left">Activity</div>
+        <div class="detail training-detail left"></div>
         <div class="right">
-            <span id="today-button" class="minibutton right">Today</span>
-            <span id="week-button" class="minibutton right">Weekly</span>
+            <span class="minibutton right today-button">Today</span>
+            <span class="minibutton right week-button">Weekly</span>
         </div>
     </h3>
 
     <div class="boxed-group-inner clearfix">
         <div class="chart-nav">
-            <div class="nav-arrow-left"><i id="moves-left-arrow" class="fa fa-chevron-left arrow"></i></div>
-            <div class="nav-arrow-centered" id="moves-chart-date"></div>
-            <div class="nav-arrow-right"><i id="moves-right-arrow" class="fa fa-chevron-right arrow"></i></div>
+            <div class="nav-arrow-left"><i class="fa fa-chevron-left arrow activities-left-arrow"></i></div>
+            <div class="nav-arrow-centered chart-date"></div>
+            <div class="nav-arrow-right"><i class="fa fa-chevron-right arrow activities-right-arrow"></i></div>
         </div>
         <div class="meas-col">
             <div class="meas-block selected">
@@ -72,7 +75,7 @@
     </div>
 
     <div class="boxed-group-inner chart activity-trend">
-        <svg id="activity-trend-svg">
+        <svg class="activity-trend-svg">
         </svg>
     </div>
 </div>

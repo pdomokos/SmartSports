@@ -4,7 +4,8 @@ class DataHelper
     @fmt_words = d3.time.format("%Y %b %e")
     @fmt_day = d3.time.format("%Y-%m-%d %a")
     @fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
-
+    @fmt_year = d3.time.format("%Y")
+    @fmt_month_day = d3.time.format("%b %e")
   proc_training_data: () ->
     if @data.walking
       @conv_to_km(@data.walking)
@@ -29,7 +30,6 @@ class DataHelper
     return result
 
   get_week_activities: (date_ymd) ->
-    console.log "get_week_act"
     result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
     walking = if @data.walking then @data.walking else []
     running = if @data.running then @data.running else []
@@ -37,7 +37,6 @@ class DataHelper
     transport = if @data.transport then @data.transport else []
     monday = @get_monday(date_ymd)
     sunday = @get_sunday(date_ymd)
-    console.log "from="+@fmt_hms(monday)+" to="+@fmt_hms(sunday)
     for d in walking.concat(running.concat(cycling.concat(transport)))
       curr = new Date(Date.parse(d.date))
       if curr > monday and curr<=sunday
