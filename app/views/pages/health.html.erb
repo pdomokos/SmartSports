@@ -1,48 +1,48 @@
 <div class="health-block">
     <input type="hidden" id="current_user_id" value="<%= @current_user.id %>">
 
-    <div id='chart-div'></div>
-    <div id='blood-pressure-chart-div'></div>
-
     <div class="columns">
         <div class="column one-half">
-            <div class="boxed-group">
-                <div class="toolbox">
-                    <div class="toolbox-inner">
-                        <div id="activity-form" class="activity-form hidden">
-                            <%= render 'activities/activity_form'  %>
-                        </div>
-                        <div id="measurement-form" class="measurement-form hidden">
-                            <%= render 'measurements/measurement_form'  %>
-                        </div>
-                    </div>
+            <div id="heartrate-container" class="boxed-group connection-block">
+                <h3>
+                    <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
+                    <div class="training-type left">Heart rate (bpm)</div>
+                    <div class="selected-meas left"></div>
+                </h3>
 
-                    <div class="toolbox-control">
-                        <div class="toolbox-item">
-                            <div class="toolbox-item-icon">
-                                <i class="fa fa-5x fa-tachometer test"></i>
-                            </div>
+                <div class="boxed-group-inner chart bloodpressure-chart">
+                    <svg class="heartrate-chart-svg">
+                    </svg>
+                </div>
+            </div>
+            <div id="spo2-container" class="boxed-group connection-block">
+                <h3>
+                    <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
+                    <div class="training-type left">Oxymetry (spo2%)</div>
+                </h3>
 
-                            <div class="toolbox-item-link">
-                                <button id="new-activity-form-button" class="button primary">Create Activity</button>
-                            </div>
-                        </div>
+                <div class="boxed-group-inner chart spo2-chart">
+                    <svg class="spo2-chart-svg">
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="column one-half">
+            <div id="bloodpressure-container" class="boxed-group connection-block">
+                <h3>
+                    <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
+                    <div class="training-type left">Blood pressure SYS/DIA (mmHg)</div>
+                    <div class="selected-meas left"></div>
+                </h3>
 
-                        <div class="toolbox-item">
-                            <div class="toolbox-item-icon">
-                                <i class="fa fa-5x fa-heart test"></i>
-                            </div>
-
-                            <div class="toolbox-item-link">
-                                <button id="new-measurement-form-button" class="button primary">Create Measurement</button>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="boxed-group-inner chart bloodpressure-chart">
+                    <svg class="bloodpressure-chart-svg">
+                    </svg>
                 </div>
             </div>
         </div>
     </div>
+
 
 </div>
 

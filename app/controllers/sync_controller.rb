@@ -1,4 +1,43 @@
 require 'Withings'
+class Withings::MeasurementGroup
+  def initialize(params)
+    params = params.stringify_keys
+    @group_id = params['grpid']
+    @attribution = params['attrib']
+    @taken_at = Time.at(params['date'])
+    @category = params['category']
+    @spo2 = nil
+    params['measures'].each do |measure|
+      value = (measure['value'] * 10 ** measure['unit']).to_f
+      case measure['type']
+        when TYPE_WEIGHT then @weight = value
+        when TYPE_SIZE then @size = value
+        when TYPE_FAT_MASS_WEIGHT then @fat = value
+        when TYPE_FAT_RATIO then @ratio = value
+        when TYPE_FAT_FREE_MASS_WEIGHT then @fat_free = value
+        when TYPE_DIASTOLIC_BLOOD_PRESSURE then @diastolic_blood_pressure = value
+        when TYPE_SYSTOLIC_BLOOD_PRESSURE then @systolic_blood_pressure = value
+        when TYPE_HEART_PULSE then @heart_pulse = value
+        when 54 then @spo2 = value
+      end
+    end
+  end
+  def spo2
+    @spo2
+  end
+end
+class Withings::User
+  def getmeas(params)
+    # options = {:limit => 100, :offset => 0} # this does not seem to work
+    options = {}
+    options.merge!(params)
+
+    response = connection.get_request('/measure', options.merge(:action => :getmeas))
+    response['measuregrps'].map do |group|
+      Withings::MeasurementGroup.new(group)
+    end
+  end
+end
 
 class SyncController < ApplicationController
 
@@ -23,15 +62,24 @@ class SyncController < ApplicationController
   end
 
   def sync_withings
-
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
     if withings_conn
       connection_data = JSON.parse(withings_conn.data)
-      result = do_sync_withings(connection_data)
-      result.merge!({:status => "OK"})
+      begin
+        withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
+        meas = sync_withings_meas(withings_user)
+        act =  sync_withings_act(withings_user)
+
+        result =  {:status=> "OK", :meas => meas, :act =>act}
+      rescue Exception => e
+        puts e.message
+        puts e.backtrace.inspect
+        result =  {:status => "ERR"}
+      end
     else
-      result = {:status => "ERR" }
+      result = {:status => "ERR"}
     end
+
     respond_to do |format|
       format.json { render json: result}
     end
@@ -131,23 +179,21 @@ class SyncController < ApplicationController
     return "OK"
   end
 
-  def do_sync_withings(connection_data)
+  private
+
+  def get_withings_last_sync(user_id)
+    result = DateTime.parse("2010-01-01 00:00:00").to_i
+    withings_meas_query = Measurement.where("user_id = #{user_id} and source = 'withings'").order(created_at: :desc).limit(1)
+    if withings_meas_query.size() >0
+      result = withings_meas_query[0].created_at.to_i
+    end
+    return result
+  end
+
+  def sync_withings_act(withings_user)
     dateFormat = "%Y-%m-%d %H:%M:%S"
     dateFormat_ymd = "%Y-%m-%d"
-    withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
-    meas = withings_user.measurement_groups(:end_at => Time.now)
-    for item in meas do
-      currDate = item.taken_at.strftime(dateFormat)
-      t1 = currDate.to_datetime
-      if Measurement.where("user_id=#{current_user.id} and date = :taken_at",{taken_at: t1}).size == 0
-        measurement = Measurement.new( user_id: current_user.id, source: 'withings', date: t1, diastolicbp: item.diastolic_blood_pressure, systolicbp: item.systolic_blood_pressure, pulse: item.heart_pulse )
-        measurement.save!
-        puts 'item saved'
-      end
-    end
-
     today_ymd = DateTime.now().strftime(dateFormat_ymd)
-
     last_sync_date = get_last_synced_final_date(current_user.id, "withings")
     if last_sync_date
       start_date = last_sync_date+1.day
@@ -162,11 +208,29 @@ class SyncController < ApplicationController
         save_withings_act(item)
       end
     end
-
-    return act
   end
 
-  private
+  def sync_withings_meas(withings_user)
+
+    lastupdate = get_withings_last_sync(current_user.id)
+    puts lastupdate
+
+    meas = withings_user.getmeas({ :lastupdate => lastupdate})
+
+    for item in meas do
+      measurement = Measurement.new( {
+         :user_id => current_user.id,
+         :source => 'withings',
+         :date => item.taken_at,
+         :diastolicbp => item.diastolic_blood_pressure,
+         :systolicbp => item.systolic_blood_pressure,
+         :pulse => item.heart_pulse,
+         :SPO2 => item.spo2}
+      )
+      measurement.save!
+    end
+    return meas
+  end
 
   def remove_activities_on_date(user_id, source, date)
     to_remove = Activity.where("user_id= #{user_id} and source = '#{source}' and date=?", DateTime.parse(date))

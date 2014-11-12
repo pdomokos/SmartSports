@@ -72,7 +72,7 @@ class ActivityChart extends BaseChart
     time_axis = d3.svg.axis()
       .scale(self.time_scale)
       .tickSize(8, 0)
-      .ticks(d3.time.days)
+#      .ticks(d3.time.days)
     svg
       .append("g")
       .attr("class", "x axis")
@@ -119,7 +119,7 @@ class ActivityChart extends BaseChart
       d3.select(this)
         .classed("selected", true)
 
-      act_date =  self.data_helper.fmt_day(new Date(Date.parse(d.date)))
+      act_date =  self.data_helper.fmt_month_day(new Date(Date.parse(d.date)))
       act_type = d.group
       if act_type == null
         act_type = "walking"
@@ -127,11 +127,11 @@ class ActivityChart extends BaseChart
         act_value = d.steps.toString() + " steps"
       else
         act_value = (d.distance).toFixed(2)+" km"
-      $("#"+self.chart_element+" span.training-detail").html(act_date+" "+act_value)
+      $("#"+self.chart_element+" div.training-detail").html(act_date+": "+act_value)
     ).on("mouseout", (d) ->
       d3.select(this)
       .classed("selected", false)
-      d3.select("#"+self.chart_element+" span.training-detail").html("")
+      d3.select("#"+self.chart_element+" div.training-detail").html("")
     ).on("click", (d) ->
       sel_date = self.data_helper.fmt(new Date(Date.parse(d.date)))
       self.update_daily(sel_date)

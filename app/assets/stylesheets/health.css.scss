@@ -1,3 +1,8 @@
+.health-block {
+  margin-top: 20px;
+}
+
+
 .axis path{
   fill:none;
   stroke: #c0c0c0;
@@ -23,9 +28,16 @@
   fill: #666;
 }
 circle {
-  fill: rgb(47, 181, 233)
+  fill: rgb(47, 181, 233);
 }
 
+circle.hr {
+  fill: rgb(47, 181, 233);
+}
+
+line.press {
+  stroke: rgb(47, 181, 233)
+}
 .toolbox {
   padding: 5px 5px;
   background: #fff;

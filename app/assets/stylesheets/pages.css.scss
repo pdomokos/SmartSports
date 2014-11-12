@@ -177,6 +177,13 @@ body {
   color: #666;
 }
 
+.boxed-group>h3 div.selected-meas {
+  padding-left: 16px;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .boxed-group.flush .boxed-group-inner {
   padding: 0;
 }

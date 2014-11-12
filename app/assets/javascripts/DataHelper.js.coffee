@@ -64,9 +64,7 @@ class DataHelper
     datanum = Object.keys(h).length
     return datanum
 
-  days_in_month: (year, month) ->
-    d = new Date(Date.parse(year+"-"+month))
-    return new Date(d.getYear(), d.getMonth()+1, 0).getDate()
+
 
   conv_to_km: (data) ->
     for d in data
@@ -79,6 +77,10 @@ class DataHelper
         for item in dat[k]
           result = result + item[measure]
     return result
+
+  days_in_month: (year, month) ->
+    d = new Date(Date.parse(year+"-"+month))
+    return new Date(d.getYear(), d.getMonth()+1, 0).getDate()
 
   get_monday: (date_ymd) ->
     d = new Date(Date.parse(date_ymd))
