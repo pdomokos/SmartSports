@@ -38,36 +38,3 @@ circle.hr {
 line.press {
   stroke: rgb(47, 181, 233)
 }
-.toolbox {
-  padding: 5px 5px;
-  background: #fff;
-  border: 2px solid #d8d8d8;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  color: #666;
-  font-size: 13px;
-}
-
-.toolbox-inner {
-  padding: 10px;
-  background: #fff;
-  color: #666;
-  font-size: 13px;
-}
-
-.toolbox-item{
-  display: inline-block;
-}
-
-.toolbox-item-icon{
-  text-align: center;
-}
-
-.hidden {
-  display: none !important;
-  visibility: hidden;
-}
-
-a.mytool{
-  text-decoration: none;
-}

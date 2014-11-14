@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   @withingsconn = nil
   @fitbitconn = nil
 
-  def index
+  def dashboard
   end
 
   def health

@@ -37,6 +37,9 @@ body {
   display: none !important;
   visibility: hidden;
 }
+.hidden-placed {
+   visibility: hidden;
+}
 
 .content {
   width: 980px;
@@ -198,8 +201,13 @@ body {
   font-size: 13px;
 }
 
+.boxed-group-inner.gray {
+  background: whitesmoke;
+}
 
-
+.boxed-group-inner.spaced {
+  padding-top: 20px;
+}
 
 
 .button {

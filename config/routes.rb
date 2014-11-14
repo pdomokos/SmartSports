@@ -12,13 +12,12 @@ Rails.application.routes.draw do
   resources :users do
     resources :measurements
   end
-  get 'pages/index'
+  get 'pages/dashboard'
   get 'pages/health'
   get 'pages/training'
   get 'pages/lifestyle'
   get 'pages/genetics'
   get 'pages/settings'
-  get 'pages/friendship'
 
   resources :activities
   resources :measurements
@@ -39,7 +38,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'pages#index'
+  root 'pages#dashboard'
 
   get 'login' => 'user_sessions#new', :as => :login
   post 'logout' => 'user_sessions#destroy', :as => :logout

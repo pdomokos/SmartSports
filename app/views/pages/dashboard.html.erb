@@ -1,0 +1,142 @@
+<% content_for :title, "SmartSports" %>
+
+
+
+<div class="dashboard-block" id="training-container">
+    <div class="columns">
+        <div class="column one-half">
+            <span>abc</span>
+        </div>
+
+        <div class="column one-half">
+            <div id="manualdata-container" class="boxed-group connection-block">
+
+                <div class="boxed-group-inner spaced gray">
+
+                    <form id="heart-form">
+                        <div class="logform clearfix" id="heart-form-div">
+                            <fieldset>
+                            <div class="field">
+                                <label for="meas-sys">SYS</label><span class="entry"><input id="meas-sys" name="sys" class="entry-mini"></span>
+                            </div>
+                            <div class="field">
+                                <label for="meas-dia">DIA</label><span class="entry"><input id="meas-dia" name="dia" class="entry-mini"></span>
+                            </div>
+                            <div class="field">
+                                <label for="meas-hr">HR</label><span class="entry"><input id="meas-hr" name="hr" class="entry-mini"></span>
+                            </div>
+                            <div class="field">
+                                <label for="meas-date">Date</label><span class="entry"><input id="meas-date" name="date" class="date-input"></span>
+                            </div>
+                            <div class="field action-field">
+                                <span></span>
+                                <div class="log-actions">
+                                    <span>
+                                        <button id="new-measurement-button" class="button minibutton primary right">Add</button>
+                                    </span>
+                                </div>
+                            </div>
+                            </fieldset>
+
+                        </div>
+                     </form>
+                     <form id="act-form">
+                        <div class="logform clearfix hidden" id="act-form-div">
+                            <fieldset>
+                                <div class="field">
+                                    <label for="act-name">Activity</label>
+                                    <span class="entry">
+                                        <input id="act-name" name="act" class="entry-normal" type="text">
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="act-steps">Steps</label>
+                                    <span class="entry">
+                                        <input id="act-steps" name="steps" class="entry-mini">
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="act-duration">Duration</label>
+                                    <span class="entry">
+                                        <input id="act-duration" name="duration" class="entry-mini">
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="act-date">Date</label>
+                                    <span class="entry">
+                                        <input id="act-date" name="date" class="date-input">
+                                    </span>
+                                </div>
+                                <div class="field action-field">
+                                    <span></span>
+                                    <div class="log-actions">
+                                    <span>
+                                        <button id="new-activity-button" class="button minibutton primary right">Add</button>
+                                    </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                     </form>
+
+                    <form id="friend-form">
+                        <div class="logform clearfix hidden" id="friend-form-div">
+                            <fieldset>
+                                <div class="field">
+                                    <label for="act-name">Friend</label><span class="entry"><input id="act-name" name="act" class="entry-normal"></span>
+                                </div>
+                                <div class="field action-field">
+                                    <span></span>
+                                    <div class="log-actions">
+                                    <span>
+                                        <button id="new-friend-button" class="button minibutton primary right">Add</button>
+                                    </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </form>
+
+
+                        <div class="clearfix">
+                            <div class="logbutton left selected" id="heart-form-sel">
+                                <div class="log-sign">
+                                </div>
+                                <span class="log-icon">
+                                    <i class="fa fa-heart fa-2x"></i>
+                                    <div>Heart</div>
+                                </span>
+                            </div>
+                            <div class="logbutton left" id="act-form-sel">
+                                <div class="log-sign hidden-placed">
+                                </div>
+                                <span class="log-icon">
+                                    <i class="fa fa-bicycle fa-2x"></i>
+                                    <div>Activity</div>
+                                </span>
+                            </div>
+                            <div class="logbutton left" id="friend-form-sel">
+                                <div class="log-sign hidden-placed">
+                                </div>
+                                <span class="log-icon">
+                                    <i class="fa fa-users fa-2x"></i>
+                                    <div>Friends</div>
+                                </span>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+
+            <div class="boxed-group toolbox">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    dashboard_loaded();
+</script>
