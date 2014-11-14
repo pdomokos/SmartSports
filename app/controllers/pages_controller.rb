@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   @fitbitconn = nil
 
   def dashboard
+    @user = current_user
   end
 
   def health

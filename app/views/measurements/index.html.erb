@@ -1,0 +1,30 @@
+<table>
+    <thead>
+    <tr>
+        <th>username</th>
+        <th>source</th>
+        <th>date</th>
+        <th>sys</th>
+        <th>dia</th>
+        <th>pulse</th>
+        <th>spo2</th>
+        <th colspan="3"></th>
+    </tr>
+    </thead>
+    <% for a in @measurements %>
+
+        <tr>
+            <td><%= a.user.name %></td>
+            <td><%= a.source %></td>
+            <td><%= a.date %></td>
+            <td><%= a.systolicbp %></td>
+            <td><%= a.diastolicbp %></td>
+            <td><%= a.pulse %></td>
+            <td><%= a.SPO2 %></td>
+            <td><%= link_to 'Show', a %></td>
+            <td><%= link_to 'Edit', edit_measurement_path(a) %></td>
+            <td><%= link_to 'Destroy', a, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+
+    <% end %>
+</table>

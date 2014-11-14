@@ -16,26 +16,29 @@
 
 .logform {
   border: 1px solid #d8d8d8;
-//  border-left: 1px solid #d8d8d8;
-//  border-right: 1px solid #d8d8d8;
 }
+
 .two-third {
   width: 66%;
 }
+
 .one-third {
   width: 34%;
 }
+
 .logbutton {
   width: 16%;
   padding: 4px;
   padding-top: 0;
   display: inline-block;
   color: #999;
+  text-align: center;
 }
 
 .logbutton.selected i{
   color: #60b044;
 }
+
 .logbutton.selected div{
   color: #333;
 }
@@ -52,9 +55,6 @@
 .log-icon {
   position: relative;
 
-}
-.log-icon i, div {
-  text-align: center;
 }
 
 .logform {
@@ -118,3 +118,92 @@
   text-align: right;
 }
 
+
+//
+.event-list-header {
+  margin: 0 0 15px;
+  color: #666;
+  border-bottom: 1px solid #ddd;
+}
+.event-list-header-item {
+  display: inline-block;
+  padding: 8px 12px 7px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.events {
+  float: none;
+  width: auto;
+}
+
+.events .event:first-child {
+  border-top: 0;
+}
+.events .event {
+  position: relative;
+  padding: 0 0 1em 45px;
+  overflow: hidden;
+  border-top: 1px solid #f1f1f1;
+}
+
+.body {
+  font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #333333;
+}
+
+.event-icon {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+  color: #bbb;
+}
+
+.event-time {
+  font-size: 12px;
+  color: #bbb;
+}
+
+.event-title {
+  font-weight: bold;
+  font-size: 14px;
+}
+.event-title a {
+  color: #4183c4;
+  text-decoration: none;
+  cursor: pointer;
+}
+.event-title a:visited {
+  color: #4183c4;
+}
+.event-title a:hover {
+  color: #4183c4;
+  text-decoration: underline;
+  background-color: #fff;
+}
+
+.event-details {
+  color: #666;
+}
+.event-details a {
+  text-decoration: none;
+  color: #666;
+  background-color: #fff;
+}
+
+.event-details a:visited {
+  color: #4183c4;
+}
+.event-details a:hover {
+  color: #4183c4;
+  text-decoration: underline;
+  background-color: #fff;
+}
+
+// otherwise half of the spinner is not visible
+#event-list div.progress-sign {
+  padding-bottom: 30px;
+}

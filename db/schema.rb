@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107082109) do
+ActiveRecord::Schema.define(version: 20141114102142) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -71,6 +71,19 @@ ActiveRecord::Schema.define(version: 20141107082109) do
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"
   add_index "measurements", ["user_id"], name: "index_measurements_on_user_id"
+
+  create_table "notifications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "detail"
+    t.string   "notification_type"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name",             null: false

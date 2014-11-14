@@ -1,17 +1,18 @@
 Rails.application.routes.draw do
+  resources :notifications
+
   get 'user_sessions/new'
-
   get 'user_sessions/create'
-
   get 'user_sessions/destroy'
 
   resources :user_sessions
+
   resources :users do
     resources :activities
-  end
-  resources :users do
     resources :measurements
+    resources :notifications
   end
+
   get 'pages/dashboard'
   get 'pages/health'
   get 'pages/training'
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   get 'pages/settings'
 
   resources :activities
+  resources :notifications
   resources :measurements
   resources :friendships
 

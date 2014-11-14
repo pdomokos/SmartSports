@@ -1,11 +1,22 @@
-<% content_for :title, "SmartSports" %>
+<% content_for :title, "SmartSport" %>
 
 
 
 <div class="dashboard-block" id="training-container">
+    <input id="current_user_id" value="<%= @user.id %>" class="hidden" >
     <div class="columns">
         <div class="column one-half">
-            <span>abc</span>
+
+            <div class="event-list-header">
+                <div class="event-list-header-item">
+                    <i class="fa fa-inbox"></i>
+                    <span>Recent notifications</span>
+                </div>
+            </div>
+
+            <div id="event-list" class="events">
+                <!--place for activity records, loaded dynamically-->
+            </div>
         </div>
 
         <div class="column one-half">
@@ -14,19 +25,21 @@
                 <div class="boxed-group-inner spaced gray">
 
                     <form id="heart-form">
+                        <input name="measurement[user_id]" value="<%= @user.id %>" type="hidden">
+                        <input name="measurement[source]" value="smartsport" type="hidden">
                         <div class="logform clearfix" id="heart-form-div">
                             <fieldset>
                             <div class="field">
-                                <label for="meas-sys">SYS</label><span class="entry"><input id="meas-sys" name="sys" class="entry-mini"></span>
+                                <label for="meas-sys">SYS</label><span class="entry"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini"></span>
                             </div>
                             <div class="field">
-                                <label for="meas-dia">DIA</label><span class="entry"><input id="meas-dia" name="dia" class="entry-mini"></span>
+                                <label for="meas-dia">DIA</label><span class="entry"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini"></span>
                             </div>
                             <div class="field">
-                                <label for="meas-hr">HR</label><span class="entry"><input id="meas-hr" name="hr" class="entry-mini"></span>
+                                <label for="meas-hr">HR</label><span class="entry"><input id="meas-hr" name="measurement[pulse]" class="entry-mini"></span>
                             </div>
                             <div class="field">
-                                <label for="meas-date">Date</label><span class="entry"><input id="meas-date" name="date" class="date-input"></span>
+                                <label for="meas-date">Date</label><span class="entry"><input id="meas-date" name="measurement[date]" class="date-input"></span>
                             </div>
                             <div class="field action-field">
                                 <span></span>
@@ -41,6 +54,7 @@
                         </div>
                      </form>
                      <form id="act-form">
+                        <input name="user_id" value="<%= @user.id %>" type="hidden">
                         <div class="logform clearfix hidden" id="act-form-div">
                             <fieldset>
                                 <div class="field">
@@ -81,6 +95,7 @@
                      </form>
 
                     <form id="friend-form">
+                        <input name="user_id" value="<%= @user.id %>" type="hidden">
                         <div class="logform clearfix hidden" id="friend-form-div">
                             <fieldset>
                                 <div class="field">
@@ -130,13 +145,30 @@
                 </div>
             </div>
 
-            <div class="boxed-group toolbox">
 
+
+        </div>
+    </div>
+</div>
+<div id="event-template" class="hidden">
+    <div class="event">
+        <div class="body">
+            <i class="fa fa-2x event-icon"></i>
+            <div class="event-time">
+                    <span>
+
+                    </span>
+            </div>
+            <div class="event-title">
+            </div>
+            <div class="event-details">
+                    <span>
+
+                    </span>
             </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     dashboard_loaded();
 </script>
