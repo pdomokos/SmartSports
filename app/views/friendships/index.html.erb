@@ -1,2 +1,30 @@
-<h1>Friendships#index</h1>
-<p>Find me in app/views/friendships/index.html.erb</p>
+<h1>Listing friendships</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>User1</th>
+        <th>User2</th>
+        <th>Authorized</th>
+        <th>Created</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @friendships.each do |f| %>
+        <tr>
+            <td><%= f.user1.username %></td>
+            <td><%= f.user2.username %></td>
+            <td><%= f.authorized %></td>
+            <td><%= f.created_at %></td>
+            <td><%= link_to 'Destroy', user_friendship_url(f.user1, f), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Activate', friendship_path(f, params={:cmd =>'activate'}), method: :get %></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Friendship', new_user_friendship_path(@user) %>

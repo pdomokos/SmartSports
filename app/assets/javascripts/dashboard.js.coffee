@@ -99,7 +99,19 @@ reset_form_sel = () ->
           $("#heart-form fieldset input").val("")
 
 new_friend_submit_handler = (evt) ->
+  event.preventDefault()
   console.log "new friend"
+  fname = $("#friend-name").val()
+  $.ajax '/friendships',
+    type: 'POST',
+    data: {friend_name: fname},
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "CREATE notification AJAX Error: #{textStatus}"
+
+    success: (data, textStatus, jqXHR) ->
+      console.log "friend req added "+data['user2_name']
+      console.log data
 
 load_notifications = () ->
   notification_limit = 20
@@ -129,6 +141,21 @@ load_notifications = () ->
 
         $("#"+newid+" div div.event-time span").html(d)
         $("#"+newid+" div div.event-title").html(notif['title'])
-        $("#"+newid+" div div.event-details span").html(notif['detail'])
+
+        activate_link = ""
+        if notif['notification_data']
+          notif_data = JSON.parse(notif['notification_data'])
+          console.log "notifdata = "
+          console.log notif_data
+          if notif_data['notif_type'] == 'friendreq'
+            friend_id = notif_data['friendshipid']
+            activate_link = " <a href='/friendships/"+1+"'>Accept</a>"
+            console.log activate_link
+            $("#"+newid+" div div.event-details span").html(notif['detail']+activate_link)
+
+
+        else
+          $("#"+newid+" div div.event-details span").html(notif['detail'])
+
         i += 1
 

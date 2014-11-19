@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :activities
     resources :measurements
     resources :notifications
+    resources :friendships
   end
 
   get 'pages/dashboard'
