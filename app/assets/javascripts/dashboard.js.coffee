@@ -99,7 +99,7 @@ reset_form_sel = () ->
           $("#heart-form fieldset input").val("")
 
 new_friend_submit_handler = (evt) ->
-  event.preventDefault()
+  evt.preventDefault()
   console.log "new friend"
   fname = $("#friend-name").val()
   $.ajax '/friendships',
@@ -149,7 +149,7 @@ load_notifications = () ->
           console.log notif_data
           if notif_data['notif_type'] == 'friendreq'
             friend_id = notif_data['friendshipid']
-            activate_link = " <a href='/friendships/"+1+"'>Accept</a>"
+            activate_link = " <a href='/friendships/"+friend_id+"?cmd=activate'>Accept</a>"
             console.log activate_link
             $("#"+newid+" div div.event-details span").html(notif['detail']+activate_link)
 
