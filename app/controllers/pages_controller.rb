@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
   # skip_before_filter :require_login, only: [:index]
   require 'rubygems'
-  require 'withings'
 
   @movesconn = nil
   @withingsconn = nil

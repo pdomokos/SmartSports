@@ -23,7 +23,7 @@ class FriendshipsController < ApplicationController
         notif1 = Notification.new({:user_id => user1.id, :title => "Friend", :detail => "Friend request sent to #{user2.username}", :notification_type =>"friend", :date => DateTime.now()})
         notif1.save!
         notif2 = Notification.new({:user_id => user2.id, :title => "Friend",
-                                   :detail => "New friend request from #{user1.username}", :notification_type =>"friend", :date => DateTime.now()
+                                   :detail => "New friend request from #{user1.username}", :notification_type =>"friend", :date => DateTime.now(),
                                    :notification_data => { "notif_type" => "friendreq", "friendshipid" => @friendship.id }.to_json
                                     })
         notif2.save!

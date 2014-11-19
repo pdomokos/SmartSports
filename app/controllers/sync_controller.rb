@@ -1,4 +1,5 @@
-require 'Withings'
+require 'withings'
+
 class Withings::MeasurementGroup
   def initialize(params)
     params = params.stringify_keys
