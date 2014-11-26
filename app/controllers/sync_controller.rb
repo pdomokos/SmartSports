@@ -94,6 +94,7 @@ class SyncController < ApplicationController
       client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'],
                                   :consumer_key => APP_CONFIG['FITBIT_KEY'], :consumer_secret => APP_CONFIG['FITBIT_SECRET'])
       userinfo = client.user_info
+      puts userinfo
       member_since = userinfo['user']['memberSince']
 
       now = DateTime.now()

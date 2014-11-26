@@ -130,7 +130,7 @@ private
       failed = true
     end
 
-    if not failed and shown_user_id
+    if not failed and shown_user_id>0
       q = User.where("id = #{shown_user_id}")
       if q.size != 1
         failed = true
@@ -140,7 +140,7 @@ private
       end
     end
 
-    if not failed
+    if not failed and shown_user
       if not shown_user.is_friend?(current_user.id)
         failed = true
         puts "Unauth user id "+shown_user_id.to_s

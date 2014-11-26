@@ -8,8 +8,8 @@
     console.log "disconnecting Moves..."
 
   $("#sync-moves-button").click (event) ->
-    console.log "syncing Moves..."
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $("#moves-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     $.ajax "/sync/sync_moves",
       type: "GET"
       dataType: "json"
@@ -25,7 +25,7 @@
           $("#moves-sync-status").html(failure_message)
 
   $("#sync-withings-button").click (event) ->
-    console.log "syncing Withings..."
+    $("#withings-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
     $.ajax "/sync/sync_withings",
       type: "GET"
@@ -43,7 +43,7 @@
           $("#withings-sync-status").html(failure_message)
 
   $("#sync-fitbit-button").click (event) ->
-    console.log "syncing Fitbit..."
+    $("#fitbit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
     $.ajax "/sync/sync_fitbit",
       type: "GET"

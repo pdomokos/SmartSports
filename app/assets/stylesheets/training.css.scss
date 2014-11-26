@@ -33,6 +33,7 @@
   width: 100%;
   min-height: 30px;
   border-left: 6px solid white;
+  cursor: pointer;
 }
 .meas-block.selected {
   border-left: 6px solid $hover_color;
