@@ -1,8 +1,27 @@
 class FriendshipsController < ApplicationController
   def index
     uid = params[:user_id]
+    filter = params[:filter]
     @user = User.find(uid)
     @friendships = Friendship.where("user1_id = #{uid} or user2_id = #{uid}")
+
+    if filter and filter=="auth"
+      @friendships = @friendships.where("authorized = 't'")
+    end
+
+    data = @friendships.collect do |f|
+      puts "uid="+uid+" f.user1_id="+f.user1_id.to_s
+      other = f.user1
+      if f.user1.id == uid.to_i
+        other = f.user2
+      end
+      { :my_id => uid, :other_id => other.id, :other_name => other.username, :authorized => f.authorized, :id=> f.id}
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: data }
+    end
   end
 
   def new
@@ -12,13 +31,38 @@ class FriendshipsController < ApplicationController
   def create
     user1 = current_user
     user2 = User.where("username = '#{params[:friend_name]}'").first
+    failed = false
     @friendship = nil
-    if user2
+
+    if not user2
+      failed = true
+      msg = "User '#{params[:friend_name]}' not found."
+    end
+
+    if not failed and  user1.id==user2.id
+      failed = true
+      msg = "Can not make yourself a friend"
+    end
+
+    if not failed
+      f = Friendship.where("( user1_id = #{user1.id} and user2_id = #{user2.id} ) or ( user1_id = #{user2.id} and user2_id = #{user1.id} )")
+      if f and f.size >0
+        failed = true
+        msg = "Friend already."
+      end
+    end
+
+    if not failed
       @friendship = Friendship.new({:user1_id => user1.id, :user2_id => user2.id, :authorized => false})
+      ret = @friendship.save
+      if not ret
+        failed = true
+        msg = "Failed to add friendship"
+      end
     end
 
     respond_to do |format|
-      if @friendship and @friendship.save
+      if not failed
         puts "save ok"
         notif1 = Notification.new({:user_id => user1.id, :title => "Friend", :detail => "Friend request sent to #{user2.username}", :notification_type =>"friend", :date => DateTime.now()})
         notif1.save!
@@ -28,11 +72,11 @@ class FriendshipsController < ApplicationController
                                     })
         notif2.save!
         format.html { redirect_to user_friendships_path(current_user) }
-        format.json { render :show, status: :created, location: @friend }
+        format.json { render json: {:status => "OK", :friendship => @friendship } }
       else
         puts "save NOK"
         format.html {  redirect_to user_friendships_path(current_user) }
-        format.json { render json: @friendship.errors, status: :unprocessable_entity }
+        format.json { render json: { :status => "NOK", :msg => msg } }
       end
     end
   end

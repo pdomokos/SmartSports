@@ -3,21 +3,8 @@
 
 
 <div class="dashboard-block" id="training-container">
-    <input id="current_user_id" value="<%= @user.id %>" class="hidden" >
-    <div class="friend-select-holder hidden">
-        <div class="friend-select">
-            <div class="friend-select-header">
-                <span class="friend-select-title">Friends</span>
 
-            </div>
-            <div class="friend-select-list">
-                <div class="friend-select-item">
-                    <span class="friend-select-item-icon"></span>
-                    <div class="friend-select-item-text">abc</div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="columns">
         <div class="column one-half">
 
@@ -113,18 +100,17 @@
                         <div class="logform clearfix hidden" id="friend-form-div">
                             <fieldset>
                                 <div class="field">
-                                    <label for="act-name">Friend</label><span class="entry"><input id="friend-name" name="act" class="entry-normal"></span>
-                                </div>
-                                <div class="field action-field">
-                                    <span></span>
-                                    <div class="log-actions">
-                                    <span>
-                                        <button id="new-friend-button" class="button minibutton primary right">Add</button>
-                                    </span>
-                                    </div>
-                                </div>
-                            </fieldset>
+                                    <label for="friend_name">Friend</label><span class="entry"><input id="friend_name" name="friend_name" class="entry-normal"></span>
 
+                                    <button id="new-friend-button" class="button minibutton primary">Add</button>
+                                </div>
+                                <div class="friend-message hidden">
+                                </div>
+                                <div class="friend-list">
+
+                                </div>
+
+                            </fieldset>
                         </div>
                     </form>
 

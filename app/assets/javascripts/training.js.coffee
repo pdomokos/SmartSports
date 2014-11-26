@@ -7,7 +7,7 @@
   register_events()
 
   $("#training-button").addClass("selected")
-  uid = $("#current_user_id")[0].value
+  uid = $("#shown-user-id")[0].value
 
   for elem in $("#training-container div.connection-block")
     conn =  $("#"+elem.id+" input.connection-name")[0].value

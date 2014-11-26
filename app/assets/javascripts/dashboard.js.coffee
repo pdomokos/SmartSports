@@ -8,19 +8,20 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
   setdate()
   load_notifications()
 
-  $(document).on "click", "#act-form-sel", (event) ->
+
+  $("#act-form-sel").click (event) ->
     reset_form_sel()
     $("#act-form-div").removeClass("hidden")
     $("#act-form-sel div.log-sign").removeClass("hidden-placed")
     $("#act-form-sel").addClass("selected")
 
-  $(document).on "click", "#heart-form-sel", (event) ->
+  $("#heart-form-sel").click (event) ->
     reset_form_sel()
     $("#heart-form-div").removeClass("hidden")
     $("#heart-form-sel div.log-sign").removeClass("hidden-placed")
     $("#heart-form-sel").addClass("selected")
 
-  $(document).on "click", "#friend-form-sel", (event) ->
+  $("#friend-form-sel").click (event) ->
     reset_form_sel()
     $("#friend-form-div").removeClass("hidden")
     $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
@@ -34,6 +35,31 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
 
   $("#new-friend-button").click (event) ->
     new_friend_submit_handler(event)
+
+
+
+new_friend_submit_handler = (event) ->
+  event.preventDefault()
+  values = $("#friend-form").serialize()
+  console.log values
+  $.ajax '/friendships',
+    type: 'POST',
+    data: values,
+    dataType: 'json'
+    error: (data, textStatus, errorThrown) ->
+      console.log "CREATE friend AJAX Error: #{textStatus}"
+      console.log data
+    success: (data, textStatus, jqXHR) ->
+      if data.status == "OK"
+        console.log "CREATE friend  Successful AJAX call"
+        console.log data
+        $("#friend_name").val("")
+        $("#friend-form-div div.friend-message").addClass("hidden")
+        load_notifications()
+      else
+        $("#friend-form-div div.friend-message").removeClass("hidden")
+        $("#friend-form-div div.friend-message").addClass("red")
+        $("#friend-form-div div.friend-message").html(data.msg)
 
 setdate = () ->
   now = new Date(Date.now())
@@ -98,24 +124,10 @@ reset_form_sel = () ->
           load_notifications()
           $("#heart-form fieldset input").val("")
 
-new_friend_submit_handler = (evt) ->
-  evt.preventDefault()
-  console.log "new friend"
-  fname = $("#friend-name").val()
-  $.ajax '/friendships',
-    type: 'POST',
-    data: {friend_name: fname},
-    dataType: 'json'
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "CREATE notification AJAX Error: #{textStatus}"
-
-    success: (data, textStatus, jqXHR) ->
-      console.log "friend req added "+data['user2_name']
-      console.log data
 
 load_notifications = () ->
   notification_limit = 20
-  $.ajax '/users/'+$("#current_user_id")[0].value+'/notifications?limit='+notification_limit,
+  $.ajax '/users/'+$("#current-user-id")[0].value+'/notifications?limit='+notification_limit,
     type: 'GET'
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
@@ -149,10 +161,15 @@ load_notifications = () ->
           console.log notif_data
           if notif_data['notif_type'] == 'friendreq'
             friend_id = notif_data['friendshipid']
-            activate_link = " <a href='/friendships/"+friend_id+"?cmd=activate'>Accept</a>"
-            console.log activate_link
+            linkid = newid+"_"+notif_data["friendship_id"]
+            activate_link = " <a href='#' id='"+linkid+"'>Accept</a>"
             $("#"+newid+" div div.event-details span").html(notif['detail']+activate_link)
-
+            $("#"+linkid).click (evt) ->
+              evt.preventDefault()
+              reset_form_sel()
+              $("#friend-form-div").removeClass("hidden")
+              $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
+              $("#friend-form-sel").addClass("selected")
 
         else
           $("#"+newid+" div div.event-details span").html(notif['detail'])

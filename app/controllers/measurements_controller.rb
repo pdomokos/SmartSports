@@ -21,6 +21,9 @@ class MeasurementsController < ApplicationController
   def index
     user_id = params[:user_id]
     user = User.find(user_id)
+    if not user
+
+    end
     @measurements = user.measurements
 
     respond_to do |format|

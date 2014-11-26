@@ -2,8 +2,8 @@
   reset_ui()
 
   $("#health-button").addClass("selected")
-  uid = $("#current_user_id")[0].value
-  console.log uid
+  uid = $("#shown-user-id")[0].value
+  console.log "getting health data for user:"+uid
   actions_url = "/users/" + uid + "/measurements.json"
   d3.json(actions_url, draw_charts)
 

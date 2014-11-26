@@ -248,3 +248,15 @@ body {
   padding: 0 10px;
   line-height: 24px;
 }
+
+span.user-classifier {
+  font-size: 12px;
+  background-color: $default_blue;
+  color: white;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+span.user-classifier.user-me {
+  background-color: #5ca941;
+}

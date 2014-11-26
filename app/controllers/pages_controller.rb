@@ -8,11 +8,18 @@ class PagesController < ApplicationController
 
   def dashboard
     @user = current_user
+    @shown_user = get_shown_user(params)
+
   end
 
   def health
-    @activity = Activity.new
-    @measurement = Measurement.new
+      @shown_user = get_shown_user(params)
+      @activity = Activity.new
+      @measurement = Measurement.new
+  end
+
+  def error
+    # to display some error in case of app failure
   end
 
   def movescb
@@ -59,6 +66,7 @@ class PagesController < ApplicationController
   end
 
   def training
+    @shown_user = get_shown_user(params)
     @uid = current_user.id
     @conn = current_user.connections
     respond_to do |format|
@@ -93,11 +101,11 @@ class PagesController < ApplicationController
   end
 
   def lifestyle
-
+    @shown_user = get_shown_user(params)
   end
 
   def genetics
-
+    @shown_user = get_shown_user(params)
   end
 
   def friendship
@@ -105,9 +113,45 @@ class PagesController < ApplicationController
   end
 
   def settings
+    @shown_user = get_shown_user(params)
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
     @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
   end
 
+private
+
+  def get_shown_user(params)
+    failed = false
+    shown_user_id = params[:shown_user].to_i
+    shown_user = nil
+    if shown_user_id == current_user.id
+      puts "this is you"
+      failed = true
+    end
+
+    if not failed and shown_user_id
+      q = User.where("id = #{shown_user_id}")
+      if q.size != 1
+        failed = true
+        puts "Invalid user id "+shown_user_id.to_s
+      else
+        shown_user = q.first()
+      end
+    end
+
+    if not failed
+      if not shown_user.is_friend?(current_user.id)
+        failed = true
+        puts "Unauth user id "+shown_user_id.to_s
+      end
+    end
+
+    if not shown_user
+      shown_user = current_user
+    end
+
+    return shown_user
+
+  end
 end

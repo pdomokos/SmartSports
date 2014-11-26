@@ -9,7 +9,8 @@
 <body>
 
 <div class="content clearfix">
-
+    <input id="current-user-id" value="<%= current_user.id %>" class="hidden" >
+    <input id="shown-user-id" type="hidden" value="<%= if @shown_user then @shown_user.id else '' end %>">
     <!--<div class="contenthead-spaceonly"></div>-->
 
     <div id="browser-menu-tab" class="browser-content clearfix">
@@ -17,38 +18,77 @@
             <div class="userinfo-container left">
                 <i class="fa fa-user fa-3x usericon"></i>
                 <div class="userinfo">
-                    <p class="title"><%= current_user.name %></p>
-                    <p class="detail">(<%= current_user.username %>) Active since 1 month</p>
+
+                    <p class="title">
+                    <span><%= @shown_user.name %></span>
+                    <% if @shown_user.id == current_user.id %>
+                        <span class="user-classifier user-me">Me</span>
+                    <% else %>
+                        <span class="user-classifier">Friend</span>
+                    <% end %>
+                    <i class="fa fa-sort-down fa-1x friend-select-arrow"></i>
+                    </p>
+                    <p class="detail">(<%= @shown_user.username %>) Active since 1 month</p>
+                </div>
+                <div class="friend-select-holder hidden">
+                    <div class="friend-select">
+                        <div class="friend-select-header">
+                            <span class="friend-select-title">Switch to</span>
+
+                        </div>
+                        <div class="friend-select-list">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="friend-select-item-template" class=" hidden">
+                    <div class="friend-select-item">
+                        <span class="friend-select-item-icon"></span>
+                        <div class="friend-select-item-text">abc</div>
+                    </div>
                 </div>
             </div>
             <div class="browser-links right">
-                <%= link_to "", {:href => "/", :class => "browser-subnav-item selected ", :id => "dashboard-button"}  do %>
-                    <i class="fa fa-home fa-2x"></i>
-                    <div>Dashboard</div>
-                <% end %>
-                <%= link_to "", { :href => "/pages/health", :class => "browser-subnav-item" , :id => "health-button"} do %>
-                    <i class="fa fa-stethoscope fa-2x"></i>
-                    <div>Health</div>
-                <%end %>
-                <%= link_to "", {:href => "/pages/training", :class => "browser-subnav-item" , :id => "training-button"} do %>
-                    <i class="fa fa-bicycle fa-2x"></i>
-                    <div>Training</div>
-                <% end %>
-                <%= link_to "", {:href => "/pages/lifestyle", :class => "browser-subnav-item" , :id => "lifestyle-button"} do %>
-                    <i class="fa fa-cutlery fa-2x"></i>
-                    <div>Lifestyle</div>
-                <%end %>
-                <%= link_to "", {:href => "/pages/genetics", :class => "browser-subnav-item" , :id => "genetics-button"} do %>
-                    <i class="fa fa-bar-chart fa-2x"></i>
-                    <div>Genetics</div>
-                <%end %>
-                <!--<%= link_to "", {:href => "/pages/friendship", :class => "browser-subnav-item" , :id => "friendship-button"} do %>-->
-                    <!--<i class="fa fa-users fa-2x"></i>-->
-                    <!--<div>Friends</div>-->
-                <!--<%end %>-->
-                <%= link_to "", {:href => "/pages/settings", :class => "browser-subnav-item" , :id => "settings-button"} do %>
-                    <i class="fa fa-cogs fa-2x"></i>
-                    <div>Settings</div>
+                <% if @shown_user.id == current_user.id %>
+                    <%= link_to "", {:href => "/", :class => "browser-subnav-item selected ", :id => "dashboard-button"}  do %>
+                        <i class="fa fa-home fa-2x"></i>
+                        <div>Dashboard</div>
+                    <% end %>
+
+                    <%= link_to "", { :href => "/pages/health", :class => "browser-subnav-item" , :id => "health-button"} do %>
+                        <i class="fa fa-stethoscope fa-2x"></i>
+                        <div>Health</div>
+                    <%end %>
+                    <%= link_to "", {:href => "/pages/training", :class => "browser-subnav-item" , :id => "training-button"} do %>
+                        <i class="fa fa-bicycle fa-2x"></i>
+                        <div>Training</div>
+                    <% end %>
+                    <%= link_to "", {:href => "/pages/lifestyle", :class => "browser-subnav-item" , :id => "lifestyle-button"} do %>
+                        <i class="fa fa-cutlery fa-2x"></i>
+                        <div>Lifestyle</div>
+                    <%end %>
+
+                    <%= link_to "", {:href => "/pages/genetics", :class => "browser-subnav-item" , :id => "genetics-button"} do %>
+                        <i class="fa fa-bar-chart fa-2x"></i>
+                        <div>Genetics</div>
+                    <%end %>
+                    <%= link_to "", {:href => "/pages/settings", :class => "browser-subnav-item" , :id => "settings-button"} do %>
+                        <i class="fa fa-cogs fa-2x"></i>
+                        <div>Settings</div>
+                    <%end %>
+                <% else %>
+                    <%= link_to "", { :href => "/pages/health?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "health-button"} do %>
+                        <i class="fa fa-stethoscope fa-2x"></i>
+                        <div>Health</div>
+                    <%end %>
+                    <%= link_to "", {:href => "/pages/training?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "training-button"} do %>
+                        <i class="fa fa-bicycle fa-2x"></i>
+                        <div>Training</div>
+                    <% end %>
+                    <%= link_to "", {:href => "/pages/lifestyle?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "lifestyle-button"} do %>
+                        <i class="fa fa-cutlery fa-2x"></i>
+                        <div>Lifestyle</div>
+                    <%end %>
                 <%end %>
             </div>
 
@@ -58,14 +98,15 @@
 
         </div>
     </div>
-    <script type="text/javascript">
-        pages_menu();
-    </script>
+
 
     <%= yield %>
 </div>
 
 
 </body>
+<script type="text/javascript">
+    pages_menu();
+</script>
 </html>
 
