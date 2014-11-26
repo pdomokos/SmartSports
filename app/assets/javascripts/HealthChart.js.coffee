@@ -42,8 +42,7 @@ class HealthChart extends BaseChart
       if item.SPO2
         showdata.push(item)
         deb.push(item.SPO2)
-    console.log "spo2"
-    console.log deb
+#    console.log deb
 
     time_extent = d3.extent(showdata, (d) -> Date.parse(d.date))
     time_scale = d3.time.scale().domain(time_extent).range([0, self.width])

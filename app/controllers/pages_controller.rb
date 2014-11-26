@@ -68,7 +68,7 @@ class PagesController < ApplicationController
   def training
     @shown_user = get_shown_user(params)
     @uid = current_user.id
-    @conn = current_user.connections
+    @conn = @shown_user.connections
     respond_to do |format|
       format.html
       format.json

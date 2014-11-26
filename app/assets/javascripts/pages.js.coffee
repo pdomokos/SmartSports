@@ -54,7 +54,12 @@ load_friends = () ->
           $("#"+friend_sel_id).click (evt) ->
             friend_id = evt.target.id.split("-")[-1..]
             console.log "friend selected: "+friend_id
-            window.location = "/pages/health?shown_user="+friend_id
+            u = $("#browser-menu-tab a.browser-subnav-item.selected").attr("href")
+            re = new RegExp("[/?]")
+            page = u.split(re)[2]
+            if page != 'health' and page!= 'training' and page != 'lifestyle'
+              page = 'health'
+            window.location = "/pages/"+page+"?shown_user="+friend_id
 
         if f.authorized
           $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+" <i class=\"fa fa-check activated\"></i></div>")
@@ -82,5 +87,13 @@ add_me = () ->
   $("#"+newid+" .friend-select-item-text").html("Me")
   friend_sel_id = "friend-sel-me"
   $("#"+newid+" .friend-select-item-text").attr("id", friend_sel_id)
+
+
+
   $("#"+friend_sel_id).click (evt) ->
-    window.location = "/pages/dashboard"
+    u = $("#browser-menu-tab a.browser-subnav-item.selected").attr("href")
+    re = new RegExp("[/?]")
+    page = u.split(re)[2]
+    console.log u
+    console.log page
+    window.location = "/pages/"+page
