@@ -61,22 +61,26 @@ load_friends = () ->
               page = 'health'
             window.location = "/pages/"+page+"?shown_user="+friend_id
 
-        if f.authorized
           $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+" <i class=\"fa fa-check activated\"></i></div>")
         else
-          $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+"<span class=\"activate_friend\" id=\"friend_act_"+f.id+"\"> Activate</span></div>")
-          $("#friend_act_"+f.id).click (evt) ->
-            arr = evt.target.id.split("_")
-            fid = arr[arr.length-1]
-            console.log fid
-            $.ajax '/users/'+f.my_id+'/friendships/'+fid+"?cmd=activate",
-              type: 'GET'
-              dataType: 'json'
-              error: (jqXHR, textStatus, errorThrown) ->
-                console.log "AJAX Error: #{textStatus}"
-              success: (data, textStatus, jqXHR) ->
-                console.log "Successful activate call"
-                load_friends()
+          console.log "XXX"
+          console.log $("#current-user-id")[0].value
+          console.log f.other_id
+          console.log f.invited
+          if f.invited
+            $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+"<span class=\"activate_friend\" id=\"friend_act_"+f.id+"\"> Activate</span></div>")
+            $("#friend_act_"+f.id).click (evt) ->
+              arr = evt.target.id.split("_")
+              fid = arr[arr.length-1]
+              console.log fid
+              $.ajax '/users/'+f.my_id+'/friendships/'+fid+"?cmd=activate",
+                type: 'GET'
+                dataType: 'json'
+                error: (jqXHR, textStatus, errorThrown) ->
+                  console.log "AJAX Error: #{textStatus}"
+                success: (data, textStatus, jqXHR) ->
+                  console.log "Successful activate call"
+                  load_friends()
 
 add_me = () ->
   console.log "adding me"

@@ -14,18 +14,25 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
     $("#act-form-div").removeClass("hidden")
     $("#act-form-sel div.log-sign").removeClass("hidden-placed")
     $("#act-form-sel").addClass("selected")
+    $("#act-message").addClass("hidden-placed")
+    $("#act-steps").focus()
 
   $("#heart-form-sel").click (event) ->
     reset_form_sel()
     $("#heart-form-div").removeClass("hidden")
+    $("#meas-message").addClass("hidden-placed")
     $("#heart-form-sel div.log-sign").removeClass("hidden-placed")
     $("#heart-form-sel").addClass("selected")
+    $("#meas-sys").focus()
 
   $("#friend-form-sel").click (event) ->
     reset_form_sel()
+    $("#friend_name").val("")
+    $("#friend-message").addClass("hidden-placed")
     $("#friend-form-div").removeClass("hidden")
     $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
     $("#friend-form-sel").addClass("selected")
+    $("#friend_name").focus()
 
   $("#new-activity-button").click (event) ->
     new_activity_submit_handler(event)
@@ -35,7 +42,6 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
 
   $("#new-friend-button").click (event) ->
     new_friend_submit_handler(event)
-
 
 
 new_friend_submit_handler = (event) ->
@@ -54,12 +60,13 @@ new_friend_submit_handler = (event) ->
         console.log "CREATE friend  Successful AJAX call"
         console.log data
         $("#friend_name").val("")
-        $("#friend-form-div div.friend-message").addClass("hidden")
+        $("#friend-message").addClass("hidden-placed")
         load_notifications()
       else
-        $("#friend-form-div div.friend-message").removeClass("hidden")
-        $("#friend-form-div div.friend-message").addClass("red")
-        $("#friend-form-div div.friend-message").html(data.msg)
+        $("#friend-message").removeClass("hidden-placed")
+#        $("#friend-form-div div.friend-message").addClass("red")
+        msg = data.msg+" "+"<i class=\"fa fa-exclamation-circle failure\"></i>"
+        $("#friend-message").html(msg)
 
 setdate = () ->
   now = new Date(Date.now())
@@ -79,22 +86,30 @@ reset_form_sel = () ->
 
 @new_activity_submit_handler = (event) ->
   event.preventDefault()
-  values = $("#new-activity-form").serialize()
+  values = $("#act-form").serialize()
+  $("#act-message").addClass("hidden-placed")
+  $("#act-message").html("")
   $.ajax '/activities',
     type: 'POST',
     data: values,
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "CREATE activity AJAX Error: #{textStatus}"
-
+      $("#act-message").html("Failed to add activity <i class=\"fa fa-exclamation-circle failure\"></i>")
+      $("#act-message").removeClass("hidden-placed")
+      console.log "fails"
+      console.log jqXHR
     success: (data, textStatus, jqXHR) ->
       console.log "CREATE measurements  Successful AJAX call"
       console.log data
+      $("#act-message").removeClass("hidden-placed")
+      $("#act-message").html("Added activity <i class=\"fa fa-check success\"></i>")
 
 @new_measurement_submit_handler = (event) ->
   event.preventDefault()
   values = $("#heart-form").serialize()
   valuesArr = $("#heart-form").serializeArray()
+  $("#meas-message").addClass("hidden-placed")
   console.log valuesArr
   $.ajax '/measurements',
     type: 'POST',
@@ -102,28 +117,16 @@ reset_form_sel = () ->
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "CREATE measurement AJAX Error: #{textStatus}"
-
+      $("#meas-message").html("Failed to add measurement <i class=\"fa fa-exclamation-circle failure\"></i>")
+      $("#meas-message").removeClass("hidden-placed")
     success: (data, textStatus, jqXHR) ->
       console.log "CREATE measurement  Successful AJAX call"
       console.log data
-      uid = $("#heart-form input[name='measurement[user_id]']").val()
-      notif_data = {}
-      console.log "uid="+uid
-      notif_data["notification[title]"] =  "Measurement"
-      notif_data["notification[detail]"] = "New measurement added. SYS: "+data['systolicbp']+" DIA: "+data['systolicbp']+" pulse: "+data['pulse']
-      notif_data["notification[type]"] = "meas"
-      notif_data["notification[date]"] = fmt_hms(new Date(Date.now()))
-      $.ajax 'users/'+uid+'/notifications',
-        type: 'POST',
-        data: notif_data,
-        dataType: 'json'
-        error: (jqXHR, textStatus, errorThrown) ->
-          console.log "CREATE notification AJAX Error: #{textStatus}"
-
-        success: (data, textStatus, jqXHR) ->
-          load_notifications()
-          $("#heart-form fieldset input").val("")
-
+      $("#meas-message").html("Measurement added <i class=\"fa fa-check success\"></i>")
+      $("#meas-message").removeClass("hidden-placed")
+      $("#meas-sys").val("")
+      $("#meas-dia").val("")
+      $("#meas-hr").val("")
 
 load_notifications = () ->
   notification_limit = 20

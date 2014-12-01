@@ -1,10 +1,6 @@
 <% content_for :title, "SmartSport" %>
 
-
-
 <div class="dashboard-block" id="training-container">
-
-
     <div class="columns">
         <div class="column one-half">
 
@@ -42,6 +38,9 @@
                             <div class="field">
                                 <label for="meas-date">Date</label><span class="entry"><input id="meas-date" name="measurement[date]" class="date-input"></span>
                             </div>
+                            <div id="meas-message" class="hidden-placed">
+                                &nbsp;
+                            </div>
                             <div class="field action-field">
                                 <span></span>
                                 <div class="log-actions">
@@ -55,32 +54,37 @@
                         </div>
                      </form>
                      <form id="act-form">
-                        <input name="user_id" value="<%= @user.id %>" type="hidden">
+                         <input name="activity[user_id]" value="<%= @user.id %>" type="hidden">
+                         <input name="activity[source]" value="smartsport" type="hidden">
+
                         <div class="logform clearfix hidden" id="act-form-div">
                             <fieldset>
                                 <div class="field">
                                     <label for="act-name">Activity</label>
                                     <span class="entry">
-                                        <input id="act-name" name="act" class="entry-normal" type="text">
+                                        <input id="act-name" name="activity[group]" class="entry-normal" type="text" disabled="true" value="walking">
                                     </span>
                                 </div>
                                 <div class="field">
                                     <label for="act-steps">Steps</label>
                                     <span class="entry">
-                                        <input id="act-steps" name="steps" class="entry-mini">
+                                        <input id="act-steps" name="activity[steps]" class="entry-mini">
                                     </span>
                                 </div>
                                 <div class="field">
-                                    <label for="act-duration">Duration</label>
+                                    <label for="act-duration">Duration (min)</label>
                                     <span class="entry">
-                                        <input id="act-duration" name="duration" class="entry-mini">
+                                        <input id="act-duration" name="activity[total_duration]" class="entry-mini">
                                     </span>
                                 </div>
                                 <div class="field">
                                     <label for="act-date">Date</label>
                                     <span class="entry">
-                                        <input id="act-date" name="date" class="date-input">
+                                        <input id="act-date" name="activity[date]" class="date-input">
                                     </span>
+                                </div>
+                                <div id="act-message" class="hidden-placed">
+                                    &nbsp;
                                 </div>
                                 <div class="field action-field">
                                     <span></span>
@@ -90,6 +94,8 @@
                                     </span>
                                     </div>
                                 </div>
+
+
                             </fieldset>
 
                         </div>
@@ -104,7 +110,8 @@
 
                                     <button id="new-friend-button" class="button minibutton primary">Add</button>
                                 </div>
-                                <div class="friend-message hidden">
+                                <div id="friend-message" class="hidden-placed">
+                                    &nbsp;
                                 </div>
                                 <div class="friend-list">
 
@@ -144,7 +151,6 @@
 
                 </div>
             </div>
-
 
 
         </div>

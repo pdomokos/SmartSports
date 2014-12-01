@@ -9,13 +9,20 @@ class FriendshipsController < ApplicationController
       @friendships = @friendships.where("authorized = 't'")
     end
 
+    if filter and filter=="my"
+      @friendships = @friendships.where("authorized = 't' and user2_id = #{uid}")
+    end
+
+
     data = @friendships.collect do |f|
       puts "uid="+uid+" f.user1_id="+f.user1_id.to_s
       other = f.user1
+      invited = true
       if f.user1.id == uid.to_i
         other = f.user2
+        invited = false
       end
-      { :my_id => uid, :other_id => other.id, :other_name => other.username, :authorized => f.authorized, :id=> f.id}
+      { :my_id => uid, :other_id => other.id, :other_name => other.username, :authorized => f.authorized, :id=> f.id, :invited => invited}
     end
 
     respond_to do |format|
@@ -36,7 +43,7 @@ class FriendshipsController < ApplicationController
 
     if not user2
       failed = true
-      msg = "User '#{params[:friend_name]}' not found."
+      msg = "Friend '#{params[:friend_name]}' not found."
     end
 
     if not failed and  user1.id==user2.id

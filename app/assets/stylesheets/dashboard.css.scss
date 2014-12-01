@@ -14,10 +14,6 @@
   overflow: hidden;
 }
 
-.logform {
-  border: 1px solid #d8d8d8;
-}
-
 .two-third {
   width: 66%;
 }
@@ -58,8 +54,10 @@
 }
 
 .logform {
-  height: 253px;
+  border: 1px solid #d8d8d8;
+  height: 280px;
 }
+
 .logform>fieldset {
   display: table;
   table-layout: fixed;
