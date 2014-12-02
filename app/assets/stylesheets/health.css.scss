@@ -38,3 +38,27 @@ circle.hr {
 line.press {
   stroke: rgb(47, 181, 233)
 }
+
+path.line.sysavg {
+  stroke: #0570b0;
+}
+
+path.line.diaavg {
+  stroke: #74a9cf;
+}
+
+path.line.hravg {
+  stroke: #f4a582;
+}
+
+circle.sysavg {
+  fill: #0570b0;
+}
+
+circle.diaavg {
+  fill: #74a9cf;
+}
+
+circle.hravg {
+  fill: #f4a582;
+}
