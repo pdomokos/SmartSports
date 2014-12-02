@@ -39,12 +39,10 @@ load_friends = () ->
         add_me()
 
       for f in data
-        console.log "other_id="+f.other_id+" shownid="+$("#shown-user-id")[0].value
         if f.other_id.toString() == $("#shown-user-id")[0].value
           continue
         if f.authorized
           newfriend = $("#friend-select-item-template").children().first().clone()
-          console.log newfriend
           newid = "f-"+f.id
           newfriend.attr("id", newid)
           $("div.friend-select-list:last-child").append(newfriend)
@@ -53,7 +51,6 @@ load_friends = () ->
           $("#"+newid+" .friend-select-item-text").attr("id", friend_sel_id)
           $("#"+friend_sel_id).click (evt) ->
             friend_id = evt.target.id.split("-")[-1..]
-            console.log "friend selected: "+friend_id
             u = $("#browser-menu-tab a.browser-subnav-item.selected").attr("href")
             re = new RegExp("[/?]")
             page = u.split(re)[2]
@@ -63,16 +60,11 @@ load_friends = () ->
 
           $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+" <i class=\"fa fa-check activated\"></i></div>")
         else
-          console.log "XXX"
-          console.log $("#current-user-id")[0].value
-          console.log f.other_id
-          console.log f.invited
           if f.invited
             $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+"<span class=\"activate_friend\" id=\"friend_act_"+f.id+"\"> Activate</span></div>")
             $("#friend_act_"+f.id).click (evt) ->
               arr = evt.target.id.split("_")
               fid = arr[arr.length-1]
-              console.log fid
               $.ajax '/users/'+f.my_id+'/friendships/'+fid+"?cmd=activate",
                 type: 'GET'
                 dataType: 'json'
@@ -98,6 +90,4 @@ add_me = () ->
     u = $("#browser-menu-tab a.browser-subnav-item.selected").attr("href")
     re = new RegExp("[/?]")
     page = u.split(re)[2]
-    console.log u
-    console.log page
     window.location = "/pages/"+page

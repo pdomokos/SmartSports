@@ -140,8 +140,8 @@ load_notifications = () ->
 
       i = 0
       $("div#event-list").empty()
-      console.log data
       for notif in data
+        console.log "notif = "+ JSON.stringify(notif)
         newactivity = $("#event-template").children().first().clone()
         newid =  "notif-" + i
         newactivity.attr('id', newid)
@@ -160,12 +160,11 @@ load_notifications = () ->
         activate_link = ""
         if notif['notification_data']
           notif_data = JSON.parse(notif['notification_data'])
-          console.log "notifdata = "
-          console.log notif_data
+
           if notif_data['notif_type'] == 'friendreq'
             friend_id = notif_data['friendshipid']
             linkid = newid+"_"+notif_data["friendship_id"]
-            activate_link = " <a href='#' id='"+linkid+"'>Accept</a>"
+            activate_link = " <a href='#' id='"+linkid+"'>Manage friends</a>"
             $("#"+newid+" div div.event-details span").html(notif['detail']+activate_link)
             $("#"+linkid).click (evt) ->
               evt.preventDefault()
