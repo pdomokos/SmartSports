@@ -6,6 +6,11 @@ class HeartTrendChart extends BaseChart
     console.log "HeartTrendChart"
     @base_r = 3
     @selected_r = 8
+
+    @margin = {top: 20, right: 40, bottom: 20, left: 40}
+    aspect = 200/700
+    @width = $("#"+@chart_element+"-container").parent().width()-@margin.left-@margin.right
+    @height = aspect*@width-@margin.top-@margin.bottom
     @preprocess()
 
   preprocess: () ->
@@ -57,10 +62,7 @@ class HeartTrendChart extends BaseChart
   draw: (date) ->
     self = this
 
-    @margin = {top: 20, right: 40, bottom: 20, left: 40}
-    aspect = 200/700
-    @width = $("#"+@chart_element+"-container").parent().width()-@margin.left-@margin.right
-    @height = aspect*@width-@margin.top-@margin.bottom
+
 
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     svg = svg

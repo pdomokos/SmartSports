@@ -158,7 +158,7 @@ class SyncController < ApplicationController
               act = Activity.new( user_id: current_user.id, source: 'moves', date: currDate, activity:  rec['activity'], group: rec['group'],
                   total_duration: rec['duration'],
                   distance: rec['distance'],
-                  steps: rec['steps'],
+                  steps: rec['steps'].to_i,
                   calories: rec['calories'],
                   synced_at: DateTime.now(),
                   sync_final: isFinal
