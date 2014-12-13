@@ -74,7 +74,7 @@ class SyncController < ApplicationController
         result =  {:status=> "OK", :meas => meas, :act =>act}
       rescue Exception => e
         puts e.message
-        puts e.backtrace.inspect
+        puts e.backtrace
         result =  {:status => "ERR"}
       end
     else
@@ -228,6 +228,7 @@ class SyncController < ApplicationController
          :pulse => item.heart_pulse,
          :SPO2 => item.spo2}
       )
+      puts measurement.to_json
       measurement.save!
     end
     return meas

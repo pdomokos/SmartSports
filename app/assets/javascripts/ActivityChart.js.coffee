@@ -72,6 +72,7 @@ class ActivityChart extends BaseChart
     time_axis = d3.svg.axis()
       .scale(self.time_scale)
       .tickSize(8, 0)
+      .ticks(5)
 #      .ticks(d3.time.days)
     svg
       .append("g")
