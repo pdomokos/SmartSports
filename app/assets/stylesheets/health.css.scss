@@ -39,26 +39,63 @@ line.press {
   stroke: rgb(47, 181, 233)
 }
 
-path.line.sysavg {
+
+path.line.systolicbp-avg {
   stroke: #0570b0;
 }
 
-path.line.diaavg {
+path.line.diastolicbp-avg {
   stroke: #74a9cf;
 }
 
-path.line.hravg {
+path.line.pulse-avg {
   stroke: #f4a582;
 }
 
-circle.sysavg {
+circle.systolicbp-avg {
   fill: #0570b0;
 }
 
-circle.diaavg {
+circle.diastolicbp-avgavg {
   fill: #74a9cf;
 }
 
-circle.hravg {
+circle.pulse-avg {
   fill: #f4a582;
+}
+
+//
+path.line.walking_duration-avg {
+  stroke: #0570b0;
+}
+circle.walking_duration-avg {
+  fill: #0570b0;
+}
+
+path.line.running_duration-avg {
+  stroke: #f4a9cf;
+}
+circle.running_duration-avg {
+  fill: #f4a9cf;
+}
+
+path.line.transport_duration-avg {
+  stroke: #74a9cf;
+}
+circle.transport_duration-avg {
+  fill: #74a9cf;
+}
+
+path.line.steps-avg {
+  stroke: #74a9cf;
+}
+circle.steps-avg {
+  fill: #74a9cf;
+}
+
+path.line.cycling_duration-avg {
+  stroke: #f40582;
+}
+circle.cycling_duration-avg {
+  fill: #f40582;
 }

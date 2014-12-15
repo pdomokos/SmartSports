@@ -1,6 +1,9 @@
 
 #= require ActivityChart
-#= require TrendChart
+#= require OverviewChart
+
+fmt = d3.time.format("%Y-%m-%d")
+fmt_words = d3.time.format("%Y %b %e")
 
 @training_loaded = () ->
   reset_ui()
@@ -9,13 +12,46 @@
   $("#training-button").addClass("selected")
   uid = $("#shown-user-id")[0].value
 
-  for elem in $("#training-container div.connection-block")
-    conn =  $("#"+elem.id+" input.connection-name")[0].value
-    actions_url = "/users/"+uid+"/activities.json?source="+conn
-    d3.json(actions_url, data_received)
+  d3.json("/users/"+uid+"/activities.json", trend_received)
 
-fmt = d3.time.format("%Y-%m-%d")
-fmt_words = d3.time.format("%Y %b %e")
+#  for elem in $("#training-container div.connection-block")
+#    conn =  $("#"+elem.id+" input.connection-name")[0].value
+#    actions_url = "/users/"+uid+"/activities.json?source="+conn
+#    d3.json(actions_url, data_received)
+
+trend_received = (jsondata) ->
+#  console.log jsondata
+  map = {}
+  data = []
+  template = {'date': null, 'walking_duration': 0, 'running_duration': 0, 'cycling_duration': 0, 'transport_duration': 0, 'sleep_duration': 0, 'steps': 0}
+  for actkey in ['walking', 'running', 'cycling', 'transport']
+    console.log "DOING "+actkey
+    for d in jsondata['activities'][actkey]
+      if d.source != 'moves'
+        continue
+
+      key = fmt(new Date(d.date))
+      console.log key
+      curr = map[key]
+      if !curr
+        map[key] = $.extend({}, template)
+        curr = map[key]
+      curr['date'] = key
+      curr[actkey+'_duration'] = d.total_duration
+      curr['steps'] = curr['steps']+d.steps
+
+      keys = Object.keys(map)
+      keys.sort()
+
+      for k in keys
+        data.push(map[k])
+
+  console.log data
+  act_trend_chart = new TrendChart("moves", "activity-trend", data,
+    ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
+    ["Walking", "Running", "Cycling", "Transport", "Steps"],
+    ["left", "left", "left", "left", "right"]
+  )
 
 @trend_charts = []
 @activity_charts = []
@@ -40,7 +76,7 @@ data_received = (jsondata) ->
   activity_chart.update_daily(data_helper.fmt(d))
   activity_chart.set_callback(selection_callback)
 
-  trend_chart = new TrendChart(source, source+"-container", jsondata, data_helper)
+  trend_chart = new OverviewChart(source, source+"-container", jsondata, data_helper)
   trend_chart.draw(d, "walking")
   @trend_charts.push(trend_chart)
 

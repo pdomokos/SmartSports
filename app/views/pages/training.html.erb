@@ -1,5 +1,18 @@
 <div class="training-block" id="training-container">
+    <div class="columns">
+        <div id="activity-trend-container" class="boxed-group">
+            <h3>
+                <img src="<%= asset_path( "moves-logo.png")%>" width="24px" height="24px" class="left">
+                <div class="training-type left">Activity trend</div>
+                <div class="selected-meas left"></div>
+            </h3>
 
+            <div class="boxed-group-inner chart activity-trend-chart">
+                <svg class="activity-trend-chart-svg">
+                </svg>
+            </div>
+        </div>
+    </div>
     <div class="columns">
         <div class="column one-half">
             <% if @conn.size > 0 %>
