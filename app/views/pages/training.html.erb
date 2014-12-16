@@ -4,7 +4,7 @@
             <h3>
                 <img src="<%= asset_path( "moves-logo.png")%>" width="24px" height="24px" class="left">
                 <div class="training-type left">Activity trend</div>
-                <div class="selected-meas left"></div>
+                <div id="legend-container" class="selected-meas right"></div>
             </h3>
 
             <div class="boxed-group-inner chart activity-trend-chart">
@@ -37,6 +37,9 @@
 
         <!--</div>-->
     <!--</div>-->
+    <div id="legend-template" class="hidden">
+        <span class="chart-legend"></span>
+    </div>
 </div>
 
 <script type="text/javascript">

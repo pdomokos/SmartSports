@@ -65,37 +65,254 @@ circle.pulse-avg {
 }
 
 //
-path.line.walking_duration-avg {
-  stroke: #0570b0;
-}
-circle.walking_duration-avg {
-  fill: #0570b0;
-}
+//path.line.walking_duration-avg {
+//  stroke: #0570b0;
+//}
+//circle.walking_duration-avg {
+//  fill: #0570b0;
+//}
+//
+//path.line.running_duration-avg {
+//  stroke: #f4a9cf;
+//}
+//circle.running_duration-avg {
+//  fill: #f4a9cf;
+//}
+//
+//path.line.transport_duration-avg {
+//  stroke: #74a9cf;
+//}
+//circle.transport_duration-avg {
+//  fill: #74a9cf;
+//}
+//
+//path.line.steps-avg {
+//  stroke: #74a9cf;
+//}
+//circle.steps-avg {
+//  fill: #74a9cf;
+//}
+//
+//path.line.cycling_duration-avg {
+//  stroke: #f40582;
+//}
+//circle.cycling_duration-avg {
+//  fill: #f40582;
+//}
 
-path.line.running_duration-avg {
-  stroke: #f4a9cf;
+.chart-legend {
+  padding: 3px 4px;
+  margin-left: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+  color: #fff;
 }
-circle.running_duration-avg {
-  fill: #f4a9cf;
-}
+// ColorBrewer color sets
 
-path.line.transport_duration-avg {
-  stroke: #74a9cf;
-}
-circle.transport_duration-avg {
-  fill: #74a9cf;
-}
+// qualitative
+path.line.colset1_0 { stroke: #66c2a5; };
+path.line.colset1_1 { stroke: #fc8d62; };
+path.line.colset1_2 { stroke: #8da0cb; };
+path.line.colset1_3 { stroke: #e78ac3; };
+path.line.colset1_4 { stroke: #a6d854; };
+path.line.colset1_5 { stroke: #ffd92f; };
+path.line.colset1_6 { stroke: #e5c494; };
+path.line.colset1_7 { stroke: #b3b3b3; };
+circle.colset1_0 {  fill: #66c2a5; };
+circle.colset1_1 {  fill: #fc8d62; };
+circle.colset1_2 {  fill: #8da0cb; };
+circle.colset1_3 {  fill: #e78ac3; };
+circle.colset1_4 {  fill: #a6d854; };
+circle.colset1_5 {  fill: #ffd92f; };
+circle.colset1_6 {  fill: #e5c494; };
+circle.colset1_7 {  fill: #b3b3b3; };
+.chart-legend.colset1_0 {  background-color: #66c2a5; };
+.chart-legend.colset1_1 {  background-color: #fc8d62; };
+.chart-legend.colset1_2 {  background-color: #8da0cb; };
+.chart-legend.colset1_3 {  background-color: #e78ac3; };
+.chart-legend.colset1_4 {  background-color: #a6d854; };
+.chart-legend.colset1_5 {  background-color: #ffd92f; };
+.chart-legend.colset1_6 {  background-color: #e5c494; };
+.chart-legend.colset1_7 {  background-color: #b3b3b3; };
 
-path.line.steps-avg {
-  stroke: #74a9cf;
-}
-circle.steps-avg {
-  fill: #74a9cf;
-}
+path.line.colset2_0 { stroke: #1f78b4;};
+path.line.colset2_1 { stroke: #b2df8a;};
+path.line.colset2_2 { stroke: #33a02c;};
+path.line.colset2_3 { stroke: #fb9a99;};
+path.line.colset2_4 { stroke: #e31a1c;};
+path.line.colset2_5 { stroke: #ff7f00;};
+path.line.colset2_6 { stroke: #fdbf6f;};
+path.line.colset2_7 { stroke: #a6cee3;};
+circle.colset2_0 { fill: #1f78b4 };
+circle.colset2_1 { fill: #b2df8a };
+circle.colset2_2 { fill: #33a02c };
+circle.colset2_3 { fill: #fb9a99 };
+circle.colset2_4 { fill: #e31a1c };
+circle.colset2_5 { fill: #ff7f00 };
+circle.colset2_6 { fill: #fdbf6f };
+circle.colset2_7 { fill: #a6cee3 };
+.chart-legend.colset2_0 { background-color: #1f78b4 };
+.chart-legend.colset2_1 { background-color: #b2df8a };
+.chart-legend.colset2_2 { background-color: #33a02c };
+.chart-legend.colset2_3 { background-color: #fb9a99 };
+.chart-legend.colset2_4 { background-color: #e31a1c };
+.chart-legend.colset2_5 { background-color: #ff7f00 };
+.chart-legend.colset2_6 { background-color: #fdbf6f };
+.chart-legend.colset2_7 { background-color: #a6cee3 };
 
-path.line.cycling_duration-avg {
-  stroke: #f40582;
-}
-circle.cycling_duration-avg {
-  fill: #f40582;
-}
+path.line.colset3_0 { stroke: #8dd3c7;};
+path.line.colset3_1 { stroke: #ffffb3;};
+path.line.colset3_2 { stroke: #bebada;};
+path.line.colset3_3 { stroke: #fb8072;};
+path.line.colset3_4 { stroke: #80b1d3;};
+path.line.colset3_5 { stroke: #fdb462;};
+path.line.colset3_6 { stroke: #b3de69;};
+path.line.colset3_7 { stroke: #fccde5;};
+circle.colset3_0 { fill: #8dd3c7 };
+circle.colset3_1 { fill: #ffffb3 };
+circle.colset3_2 { fill: #bebada };
+circle.colset3_3 { fill: #fb8072 };
+circle.colset3_4 { fill: #80b1d3 };
+circle.colset3_5 { fill: #fdb462 };
+circle.colset3_6 { fill: #b3de69 };
+circle.colset3_7 { fill: #fccde5 };
+.chart-legend.colset3_0 { background-color: #8dd3c7 };
+.chart-legend.colset3_1 { background-color: #ffffb3 };
+.chart-legend.colset3_2 { background-color: #bebada };
+.chart-legend.colset3_3 { background-color: #fb8072 };
+.chart-legend.colset3_4 { background-color: #80b1d3 };
+.chart-legend.colset3_5 { background-color: #fdb462 };
+.chart-legend.colset3_6 { background-color: #b3de69 };
+.chart-legend.colset3_7 { background-color: #fccde5 };
+
+// diverging
+path.line.colset4_0 { stroke: #d53e4f;};
+path.line.colset4_1 { stroke: #f46d43;};
+path.line.colset4_2 { stroke: #3288bd;};
+path.line.colset4_3 { stroke: #fee08b;};
+path.line.colset4_4 { stroke: #e6f598;};
+path.line.colset4_5 { stroke: #abdda4;};
+path.line.colset4_6 { stroke: #66c2a5;};
+path.line.colset4_7 { stroke: #fdae61;};
+circle.colset4_0 { fill: #d53e4f; };
+circle.colset4_1 { fill: #f46d43; };
+circle.colset4_2 { fill: #3288bd; };
+circle.colset4_3 { fill: #fee08b; };
+circle.colset4_4 { fill: #e6f598; };
+circle.colset4_5 { fill: #abdda4; };
+circle.colset4_6 { fill: #66c2a5; };
+circle.colset4_7 { fill: #fdae61; };
+.chart-legend.colset4_0 { background-color: #d53e4f; };
+.chart-legend.colset4_1 { background-color: #f46d43; };
+.chart-legend.colset4_2 { background-color: #3288bd; };
+.chart-legend.colset4_3 { background-color: #fee08b; };
+.chart-legend.colset4_4 { background-color: #e6f598; };
+.chart-legend.colset4_5 { background-color: #abdda4; };
+.chart-legend.colset4_6 { background-color: #66c2a5; };
+.chart-legend.colset4_7 { background-color: #fdae61; };
+
+path.line.colset5_0 { stroke: #8c510a; };
+path.line.colset5_1 { stroke: #bf812d; };
+path.line.colset5_2 { stroke: #dfc27d; };
+path.line.colset5_3 { stroke: #f6e8c3; };
+path.line.colset5_4 { stroke: #c7eae5; };
+path.line.colset5_5 { stroke: #80cdc1; };
+path.line.colset5_6 { stroke: #35978f; };
+path.line.colset5_7 { stroke: #01665e; };
+circle.colset5_0 { fill: #8c510a };
+circle.colset5_1 { fill: #bf812d };
+circle.colset5_2 { fill: #dfc27d };
+circle.colset5_3 { fill: #f6e8c3 };
+circle.colset5_4 { fill: #c7eae5 };
+circle.colset5_5 { fill: #80cdc1 };
+circle.colset5_6 { fill: #35978f };
+circle.colset5_7 { fill: #01665e };
+.chart-legend.colset5_0 { background-color: #8c510a };
+.chart-legend.colset5_1 { background-color: #bf812d };
+.chart-legend.colset5_2 { background-color: #dfc27d };
+.chart-legend.colset5_3 { background-color: #f6e8c3 };
+.chart-legend.colset5_4 { background-color: #c7eae5 };
+.chart-legend.colset5_5 { background-color: #80cdc1 };
+.chart-legend.colset5_6 { background-color: #35978f };
+.chart-legend.colset5_7 { background-color: #01665e };
+
+path.line.colset6_0 { stroke: #d73027;};
+path.line.colset6_1 { stroke: #f46d43;};
+path.line.colset6_2 { stroke: #fdae61;};
+path.line.colset6_3 { stroke: #fee090;};
+path.line.colset6_4 { stroke: #e0f3f8;};
+path.line.colset6_5 { stroke: #abd9e9;};
+path.line.colset6_6 { stroke: #74add1;};
+path.line.colset6_7 { stroke: #4575b4;};
+circle.colset6_0 { fill: #d73027 };
+circle.colset6_1 { fill: #f46d43 };
+circle.colset6_2 { fill: #fdae61 };
+circle.colset6_3 { fill: #fee090 };
+circle.colset6_4 { fill: #e0f3f8 };
+circle.colset6_5 { fill: #abd9e9 };
+circle.colset6_6 { fill: #74add1 };
+circle.colset6_7 { fill: #4575b4 };
+.chart-legend.colset6_0 { background-color: #d73027 };
+.chart-legend.colset6_1 { background-color: #f46d43 };
+.chart-legend.colset6_2 { background-color: #fdae61 };
+.chart-legend.colset6_3 { background-color: #fee090 };
+.chart-legend.colset6_4 { background-color: #e0f3f8 };
+.chart-legend.colset6_5 { background-color: #abd9e9 };
+.chart-legend.colset6_6 { background-color: #74add1 };
+.chart-legend.colset6_7 { background-color: #4575b4 };
+
+// sequential
+path.line.colset7_0 { stroke: #ffffcc; };
+path.line.colset7_1 { stroke: #ffeda0; };
+path.line.colset7_2 { stroke: #fed976; };
+path.line.colset7_3 { stroke: #feb24c; };
+path.line.colset7_4 { stroke: #fd8d3c; };
+path.line.colset7_5 { stroke: #fc4e2a; };
+path.line.colset7_6 { stroke: #e31a1c; };
+path.line.colset7_7 { stroke: #b10026; };
+circle.colset7_0 { fill: #ffffcc; };
+circle.colset7_1 { fill: #ffeda0; };
+circle.colset7_2 { fill: #fed976; };
+circle.colset7_3 { fill: #feb24c; };
+circle.colset7_4 { fill: #fd8d3c; };
+circle.colset7_5 { fill: #fc4e2a; };
+circle.colset7_6 { fill: #e31a1c; };
+circle.colset7_7 { fill: #b10026; };
+.chart-legend.colset7_0 { background-color: #ffffcc; };
+.chart-legend.colset7_1 { background-color: #ffeda0; };
+.chart-legend.colset7_2 { background-color: #fed976; };
+.chart-legend.colset7_3 { background-color: #feb24c; };
+.chart-legend.colset7_4 { background-color: #fd8d3c; };
+.chart-legend.colset7_5 { background-color: #fc4e2a; };
+.chart-legend.colset7_6 { background-color: #e31a1c; };
+.chart-legend.colset7_7 { background-color: #b10026; };
+
+path.line.colset8_0 { stroke: #ffffd9;  };
+path.line.colset8_1 { stroke: #edf8b1;  };
+path.line.colset8_2 { stroke: #c7e9b4;  };
+path.line.colset8_3 { stroke: #7fcdbb;  };
+path.line.colset8_4 { stroke: #41b6c4;  };
+path.line.colset8_5 { stroke: #1d91c0;  };
+path.line.colset8_6 { stroke: #225ea8;  };
+path.line.colset8_7 { stroke: #0c2c84;  };
+circle.colset8_0 { fill: #ffffd9 };
+circle.colset8_1 { fill: #edf8b1 };
+circle.colset8_2 { fill: #c7e9b4 };
+circle.colset8_3 { fill: #7fcdbb };
+circle.colset8_4 { fill: #41b6c4 };
+circle.colset8_5 { fill: #1d91c0 };
+circle.colset8_6 { fill: #225ea8 };
+circle.colset8_7 { fill: #0c2c84 };
+.chart-legend.colset8_0 { background-color: #ffffd9 };
+.chart-legend.colset8_1 { background-color: #edf8b1 };
+.chart-legend.colset8_2 { background-color: #c7e9b4 };
+.chart-legend.colset8_3 { background-color: #7fcdbb };
+.chart-legend.colset8_4 { background-color: #41b6c4 };
+.chart-legend.colset8_5 { background-color: #1d91c0 };
+.chart-legend.colset8_6 { background-color: #225ea8 };
+.chart-legend.colset8_7 { background-color: #0c2c84 };
+
+

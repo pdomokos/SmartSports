@@ -12,33 +12,31 @@ fmt_words = d3.time.format("%Y %b %e")
   $("#training-button").addClass("selected")
   uid = $("#shown-user-id")[0].value
 
-  d3.json("/users/"+uid+"/activities.json", trend_received)
+  d3.json("/users/"+uid+"/activities.json", data_received)
 
-#  for elem in $("#training-container div.connection-block")
-#    conn =  $("#"+elem.id+" input.connection-name")[0].value
-#    actions_url = "/users/"+uid+"/activities.json?source="+conn
-#    d3.json(actions_url, data_received)
+data_received = (jsondata) ->
+  draw_trends(jsondata)
+  draw_conn(jsondata)
 
-trend_received = (jsondata) ->
+draw_trends = (jsondata) ->
 #  console.log jsondata
   map = {}
   data = []
   template = {'date': null, 'walking_duration': 0, 'running_duration': 0, 'cycling_duration': 0, 'transport_duration': 0, 'sleep_duration': 0, 'steps': 0}
   for actkey in ['walking', 'running', 'cycling', 'transport']
-    console.log "DOING "+actkey
     for d in jsondata['activities'][actkey]
-      if d.source != 'moves'
-        continue
 
       key = fmt(new Date(d.date))
-      console.log key
       curr = map[key]
       if !curr
         map[key] = $.extend({}, template)
         curr = map[key]
+
       curr['date'] = key
-      curr[actkey+'_duration'] = d.total_duration
-      curr['steps'] = curr['steps']+d.steps
+      if d.source == 'moves'
+
+        curr[actkey+'_duration'] = d.total_duration
+        curr['steps'] = curr['steps']+d.steps
 
       keys = Object.keys(map)
       keys.sort()
@@ -46,20 +44,48 @@ trend_received = (jsondata) ->
       for k in keys
         data.push(map[k])
 
-  console.log data
   act_trend_chart = new TrendChart("moves", "activity-trend", data,
     ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
     ["Walking", "Running", "Cycling", "Transport", "Steps"],
-    ["left", "left", "left", "left", "right"]
+    ["left", "left", "left", "left", "right"],
+    ["colset2_0", "colset2_1", "colset2_2", "colset2_3", "colset2_4"],
+    ["min", "step"]
+    true
   )
+  act_trend_chart.preproc_cb = (data) ->
+    console.log "CB called"
+    keys = ["walking_duration", "running_duration", "cycling_duration", "transport_duration"]
+    for k in keys
+      for d in data[k]
+        d['value'] = d['value']/60.0
+  act_trend_chart.margin = {top: 20, right: 40, bottom: 20, left: 30}
+  act_trend_chart.draw()
+
 
 @trend_charts = []
 @activity_charts = []
 self = this
 
-data_received = (jsondata) ->
+get_conn_data = (data, sourcename) ->
+  keys = Object.keys(data.activities)
+  result = {'source': sourcename, 'activities': {}}
+  for k in keys
+    result['activities'][k] = []
+  for k in keys
+    for d in data['activities'][k]
+      if d.source == sourcename
+        result['activities'][k].push( d )
+  return(result)
+  
+draw_conn = (jsondata) ->
+  for elem in $("#training-container div.connection-block")
+    conn =  $("#"+elem.id+" input.connection-name")[0].value
+    draw_conn_data(get_conn_data(jsondata, conn))
+
+draw_conn_data = (jsondata) ->
   source = jsondata.source
-  console.log "DATA_RECEIVED "+source
+  console.log "DOING "+source
+  console.log jsondata
   jsondata = jsondata.activities
   data_helper = new DataHelper(jsondata)
   datanum = data_helper.get_data_size()
