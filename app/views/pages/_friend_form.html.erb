@@ -1,0 +1,19 @@
+<form id="friend-form">
+    <input name="user_id" value="<%= @user.id %>" type="hidden">
+    <div class="logform clearfix hidden" id="friend-form-div">
+        <fieldset>
+            <div class="field">
+                <label for="friend_name">Friend</label><span class="entry"><input id="friend_name" name="friend_name" class="entry-normal"></span>
+
+                <button id="new-friend-button" class="button minibutton primary">Add</button>
+            </div>
+            <div id="friend-message" class="hidden-placed">
+                &nbsp;
+            </div>
+            <div class="friend-list">
+
+            </div>
+
+        </fieldset>
+    </div>
+</form>

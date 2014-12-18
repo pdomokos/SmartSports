@@ -1,0 +1,100 @@
+<form id="act-form">
+    <input name="activity[user_id]" value="<%= @user.id %>" type="hidden">
+    <input name="activity[source]" value="smartsport" type="hidden">
+
+    <div class="logform clearfix hidden" id="act-form-div">
+        <fieldset>
+
+            <div class="activity-container">
+                <div class="field">
+                    <label for="act-name">Activity</label>
+                    <span class="entry">
+                        <select id="act-type" name="activity[group]"
+                                class="entry-normal">
+                            <option>walking</option>
+                            <option>ping-pong</option>
+                            <option>coffee</option>
+                        </select>
+
+                    </span>
+                    <i id="timer-start" class="fa fa-play-circle-o fa-2x text-green"></i>
+                </div>
+
+                <!-- walking -->
+                <div class="field field-temp walking-param">
+                    <label for="walking-date">Time</label>
+                    <span class="entry">
+                        <input id="walking-date" name="activity[date]" class="date-input">
+                    </span>
+                </div>
+                <div class="field field-temp walking-param">
+                    <label for="walking-duration">Duration (min)</label>
+                    <span class="entry">
+                        <input id="walking-duration" name="activity[total_duration]" class="entry-mini">
+                    </span>
+                </div>
+                <div class="field field-temp walking-param">
+                    <label for="walking-steps">Steps</label>
+                    <span class="entry">
+                        <input id="walking-steps" name="activity[steps]" class="entry-mini">
+                    </span>
+                </div>
+
+                <!-- pingpong  -->
+                <div class="field field-temp ping-pong-param hidden">
+                    <label for="pingpong-date">Time</label>
+                    <span class="entry">
+                        <input id="pingpong-date" name="activity[date]" class="date-input">
+                    </span>
+                </div>
+                <div class="field field-temp ping-pong-param hidden">
+                    <label for="pingpong-duration">Duration (min)</label>
+                    <span class="entry">
+                        <input id="pingpong-duration" name="activity[total_duration]" class="entry-mini">
+                    </span>
+                </div>
+                <div class="field field-temp ping-pong-param hidden">
+                    <label for="pingpong-players">Players</label>
+                    <span class="entry">
+                        <input id="pingpong-players" name="activity[steps]" class="entry-mini">
+                    </span>
+                </div>
+
+                <!-- coffee  -->
+                <div class="field field-temp coffee-param hidden">
+                    <label for="coffee-date">Time</label>
+                    <span class="entry">
+                        <input id="coffee-date" name="activity[steps]" class="entry-mini">
+                    </span>
+                </div>
+
+                <!-- timer  -->
+                <div class="field field-temp timer-param hidden">
+                    <input type="text" class="hidden" id="timer-started-at">
+                    <input type="text" class="hidden" id="timer-stopped-at">
+                    <input type="text" class="hidden" id="timer-running">
+
+                    <span>Elapsed time</span>
+                    <span>
+                        <div id="activity-timer" class="timer-time"></div>
+                        <span id="timer-stop" class="stop-control">Stop</span>
+                    </span>
+                </div>
+
+                <div id="act-message" class="hidden-placed">
+                    &nbsp;
+                </div>
+                <div class="field action-field">
+                    <span></span>
+                    <div class="log-actions">
+                        <span>
+                            <button id="new-activity-button" class="button minibutton primary right">Add</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+        </fieldset>
+    </div>
+</form>

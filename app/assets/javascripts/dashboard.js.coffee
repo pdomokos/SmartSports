@@ -8,6 +8,51 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
   setdate()
   load_notifications()
 
+  $("#act-type").change (event) ->
+    act_type =  event.target.value
+    $("#act-form-div div.field-temp").addClass("hidden")
+    $("#act-form-div div.field."+act_type+"-param").removeClass("hidden")
+
+  $("#timer-start").click (event) ->
+    $("#activity-timer").html("00:00")
+    $("#act-form-div div.field-temp").addClass("hidden")
+    $("#act-form-div div.field.timer-param").removeClass("hidden")
+    $("#new-activity-button").addClass("hidden-placed")
+    $("#timer-start").addClass("hidden")
+    $("#timer-stop").removeClass("hidden")
+    $("#timer-started-at").val(new Date().getTime())
+
+    $("#timer-running").val("true")
+    timer_handler = () ->
+      if $("#timer-running") and $("#timer-running").val()=="true"
+        started = parseInt($("#timer-started-at").val())
+        curr = new Date().getTime()
+        diff = Math.floor((curr - started)/1000)
+        hour = Math.floor(diff/60/60)
+        diff = diff - hour*60*60
+        minutes = Math.floor(diff/60)
+        diff = diff - minutes*60
+        seconds = diff
+        elapsed = ("0"+minutes.toString()).substr(-2)+":"+("0"+seconds.toString()).substr(-2)
+        if hour > 0
+          elapsed = ("0"+hour.toString()).substr(-2)+":"+elapsed
+        $("#activity-timer").html(elapsed)
+        setTimeout( timer_handler, 1000)
+    setTimeout(timer_handler, 1000)
+
+  $("#timer-stop").click (event) ->
+    $("#new-activity-button").removeClass("hidden")
+    $("#timer-start").removeClass("hidden")
+    $("#timer-stop").addClass("hidden")
+    $("#act-form-div div.field."+$("#act-type").val()+"-param").removeClass("hidden")
+    $("#act-form-div div.field.timer-param").addClass("hidden")
+    $("#timer-stopped-at").val(new Date().getTime())
+    $("#timer-running").val("false")
+
+    date = fmt_hms(new Date(parseInt($("#timer-started-at").val())))
+    duration = Math.floor((parseInt($("#timer-stopped-at").val())-parseInt($("#timer-started-at").val()))/(1000*60))
+    $("#"+$("#act-type").val()+"-date").val(date)
+    $("#"+$("#act-type").val()+"-duration").val(duration)
 
   $("#act-form-sel").click (event) ->
     reset_form_sel()

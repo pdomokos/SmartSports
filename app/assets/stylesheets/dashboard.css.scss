@@ -55,7 +55,7 @@
 
 .logform {
   border: 1px solid #d8d8d8;
-  height: 280px;
+  min-height: 280px;
 }
 
 .logform>fieldset {
@@ -65,9 +65,7 @@
   border: 0;
 }
 
-.logform>fieldset>.field {
-  display: table-row;
-}
+
 
 .logform .entry {
   display: inline-block;
@@ -83,12 +81,15 @@
   box-sizing: border-box;
 }
 
-
-.logform>fieldset>.field>:first-child {
+.logform>fieldset div.field {
+  display: table-row;
+}
+.logform>fieldset div.field>:first-child {
   display: table-cell;
   padding: 15px 10px 15px 0;
   white-space: nowrap;
 }
+
 
 .logform label {
   margin-right: 5px;
@@ -206,3 +207,38 @@
   padding-bottom: 30px;
 }
 
+.text-green {
+  color: #60b044;
+}
+.text-red {
+  color: red;
+}
+
+div.field i {
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+
+.timer-time {
+  color: #494847;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 8px 8px 8px 0;
+  vertical-align: middle;
+  width: 200px;
+}
+
+.stop-control {
+  padding: 3px 4px;
+  margin-left: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+  color: #fff;
+  background-color: red;
+  vertical-align: middle;
+  cursor: pointer;
+}
