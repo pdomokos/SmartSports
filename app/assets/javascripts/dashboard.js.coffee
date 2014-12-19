@@ -8,10 +8,30 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
   setdate()
   load_notifications()
 
+  del = (event) ->
+    friend_name = event.target.parentElement.firstChild.textContent
+    event.target.parentElement.remove()
+    $("#pingpong-activity-participant").append(new Option(friend_name, friend_name))
+
+  $("#act-form").on("click", "i.remove-pingpong-participant", del)
+
+  $("#add-pingpong-participant").click (event) ->
+    pname = $("#pingpong-activity-participant").val()
+    if( pname != null)
+      console.log pname
+      $("<div><span>"+pname+"</span> <i class=\"fa fa-minus-square text-red remove-pingpong-participant\"></i></div>").appendTo("#pingpong-participants")
+      $("#pingpong-activity-participant option[value="+pname+"]").remove()
+      npart = $("#pingpong-participants span").size()
+      if npart>0
+        if npart == 1
+          $("#ping-pong-games").removeClass("hidden")
+          console.log ""
+
   $("#act-type").change (event) ->
     act_type =  event.target.value
     $("#act-form-div div.field-temp").addClass("hidden")
     $("#act-form-div div.field."+act_type+"-param").removeClass("hidden")
+    $("#pingpong-games-container").addClass("hidden")
 
   $("#timer-start").click (event) ->
     $("#activity-timer").html("00:00")
@@ -61,6 +81,7 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
     $("#act-form-sel").addClass("selected")
     $("#act-message").addClass("hidden-placed")
     $("#act-steps").focus()
+
 
   $("#heart-form-sel").click (event) ->
     reset_form_sel()

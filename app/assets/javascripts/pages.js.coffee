@@ -46,6 +46,7 @@ load_friends = () ->
           newid = "f-"+f.id
           newfriend.attr("id", newid)
           $("div.friend-select-list:last-child").append(newfriend)
+
           $("#"+newid+" .friend-select-item-text").html(f.other_name)
           friend_sel_id = "friend-sel-"+f.other_id
           $("#"+newid+" .friend-select-item-text").attr("id", friend_sel_id)
@@ -59,6 +60,10 @@ load_friends = () ->
             window.location = "/pages/"+page+"?shown_user="+friend_id
 
           $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+" <i class=\"fa fa-check activated\"></i></div>")
+
+          # add to activity participant list
+          if $("#pingpong-activity-participant")
+            $("#pingpong-activity-participant").append(new Option(f.other_name, f.other_name))
         else
           if f.invited
             $("#friend-form div.friend-list:last-child").append("<div>"+f.other_name+"<span class=\"activate_friend\" id=\"friend_act_"+f.id+"\"> Activate</span></div>")

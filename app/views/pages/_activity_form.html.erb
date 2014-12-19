@@ -56,9 +56,23 @@
                 <div class="field field-temp ping-pong-param hidden">
                     <label for="pingpong-players">Players</label>
                     <span class="entry">
-                        <input id="pingpong-players" name="activity[steps]" class="entry-mini">
+                        <select id="pingpong-activity-participant" name="activity[steps]" class="entry-normal"></select>
                     </span>
+                    <i id="add-pingpong-participant" class="fa fa-plus-square fa-ex text-green"></i>
+                    <div id="pingpong-participants">
+
+                    </div>
                 </div>
+                <div id="pingpong-games-container" class="field field-temp ping-pong-param hidden">
+                    <label for="pingpong-games">Games</label>
+                    <span class="entry">
+                        <select id="pingpong-games" name="activity[steps]" class="entry-normal"></select>
+                        <input type="text" class="entry-number">:
+                        <input type="text" class="entry-number">
+                    </span>
+                    <i id="add-pingpong-game" class="fa fa-plus-square fa-ex text-green"></i>
+                </div>
+
 
                 <!-- coffee  -->
                 <div class="field field-temp coffee-param hidden">
