@@ -10,6 +10,7 @@
 
 <div class="content clearfix">
     <input id="current-user-id" value="<%= current_user.id %>" class="hidden" >
+    <input id="current-user-name" value="<%= current_user.username %>" class="hidden" >
     <input id="shown-user-id" type="hidden" value="<%= if @shown_user then @shown_user.id else '' end %>">
     <!--<div class="contenthead-spaceonly"></div>-->
 

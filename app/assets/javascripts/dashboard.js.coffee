@@ -16,16 +16,33 @@ fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
   $("#act-form").on("click", "i.remove-pingpong-participant", del)
 
   $("#add-pingpong-participant").click (event) ->
+    player_sel = [[], [[0,1]], [[0,1], [0, 2], [1,2]], [[[0, 1], [2, 3]], [[0,2], [1,3]], [[0, 3],[1, 2]]]]
     pname = $("#pingpong-activity-participant").val()
-    if( pname != null)
+
+    if( pname != null and $("#pingpong-participants span").size() < 3)
       console.log pname
       $("<div><span>"+pname+"</span> <i class=\"fa fa-minus-square text-red remove-pingpong-participant\"></i></div>").appendTo("#pingpong-participants")
+
+      player_arr = [$("#current-user-name").val()]
+      for s in $("#pingpong-participants span")
+        player_arr.push(s.innerHTML)
+      console.log player_arr
+
+
       $("#pingpong-activity-participant option[value="+pname+"]").remove()
       npart = $("#pingpong-participants span").size()
-      if npart>0
-        if npart == 1
-          $("#ping-pong-games").removeClass("hidden")
-          console.log ""
+      console.log npart
+      $("#pingpong-games option").remove()
+      $("#pingpong-games-container").removeClass("hidden")
+      if npart == 1 or npart == 2
+        for g in player_sel[npart]
+          game_txt = player_arr[g[0]]+" : "+player_arr[g[1]]
+          $("#pingpong-games").append(new Option(game_txt, game_txt))
+      else if npart==3
+        for g in player_sel[npart]
+          game_txt = player_arr[g[0][0]]+" - "+player_arr[g[0][1]] + " : "+ player_arr[g[1][0]]+" - "+player_arr[g[1][1]]
+          console.log game_txt
+          $("#pingpong-games").append(new Option(game_txt, game_txt))
 
   $("#act-type").change (event) ->
     act_type =  event.target.value
