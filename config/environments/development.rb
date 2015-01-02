@@ -35,5 +35,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  APP_CONFIG = YAML.load_file(ENV['HOME']+'/.smartsport_connection_data')[::Rails.env]
+  config_fname = ENV['HOME']+'/.smartsport_connection_data'
+  if not File.exists?(config_fname)
+    raise "Connections configuration file "+config_fname+" does not exist."
+  end
+  APP_CONFIG = YAML.load_file(config_fname)[::Rails.env]
 end

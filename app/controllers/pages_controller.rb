@@ -1,10 +1,18 @@
 class PagesController < ApplicationController
-  # skip_before_filter :require_login, only: [:index]
-  require 'rubygems'
+  layout :resolve_layout
+  skip_before_filter :require_login, only: [:login, :signup]
 
   @movesconn = nil
   @withingsconn = nil
   @fitbitconn = nil
+
+  def login
+    @user = User.new
+  end
+
+  def signup
+
+  end
 
   def dashboard
     @user = current_user
@@ -153,5 +161,16 @@ private
 
     return shown_user
 
+  end
+
+  def resolve_layout
+    case action_name
+      when "login"
+        "login"
+      when "signup"
+        "login"
+      else
+        "pages"
+    end
   end
 end

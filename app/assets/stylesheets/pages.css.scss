@@ -260,3 +260,122 @@ span.user-classifier {
 span.user-classifier.user-me {
   background-color: #5ca941;
 }
+
+// login page
+
+body.login-body {
+  background-color: #7b8c93;
+}
+
+div.login-page {
+  background: url(image_path('login_screen.jpg')) no-repeat center center ;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+
+
+.login-form-container {
+//  left: 50%;
+//  margin-left: -400px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+//  width: 800px;
+  box-sizing: border-box;
+//  overflow: hidden;
+  display: block;
+}
+
+.login-form-header {
+  margin-bottom: 14px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+//  font: 48px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+//  color: #666;
+}
+
+.login-form-header h1 {
+  color: #fff;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 24px;
+  margin: auto;
+
+  float: none;
+  width: 232px;
+  height: 50px;
+}
+
+.login-field {
+  margin: auto;
+  padding: 0;
+  position: relative;
+  border-top: 1px solid #e3e3e3;
+  font: inherit;
+  vertical-align: baseline;
+  width: 260px;
+
+  background: #fff;
+  z-index: 2;
+}
+
+.login-field:first-child {
+  border-top: 0;
+}
+
+input.login-input {
+  width: 100%;
+  padding: 11px 10px 11px 13px;
+  display: block;
+  margin: 0;
+  border: 0;
+  font: 16px/1.4 "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+
+  box-sizing: border-box;
+}
+input.login-input:focus {
+  border: none;
+  outline-width: 0;
+}
+.login-button {
+  color: white;
+  background-color: #529ecc;
+  font-size: 16px;
+  cursor: pointer;
+
+  height: 45px;
+  width: 260px;
+  border: 0px;
+}
+
+.submit-holder {
+  margin-top: 14px;
+  border-top: 0px;
+}
+
+.placeholder {
+  height: 20px;
+}
+
+.register-link-holder {
+  padding-top: 20px;
+}
+
+a.register-link {
+  color: #fff;
+  background-color: #7b8c93;
+  text-decoration: none;
+}
+a.register-link:visited {
+  color: #fff;
+}
+a.register-link:hover {
+  color: #529ecc;
+  background-color: #7b8c93;
+}

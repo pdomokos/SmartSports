@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   resources :notifications
 
-  get 'user_sessions/new'
-  get 'user_sessions/create'
-  get 'user_sessions/destroy'
+  # get 'user_sessions/create'
+  # get 'user_sessions/destroy'
 
   resources :user_sessions
 
@@ -14,6 +13,8 @@ Rails.application.routes.draw do
     resources :friendships
   end
 
+  get 'pages/login'
+  get 'pages/signup'
   get 'pages/dashboard'
   get 'pages/health'
   get 'pages/training'
@@ -43,7 +44,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'pages#dashboard'
 
-  get 'login' => 'user_sessions#new', :as => :login
+  get 'login' => 'pages#login', :as => :login
   post 'logout' => 'user_sessions#destroy', :as => :logout
 
   # Example of regular route:

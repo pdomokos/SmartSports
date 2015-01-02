@@ -1,0 +1,44 @@
+<div class="login-page">
+
+    <div class="login-form-container">
+        <div class="login-form-header">
+            <h1>SmartSport</h1>
+        </div>
+
+        <div class="placeholder">
+        </div>
+
+        <div class="login-form">
+            <%= form_tag users_path, :method => :post do %>
+                <div>
+                    <div class="login-field">
+                        <%= text_field_tag 'user[email]', "", { :class => 'login-input', :placeholder => "Email"} %>
+                    </div>
+                    <div class="login-field">
+                        <%= password_field_tag 'user[password]', "", { :class => 'login-input', :placeholder => "Password"} %>
+                    </div>
+                    <div class="login-field">
+                        <%= password_field_tag 'user[password_confirmation]', "", { :class => 'login-input', :placeholder => "Password again"} %>
+                    </div>
+                    <div class="login-field">
+                        <%= text_field_tag 'user[username]', "", { :class => 'login-input', :placeholder => "User name"} %>
+                    </div>
+                    <div class="login-field">
+                        <%= text_field_tag 'user[name]', "", { :class => 'login-input', :placeholder => "Full name"} %>
+                    </div>
+
+
+                    <div class="login-field submit-holder">
+                        <button class="login-button">Sign up</button>
+                    </div>
+                </div>
+
+
+            <% end %>
+        </div>
+        <div class="register-link-holder">
+            <a href="<%= pages_login_path %>" class="register-link">Log in</a>
+        </div>
+    </div>
+
+</div>
