@@ -73,8 +73,8 @@ class SyncController < ApplicationController
 
         result =  {:status=> "OK", :meas => meas, :act =>act}
       rescue Exception => e
-        puts e.message
-        puts e.backtrace
+        logger.error e.message
+        logger.error e.backtrace
         result =  {:status => "ERR"}
       end
     else
@@ -93,7 +93,6 @@ class SyncController < ApplicationController
       connection_data = JSON.parse(fitbit_conn.data)
       client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'], :consumer_key => APP_CONFIG['FITBIT_KEY'], :consumer_secret => APP_CONFIG['FITBIT_SECRET'])
       userinfo = client.user_info
-      puts userinfo
       member_since = userinfo['user']['memberSince']
 
       now = DateTime.now()
@@ -128,7 +127,6 @@ class SyncController < ApplicationController
     dateFormat = "%Y-%m-%d"
     @moves = Moves::Client.new(sess["token"])
     @profile = @moves.profile['profile']
-    puts @profile
     currDate = Date.parse(@profile['firstDate'])
     today = Date.today()
     todayYmd = today.strftime(dateFormat)
@@ -139,7 +137,7 @@ class SyncController < ApplicationController
         dbActivities = nil
       end
       if dbActivities.nil? or dbActivities.size == 0
-        puts "syncing #{currDate}"
+        logger.info "syncing #{currDate}"
         currDateYmd = currDate.strftime(dateFormat)
         summary = @moves.daily_summary(currDateYmd)
         for item in summary do
@@ -147,14 +145,13 @@ class SyncController < ApplicationController
             lastUpdate = item['lastUpdate']
             sItem = item['summary']
             isFinal = false
-            puts "currdate="+currDate.to_s
-            puts "today="+today.to_s
+            logger.info "currdate="+currDate.to_s
+            logger.info "today="+today.to_s
             if currDate < today
               isFinal = true
             end
             i = 0
             for rec in sItem do
-              puts "rec[#{i}]=#{rec}"
               act = Activity.new( user_id: current_user.id, source: 'moves', date: currDate, activity:  rec['activity'], group: rec['group'],
                   total_duration: rec['duration'],
                   distance: rec['distance'],
@@ -164,15 +161,12 @@ class SyncController < ApplicationController
                   sync_final: isFinal
               )
               act.save!
-              puts "saved #{i} to db"
               i = i + 1
             end
           else
-            puts "no activities for #{currDate}"
+            logger.info "no activities for #{currDate}"
           end
         end
-      else
-        puts "exists #{currDate}"
       end
 
       currDate = currDate+1.day
@@ -214,7 +208,6 @@ class SyncController < ApplicationController
   def sync_withings_meas(withings_user)
 
     lastupdate = get_withings_last_sync(current_user.id)
-    puts lastupdate
 
     meas = withings_user.getmeas({ :lastupdate => lastupdate})
 
@@ -228,7 +221,7 @@ class SyncController < ApplicationController
          :pulse => item.heart_pulse,
          :SPO2 => item.spo2}
       )
-      puts measurement.to_json
+      logger.debug measurement.to_json
       measurement.save!
     end
     return meas

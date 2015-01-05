@@ -134,7 +134,6 @@ private
     shown_user_id = params[:shown_user].to_i
     shown_user = nil
     if shown_user_id == current_user.id
-      puts "this is you"
       failed = true
     end
 
@@ -142,7 +141,7 @@ private
       q = User.where("id = #{shown_user_id}")
       if q.size != 1
         failed = true
-        puts "Invalid user id "+shown_user_id.to_s
+        logger.info "Invalid user id "+shown_user_id.to_s
       else
         shown_user = q.first()
       end
@@ -151,7 +150,7 @@ private
     if not failed and shown_user
       if not shown_user.is_friend?(current_user.id)
         failed = true
-        puts "Unauth user id "+shown_user_id.to_s
+        logger.info "Unauth user id "+shown_user_id.to_s
       end
     end
 

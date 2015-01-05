@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   root 'pages#dashboard'
 
   get 'login' => 'pages#login', :as => :login
+  get 'signup' => 'pages#signup', :as => :signup
   post 'logout' => 'user_sessions#destroy', :as => :logout
 
   # Example of regular route:

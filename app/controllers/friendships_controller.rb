@@ -15,7 +15,6 @@ class FriendshipsController < ApplicationController
 
 
     data = @friendships.collect do |f|
-      puts "uid="+uid+" f.user1_id="+f.user1_id.to_s
       other = f.user1
       invited = true
       if f.user1.id == uid.to_i
@@ -70,7 +69,6 @@ class FriendshipsController < ApplicationController
 
     respond_to do |format|
       if not failed
-        puts "save ok"
         notif1 = Notification.new({:user_id => user1.id, :title => "Friend", :detail => "Friend request sent to #{user2.username}", :notification_type =>"friend", :date => DateTime.now()})
         notif1.save!
         notif2 = Notification.new({:user_id => user2.id, :title => "Friend",
@@ -81,7 +79,6 @@ class FriendshipsController < ApplicationController
         format.html { redirect_to user_friendships_path(current_user) }
         format.json { render json: {:status => "OK", :friendship => @friendship } }
       else
-        puts "save NOK"
         format.html {  redirect_to user_friendships_path(current_user) }
         format.json { render json: { :status => "NOK", :msg => msg } }
       end
@@ -95,7 +92,7 @@ class FriendshipsController < ApplicationController
         @friendship.authorized = true
         ret = @friendship.save!
         if not ret
-          puts "failed to activate"
+          logger.error "failed to activate"
         end
         respond_to do |format|
           format.html { redirect_to user_friendships_path(current_user)}
