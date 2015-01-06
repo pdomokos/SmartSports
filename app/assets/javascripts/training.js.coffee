@@ -98,8 +98,8 @@ draw_conn_data = (jsondata) ->
 
   activity_chart = new ActivityChart(source, source+"-container", jsondata, data_helper)
   @activity_charts.push(activity_chart)
-  activity_chart.draw(d, "walking")
   activity_chart.update_daily(data_helper.fmt(d))
+  activity_chart.draw(d, "walking")
   activity_chart.set_callback(selection_callback)
 
   trend_chart = new OverviewChart(source, source+"-container", jsondata, data_helper)
@@ -152,6 +152,7 @@ register_events = () ->
     chart.show_selection()
     trend_chart = get_chart(self.trend_charts, activity_conn)
     trend_chart.show_curr_week(curr)
+
   $("i.activities-right-arrow").click (evt) ->
     par = evt.currentTarget.parentNode.parentNode.parentNode.parentNode
     activity_conn =  $(par).find("input.connection-name")[0].value

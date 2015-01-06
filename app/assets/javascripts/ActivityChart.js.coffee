@@ -28,6 +28,9 @@ class ActivityChart extends BaseChart
 
     if showdata.length==0
       console.log "no data"
+      @nodata = true
+    else
+      @nodata = false
 
     svg = d3.select($("#"+@chart_element+" svg.activity-chart-svg")[0])
     svg = svg
@@ -36,10 +39,9 @@ class ActivityChart extends BaseChart
       .append("g")
       .attr("transform", "translate("+margin.left+","+margin.top+")")
 
-    if showdata.length==0
-      console.log "no data"
+    if @nodata
       svg.append("text")
-      .text("No data!")
+      .text("No data")
       .attr("class", "warn")
       .attr("x", width/2-margin.left)
       .attr("y", self.height/2)
@@ -73,7 +75,6 @@ class ActivityChart extends BaseChart
       .scale(self.time_scale)
       .tickSize(8, 0)
       .ticks(5)
-#      .ticks(d3.time.days)
     svg
       .append("g")
       .attr("class", "x axis")
@@ -142,21 +143,51 @@ class ActivityChart extends BaseChart
         self.callback(d)
     )
 
+  draw_percent: (percent) ->
+    console.log("draw percent")
+    $("#"+@chart_element+" svg.goal-percent-indicator").empty()
+    svg = d3.select($("#"+@chart_element+" svg.goal-percent-indicator")[0])
+
+    fullarc = d3.svg.arc()
+      .innerRadius(60)
+      .outerRadius(70)
+      .startAngle(0)
+      .endAngle(2*Math.PI)
+
+    arc = d3.svg.arc()
+      .innerRadius(60)
+      .outerRadius(70)
+      .startAngle(0)
+      .endAngle(percent/100*2*Math.PI)
+
+    g = svg
+      .append("g")
+      .attr("transform", "translate(75, 75)")
+
+    g.append("path")
+    .attr("class", "full-arc")
+    .attr("d", fullarc)
+
+    g.append("path")
+      .attr("class", "percent-arc")
+      .attr("d", arc)
+
   set_callback: (cb) ->
     @callback = cb
 
   show_selection: ->
-    currdate = Date.parse($("#"+@chart_element+" input.curr-date")[0].value)
+    if not @nodata
+      currdate = Date.parse($("#"+@chart_element+" input.curr-date")[0].value)
 
-    self = this
-    svg = d3.select($("#"+@chart_element+" svg.activity-chart-svg g:first-child")[0])
-    d3.selectAll($("#"+@chart_element+" svg.activity-chart-svg line.sel")).remove()
-    svg.insert("line", ":first-child")
-      .attr("class", "sel")
-      .attr("x1", self.time_scale(currdate)-2)
-      .attr("y1", -10)
-      .attr("x2", self.time_scale(currdate)-2)
-      .attr("y2", self.height)
+      self = this
+      svg = d3.select($("#"+@chart_element+" svg.activity-chart-svg g:first-child")[0])
+      d3.selectAll($("#"+@chart_element+" svg.activity-chart-svg line.sel")).remove()
+      svg.insert("line", ":first-child")
+        .attr("class", "sel")
+        .attr("x1", self.time_scale(currdate)-2)
+        .attr("y1", -10)
+        .attr("x2", self.time_scale(currdate)-2)
+        .attr("y2", self.height)
 
   update_daily: (sel_date) ->
     $("#"+@chart_element+" input.is-weekly")[0].value = ""
@@ -169,11 +200,14 @@ class ActivityChart extends BaseChart
     daily = @data_helper.get_daily_activities(sel_date)
     sum_steps = @data_helper.get_sum_measure(daily, 'steps', ['walking'])
     $("#"+@chart_element+" div.steps").html(sum_steps)
-    $("#"+@chart_element+" div.avg-percent").html((sum_steps/10000.0*100.0).toFixed(1)+"%")
+    percent = (sum_steps/10000.0*100.0).toFixed(1)
+    $("#"+@chart_element+" div.avg-percent").html(percent+"%")
+    @draw_percent(percent)
+
     $("#"+@chart_element+" div.avg-description").html("of 10,000 steps")
     $("#"+@chart_element+" div.km-running").html(@data_helper.get_sum_measure(daily, 'distance', ['running']).toFixed(2))
     $("#"+@chart_element+" div.km-cycling").html(@data_helper.get_sum_measure(daily, 'distance', ['cycling']).toFixed(2))
-    $("#"+@chart_element+" div.calories").html(@data_helper.get_sum_measure(daily, 'calories', ['walking', 'running', 'cycling']))
+    $("#"+@chart_element+" div.calories").html(Math.round(@data_helper.get_sum_measure(daily, 'calories', ['walking', 'running', 'cycling'])))
     $("#"+@chart_element+" div.distance").html(@data_helper.get_sum_measure(daily, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
     duration_sec = @data_helper.get_sum_measure(daily, 'total_duration', ['walking', 'running', 'cycling'])
     timestr = @data_helper.get_hour(duration_sec)+"h "+@data_helper.get_min(duration_sec)+"min"
@@ -187,13 +221,15 @@ class ActivityChart extends BaseChart
     $("#"+@chart_element+" div.chart-date").html("Week of "+@data_helper.fmt_month_day(monday)+" - "+@data_helper.fmt_month_day(sunday)+" "+@data_helper.fmt_year(sunday))
 
     sum_steps = @data_helper.get_sum_measure(weekly, 'steps', ['walking'])
-    $("#"+@chart_element+" div.avg-percent").html((sum_steps/70000.0*100.0).toFixed(1)+"%")
+    percent = (sum_steps/70000.0*100.0).toFixed(1)
+    $("#"+@chart_element+" div.avg-percent").html(percent+"%")
+    @draw_percent(percent)
     $("#"+@chart_element+" div.avg-description").html("of 70,000 steps")
 
     $("#"+@chart_element+" div.steps").html(sum_steps)
     $("#"+@chart_element+" div.km-running").html(@data_helper.get_sum_measure(weekly, 'distance', ['running']).toFixed(2))
     $("#"+@chart_element+" div.km-cycling").html(@data_helper.get_sum_measure(weekly, 'distance', ['cycling']).toFixed(2))
-    $("#"+@chart_element+" div.calories").html(@data_helper.get_sum_measure(weekly, 'calories', ['walking', 'running', 'cycling']))
+    $("#"+@chart_element+" div.calories").html(Math.round(@data_helper.get_sum_measure(weekly, 'calories', ['walking', 'running', 'cycling'])))
     $("#"+@chart_element+" div.distance").html(@data_helper.get_sum_measure(weekly, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
     duration_sec = @data_helper.get_sum_measure(weekly, 'total_duration', ['walking', 'running', 'cycling'])
     timestr = @data_helper.get_hour(duration_sec)+"h "+@data_helper.get_min(duration_sec)+"min"

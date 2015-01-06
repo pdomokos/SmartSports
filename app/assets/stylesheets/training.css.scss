@@ -8,7 +8,6 @@
 
 .meas-col {
   display: block;
-  //  line-height: 0;
   content: "";
   width: 33%;
   float: left;
@@ -22,10 +21,25 @@
 .meas-col:after {
   clear: both;
 }
-
-.meas-center {
-  text-align: center;
+.meas-center-container {
+  position: relative;
+  height: 10em;
 }
+.meas-center {
+  position: absolute;
+  top: 50%;
+  height: 5em;
+
+  margin-top: -2em;
+  margin-left: 1.5em;
+}
+
+#goal-percent-indicator {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+}
+
 .meas-block {
   float: left;
   display: block;
@@ -36,7 +50,7 @@
   cursor: pointer;
 }
 .meas-block.selected {
-  border-left: 6px solid $hover_color;
+  border-left: 6px solid $meas_selected_color;
 }
 
 .meas-val {
@@ -51,13 +65,19 @@
   padding-bottom: 2px;
 }
 
-
+.full-arc {
+  fill: #e0e0e0;
+  stroke-width: 0;
+}
+.percent-arc {
+  fill: #fe6420;
+  stroke-width: 0;
+}
 // d3
 
 #moves-chart {
   padding: 0;
 }
-
 
 path {
   fill:none;
@@ -107,15 +127,17 @@ rect.selected{
 }
 
 line.sel {
-  stroke: $hover_color;
+  stroke: $selection_color;
 }
 rect.sel {
-  fill: $hover_color;
+  fill: $selection_color;
   opacity: 0.5;
 }
 
 text.warn {
-  fill: red;
+  fill: #FF4033;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .chart {
@@ -128,7 +150,6 @@ text.warn {
 
   position: relative;
   display: inline-block;
-//  padding: 7px 12px;
   font-size: 13px;
   font-weight: bold;
   color: #333;
@@ -169,13 +190,14 @@ text.warn {
 
 path.line {
   fill: none;
-  stroke: #666;
-//  stroke: #49EE3F;
-//  stroke: black;
+  stroke: #fc4e2a;
   stroke-width: 1.5px;
 }
 
 path.area {
-//  fill: #e7e7e7;
-  fill: lightgreen;
+  fill: #fd8d3c;
+}
+
+svg.activity-trend-svg circle {
+  fill: #fc4e2a;
 }

@@ -20,8 +20,11 @@ class OverviewChart extends BaseChart
       showdata = @data[meas]
       y_domain_getter = (d) -> d.distance
 
-    if !showdata or showdata.length==0
+    if not showdata or showdata.length==0
       console.log "trends no data"
+      @nodata = true
+    else
+      @nodata = false
 
     svg = d3.select($("#"+@chart_element+" svg.activity-trend-svg")[0])
     svg = svg
@@ -30,10 +33,9 @@ class OverviewChart extends BaseChart
     .append("g")
     .attr("transform", "translate("+margin.left+","+margin.top+")")
 
-    if showdata.length==0
-      console.log "trends no data"
+    if @nodata
       svg.append("text")
-      .text("No data!")
+      .text("No data")
       .attr("class", "warn")
       .attr("x", width/2-margin.left)
       .attr("y", self.height/2)
@@ -64,40 +66,15 @@ class OverviewChart extends BaseChart
 
     line = d3.svg
       .line()
-      .interpolate("monotone")
+#      .interpolate("monotone")
       .x(x_getter)
       .y(y_getter)
-
-    #  svg.append("clipPath")
-    #    .attr("id", "clip")
-    #    .append("rect")
-    #    .attr("width", width)
-    #    .attr("height", trend_height);
-
-    svg.
-      selectAll("#"+@chart_element+" svg.activity-trend-svgcircle")
-      .data(showdata)
-      .enter()
-      .append("circle")
-      .attr("cx", (d) -> self.time_scale(Date.parse(d.date)))
-      .attr("cy", y_getter)
-      .attr("r", 3)
-
-    svg.append("path")
-      .attr("class", "area")
-      .attr("clip-path", "url(#clip)")
-      .attr("d", area(showdata));
-
-    svg.append("path")
-      .attr("class", "line")
-      .attr("clip-path", "url(#clip)")
-      .attr("d", line(showdata));
 
 
     time_axis = d3.svg.axis()
       .scale(self.time_scale)
-      .ticks(6)
-      .tickSize(5, 0)
+      .ticks(d3.time.weeks, 2)
+#      .tickSize(5, 0)
     svg
       .append("g")
       .attr("class", "x axis")
@@ -121,6 +98,20 @@ class OverviewChart extends BaseChart
       .attr("x", (width / 2) )
       .attr("y", margin.bottom*.8);
 
+    svg.
+      selectAll("#"+@chart_element+" svg.activity-trend-svg")
+      .data(showdata)
+      .enter()
+      .append("circle")
+      .attr("cx", (d) -> self.time_scale(Date.parse(d.date)))
+      .attr("cy", y_getter)
+      .attr("r", 3)
+
+    svg.append("path")
+      .attr("class", "line")
+      .attr("clip-path", "url(#clip)")
+      .attr("d", line(showdata));
+
   show_curr_week: (currdate) ->
     self = this
     monday = @data_helper.get_monday(@fmt(currdate))
@@ -136,10 +127,13 @@ class OverviewChart extends BaseChart
 
     svg_trend = d3.select($("#"+@chart_element+" svg.activity-trend-svg g:first-child")[0])
     d3.selectAll($("#"+@chart_element+" svg.activity-trend-svg rect.sel")).remove()
-    svg_trend.append("svg:rect")
+    w = self.time_scale(sunday.getTime())-self.time_scale(monday.getTime())
+    if w < 2
+      w = 2
+    svg_trend.insert("svg:rect", ":first-child")
       .attr("class", "sel")
       .attr("x", (self.time_scale(monday.getTime())))
-      .attr("width", self.time_scale(sunday.getTime())-self.time_scale(monday.getTime()))
+      .attr("width", w)
       .attr("y", 0)
       .attr("height", self.height)
 
