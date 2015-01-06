@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141119151112) do
+ActiveRecord::Schema.define(version: 20150105144204) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -87,16 +87,20 @@ ActiveRecord::Schema.define(version: 20141119151112) do
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "name",             null: false
-    t.string   "username",         null: false
-    t.string   "email",            null: false
-    t.string   "crypted_password", null: false
-    t.string   "salt",             null: false
+    t.string   "name",                            null: false
+    t.string   "username",                        null: false
+    t.string   "email",                           null: false
+    t.string   "crypted_password",                null: false
+    t.string   "salt",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "connection_id"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token"
 
 end

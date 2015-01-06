@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'password_resets/create'
+
+  get 'password_resets/edit'
+
+  get 'password_resets/update'
+
   resources :notifications
 
   # get 'user_sessions/create'
@@ -12,6 +18,8 @@ Rails.application.routes.draw do
     resources :notifications
     resources :friendships
   end
+
+  resources :password_resets
 
   get 'pages/login'
   get 'pages/signup'
@@ -31,6 +39,7 @@ Rails.application.routes.draw do
   get 'sync/sync_withings'
   get 'sync/sync_fitbit'
 
+  get 'pages/pwreset'
   get 'pages/mdestroy'
   get 'pages/wdestroy'
   get 'pages/fdestroy'

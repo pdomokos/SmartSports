@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   layout :resolve_layout
-  skip_before_filter :require_login, only: [:login, :signup]
+  skip_before_filter :require_login, only: [:login, :signup, :pwreset]
 
   @movesconn = nil
   @withingsconn = nil
@@ -167,6 +167,8 @@ private
       when "login"
         "login"
       when "signup"
+        "login"
+      when "pwreset"
         "login"
       else
         "pages"
