@@ -2,9 +2,6 @@
 #= require ActivityChart
 #= require OverviewChart
 
-fmt = d3.time.format("%Y-%m-%d")
-fmt_words = d3.time.format("%Y %b %e")
-
 @training_loaded = () ->
   reset_ui()
   register_events()
@@ -98,7 +95,7 @@ draw_conn_data = (jsondata) ->
 
   activity_chart = new ActivityChart(source, source+"-container", jsondata, data_helper)
   @activity_charts.push(activity_chart)
-  activity_chart.update_daily(data_helper.fmt(d))
+  activity_chart.update_daily(fmt(d))
   activity_chart.draw(d, "walking")
   activity_chart.set_callback(selection_callback)
 

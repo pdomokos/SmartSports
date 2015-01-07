@@ -1,12 +1,11 @@
 #= require BaseChart
 
-class OverviewChart extends BaseChart
-  constructor: (@connection, @chart_element, data, @data_helper) ->
-    super(data)
+class OverviewChart
+  constructor: (@connection, @chart_element, @data, @data_helper) ->
 
   draw: (date, meas) ->
     self = this
-    date_ymd = @fmt(date)
+    date_ymd = fmt(date)
     console.log "draw_trend_chart "+date_ymd+" -> "+meas
 
     margin = {top: 10, right: 30, bottom: 40, left: 50}
@@ -114,11 +113,11 @@ class OverviewChart extends BaseChart
 
   show_curr_week: (currdate) ->
     self = this
-    monday = @data_helper.get_monday(@fmt(currdate))
+    monday = @data_helper.get_monday(fmt(currdate))
     monday.setHours(0)
     monday.setMinutes(0)
     monday.setSeconds(0)
-    sunday = @data_helper.get_sunday(@fmt(currdate))
+    sunday = @data_helper.get_sunday(fmt(currdate))
     sunday.setHours(23)
     sunday.setMinutes(59)
     sunday.setSeconds(59)

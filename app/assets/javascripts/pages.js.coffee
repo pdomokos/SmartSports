@@ -4,6 +4,47 @@
 
 @pages_menu = () ->
   console.log "pages layout"
+  define_globals()
+
+define_globals = () ->
+  window.fmt = d3.time.format("%Y-%m-%d")
+  window.fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
+  window.fmt_words = d3.time.format("%Y %b %e")
+  window.fmt_month_day = d3.time.format("%b %e")
+  window.fmt_year = d3.time.format("%Y")
+  window.get_hour =  (sec) ->
+    Math.floor(sec/60.0/60.0).toString()
+  window.get_min =  (sec) ->
+    Math.floor((sec%(60*60))/60).toString()
+
+  window.draw_percent = (chart_element, percent) ->
+    console.log("draw percent "+chart_element)
+    $("#"+chart_element+" svg.goal-percent-indicator").empty()
+    svg = d3.select($("#"+chart_element+" svg.goal-percent-indicator")[0])
+
+    fullarc = d3.svg.arc()
+    .innerRadius(60)
+    .outerRadius(70)
+    .startAngle(0)
+    .endAngle(2*Math.PI)
+
+    arc = d3.svg.arc()
+    .innerRadius(60)
+    .outerRadius(70)
+    .startAngle(0)
+    .endAngle(percent/100*2*Math.PI)
+
+    g = svg
+    .append("g")
+    .attr("transform", "translate(75, 75)")
+
+    g.append("path")
+    .attr("class", "full-arc")
+    .attr("d", fullarc)
+
+    g.append("path")
+    .attr("class", "percent-arc")
+    .attr("d", arc)
 
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")
@@ -30,7 +71,6 @@ load_friends = () ->
       console.log "AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "Successful friendship call"
-      console.log data
 
       $("div.friend-select-list").empty()
       $("#friend-form div.friend-list").empty()

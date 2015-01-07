@@ -1,8 +1,7 @@
 #= require BaseChart
 
-class HealthChart extends BaseChart
-  constructor: (@connection, @chart_element_hr, @chart_element_bp, @chart_element_spo2, data, @data_helper) ->
-    super(data)
+class HealthChart
+  constructor: (@connection, @chart_element_hr, @chart_element_bp, @chart_element_spo2, @data, @data_helper) ->
     i = 0
     for d in @data
       d.data_id = i
@@ -14,7 +13,7 @@ class HealthChart extends BaseChart
 
   draw: (date) ->
     self = this
-    date_ymd = @fmt(date)
+    date_ymd = fmt(date)
     console.log "draw_health_chart ["+@chart_element_hr+"] " +date_ymd
 
     @margin = {top: 20, right: 30, bottom: 20, left: 40}

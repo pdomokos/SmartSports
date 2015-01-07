@@ -1,11 +1,7 @@
+
 class DataHelper
   constructor: (@data) ->
-    @fmt = d3.time.format("%Y-%m-%d")
-    @fmt_words = d3.time.format("%Y %b %e")
-    @fmt_day = d3.time.format("%Y-%m-%d %a")
-    @fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
-    @fmt_year = d3.time.format("%Y")
-    @fmt_month_day = d3.time.format("%b %e")
+
   proc_training_data: () ->
     if @data.walking
       @conv_to_km(@data.walking)
@@ -22,7 +18,7 @@ class DataHelper
     transport = if @data.transport then @data.transport else []
 
     for d in walking.concat(running.concat(cycling.concat(transport)))
-      if @fmt(new Date(Date.parse(d.date))) == date
+      if fmt(new Date(Date.parse(d.date))) == date
         if d.group
           result[d.group].push(d)
         else
@@ -46,25 +42,16 @@ class DataHelper
           result['walking'].push(d)
     return result
 
-
-  get_hour: (sec) ->
-    Math.floor(sec/60.0/60.0).toString()
-
-  get_min: (sec) ->
-    Math.floor((sec%(60*60))/60).toString()
-
   get_data_size: ->
     h = {}
     walking = if @data.walking then @data.walking else []
     running = if @data.running then @data.running else []
     cycling = if @data.cycling then @data.cycling else []
     for d in walking.concat(running.concat(cycling))
-      curr = @fmt(new Date(Date.parse(d.date)))
+      curr = fmt(new Date(Date.parse(d.date)))
       h[curr] = true
     datanum = Object.keys(h).length
     return datanum
-
-
 
   conv_to_km: (data) ->
     for d in data

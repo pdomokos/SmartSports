@@ -1,8 +1,8 @@
 #= require BaseChart
 
-class TrendChart extends BaseChart
-  constructor: (@connection, @chart_element, data, @series_keys, series_names, @scale_keys, series_colors, @labels, @zero_when_missing=false) ->
-    super(data)
+class TrendChart
+  constructor: (@connection, @chart_element, @data, @series_keys, series_names, @scale_keys, series_colors, @labels, @zero_when_missing=false) ->
+
     console.log "TrendChart"
     @base_r = 3
     @selected_r = 8
@@ -31,7 +31,7 @@ class TrendChart extends BaseChart
 
     daily = Object()
     for d in @data
-      key = @fmt(new Date(Date.parse(d.date)))
+      key = fmt(new Date(Date.parse(d.date)))
       if daily[key]
         daily[key].push(d)
       else
@@ -174,4 +174,5 @@ class TrendChart extends BaseChart
       new_label.appendTo($("#legend-container"))
       $("#"+new_id).html(@name_map[k])
       $("#"+new_id).addClass(@color_map[k])
+
 window.TrendChart = TrendChart
