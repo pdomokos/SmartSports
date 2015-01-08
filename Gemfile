@@ -50,3 +50,5 @@ gem 'omniauth-withings'
 
 gem 'fitgem'
 gem 'omniauth-fitbit'
+
+gem 'mobile-fu'

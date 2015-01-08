@@ -1,17 +1,11 @@
 Rails.application.routes.draw do
 
   get 'password_resets/create'
-
   get 'password_resets/edit'
-
   get 'password_resets/update'
+  resources :password_resets
 
   resources :notifications
-
-  # get 'user_sessions/create'
-  # get 'user_sessions/destroy'
-
-  resources :user_sessions
 
   resources :users do
     resources :activities
@@ -21,16 +15,18 @@ Rails.application.routes.draw do
     resources :summary
   end
 
-  resources :password_resets
-
-  get 'pages/login'
-  get 'pages/signup'
   get 'pages/dashboard'
   get 'pages/health'
   get 'pages/training'
   get 'pages/lifestyle'
   get 'pages/genetics'
   get 'pages/settings'
+  get 'pages/mdestroy'
+  get 'pages/wdestroy'
+  get 'pages/fdestroy'
+  get '/auth/moves/callback' => 'pages#movescb'
+  get '/auth/withings/callback' => 'pages#withingscb'
+  get '/auth/fitbit/callback' => 'pages#fitbitcb'
 
   resources :activities
   resources :notifications
@@ -41,23 +37,17 @@ Rails.application.routes.draw do
   get 'sync/sync_withings'
   get 'sync/sync_fitbit'
 
-  get 'pages/pwreset'
-  get 'pages/mdestroy'
-  get 'pages/wdestroy'
-  get 'pages/fdestroy'
-  get '/auth/moves/callback' => 'pages#movescb'
-  get '/auth/withings/callback' => 'pages#withingscb'
-  get '/auth/fitbit/callback' => 'pages#fitbitcb'
+  get 'sessions/reset_password'
+  get 'login' => 'sessions#signin', :as => :login
+  get 'signup' => 'sessions#signup', :as => :signup
+  post 'logout' => 'sessions#destroy', :as => :logout
+  resources :sessions
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'pages#dashboard'
-
-  get 'login' => 'pages#login', :as => :login
-  get 'signup' => 'pages#signup', :as => :signup
-  post 'logout' => 'user_sessions#destroy', :as => :logout
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

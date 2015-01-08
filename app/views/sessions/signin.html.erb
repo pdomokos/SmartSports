@@ -9,22 +9,25 @@
         </div>
 
         <div class="login-form">
-            <%= form_tag password_resets_path, :method => :post do %>
-
+            <%= form_tag sessions_path, :method => :post do %>
                 <div>
                     <div class="login-field">
                         <%= text_field_tag :email, "", { :class => 'login-input', :placeholder => "Email"} %>
                     </div>
+                    <div class="login-field">
+                        <%= password_field_tag :password, "", { :class => 'login-input', :placeholder => "Password"} %>
+                    </div>
 
                     <div class="login-field submit-holder">
-                        <button class="login-button">Reset my password!</button>
+                        <button class="login-button">Log in</button>
                     </div>
                 </div>
             <% end %>
-
         </div>
         <div class="register-link-holder">
-            <a href="<%= pages_login_path %>" class="register-link">Log in</a>
+            <a href="<%= signup_path %>" class="register-link">Sign up</a>
+            <a href="<%= sessions_reset_password_path %>">Forgot password?</a>
         </div>
     </div>
+
 </div>

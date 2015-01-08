@@ -1,18 +1,9 @@
 class PagesController < ApplicationController
-  layout :resolve_layout
-  skip_before_filter :require_login, only: [:login, :signup, :pwreset]
+  layout 'pages'
 
   @movesconn = nil
   @withingsconn = nil
   @fitbitconn = nil
-
-  def login
-    @user = User.new
-  end
-
-  def signup
-
-  end
 
   def dashboard
     @user = current_user
@@ -159,19 +150,6 @@ private
     end
 
     return shown_user
-
   end
 
-  def resolve_layout
-    case action_name
-      when "login"
-        "login"
-      when "signup"
-        "login"
-      when "pwreset"
-        "login"
-      else
-        "pages"
-    end
-  end
 end

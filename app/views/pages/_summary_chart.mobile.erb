@@ -1,0 +1,76 @@
+<div id="dashboard-summary-container" class="boxed-group connection-block">
+    <input type="hidden" class="curr-date" />
+    <input type="hidden" class="curr-meas" value="walking"/>
+    <input type="hidden" class="is-weekly" value="no"/>
+
+    <h3>
+        <!--TODO icon-->
+        <img src="<%= asset_path("logo.png")%>" width="24px" height="24px" class="left" style="color: purple">
+        <div class="training-type left">Today's summary</div>
+        <div class="detail training-detail left"></div>
+    </h3>
+
+    <div class="boxed-group-inner clearfix">
+        <div class="meas-col">
+            <div class="meas-block">
+                <div class="meas-val steps">
+                </div>
+                <div class="meas-annot">
+                    Steps Walking
+                </div>
+            </div>
+            <div class="meas-block">
+                <div class="meas-val km-cycling">
+                </div>
+                <div class="meas-annot">
+                    Km Cycling
+                </div>
+            </div>
+            <div class="meas-block">
+                <div class="meas-val km-running">
+                </div>
+                <div class="meas-annot">
+                    Km Running
+                </div>
+            </div>
+        </div>
+
+        <div class="meas-col">
+            <div class="meas-center-container">
+                <div class="meas-center">
+                    <div class="meas-val avg-percent">
+                        10%
+                    </div>
+                    <div class="meas-annot avg-description">
+                        of weekly average
+                    </div>
+                </div>
+                <div class="meas-percent">
+                    <svg class="goal-percent-indicator"></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="meas-col">
+            <div class="meas-block">
+                <div class="meas-val calories"></div>
+                <div class="meas-annot">Calories</div>
+            </div>
+            <div class="meas-block">
+                <div class="meas-val distance"></div>
+                <div class="meas-annot">Km distance</div>
+            </div>
+            <div class="meas-block">
+                <div class="meas-val meas-small duration"></div>
+                <div class="meas-annot">Activity</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="boxed-group-inner chart activity-chart">
+        <svg class="activity-chart-svg">
+        </svg>
+    </div>
+
+
+</div>
