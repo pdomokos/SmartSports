@@ -1,6 +1,7 @@
 
 #= require ActivityChart
 #= require OverviewChart
+#= require TrainingTrendChart
 
 @training_loaded = () ->
   reset_ui()
@@ -16,34 +17,9 @@ data_received = (jsondata) ->
   draw_conn(jsondata)
 
 draw_trends = (jsondata) ->
-#  console.log jsondata
-#  map = {}
-#  data = []
-#  template = {'date': null, 'walking_duration': 0, 'running_duration': 0, 'cycling_duration': 0, 'transport_duration': 0, 'sleep_duration': 0, 'steps': 0}
-#  for actkey in ['walking', 'running', 'cycling', 'transport']
-#    for d in jsondata['activities'][actkey]
-#
-#      key = fmt(new Date(d.date))
-#      curr = map[key]
-#      if !curr
-#        map[key] = $.extend({}, template)
-#        curr = map[key]
-#
-#      curr['date'] = key
-#      if d.source == 'moves'
-#
-#        curr[actkey+'_duration'] = d.total_duration
-#        curr['steps'] = curr['steps']+d.steps
-#
-#  keys = Object.keys(map)
-#  keys.sort()
-#
-#  for k in keys
-#    data.push(map[k])
-
   console.log jsondata
 
-  act_trend_chart = new TrendChart("activity-trend", jsondata,
+  act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
     ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
     ["Walking", "Running", "Cycling", "Transport", "Steps"],
     ["left", "left", "left", "left", "right"],

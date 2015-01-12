@@ -2,7 +2,6 @@
 
 class TrendChart
   constructor: (@chart_element, @data, @series_keys, series_names, @side_keys, series_colors, @labels, @zero_when_missing=false) ->
-
     console.log "TrendChart"
     @base_r = 3
     @selected_r = 8
@@ -22,65 +21,7 @@ class TrendChart
       @name_map[@series_keys[i]] = series_names[i]
       @side_map[@series_keys[i]] = @side_keys[i]
 
-  get_series: () ->
-    template = {'date': null, 'walking_duration': 0, 'running_duration': 0, 'cycling_duration': 0, 'transport_duration': 0, 'sleep_duration': 0, 'steps': 0}
-    result = Object()
-
-    for actkey in ['walking', 'running', 'cycling', 'transport']
-      daily_activity = Object()
-      for d in @data['activities'][actkey]
-        key = fmt(new Date(Date.parse(d.date)))
-        if daily_activity[key]
-          daily_activity[key].push(d)
-        else
-          daily_activity[key] = [d]
-
-      days = Object.keys(daily_activity)
-      if days == null
-        continue
-      days.sort()
-
-      for day in days
-        daily_data = daily_activity[day]
-        result_daily = result[day]
-        if !result_daily
-          result_daily = $.extend({}, template)
-          result_daily['date'] = day
-          result[day] = result_daily
-        @aggregate(daily_data, result_daily)
-    return(result)
-
-  aggregate: (data, result) ->
-    len = data.length
-    if len==0
-      if @zero_when_missing
-        return 0
-      else
-        return null
-
-    current_item =  data.filter( (d) -> d['source'] == 'withings' )
-    if current_item.length != 0
-      result['walking_duration'] = current_item[0]['total_duration']
-      result['steps'] = current_item[0]['steps']
-    else
-      current_item =  data.filter( (d) -> d['source'] == 'fitbit')
-      if current_item.length != 0
-        result['walking_duration'] = current_item[0]['total_duration']
-        result['steps'] = current_item[0]['steps']
-      else
-        current_item = data
-        switch data[0]['group']
-          when 'walking'
-            result['walking_duration'] = current_item[0]['total_duration']
-            result['steps'] = current_item[0]['steps']
-          when 'running'
-            result['running_duration'] = current_item[0]['total_duration']
-          when 'cycling'
-            result['cycling_duration'] = current_item[0]['total_duration']
-          when 'transport'
-            result['transport_duration'] = current_item[0]['total_duration']
-          else
-            console.log "not found: "+data[0]['group']
+  # get_series() needs to be provided in subclass
 
   get_time_extent: () ->
     return d3.extent(@series, (d) -> new Date(d.date))
@@ -180,7 +121,7 @@ class TrendChart
 
     for k in @series_keys
       svg.selectAll("circle."+k+"-avg")
-        .data(self.series)
+        .data(self.series.filter( (d) -> d[k]!=null))
         .enter()
         .append("circle")
         .attr("cx", (d) -> time_scale(new Date(d.date)))
@@ -189,7 +130,7 @@ class TrendChart
         .attr("class", self.color_map[k]+" "+k)
 
       svg.append("path")
-        .datum(self.series)
+        .datum(self.series.filter( (d) -> d[k]!=null))
         .attr("class", "line "+self.color_map[k]+" "+k)
         .attr("d", self.line[k])
 

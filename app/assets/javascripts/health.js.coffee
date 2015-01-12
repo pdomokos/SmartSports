@@ -11,7 +11,7 @@ draw_charts = (data) ->
   health_type1 = "heartrate"
   health_type2 = "bloodpressure"
   health_type3 = "spo2"
-  heart_trend_chart = new TrendChart("heart-trend", data,
+  heart_trend_chart = new HealthTrendChart("heart-trend", data,
     ["systolicbp", "pulse", "diastolicbp"],
     ["SYS", "DIA", "HR"],
     ["left", "left", "right"]
