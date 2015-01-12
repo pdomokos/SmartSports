@@ -59,7 +59,13 @@
                             <i class="fa fa-cog"></i>
                         </div>
                         <div class="table-list-cell">
-                            <%= link_to "Edit Profile", edit_user_path(current_user.id), :class => "title-link" %>
+                            <%= link_to "Edit Profile", "#", :class => "title-link", :id => "edit-profile-button" %>
+
+                            <p id="update-profile-info"/>
+                            <div id="update-profile-form" class="hidden">
+                                <%= render 'edit_profile_form' %>
+                            </div>
+
                         </div>
                     </li>
                     <li class="table-list-item">

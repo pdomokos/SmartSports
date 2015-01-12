@@ -1,0 +1,30 @@
+<form id="edit-profile-form">
+
+    <% user= User.find(@current_user.id) %>
+    <p>
+        <label for="username">Login</label><br>
+        <input id="username" name="user[username]" type="text" value="<%=user.username%>" />
+    </p>
+    <p>
+        <label for="name">Full name</label><br>
+        <input id="name" name="user[name]" type="text" value="<%=user.name%>"/>
+    </p>
+    <p>
+        <label for="email">E-mail</label><br>
+        <input id="email" name="user[email]" type="text" value="<%=user.email%>" />
+    </p>
+    <p>
+        <label for="password">Password</label><br>
+        <input id="password" name="user[password]" type="password" />
+    </p>
+    <p>
+        <label for="password_confirmation">Password confirmation</label><br>
+        <input id="password_confirmation" name="user[password_confirmation]" type="password" />
+    </p>
+
+    <p>
+        <%= link_to "Update Profile", "#", :class => "button primary", :id => "update-profile-button" %>
+    </p>
+
+</form>
+

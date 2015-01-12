@@ -59,3 +59,30 @@
           console.log result['data']
         else
           $("#fitbit-sync-status").html(failure_message)
+
+  $("#edit-profile-button").click (event) ->
+    $("#update-profile-info").html("")
+    if $('#update-profile-form').hasClass("hidden")
+      $('#update-profile-form').removeClass("hidden")
+    else
+      $('#update-profile-form').addClass("hidden")
+
+
+  $("#update-profile-button").click (event) ->
+    user = $("#edit-profile-form").serialize()
+    id = $("#current-user-id")[0].value
+    $.ajax '/users/'+id,
+      type: 'PUT',
+      data: user,
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "UPDATE user AJAX Error: #{textStatus}"
+        $("#update-profile-info").html("Profile update error")
+      success: (data, textStatus, jqXHR) ->
+        console.log "UPDATE user  Successful AJAX call"
+        if data.status == "NOK"
+          $("#update-profile-info").html("Profile update error")
+        else
+          $("#update-profile-info").html("Profile updated successfully")
+          $('#update-profile-form').addClass("hidden")
+
