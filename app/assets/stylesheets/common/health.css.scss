@@ -110,6 +110,16 @@ circle.pulse-avg {
   box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
   color: #fff;
 }
+
+.legend-label {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  /* No support for these yet, use at own risk */
+  -o-user-select: none;
+  user-select: none;
+}
 // ColorBrewer color sets
 
 // qualitative

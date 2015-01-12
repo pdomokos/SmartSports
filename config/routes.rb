@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get 'sync/sync_fitbit'
 
   get 'sessions/reset_password'
+  get 'sessions/signin'
   get 'login' => 'sessions#signin', :as => :login
   get 'signup' => 'sessions#signup', :as => :signup
   post 'logout' => 'sessions#destroy', :as => :logout

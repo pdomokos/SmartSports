@@ -1,9 +1,21 @@
 class PagesController < ApplicationController
+  has_mobile_fu
   layout 'pages'
 
   @movesconn = nil
   @withingsconn = nil
   @fitbitconn = nil
+
+  def formats=(values)
+    # fall back to the browser view if the mobile or tablet version does not exist
+    values << :html if values == [:mobile] or values == [:tablet]
+
+    # DEBUG: force mobile. Uncomment if not debugging!
+    #values = [:mobile, :html] if values == [:html]
+    # values = [:tablet, :html] if values == [:html]
+
+    super(values)
+  end
 
   def dashboard
     @user = current_user

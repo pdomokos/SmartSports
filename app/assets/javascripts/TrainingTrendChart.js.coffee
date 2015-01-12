@@ -27,6 +27,7 @@ class TrainingTrendChart extends TrendChart
           result_daily['date'] = day
           result[day] = result_daily
         @aggregate(daily_data, result_daily)
+    console.log result
     return(result)
 
   aggregate: (data, result) ->

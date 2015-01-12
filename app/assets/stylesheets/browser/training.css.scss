@@ -1,0 +1,198 @@
+@import "../common/config";
+
+//graph
+
+.training-block {
+  margin-top: 20px;
+}
+
+.meas-col {
+  display: block;
+  content: "";
+  width: 33%;
+  float: left;
+}
+.meas-col:last-child .meas-block {
+  text-align: right;
+}
+.meas-col:last-child .meas-block .meas-val {
+  padding-right: 0;
+}
+.meas-col:after {
+  clear: both;
+}
+.meas-center-container {
+  position: relative;
+  height: 10em;
+}
+.meas-center {
+  position: absolute;
+  top: 50%;
+  height: 5em;
+
+  margin-top: -2em;
+  margin-left: 1.5em;
+}
+
+#goal-percent-indicator {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+}
+
+.meas-block {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  border-left: 6px solid white;
+  cursor: pointer;
+}
+.meas-block.selected {
+  border-left: 6px solid $meas_selected_color;
+}
+
+.meas-val {
+  color: #494847;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 8px 8px 8px 0;
+}
+
+.meas-small {
+  font-size: 16px;
+  padding-bottom: 2px;
+}
+
+.full-arc {
+  fill: #e0e0e0;
+  stroke-width: 0;
+}
+.percent-arc {
+  fill: #fe6420;
+  stroke-width: 0;
+}
+// d3
+
+#moves-chart {
+  padding: 0;
+}
+
+path {
+  fill:none;
+  stroke:black;
+  stroke-width:2px;
+}
+
+rect.walking {
+  fill:#ffac29;
+}
+rect.cycling {
+  fill:#fe6420;
+}
+rect.running{
+  fill:#fe201b;
+}
+rect.selected{
+  fill:#ccc;
+}
+
+
+.axis path{
+  fill:none;
+  stroke: #c0c0c0;
+}
+
+.axis text {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+  cursor: default;
+  line-height: 14px;
+  fill: #666;
+}
+.tick text {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #666;
+  cursor: default;
+  line-height: 14px;
+  fill: #666;
+}
+.axis line {
+  fill: none;
+  stroke: #666;
+  shape-rendering: crispEdges;
+}
+
+line.sel {
+  stroke: $selection_color;
+}
+rect.sel {
+  fill: $selection_color;
+  opacity: 0.5;
+}
+
+text.warn {
+  fill: #FF4033;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.chart {
+  border-top: 0;
+}
+
+.minibutton {
+  padding: 0 10px;
+  line-height: 24px;
+
+  position: relative;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #eee;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  background-repeat: repeat-x;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+}
+
+.arrow {
+  color: $hover_color;
+  cursor: pointer;
+}
+.chart-nav:after {
+  clear: both;
+}
+
+.nav-arrow-left {
+  width: 20%;
+  float: left;
+}
+.nav-arrow-right {
+  width: 20%;
+  float: left;
+  text-align: right;
+}
+.nav-arrow-centered {
+  text-align: center;
+  width: 60%;
+  float: left;
+}
+
+path.line {
+  fill: none;
+  stroke: #fc4e2a;
+  stroke-width: 1.5px;
+}
+
+svg.activity-trend-svg circle {
+  fill: #fc4e2a;
+}

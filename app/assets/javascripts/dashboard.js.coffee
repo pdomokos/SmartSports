@@ -294,15 +294,17 @@ draw_daily_activity = (chart_element, data) ->
 
   margin = {top: 30, right: 30, bottom: 30, left: 30}
   aspect = 400/700
-  width = $("#"+chart_element).parent().width()-margin.left-margin.right
+  parent_width = $("#"+chart_element).parent().width()
+  console.log "parent.width = "+parent_width
+  width = parent_width-margin.left-margin.right
   height = aspect*width-margin.top-margin.bottom
 
   svg = d3.select($("#"+chart_element+" svg.activity-chart-svg")[0])
   svg = svg
-  .attr("width", width+margin.left+margin.right)
-  .attr("height", height+margin.top+margin.bottom)
-  .append("g")
-    .attr("transform", "translate("+margin.left+","+margin.top+")")
+    .attr("width", parent_width)
+    .attr("height", height+margin.top+margin.bottom)
+    .append("g")
+      .attr("transform", "translate("+margin.left+","+margin.top+")")
 
   time_padding = 1
   time_extent = d3.extent(data, (d) -> d.time)
@@ -312,7 +314,7 @@ draw_daily_activity = (chart_element, data) ->
   y_extent = d3.extent( data, (d) -> d.activity )
   y_scale = d3.scale.linear().domain(y_extent).range([height, 0])
 
-  barwidth = width/25.0
+  barwidth = width/49.0
   svg
     .selectAll("rect.act")
     .data(data)

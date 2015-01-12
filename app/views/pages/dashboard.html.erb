@@ -4,24 +4,6 @@
     <div class="columns">
         <div class="column one-half">
 
-            <div class="event-list-header">
-                <div class="event-list-header-item">
-                    <i class="fa fa-inbox"></i>
-                    <span>Recent notifications</span>
-                </div>
-            </div>
-
-            <div id="event-list" class="events">
-                <!--place for activity records, loaded dynamically-->
-            </div>
-        </div>
-
-        <div class="column one-half">
-
-            <div id="dashboard-summary-container" class="boxed-group connection-block">
-                <%= render partial: 'summary_chart' %>
-            </div>
-
             <div id="manualdata-container" class="boxed-group connection-block">
                 <div class="boxed-group-inner spaced gray">
 
@@ -57,6 +39,28 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <div class="event-list-header">
+                <div class="event-list-header-item">
+                    <i class="fa fa-inbox"></i>
+                    <span>Recent notifications</span>
+                </div>
+            </div>
+
+            <div id="event-list" class="events">
+                <!--place for activity records, loaded dynamically-->
+            </div>
+        </div>
+
+        <div class="column one-half">
+
+            <div id="dashboard-summary-container" class="boxed-group connection-block">
+                <%= render partial: 'summary_chart' %>
+            </div>
+
+
 
 
         </div>

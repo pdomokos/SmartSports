@@ -1,4 +1,4 @@
-@import "config";
+@import "../common/config";
 
 //graph
 
@@ -9,7 +9,7 @@
 .meas-col {
   display: block;
   content: "";
-  width: 33%;
+  width: 50%;
   float: left;
 }
 .meas-col:last-child .meas-block {
@@ -187,15 +187,10 @@ text.warn {
   float: left;
 }
 
-
 path.line {
   fill: none;
   stroke: #fc4e2a;
   stroke-width: 1.5px;
-}
-
-path.area {
-  fill: #fd8d3c;
 }
 
 svg.activity-trend-svg circle {

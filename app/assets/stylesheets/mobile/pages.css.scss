@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "config";
+@import "../common/config";
 
 * {
   box-sizing: border-box;
@@ -10,7 +10,6 @@
 body {
   margin: 0;
   display: block;
-  min-width: 1020px;
   font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif;
   color: $default_font_color;
   background-color: #fff;
@@ -42,7 +41,8 @@ body {
 }
 
 .content {
-  width: 980px;
+  background: #ccc;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -185,6 +185,10 @@ body {
   color: #333;
   font-size: 20px;
   font-weight: bold;
+}
+
+.meas-percent {
+  min-height: 160px;
 }
 
 .boxed-group.flush .boxed-group-inner {

@@ -14,7 +14,6 @@ class HealthTrendChart extends TrendChart
       else
         daily_data[key] = [d]
 
-    console.log daily_data
     days = Object.keys(daily_data)
     if days == null
       return
@@ -26,8 +25,6 @@ class HealthTrendChart extends TrendChart
       result[day] = result_daily
       @aggregate(daily_data[day], result_daily)
 
-    console.log "HEALTH SERIES"
-    console.log result
     return(result)
 
   aggregate: (daily, result_daily) ->
