@@ -1,16 +1,16 @@
 #= require BaseChart
 
 class TrendChart
-  constructor: (@chart_element, @data, @series_keys, series_names, @side_keys, series_colors, @labels, @zero_when_missing=false) ->
+  constructor: (@chart_element, @data, @series_keys, series_names, @side_keys, series_colors, @labels, @zero_when_missing=false, @aspect=2.0/7) ->
     console.log "TrendChart"
     @base_r = 3
     @selected_r = 8
     @preproc_cb = null
 
     @margin = {top: 20, right: 40, bottom: 20, left: 30}
-    aspect = 200/700
+
     @width = $("#"+@chart_element+"-container").parent().width()-@margin.left-@margin.right
-    @height = aspect*@width-@margin.top-@margin.bottom
+    @height = @aspect*@width-@margin.top-@margin.bottom
 
     @n = @series_keys.length
     @color_map = {}
@@ -42,6 +42,7 @@ class TrendChart
     hash = @get_series()
     hashkeys = Object.keys(hash)
     hashkeys.sort()
+
     @series = hashkeys.map( (k) -> hash[k])
     if @preproc_cb != null
       @preproc_cb(@series)
@@ -138,16 +139,16 @@ class TrendChart
     self = this
     for k in @series_keys
       new_label = $("#legend-template").children().first().clone()
-      new_id =  "legend-label-" + k
+      tmp = @chart_element.replace("-", "_")
+      new_id =  "legend-label_"+tmp+"-" + k
       new_label.attr('id', new_id)
-      new_label.appendTo($("#legend-container"))
+      new_label.appendTo($("#"+@chart_element+"-container .legend-container"))
       $("#"+new_id).html(@name_map[k])
       $("#"+new_id).addClass(@color_map[k])
 
-      $("#legend-label-"+k).click (evt) ->
+      $("#"+new_id).click (evt) ->
         $("#"+evt.target.id).toggleClass("graph-hidden")
         [..., last] = evt.target.id.split("-")
-        console.log "svg."+self.chart_element+"-chart-svg ."+last
         op = $("#"+evt.target.id).hasClass("graph-hidden")
         d3.selectAll("svg."+self.chart_element+"-chart-svg ."+last).classed("hidden", op)
 

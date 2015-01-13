@@ -17,8 +17,6 @@ data_received = (jsondata) ->
   draw_conn(jsondata)
 
 draw_trends = (jsondata) ->
-  console.log jsondata
-
   act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
     ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
     ["Walking", "Running", "Cycling", "Transport", "Steps"],
@@ -28,7 +26,6 @@ draw_trends = (jsondata) ->
     true
   )
   act_trend_chart.preproc_cb = (data) ->
-    console.log "CB called"
     keys = ["walking_duration", "running_duration", "cycling_duration", "transport_duration"]
     for d in data
       for k in keys
@@ -60,7 +57,6 @@ draw_conn = (jsondata) ->
 draw_conn_data = (jsondata) ->
   source = jsondata.source
   console.log "DOING "+source
-  console.log jsondata
   jsondata = jsondata.activities
   data_helper = new DataHelper(jsondata)
   datanum = data_helper.get_data_size()
@@ -85,7 +81,6 @@ draw_conn_data = (jsondata) ->
   trend_chart.show_curr_week(d)
 
 selection_callback = (d) ->
-  console.log "selection_callback called, "+d.source
   trend_chart = get_chart(self.trend_charts, d.source)
   trend_chart.show_curr_week(new Date(Date.parse(d.date)))
 

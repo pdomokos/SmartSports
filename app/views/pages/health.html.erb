@@ -4,7 +4,7 @@
             <h3 class="legend-label">
                 <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
                 <div class="training-type left">Heart trend</div>
-                <div id="legend-container" class="selected-meas right"></div>
+                <div class="selected-meas legend-container right"></div>
             </h3>
 
             <div class="boxed-group-inner chart bloodpressure-chart">
@@ -16,7 +16,7 @@
     <div class="columns">
         <div class="column one-half">
             <div id="bloodpressure-container" class="boxed-group connection-block">
-                <h3>
+                <h3 class="legend-label">
                     <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
                     <div class="training-type left">Blood pressure SYS/DIA (mmHg)</div>
                     <div class="selected-meas left"></div>
@@ -27,24 +27,15 @@
                     </svg>
                 </div>
             </div>
-            <div id="spo2-container" class="boxed-group connection-block">
-                <h3>
-                    <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Oxymetry (spo2%)</div>
-                </h3>
 
-                <div class="boxed-group-inner chart spo2-chart">
-                    <svg class="spo2-chart-svg">
-                    </svg>
-                </div>
-            </div>
         </div>
         <div class="column one-half">
             <div id="heartrate-container" class="boxed-group connection-block">
-                <h3>
+                <h3 class="legend-label">
                     <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Heart rate (bpm)</div>
+                    <div class="training-type left">Heart rate / SPO2</div>
                     <div class="selected-meas left"></div>
+                    <div class="selected-meas legend-container right"></div>
                 </h3>
 
                 <div class="boxed-group-inner chart bloodpressure-chart">

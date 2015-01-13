@@ -18,7 +18,6 @@ define_globals = () ->
     Math.floor((sec%(60*60))/60).toString()
 
   window.draw_percent = (chart_element, percent) ->
-    console.log("draw percent "+chart_element)
     $("#"+chart_element+" svg.goal-percent-indicator").empty()
     svg = d3.select($("#"+chart_element+" svg.goal-percent-indicator")[0])
 

@@ -65,7 +65,6 @@ class OverviewChart
 
     line = d3.svg
       .line()
-#      .interpolate("monotone")
       .x(x_getter)
       .y(y_getter)
 
@@ -73,7 +72,6 @@ class OverviewChart
     time_axis = d3.svg.axis()
       .scale(self.time_scale)
       .ticks(d3.time.weeks, 2)
-#      .tickSize(5, 0)
     svg
       .append("g")
       .attr("class", "x axis")

@@ -4,13 +4,16 @@
   $("#health-button").addClass("selected")
   uid = $("#shown-user-id")[0].value
   console.log "getting health data for user:"+uid
-  actions_url = "/users/" + uid + "/measurements.json"
-  d3.json(actions_url, draw_charts)
+  actions_summary_url = "/users/" + uid + "/measurements.json?summary=true"
+  d3.json(actions_summary_url, draw_trend)
 
-draw_charts = (data) ->
-  health_type1 = "heartrate"
-  health_type2 = "bloodpressure"
-  health_type3 = "spo2"
+  d = new Date()
+  d.setDate(d.getDate()-28)
+  day_2week = fmt(d)
+  actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
+  d3.json(actions_lastweek_url, draw_heart_charts)
+
+draw_trend = (data) ->
   heart_trend_chart = new HealthTrendChart("heart-trend", data,
     ["systolicbp", "pulse", "diastolicbp"],
     ["SYS", "DIA", "HR"],
@@ -21,6 +24,18 @@ draw_charts = (data) ->
     )
   heart_trend_chart.draw()
 
-  bp_chart = new HealthChart("withings", health_type1, health_type2, health_type3, data)
+draw_heart_charts = (data) ->
+  bp_chart = new HealthChart("withings", "bloodpressure", data)
   now = new Date(Date.now())
   bp_chart.draw(now)
+
+  heart_chart = new HealthTrendChart("heartrate", data,
+    ["pulse", "SPO2"],
+    ["HR", "SPO2"],
+    ["left", "right"]
+    ["colset6_1", "colset6_2"],
+    ["1/m", "%"],
+    false,
+    4.0/7
+  )
+  heart_chart.draw()
