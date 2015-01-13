@@ -8,8 +8,8 @@ class HealthChart
       i = i+1
     @time_scale = null
     @callback = null
-    @base_r = 5
-    @selected_r = 8
+    @base_r = 6
+    @selected_r = 9
 
   draw: (date) ->
     self = this
@@ -72,47 +72,54 @@ class HealthChart
       .text("mmHg")
       .attr("transform", "translate(-20, 0)")
 
+    hr_extent = d3.extent(@data, (d) -> d.pulse)
+    hr_extent[0] = Math.min(hr_extent[0], 50)
+    hr_extent[1] = Math.max(hr_extent[1], 200)
+    hr_range = hr_extent[1]-hr_extent[0]
+
+    classfn = (d) -> "colset9_"+Math.round(1.0*(d.pulse-hr_extent[0])/hr_range*7.0).toString()
+
     svg.selectAll("circle.sys")
       .data(@data)
       .enter()
       .append("circle")
-      .attr("cx", (d) -> time_scale(new Date(d.date)))
-      .attr("cy", (d) -> y_scale(d.systolicbp))
-      .attr("r", @base_r)
-      .attr("class", "sys")
-      .attr("id", (d) -> "sys-"+d.data_id.toString())
+        .attr("cx", (d) -> time_scale(new Date(d.date)))
+        .attr("cy", (d) -> y_scale(d.systolicbp))
+        .attr("r", @base_r)
+        .attr("class", (d) -> "sys "+classfn(d))
+        .attr("id", (d) -> "sys-"+d.data_id.toString())
       .on("mouseover", (d) ->
         if d.systolicbp
           $("#"+self.chart_element+"-container").find("div.selected-meas").html(d.systolicbp.toString()+"/"+d.diastolicbp.toString()+" "+d.pulse.toString())
         d3.select(this)
           .transition()
           .attr("r", self.selected_r)
-          .style("fill", '#ffac29' )
+        d3.select(this).classed("selected", true)
         id = this.id.toString().substr(4)
         d3.select("circle#dia-"+id)
           .transition()
           .attr("r", self.selected_r)
-          .style("fill", '#ffac29' )
+        d3.select("circle#dia-"+id).classed("selected", true)
         d3.select("line#press-"+id)
           .transition()
-          .attr("stroke-width", 3)
-          .style("stroke", '#ffac29' )
+          .style("stroke-width", 4)
+        d3.select("line#press-"+id).classed("selected", true)
       )
       .on("mouseout", (d) ->
         $("#"+self.chart_element+"-container").find("div.selected-meas").html("")
         d3.select(this)
           .transition()
           .attr("r", self.base_r)
-          .style("fill", '#2FB5E9' )
+        d3.select(this).classed("selected", false)
         id = this.id.toString().substr(4)
         d3.select("circle#dia-"+id)
           .transition()
           .attr("r", self.base_r)
-          .style("fill", '#2FB5E9' )
+        d3.select("circle#dia-"+id).classed("selected", false)
         d3.select("line#press-"+id)
-          .transition()
-          .attr("stroke-width", 1)
-          .style("stroke", '#2FB5E9' )
+        .transition()
+        .style("stroke-width", 2)
+        d3.select("line#press-"+id).classed("selected", false)
       )
 
     svg.selectAll("circle.dia")
@@ -122,8 +129,41 @@ class HealthChart
       .attr("cx", (d) -> time_scale(new Date(d.date)))
       .attr("cy", (d) -> y_scale(d.diastolicbp))
       .attr("r", self.base_r)
-      .attr("class", "dia")
+      .attr("class", (d) -> "dia "+classfn(d))
       .attr("id", (d) -> "dia-"+d.data_id.toString())
+      .on("mouseover", (d) ->
+        if d.systolicbp
+          $("#"+self.chart_element+"-container").find("div.selected-meas").html(d.systolicbp.toString()+"/"+d.diastolicbp.toString()+" "+d.pulse.toString())
+        d3.select(this)
+        .transition()
+        .attr("r", self.selected_r)
+        d3.select(this).classed("selected", true)
+        id = this.id.toString().substr(4)
+        d3.select("circle#sys-"+id)
+        .transition()
+        .attr("r", self.selected_r)
+        d3.select("circle#sys-"+id).classed("selected", true)
+        d3.select("line#press-"+id)
+        .transition()
+        .style("stroke-width", 4)
+        d3.select("line#press-"+id).classed("selected", true)
+      )
+      .on("mouseout", (d) ->
+        $("#"+self.chart_element+"-container").find("div.selected-meas").html("")
+        d3.select(this)
+        .transition()
+        .attr("r", self.base_r)
+        d3.select(this).classed("selected", false)
+        id = this.id.toString().substr(4)
+        d3.select("circle#sys-"+id)
+        .transition()
+        .attr("r", self.base_r)
+        d3.select("circle#sys-"+id).classed("selected", false)
+        d3.select("line#press-"+id)
+        .transition()
+        .style("stroke-width", 2)
+        d3.select("line#press-"+id).classed("selected", false)
+      )
 
     svg.selectAll("line.press")
       .data(@data)
@@ -133,8 +173,8 @@ class HealthChart
       .attr("y1", (d) -> y_scale(d.diastolicbp))
       .attr("x2", (d) -> time_scale(new Date(d.date)))
       .attr("y2", (d) -> y_scale(d.systolicbp))
-      .attr("stroke-width", 1)
-      .attr("class", "press")
+      .attr("stroke-width", 2)
+      .attr("class", (d) -> "press "+classfn(d))
       .attr("id", (d) -> "press-"+d.data_id.toString())
 
   create_lines:  (r) ->
