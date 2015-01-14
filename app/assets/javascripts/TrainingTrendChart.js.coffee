@@ -7,12 +7,13 @@ class TrainingTrendChart extends TrendChart
 
     for actkey in ['walking', 'running', 'cycling', 'transport']
       daily_activity = Object()
-      for d in @data['activities'][actkey]
-        key = fmt(new Date(Date.parse(d.date)))
-        if daily_activity[key]
-          daily_activity[key].push(d)
-        else
-          daily_activity[key] = [d]
+      if @data['activities'][actkey]
+        for d in @data['activities'][actkey]
+          key = fmt(new Date(Date.parse(d.date)))
+          if daily_activity[key]
+            daily_activity[key].push(d)
+          else
+            daily_activity[key] = [d]
 
       days = Object.keys(daily_activity)
       if days == null

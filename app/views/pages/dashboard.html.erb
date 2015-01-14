@@ -7,25 +7,26 @@
             <div id="manualdata-container" class="boxed-group connection-block">
                 <div class="boxed-group-inner spaced gray">
 
-                    <%= render partial: 'heart_form' %>
                     <%= render partial: 'activity_form' %>
+                    <%= render partial: 'heart_form' %>
                     <%= render partial: 'friend_form' %>
 
                     <div class="clearfix">
-                        <div class="logbutton left selected" id="heart-form-sel">
-                            <div class="log-sign">
-                            </div>
-                            <span class="log-icon">
-                                <i class="fa fa-heart fa-2x"></i>
-                                <div>Heart</div>
-                            </span>
-                        </div>
-                        <div class="logbutton left" id="act-form-sel">
+
+                        <div class="logbutton left selected" id="act-form-sel">
                             <div class="log-sign hidden-placed">
                             </div>
                             <span class="log-icon">
                                 <i class="fa fa-bicycle fa-2x"></i>
                                 <div>Activity</div>
+                            </span>
+                        </div>
+                        <div class="logbutton left" id="heart-form-sel">
+                            <div class="log-sign">
+                            </div>
+                            <span class="log-icon">
+                                <i class="fa fa-heart fa-2x"></i>
+                                <div>Heart</div>
                             </span>
                         </div>
                         <div class="logbutton left" id="friend-form-sel">
@@ -39,8 +40,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             <div class="event-list-header">
                 <div class="event-list-header-item">
