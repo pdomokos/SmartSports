@@ -1,10 +1,10 @@
-class ActivitiesController < ApplicationController
+class SummariesController < ApplicationController
   def new
-    @activity = Activity.new
+    @activity = Summary.new
   end
 
   def create
-     @activity = Activity.new(activity_params)
+     @activity = Summary.new(activity_params)
      respond_to do |format|
       if @activity.save
         format.html { redirect_to :controller => 'pages', :action => 'health' }
@@ -19,7 +19,7 @@ class ActivitiesController < ApplicationController
    def index
     user_id = params[:user_id]
     source = params[:source]
-    @activities = Activity.where("user_id = #{user_id}")
+    @activities = Summary.where("user_id = #{user_id}")
     if source
       @activities = @activities.where("source = '#{source}'")
     end

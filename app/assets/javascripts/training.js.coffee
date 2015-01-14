@@ -10,7 +10,7 @@
   $("#training-button").addClass("selected")
   uid = $("#shown-user-id")[0].value
 
-  d3.json("/users/"+uid+"/activities.json", data_received)
+  d3.json("/users/"+uid+"/summaries.json", data_received)
 
 data_received = (jsondata) ->
   draw_trends(jsondata)

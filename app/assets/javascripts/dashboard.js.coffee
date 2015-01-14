@@ -262,7 +262,7 @@ load_notifications = () ->
 update_summary = () ->
   chart_element = "dashboard-summary-container"
   today = new Date(Date.now())
-  $.ajax '/users/'+$("#current-user-id")[0].value+"/summary",
+  $.ajax '/users/'+$("#current-user-id")[0].value+"/outline",
     type: 'GET'
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->

@@ -11,30 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105144204) do
-
-  create_table "activities", force: true do |t|
-    t.integer  "user_id"
-    t.string   "source"
-    t.datetime "date"
-    t.string   "activity"
-    t.string   "group"
-    t.float    "total_duration"
-    t.float    "distance"
-    t.integer  "steps"
-    t.float    "calories"
-    t.datetime "synced_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "soft_duration"
-    t.float    "moderate_duration"
-    t.float    "hard_duration"
-    t.float    "elevation"
-    t.boolean  "sync_final"
-  end
-
-  add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
-  add_index "activities", ["user_id"], name: "index_activities_on_user_id"
+ActiveRecord::Schema.define(version: 20150114103321) do
 
   create_table "connections", force: true do |t|
     t.string   "name"
@@ -85,6 +62,29 @@ ActiveRecord::Schema.define(version: 20150105144204) do
 
   add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
+
+  create_table "summaries", force: true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.datetime "date"
+    t.string   "activity"
+    t.string   "group"
+    t.float    "total_duration"
+    t.float    "distance"
+    t.integer  "steps"
+    t.float    "calories"
+    t.datetime "synced_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "soft_duration"
+    t.float    "moderate_duration"
+    t.float    "hard_duration"
+    t.float    "elevation"
+    t.boolean  "sync_final"
+  end
+
+  add_index "summaries", ["user_id", "created_at"], name: "index_summaries_on_user_id_and_created_at"
+  add_index "summaries", ["user_id"], name: "index_summaries_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name",                            null: false

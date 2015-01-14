@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   resources :notifications
 
   resources :users do
-    resources :activities
+    resources :summaries
     resources :measurements
     resources :notifications
     resources :friendships
-    resources :summary
+    resources :outline
   end
 
   get 'pages/dashboard'
@@ -28,9 +28,9 @@ Rails.application.routes.draw do
   get '/auth/withings/callback' => 'pages#withingscb'
   get '/auth/fitbit/callback' => 'pages#fitbitcb'
 
-  resources :activities
-  resources :notifications
-  resources :measurements
+  # resources :summaries
+  # resources :notifications
+  # resources :measurements
   resources :friendships
 
   get 'sync/sync_moves'

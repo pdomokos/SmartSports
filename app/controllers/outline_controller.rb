@@ -1,4 +1,4 @@
-class SummaryController < ApplicationController
+class OutlineController < ApplicationController
 
   def index
     user_id = params[:user_id]

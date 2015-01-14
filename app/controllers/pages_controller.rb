@@ -24,7 +24,7 @@ class PagesController < ApplicationController
   end
 
   def health
-      @activity = Activity.new
+      @activity = Summary.new
       @measurement = Measurement.new
   end
 
