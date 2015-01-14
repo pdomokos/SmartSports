@@ -29,7 +29,7 @@
                     <% end %>
                     <i class="fa fa-sort-down fa-1x friend-select-arrow"></i>
                     </p>
-                    <p class="detail">(<%= @shown_user.username %>) Active since 1 month</p>
+                    <p class="detail">(<%= @shown_user.username %>) Active since <%= time_ago_in_words(@shown_user.created_at) %></p>
                 </div>
                 <div class="friend-select-holder hidden">
                     <div class="friend-select">

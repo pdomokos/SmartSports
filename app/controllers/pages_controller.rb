@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_action :set_user_data, only: [:dashboard, :health, :training, :lifestyle, :genetics, :settings]
   has_mobile_fu
   layout 'pages'
 
@@ -19,14 +20,34 @@ class PagesController < ApplicationController
 
   def dashboard
     @user = current_user
-    @shown_user = get_shown_user(params)
 
   end
 
   def health
-      @shown_user = get_shown_user(params)
       @activity = Activity.new
       @measurement = Measurement.new
+  end
+
+  def training
+    @uid = current_user.id
+    @conn = @shown_user.connections
+    respond_to do |format|
+      format.html
+      format.json
+    end
+    # render :text => "<pre>"+request.env["omniauth.auth"].to_yaml+"</pre>"
+  end
+
+  def lifestyle
+  end
+
+  def genetics
+  end
+
+  def settings
+    @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
+    @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
+    @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
   end
 
   def error
@@ -76,17 +97,6 @@ class PagesController < ApplicationController
     end
   end
 
-  def training
-    @shown_user = get_shown_user(params)
-    @uid = current_user.id
-    @conn = @shown_user.connections
-    respond_to do |format|
-      format.html
-      format.json
-    end
-    # render :text => "<pre>"+request.env["omniauth.auth"].to_yaml+"</pre>"
-  end
-
   def mdestroy
     moves_conn = Connection.where(user_id: current_user.id, name: 'moves').first
     if moves_conn
@@ -111,23 +121,10 @@ class PagesController < ApplicationController
     redirect_to pages_settings_path
   end
 
-  def lifestyle
-    @shown_user = get_shown_user(params)
-  end
 
-  def genetics
-    @shown_user = get_shown_user(params)
-  end
 
   def friendship
     @friendship = Friendship.new
-  end
-
-  def settings
-    @shown_user = get_shown_user(params)
-    @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
-    @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
-    @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
   end
 
 private
@@ -164,4 +161,7 @@ private
     return shown_user
   end
 
+  def set_user_data
+    @shown_user = get_shown_user(params)
+  end
 end
