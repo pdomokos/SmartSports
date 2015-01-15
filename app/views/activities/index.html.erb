@@ -1,0 +1,42 @@
+<table>
+  <thead>
+    <tr>
+      <th>User name</th>
+      <th>Source</th>
+      <th>Activity</th>
+      <th>Group</th>
+      <th>Game</th>
+      <th>Start time</th>
+      <th>End time</th>
+      <th>Steps</th>
+      <th>Duration</th>
+      <th>Distance</th>
+      <th>Calories</th>
+      <th>Manual</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activities.each do |activity| %>
+      <tr>
+        <td><%= activity.user.name %></td>
+        <td><%= activity.source %></td>
+        <td><%= activity.activity %></td>
+        <td><%= activity.group %></td>
+        <td><%= activity.game_id %></td>
+        <td><%= activity.start_time %></td>
+        <td><%= activity.end_time %></td>
+        <td><%= activity.steps %></td>
+        <td><%= activity.duration %></td>
+        <td><%= activity.distance %></td>
+        <td><%= activity.calories %></td>
+        <td><%= activity.manual %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

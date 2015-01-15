@@ -1,0 +1,13 @@
+<div class="action-item">
+    <input type="text" class="hidden" id="<%= curr %>-timer-started-at">
+    <input type="text" class="hidden" id="<%= curr %>-timer-stopped-at">
+    <input type="text" class="hidden" id="<%= curr %>-timer-running">
+    <span><%= curr.capitalize %></span>
+    <% if curr=="coffee" or curr=="eat" %>
+        <i id="<%= curr %>-timer-start" class="fa fa-plus-circle fa-2x text-green activity-add"></i>
+    <% else %>
+        <i id="<%= curr %>-timer-start" class="fa fa-play-circle-o fa-2x text-green timer-start"></i>
+    <% end %>
+    <span id="<%= curr %>-timer-value" class="hidden">12</span>
+    <span id="<%= curr %>-timer-stop" class="stop-control-holder hidden"><div class="stop-control">Stop</div></span>
+</div>

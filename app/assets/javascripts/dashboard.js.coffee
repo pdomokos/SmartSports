@@ -6,6 +6,7 @@
   setdate()
   update_summary()
   load_notifications()
+  self = this
 
   del = (event) ->
     friend_name = event.target.parentElement.firstChild.textContent
@@ -49,19 +50,19 @@
     $("#act-form-div div.field."+act_type+"-param").removeClass("hidden")
     $("#pingpong-games-container").addClass("hidden")
 
-  $("#timer-start").click (event) ->
-    $("#activity-timer").html("00:00")
-    $("#act-form-div div.field-temp").addClass("hidden")
-    $("#act-form-div div.field.timer-param").removeClass("hidden")
-    $("#new-activity-button").addClass("hidden-placed")
-    $("#timer-start").addClass("hidden")
-    $("#timer-stop").removeClass("hidden")
-    $("#timer-started-at").val(new Date().getTime())
+  $("i.timer-start").click (event) ->
+    name =  event.target.id.split("-")[0]
+    console.log name
+    $("#"+name+"-timer-value").html("00:00")
+    $("#"+name+"-timer-start").addClass("hidden")
+    $("#"+name+"-timer-stop").removeClass("hidden")
+    $("#"+name+"-timer-value").removeClass("hidden")
+    $("#"+name+"-timer-started-at").val(new Date().getTime())
 
-    $("#timer-running").val("true")
+    $("#"+name+"-timer-running").val("true")
     timer_handler = () ->
-      if $("#timer-running") and $("#timer-running").val()=="true"
-        started = parseInt($("#timer-started-at").val())
+      if $("#"+name+"-timer-running") and $("#"+name+"-timer-running").val()=="true"
+        started = parseInt($("#"+name+"-timer-started-at").val())
         curr = new Date().getTime()
         diff = Math.floor((curr - started)/1000)
         hour = Math.floor(diff/60/60)
@@ -72,23 +73,54 @@
         elapsed = ("0"+minutes.toString()).substr(-2)+":"+("0"+seconds.toString()).substr(-2)
         if hour > 0
           elapsed = ("0"+hour.toString()).substr(-2)+":"+elapsed
-        $("#activity-timer").html(elapsed)
+        $("#"+name+"-timer-value").html(elapsed)
         setTimeout( timer_handler, 1000)
     setTimeout(timer_handler, 1000)
 
-  $("#timer-stop").click (event) ->
-    $("#new-activity-button").removeClass("hidden")
-    $("#timer-start").removeClass("hidden")
-    $("#timer-stop").addClass("hidden")
-    $("#act-form-div div.field."+$("#act-type").val()+"-param").removeClass("hidden")
-    $("#act-form-div div.field.timer-param").addClass("hidden")
-    $("#timer-stopped-at").val(new Date().getTime())
-    $("#timer-running").val("false")
+  $("div.stop-control").click (event) ->
+    name =  event.target.parentNode.id.split("-")[0]
+    console.log "stopping "+name
+    $("#"+name+"-timer-value").html("00:00")
+    $("#"+name+"-timer-start").removeClass("hidden")
+    $("#"+name+"-timer-stop").addClass("hidden")
+    $("#"+name+"-timer-value").addClass("hidden")
+    $("#"+name+"-timer-stopped-at").val(new Date().getTime())
+    $("#"+name+"-timer-running").val("false")
 
-    date = fmt_hms(new Date(parseInt($("#timer-started-at").val())))
-    duration = Math.floor((parseInt($("#timer-stopped-at").val())-parseInt($("#timer-started-at").val()))/(1000*60))
-    $("#"+$("#act-type").val()+"-date").val(date)
-    $("#"+$("#act-type").val()+"-duration").val(duration)
+    date = fmt_hms(new Date(parseInt($("#"+name+"-timer-started-at").val())))
+    duration = Math.floor((parseInt($("#"+name+"-timer-stopped-at").val())-parseInt($("#"+name+"-timer-started-at").val()))/(1000))
+    console.log(duration)
+
+    result = Object()
+    self.add_param("activity-form-userid", result)
+    self.add_param("activity-form-source", result)
+    act_name = name
+    if act_name=="pingpong"
+      act_name = "ping-pong"
+    result["activity[activity]"] = name
+    result["activity[group]"] = name
+    result["activity[start_time]"] = date
+    result["activity[duration]"] = duration
+
+    console.log result
+    $("#act-message").addClass("hidden-placed")
+#    $("#act-message").html("")
+    current_user = $("#current-user-id")[0].value
+    $.ajax '/users/'+current_user+'/activities',
+      type: 'POST',
+      data: result,
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "CREATE activity AJAX Error: #{textStatus}"
+        $("#act-message").html("Failed to add activity <i class=\"fa fa-exclamation-circle failure\"></i>")
+        $("#act-message").removeClass("hidden-placed")
+        console.log "fails"
+        console.log jqXHR
+      success: (data, textStatus, jqXHR) ->
+        console.log "CREATE measurements  Successful AJAX call"
+        console.log data
+        $("#act-message").removeClass("hidden-placed")
+        $("#act-message-item").html("<i class=\"fa fa-check success\"></i><span>Added "+act_name+" activity</span><span class=\"edit-control-holder\"><div class=\"edit-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"edit-control\">Delete</div></span>")
 
   $("#act-form-sel").click (event) ->
     reset_form_sel()
@@ -166,12 +198,29 @@ reset_form_sel = () ->
   $("#friend-form-sel").removeClass("selected")
   setdate()
 
+@add_param = (name, hash) ->
+  pname = $("#"+name).attr("name")
+  pval = $("#"+name).val()
+  hash[pname] = pval
+
+@create_params = (par) ->
+  result = Object()
+  @add_param("activity-form-userid", result)
+  @add_param("activity-form-source", result)
+  for e in $("form#act-form input."+par+"-param")
+    console.log e.id
+    @add_param(e.id, result)
+  return result
+
 @new_activity_submit_handler = (event) ->
   event.preventDefault()
-  values = $("#act-form").serialize()
+#  values = $("#act-form").serialize()
+  values = create_params("walking")
+  console.log values
   $("#act-message").addClass("hidden-placed")
   $("#act-message").html("")
-  $.ajax '/activities',
+  current_user = $("#current-user-id")[0].value
+  $.ajax '/users/'+current_user+'/activities',
     type: 'POST',
     data: values,
     dataType: 'json'

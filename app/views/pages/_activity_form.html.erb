@@ -1,42 +1,35 @@
 <form id="act-form">
-    <input name="activity[user_id]" value="<%= @user.id %>" type="hidden">
-    <input name="activity[source]" value="smartsport" type="hidden">
+    <input id="activity-form-userid" name="user_id" value="<%= @user.id %>" type="hidden">
+    <input id="activity-form-source" name="activity[source]" value="smartsport" type="hidden">
 
     <div class="logform clearfix" id="act-form-div">
         <fieldset>
 
-            <div class="activity-container">
-                <div class="field">
-                    <label for="act-name">Activity</label>
-                    <span class="entry">
-                        <select id="act-type" name="activity[group]"
-                                class="entry-normal">
-                            <option>walking</option>
-                            <option>ping-pong</option>
-                            <option>coffee</option>
-                        </select>
+            <div class="action-list">
+                <% for curr in ['walking', 'cycling', 'pingpong', 'coffee', 'eat'] %>
+                    <%= render partial: 'activity_action_item', locals: {:curr => curr} %>
+                <% end %>
+            </div>
 
-                    </span>
-                    <i id="timer-start" class="fa fa-play-circle-o fa-2x text-green"></i>
-                </div>
+            <div class="activity-container">
 
                 <!-- walking -->
-                <div class="field field-temp walking-param">
+                <div class="field field-temp walking-param hidden">
                     <label for="walking-date">Time</label>
                     <span class="entry">
-                        <input id="walking-date" name="activity[date]" class="date-input">
+                        <input id="walking-date" name="activity[start_time]" class="date-input walking-param">
                     </span>
                 </div>
-                <div class="field field-temp walking-param">
+                <div class="field field-temp walking-param hidden">
                     <label for="walking-duration">Duration (min)</label>
                     <span class="entry">
-                        <input id="walking-duration" name="activity[total_duration]" class="entry-mini">
+                        <input id="walking-duration" name="activity[duration]" class="entry-mini walking-param">
                     </span>
                 </div>
-                <div class="field field-temp walking-param">
+                <div class="field field-temp walking-param hidden">
                     <label for="walking-steps">Steps</label>
                     <span class="entry">
-                        <input id="walking-steps" name="activity[steps]" class="entry-mini">
+                        <input id="walking-steps" name="activity[steps]" class="entry-mini walking-param">
                     </span>
                 </div>
 
@@ -44,19 +37,19 @@
                 <div class="field field-temp ping-pong-param hidden">
                     <label for="pingpong-date">Time</label>
                     <span class="entry">
-                        <input id="pingpong-date" name="activity[date]" class="date-input">
+                        <input id="pingpong-date" name="activity[datexx]" class="date-input">
                     </span>
                 </div>
                 <div class="field field-temp ping-pong-param hidden">
                     <label for="pingpong-duration">Duration (min)</label>
                     <span class="entry">
-                        <input id="pingpong-duration" name="activity[total_duration]" class="entry-mini">
+                        <input id="pingpong-duration" name="activity[total_durationxx]" class="entry-mini">
                     </span>
                 </div>
                 <div class="field field-temp ping-pong-param hidden">
                     <label for="pingpong-players">Players</label>
                     <span class="entry">
-                        <select id="pingpong-activity-participant" name="activity[steps]" class="entry-normal"></select>
+                        <select id="pingpong-activity-participant" name="activity[stepsxx]" class="entry-normal"></select>
                     </span>
                     <i id="add-pingpong-participant" class="fa fa-plus-square fa-ex text-green"></i>
                     <div id="pingpong-participants">
@@ -66,7 +59,7 @@
                 <div id="pingpong-games-container" class="field field-temp ping-pong-param hidden">
                     <label for="pingpong-games">Games</label>
                     <span class="entry">
-                        <select id="pingpong-games" name="activity[steps]" class="entry-normal"></select>
+                        <select id="pingpong-games" name="activity[games]" class="entry-normal"></select>
                     </span>
                     <input type="text" class="entry-number">: <input type="text" class="entry-number">
                     <i id="add-pingpong-game" class="fa fa-plus-square fa-ex text-green"></i>
@@ -77,36 +70,15 @@
                 <div class="field field-temp coffee-param hidden">
                     <label for="coffee-date">Time</label>
                     <span class="entry">
-                        <input id="coffee-date" name="activity[steps]" class="entry-mini">
+                        <input id="coffee-date" name="activity[start_time]" class="entry-mini">
                     </span>
                 </div>
 
-                <!-- timer  -->
-                <div class="field field-temp timer-param hidden">
-                    <input type="text" class="hidden" id="timer-started-at">
-                    <input type="text" class="hidden" id="timer-stopped-at">
-                    <input type="text" class="hidden" id="timer-running">
 
-                    <span>Elapsed time</span>
-                    <span>
-                        <div id="activity-timer" class="timer-time"></div>
-                        <span id="timer-stop" class="stop-control">Stop</span>
-                    </span>
-                </div>
-
-                <div id="act-message" class="hidden-placed">
-                    &nbsp;
-                </div>
-                <div class="field action-field">
-                    <span></span>
-                    <div class="log-actions">
-                        <span>
-                            <button id="new-activity-button" class="button minibutton primary right">Add</button>
-                        </span>
-                    </div>
+                <div id="act-message" class="act-message hidden-placed action-list">
+                    <div id="act-message-item" class="action-item"></div>
                 </div>
             </div>
-
 
         </fieldset>
     </div>

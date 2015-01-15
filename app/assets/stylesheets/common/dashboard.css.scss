@@ -245,4 +245,31 @@ div.field i {
   background-color: red;
   vertical-align: middle;
   cursor: pointer;
+
+}
+.stop-control-holder {
+  height: 30px;
+}
+//
+div.action-list {
+  display: table;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+div.action-item {
+  display: table-row;
+}
+div.action-item span {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 4px;
+}
+div.action-item i {
+  display: table-cell;
+  padding-left: 4px;
+}
+
+div.act-message {
+  padding-top: 8px;
 }

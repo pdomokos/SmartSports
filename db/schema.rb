@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114103321) do
+ActiveRecord::Schema.define(version: 20150114143328) do
+
+  create_table "activities", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.boolean  "manual"
+    t.string   "source"
+    t.string   "group"
+    t.string   "activity"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "steps"
+    t.integer  "duration"
+    t.float    "distance"
+    t.float    "elevation"
+    t.float    "calories"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id"
 
   create_table "connections", force: true do |t|
     t.string   "name"

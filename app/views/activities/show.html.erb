@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @activity.user_id %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @activity.source %>
+</p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @activity.activity %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @activity.group %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @activity.game_id %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @activity.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @activity.end_time %>
+</p>
+
+<p>
+  <strong>Steps:</strong>
+  <%= @activity.steps %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @activity.duration %>
+</p>
+
+<p>
+  <strong>Distance:</strong>
+  <%= @activity.distance %>
+</p>
+
+<p>
+  <strong>Calories:</strong>
+  <%= @activity.calories %>
+</p>
+
+<p>
+  <strong>Manual:</strong>
+  <%= @activity.manual %>
+</p>
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>

@@ -131,7 +131,7 @@ class SyncController < ApplicationController
     today = Date.today()
     todayYmd = today.strftime(dateFormat)
     while currDate <= today
-      dbActivities = Activity.where("user_id= #{current_user.id} and source = 'moves' and (date between '#{currDate} 00:00:00' and '#{currDate} 23:59:59' )")
+      dbActivities = Summary.where("user_id= #{current_user.id} and source = 'moves' and (date between '#{currDate} 00:00:00' and '#{currDate} 23:59:59' )")
       if !dbActivities.all? { |a| a.sync_final }
         dbActivities.each { |a| a.destroy }
         dbActivities = nil
@@ -152,7 +152,7 @@ class SyncController < ApplicationController
             end
             i = 0
             for rec in sItem do
-              act = Activity.new( user_id: current_user.id, source: 'moves', date: currDate, activity:  rec['activity'], group: rec['group'],
+              act = Summary.new( user_id: current_user.id, source: 'moves', date: currDate, activity:  rec['activity'], group: rec['group'],
                   total_duration: rec['duration'],
                   distance: rec['distance'],
                   steps: rec['steps'].to_i,
@@ -228,13 +228,13 @@ class SyncController < ApplicationController
   end
 
   def remove_activities_on_date(user_id, source, date)
-    to_remove = Activity.where("user_id= #{user_id} and source = '#{source}' and date=?", DateTime.parse(date))
+    to_remove = Summary.where("user_id= #{user_id} and source = '#{source}' and date=?", DateTime.parse(date))
     to_remove.each { |it| it.destroy!}
   end
 
   def get_last_synced_final_date(user_id, source)
     last_sync_date = nil
-    query = Activity.where("user_id= #{user_id} and source = '#{source}'")
+    query = Summary.where("user_id= #{user_id} and source = '#{source}'")
     if  query.size() > 0
       last_sync = query.where("sync_final = 't'").order(date: :desc).limit(1)[0]
       last_sync_date = last_sync.date
@@ -250,7 +250,7 @@ class SyncController < ApplicationController
     if DateTime.parse(rec['date']) < Date.today()
       isFinal = true
     end
-    new_act =  Activity.new( user_id: current_user.id, source: 'withings', date: DateTime.parse(rec['date']),
+    new_act =  Summary.new( user_id: current_user.id, source: 'withings', date: DateTime.parse(rec['date']),
         total_duration: soft+moderate+intense,
         soft_duration: soft,
         moderate_duration: moderate,
@@ -279,7 +279,7 @@ class SyncController < ApplicationController
       if date < Date.today()
         isFinal = true
       end
-      new_act =  Activity.new( user_id: current_user.id, source: 'fitbit', date: date,
+      new_act =  Summary.new( user_id: current_user.id, source: 'fitbit', date: date,
           total_duration: total,
           soft_duration: lightly,
           moderate_duration: fairly,

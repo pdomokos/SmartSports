@@ -3,23 +3,27 @@
 one:
   user_id: 1
   source: MyString
-  date: 2014-10-21 09:43:01
   activity: MyString
   group: MyString
-  duration: 1
-  distance: 1
+  game_id: 1
+  start_time: 2015-01-14 15:33:38
+  end_time: 2015-01-14 15:33:38
   steps: 1
-  calories: 1
-  last_update: 2014-10-21 09:43:01
+  duration: 1
+  distance: 1.5
+  calories: 1.5
+  manual: false
 
 two:
   user_id: 1
   source: MyString
-  date: 2014-10-21 09:43:01
   activity: MyString
   group: MyString
-  duration: 1
-  distance: 1
+  game_id: 1
+  start_time: 2015-01-14 15:33:38
+  end_time: 2015-01-14 15:33:38
   steps: 1
-  calories: 1
-  last_update: 2014-10-21 09:43:01
+  duration: 1
+  distance: 1.5
+  calories: 1.5
+  manual: false

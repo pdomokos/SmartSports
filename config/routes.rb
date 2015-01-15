@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :summaries
+    resources :activities
     resources :measurements
     resources :notifications
     resources :friendships
