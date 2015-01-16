@@ -1,18 +1,9 @@
 <% content_for :title, "SmartSport" %>
 
-<div class="dashboard-block" id="training-container">
-    <!--<div class="columns">-->
-
-        <!--<div class="column">-->
-
-
-                <%= render partial: 'summary_chart' %>
-
-
-        <!--</div>-->
-    <!--</div>-->
+<div id="training-container">
+    <%= render partial: 'summary_chart' %>
 </div>
 
 <script type="text/javascript">
-    dashboard_loaded();
+    dashboard_loaded(true);
 </script>

@@ -53,7 +53,7 @@ class ActivitiesController < ApplicationController
         format.json { render json: {:status => "ok", :result => @activity} }
       else
         format.html { render :new }
-        format.json { render json: @activity.errors, status: :unprocessable_entity }
+        format.json { render json: { :status => "nok", :msg => @activity.errors } }
       end
     end
   end
@@ -64,7 +64,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       if @activity.update(activity_params)
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
-        format.json { render :show, status: :ok, location: @activity }
+        format.json { render json: { :status => :ok, :result => @activity } }
       else
         format.html { render :edit }
         format.json { render json: @activity.errors, status: :unprocessable_entity }

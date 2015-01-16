@@ -233,7 +233,7 @@ div.field i {
   width: 200px;
 }
 
-.stop-control {
+.stop-control, .delete-control {
   padding: 3px 4px;
   margin-left: 3px;
   font-size: 11px;
@@ -245,8 +245,22 @@ div.field i {
   background-color: red;
   vertical-align: middle;
   cursor: pointer;
-
 }
+
+.edit-control  {
+  padding: 3px 4px;
+  margin-left: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+  color: #fff;
+  background-color: #60b044;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 .stop-control-holder {
   height: 30px;
 }
@@ -268,6 +282,7 @@ div.action-item span {
 div.action-item i {
   display: table-cell;
   padding-left: 4px;
+  cursor: pointer;
 }
 
 div.act-message {

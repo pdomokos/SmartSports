@@ -30,8 +30,8 @@
   top: 50%;
   height: 5em;
 
-  margin-top: -2em;
-  margin-left: 1.5em;
+//  margin-top: -2em;
+  margin-left: 2.5em;
 }
 
 #goal-percent-indicator {
@@ -48,6 +48,7 @@
   min-height: 30px;
   border-left: 6px solid white;
   cursor: pointer;
+  padding: 6px;
 }
 .meas-block.selected {
   border-left: 6px solid $meas_selected_color;
@@ -57,7 +58,7 @@
   color: #494847;
   font-size: 30px;
   font-weight: bold;
-  padding: 8px 8px 8px 0;
+  line-height: 20px;
 }
 
 .meas-small {

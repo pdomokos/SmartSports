@@ -1,11 +1,11 @@
 <form id="act-form">
     <input id="activity-form-userid" name="user_id" value="<%= @user.id %>" type="hidden">
     <input id="activity-form-source" name="activity[source]" value="smartsport" type="hidden">
-
+    <input id="current-activity-data" type="hidden"/>
     <div class="logform clearfix" id="act-form-div">
         <fieldset>
 
-            <div class="action-list">
+            <div id="action-table" class="action-list">
                 <% for curr in ['walking', 'cycling', 'pingpong', 'coffee', 'eat'] %>
                     <%= render partial: 'activity_action_item', locals: {:curr => curr} %>
                 <% end %>
@@ -14,24 +14,53 @@
             <div class="activity-container">
 
                 <!-- walking -->
-                <div class="field field-temp walking-param hidden">
-                    <label for="walking-date">Time</label>
+                <div class="field-temp walking-ui hidden">
+                    <h3>Walking activity</h3>
+                </div>
+                <input id="walking-id" name="activity[id]" type="hidden" class="walking-param">
+                <div class="field field-temp walking-param walking-ui hidden">
+                    <label for="walking-start_time">Time</label>
                     <span class="entry">
-                        <input id="walking-date" name="activity[start_time]" class="date-input walking-param">
+                        <input id="walking-start_time" name="activity[start_time]" class="date-input walking-param">
                     </span>
                 </div>
-                <div class="field field-temp walking-param hidden">
+                <div class="field field-temp walking-param walking-ui hidden">
                     <label for="walking-duration">Duration (min)</label>
                     <span class="entry">
                         <input id="walking-duration" name="activity[duration]" class="entry-mini walking-param">
                     </span>
                 </div>
-                <div class="field field-temp walking-param hidden">
+                <div class="field field-temp walking-param walking-ui hidden">
                     <label for="walking-steps">Steps</label>
                     <span class="entry">
                         <input id="walking-steps" name="activity[steps]" class="entry-mini walking-param">
                     </span>
                 </div>
+
+                <!-- cycling -->
+                <div class="field-temp cycling-ui hidden">
+                    <h3>Cycling activity</h3>
+                </div>
+                <input id="cycling-id" name="activity[id]" type="hidden" class="cycling-param">
+                <div class="field field-temp cycling-param cycling-ui hidden">
+                    <label for="cycling-start_time">Time</label>
+                    <span class="entry">
+                        <input id="cycling-start_time" name="activity[start_time]" class="date-input cycling-param">
+                    </span>
+                </div>
+                <div class="field field-temp cycling-param cycling-ui hidden">
+                    <label for="cycling-duration">Duration (min)</label>
+                    <span class="entry">
+                        <input id="cycling-duration" name="activity[duration]" class="entry-mini cycling-param">
+                    </span>
+                </div>
+                <div class="field field-temp cycling-param cycling-ui hidden">
+                    <label for="cycling-steps">Distance</label>
+                    <span class="entry">
+                        <input id="cycling-distance" name="activity[distance]" class="entry-mini cycling-param">
+                    </span>
+                </div>
+
 
                 <!-- pingpong  -->
                 <div class="field field-temp ping-pong-param hidden">
@@ -74,6 +103,10 @@
                     </span>
                 </div>
 
+                <div id="edit-controls" class="field-temp hidden">
+                    <span id="save-activity-button" class="edit-control">Save</span>
+                    <span id="cancel-activity-button" class="delete-control">Cancel</span>
+                </div>
 
                 <div id="act-message" class="act-message hidden-placed action-list">
                     <div id="act-message-item" class="action-item"></div>
