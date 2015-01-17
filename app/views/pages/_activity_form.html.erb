@@ -18,19 +18,19 @@
                     <h3>Walking activity</h3>
                 </div>
                 <input id="walking-id" name="activity[id]" type="hidden" class="walking-param">
-                <div class="field field-temp walking-param walking-ui hidden">
+                <div class="field field-temp walking-ui hidden">
                     <label for="walking-start_time">Time</label>
                     <span class="entry">
                         <input id="walking-start_time" name="activity[start_time]" class="date-input walking-param">
                     </span>
                 </div>
-                <div class="field field-temp walking-param walking-ui hidden">
+                <div class="field field-temp walking-ui hidden">
                     <label for="walking-duration">Duration (min)</label>
                     <span class="entry">
                         <input id="walking-duration" name="activity[duration]" class="entry-mini walking-param">
                     </span>
                 </div>
-                <div class="field field-temp walking-param walking-ui hidden">
+                <div class="field field-temp walking-ui hidden">
                     <label for="walking-steps">Steps</label>
                     <span class="entry">
                         <input id="walking-steps" name="activity[steps]" class="entry-mini walking-param">
@@ -42,53 +42,55 @@
                     <h3>Cycling activity</h3>
                 </div>
                 <input id="cycling-id" name="activity[id]" type="hidden" class="cycling-param">
-                <div class="field field-temp cycling-param cycling-ui hidden">
+                <div class="field field-temp cycling-ui hidden">
                     <label for="cycling-start_time">Time</label>
                     <span class="entry">
                         <input id="cycling-start_time" name="activity[start_time]" class="date-input cycling-param">
                     </span>
                 </div>
-                <div class="field field-temp cycling-param cycling-ui hidden">
+                <div class="field field-temp cycling-ui hidden">
                     <label for="cycling-duration">Duration (min)</label>
                     <span class="entry">
                         <input id="cycling-duration" name="activity[duration]" class="entry-mini cycling-param">
                     </span>
                 </div>
-                <div class="field field-temp cycling-param cycling-ui hidden">
+                <div class="field field-temp cycling-ui hidden">
                     <label for="cycling-steps">Distance</label>
                     <span class="entry">
                         <input id="cycling-distance" name="activity[distance]" class="entry-mini cycling-param">
                     </span>
                 </div>
 
-
                 <!-- pingpong  -->
-                <div class="field field-temp ping-pong-param hidden">
-                    <label for="pingpong-date">Time</label>
+                <div class="field-temp pingpong-ui hidden">
+                    <h3>Ping-pong activity</h3>
+                </div>
+                <input id="pingpong-id" name="activity[id]" type="hidden" class="pingpong-param">
+                <div class="field field-temp pingpong-ui hidden">
+                    <label for="pingpong-start_time">Time</label>
                     <span class="entry">
-                        <input id="pingpong-date" name="activity[datexx]" class="date-input">
+                        <input id="pingpong-start_time" name="activity[start_time]" class="date-input pingpong-param">
                     </span>
                 </div>
-                <div class="field field-temp ping-pong-param hidden">
+                <div class="field field-temp pingpong-ui hidden">
                     <label for="pingpong-duration">Duration (min)</label>
                     <span class="entry">
-                        <input id="pingpong-duration" name="activity[total_durationxx]" class="entry-mini">
+                        <input id="pingpong-duration" name="activity[duration]" class="entry-mini pingpong-param">
                     </span>
                 </div>
-                <div class="field field-temp ping-pong-param hidden">
+                <div class="field field-temp pingpong-ui hidden">
                     <label for="pingpong-players">Players</label>
                     <span class="entry">
-                        <select id="pingpong-activity-participant" name="activity[stepsxx]" class="entry-normal"></select>
+                        <select id="pingpong-activity-participant" class="entry-normal"></select>
                     </span>
                     <i id="add-pingpong-participant" class="fa fa-plus-square fa-ex text-green"></i>
                     <div id="pingpong-participants">
-
                     </div>
                 </div>
-                <div id="pingpong-games-container" class="field field-temp ping-pong-param hidden">
+                <div id="pingpong-games-container" class="field field-temp pingpong-ui hidden">
                     <label for="pingpong-games">Games</label>
                     <span class="entry">
-                        <select id="pingpong-games" name="activity[games]" class="entry-normal"></select>
+                        <select id="pingpong-games" class="entry-normal"></select>
                     </span>
                     <input type="text" class="entry-number">: <input type="text" class="entry-number">
                     <i id="add-pingpong-game" class="fa fa-plus-square fa-ex text-green"></i>

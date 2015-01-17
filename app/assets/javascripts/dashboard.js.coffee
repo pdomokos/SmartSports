@@ -89,9 +89,6 @@
       result = Object()
       self.add_param("activity-form-userid", result)
       self.add_param("activity-form-source", result)
-      act_name = name
-      if act_name=="pingpong"
-        act_name = "ping-pong"
       result["activity[activity]"] = name
       result["activity[group]"] = name
       result["activity[start_time]"] = date
@@ -114,7 +111,7 @@
           console.log "CREATE measurements  Successful AJAX call"
           console.log data
           $("#act-message").removeClass("hidden-placed")
-          $("#act-message-item").html("<i class=\"fa fa-check success\"></i><span>Added "+act_name+" activity</span><span class=\"edit-control-holder\"><div class=\"edit-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"delete-control\">Delete</div></span>")
+          $("#act-message-item").html("<i class=\"fa fa-check success\"></i><span>Added "+name+" activity</span><span class=\"edit-control-holder\"><div class=\"edit-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"delete-control\">Delete</div></span>")
           $("#current-activity-data").val(JSON.stringify(data['result']))
 
     $("#act-form-sel").click (event) ->
@@ -148,6 +145,10 @@
         edit_activity_submit_handler(event)
     )
 
+    $("#manualdata-container").on("click", "div.delete-control",
+      (event) ->
+        delete_activity_handler(event)
+    )
     $("#save-activity-button").click (event) ->
       save_activity_handler(event)
 
@@ -259,27 +260,38 @@ reset_form_sel = () ->
 
 @edit_activity_submit_handler = (event) ->
   $("#action-table").addClass("hidden")
-  $("#manualdata-container div.act-message").addClass("hidden")
+  $("#manualdata-container div.act-message").addClass("hidden-placed")
   data = $("#current-activity-data").val()
   data = JSON.parse(data)
   console.log data
   activity_type = data['activity']
-  if activity_type == "ping-pong"
-    activity_type = "pingpong"
   $("div.activity-container div."+activity_type+"-ui").removeClass("hidden")
   $("#edit-controls").removeClass("hidden")
   for e in $("form#act-form input."+activity_type+"-param")
     @set_param(e.id, data)
+
+@delete_activity_handler = (event) ->
+  data = JSON.parse($("#current-activity-data").val())
+  console.log "deleting action "+data['id']
+  console.log data
+  current_user = $("#current-user-id")[0].value
+  $.ajax '/users/'+current_user+'/activities/'+data['id'],
+    type: 'DELETE',
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "DELETE activity AJAX Error: #{textStatus}"
+      console.log jqXHR
+    success: (data, textStatus, jqXHR) ->
+      console.log "DELETE Successful AJAX call"
+      $("#manualdata-container div.act-message").addClass("hidden-placed")
 
 @cancel_activity_handler = (event) ->
   console.log "cancel"
   data = $("#current-activity-data").val()
   data = JSON.parse(data)
   activity_type = data['activity']
-  if activity_type == "ping-pong"
-    activity_type = "pingpong"
   $("#action-table").removeClass("hidden")
-  $("#manualdata-container div.act-message").removeClass("hidden")
+  $("#manualdata-container div.act-message").removeClass("hidden-placed")
   $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
   $("#edit-controls").addClass("hidden")
 
@@ -310,10 +322,8 @@ reset_form_sel = () ->
       console.log data
       $("#act-message").removeClass("hidden-placed")
       activity_type = data['result']['activity']
-      if activity_type == "ping-pong"
-        activity_type = "pingpong"
       $("#action-table").removeClass("hidden")
-      $("#manualdata-container div.act-message").removeClass("hidden")
+      $("#manualdata-container div.act-message").removeClass("hidden-placed")
       $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
       $("#edit-controls").addClass("hidden")
 
@@ -458,10 +468,8 @@ load_notifications = () ->
               $("#friend-form-div").removeClass("hidden")
               $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
               $("#friend-form-sel").addClass("selected")
-
         else
           $("#"+newid+" div div.event-details span").html(notif['detail'])
-
         i += 1
 
 update_summary = (is_mobile) ->
