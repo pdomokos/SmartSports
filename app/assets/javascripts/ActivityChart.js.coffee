@@ -1,6 +1,5 @@
 #= require BaseChart
 
-
 class ActivityChart extends BaseChart
   constructor: (@connection, @chart_element, data, @data_helper) ->
     super(data)

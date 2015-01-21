@@ -34,6 +34,7 @@ class MeasurementsController < ApplicationController
     summary = (params[:summary] and params[:summary] == "true")
     start = params[:start]
     user = User.find(user_id)
+    hourly = params[:hourly]
 
     @measurements = user.measurements
     if summary
@@ -64,6 +65,36 @@ class MeasurementsController < ApplicationController
       respond_to do |format|
         format.json {render json: result}
       end
+    elsif hourly
+      result = []
+      data = user.measurements.collect{|it| [it.date.hour, it[hourly]]}.select{|it| !it[1].nil?}
+
+      hash = Hash.new{ |h,k| h[k] = []}
+      data.each do |it|
+        hash[it[0]] << it[1]
+      end
+
+      hours = hash.keys().sort()
+      hours.each do |hour|
+        # puts "#{hour} - #{hash[hour].sort()}"
+        if hash[hour] and hash[hour].size!=0
+          stats = get_stats(hash[hour])
+          result << {
+              :hour => hour,
+              :min => hash[hour].min,
+              :max => hash[hour].max,
+              :avg => stats[:avg],
+              :median => stats[:median],
+              :lower => stats[:lower],
+              :upper => stats[:upper],
+              :sd => stats[:sd],
+              :size => hash[hour].size
+          }
+        end
+      end
+      respond_to do |format|
+        format.json {render json: result}
+      end
     else
       if start
         @measurements = @measurements.where("date >= '"+start+"'")
@@ -73,6 +104,28 @@ class MeasurementsController < ApplicationController
         format.json {render json: @measurements}
       end
     end
+  end
+
+  def get_stats(arr)
+    len = arr.size
+    if len == 0
+      return nil
+    end
+    result = {}
+    avg = arr.reduce{|c, s| c+s}/len.to_f
+    result[:avg] = avg
+    arr.sort!
+    med_index = len/2
+    if (len>1)
+      med_index -= 1
+    end
+    puts "#{len} #{med_index}"
+
+    result[:median] = arr[med_index]
+    result[:lower] = arr[(len*0.25).floor()]
+    result[:upper] = arr[(len*0.75).floor()]
+    result[:sd] = Math.sqrt(arr.reduce{|s, c| s+(c-avg)**2}/len.to_f)
+    return result
   end
 
   def show
