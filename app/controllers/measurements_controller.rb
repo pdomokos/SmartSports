@@ -6,14 +6,25 @@ class MeasurementsController < ApplicationController
 
   def create
     @measurement = Measurement.new(measurement_params)
+    @measurement.date = DateTime.now
 
     respond_to do |format|
       if @measurement.save
-        format.html { redirect_to user_measurements_path(@measurement.user) }
-        format.json { render :show, status: :created, location: @measurement }
+        format.json { render json: { :status => "OK", :msg => "Saved successfully", :result => @measurement } }
       else
-        format.html { redirect_to user_measurements_path(@measurement.user) }
-        format.json { render json: @measurement.errors, status: :unprocessable_entity }
+        format.json { render json: { :status => "NOK", :msg => "Save error" } }
+      end
+    end
+  end
+
+  # PATCH/PUT /measurements/1
+  # PATCH/PUT /measurements/1.json
+  def update
+    respond_to do |format|
+      if @measurement.update(measurement_params)
+        format.json { render json: { :status => "OK", :msg => "Updated successfully", :result => @measurement } }
+      else
+        format.json { render json: { :status => "NOK", :msg => "Update errror" } }
       end
     end
   end
@@ -70,11 +81,18 @@ class MeasurementsController < ApplicationController
   # DELETE /measurements/1
   # DELETE /measurements/1.json
   def destroy
-    user = @measurement.user
-    @measurement.destroy
+    # user = @measurement.user
+    # @measurement.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to user_measurements_url(user), notice: 'Measurement was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
     respond_to do |format|
-      format.html { redirect_to user_measurements_url(user), notice: 'Measurement was successfully destroyed.' }
-      format.json { head :no_content }
+      if @measurement.destroy
+        format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
+      else
+        format.json { render json: { :status => "NOK", :msg => "Delete errror" } }
+      end
     end
   end
 
