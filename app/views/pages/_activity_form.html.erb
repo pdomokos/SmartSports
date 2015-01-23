@@ -1,12 +1,14 @@
 <form id="act-form">
     <input id="activity-form-userid" name="user_id" value="<%= @user.id %>" type="hidden">
     <input id="activity-form-source" name="activity[source]" value="smartsport" type="hidden">
+    <input id="lifestyle-form-source" name="lifestyle[source]" value="smartsport" type="hidden">
     <input id="current-activity-data" type="hidden"/>
+    <input id="current-lifestyle-data" type="hidden"/>
     <div class="logform clearfix" id="act-form-div">
         <fieldset>
 
             <div id="action-table" class="action-list">
-                <% for curr in ['walking', 'cycling', 'pingpong', 'coffee', 'eat'] %>
+                <% for curr in ['walking', 'cycling', 'pingpong', 'coffee', 'eat', 'cigarette'] %>
                     <%= render partial: 'activity_action_item', locals: {:curr => curr} %>
                 <% end %>
             </div>
@@ -98,12 +100,15 @@
 
 
                 <!-- coffee  -->
-                <div class="field field-temp coffee-param hidden">
-                    <label for="coffee-date">Time</label>
+                <div class="field field-temp coffee-ui hidden">
+                    <input id="coffee-id" name="lifestyle[id]" type="hidden" class="coffee-param">
+                    <label for="coffee-start_time">Time</label>
                     <span class="entry">
-                        <input id="coffee-date" name="activity[start_time]" class="entry-mini">
+                        <input id="coffee-start_time" name="lifestyle[start_time]" class="entry-mini coffee-param">
                     </span>
                 </div>
+
+
 
                 <div id="edit-controls" class="field-temp hidden">
                     <span id="save-activity-button" class="edit-control">Save</span>

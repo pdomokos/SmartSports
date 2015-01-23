@@ -3,8 +3,8 @@
     <input type="text" class="hidden" id="<%= curr %>-timer-stopped-at">
     <input type="text" class="hidden" id="<%= curr %>-timer-running">
     <span><%= curr.capitalize %></span>
-    <% if curr=="coffee" or curr=="eat" %>
-        <i id="<%= curr %>-timer-start" class="fa fa-plus-circle fa-2x text-green activity-add"></i>
+    <% if curr=="coffee" or curr=="eat" or curr=="cigarette" %>
+        <i id="<%= curr %>-lifestyle-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
     <% else %>
         <i id="<%= curr %>-timer-start" class="fa fa-play-circle-o fa-2x text-green timer-start"></i>
     <% end %>

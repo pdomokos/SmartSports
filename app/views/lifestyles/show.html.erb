@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @lifestyle.user_id %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @lifestyle.source %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @lifestyle.group %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @lifestyle.name %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @lifestyle.amount %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @lifestyle.data %>
+</p>
+
+<%= link_to 'Edit', edit_user_lifestyle_path(@lifestyle.user, @lifestyle) %> |
+<%= link_to 'Back', user_lifestyles_path(@lifestyle.user) %>

@@ -103,15 +103,16 @@
         console.log "CREATE activity  Successful AJAX call"
         console.log data
         $("#act-message").removeClass("hidden-placed")
-        $("#act-message-item").html("<i class=\"fa fa-check success\"></i><span>Added "+name+" activity</span><span class=\"edit-control-holder\"><div class=\"edit-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"delete-control\">Delete</div></span>")
+        $("#act-message").html("<div id=\"act-message-item\"  class=\"action-item\"><i class=\"fa fa-check success\"></i><span>Added "+name+" activity</span><span class=\"edit-control-holder\"><div class=\"edit-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"delete-control\">Delete</div></span></div>")
         $("#current-activity-data").val(JSON.stringify(data['result']))
 
-  $("#manualdata-container").on("click", "div.edit-control",
+  console.log "REGISTER!!!!!!!!!"
+  $("#manualdata-container").on("click", "#act-message-item div.edit-control",
       (event) ->
         edit_activity_submit_handler(event)
       )
 
-  $("#manualdata-container").on("click", "div.delete-control",
+  $("#manualdata-container").on("click", "#act-message-item div.delete-control",
     (event) ->
       delete_activity_handler(event)
     )
@@ -121,3 +122,72 @@
 
   $("#cancel-activity-button").click (event) ->
     cancel_activity_handler(event)
+
+@edit_activity_submit_handler = (event) ->
+  $("#action-table").addClass("hidden")
+  $("#manualdata-container div.act-message").addClass("hidden-placed")
+  data = $("#current-activity-data").val()
+  data = JSON.parse(data)
+  console.log data
+  activity_type = data['activity']
+  $("div.activity-container div."+activity_type+"-ui").removeClass("hidden")
+  $("#edit-controls").removeClass("hidden")
+  for e in $("form#act-form input."+activity_type+"-param")
+    @set_param(e.id, data)
+
+@delete_activity_handler = (event) ->
+  data = JSON.parse($("#current-activity-data").val())
+  console.log "deleting action "+data['id']
+  console.log data
+  current_user = $("#current-user-id")[0].value
+  $.ajax '/users/'+current_user+'/activities/'+data['id'],
+    type: 'DELETE',
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "DELETE activity AJAX Error: #{textStatus}"
+      console.log jqXHR
+    success: (data, textStatus, jqXHR) ->
+      console.log "DELETE Successful AJAX call"
+      $("#manualdata-container div.act-message").addClass("hidden-placed")
+
+@cancel_activity_handler = (event) ->
+  console.log "cancel"
+  data = $("#current-activity-data").val()
+  data = JSON.parse(data)
+  activity_type = data['activity']
+  $("#action-table").removeClass("hidden")
+  $("#manualdata-container div.act-message").removeClass("hidden-placed")
+  $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
+  $("#edit-controls").addClass("hidden")
+
+@save_activity_handler = (event) ->
+  console.log "save"
+  data = JSON.parse($("#current-activity-data").val())
+  console.log data
+  current_activity = data['activity']
+  console.log "current activity = "+current_activity
+  values = create_params(current_activity)
+  console.log values
+  $("#act-message").addClass("hidden-placed")
+  $("#act-message-item").html("")
+  current_user = $("#current-user-id")[0].value
+  act_id = values['activity[id]']
+  delete values['activity[id]']
+  $.ajax '/users/'+current_user+'/activities/'+act_id,
+    type: 'PUT',
+    data: values,
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "CREATE activity AJAX Error: #{textStatus}"
+      $("#act-message-item").html("<i class=\"fa fa-exclamation-circle failure\"></i>Failed to update activity")
+      $("#act-message").removeClass("hidden-placed")
+      console.log jqXHR
+    success: (data, textStatus, jqXHR) ->
+      console.log "CREATE measurements  Successful AJAX call"
+      console.log data
+      $("#act-message").removeClass("hidden-placed")
+      activity_type = data['result']['activity']
+      $("#action-table").removeClass("hidden")
+      $("#manualdata-container div.act-message").removeClass("hidden-placed")
+      $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
+      $("#edit-controls").addClass("hidden")

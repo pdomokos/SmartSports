@@ -1,19 +1,30 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Email:</strong>
+    <strong>ID:</strong>
+    <%= @user.id %>
+</p>
+<p>
+  <strong>Name:</strong>
   <%= @user.name %>
 </p>
 
 <p>
-  <strong>Crypted password:</strong>
+  <strong>User Name:</strong>
   <%= @user.username %>
 </p>
 
 <p>
-  <strong>Salt:</strong>
+  <strong>Email:</strong>
   <%= @user.email %>
 </p>
 
+<%= link_to 'Activities', user_activities_path(@user) %>
+<br/>
+<%= link_to 'Measurements', user_measurements_path(@user) %>
+<br/>
+<%= link_to 'Lifestyles', user_lifestyles_path(@user) %>
+<br/>
+<br/>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

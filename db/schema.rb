@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114143328) do
+ActiveRecord::Schema.define(version: 20150123111543) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -54,6 +54,22 @@ ActiveRecord::Schema.define(version: 20150114143328) do
   end
 
   add_index "friendships", ["user1_id", "user2_id"], name: "index_friendships_on_user1_id_and_user2_id"
+
+  create_table "lifestyles", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "start_time"
+    t.string   "source"
+    t.string   "group"
+    t.string   "name"
+    t.float    "amount"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lifestyles", ["user_id", "created_at"], name: "index_lifestyles_on_user_id_and_created_at"
+  add_index "lifestyles", ["user_id", "name"], name: "index_lifestyles_on_user_id_and_name"
+  add_index "lifestyles", ["user_id"], name: "index_lifestyles_on_user_id"
 
   create_table "measurements", force: true do |t|
     t.integer  "user_id"

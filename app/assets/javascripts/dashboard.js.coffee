@@ -10,6 +10,7 @@
     @load_notifications()
 
     @register_activity_cbs()
+    @register_lifestyle_cbs()
 
     $("#act-form-sel").click (event) ->
       reset_form_sel()
@@ -18,6 +19,7 @@
       $("#act-form-sel").addClass("selected")
       $("#act-message").addClass("hidden-placed")
       $("#act-steps").focus()
+
 
     $("#heart-form-sel").click (event) ->
       reset_form_sel()
@@ -36,6 +38,16 @@
       $("#friend-form-sel").addClass("selected")
       $("#friend_name").focus()
 
+    $("#manualdata-container").on("click", "div.edit-control",
+      (event) ->
+        edit_activity_submit_handler(event)
+    )
+
+    $("#save-activity-button").click (event) ->
+      save_activity_handler(event)
+
+    $("#cancel-activity-button").click (event) ->
+      cancel_activity_handler(event)
 
     $("#save-measurement-button").click (event) ->
       save_measurement_submit_handler(event)
@@ -140,74 +152,7 @@ reset_form_sel = () ->
   $("#"+element_id).val(hash[key])
   console.log "setting "+"#"+element_id+"["+key+"]="+hash[key]
 
-@edit_activity_submit_handler = (event) ->
-  $("#action-table").addClass("hidden")
-  $("#manualdata-container div.act-message").addClass("hidden-placed")
-  data = $("#current-activity-data").val()
-  data = JSON.parse(data)
-  console.log data
-  activity_type = data['activity']
-  $("div.activity-container div."+activity_type+"-ui").removeClass("hidden")
-  $("#edit-controls").removeClass("hidden")
-  for e in $("form#act-form input."+activity_type+"-param")
-    @set_param(e.id, data)
 
-@delete_activity_handler = (event) ->
-  data = JSON.parse($("#current-activity-data").val())
-  console.log "deleting action "+data['id']
-  console.log data
-  current_user = $("#current-user-id")[0].value
-  $.ajax '/users/'+current_user+'/activities/'+data['id'],
-    type: 'DELETE',
-    dataType: 'json'
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "DELETE activity AJAX Error: #{textStatus}"
-      console.log jqXHR
-    success: (data, textStatus, jqXHR) ->
-      console.log "DELETE Successful AJAX call"
-      $("#manualdata-container div.act-message").addClass("hidden-placed")
-
-@cancel_activity_handler = (event) ->
-  console.log "cancel"
-  data = $("#current-activity-data").val()
-  data = JSON.parse(data)
-  activity_type = data['activity']
-  $("#action-table").removeClass("hidden")
-  $("#manualdata-container div.act-message").removeClass("hidden-placed")
-  $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
-  $("#edit-controls").addClass("hidden")
-
-@save_activity_handler = (event) ->
-  console.log "save"
-  data = JSON.parse($("#current-activity-data").val())
-  console.log data
-  current_activity = data['activity']
-  console.log "current activity = "+current_activity
-  values = create_params(current_activity)
-  console.log values
-  $("#act-message").addClass("hidden-placed")
-  $("#act-message-item").html("")
-  current_user = $("#current-user-id")[0].value
-  act_id = values['activity[id]']
-  delete values['activity[id]']
-  $.ajax '/users/'+current_user+'/activities/'+act_id,
-    type: 'PUT',
-    data: values,
-    dataType: 'json'
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "CREATE activity AJAX Error: #{textStatus}"
-      $("#act-message-item").html("<i class=\"fa fa-exclamation-circle failure\"></i>Failed to update activity")
-      $("#act-message").removeClass("hidden-placed")
-      console.log jqXHR
-    success: (data, textStatus, jqXHR) ->
-      console.log "CREATE measurements  Successful AJAX call"
-      console.log data
-      $("#act-message").removeClass("hidden-placed")
-      activity_type = data['result']['activity']
-      $("#action-table").removeClass("hidden")
-      $("#manualdata-container div.act-message").removeClass("hidden-placed")
-      $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
-      $("#edit-controls").addClass("hidden")
 
 @save_measurement_submit_handler = (event) ->
     event.preventDefault()
