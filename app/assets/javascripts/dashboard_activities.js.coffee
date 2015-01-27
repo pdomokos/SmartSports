@@ -87,7 +87,8 @@
     result["activity[duration]"] = duration
 
     console.log result
-    $("#act-message").addClass("hidden-placed")
+    $("#act-message-item").addClass("hidden")
+    $("#act-message-failed").addClass("hidden")
     current_user = $("#current-user-id")[0].value
     $.ajax '/users/'+current_user+'/activities',
       type: 'POST',
@@ -95,27 +96,25 @@
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "CREATE activity AJAX Error: #{textStatus}"
-        $("#act-message-item").html("Failed to add activity <i class=\"fa fa-exclamation-circle failure\"></i>")
-        $("#act-message").removeClass("hidden-placed")
+        $("#act-message-failed").html("Failed to add activity <i class=\"fa fa-exclamation-circle failure\"></i>")
+        $("#act-message-failed").removeClass("hidden")
+        $("#act-message-item").addClass("hidden")
         console.log "fails"
         console.log jqXHR
       success: (data, textStatus, jqXHR) ->
         console.log "CREATE activity  Successful AJAX call"
         console.log data
-        $("#act-message").removeClass("hidden-placed")
-        $("#act-message").html("<div id=\"act-message-item\"  class=\"action-item\"><i class=\"fa fa-check success\"></i><span>Added "+name+" activity</span><span class=\"edit-control-holder\"><div class=\"edit-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"delete-control\">Delete</div></span></div>")
+        $("#act-message-failed").addClass("hidden")
+        $("#act-message-item").removeClass("hidden")
+        $("#act-message-item span:first-of-type").html("Added "+data.result.activity+" activity")
         $("#current-activity-data").val(JSON.stringify(data['result']))
 
   console.log "REGISTER!!!!!!!!!"
-  $("#manualdata-container").on("click", "#act-message-item div.edit-control",
-      (event) ->
-        edit_activity_submit_handler(event)
-      )
+  $("#act-message-item div.edit-control").click (event) ->
+    edit_activity_submit_handler(event)
 
-  $("#manualdata-container").on("click", "#act-message-item div.delete-control",
-    (event) ->
-      delete_activity_handler(event)
-    )
+  $("#act-message-item div.delete-control").click (event) ->
+    delete_activity_handler(event)
 
   $("#save-activity-button").click (event) ->
     save_activity_handler(event)
@@ -125,13 +124,14 @@
 
 @edit_activity_submit_handler = (event) ->
   $("#action-table").addClass("hidden")
-  $("#manualdata-container div.act-message").addClass("hidden-placed")
+  $("#act-message-item").addClass("hidden")
+  $("#act-message-failed").addClass("hidden")
   data = $("#current-activity-data").val()
   data = JSON.parse(data)
   console.log data
   activity_type = data['activity']
-  $("div.activity-container div."+activity_type+"-ui").removeClass("hidden")
-  $("#edit-controls").removeClass("hidden")
+  $("#activity-container div."+activity_type+"-ui").removeClass("hidden")
+  $("#activity-container div.act-edit-controls").removeClass("hidden")
   for e in $("form#act-form input."+activity_type+"-param")
     @set_param(e.id, data)
 
@@ -148,7 +148,7 @@
       console.log jqXHR
     success: (data, textStatus, jqXHR) ->
       console.log "DELETE Successful AJAX call"
-      $("#manualdata-container div.act-message").addClass("hidden-placed")
+      $("#act-message-item").addClass("hidden")
 
 @cancel_activity_handler = (event) ->
   console.log "cancel"
@@ -156,9 +156,9 @@
   data = JSON.parse(data)
   activity_type = data['activity']
   $("#action-table").removeClass("hidden")
-  $("#manualdata-container div.act-message").removeClass("hidden-placed")
-  $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
-  $("#edit-controls").addClass("hidden")
+  $("#act-message-item").removeClass("hidden")
+  $("#activity-container div."+activity_type+"-ui").addClass("hidden")
+  $("#activity-container div.act-edit-controls").addClass("hidden")
 
 @save_activity_handler = (event) ->
   console.log "save"
@@ -168,26 +168,28 @@
   console.log "current activity = "+current_activity
   values = create_params(current_activity)
   console.log values
-  $("#act-message").addClass("hidden-placed")
-  $("#act-message-item").html("")
+  $("#act-message-item").addClass("hidden")
+
   current_user = $("#current-user-id")[0].value
   act_id = values['activity[id]']
   delete values['activity[id]']
+  values['activity[source]'] = 'smartsport'
   $.ajax '/users/'+current_user+'/activities/'+act_id,
     type: 'PUT',
     data: values,
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "CREATE activity AJAX Error: #{textStatus}"
-      $("#act-message-item").html("<i class=\"fa fa-exclamation-circle failure\"></i>Failed to update activity")
-      $("#act-message").removeClass("hidden-placed")
+      $("#act-message-failed").html("<i class=\"fa fa-exclamation-circle failure\"></i>Failed to update activity")
+      $("#act-message-failed").removeClass("hidden")
       console.log jqXHR
     success: (data, textStatus, jqXHR) ->
       console.log "CREATE measurements  Successful AJAX call"
       console.log data
-      $("#act-message").removeClass("hidden-placed")
+      $("#act-message-item").removeClass("hidden")
       activity_type = data['result']['activity']
       $("#action-table").removeClass("hidden")
-      $("#manualdata-container div.act-message").removeClass("hidden-placed")
-      $("div.activity-container div."+activity_type+"-ui").addClass("hidden")
-      $("#edit-controls").addClass("hidden")
+      $("#act-message-item").removeClass("hidden")
+      $("#activity-container div."+activity_type+"-ui").addClass("hidden")
+      $("#activity-container div.act-edit-controls").addClass("hidden")
+      $("#current-activity-data").val(JSON.stringify(data['result']))

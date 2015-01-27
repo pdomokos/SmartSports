@@ -17,7 +17,8 @@
       $("#act-form-div").removeClass("hidden")
       $("#act-form-sel div.log-sign").removeClass("hidden-placed")
       $("#act-form-sel").addClass("selected")
-      $("#act-message").addClass("hidden-placed")
+      $("#act-message-item").addClass("hidden")
+      $("#act-message-failed").addClass("hidden")
       $("#act-steps").focus()
 
 
@@ -37,11 +38,6 @@
       $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
       $("#friend-form-sel").addClass("selected")
       $("#friend_name").focus()
-
-    $("#manualdata-container").on("click", "div.edit-control",
-      (event) ->
-        edit_activity_submit_handler(event)
-    )
 
     $("#save-activity-button").click (event) ->
       save_activity_handler(event)
@@ -116,6 +112,10 @@ reset_form_sel = () ->
 @add_param = (name, hash) ->
   pname = $("#"+name).attr("name")
   pval = $("#"+name).val()
+  # duration is saved in seconds, but displayed in minutes
+  if name[-8..] is "duration"
+    orig = pval
+    pval = Math.round(60.0*orig)
   hash[pname] = pval
 
 @add_m_param = (name, hash) ->
@@ -127,9 +127,8 @@ reset_form_sel = () ->
 @create_params = (par) ->
   result = Object()
   @add_param("activity-form-userid", result)
-  @add_param("activity-form-source", result)
   for e in $("form#act-form input."+par+"-param")
-    console.log e.id
+    console.log "create_params: "+e.id
     @add_param(e.id, result)
   return result
 
@@ -144,15 +143,21 @@ reset_form_sel = () ->
 
 @set_param = (element_id, hash) ->
   key = element_id.split("-")[1]
-  $("#"+element_id).val(hash[key])
-  console.log "setting "+"#"+element_id+"["+key+"]="+hash[key]
+  if key[-4..] is "time"
+    val = fmt_hms(new Date(hash[key]))
+  else
+    val = hash[key]
+  # duration is saved in seconds, but displayed in minutes
+  if key[-8..] is "duration"
+    val = Math.round(hash[key]/60.0*100)/100.0
+
+  $("#"+element_id).val(val)
+  console.log "setting "+"#"+element_id+"["+key+"]="+val
 
 @set_m_param = (element_id, hash) ->
   key = element_id.split("-")[1]
   $("#"+element_id).val(hash[key])
-  console.log "setting "+"#"+element_id+"["+key+"]="+hash[key]
-
-
+  console.log "setting mparam "+"#"+element_id+"["+key+"]="+hash[key]
 
 @save_measurement_submit_handler = (event) ->
     event.preventDefault()
@@ -201,7 +206,7 @@ reset_form_sel = () ->
       console.log data
       if data.status == "OK"
         $("#measurement-container div.measure-ui").addClass("hidden")
-        $("#measurement-container #edit-controls").addClass("hidden")
+        $("#measurement-container .edit-controls").addClass("hidden")
         $("#heart-form-div #action-table").removeClass("hidden")
         $("#manualdata-container #meas-message").removeClass("hidden")
         $("#meas-message").removeClass("hidden-placed")
@@ -218,7 +223,7 @@ reset_form_sel = () ->
     data = JSON.parse(data)
     console.log data
     $("#measurement-container div.measure-ui").removeClass("hidden")
-    $("#measurement-container #edit-controls").removeClass("hidden")
+    $("#measurement-container .edit-controls").removeClass("hidden")
     for e in $("form#heart-form input.measure-param")
       console.log e.id
       @set_m_param(e.id, data)
@@ -250,6 +255,6 @@ reset_form_sel = () ->
   $("#heart-form-div #action-table").removeClass("hidden")
   $("#manualdata-container #meas-message").removeClass("hidden")
   $("#measurement-container div.measure-ui").addClass("hidden")
-  $("#measurement-container #edit-controls").addClass("hidden")
+  $("#measurement-container .edit-controls").addClass("hidden")
 
 

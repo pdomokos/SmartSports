@@ -65,15 +65,13 @@
   border: 0;
 }
 
-
-
 .logform .entry {
-  display: inline-block;
+//  display: inline-block;
   position: relative;
   margin-right: 5px;
   padding: 5px;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
+//  border: 1px solid #d4d4d4;
+//  border-radius: 5px;
   font-family: sans-serif;
   white-space: nowrap;
   background: #fbfbfb no-repeat;
@@ -316,6 +314,7 @@ div.action-item i {
 div.measure-list {
   display: table;
   font-size: 15px;
+  margin-top: 5px;
 }
 
 div.measure-item {
@@ -326,13 +325,22 @@ div.measure-item span {
   display: table-cell;
   font-weight: bold;
   vertical-align: middle;
-  padding-right: 25px;
+  height: 30px;
+}
+
+div.measure-item label {
+  vertical-align: middle;
 }
 
 div.measure-item i {
   display: table-cell;
   padding-left: 4px;
   cursor: pointer;
+  vertical-align: middle;
+}
+
+div.measure-item i:first-child {
+  padding-right: 6px;
 }
 
 div.act-message {

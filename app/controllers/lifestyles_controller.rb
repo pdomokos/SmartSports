@@ -52,7 +52,7 @@ class LifestylesController < ApplicationController
     respond_to do |format|
       if @lifestyle.update(lifestyle_params)
         format.html { redirect_to user_lifestyle_url(@lifestyle.user, @lifestyle), notice: 'Lifestyle was successfully updated.' }
-        format.json { render :show, status: :ok, location: @lifestyle }
+        format.json { render json: { :status => :ok, :result => @lifestyle } }
       else
         format.html { render :edit }
         format.json { render json: @lifestyle.errors, status: :unprocessable_entity }

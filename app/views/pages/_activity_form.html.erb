@@ -13,7 +13,7 @@
                 <% end %>
             </div>
 
-            <div class="activity-container">
+            <div id="activity-container">
 
                 <!-- walking -->
                 <div class="field-temp walking-ui hidden">
@@ -100,24 +100,82 @@
 
 
                 <!-- coffee  -->
+                <div class="field-temp coffee-ui hidden">
+                    <h3>Coffee</h3>
+                </div>
+                <input id="coffee-id" name="lifestyle[id]" type="hidden" class="coffee-param">
                 <div class="field field-temp coffee-ui hidden">
-                    <input id="coffee-id" name="lifestyle[id]" type="hidden" class="coffee-param">
                     <label for="coffee-start_time">Time</label>
                     <span class="entry">
-                        <input id="coffee-start_time" name="lifestyle[start_time]" class="entry-mini coffee-param">
+                        <input id="coffee-start_time" name="lifestyle[start_time]" class="date-input coffee-param">
+                    </span>
+                </div>
+
+                <!-- eat  -->
+                <div class="field-temp eat-ui hidden">
+                    <h3>Eat</h3>
+                </div>
+                <input id="eat-id" name="lifestyle[id]" type="hidden" class="eat-param">
+                <div class="field field-temp eat-ui hidden">
+                    <label for="eat-start_time">Time</label>
+                    <span class="entry">
+                        <input id="eat-start_time" name="lifestyle[start_time]" class="date-input eat-param">
+                    </span>
+                </div>
+
+                <!-- cigarette  -->
+                <div class="field-temp cigarette-ui hidden">
+                    <h3>Cigarette</h3>
+                </div>
+                <input id="cigarette-id" name="lifestyle[id]" type="hidden" class="cigarette-param">
+                <div class="field field-temp cigarette-ui hidden">
+                    <label for="cigarette-start_time">Time</label>
+                    <span class="entry">
+                        <input id="cigarette-start_time" name="lifestyle[start_time]" class="date-input cigarette-param">
                     </span>
                 </div>
 
 
-
-                <div id="edit-controls" class="field-temp hidden">
+                <div class="life-edit-controls field-temp hidden">
+                    <span id="save-lifestyle-button" class="edit-control">Save</span>
+                    <span id="cancel-lifestyle-button" class="delete-control">Cancel</span>
+                </div>
+                <div class="act-edit-controls field-temp hidden">
                     <span id="save-activity-button" class="edit-control">Save</span>
                     <span id="cancel-activity-button" class="delete-control">Cancel</span>
                 </div>
 
-                <div id="act-message" class="act-message hidden-placed action-list">
-                    <div id="act-message-item" class="action-item"></div>
+                <div id="act-message" class="act-message action-list">
+                    <!--<div id="act-message-item" class="action-item"></div>-->
+                    <div id="act-message-item" class="action-item hidden">
+                        <i class="fa fa-check success"></i>
+                        <span></span>
+                        <span class="edit-control-holder">
+                            <div class="edit-control">Edit</div>
+                        </span>
+                        <span class="delete-control-holder">
+                            <div class="delete-control">Delete</div>
+                        </span>
+                    </div>
+                    <div id="act-message-failed" class="action-item hidden">
+                        Failed
+                    </div>
                 </div>
+                <div id="life-message" class="act-message action-list">
+                    <div id="life-message-item" class="action-item hidden">
+                        <i class="fa fa-check success"></i>
+                            <span></span>
+                            <span class="edit-control-holder">
+                                <div class="edit-control">Edit</div>
+                            </span>
+                            <span class="delete-control-holder">
+                                <div class="delete-control">Delete</div>
+                            </span>
+                    </div>
+                    <div id="life-message-failed" class="action-item hidden">
+                        Failed
+                    </div>
+                 </div>
             </div>
 
         </fieldset>

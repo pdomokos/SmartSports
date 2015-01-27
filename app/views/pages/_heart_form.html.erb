@@ -6,10 +6,22 @@
         <fieldset>
             <div id="action-table" class="measure-list">
                 <div class="measure-item">
-                    <i class="fa fa-heart fa-1x"></i>
-                    <label for="meas-sys">SYS</label><span class="entry"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini"></span>
-                    <label for="meas-dia">DIA</label><span class="entry"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini"></span>
-                    <label for="meas-hr">HR</label><span class="entry"><input id="meas-hr" name="measurement[pulse]" class="entry-mini"></span>
+                    <i class="fa fa-heart fa-2x"></i>
+                    <span>SYS</span><span class="entry"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini"></span>
+                    <span>DIA</span><span class="entry"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini"></span>
+                    <span >HR</span><span class="entry"><input id="meas-hr" name="measurement[pulse]" class="entry-mini"></span>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
+                </div>
+
+                <div class="measure-item">
+                    <i class="fa fa-tint fa-2x"></i>
+                    <span>Level (mmol/L)</span><span class="entry"><input id="meas-sys" name="measurement[bloodsugar]" class="entry-mini"></span>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
+                </div>
+
+                <div class="measure-item">
+                    <i class="fa fa-area-chart fa-2x"></i>
+                    <span>Weight (kg)</span><span class="entry"><input id="meas-sys" name="measurement[weight]" class="entry-mini"></span>
                     <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
                 </div>
             </div>
@@ -22,21 +34,21 @@
                 <input id="meas-id" name="id" type="hidden" class="measure-param">
 
                 <div class="field field-temp measure-ui hidden">
-                    <label for="meas-sys">SYS</label>
+                    <span>SYS</span>
                     <span class="entry">
                         <input id="meas-systolicbp" name="systolicbp" class="entry-mini measure-param">
                     </span>
                 </div>
 
                 <div class="field field-temp measure-ui hidden">
-                    <label for="meas-dia">DIA</label>
+                    <span>DIA</span>
                     <span class="entry">
                         <input id="meas-diastolicbp" name="diastolicbp" class="entry-mini measure-param">
                     </span>
                 </div>
 
                 <div class="field field-temp measure-ui hidden">
-                    <label for="meas-hr">HR</label>
+                    <span>HR</span>
                     <span class="entry">
                         <input id="meas-pulse" name="pulse" class="entry-mini measure-param">
                     </span>
@@ -49,7 +61,12 @@
                     </span>
                 </div>
 
-                <div id="edit-controls" class="field-temp hidden">
+                <div class="act-edit-controls field-temp hidden">
+                    <span id="update-measurement-button" class="edit-control">Save</span>
+                    <span id="cancel-measurement-button" class="delete-control">Cancel</span>
+                </div>
+
+                <div class="life-edit-controls field-temp hidden">
                     <span id="update-measurement-button" class="edit-control">Save</span>
                     <span id="cancel-measurement-button" class="delete-control">Cancel</span>
                 </div>
