@@ -1,4 +1,5 @@
 module SyncMoves
+
   def sync_moves
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if movesconn != nil
@@ -10,14 +11,32 @@ module SyncMoves
       sess = { "access_token" => auth['credentials']['token']}
     end
     status = do_sync_moves(sess)
-
     respond_to do |format|
       format.json { render json: {:status => status}}
     end
   end
 
-  private
 
+  def sync_moves_act_daily
+    movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
+    if movesconn != nil
+      sess = JSON.parse(movesconn.data)
+
+      @moves = Moves::Client.new(sess["token"])
+      today = Date.today()
+      dateFormat = "%Y-%m-%d"
+      todayYmd = today.strftime(dateFormat)
+      daily = @moves.daily_activities(todayYmd)
+      status = "OK"
+    else
+      status = "NOK"
+    end
+    respond_to do |format|
+      format.json { render json: {:status => status, :data => daily}}
+    end
+  end
+
+  private
   def do_sync_moves(sess)
     dateFormat = "%Y-%m-%d"
     @moves = Moves::Client.new(sess["token"])

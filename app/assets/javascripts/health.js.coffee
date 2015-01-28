@@ -16,7 +16,7 @@
 draw_trend = (data) ->
   heart_trend_chart = new HealthTrendChart("heart-trend", data,
     ["systolicbp", "pulse", "diastolicbp"],
-    ["SYS", "DIA", "HR"],
+    ["SYS", "HR", "DIA"],
     ["left", "left", "right"]
     ["colset4_0", "colset4_1", "colset4_2"],
     ["mmHg", "1/min"],

@@ -3,4 +3,8 @@ class SyncController < ApplicationController
   include SyncMoves
   include SyncFitbit
   include SyncGoogle
+
+  def testmoves
+
+  end
 end
