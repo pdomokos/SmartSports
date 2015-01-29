@@ -30,8 +30,7 @@
       draw_daily_activity(chart_element, data['profile'], is_mobile)
 
 draw_daily_activity = (chart_element, data, is_mobile) ->
-
-  margin = {top: 30, right: 30, bottom: 30, left: 10}
+  margin = {top: 30, right: 30, bottom: 30, left: 30}
   aspect = 400/700
 
   parent_width = $("#"+chart_element).parent().width()
@@ -41,10 +40,10 @@ draw_daily_activity = (chart_element, data, is_mobile) ->
 
   svg = d3.select($("#"+chart_element+" svg.activity-chart-svg")[0])
   svg = svg
-  .attr("width", parent_width)
-  .attr("height", height+margin.top+margin.bottom)
-  .append("g")
-  .attr("transform", "translate("+margin.left+","+margin.top+")")
+    .attr("width", parent_width)
+    .attr("height", height+margin.top+margin.bottom)
+    .append("g")
+    .attr("transform", "translate("+margin.left+","+margin.top+")")
 
   time_padding = 1
   time_extent = d3.extent(data, (d) -> d.time)
@@ -56,42 +55,42 @@ draw_daily_activity = (chart_element, data, is_mobile) ->
 
   barwidth = width/49.0
   svg
-  .selectAll("rect.act")
-  .data(data)
-  .enter()
-  .append("rect")
-  .attr("class", "act")
-  .attr("x", (d) -> time_scale(d.time)-barwidth/2)
-  .attr("y", (d) -> y_scale( d.activity) )
-  .attr("width", (d) -> barwidth)
-  .attr("height", (d) -> height - y_scale(  d.activity ) )
+    .selectAll("rect.act")
+    .data(data)
+    .enter()
+      .append("rect")
+      .attr("class", "act")
+      .attr("x", (d) -> time_scale(d.time)-barwidth/2)
+      .attr("y", (d) -> y_scale( d.activity) )
+      .attr("width", (d) -> barwidth)
+      .attr("height", (d) -> height - y_scale(  d.activity ) )
 
   time_axis = d3.svg.axis()
   .scale(time_scale)
 
   svg
-  .append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(0 ,"+height+")")
-  .call(time_axis)
+    .append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0 ,"+height+")")
+    .call(time_axis)
   svg.
-  select(".x.axis")
-  .append("text")
-  .text("Hour")
-  .attr("x", (width / 2) - margin.right)
-  .attr("y", margin.bottom / 1.1)
+    select(".x.axis")
+      .append("text")
+      .text("Hour")
+      .attr("x", (width / 2) - margin.right)
+      .attr("y", margin.bottom / 1.1)
 
   if not is_mobile
     y_axis = d3.svg.axis()
-    .scale(y_scale)
-    .orient("left")
+      .scale(y_scale)
+      .orient("left")
     svg
-    .append("g")
-    .attr("class", "y axis steps")
-    .attr("transform", "translate(0, 0)")
-    .call(y_axis)
+      .append("g")
+      .attr("class", "y axis steps")
+      .attr("transform", "translate(0, 0)")
+      .call(y_axis)
     svg.select(".y.axis")
-    .append("text")
-    .text("Activity (Steps)")
-    .attr("x", -30)
-    .attr("y", -10)
+      .append("text")
+      .text("Activity (Steps)")
+      .attr("x", -30)
+      .attr("y", -10)
