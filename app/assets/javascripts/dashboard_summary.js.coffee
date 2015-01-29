@@ -19,14 +19,13 @@
       draw_percent(chart_element, percent)
 
       $("#"+chart_element+" div.avg-description").html("of 10,000 steps")
-      $("#"+chart_element+" div.km-running").html(data['running'].toFixed(2))
-      $("#"+chart_element+" div.km-cycling").html(data['cycling'].toFixed(2))
+      $("#"+chart_element+" div.km-running").html((data['running']/1000).toFixed(2))
+      $("#"+chart_element+" div.km-cycling").html((data['cycling']/1000).toFixed(2))
       $("#"+chart_element+" div.calories").html(Math.round(data['calories']))
-      $("#"+chart_element+" div.distance").html(data['distance'].toFixed(2))
+      $("#"+chart_element+" div.distance").html((data['distance']/1000).toFixed(2))
       duration_sec = data['activity']
       timestr = get_hour(duration_sec)+"h "+get_min(duration_sec)+"min"
       $("#"+chart_element+" div.duration").html(timestr)
-
       draw_daily_activity(chart_element, data['profile'], is_mobile)
 
 draw_daily_activity = (chart_element, data, is_mobile) ->

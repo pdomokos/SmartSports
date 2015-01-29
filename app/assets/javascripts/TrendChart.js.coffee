@@ -87,7 +87,7 @@ class TrendChart
 
     time_axis = d3.svg.axis()
       .scale(time_scale)
-      .ticks(5)
+      .ticks(d3.time.weeks, 1)
     svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + (self.height-self.margin.top) + ")")
