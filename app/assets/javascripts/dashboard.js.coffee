@@ -7,66 +7,113 @@
   @update_summary(is_mobile)
   self = this
   if not is_mobile
-    @load_notifications()
+    @init_browser_dashboard()
+  else
+    @init_mobile_dashboard()
 
-    @register_activity_cbs()
-    @register_lifestyle_cbs()
+@init_browser_dashboard = () ->
+  @load_notifications()
 
-    $("#act-form-sel").click (event) ->
-      reset_form_sel()
-      $("#act-form-div").removeClass("hidden")
-      $("#act-form-sel div.log-sign").removeClass("hidden-placed")
-      $("#act-form-sel").addClass("selected")
-      $("#act-message-item").addClass("hidden")
-      $("#act-message-failed").addClass("hidden")
-      $("#act-steps").focus()
+  @register_activity_cbs()
+  @register_lifestyle_cbs()
+
+  $("#act-form-sel").click (event) ->
+    reset_form_sel()
+    $("#act-form-div").removeClass("hidden")
+    $("#act-form-sel div.log-sign").removeClass("hidden-placed")
+    $("#act-form-sel").addClass("selected")
+    $("#act-message-item").addClass("hidden")
+    $("#act-message-failed").addClass("hidden")
+    $("#act-steps").focus()
 
 
-    $("#heart-form-sel").click (event) ->
-      reset_form_sel()
-      $("#heart-form-div").removeClass("hidden")
-      $("#meas-message").addClass("hidden-placed")
-      $("#heart-form-sel div.log-sign").removeClass("hidden-placed")
-      $("#heart-form-sel").addClass("selected")
-      $("#meas-sys").focus()
+  $("#heart-form-sel").click (event) ->
+    reset_form_sel()
+    $("#heart-form-div").removeClass("hidden")
+    $("#meas-message").addClass("hidden-placed")
+    $("#heart-form-sel div.log-sign").removeClass("hidden-placed")
+    $("#heart-form-sel").addClass("selected")
+    $("#meas-sys").focus()
 
-    $("#friend-form-sel").click (event) ->
-      reset_form_sel()
-      $("#friend_name").val("")
-      $("#friend-message").addClass("hidden-placed")
-      $("#friend-form-div").removeClass("hidden")
-      $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
-      $("#friend-form-sel").addClass("selected")
-      $("#friend_name").focus()
+  $("#friend-form-sel").click (event) ->
+    reset_form_sel()
+    $("#friend_name").val("")
+    $("#friend-message").addClass("hidden-placed")
+    $("#friend-form-div").removeClass("hidden")
+    $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
+    $("#friend-form-sel").addClass("selected")
+    $("#friend_name").focus()
 
-    $("#save-activity-button").click (event) ->
-      save_activity_handler(event)
+  $("#save-activity-button").click (event) ->
+    save_activity_handler(event)
 
-    $("#cancel-activity-button").click (event) ->
-      cancel_activity_handler(event)
+  $("#cancel-activity-button").click (event) ->
+    cancel_activity_handler(event)
 
-    $("#save-measurement-button").click (event) ->
-      save_measurement_submit_handler(event)
+  $("#save-measurement-button").click (event) ->
+    save_measurement_submit_handler(event)
 
-    $("#manualdata-container").on("click", "div.edit-meas-control",
-      (event) ->
-        edit_measurement_submit_handler(event)
-    )
+  $("#manualdata-container").on("click", "div.edit-meas-control",
+    (event) ->
+      edit_measurement_submit_handler(event)
+  )
 
-    $("#manualdata-container").on("click", "div.delete-meas-control",
-      (event) ->
-        delete_measurement_submit_handler(event)
-    )
+  $("#manualdata-container").on("click", "div.delete-meas-control",
+    (event) ->
+      delete_measurement_submit_handler(event)
+  )
 
-    $("#update-measurement-button").click (event) ->
-      update_measurement_submit_handler(event)
+  $("#update-measurement-button").click (event) ->
+    update_measurement_submit_handler(event)
 
-    $("#cancel-measurement-button").click (event) ->
-      cancel_measurement_submit_handler(event)
+  $("#cancel-measurement-button").click (event) ->
+    cancel_measurement_submit_handler(event)
 
-    $("#new-friend-button").click (event) ->
-      new_friend_submit_handler(event)
+  $("#new-friend-button").click (event) ->
+    new_friend_submit_handler(event)
 
+@init_mobile_dashboard = () ->
+  console.log("mobile dashboard")
+  uid = $("#shown-user-id")[0].value
+  d3.json("/users/"+uid+"/summaries.json?from="+get_days_ago_ymd(30), mobile_act_data_received)
+
+  actions_summary_url = "/users/" + uid + "/measurements.json?summary=true&hourly=true&start="+get_days_ago_ymd(30)
+  d3.json(actions_summary_url, mobile_heart_data_received)
+
+mobile_act_data_received = (jsondata) ->
+  act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
+    ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
+    ["Walking", "Running", "Cycling", "Transport", "Steps"],
+    ["left", "left", "left", "left", "right"],
+    ["colset2_0", "colset2_1", "colset2_2", "colset2_3", "colset2_4"],
+    ["min", "step"]
+    true,
+    1
+  )
+  act_trend_chart.preproc_cb = (data) ->
+    keys = ["walking_duration", "running_duration", "cycling_duration", "transport_duration"]
+    for d in data
+      for k in keys
+        d[k] = d[k]/60.0
+  act_trend_chart.margin = {top: 20, right: 60, bottom: 20, left: 30}
+  act_trend_chart.draw()
+
+mobile_heart_data_received = (jsondata) ->
+  heart_trend_chart = new HealthTrendChart("heart-trend", jsondata,
+    ["systolicbp", "pulse", "diastolicbp"],
+    ["SYS", "HR", "DIA"],
+    ["left", "left", "right"]
+    ["colset4_0", "colset4_1", "colset4_2"],
+    ["mmHg", "1/min"],
+    false,
+    1
+  )
+  heart_trend_chart.draw()
+
+get_days_ago_ymd = (n) ->
+  d = new Date()
+  d.setDate(d.getDate()-n)
+  return fmt(d)
 
 new_friend_submit_handler = (event) ->
   event.preventDefault()

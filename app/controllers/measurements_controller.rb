@@ -38,7 +38,10 @@ class MeasurementsController < ApplicationController
 
     @measurements = user.measurements
     if summary
-      puts "summary"
+      if start
+        @measurements = @measurements.where("date >= '#{start}'")
+      end
+
       daily_data = Hash.new { |h,k| h[k] = [] }
       for m in @measurements
         k = m.date.strftime("%F")

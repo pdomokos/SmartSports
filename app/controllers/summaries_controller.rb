@@ -23,7 +23,10 @@ class SummariesController < ApplicationController
     if source
       @activities = @activities.where("source = '#{source}'")
     end
-    if params[:year] and params[:month]
+    if params[:from]
+      from = params[:from]
+      @activities = @activities.where("date > '#{from}'")
+    elsif params[:year] and params[:month]
       year = params[:year].to_i
       month = params[:month].to_i
       numdays = Time.days_in_month(month, year)
