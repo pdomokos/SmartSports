@@ -52,7 +52,9 @@ get_conn_data = (data, sourcename) ->
 draw_conn = (jsondata) ->
   for elem in $("#training-container div.connection-block")
     conn =  $("#"+elem.id+" input.connection-name")[0].value
-    draw_conn_data(get_conn_data(jsondata, conn))
+    conndata = get_conn_data(jsondata, conn)
+    delete conndata['activities']['sleep']
+    draw_conn_data(conndata)
 
 draw_conn_data = (jsondata) ->
   source = jsondata.source

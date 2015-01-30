@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get 'sync/sync_withings'
   get 'sync/sync_fitbit'
   get 'sync/sync_moves_act_daily'
+  get 'sync/sync_withings_sleep_test'
 
   get 'sessions/reset_password'
   get 'sessions/signin'

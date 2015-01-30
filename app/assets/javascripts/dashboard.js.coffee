@@ -266,5 +266,3 @@ reset_form_sel = () ->
   $("#manualdata-container #meas-message").removeClass("hidden")
   $("#measurement-container div.measure-ui").addClass("hidden")
   $("#measurement-container .edit-controls").addClass("hidden")
-
-
