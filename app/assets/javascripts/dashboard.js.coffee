@@ -1,17 +1,18 @@
 
 @dashboard_loaded = (is_mobile=false) ->
-  reset_ui()
-  $("#dashboard-button").addClass("selected")
-  console.log "dashboard loaded"
-  setdate()
-  @update_summary(is_mobile)
-  self = this
   if not is_mobile
     @init_browser_dashboard()
   else
     @init_mobile_dashboard()
 
 @init_browser_dashboard = () ->
+  reset_ui()
+  $("#dashboard-button").addClass("selected")
+  console.log "dashboard loaded"
+  @setdate()
+  @update_summary(false)
+  self = this
+
   @load_notifications()
 
   @register_activity_cbs()
@@ -72,45 +73,7 @@
   $("#new-friend-button").click (event) ->
     new_friend_submit_handler(event)
 
-@init_mobile_dashboard = () ->
-  console.log("mobile dashboard")
-  uid = $("#shown-user-id")[0].value
-  d3.json("/users/"+uid+"/summaries.json?from="+get_days_ago_ymd(30), mobile_act_data_received)
-
-  actions_summary_url = "/users/" + uid + "/measurements.json?summary=true&hourly=true&start="+get_days_ago_ymd(30)
-  d3.json(actions_summary_url, mobile_heart_data_received)
-
-mobile_act_data_received = (jsondata) ->
-  act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
-    ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
-    ["Walking", "Running", "Cycling", "Transport", "Steps"],
-    ["left", "left", "left", "left", "right"],
-    ["colset2_0", "colset2_1", "colset2_2", "colset2_3", "colset2_4"],
-    ["min", "step"]
-    true,
-    1
-  )
-  act_trend_chart.preproc_cb = (data) ->
-    keys = ["walking_duration", "running_duration", "cycling_duration", "transport_duration"]
-    for d in data
-      for k in keys
-        d[k] = d[k]/60.0
-  act_trend_chart.margin = {top: 20, right: 60, bottom: 20, left: 30}
-  act_trend_chart.draw()
-
-mobile_heart_data_received = (jsondata) ->
-  heart_trend_chart = new HealthTrendChart("heart-trend", jsondata,
-    ["systolicbp", "pulse", "diastolicbp"],
-    ["SYS", "HR", "DIA"],
-    ["left", "left", "right"]
-    ["colset4_0", "colset4_1", "colset4_2"],
-    ["mmHg", "1/min"],
-    false,
-    1
-  )
-  heart_trend_chart.draw()
-
-get_days_ago_ymd = (n) ->
+@get_days_ago_ymd = (n) ->
   d = new Date()
   d.setDate(d.getDate()-n)
   return fmt(d)
@@ -140,7 +103,7 @@ new_friend_submit_handler = (event) ->
         $("#friend-message").html(msg)
         $("#")
 
-setdate = () ->
+@setdate = () ->
   now = new Date(Date.now())
   $(".logform input.date-input").val(fmt_hms(now))
 
@@ -154,7 +117,7 @@ reset_form_sel = () ->
   $("#heart-form-sel").removeClass("selected")
   $("#act-form-sel").removeClass("selected")
   $("#friend-form-sel").removeClass("selected")
-  setdate()
+  @setdate()
 
 @add_param = (name, hash) ->
   pname = $("#"+name).attr("name")

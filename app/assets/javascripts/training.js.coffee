@@ -18,19 +18,19 @@ data_received = (jsondata) ->
 
 draw_trends = (jsondata) ->
   act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
-    ["walking_duration", "running_duration", "cycling_duration", "transport_duration", "steps"],
-    ["Walking", "Running", "Cycling", "Transport", "Steps"],
-    ["left", "left", "left", "left", "right"],
-    ["colset2_0", "colset2_1", "colset2_2", "colset2_3", "colset2_4"],
-    ["min", "step"]
+    ["walking_duration", "running_duration", "cycling_duration", "steps"],
+    ["Walking", "Running", "Cycling", "Steps"],
+    ["left", "left", "left", "right"],
+    ["colset2_0", "colset2_1", "colset2_2", "colset2_4"],
+    ["minutes", "steps"]
     true
   )
   act_trend_chart.preproc_cb = (data) ->
-    keys = ["walking_duration", "running_duration", "cycling_duration", "transport_duration"]
+    keys = ["walking_duration", "running_duration", "cycling_duration"]
     for d in data
       for k in keys
         d[k] = d[k]/60.0
-  act_trend_chart.margin = {top: 20, right: 40, bottom: 20, left: 30}
+  act_trend_chart.margin = {top: 20, right: 50, bottom: 20, left: 35}
   act_trend_chart.draw()
 
 

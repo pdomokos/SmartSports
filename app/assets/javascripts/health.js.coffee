@@ -22,6 +22,7 @@ draw_trend = (data) ->
     ["mmHg", "1/min"],
     false
     )
+  heart_trend_chart.margin = {top: 20, right: 35, bottom: 20, left: 30}
   heart_trend_chart.draw()
 
 draw_detail = (data) ->
@@ -35,9 +36,10 @@ draw_detail = (data) ->
     ["HR", "SPO2"],
     ["left", "right"]
     ["colset6_1", "colset6_2"],
-    ["1/m", "%"],
+    ["1/minutes", "SPO2%"],
     false,
     4.0/7
   )
+  heart_chart.margin = {top: 20, right: 40, bottom: 20, left: 30}
   heart_chart.draw()
 

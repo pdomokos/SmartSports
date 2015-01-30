@@ -7,10 +7,11 @@ class TrendChart
     @selected_r = 8
     @preproc_cb = null
 
-    @margin = {top: 20, right: 40, bottom: 20, left: 30}
+    # default, overwrite if axis labels need more place
+    @margin = {top: 40, right: 40, bottom: 40, left: 40}
 
-    @width = $("#"+@chart_element+"-container").parent().width()-@margin.left-@margin.right
-    @height = @aspect*@width-@margin.top-@margin.bottom
+    @width = $("#"+@chart_element+"-container").parent().width()
+    @height = @aspect*@width
 
     @n = @series_keys.length
     @color_map = {}
@@ -51,23 +52,19 @@ class TrendChart
     @add_legend()
 
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
-    svg = svg
-      .attr("width", self.width+self.margin.left+self.margin.right)
-      .attr("height", self.height+self.margin.top+self.margin.bottom)
-      .append("g")
-      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
+
 
     time_extent = @get_time_extent()
-    time_scale = d3.time.scale().domain(time_extent).range([0, self.width])
+    time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
     @line = {}
     @ext_map = {}
     @scale_map = {}
 
     ext_left = @get_value_extent([0..@n-1].filter( (i) -> self.side_keys[i] == 'left').map( (i) -> self.series_keys[i]))
-    scale_left = d3.scale.linear().range([self.height - self.margin.bottom, self.margin.top]).domain(ext_left)
+    scale_left = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_left)
     ext_right = @get_value_extent( [0..@n-1].filter( (i) -> self.side_keys[i] == 'right').map( (i) -> self.series_keys[i]))
-    scale_right = d3.scale.linear().range([self.height - self.margin.bottom, self.margin.top]).domain(ext_right)
+    scale_right = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_right)
 
     if @zero_when_missing
       ext_left[0] = 0
@@ -90,47 +87,45 @@ class TrendChart
       .ticks(d3.time.weeks, 1)
     svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + (self.height-self.margin.top) + ")")
+      .attr("transform", "translate("+self.margin.left+","+(self.height-self.margin.bottom)+")")
       .call(time_axis)
-    svg.select(".x.axis")
-      .append("text")
-      .text("Date")
-      .attr("x", (self.width / 2) - self.margin.left)
-      .attr("y", self.margin.bottom+self.margin.top)
 
     y_axis_left = d3.svg.axis().scale(scale_left).orient("left")
     svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate( 0, 0 )")
+      .attr("transform", "translate( "+self.margin.left+", "+self.margin.top+" )")
       .attr("stroke-width", "0")
       .call(y_axis_left)
-    svg.select(".y.axis")
       .append("text")
       .text(self.labels[0])
-      .attr("transform", "translate(-20, 0)")
+      .attr("transform", "translate("+(-self.margin.left/2)+", "+(-self.margin.top/2)+")")
 
     y_axis_right = d3.svg.axis().scale(scale_right).orient("right")
     svg.append("g")
       .attr("class", "hr axis")
-      .attr("transform", "translate( "+@width.toString()+", 0 )")
+      .attr("transform", "translate( "+(self.width-self.margin.right)+", "+self.margin.top+" )")
       .attr("stroke-width", "0")
       .call(y_axis_right)
-    svg.select(".hr.axis")
       .append("text")
       .text(self.labels[1])
-      .attr("transform", "translate(-20, 0)")
+      .attr("transform", "translate("+(-self.margin.right/2)+", "+(-self.margin.top/2)+" )")
 
+    canvas = svg
+      .attr("width", self.width)
+      .attr("height", self.height)
+      .append("g")
+      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
     for k in @series_keys
-      svg.selectAll("circle."+k+"-avg")
+      canvas.selectAll("circle."+k+"-avg")
         .data(self.series.filter( (d) -> d[k]!=null))
         .enter()
-        .append("circle")
-        .attr("cx", (d) -> time_scale(new Date(d.date)))
-        .attr("cy", (d) -> self.scale_map[k](d[k]))
-        .attr("r", @base_r)
-        .attr("class", self.color_map[k]+" "+k)
+          .append("circle")
+          .attr("cx", (d) -> time_scale(new Date(d.date)))
+          .attr("cy", (d) -> self.scale_map[k](d[k]))
+          .attr("r", @base_r)
+          .attr("class", self.color_map[k]+" "+k)
 
-      svg.append("path")
+      canvas.append("path")
         .datum(self.series.filter( (d) -> d[k]!=null))
         .attr("class", "line "+self.color_map[k]+" "+k)
         .attr("d", self.line[k])
