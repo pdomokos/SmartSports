@@ -87,6 +87,9 @@ GEM
     omniauth-fitbit (1.0.4)
       multi_xml
       omniauth-oauth (~> 1.0)
+    omniauth-google-oauth2 (0.2.6)
+      omniauth (> 1.0)
+      omniauth-oauth2 (~> 1.1)
     omniauth-moves (0.0.2)
       multi_json (~> 1.0)
       omniauth (~> 1.0)
@@ -182,6 +185,7 @@ DEPENDENCIES
   mobile-fu
   moves
   omniauth-fitbit
+  omniauth-google-oauth2
   omniauth-moves
   omniauth-oauth
   omniauth-withings

@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   @movesconn = nil
   @withingsconn = nil
   @fitbitconn = nil
+  @googleconn = nil
 
   def formats=(values)
     # fall back to the browser view if the mobile or tablet version does not exist
@@ -48,6 +49,7 @@ class PagesController < ApplicationController
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
     @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
+    @googleconn = Connection.where(user_id: current_user.id, name: 'google').first
   end
 
   def error
@@ -97,6 +99,22 @@ class PagesController < ApplicationController
     end
   end
 
+  def googlecb
+    auth = request.env['omniauth.auth']
+    puts 'aaaaaaaaaaaa'
+    puts auth
+    if auth
+      data = auth['credentials']
+      u = User.find(current_user.id)
+      conn  = u.connections.create(name: 'google', data: data.to_json, user_id: u.id)
+      conn.save!
+      redirect_to :controller => 'pages', :action => 'training'
+    else
+      #TODO please sign in first message
+      redirect_to pages_settings_path
+    end
+  end
+
   def mdestroy
     moves_conn = Connection.where(user_id: current_user.id, name: 'moves').first
     if moves_conn
@@ -121,7 +139,13 @@ class PagesController < ApplicationController
     redirect_to pages_settings_path
   end
 
-
+  def gfdestroy
+    fit_conn = Connection.where(user_id: current_user.id, name: 'google').first
+    if fit_conn
+      fit_conn.destroy!
+    end
+    redirect_to pages_settings_path
+  end
 
   def friendship
     @friendship = Friendship.new

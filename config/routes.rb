@@ -26,9 +26,11 @@ Rails.application.routes.draw do
   get 'pages/mdestroy'
   get 'pages/wdestroy'
   get 'pages/fdestroy'
+  get 'pages/gfdestroy'
   get '/auth/moves/callback' => 'pages#movescb'
   get '/auth/withings/callback' => 'pages#withingscb'
   get '/auth/fitbit/callback' => 'pages#fitbitcb'
+  get '/auth/google_oauth2/callback' => 'pages#googlecb'
 
   # resources :summaries
   # resources :notifications
@@ -40,6 +42,7 @@ Rails.application.routes.draw do
   get 'sync/sync_fitbit'
   get 'sync/sync_moves_act_daily'
   get 'sync/sync_withings_sleep_test'
+  get 'sync/sync_google'
 
   get 'sessions/reset_password'
   get 'sessions/signin'

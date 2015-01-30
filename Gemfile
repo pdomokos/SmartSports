@@ -54,3 +54,5 @@ gem 'omniauth-fitbit'
 gem 'mobile-fu'
 
 gem 'chronic'
+
+gem "omniauth-google-oauth2"

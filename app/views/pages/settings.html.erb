@@ -48,6 +48,21 @@
                     <% end %>
                 </div>
             </div>
+
+            <div class="boxed-group">
+                <h3>Google Fit</h3>
+                <div class="boxed-group-inner">
+                    <p>Active since 2014-10-01</p>
+                    <p id="google-sync-status">Synced 1 day ago</p>
+                    <% if @googleconn %>
+                        <p><%= link_to "Sync Google", "#", :class => "button primary", :id => "sync-google-button" %>
+                            <%= link_to "Disconnect", "/pages/gfdestroy", :class => "button danger", :id => "disconnect-google-button" %>
+                        </p>
+                    <% else %>
+                        <p><%= link_to "Sign in to Google", "/auth/google_oauth2", :class => "button primary", :id => "signin-google-button" %></p>
+                    <% end %>
+                </div>
+            </div>
         </div>
 
         <div class="column one-half">

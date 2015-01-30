@@ -60,6 +60,24 @@
         else
           $("#fitbit-sync-status").html(failure_message)
 
+  $("#sync-google-button").click (event) ->
+    $("#google-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
+    failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $.ajax "/sync/sync_google",
+      type: "GET"
+      dataType: "json"
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "AJAX Error: #{textStatus}"
+        $("#google-sync-status").html(failure_message)
+      success: (result, textStatus, jqXHR) ->
+        console.log "Successful AJAX call"
+        console.log result
+        if result['status'] == "OK"
+          $("#google-sync-status").html("Synced just now <i class='fa fa-check' style='color: green'></i>")
+          console.log result['data']
+        else
+          $("#google-sync-status").html(failure_message)
+
   $("#edit-profile-button").click (event) ->
     $("#update-profile-info").html("")
     if $('#update-profile-form').hasClass("hidden")
