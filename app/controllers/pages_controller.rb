@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :set_user_data, only: [:dashboard, :health, :training, :lifestyle, :genetics, :settings]
+  before_action :set_user_data, only: [:dashboard, :health, :training, :lifestyle, :explore, :settings]
   has_mobile_fu
   layout 'pages'
 
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
   def lifestyle
   end
 
-  def genetics
+  def explore
   end
 
   def settings

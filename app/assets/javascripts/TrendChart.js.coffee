@@ -41,6 +41,8 @@ class TrendChart
     self = this
 
     hash = @get_series()
+    console.log hash
+
     hashkeys = Object.keys(hash)
     hashkeys.sort()
 
@@ -63,12 +65,16 @@ class TrendChart
 
     ext_left = @get_value_extent([0..@n-1].filter( (i) -> self.side_keys[i] == 'left').map( (i) -> self.series_keys[i]))
     scale_left = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_left)
-    ext_right = @get_value_extent( [0..@n-1].filter( (i) -> self.side_keys[i] == 'right').map( (i) -> self.series_keys[i]))
-    scale_right = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_right)
+    has_right = [0..@n-1].filter( (i) -> self.side_keys[i] == 'right').length>0
+    console.log "has_right="+has_right
+    if(has_right)
+      ext_right = @get_value_extent( [0..@n-1].filter( (i) -> self.side_keys[i] == 'right').map( (i) -> self.series_keys[i]))
+      scale_right = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_right)
 
     if @zero_when_missing
       ext_left[0] = 0
-      ext_right[0] = 0
+      if(has_right)
+        ext_right[0] = 0
 
     for k in @series_keys
       @ext_map[k] = ext_right
@@ -100,21 +106,23 @@ class TrendChart
       .text(self.labels[0])
       .attr("transform", "translate("+(-self.margin.left/2)+", "+(-self.margin.top/2)+")")
 
-    y_axis_right = d3.svg.axis().scale(scale_right).orient("right")
-    svg.append("g")
-      .attr("class", "hr axis")
-      .attr("transform", "translate( "+(self.width-self.margin.right)+", "+self.margin.top+" )")
-      .attr("stroke-width", "0")
-      .call(y_axis_right)
-      .append("text")
-      .text(self.labels[1])
-      .attr("transform", "translate("+(-self.margin.right/2)+", "+(-self.margin.top/2)+" )")
+    if(has_right)
+      y_axis_right = d3.svg.axis().scale(scale_right).orient("right")
+      svg.append("g")
+        .attr("class", "hr axis")
+        .attr("transform", "translate( "+(self.width-self.margin.right)+", "+self.margin.top+" )")
+        .attr("stroke-width", "0")
+        .call(y_axis_right)
+        .append("text")
+        .text(self.labels[1])
+        .attr("transform", "translate("+(-self.margin.right/2)+", "+(-self.margin.top/2)+" )")
 
     canvas = svg
       .attr("width", self.width)
       .attr("height", self.height)
       .append("g")
       .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
+
     for k in @series_keys
       canvas.selectAll("circle."+k+"-avg")
         .data(self.series.filter( (d) -> d[k]!=null))

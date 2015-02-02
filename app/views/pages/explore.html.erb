@@ -1,0 +1,34 @@
+<div class="explore-block" id="explore-container">
+    <div class="columns">
+        <div id="explore-trend-container" class="boxed-group">
+            <h3 class="legend-label">
+                <img src="<%= asset_path( "logo.png")%>" width="24px" height="24px" class="left">
+                <div class="training-type left">Activity times</div>
+                <div class="selected-meas legend-container right"></div>
+            </h3>
+
+            <div class="boxed-group-inner chart activity-trend-chart">
+                <svg class="explore-trend-chart-svg">
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column one-half">
+
+        </div>
+
+        <div class="column one-half">
+
+        </div>
+    </div>
+
+    <div id="legend-template" class="hidden">
+        <span class="chart-legend"></span>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    explore_loaded();
+</script>
