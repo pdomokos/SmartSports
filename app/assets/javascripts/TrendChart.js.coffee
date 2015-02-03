@@ -31,30 +31,47 @@ class TrendChart
     ext = null
     for k in keys
       if ext == null
-        ext = d3.extent(@series, (d) -> d[k])
+        newext = d3.extent(@series, (d) -> d[k])
+        if not(newext[0]==null or newext[0] == undefined or newext[1]==null or newext[1]==undefined)
+          ext = newext
       else
         newext = d3.extent(@series, (d) -> d[k])
-        ext = [Math.min(ext[0], newext[0]), Math.max(ext[1], newext[1])]
+        if not(newext[0]==null or newext[0] == undefined or newext[1]==null or newext[1]==undefined)
+          ext = [Math.min(ext[0], newext[0]), Math.max(ext[1], newext[1])]
     return ext
 
   draw: (date) ->
     self = this
-
     hash = @get_series()
-    console.log hash
 
+    @nodata = false
     hashkeys = Object.keys(hash)
-    hashkeys.sort()
+    if hashkeys.length ==0
+      @nodata = true
 
+    hashkeys.sort()
     @series = hashkeys.map( (k) -> hash[k])
+
     if @preproc_cb != null
       @preproc_cb(@series)
     console.log "draw - series"
-
-    @add_legend()
+    #window.series = @series
 
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
+    canvas = svg
+      .attr("width", self.width)
+      .attr("height", self.height)
+      .append("g")
+      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
 
+    @add_legend()
+    if @nodata
+      svg.append("text")
+      .text("No data")
+      .attr("class", "warn")
+      .attr("x", self.width/2-self.margin.left)
+      .attr("y", self.height/2)
+      return
 
     time_extent = @get_time_extent()
     time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
@@ -63,12 +80,24 @@ class TrendChart
     @ext_map = {}
     @scale_map = {}
 
-    ext_left = @get_value_extent([0..@n-1].filter( (i) -> self.side_keys[i] == 'left').map( (i) -> self.series_keys[i]))
+    left_keys = [0..@n-1].map( (i) ->
+      if self.side_keys[i] == 'left'
+        self.series_keys[i]
+      else
+        null).filter( (i) -> i!=null )
+
+    right_keys = [0..@n-1].map( (i) ->
+      if self.side_keys[i] == 'right'
+        self.series_keys[i]
+      else
+        null).filter( (i) -> i!=null )
+
+    ext_left = @get_value_extent(left_keys)
     scale_left = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_left)
-    has_right = [0..@n-1].filter( (i) -> self.side_keys[i] == 'right').length>0
-    console.log "has_right="+has_right
+
+    has_right = right_keys.length>0
     if(has_right)
-      ext_right = @get_value_extent( [0..@n-1].filter( (i) -> self.side_keys[i] == 'right').map( (i) -> self.series_keys[i]))
+      ext_right = @get_value_extent( right_keys )
       scale_right = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_right)
 
     if @zero_when_missing
@@ -117,26 +146,26 @@ class TrendChart
         .text(self.labels[1])
         .attr("transform", "translate("+(-self.margin.right/2)+", "+(-self.margin.top/2)+" )")
 
-    canvas = svg
-      .attr("width", self.width)
-      .attr("height", self.height)
-      .append("g")
-      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
+
 
     for k in @series_keys
-      canvas.selectAll("circle."+k+"-avg")
-        .data(self.series.filter( (d) -> d[k]!=null))
-        .enter()
-          .append("circle")
-          .attr("cx", (d) -> time_scale(new Date(d.date)))
-          .attr("cy", (d) -> self.scale_map[k](d[k]))
-          .attr("r", @base_r)
-          .attr("class", self.color_map[k]+" "+k)
+      dd = self.series.filter( (d) -> d[k]!=null)
+      if dd.length > 0
+        canvas.selectAll("circle."+k+"-avg")
+          .data(dd)
+          .enter()
+            .append("circle")
+            .attr("cx", (d) -> time_scale(new Date(d.date)))
+            .attr("cy", (d) -> self.scale_map[k](d[k]))
+            .attr("r", @base_r)
+            .attr("class", self.color_map[k]+" "+k)
 
-      canvas.append("path")
-        .datum(self.series.filter( (d) -> d[k]!=null))
-        .attr("class", "line "+self.color_map[k]+" "+k)
-        .attr("d", self.line[k])
+        canvas.append("path")
+          .datum(dd)
+          .attr("class", "line "+self.color_map[k]+" "+k)
+          .attr("d", self.line[k])
+
+
 
   add_legend: () ->
     self = this

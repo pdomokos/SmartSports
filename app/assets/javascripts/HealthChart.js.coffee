@@ -51,15 +51,11 @@ class HealthChart
     time_axis = d3.svg.axis()
       .scale(time_scale)
       .ticks(5)
+
     svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + (self.height-self.margin.top) + ")")
       .call(time_axis)
-    svg.select(".x.axis")
-      .append("text")
-      .text("Date")
-      .attr("x", (self.width / 2) - self.margin.left)
-      .attr("y", self.margin.bottom+self.margin.top)
 
     y_axis = d3.svg.axis().scale(y_scale).orient("left")
     svg.append("g")
@@ -71,6 +67,25 @@ class HealthChart
       .append("text")
       .text("mmHg")
       .attr("transform", "translate(-20, 0)")
+
+    @nodata = false
+    if @data.length ==0
+      @nodata = true
+
+    if @nodata
+      svg.append("text")
+        .text("No data")
+        .attr("class", "warn")
+        .attr("x", self.width/2-self.margin.left)
+        .attr("y", self.height/2)
+      return
+
+    svg.select(".x.axis")
+      .append("text")
+      .text("Date")
+      .attr("x", (self.width / 2) - self.margin.left)
+      .attr("y", self.margin.bottom+self.margin.top)
+
 
     hr_extent = d3.extent(@data, (d) -> d.pulse)
     hr_extent[0] = Math.min(hr_extent[0], 50)
@@ -176,6 +191,8 @@ class HealthChart
       .attr("stroke-width", 2)
       .attr("class", (d) -> "press "+classfn(d))
       .attr("id", (d) -> "press-"+d.data_id.toString())
+
+
 
   create_lines:  (r) ->
     start = r[0] - r[0] % 5

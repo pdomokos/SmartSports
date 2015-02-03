@@ -1,10 +1,10 @@
 class OutlineController < ApplicationController
 
   def index
-
+    uid = params[:user_id]
     summary = {}
 
-    movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
+    movesconn = Connection.where(user_id: uid, name: 'moves').first
     if not movesconn.nil?
       sess = JSON.parse(movesconn.data)
 
@@ -41,6 +41,26 @@ class OutlineController < ApplicationController
           prf << {"time" => hour, "activity" => hourly[hour]}
         end
         summary[:profile] = prf
+      end
+    else
+      sums = Summary.where("date between '#{todayYmd} 00:00:00' and '#{todayYmd} 23:59:59'")
+
+      summary['cycling'] = 0
+      summary['running'] = 0
+      summary['walking'] =0
+      summary['steps'] = 0
+      summary['distance'] = 0
+      summary['activity'] = 0
+      summary['calories'] =0
+      walk = sums.select{|it| it.group == 'walking'}
+      puts "WALK"
+      puts walk
+      if walk.length >0
+        summary['walking'] = walk[0].total_duration
+        summary['steps'] = walk[0].steps
+        summary['calories'] = walk[0].calories
+        summary['activity'] = walk[0].total_duration
+        summary['distance'] = walk[0].distance
       end
     end
 

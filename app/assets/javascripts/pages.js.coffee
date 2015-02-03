@@ -21,6 +21,8 @@ define_globals = () ->
     $("#"+chart_element+" svg.goal-percent-indicator").empty()
     svg = d3.select($("#"+chart_element+" svg.goal-percent-indicator")[0])
 
+    if percent == null
+      percent = 0
     fullarc = d3.svg.arc()
     .innerRadius(60)
     .outerRadius(70)

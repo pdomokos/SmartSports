@@ -1,4 +1,5 @@
 @update_summary = (is_mobile) ->
+  self = this
   chart_element = "dashboard-summary-container"
   today = new Date(Date.now())
   $.ajax '/users/'+$("#current-user-id")[0].value+"/outline",
@@ -9,13 +10,18 @@
     success: (data, textStatus, jqXHR) ->
       console.log "Successful AJAX call"
 
-      # $("#"+chart_element+" div.chart-date").html("Today")
-      $("#"+chart_element+" div.chart-date").html(fmt_words(today))
+      self.nodata = false
+      if not data['profile']
+        console.log "NODATA"
+        self.nodata = true
+      console.log data
 
+      $("#"+chart_element+" div.chart-date").html(fmt_words(today))
       sum_steps = data['steps']
       $("#"+chart_element+" div.steps").html(sum_steps)
       percent = (sum_steps/10000.0*100.0).toFixed(1)
       $("#"+chart_element+" div.avg-percent").html(percent+"%")
+
       draw_percent(chart_element, percent)
 
       $("#"+chart_element+" div.avg-description").html("of 10,000 steps")
@@ -29,6 +35,7 @@
       draw_daily_activity(chart_element, data['profile'], is_mobile)
 
 draw_daily_activity = (chart_element, data, is_mobile) ->
+  self = this
   margin = {top: 30, right: 30, bottom: 30, left: 30}
   aspect = 400/700
 
@@ -44,13 +51,35 @@ draw_daily_activity = (chart_element, data, is_mobile) ->
     .append("g")
     .attr("transform", "translate("+margin.left+","+margin.top+")")
 
-  time_padding = 1
+  if self.nodata
+    svg.append("text")
+      .text("No data")
+      .attr("class", "warn")
+      .attr("x", width/2-margin.left)
+      .attr("y", height/2)
+    return
+
   time_extent = d3.extent(data, (d) -> d.time)
   time_extent[0] = 0
   time_scale = d3.scale.linear().domain(time_extent).range([0, width])
 
   y_extent = d3.extent( data, (d) -> d.activity )
   y_scale = d3.scale.linear().domain(y_extent).range([height, 0])
+
+  time_axis = d3.svg.axis()
+    .scale(time_scale)
+
+  svg
+    .append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0 ,"+height+")")
+    .call(time_axis)
+  svg
+    .select(".x.axis")
+    .append("text")
+    .text("Hour")
+    .attr("x", (width / 2) - margin.right)
+    .attr("y", margin.bottom / 1.1)
 
   barwidth = width/49.0
   svg
@@ -63,21 +92,6 @@ draw_daily_activity = (chart_element, data, is_mobile) ->
       .attr("y", (d) -> y_scale( d.activity) )
       .attr("width", (d) -> barwidth)
       .attr("height", (d) -> height - y_scale(  d.activity ) )
-
-  time_axis = d3.svg.axis()
-  .scale(time_scale)
-
-  svg
-    .append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0 ,"+height+")")
-    .call(time_axis)
-  svg.
-    select(".x.axis")
-      .append("text")
-      .text("Hour")
-      .attr("x", (width / 2) - margin.right)
-      .attr("y", margin.bottom / 1.1)
 
   if not is_mobile
     y_axis = d3.svg.axis()

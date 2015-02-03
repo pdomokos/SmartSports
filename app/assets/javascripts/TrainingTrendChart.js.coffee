@@ -38,29 +38,32 @@ class TrainingTrendChart extends TrendChart
       else
         return null
 
-    current_item =  data.filter( (d) -> d['source'] == 'withings' )
-    if current_item.length != 0
-      result['walking_duration'] = current_item[0]['total_duration']
-      result['steps'] = current_item[0]['steps']
-    else
-      current_item =  data.filter( (d) -> d['source'] == 'fitbit')
-      if current_item.length != 0
-        result['walking_duration'] = current_item[0]['total_duration']
-        result['steps'] = current_item[0]['steps']
-      else
-        current_item = data
-        switch data[0]['group']
-          when 'walking'
-            result['walking_duration'] = current_item[0]['total_duration']
-            result['steps'] = current_item[0]['steps']
-          when 'running'
-            result['running_duration'] = current_item[0]['total_duration']
-          when 'cycling'
-            result['cycling_duration'] = current_item[0]['total_duration']
-          when 'transport'
-            result['transport_duration'] = current_item[0]['total_duration']
-          else
-            console.log "not found: "+data[0]['group']
+    current_items = data.filter( (d) -> d['group'] == 'walking')
+    if current_items.length != 0
+      result['walking_duration'] = current_items[0]['total_duration']
+      result['steps'] = current_items[0]['steps']
+
+    current_items = data.filter( (d) -> d['group'] == 'running')
+    if current_items.length != 0
+      result['running_duration'] = current_items[0]['total_duration']
+
+    current_items = data.filter( (d) -> d['group'] == 'cycling')
+    if current_items.length != 0
+      result['cycling_duration'] = current_items[0]['total_duration']
+
+    current_items =  data.filter( (d) -> d['source'] == 'fitbit')
+    if current_items.length != 0
+      walk_times = current_items.filter( (d) -> d['group'] == 'walking')
+      if walk_times.length != 0
+        result['walking_duration'] = walk_times[0]['total_duration']
+        result['steps'] = walk_times[0]['steps']
+
+    current_items =  data.filter( (d) -> d['source'] == 'withings' )
+    if current_items.length != 0
+      walk_times = current_items.filter( (d) -> d['group'] == 'walking')
+      if walk_times.length != 0
+        result['walking_duration'] = walk_times[0]['total_duration']
+        result['steps'] = walk_times[0]['steps']
 
 
 window.TrainingTrendChart = TrainingTrendChart

@@ -21,7 +21,7 @@ draw_trends = (jsondata) ->
     ["walking_duration", "running_duration", "cycling_duration", "steps"],
     ["Walking", "Running", "Cycling", "Steps"],
     ["left", "left", "left", "right"],
-    ["colset2_0", "colset2_1", "colset2_2", "colset2_4"],
+    ["colset2_0", "colset5_1", "colset2_2", "colset7_5"],
     ["minutes", "steps"]
     true
   )
