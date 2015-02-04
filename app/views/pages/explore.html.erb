@@ -16,6 +16,19 @@
     <div class="columns">
         <div class="column one-half">
 
+            <div id="daily-piechart-container" class="boxed-group">
+                <h3 class="legend-label">
+                    <img src="<%= asset_path( "logo.png")%>" width="24px" height="24px" class="left">
+                    <div class="training-type left">Activity daily</div>
+                    <div class="selected-meas legend-container right"></div>
+                </h3>
+
+                <div class="boxed-group-inner chart daily-piechart">
+                    <svg class="pie-chart">
+                    </svg>
+                </div>
+            </div>
+
         </div>
 
         <div class="column one-half">

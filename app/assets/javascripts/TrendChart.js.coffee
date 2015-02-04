@@ -58,11 +58,9 @@ class TrendChart
     #window.series = @series
 
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
-    canvas = svg
+    svg
       .attr("width", self.width)
       .attr("height", self.height)
-      .append("g")
-      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
 
     @add_legend()
     if @nodata
@@ -147,6 +145,8 @@ class TrendChart
         .attr("transform", "translate("+(-self.margin.right/2)+", "+(-self.margin.top/2)+" )")
 
 
+    canvas = svg.append("g")
+      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
 
     for k in @series_keys
       dd = self.series.filter( (d) -> d[k]!=null)

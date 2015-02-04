@@ -4,6 +4,11 @@
   uid = $("#shown-user-id")[0].value
   d3.json("/users/"+uid+"/summaries.json", data_received)
 
+  daily_piechart = new PieChart("daily-piechart",
+    [ ['Walk', 10], ["Sleep", 23], ["Transport", 44], ["Run", 1]]
+  )
+  daily_piechart.draw()
+
 data_received = (jsondata) ->
   draw_trends(jsondata)
 
