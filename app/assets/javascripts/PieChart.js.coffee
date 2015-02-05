@@ -37,11 +37,6 @@ class PieChart
       arc_data.push({"label": d[0], "value": value, "index": index})
       index += 1
 
-    console.log "ARC_DATA"
-    console.log @data
-    console.log arc_data
-
-    color = d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
     arc = d3.svg.arc()
       .outerRadius(radius)
       .innerRadius(0)
@@ -60,14 +55,8 @@ class PieChart
     g.append("path")
       .attr("d", arc)
       .attr("class", (d) ->
-        console.log d
         return (col[d.data.index])
       )
-
-#    canvas.append("path")
-#      .attr("class", "full-arc")
-#      .attr("d", fullarc)
-
 
 window.PieChart = PieChart
 

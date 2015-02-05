@@ -4,13 +4,9 @@
   uid = $("#shown-user-id")[0].value
   d3.json("/users/"+uid+"/summaries.json", data_received)
 
-  daily_piechart = new PieChart("daily-piechart",
-    [ ['Walk', 10], ["Sleep", 23], ["Transport", 44], ["Run", 1]]
-  )
-  daily_piechart.draw()
-
 data_received = (jsondata) ->
   draw_trends(jsondata)
+  draw_pie("2015-02-05", jsondata)
 
 draw_trends = (jsondata) ->
   act_trend_chart = new TrendChart("explore-trend", jsondata,
@@ -92,3 +88,21 @@ draw_trends = (jsondata) ->
   act_trend_chart.margin = {top: 20, right: 10, bottom: 20, left: 35}
 
   act_trend_chart.draw()
+
+draw_pie = (day_ymd, jsondata) ->
+  daily = []
+  act = jsondata['activities']
+  keys = Object.keys(act)
+  for k in keys
+    console.log k
+    today_acts = act[k].filter( (d) -> fmt(new Date(Date.parse(d['date'])))==day_ymd )
+    console.log today_acts
+    if today_acts.length>0
+      daily.concat(today_acts)
+  console.log "DAILY"
+  console.log daily
+
+  daily_piechart = new PieChart("daily-piechart",
+    [ ['Walk', 10], ["Sleep", 23], ["Transport", 44], ["Run", 1]]
+  )
+  daily_piechart.draw()

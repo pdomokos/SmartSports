@@ -8,6 +8,11 @@ class LifestylesController < ApplicationController
     u = User.find(user_id)
     @lifestyles = u.lifestyles
     @user = u
+
+    respond_to do |format|
+      format.html
+      format.json {render json: @lifestyles}
+    end
   end
 
   # GET /lifestyles/1
