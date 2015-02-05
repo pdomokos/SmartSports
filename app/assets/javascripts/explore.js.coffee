@@ -90,19 +90,31 @@ draw_trends = (jsondata) ->
   act_trend_chart.draw()
 
 draw_pie = (day_ymd, jsondata) ->
-  daily = []
-  act = jsondata['activities']
+  pie_data = get_daily_data(day_ymd, jsondata['activities'])
+
+  daily_piechart = new PieChart("daily-piechart", pie_data )
+  daily_piechart.draw()
+
+get_daily_data = (day_ymd, act) ->
   keys = Object.keys(act)
+  daily = []
   for k in keys
     console.log k
     today_acts = act[k].filter( (d) -> fmt(new Date(Date.parse(d['date'])))==day_ymd )
-    console.log today_acts
     if today_acts.length>0
-      daily.concat(today_acts)
-  console.log "DAILY"
+      if k=='walking'
+        w = today_acts.filter( (d) -> d.source == 'withings')
+        if w.length>0
+          daily.push(w[0])
+        else
+          daily.push(today_acts[0])
+      else
+        daily.push(today_acts[0])
   console.log daily
-
-  daily_piechart = new PieChart("daily-piechart",
-    [ ['Walk', 10], ["Sleep", 23], ["Transport", 44], ["Run", 1]]
-  )
-  daily_piechart.draw()
+  pie_data = daily.map( (d) -> [d.group, d.total_duration/60.0])
+  console.log pie_data
+  minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
+  console.log minutes
+  pie_data.push(["Other", (24*60-minutes)])
+  console.log "DAILY"
+  return pie_data

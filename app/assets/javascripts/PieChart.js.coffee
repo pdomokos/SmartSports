@@ -58,5 +58,21 @@ class PieChart
         return (col[d.data.index])
       )
 
+  add_legend: () ->
+    self = this
+    for k in @series_keys
+      new_label = $("#legend-template").children().first().clone()
+      tmp = @chart_element.replace("-", "_")
+      new_id =  "legend-label_"+tmp+"-" + k
+      new_label.attr('id', new_id)
+      new_label.appendTo($("#"+@chart_element+"-container .legend-container"))
+      $("#"+new_id).html(@name_map[k])
+      $("#"+new_id).addClass(@color_map[k])
+
+      $("#"+new_id).click (evt) ->
+        $("#"+evt.target.id).toggleClass("graph-hidden")
+        [..., last] = evt.target.id.split("-")
+        op = $("#"+evt.target.id).hasClass("graph-hidden")
+        d3.selectAll("svg."+self.chart_element+"-chart-svg ."+last).classed("hidden", op)
 window.PieChart = PieChart
 
