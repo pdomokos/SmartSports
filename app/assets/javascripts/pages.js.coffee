@@ -47,6 +47,30 @@ define_globals = () ->
     .attr("class", "percent-arc")
     .attr("d", arc)
 
+  window.capitalize = (word) ->
+    word.charAt(0).toUpperCase() + word.slice 1
+
+  window.get_monday = (date_ymd) ->
+    d = new Date(Date.parse(date_ymd))
+    dow = d.getDay()
+    dow2 = if (dow==0) then 6 else (dow-1)
+    d.setDate(d.getDate()-dow2)
+    d.setHours(0)
+    d.setMinutes(0)
+    d.setSeconds(0)
+    return new Date(d)
+
+  window.get_sunday = (date_ymd) ->
+    d = new Date(Date.parse(date_ymd))
+    dow = d.getDay()
+    dow2 = if (dow==0) then 6 else (dow-1)
+
+    d.setDate(d.getDate()+6-dow2)
+    d.setHours(23)
+    d.setMinutes(59)
+    d.setSeconds(59)
+    return new Date(d)
+
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")
   $("#friend-form-div div.friend-message").addClass("hidden")

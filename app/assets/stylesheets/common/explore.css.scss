@@ -36,3 +36,27 @@ path.colset6_7 {
   fill: #4575b4;
   stroke: $arc_stroke;
 }
+
+path.selected {
+  fill: #abd9e9;
+  stroke: $arc_stroke;
+}
+
+#daily-piechart-container div.notes {
+  color: black;
+}
+
+#daily-piechart-container text {
+  stroke: black;
+}
+
+#daily-piechart-container div.pie-label {
+  width: 100%;
+  display: table;
+}
+
+#daily-piechart-container div.pie-label span {
+  width: 50%;
+  display: table-cell;
+  text-align: center;
+}

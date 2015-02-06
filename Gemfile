@@ -52,3 +52,5 @@ gem 'fitgem'
 gem 'omniauth-fitbit'
 
 gem 'mobile-fu'
+
+gem 'chronic'

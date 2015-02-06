@@ -133,6 +133,8 @@
   $("#activity-container div."+activity_type+"-ui").removeClass("hidden")
   $("#activity-container div.act-edit-controls").removeClass("hidden")
   for e in $("form#act-form input."+activity_type+"-param")
+    console.log "SETTING "+e.id+" = "
+    console.log data
     @set_param(e.id, data)
 
 @delete_activity_handler = (event) ->

@@ -91,15 +91,14 @@ draw_trends = (jsondata) ->
 
 draw_pie = (day_ymd, jsondata) ->
   pie_data = get_daily_data(day_ymd, jsondata['activities'])
-
-  daily_piechart = new PieChart("daily-piechart", pie_data )
+  pie_data_weekly = get_weekly_data(day_ymd, jsondata['activities'])
+  daily_piechart = new PieChart("daily-piechart", pie_data, pie_data_weekly )
   daily_piechart.draw()
 
 get_daily_data = (day_ymd, act) ->
   keys = Object.keys(act)
   daily = []
   for k in keys
-    console.log k
     today_acts = act[k].filter( (d) -> fmt(new Date(Date.parse(d['date'])))==day_ymd )
     if today_acts.length>0
       if k=='walking'
@@ -110,11 +109,52 @@ get_daily_data = (day_ymd, act) ->
           daily.push(today_acts[0])
       else
         daily.push(today_acts[0])
-  console.log daily
   pie_data = daily.map( (d) -> [d.group, d.total_duration/60.0])
+
+  minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
+  pie_data.push(["Other", (24.0*60-minutes)])
+  return pie_data
+
+get_weekly_data = (day_ymd, act) ->
+  keys = Object.keys(act)
+  weekly = []
+  mon = get_monday(day_ymd)
+  sun = get_sunday(day_ymd)
+  now = new Date()
+  if now < sun
+    sun = now
+
+  console.log "WEEKLY"
+  for k in keys
+#    console.log k
+    week_acts = act[k].filter( (d) -> (new Date(Date.parse(d['date']))>=mon) and (new Date(Date.parse(d['date']))<=sun) )
+#    console.log today_acts
+    week_hash = Object()
+    for w in week_acts
+      wkey = fmt(new Date(Date.parse(w['date'])))
+      if week_hash[wkey]
+        week_hash[wkey].push(w)
+      else
+        week_hash[wkey] = [w]
+    dkeys = Object.keys(week_hash)
+    for dk in dkeys
+      day_acts = week_hash[dk]
+      if day_acts.length>0
+        if k=='walking'
+          w = week_acts.filter( (d) -> d.source == 'withings')
+          if w.length>0
+            weekly.push(w[0])
+          else
+            weekly.push(day_acts[0])
+        else
+          weekly.push(day_acts[0])
+  pie_data = weekly.map( (d) -> [d.group, d.total_duration/60.0])
+
   console.log pie_data
   minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
-  console.log minutes
-  pie_data.push(["Other", (24*60-minutes)])
-  console.log "DAILY"
+  total = (sun-mon)/1000/60
+  console.log "minutes: " + minutes
+  console.log "total: " + total
+  console.log "diff: " + (total-minutes)
+  pie_data.push(["Other", (total-minutes)])
   return pie_data

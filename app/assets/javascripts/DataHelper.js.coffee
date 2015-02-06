@@ -31,8 +31,8 @@ class DataHelper
     running = if @data.running then @data.running else []
     cycling = if @data.cycling then @data.cycling else []
     transport = if @data.transport then @data.transport else []
-    monday = @get_monday(date_ymd)
-    sunday = @get_sunday(date_ymd)
+    monday = get_monday(date_ymd)
+    sunday = get_sunday(date_ymd)
     for d in walking.concat(running.concat(cycling.concat(transport)))
       curr = new Date(Date.parse(d.date))
       if curr > monday and curr<=sunday
@@ -68,26 +68,5 @@ class DataHelper
   days_in_month: (year, month) ->
     d = new Date(Date.parse(year+"-"+month))
     return new Date(d.getYear(), d.getMonth()+1, 0).getDate()
-
-  get_monday: (date_ymd) ->
-    d = new Date(Date.parse(date_ymd))
-    dow = d.getDay()
-    dow2 = if (dow==0) then 6 else (dow-1)
-    d.setDate(d.getDate()-dow2)
-    d.setHours(0)
-    d.setMinutes(0)
-    d.setSeconds(0)
-    return new Date(d)
-
-  get_sunday: (date_ymd) ->
-    d = new Date(Date.parse(date_ymd))
-    dow = d.getDay()
-    dow2 = if (dow==0) then 6 else (dow-1)
-
-    d.setDate(d.getDate()+6-dow2)
-    d.setHours(23)
-    d.setMinutes(59)
-    d.setSeconds(59)
-    return new Date(d)
 
 window.DataHelper = DataHelper

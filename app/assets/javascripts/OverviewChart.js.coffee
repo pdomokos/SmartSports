@@ -111,11 +111,11 @@ class OverviewChart
 
   show_curr_week: (currdate) ->
     self = this
-    monday = @data_helper.get_monday(fmt(currdate))
+    monday = get_monday(fmt(currdate))
     monday.setHours(0)
     monday.setMinutes(0)
     monday.setSeconds(0)
-    sunday = @data_helper.get_sunday(fmt(currdate))
+    sunday = get_sunday(fmt(currdate))
     sunday.setHours(23)
     sunday.setMinutes(59)
     sunday.setSeconds(59)

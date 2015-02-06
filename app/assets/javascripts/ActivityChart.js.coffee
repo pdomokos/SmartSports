@@ -47,7 +47,7 @@ class ActivityChart extends BaseChart
       .attr("y", self.height/2)
 
     time_padding = 8*60*60*1000
-    time_extent = [@data_helper.get_monday(date_ymd).getTime()-time_padding, @data_helper.get_sunday(date_ymd).getTime()-time_padding]
+    time_extent = [get_monday(date_ymd).getTime()-time_padding, get_sunday(date_ymd).getTime()-time_padding]
     @time_scale = d3.time.scale().domain(time_extent).range([0, width])
 
     if meas=='walking'
@@ -187,8 +187,8 @@ class ActivityChart extends BaseChart
   update_weekly: (sel_date) ->
     $("#"+@chart_element+" input.is-weekly")[0].value = "yes"
     weekly = @data_helper.get_week_activities(sel_date)
-    monday =  @data_helper.get_monday(sel_date)
-    sunday = @data_helper.get_sunday(sel_date)
+    monday = get_monday(sel_date)
+    sunday = get_sunday(sel_date)
     $("#"+@chart_element+" div.chart-date").html("Week of "+fmt_month_day(monday)+" - "+fmt_month_day(sunday)+" "+fmt_year(sunday))
 
     sum_steps = @data_helper.get_sum_measure(weekly, 'steps', ['walking'])
