@@ -13,7 +13,7 @@ draw_trends = (jsondata) ->
     ["walking_duration", "sleep_duration", "transport_duration"],
     ["Walking", "Sleep", "Transport"],
     ["left", "left", "left"],
-    ["colset5_6", "colset6_6", "colset6_1" ],
+    ["walking", "sleep", "transport" ],
     ["minutes"]
     false
   )
@@ -87,12 +87,33 @@ draw_trends = (jsondata) ->
           d[k] = d[k]/60.0
   act_trend_chart.margin = {top: 20, right: 10, bottom: 20, left: 35}
 
+  act_trend_chart.cb_over = (d, node) ->
+    console.log d
+    node = d3.select(node)
+    console.log node
+    if node.classed("walking")
+      txt = d.date+" walking: "+d.walking_duration
+    else if node.classed("transport")
+      txt = d.date+" walking: "+d.transport_duration
+    else if node.classed("sleep")
+      txt = d.date+" sleep: "+d.sleep_duration
+    else
+      txt = d.date
+    $("#explore-trend-container div.notes").html(txt)
+
+  act_trend_chart.cb_out = (d, node) ->
+
+    $("#explore-trend-container div.notes").html("")
+  act_trend_chart.cb_click = (d, node) ->
+    console.log "click"
+    console.log node
+
   act_trend_chart.draw()
 
 draw_pie = (day_ymd, jsondata) ->
   pie_data = get_daily_data(day_ymd, jsondata['activities'])
   pie_data_weekly = get_weekly_data(day_ymd, jsondata['activities'])
-  daily_piechart = new PieChart("daily-piechart", pie_data, pie_data_weekly )
+  daily_piechart = new PieChart("daily-piechart", pie_data, pie_data_weekly)
   daily_piechart.draw()
 
 get_daily_data = (day_ymd, act) ->
@@ -112,49 +133,55 @@ get_daily_data = (day_ymd, act) ->
   pie_data = daily.map( (d) -> [d.group, d.total_duration/60.0])
 
   minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
-  pie_data.push(["Other", (24.0*60-minutes)])
+  pie_data.push(["other", (24.0*60-minutes)])
   return pie_data
 
 get_weekly_data = (day_ymd, act) ->
-  keys = Object.keys(act)
-  weekly = []
+  activity_keys = Object.keys(act)
   mon = get_monday(day_ymd)
   sun = get_sunday(day_ymd)
   now = new Date()
   if now < sun
     sun = now
 
+  console.log "MON="+mon
+  console.log "SUN="+sun
   console.log "WEEKLY"
-  for k in keys
-#    console.log k
-    week_acts = act[k].filter( (d) -> (new Date(Date.parse(d['date']))>=mon) and (new Date(Date.parse(d['date']))<=sun) )
-#    console.log today_acts
+
+  pie_data = []
+  for k in activity_keys
     week_hash = Object()
+    week_acts = act[k].filter( (d) -> (new Date(Date.parse(d['date']))>=mon) and (new Date(Date.parse(d['date']))<=sun) )
+
+    if week_acts.length == 0
+      continue
+
     for w in week_acts
       wkey = fmt(new Date(Date.parse(w['date'])))
       if week_hash[wkey]
         week_hash[wkey].push(w)
       else
         week_hash[wkey] = [w]
+
     dkeys = Object.keys(week_hash)
+
+    weekly = []
     for dk in dkeys
       day_acts = week_hash[dk]
       if day_acts.length>0
         if k=='walking'
-          w = week_acts.filter( (d) -> d.source == 'withings')
+          w = day_acts.filter( (d) -> d.source == 'withings')
           if w.length>0
             weekly.push(w[0])
           else
             weekly.push(day_acts[0])
         else
           weekly.push(day_acts[0])
-  pie_data = weekly.map( (d) -> [d.group, d.total_duration/60.0])
 
-  console.log pie_data
+    total = weekly.map( (d) ->  d.total_duration/60.0 ).reduce( (a, b) -> a+b)
+    pie_data.push([k, total])
+
   minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
   total = (sun-mon)/1000/60
-  console.log "minutes: " + minutes
-  console.log "total: " + total
-  console.log "diff: " + (total-minutes)
-  pie_data.push(["Other", (total-minutes)])
+  pie_data.push(["other", (total-minutes)])
   return pie_data

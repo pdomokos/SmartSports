@@ -7,7 +7,7 @@ class PieChart
 
     @width = $("#"+@chart_element+"-container").parent().width()
     @height = @aspect*@width
-    @col = ["colset6_0", "colset6_1", "colset6_2", "colset6_3", "colset6_4"]
+#    @col = ["colset6_0", "colset6_1", "colset6_2", "colset6_3", "colset6_4"]
 
   draw: () ->
     self = this
@@ -30,8 +30,6 @@ class PieChart
 
     @draw_pie(svg1, @data)
     @draw_pie(svg2, @data_weekly )
-    console.log @data_weekly
-#    @draw_pie(svg2, [["walking", 100], ["running", 54], ["sleep", 300], ["other", 900]] )
     @add_legend(@data)
 
   draw_pie: (elem, chart_data) ->
@@ -62,7 +60,7 @@ class PieChart
     g.append("path")
       .attr("d", arc)
       .attr("class", (d) ->
-        return (self.col[d.data.index])
+        return (d.data.label)
       )
       .on("mouseover", (d) ->
         data = d['data']
@@ -97,16 +95,13 @@ class PieChart
       new_label.attr('id', new_id)
       new_label.appendTo($("#"+@chart_element+"-container .legend-container"))
       $("#"+new_id).html(capitalize(k[0]))
-      $("#"+new_id).addClass(self.col[i])
-
-#      $("#"+new_id).click (evt) ->
-#        $("#"+evt.target.id).toggleClass("graph-hidden")
-#        [..., last] = evt.target.id.split("-")
-#        op = $("#"+evt.target.id).hasClass("graph-hidden")
-#        d3.selectAll("svg."+self.chart_element+"-chart-svg ."+last).classed("hidden", op)
+      $("#"+new_id).addClass(k[0])
+      $("#"+new_id).on("mouseover", (d) ->
+        act = this.id.split("-")[-1..][0]
+        d3.selectAll("#daily-piechart-container path."+act).classed("selected", true))
+      $("#"+new_id).on("mouseout", (d) ->
+        act = this.id.split("-")[-1..][0]
+        d3.selectAll("#daily-piechart-container path."+act).classed("selected", false))
       i += 1
 
-
-
 window.PieChart = PieChart
-

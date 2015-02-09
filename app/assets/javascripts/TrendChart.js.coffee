@@ -22,6 +22,10 @@ class TrendChart
       @name_map[@series_keys[i]] = series_names[i]
       @side_map[@series_keys[i]] = @side_keys[i]
 
+    @cb_over = null
+    @cb_out = null
+    @cb_click = null
+
   # get_series() needs to be provided in subclass
 
   get_time_extent: () ->
@@ -159,13 +163,22 @@ class TrendChart
             .attr("cy", (d) -> self.scale_map[k](d[k]))
             .attr("r", @base_r)
             .attr("class", self.color_map[k]+" "+k)
-
+            .on("mouseover", (d) ->
+              if self.cb_over
+                self.cb_over(d, this)
+            )
+            .on("mouseout", (d) ->
+              if self.cb_out
+                self.cb_out(d, this)
+            )
+            .on("click", (d) ->
+              if self.cb_click
+                self.cb_click(d, this)
+            )
         canvas.append("path")
           .datum(dd)
           .attr("class", "line "+self.color_map[k]+" "+k)
           .attr("d", self.line[k])
-
-
 
   add_legend: () ->
     self = this
