@@ -58,38 +58,47 @@ private
     startTimeNanos = minStartTimeNs
     total_duration = 0
     steps = 0
-    i = 1
-
+   
     dataPoints.each do |datapoint|
-      if startTimeNanos < startTime + (i *oneDayNanos)
-        valueArr = datapoint["value"]
-        startTimeNanos = datapoint["startTimeNanos"].to_i
-        endTimeNanos = datapoint["endTimeNanos"].to_i
-        duration = (endTimeNanos - startTimeNanos) / (10 ** 9).to_f
-        total_duration += duration
-        steps += valueArr[0]["intVal"]
-      else
+      if newDayData(startTime, startTimeNanos, datapoint["startTimeNanos"].to_i, oneDayNanos)
         if steps != 0
-          date = getDateOfSummary(startTime, oneDayNanos, i)
+          date = getDateOfSummary(startTime, startTimeNanos, oneDayNanos)
           saveSummary(steps, date, total_duration, true)
           puts 'save final'
         end
-        i+=1
         valueArr = datapoint["value"]
         startTimeNanos = datapoint["startTimeNanos"].to_i
         endTimeNanos = datapoint["endTimeNanos"].to_i
         duration = (endTimeNanos - startTimeNanos) / (10 ** 9).to_f
         total_duration = duration
         steps = valueArr[0]["intVal"]
+      else
+        valueArr = datapoint["value"]
+        startTimeNanos = datapoint["startTimeNanos"].to_i
+        endTimeNanos = datapoint["endTimeNanos"].to_i
+        duration = (endTimeNanos - startTimeNanos) / (10 ** 9).to_f
+        total_duration += duration
+        steps += valueArr[0]["intVal"]
       end
     end
-    date = getDateOfSummary(startTime, oneDayNanos, i)
+    date = getDateOfSummary(startTime, startTimeNanos, oneDayNanos)
     saveSummary(steps, date, total_duration, false)
     puts 'save not final'
   end
 
-   def getDateOfSummary(startTime, oneDayNanos, i)     #start of day
-     dateInNanos = startTime + (i *oneDayNanos) - oneDayNanos
+   def newDayData(startTime, startTimeNanos, newStartTimeNanos, oneDayNanos)
+      time1 = ((startTimeNanos - startTime) / oneDayNanos).to_i
+      time2 = ((newStartTimeNanos - startTime) / oneDayNanos).to_i
+      if time1 != time2
+        return true
+      else
+        return false
+      end
+   end
+
+   def getDateOfSummary(startTime, startTimeNanos, oneDayNanos)     #start of day
+     i = ((startTimeNanos - startTime)/oneDayNanos).floor
+     dateInNanos = startTime + (i *oneDayNanos)
      dateInSecs = (dateInNanos / (10 ** 9)).to_s
      return DateTime.strptime(dateInSecs,'%s')
    end
