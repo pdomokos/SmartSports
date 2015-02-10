@@ -1,8 +1,7 @@
 #= require BaseChart
 
-class ActivityChart extends BaseChart
-  constructor: (@connection, @chart_element, data, @data_helper) ->
-    super(data)
+class ActivityChart
+  constructor: (@connection, @chart_element, @data, @data_helper) ->
     @time_scale = null
     @callback = null
 
@@ -13,7 +12,7 @@ class ActivityChart extends BaseChart
 
     $("#"+@chart_element+" input.curr-date")[0].value = date_ymd
 
-    currdata = @data_helper.get_week_activities(date_ymd)
+    currdata = @data_helper.get_week_activities(date_ymd, @data)
     margin = {top: 30, right: 10, bottom: 40, left: 50}
     aspect = 400/700
     width = $("#"+@chart_element).parent().width()-margin.left-margin.right
@@ -186,7 +185,7 @@ class ActivityChart extends BaseChart
 
   update_weekly: (sel_date) ->
     $("#"+@chart_element+" input.is-weekly")[0].value = "yes"
-    weekly = @data_helper.get_week_activities(sel_date)
+    weekly = @data_helper.get_week_activities(sel_date, @data)
     monday = get_monday(sel_date)
     sunday = get_sunday(sel_date)
     $("#"+@chart_element+" div.chart-date").html("Week of "+fmt_month_day(monday)+" - "+fmt_month_day(sunday)+" "+fmt_year(sunday))

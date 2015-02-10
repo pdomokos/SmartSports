@@ -25,21 +25,17 @@ class DataHelper
           result['walking'].push(d)
     return result
 
-  get_week_activities: (date_ymd) ->
+  get_week_activities: (date_ymd, data) ->
     result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
-    walking = if @data.walking then @data.walking else []
-    running = if @data.running then @data.running else []
-    cycling = if @data.cycling then @data.cycling else []
-    transport = if @data.transport then @data.transport else []
+    keys = ['walking', 'running', 'cycling', 'transport']
     monday = get_monday(date_ymd)
     sunday = get_sunday(date_ymd)
-    for d in walking.concat(running.concat(cycling.concat(transport)))
-      curr = new Date(Date.parse(d.date))
-      if curr > monday and curr<=sunday
-        if d.group
-          result[d.group].push(d)
-        else
-          result['walking'].push(d)
+    for k in keys
+      if data[k]
+        for d in data[k]
+          curr = new Date(Date.parse(d.date))
+          if curr >= monday and curr<=sunday
+            result[k].push(d)
     return result
 
   get_data_size: ->
