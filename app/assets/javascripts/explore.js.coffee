@@ -2,14 +2,18 @@
   reset_ui()
   $("#explore-button").addClass("selected")
   uid = $("#shown-user-id")[0].value
-  d3.json("/users/"+uid+"/summaries.json", data_received)
+  d3.json("/users/"+uid+"/summaries.json", @data_received)
 
-data_received = (jsondata) ->
-  draw_trends(jsondata)
-  draw_pie("2015-02-05", jsondata)
+@data_received = (jsondata) ->
+  @explore_data = jsondata
+  @draw_trends()
+  @draw_pie("2015-02-05")
 
-draw_trends = (jsondata) ->
-  act_trend_chart = new TrendChart("explore-trend", jsondata,
+@draw_trends = () ->
+  console.log @explore_data
+
+  self = this
+  act_trend_chart = new TrendChart("explore-trend", @explore_data,
     ["walking_duration", "sleep_duration", "transport_duration"],
     ["Walking", "Sleep", "Transport"],
     ["left", "left", "left"],
@@ -17,7 +21,7 @@ draw_trends = (jsondata) ->
     ["minutes"]
     false
   )
-  console.log jsondata
+
   act_trend_chart.get_series = () ->
     self=this
     template = {'date': null, 'walking_duration': 0, 'transport_duration': 0, 'sleep_duration': null}
@@ -86,34 +90,39 @@ draw_trends = (jsondata) ->
         if d[k] != null
           d[k] = d[k]/60.0
   act_trend_chart.margin = {top: 20, right: 10, bottom: 20, left: 35}
-
+  get_duration = (val_min) ->
+    if val_min<60
+      result = val_min.toFixed(1)+" minutes"
+    else
+      result = (val_min/60.0).toFixed(1)+" hours"
   act_trend_chart.cb_over = (d, node) ->
-    console.log d
     node = d3.select(node)
-    console.log node
+    date_with_day = fmt_day(new Date(Date.parse(d.date)))
     if node.classed("walking")
-      txt = d.date+" walking: "+d.walking_duration
+      txt = date_with_day+" Walking: "+get_duration(d.walking_duration)
     else if node.classed("transport")
-      txt = d.date+" walking: "+d.transport_duration
+      txt = date_with_day+" Transport: "+get_duration(d.transport_duration)
     else if node.classed("sleep")
-      txt = d.date+" sleep: "+d.sleep_duration
+      txt = date_with_day+" Sleep: "+get_duration(d.sleep_duration)
     else
       txt = d.date
     $("#explore-trend-container div.notes").html(txt)
 
   act_trend_chart.cb_out = (d, node) ->
-
     $("#explore-trend-container div.notes").html("")
-  act_trend_chart.cb_click = (d, node) ->
-    console.log "click"
-    console.log node
 
+  act_trend_chart.cb_click = (d, node) ->
+    draw_pie(d.date, self.explore_data)
+  act_trend_chart.base_r = 4
   act_trend_chart.draw()
 
-draw_pie = (day_ymd, jsondata) ->
-  pie_data = get_daily_data(day_ymd, jsondata['activities'])
-  pie_data_weekly = get_weekly_data(day_ymd, jsondata['activities'])
+@draw_pie = (day_ymd) ->
+  console.log @explore_data
+  pie_data = get_daily_data(day_ymd, @explore_data['activities'])
+  pie_data_weekly = get_weekly_data(day_ymd, @explore_data['activities'])
   daily_piechart = new PieChart("daily-piechart", pie_data, pie_data_weekly)
+  $("#daily-piechart-container span.pie1-label").html(day_ymd)
+  $("#daily-piechart-container span.pie2-label").html(fmt(get_monday(day_ymd))+" : "+fmt(get_sunday(day_ymd)))
   daily_piechart.draw()
 
 get_daily_data = (day_ymd, act) ->

@@ -42,9 +42,6 @@ path.selected {
   stroke: $arc_stroke !important;
 }
 
-#daily-piechart-container div.notes {
-  color: black;
-}
 
 #daily-piechart-container text {
   stroke: black;
@@ -105,3 +102,13 @@ path.s5 { stroke: white; fill: #74add1 };
 path.s6 { stroke: white; fill: #35978f };
 path.s4 { stroke: white; fill: #abd9e9 };
 path.s3 { stroke: white; fill: #e0f3f8 };
+
+#daily-piechart-container div.notes {
+  color: black;
+  font-size: 12px;
+}
+
+#explore-trend-container div.notes {
+  color: black;
+  font-size: 12px;
+}

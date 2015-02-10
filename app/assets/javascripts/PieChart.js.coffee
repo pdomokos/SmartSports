@@ -13,6 +13,8 @@ class PieChart
     self = this
     console.log "draw pie chart"
 
+    $("#"+@chart_element+"-container .legend-container").empty()
+
     elem = $("#"+@chart_element+"-container svg.pie-chart")
     elem.empty()
     svg = d3.select(elem[0])
