@@ -36,6 +36,15 @@
     $("#heart-form-sel").addClass("selected")
     $("#meas-sys").focus()
 
+  $("#lifestyle-form-sel").click (event) ->
+    reset_form_sel()
+    $("#lifestyle-form-div").removeClass("hidden")
+    $("#meas-message").addClass("hidden-placed")
+    $("#lifestyle-form-sel div.log-sign").removeClass("hidden-placed")
+    $("#lifestyle-form-sel").addClass("selected")
+#    $("#meas-sys").focus()
+
+
   $("#friend-form-sel").click (event) ->
     reset_form_sel()
     $("#friend_name").val("")
@@ -108,13 +117,16 @@ new_friend_submit_handler = (event) ->
   $(".logform input.date-input").val(fmt_hms(now))
 
 reset_form_sel = () ->
-  $("#act-form-div").addClass("hidden")
   $("#heart-form-div").addClass("hidden")
+  $("#lifestyle-form-div").addClass("hidden")
+  $("#act-form-div").addClass("hidden")
   $("#friend-form-div").addClass("hidden")
-  $("#heart-form-sel div.log-sign").addClass("hidden-placed")
   $("#act-form-sel div.log-sign").addClass("hidden-placed")
+  $("#lifestyle-form-sel div.log-sign").addClass("hidden-placed")
+  $("#heart-form-sel div.log-sign").addClass("hidden-placed")
   $("#friend-form-sel div.log-sign").addClass("hidden-placed")
   $("#heart-form-sel").removeClass("selected")
+  $("#lifestyle-form-sel").removeClass("selected")
   $("#act-form-sel").removeClass("selected")
   $("#friend-form-sel").removeClass("selected")
   @setdate()

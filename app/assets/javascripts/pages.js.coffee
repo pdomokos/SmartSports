@@ -49,7 +49,10 @@ define_globals = () ->
     .attr("d", arc)
 
   window.capitalize = (word) ->
-    word.charAt(0).toUpperCase() + word.slice 1
+    if word
+      word.charAt(0).toUpperCase() + word.slice 1
+    else
+      word
 
   window.get_monday = (date_ymd) ->
     d = new Date(Date.parse(date_ymd))
