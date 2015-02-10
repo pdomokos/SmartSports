@@ -101,8 +101,6 @@ class PagesController < ApplicationController
 
   def googlecb
     auth = request.env['omniauth.auth']
-    puts 'aaaaaaaaaaaa'
-    puts auth
     if auth
       data = auth['credentials']
       u = User.find(current_user.id)
