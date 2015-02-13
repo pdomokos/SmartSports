@@ -1,6 +1,12 @@
 @register_activity_cbs = () ->
   console.log "register_activity_cbs()"
 
+  $("#save-activity-button").click (event) ->
+    save_activity_handler(event)
+
+  $("#cancel-activity-button").click (event) ->
+    cancel_activity_handler(event)
+
   del = (event) ->
     friend_name = event.target.parentElement.firstChild.textContent
     event.target.parentElement.remove()

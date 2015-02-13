@@ -38,28 +38,28 @@ draw_trends = (jsondata) ->
 @activity_charts = []
 self = this
 
-get_conn_data = (data, sourcename) ->
-  keys = Object.keys(data.activities)
-  result = {'source': sourcename, 'activities': {}}
-  for k in keys
-    result['activities'][k] = []
-  for k in keys
-    for d in data['activities'][k]
-      if d.source == sourcename
-        result['activities'][k].push( d )
-  return(result)
-  
+
 draw_conn = (jsondata) ->
   for elem in $("#training-container div.connection-block")
     conn =  $("#"+elem.id+" input.connection-name")[0].value
     conndata = get_conn_data(jsondata, conn)
-    delete conndata['activities']['sleep']
-    draw_conn_data(conndata)
+    delete conndata['sleep']
+    draw_conn_data(conndata, conn)
 
-draw_conn_data = (jsondata) ->
-  source = jsondata.source
+get_conn_data = (data, sourcename) ->
+  keys = Object.keys(data)
+  result = {}
+  for k in keys
+    result[k] = []
+  for k in keys
+    for d in data[k]
+      if d.source == sourcename
+        result[k].push( d )
+  return(result)
+
+
+draw_conn_data = (jsondata, source) ->
   console.log "DOING "+source
-  jsondata = jsondata.activities
   data_helper = new DataHelper(jsondata)
   datanum = data_helper.get_data_size()
   if datanum==0

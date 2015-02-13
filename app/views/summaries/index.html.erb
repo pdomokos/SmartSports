@@ -15,23 +15,23 @@
         <th>synced_at</th>
         <th>sync_final</th>
     </tr>
-    <% for a in @activities %>
+    <% for s in @summaries %>
 
         <tr>
-            <td><%= a.user.name %></td>
-            <td><%= a.source %></td>
-            <td><%= a.date %></td>
-            <td><%= a.group %></td>
-            <td><%= a.total_duration %></td>
-            <td><%= a.steps %></td>
-            <td><%= a.soft_duration %></td>
-            <td><%= a.moderate_duration %></td>
-            <td><%= a.hard_duration %></td>
-            <td><%= a.distance %></td>
-            <td><%= a.calories %></td>
-            <td><%= a.elevation %></td>
-            <td><%= a.synced_at %></td>
-            <td><%= a.sync_final %></td>
+            <td><%= s.user.name %></td>
+            <td><%= s.source %></td>
+            <td><%= s.date %></td>
+            <td><%= s.group %></td>
+            <td><%= s.total_duration %></td>
+            <td><%= s.steps %></td>
+            <td><%= s.soft_duration %></td>
+            <td><%= s.moderate_duration %></td>
+            <td><%= s.hard_duration %></td>
+            <td><%= s.distance %></td>
+            <td><%= s.calories %></td>
+            <td><%= s.elevation %></td>
+            <td><%= s.synced_at %></td>
+            <td><%= s.sync_final %></td>
         </tr>
 
     <% end %>

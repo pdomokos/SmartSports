@@ -84,7 +84,7 @@
 }
 .logform>fieldset div.field>:first-child {
   display: table-cell;
-  padding: 15px 10px 15px 0;
+//  padding: 15px 10px 15px 0;
   white-space: nowrap;
 }
 
@@ -259,7 +259,7 @@ div.field i {
   cursor: pointer;
 }
 
-.edit-meas-control  {
+.edit-meas-control, .save-meas-control, .cancel-meas-control  {
   padding: 3px 4px;
   margin-left: 3px;
   font-size: 11px;
@@ -311,10 +311,25 @@ div.action-item i {
   cursor: pointer;
 }
 
+div.lifestyle-item {
+  display: table-row;
+}
+div.lifestyle-item span {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 4px;
+}
+div.lifestyle-item i {
+  display: table-cell;
+  padding-left: 4px;
+  cursor: pointer;
+}
+
+/*
 div.measure-list {
   display: table;
   font-size: 15px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 div.measure-item {
@@ -342,7 +357,86 @@ div.measure-item i {
 div.measure-item i:first-child {
   padding-right: 6px;
 }
+*/
+//div.act-message {
+//  padding-top: 8px;
+//}
 
-div.act-message {
-  padding-top: 8px;
+
+
+#meas-table {
+//  border: solid 1px;
+  background-color: #f6e8c3;
+  padding-right: 6px;
+  margin-top: 10px;
+}
+div.list-container {
+//  display: table;
+  font-size: 15px;
+  margin-top: 10px;
+}
+span.list-header {
+  display: table-cell;
+  padding-left: 4px;
+  text-align: center;
+  color: #333;
+
+  font-size: 12px;
+  font-weight: bold;
+  vertical-align: middle;
+  height: 30px;
+}
+span.list-attr {
+  display: table-cell;
+  padding-left: 4px;
+  text-align: center;
+
+  font-weight: bold;
+  vertical-align: middle;
+  height: 30px;
+}
+span.list-ctrl {
+  display: table-cell;
+  padding-left: 4px;
+  text-align: center;
+
+  font-weight: bold;
+  vertical-align: middle;
+  height: 30px;
+}
+span.list-edit {
+  display: table-cell;
+  padding-left: 4px;
+  text-align: center;
+
+  font-weight: bold;
+  vertical-align: middle;
+  height: 30px;
+}
+span.list-edit input {
+  width: 100%;
+  font-size: 14px;
+  padding: 0px;
+}
+span.list-edit input.short {
+  width: 32px;
+}
+span.list-edit input.medium {
+  width: 78px;
+}
+span.list-edit input.long {
+  width: 128px;
+}
+
+div.list-item {
+  display: table-row;
+}
+div.list-item span:first-of-type {
+  text-align: right;
+}
+div.list-item i {
+  display: table-cell;
+  padding-left: 4px;
+  cursor: pointer;
+  vertical-align: middle;
 }

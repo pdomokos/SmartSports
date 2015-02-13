@@ -26,11 +26,10 @@
     self=this
     template = {'date': null, 'walking_duration': 0, 'transport_duration': 0, 'sleep_duration': null}
     result = Object()
-#    console.log(this.data)
     for actkey in ['walking', 'sleep', 'transport']
       daily_activity = Object()
-      if this.data['activities'][actkey]
-        for d in this.data['activities'][actkey]
+      if this.data[actkey]
+        for d in this.data[actkey]
           key = fmt(new Date(Date.parse(d.date)))
           if daily_activity[key]
             daily_activity[key].push(d)
@@ -51,8 +50,12 @@
           result[day] = result_daily
         this.aggregate(daily_data, result_daily)
 
-#    console.log(result)
-    return(result)
+    days = Object.keys(result)
+    days.sort()
+    res = []
+    for day in days
+      res.push(result[day])
+    return(res)
 
   act_trend_chart.aggregate = (data, result) ->
     len = data.length
@@ -117,9 +120,8 @@
   act_trend_chart.draw()
 
 @draw_pie = (day_ymd) ->
-  console.log @explore_data
-  pie_data = get_daily_data(day_ymd, @explore_data['activities'])
-  pie_data_weekly = get_weekly_data(day_ymd, @explore_data['activities'])
+  pie_data = get_daily_data(day_ymd, @explore_data)
+  pie_data_weekly = get_weekly_data(day_ymd, @explore_data)
   daily_piechart = new PieChart("daily-piechart", pie_data, pie_data_weekly)
   $("#daily-piechart-container span.pie1-label").html(day_ymd)
   $("#daily-piechart-container span.pie2-label").html(fmt(get_monday(day_ymd))+" : "+fmt(get_sunday(day_ymd)))

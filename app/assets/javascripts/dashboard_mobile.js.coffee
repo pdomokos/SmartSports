@@ -7,7 +7,7 @@
 
   console.log("mobile dashboard")
   uid = $("#shown-user-id")[0].value
-  d3.json("/users/"+uid+"/summaries.json?from="+@get_days_ago_ymd(30), mobile_act_data_received)
+  d3.json("/users/"+uid+"/summaries.json?start="+@get_days_ago_ymd(30), mobile_act_data_received)
 
   actions_summary_url = "/users/" + uid + "/measurements.json?summary=true&hourly=true&start="+@get_days_ago_ymd(30)
   d3.json(actions_summary_url, mobile_heart_data_received)

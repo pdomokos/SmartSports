@@ -2,79 +2,142 @@
     <input id="meas-user_id" name="measurement[user_id]" value="<%= @user.id %>" type="hidden">
     <input id="meas-source" name="measurement[source]" value="smartsport" type="hidden">
     <input id="current-measurement-data" type="hidden"/>
-    <div class="logform clearfix" id="heart-form-div">
+    <div class="logform clearfix" id="health-form-div">
         <fieldset>
-            <div id="action-table" class="measure-list">
-                <div class="measure-item">
+            <div id="action-table" class="list-container">
+                <div class="list-item">
                     <i class="fa fa-heart fa-2x"></i>
-                    <span>SYS</span><span class="entry"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini"></span>
-                    <span>DIA</span><span class="entry"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini"></span>
-                    <span >HR</span><span class="entry"><input id="meas-hr" name="measurement[pulse]" class="entry-mini"></span>
+                    <span class="list-attr">SYS</span>
+                    <span class="list-attr"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini"></span>
+                    <span class="list-attr">DIA</span>
+                    <span class="list-attr"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini"></span>
+                    <span class="list-attr">HR</span>
+                    <span class="list-attr"><input id="meas-hr" name="measurement[pulse]" class="entry-mini"></span>
                     <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
                 </div>
 
-                <div class="measure-item">
+                <div class="list-item">
                     <i class="fa fa-tint fa-2x"></i>
-                    <span>Level (mmol/L)</span><span class="entry"><input id="meas-sys" name="measurement[bloodsugar]" class="entry-mini"></span>
+                    <span class="list-attr">Sugar Level<br/>(mmol/L)</span>
+                    <span class="list-attr"><input id="meas-blood_sugar" name="measurement[blood_sugar]" class="entry-mini"></span>
+                    <span class="list-attr"></span>
+                    <span class="list-attr"></span>
+                    <span class="list-attr"></span>
+                    <span class="list-attr"></span>
                     <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
                 </div>
 
-                <div class="measure-item">
+                <div class="list-item">
                     <i class="fa fa-area-chart fa-2x"></i>
-                    <span>Weight (kg)</span><span class="entry"><input id="meas-sys" name="measurement[weight]" class="entry-mini"></span>
+                    <span class="list-attr">Weight (kg)</span>
+                    <span class="list-attr"><input id="meas-weight" name="measurement[weight]" class="entry-mini"></span>
+                    <span class="list-attr">Waist (cm)</span>
+                    <span class="list-attr"><input id="meas-waist" name="measurement[waist]" class="entry-mini"></span>
+                    <!--<span class="list-attr"></span>-->
+                    <!--<span class="list-attr"></span>-->
+                    <span class="list-attr"></span>
+                    <span class="list-attr"></span>
                     <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
                 </div>
             </div>
 
-            <div id="measurement-container" class="measurement-container">
+            <!--<div id="measurement-container">-->
+                <!--<div class="field-temp measure-ui">-->
+                    <!--<h3>Heart data measurement</h3>-->
+                <!--</div>-->
+                <!--<input id="meas-id" name="id" type="hidden" class="measure-param">-->
 
-                <div class="field-temp measure-ui hidden">
-                    <h3>Heart data measurement</h3>
-                </div>
-                <input id="meas-id" name="id" type="hidden" class="measure-param">
+                <!--<div class="field field-temp measure-ui hidden">-->
+                    <!--<span>SYS</span>-->
+                    <!--<span class="entry">-->
+                        <!--<input id="meas-systolicbp" name="systolicbp" class="entry-mini measure-param">-->
+                    <!--</span>-->
+                <!--</div>-->
 
-                <div class="field field-temp measure-ui hidden">
-                    <span>SYS</span>
-                    <span class="entry">
-                        <input id="meas-systolicbp" name="systolicbp" class="entry-mini measure-param">
-                    </span>
-                </div>
+                <!--<div class="field field-temp measure-ui hidden">-->
+                    <!--<span>DIA</span>-->
+                    <!--<span class="entry">-->
+                        <!--<input id="meas-diastolicbp" name="diastolicbp" class="entry-mini measure-param">-->
+                    <!--</span>-->
+                <!--</div>-->
 
-                <div class="field field-temp measure-ui hidden">
-                    <span>DIA</span>
-                    <span class="entry">
-                        <input id="meas-diastolicbp" name="diastolicbp" class="entry-mini measure-param">
-                    </span>
-                </div>
+                <!--<div class="field field-temp measure-ui hidden">-->
+                    <!--<span>HR</span>-->
+                    <!--<span class="entry">-->
+                        <!--<input id="meas-pulse" name="pulse" class="entry-mini measure-param">-->
+                    <!--</span>-->
+                <!--</div>-->
 
-                <div class="field field-temp measure-ui hidden">
-                    <span>HR</span>
-                    <span class="entry">
-                        <input id="meas-pulse" name="pulse" class="entry-mini measure-param">
-                    </span>
-                </div>
+                <!--<div class="field field-temp measure-ui hidden">-->
+                    <!--<span>Blood sugar</span>-->
+                    <!--<span class="entry">-->
+                        <!--<input id="meas-blood_sugar" name="blood_sugar" class="entry-mini measure-param">-->
+                    <!--</span>-->
+                <!--</div>-->
 
-                <div class="field field-temp measure-ui hidden">
-                    <label for="meas-date">Date</label>
-                    <span class="entry">
-                        <input id="meas-date" name="date" class="date-input measure-param">
-                    </span>
-                </div>
+                <!--<div class="field field-temp measure-ui hidden">-->
+                    <!--<span>Weight</span>-->
+                    <!--<span class="entry">-->
+                        <!--<input id="meas-weight" name="weight" class="entry-mini measure-param">-->
+                    <!--</span>-->
+                <!--</div>-->
 
-                <div class="act-edit-controls field-temp hidden">
-                    <span id="update-measurement-button" class="edit-control">Save</span>
-                    <span id="cancel-measurement-button" class="delete-control">Cancel</span>
-                </div>
+                <!--<div class="field field-temp measure-ui hidden">-->
+                    <!--<label for="meas-date">Date</label>-->
+                    <!--<span class="entry">-->
+                        <!--<input id="meas-date" name="date" class="date-input measure-param">-->
+                    <!--</span>-->
+                <!--</div>-->
 
-                <div class="life-edit-controls field-temp hidden">
-                    <span id="update-measurement-button" class="edit-control">Save</span>
-                    <span id="cancel-measurement-button" class="delete-control">Cancel</span>
-                </div>
+                <!--<div class="edit-controls field-temp hidden">-->
+                    <!--<span id="update-measurement-button" class="edit-control">Save</span>-->
+                    <!--<span id="cancel-measurement-button" class="delete-control">Cancel</span>-->
+                <!--</div>-->
 
-                <div id="meas-message" class="meas-message hidden-placed measure-list">
-                    <div id="meas-message-item" class="measure-item"></div>
+
+                <div id="meas-table" class="list-container">
+                    <div class="list-item">
+                        <span class="list-header"></span>
+                        <span class="list-header">Time</span>
+                        <span class="list-header">BP</span>
+                        <span class="list-header">BS</span>
+                        <span class="list-header">WEIGHT</span>
+                        <span class="list-header">WAIST</span>
+                        <span class="list-header"></span>
+                        <span class="list-header"></span>
+                    </div>
+                    <!--place of rows-->
                </div>
-            </div>
+            <!--</div>-->
         </fieldset>
+        <div id="meas-row-template" class="hidden">
+            <div id="meas-iid" class="list-item measure-item">
+                <i class="fa fa-check success"></i>
+                <span class="list-attr">2015-02-11 09:35</span>
+                <span class="list-edit hidden"><input class="long" type="text" value="2015-02-11 09:35"></span>
+                <span class="list-attr">123/66/45</span>
+                <span class="list-edit hidden"><input class="medium" type="text" value="123/66/45"></span>
+                <span class="list-attr">124</span>
+                <span class="list-edit hidden"><input class="short" type="text" value="124"></span>
+                <span class="list-attr">55</span>
+                <span class="list-edit hidden"><input class="short" type="text" value="55"></span>
+                <span class="list-attr">90</span>
+                <span class="list-edit hidden"><input class="short" type="text" value="90"></span>
+
+                <span class="list-ctrl show">
+                    <div class="edit-meas-control">Edit</div>
+                </span>
+                <span class="list-ctrl show">
+                    <div class="delete-meas-control">Delete</div>
+                </span>
+                <span class="list-ctrl edit hidden">
+                    <div class="save-meas-control">Save</div>
+                </span>
+                <span class="list-ctrl edit hidden">
+                    <div class="cancel-meas-control">Cancel</div>
+                </span>
+            </div>
+        </div>
     </div>
+
 </form>

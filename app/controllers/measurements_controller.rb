@@ -35,13 +35,26 @@ class MeasurementsController < ApplicationController
     start = params[:start]
     user = User.find(user_id)
     hourly = params[:hourly]
+    source = params[:source]
+    order = params[:order]
+    limit = params[:limit]
 
     @measurements = user.measurements
+    if start
+      @measurements = @measurements.where("date >= '#{start}'")
+    end
+    if source
+      @measurements = @measurements.where("source = '#{source}'")
+    end
+    if order
+      @measurements = @measurements.order("date desc")
+    else
+      @measurements = @measurements.order("date")
+    end
+    if limit
+      @measurements = @measurements.limit(limit)
+    end
     if summary
-      if start
-        @measurements = @measurements.where("date >= '#{start}'")
-      end
-
       daily_data = Hash.new { |h,k| h[k] = [] }
       for m in @measurements
         k = m.date.strftime("%F")
@@ -52,12 +65,13 @@ class MeasurementsController < ApplicationController
       result = []
       for day in days
         daily = daily_data[day]
-        temp = {"date" => day, "systolicbp"=>0, "diastolicbp"=>0, "pulse"=>0, "SPO2"=>0}
-        for meas in ["systolicbp", "diastolicbp", "pulse", "SPO2"]
+        temp = {"date" => day, "systolicbp"=>0, "diastolicbp"=>0, "pulse"=>0, "SPO2"=>0, "blood_sugar" => nil, "weight" => nil, "waist" => nil}
+        for meas in ["systolicbp", "diastolicbp", "pulse", "SPO2", "blood_sugar", "weight", "waist"]
           values = daily.select { |d| !d[meas].nil?}.map { |d| d[meas] }
           num = values.length
           if num > 0
             temp[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num).round
+            # puts "#{day} #{meas} #{num} min:#{values.min()} #{temp[meas]}"
           else
             temp[meas] = nil
           end
@@ -68,7 +82,7 @@ class MeasurementsController < ApplicationController
       respond_to do |format|
         format.json {render json: result}
       end
-    elsif hourly
+    else if hourly
       result = []
       data = user.measurements.collect{|it| [it.date.hour, it[hourly]]}.select{|it| !it[1].nil?}
 
@@ -99,13 +113,11 @@ class MeasurementsController < ApplicationController
         format.json {render json: result}
       end
     else
-      if start
-        @measurements = @measurements.where("date >= '"+start+"'")
-      end
       respond_to do |format|
         format.html
         format.json {render json: @measurements}
       end
+    end
     end
   end
 
@@ -159,7 +171,7 @@ class MeasurementsController < ApplicationController
   end
 
   def measurement_params
-    params.require(:measurement).permit(:user_id, :source, :systolicbp, :diastolicbp, :pulse, :date)
+    params.require(:measurement).permit(:user_id, :source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date)
   end
 
 end

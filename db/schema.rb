@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123111543) do
+ActiveRecord::Schema.define(version: 20150211084241) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 20150123111543) do
     t.integer  "SPO2"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "blood_sugar"
+    t.float    "weight"
+    t.float    "waist"
   end
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"

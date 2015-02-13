@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @load_notifications = () ->
+  self = this
   notification_limit = 20
   $.ajax '/users/'+$("#current-user-id")[0].value+'/notifications?limit='+notification_limit,
     type: 'GET'
@@ -41,7 +42,7 @@
             $("#"+newid+" div div.event-details span").html(notif['detail']+activate_link)
             $("#"+linkid).click (evt) ->
               evt.preventDefault()
-              reset_form_sel()
+              self.reset_form_sel()
               $("#friend-form-div").removeClass("hidden")
               $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
               $("#friend-form-sel").addClass("selected")

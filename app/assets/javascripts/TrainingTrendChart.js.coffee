@@ -7,8 +7,8 @@ class TrainingTrendChart extends TrendChart
 
     for actkey in ['walking', 'running', 'cycling', 'transport']
       daily_activity = Object()
-      if @data['activities'][actkey]
-        for d in @data['activities'][actkey]
+      if @data[actkey]
+        for d in @data[actkey]
           key = fmt(new Date(Date.parse(d.date)))
           if daily_activity[key]
             daily_activity[key].push(d)
@@ -28,7 +28,13 @@ class TrainingTrendChart extends TrendChart
           result_daily['date'] = day
           result[day] = result_daily
         @aggregate(daily_data, result_daily)
-    return(result)
+
+    res = []
+    keys = Object.keys(result)
+    keys.sort()
+    for k in keys
+      res.push( result[k] )
+    return(res)
 
   aggregate: (data, result) ->
     len = data.length

@@ -3,6 +3,7 @@
 class TrendChart
   constructor: (@chart_element, @data, @series_keys, series_names, @side_keys, series_colors, @labels, @zero_when_missing=false, @aspect=2.0/7) ->
     console.log "TrendChart"
+#    console.log @data
     @base_r = 3
     @selected_r = 8
     @preproc_cb = null
@@ -28,6 +29,9 @@ class TrendChart
 
   # get_series() needs to be provided in subclass
 
+  get_series: () ->
+    return @data
+
   get_time_extent: () ->
     return d3.extent(@series, (d) -> new Date(d.date))
 
@@ -46,21 +50,13 @@ class TrendChart
 
   draw: (date) ->
     self = this
-    hash = @get_series()
 
-    @nodata = false
-    hashkeys = Object.keys(hash)
-    if hashkeys.length ==0
-      @nodata = true
-
-    hashkeys.sort()
-    @series = hashkeys.map( (k) -> hash[k])
+    @series = @get_series()
 
     if @preproc_cb != null
       @preproc_cb(@series)
     console.log "draw - series"
     #window.series = @series
-
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     svg
       .attr("width", self.width)

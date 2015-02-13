@@ -16,7 +16,7 @@ class HealthChart
     date_ymd = fmt(date)
 
     @margin = {top: 20, right: 30, bottom: 20, left: 40}
-    aspect = 400/700
+    aspect = 4.0/7
     @width = $("#"+@chart_element+"-container").parent().width()-@margin.left-@margin.right
     @height = aspect*@width-@margin.top-@margin.bottom
 
