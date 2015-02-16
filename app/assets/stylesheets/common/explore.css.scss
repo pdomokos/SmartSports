@@ -43,7 +43,10 @@ path.selected {
 }
 
 
-#daily-piechart-container text {
+#daily-piechart-container .pie1.text {
+  stroke: black;
+}
+#daily-piechart-container .pie2.text {
   stroke: black;
 }
 

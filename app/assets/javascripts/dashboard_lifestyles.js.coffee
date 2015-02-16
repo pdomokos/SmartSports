@@ -112,3 +112,4 @@
       $("#activity-container div."+name+"-ui").addClass("hidden")
       $("#activity-container div.life-edit-controls").addClass("hidden")
       $("#current-lifestyle-data").val(JSON.stringify(data['result']))
+

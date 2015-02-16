@@ -146,7 +146,10 @@ body {
 //  padding-left: 10px;
 }
 .columns .column:nth-child(2) {
-  padding-left: 10px;
+  padding-left: 5px;
+}
+.columns .column:nth-child(1) {
+  padding-right: 5px;
 }
 .one-half {
   width: 50%;

@@ -141,6 +141,9 @@ get_daily_data = (day_ymd, act) ->
           daily.push(today_acts[0])
       else
         daily.push(today_acts[0])
+  console.log daily
+  if daily.length == 0
+    return daily
   pie_data = daily.map( (d) -> [d.group, d.total_duration/60.0])
 
   minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
@@ -192,6 +195,8 @@ get_weekly_data = (day_ymd, act) ->
     total = weekly.map( (d) ->  d.total_duration/60.0 ).reduce( (a, b) -> a+b)
     pie_data.push([k, total])
 
+  if pie_data.length==0
+    return pie_data
   minutes = (pie_data.map( (d) -> d[1])).reduce( (a, b) -> a+b)
   total = (sun-mon)/1000/60
   pie_data.push(["other", (total-minutes)])

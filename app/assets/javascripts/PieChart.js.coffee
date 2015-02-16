@@ -25,13 +25,25 @@ class PieChart
       .attr("height", @height)
       .append("g")
         .attr("transform", "translate(120, 110)")
-
+        .attr("class", "pie1")
     svg2 = svg
       .append("g")
-      .attr("transform", "translate(370, 110)")
+        .attr("transform", "translate(370, 110)")
+        .attr("class", "pie2")
 
-    @draw_pie(svg1, @data)
-    @draw_pie(svg2, @data_weekly )
+    if (@data==null or @data.length==0) and (@data_weekly==null or @data_weekly.length==0)
+      svg.append("text")
+        .text("No data")
+        .attr("class", "warn")
+        .attr("x", self.width/2-self.margin.left)
+        .attr("y", self.height/2)
+      return
+
+    if @data!=null and @data.length!=0
+      @draw_pie(svg1, @data)
+    if @data_weekly!=null and @data_weekly.length!=0
+      @draw_pie(svg2, @data_weekly )
+
     @add_legend(@data)
 
   draw_pie: (elem, chart_data) ->

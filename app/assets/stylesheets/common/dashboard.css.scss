@@ -271,6 +271,7 @@ div.field i {
   background-color: #60b044;
   vertical-align: middle;
   cursor: pointer;
+  width: 36px;
 }
 
 .delete-meas-control {
@@ -285,8 +286,11 @@ div.field i {
   background-color: red;
   vertical-align: middle;
   cursor: pointer;
+  width: 36px;
 }
-
+.cancel-meas-control, .delete-meas-control {
+  width: 42px;
+}
 .stop-control-holder {
   height: 30px;
 }
@@ -381,7 +385,7 @@ span.list-header {
   text-align: center;
   color: #333;
 
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   vertical-align: middle;
   height: 30px;
@@ -394,6 +398,9 @@ span.list-attr {
   font-weight: bold;
   vertical-align: middle;
   height: 30px;
+}
+span.list-attr.label {
+  font-size: 13px;
 }
 span.list-ctrl {
   display: table-cell;
@@ -418,16 +425,33 @@ span.list-edit input {
   font-size: 14px;
   padding: 0px;
 }
-span.list-edit input.short {
-  width: 32px;
+
+
+span.list-attr.short {
+  width: 30px;
+  max-width: 30px;
 }
-span.list-edit input.medium {
-  width: 78px;
+span.list-attr.medium {
+  width: 67px;
+  max-width: 67px;
 }
-span.list-edit input.long {
-  width: 128px;
+span.list-attr.long {
+  width: 124px;
+  max-width: 124px;
 }
 
+span.list-edit input.short {
+  width: 26px;
+}
+span.list-edit input.medium {
+  width: 67px;
+}
+span.list-edit input.long {
+  width: 120px;
+}
+span.list-edit input {
+  font-size: 13px;
+}
 div.list-item {
   display: table-row;
 }
@@ -439,4 +463,11 @@ div.list-item i {
   padding-left: 4px;
   cursor: pointer;
   vertical-align: middle;
+}
+
+#lifestyle-table {
+  //  border: solid 1px;
+  background-color: #f6e8c3;
+  padding-right: 6px;
+  margin-top: 10px;
 }

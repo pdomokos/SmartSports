@@ -56,6 +56,7 @@ class TrendChart
     if @preproc_cb != null
       @preproc_cb(@series)
     console.log "draw - series"
+    console.log @series
     #window.series = @series
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     svg
@@ -63,7 +64,7 @@ class TrendChart
       .attr("height", self.height)
 
     @add_legend()
-    if @nodata
+    if @series == null or @series.length == 0
       svg.append("text")
       .text("No data")
       .attr("class", "warn")

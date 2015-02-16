@@ -108,11 +108,7 @@ new_friend_submit_handler = (event) ->
     pval = Math.round(60.0*orig)
   hash[pname] = pval
 
-@add_m_param = (name, hash) ->
-  pname = $("#"+name).attr("name")
-  pname = 'measurement['+pname+']'
-  pval = $("#"+name).val()
-  hash[pname] = pval
+
 
 @create_params = (par) ->
   result = Object()
@@ -122,14 +118,6 @@ new_friend_submit_handler = (event) ->
     @add_param(e.id, result)
   return result
 
-@create_m_params = () ->
-  result = Object()
-  @add_param("meas-user_id", result)
-  @add_param("meas-source", result)
-  for e in $("form#heart-form input.measure-param")
-    console.log e.id
-    @add_m_param(e.id, result)
-  return result
 
 @set_param = (element_id, hash) ->
   key = element_id.split("-")[1]
@@ -143,11 +131,6 @@ new_friend_submit_handler = (event) ->
 
   $("#"+element_id).val(val)
   console.log "setting "+"#"+element_id+"["+key+"]="+val
-
-@set_m_param = (element_id, hash) ->
-  key = element_id.split("-")[1]
-  $("#"+element_id).val(hash[key])
-  console.log "setting mparam "+"#"+element_id+"["+key+"]="+hash[key]
 
 
 

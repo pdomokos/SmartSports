@@ -10,6 +10,7 @@ define_globals = () ->
   window.fmt = d3.time.format("%Y-%m-%d")
   window.fmt_day = d3.time.format("%Y-%m-%d %a")
   window.fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")
+  window.fmt_hm = d3.time.format("%Y-%m-%d %H:%M")
   window.fmt_words = d3.time.format("%Y %b %e")
   window.fmt_month_day = d3.time.format("%b %e")
   window.fmt_year = d3.time.format("%Y")

@@ -16,37 +16,38 @@ class HealthChart
     date_ymd = fmt(date)
 
     @margin = {top: 20, right: 30, bottom: 20, left: 40}
-    aspect = 4.0/7
-    @width = $("#"+@chart_element+"-container").parent().width()-@margin.left-@margin.right
-    @height = aspect*@width-@margin.top-@margin.bottom
+    @aspect = 4.0/7
+
+    @width = $("#"+@chart_element+"-container").parent().width()
+    @height = @aspect*@width
 
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
-    svg = svg
-      .attr("width", self.width+self.margin.left+self.margin.right)
-      .attr("height", self.height+self.margin.top+self.margin.bottom)
+    canvas = svg
+      .attr("width", self.width)
+      .attr("height", self.height)
       .append("g")
-      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
+        .attr("transform", "translate("+self.margin.left+","+(self.margin.top)+")")
 
     time_extent = d3.extent(@data, (d) -> new Date(d.date))
-    time_scale = d3.time.scale().domain(time_extent).range([0, self.width])
+    time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
     y_extent = d3.extent(@data, (d) -> d.systolicbp)
     y_extent[0] = 50
-    y_extent[1] = Math.max(y_extent[1], 175)
-    y_scale = d3.scale.linear().range([self.height - self.margin.bottom, self.margin.top]).domain(y_extent)
+    y_extent[1] = Math.max(y_extent[1], 150)
+    y_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(y_extent)
 
     ldata = @create_lines(y_extent)
-    svg.selectAll("line")
+    canvas.selectAll("line")
       .data(ldata)
       .enter()
-      .append("svg:line")
-      .attr("x1", time_scale(time_extent[0]))
-      .attr("y1", (d) -> y_scale(d.x))
-      .attr("x2", time_scale(time_extent[1]))
-      .attr("y2", (d) -> y_scale(d.x))
-      .attr("stroke", (d) -> d.color)
-      .attr("stroke-width", 1)
-      .attr("opacity", 1)
+        .append("svg:line")
+        .attr("x1", time_scale(time_extent[0]))
+        .attr("y1", (d) -> y_scale(d.x))
+        .attr("x2", time_scale(time_extent[1]))
+        .attr("y2", (d) -> y_scale(d.x))
+        .attr("stroke", (d) -> d.color)
+        .attr("stroke-width", 1)
+        .attr("opacity", 1)
 
     time_axis = d3.svg.axis()
       .scale(time_scale)
@@ -54,19 +55,18 @@ class HealthChart
 
     svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + (self.height-self.margin.top) + ")")
+      .attr("transform", "translate("+self.margin.left+","+(self.height-self.margin.bottom)+")")
       .call(time_axis)
 
     y_axis = d3.svg.axis().scale(y_scale).orient("left")
     svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate( 0, 0 )")
+      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
       .attr("stroke-width", "0")
       .call(y_axis)
-    svg.select(".y.axis")
       .append("text")
       .text("mmHg")
-      .attr("transform", "translate(-20, 0)")
+
 
     @nodata = false
     if @data.length ==0
@@ -94,7 +94,7 @@ class HealthChart
 
     classfn = (d) -> "colset9_"+Math.round(1.0*(d.pulse-hr_extent[0])/hr_range*7.0).toString()
 
-    svg.selectAll("circle.sys")
+    canvas.selectAll("circle.sys")
       .data(@data)
       .enter()
       .append("circle")
@@ -137,7 +137,7 @@ class HealthChart
         d3.select("line#press-"+id).classed("selected", false)
       )
 
-    svg.selectAll("circle.dia")
+    canvas.selectAll("circle.dia")
       .data(@data)
       .enter()
       .append("circle")
@@ -180,7 +180,7 @@ class HealthChart
         d3.select("line#press-"+id).classed("selected", false)
       )
 
-    svg.selectAll("line.press")
+    canvas.selectAll("line.press")
       .data(@data)
       .enter()
       .append("line")
