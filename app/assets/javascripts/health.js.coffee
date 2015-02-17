@@ -41,5 +41,20 @@ draw_detail = (data) ->
     4.0/7
   )
   heart_chart.margin = {top: 20, right: 40, bottom: 20, left: 30}
+  heart_chart.tick_unit = d3.time.day
+  heart_chart.ticks = 2
   heart_chart.draw()
 
+  blood_chart = new TrendChart("bloodsugar", data,
+    ["blood_sugar", "waist"],
+    ["Bood Sugar", "Waist"],
+    ["left", "right"]
+    ["colset6_1", "colset6_2"],
+    ["mmol/L", "cm"],
+    false,
+      4.0/7
+  )
+  blood_chart.margin = {top: 20, right: 40, bottom: 20, left: 50}
+  blood_chart.tick_unit = d3.time.day
+  blood_chart.ticks = 2
+  blood_chart.draw()

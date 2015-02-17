@@ -27,6 +27,8 @@ class TrendChart
     @cb_out = null
     @cb_click = null
 
+    @tick_unit = d3.time.week
+    @ticks = 1
   # get_series() needs to be provided in subclass
 
   get_series: () ->
@@ -55,8 +57,8 @@ class TrendChart
 
     if @preproc_cb != null
       @preproc_cb(@series)
-    console.log "draw - series"
-    console.log @series
+    console.log "draw series - "+@chart_element
+#    console.log @series
     #window.series = @series
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     svg
@@ -64,7 +66,9 @@ class TrendChart
       .attr("height", self.height)
 
     @add_legend()
-    if @series == null or @series.length == 0
+    dlen = @get_data_len()
+    console.log "Data len="+dlen
+    if @series == null or dlen == 0
       svg.append("text")
       .text("No data")
       .attr("class", "warn")
@@ -118,7 +122,7 @@ class TrendChart
 
     time_axis = d3.svg.axis()
       .scale(time_scale)
-      .ticks(d3.time.weeks, 1)
+      .ticks(self.tick_unit, self.ticks)
     svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate("+self.margin.left+","+(self.height-self.margin.bottom)+")")
@@ -176,6 +180,14 @@ class TrendChart
           .datum(dd)
           .attr("class", "line "+self.color_map[k]+" "+k)
           .attr("d", self.line[k])
+
+  get_data_len: () ->
+    num = 0
+    for k in @series_keys
+      arr = @series.filter( (d) -> d[k] !=null )
+      console.log arr
+      num += arr.length
+    return num
 
   add_legend: () ->
     self = this

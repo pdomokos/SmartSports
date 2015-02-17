@@ -15,6 +15,7 @@
     </div>
     <div class="columns">
         <div class="column one-half">
+
             <div id="bloodpressure-container" class="boxed-group connection-block">
                 <h3 class="legend-label">
                     <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
@@ -24,6 +25,19 @@
 
                 <div class="boxed-group-inner chart bloodpressure-chart">
                     <svg class="bloodpressure-chart-svg">
+                    </svg>
+                </div>
+            </div>
+
+            <div id="bloodsugar-container" class="boxed-group connection-block">
+                <h3 class="legend-label">
+                    <img src="<%= asset_path( "logo.png")%>" width="24px" height="24px" class="left">
+                    <div class="training-type left">Blood sugar level</div>
+                    <div class="selected-meas left"></div>
+                </h3>
+
+                <div class="boxed-group-inner chart bloodsugar-chart">
+                    <svg class="bloodsugar-chart-svg">
                     </svg>
                 </div>
             </div>
@@ -43,7 +57,6 @@
                     </svg>
                 </div>
             </div>
-
         </div>
     </div>
 

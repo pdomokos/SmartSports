@@ -5,8 +5,25 @@ class LifestylesController < ApplicationController
   # GET /lifestyles.json
   def index
     user_id = params[:user_id]
+
+    source = params[:source]
+    order = params[:order]
+    limit = params[:limit]
+
     u = User.find(user_id)
     @lifestyles = u.lifestyles
+
+    if source and source !=""
+      @lifestyles = @lifestyles.where(source: source)
+    end
+    if order and order=="desc"
+      @lifestyles = @lifestyles.order(start_time: :desc)
+    else
+      @lifestyles = @lifestyles.order(start_time: :asc)
+    end
+    if limit and limit.to_i>0
+      @lifestyles = @lifestyles.limit(limit)
+    end
     @user = u
 
     respond_to do |format|

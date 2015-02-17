@@ -44,12 +44,12 @@ class MeasurementsController < ApplicationController
       @measurements = @measurements.where("date >= '#{start}'")
     end
     if source
-      @measurements = @measurements.where("source = '#{source}'")
+      @measurements = @measurements.where(source: source)
     end
     if order
-      @measurements = @measurements.order("date desc")
+      @measurements = @measurements.order(date: :desc)
     else
-      @measurements = @measurements.order("date")
+      @measurements = @measurements.order(date: :asc)
     end
     if limit
       @measurements = @measurements.limit(limit)

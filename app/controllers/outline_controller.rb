@@ -13,7 +13,8 @@ class OutlineController < ApplicationController
       dateFormat = "%Y-%m-%d"
       todayYmd = today.strftime(dateFormat)
       daily = @moves.daily_activities(todayYmd)
-      if not daily.nil?
+
+      if daily and daily[0] and daily[0]['summary']
         act_sum = daily[0]['summary']
         summary['cycling'] = getsum(act_sum, 'cycling', 'distance')
         summary['running'] = getsum(act_sum, 'running', 'distance')

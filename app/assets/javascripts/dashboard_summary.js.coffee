@@ -12,26 +12,26 @@
 
       self.nodata = false
       if not data['profile']
-        console.log "NODATA"
         self.nodata = true
-      console.log data
+      else
 
-      $("#"+chart_element+" div.chart-date").html(fmt_words(today))
-      sum_steps = data['steps']
-      $("#"+chart_element+" div.steps").html(sum_steps)
-      percent = (sum_steps/10000.0*100.0).toFixed(1)
-      $("#"+chart_element+" div.avg-percent").html(percent+"%")
+        $("#"+chart_element+" div.chart-date").html(fmt_words(today))
+        sum_steps = data['steps']
+        $("#"+chart_element+" div.steps").html(sum_steps)
+        percent = (sum_steps/10000.0*100.0).toFixed(1)
+        $("#"+chart_element+" div.avg-percent").html(percent+"%")
 
-      draw_percent(chart_element, percent)
+        draw_percent(chart_element, percent)
 
-      $("#"+chart_element+" div.avg-description").html("of 10,000 steps")
-      $("#"+chart_element+" div.km-running").html((data['running']/1000).toFixed(2))
-      $("#"+chart_element+" div.km-cycling").html((data['cycling']/1000).toFixed(2))
-      $("#"+chart_element+" div.calories").html(Math.round(data['calories']))
-      $("#"+chart_element+" div.distance").html((data['distance']/1000).toFixed(2))
-      duration_sec = data['activity']
-      timestr = get_hour(duration_sec)+"h "+get_min(duration_sec)+"min"
-      $("#"+chart_element+" div.duration").html(timestr)
+        $("#"+chart_element+" div.avg-description").html("of 10,000 steps")
+        $("#"+chart_element+" div.km-running").html((data['running']/1000).toFixed(2))
+        $("#"+chart_element+" div.km-cycling").html((data['cycling']/1000).toFixed(2))
+        $("#"+chart_element+" div.calories").html(Math.round(data['calories']))
+        $("#"+chart_element+" div.distance").html((data['distance']/1000).toFixed(2))
+        duration_sec = data['activity']
+        timestr = get_hour(duration_sec)+"h "+get_min(duration_sec)+"min"
+        $("#"+chart_element+" div.duration").html(timestr)
+
       draw_daily_activity(chart_element, data['profile'], is_mobile)
 
 draw_daily_activity = (chart_element, data, is_mobile) ->
