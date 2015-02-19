@@ -55,4 +55,4 @@ gem 'mobile-fu'
 
 gem 'chronic'
 
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'

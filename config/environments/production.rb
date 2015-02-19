@@ -81,5 +81,34 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config_fname = ENV['HOME']+'/.smartsport_connection_data'
+  if not File.exists?(config_fname)
+    raise "Connections configuration file "+config_fname+" does not exist."
+  end
   APP_CONFIG = YAML.load_file('/data/.smartsport_connection_data')[::Rails.env]
+
+  mail_config_fname =  File.join(ENV['HOME'], '.mail.conf')
+  if not File.exists?(mail_config_fname)
+    raise "Configuration file "+mail_config_fname+" does not exist."
+  end
+  MAIL_CONFIG = YAML.load_file(mail_config_fname)[::Rails.env]
+
+  config.action_mailer.default_url_options = {
+      :host => 'app.smartsport.me'
+  }
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+      :domain => 'smartsport.me',
+      :address              => MAIL_CONFIG['host'],
+      :port                 => 465,
+      :user_name            => MAIL_CONFIG['user'],
+      :password             => MAIL_CONFIG['password'],
+      :authentication       => :plain,
+      :ssl => true,
+      :openssl_verify_mode => 'none',
+  }
+
 end

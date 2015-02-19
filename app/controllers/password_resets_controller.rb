@@ -3,8 +3,17 @@ class PasswordResetsController < ApplicationController
 
   def create
     @user = User.find_by_email(params[:email])
-    @user.deliver_reset_password_instructions! if @user
-    redirect_to(root_path, :notice => 'Instructions have been sent to your email.')
+    logger.info "delivering password reset instructions to "+params[:email]
+    begin
+      @user.deliver_reset_password_instructions! if @user
+      redirect_to(root_path, :notice => 'Instructions have been sent to your email.')
+    rescue => e
+      logger.info "Exception"
+      logger.error e
+      logger.error e.backtrace.join("\n")
+      redirect_to(root_path, :notice => 'Failed to send email.')
+    end
+
   end
 
   def edit

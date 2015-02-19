@@ -1,3 +1,5 @@
+# require "smtp_tls"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -14,7 +16,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -40,4 +42,33 @@ Rails.application.configure do
     raise "Connections configuration file "+config_fname+" does not exist."
   end
   APP_CONFIG = YAML.load_file(config_fname)[::Rails.env]
+
+  mail_config_fname =  File.join(ENV['HOME'], '.mail.conf')
+  if not File.exists?(mail_config_fname)
+    raise "Configuration file "+mail_config_fname+" does not exist."
+  end
+  MAIL_CONFIG = YAML.load_file(mail_config_fname)[::Rails.env]
+
+  config.action_mailer.default_url_options = {
+      :host => 'localhost',
+      :port => 3000
+  }
+
+  # config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.logger = nil
+
+  # config.action_mailer.debug_output = $stdout
+  config.action_mailer.smtp_settings = {
+      :domain => 'smartsport.me',
+      :address              => MAIL_CONFIG['host'],
+      :port                 => 465,
+      :user_name            => MAIL_CONFIG['user'],
+      :password             => MAIL_CONFIG['password'],
+      :authentication       => :plain,
+      :ssl => true,
+      :openssl_verify_mode => 'none',
+      # :enable_starttls_auto => true
+  }
+
 end
