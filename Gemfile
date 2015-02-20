@@ -56,3 +56,6 @@ gem 'mobile-fu'
 gem 'chronic'
 
 gem 'omniauth-google-oauth2'
+
+gem 'delayed_job_active_record'
+gem 'daemons'

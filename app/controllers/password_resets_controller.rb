@@ -1,5 +1,6 @@
 class PasswordResetsController < ApplicationController
   skip_before_filter :require_login
+  layout :resolve_layout
 
   def create
     @user = User.find_by_email(params[:email])
@@ -17,6 +18,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
+
     @token = params[:id]
     @user = User.load_from_reset_password_token(params[:id])
     if @user.blank?
@@ -43,4 +45,16 @@ class PasswordResetsController < ApplicationController
       render :action => "edit"
     end
   end
+
+  private
+
+  def resolve_layout
+    case action_name
+    when "edit"
+      "auth"
+    else
+      "application"
+    end
+  end
+
 end

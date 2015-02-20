@@ -1,4 +1,4 @@
-<h1>Choose a new password</h1>
+<% if false %>
 <%= form_for @user, :url => password_reset_path(@token), :html => {:method => :put} do |f| %>
     <% if @user.errors.any? %>
         <div id="error_explanation">
@@ -28,3 +28,39 @@
         <%= f.submit %>
     </div>
 <% end %>
+<% end %>
+
+
+<div class="login-page">
+
+    <div class="login-form-container">
+        <div class="login-form-header">
+            <h2>Choose a new password</h2>
+            <!--<h1>SmartSport</h1>-->
+            <h3><%= @user.email %></h3>
+        </div>
+
+
+        <div class="login-form">
+            <%= form_for @user, :url => password_reset_path(@token), :html => {:method => :put} do |f| %>
+                <div>
+
+                    <div class="login-field">
+                        <%= f.password_field :password, { :class => 'login-input', :placeholder => "Password"} %>
+                    </div>
+                    <div class="login-field">
+                        <%= f.password_field :password_confirmation, { :class => 'login-input', :placeholder => "Password Confirmation"}  %>
+                    </div>
+
+                    <div class="login-field submit-holder">
+                        <button class="login-button">Update password</button>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+        <div class="register-link-holder">
+            <a href="<%= login_path %>" class="register-link">Sign In</a>
+        </div>
+    </div>
+
+</div>
