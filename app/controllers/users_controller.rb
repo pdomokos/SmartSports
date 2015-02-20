@@ -29,6 +29,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        demo_user = User.where( :email => "balint.domokos@larkbio.com").first
+        if demo_user
+          friendship = Friendship.new({:user1_id => @user.id, :user2_id => demo_user.id, :authorized => true})
+          friendship.save
+          print("created friendship with demo user")
+        end
         format.html { redirect_to :root, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else

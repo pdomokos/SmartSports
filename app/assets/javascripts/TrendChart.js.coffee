@@ -67,7 +67,6 @@ class TrendChart
 
     @add_legend()
     dlen = @get_data_len()
-    console.log "Data len="+dlen
     if @series == null or dlen == 0
       svg.append("text")
       .text("No data")
@@ -95,18 +94,30 @@ class TrendChart
       else
         null).filter( (i) -> i!=null )
 
-    ext_left = @get_value_extent(left_keys)
-    scale_left = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_left)
+    has_left = left_keys.length>0
+    if has_left
+      ext_left = @get_value_extent(left_keys)
+      if ext_left !=null
+        if ext_left[0] == ext_left[1]
+          ext_left = [ext_left[0]-10,ext_left[0]+10]
+        if @zero_when_missing
+          ext_left[0] = 0
+        scale_left = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_left)
+      else
+        ext_left = [0,100]
+        has_left = false
 
     has_right = right_keys.length>0
     if(has_right)
       ext_right = @get_value_extent( right_keys )
-      scale_right = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_right)
-
-    if @zero_when_missing
-      ext_left[0] = 0
-      if(has_right)
-        ext_right[0] = 0
+      if ext_right !=null
+        if ext_right[0] == ext_right[1]
+          ext_right = [ext_right[0]-10,ext_right[0]+10]
+        if @zero_when_missing
+          ext_right[0] = 0
+        scale_right = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(ext_right)
+      else
+        has_right = false
 
     for k in @series_keys
       @ext_map[k] = ext_right
@@ -128,15 +139,16 @@ class TrendChart
       .attr("transform", "translate("+self.margin.left+","+(self.height-self.margin.bottom)+")")
       .call(time_axis)
 
-    y_axis_left = d3.svg.axis().scale(scale_left).orient("left")
-    svg.append("g")
-      .attr("class", "y axis")
-      .attr("transform", "translate( "+self.margin.left+", "+self.margin.top+" )")
-      .attr("stroke-width", "0")
-      .call(y_axis_left)
-      .append("text")
-      .text(self.labels[0])
-      .attr("transform", "translate("+(-self.margin.left/2)+", "+(-self.margin.top/2)+")")
+    if has_left
+      y_axis_left = d3.svg.axis().scale(scale_left).orient("left")
+      svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate( "+self.margin.left+", "+self.margin.top+" )")
+        .attr("stroke-width", "0")
+        .call(y_axis_left)
+        .append("text")
+        .text(self.labels[0])
+        .attr("transform", "translate("+(-self.margin.left/2)+", "+(-self.margin.top/2)+")")
 
     if(has_right)
       y_axis_right = d3.svg.axis().scale(scale_right).orient("right")
@@ -185,7 +197,7 @@ class TrendChart
     num = 0
     for k in @series_keys
       arr = @series.filter( (d) -> d[k] !=null )
-      console.log arr
+#      console.log arr
       num += arr.length
     return num
 
