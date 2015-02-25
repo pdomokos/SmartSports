@@ -5,13 +5,18 @@ class MeasurementsController < ApplicationController
   end
 
   def create
-    @measurement = Measurement.new(measurement_params)
+    user_id = params[:user_id]
+    par = measurement_params
+    par.merge!(:user_id => user_id)
+    print par
+    @measurement = Measurement.new(par)
     @measurement.date = DateTime.now
 
     respond_to do |format|
       if @measurement.save
         format.json { render json: { :status => "OK", :msg => "Saved successfully", :result => @measurement } }
       else
+        print @measurement.errors.full_messages.to_sentence+"\n"
         format.json { render json: { :status => "NOK", :msg => "Save error" } }
       end
     end
@@ -171,7 +176,7 @@ class MeasurementsController < ApplicationController
   end
 
   def measurement_params
-    params.require(:measurement).permit(:user_id, :source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date)
+    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date)
   end
 
 end

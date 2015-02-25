@@ -58,7 +58,7 @@
   min-height: 280px;
 }
 
-.logform>fieldset {
+.logform>form {
   display: table;
   table-layout: fixed;
   background-color: white;
@@ -79,10 +79,10 @@
   box-sizing: border-box;
 }
 
-.logform>fieldset div.field {
+.logform>form div.field {
   display: table-row;
 }
-.logform>fieldset div.field>:first-child {
+.logform>form div.field>:first-child {
   display: table-cell;
 //  padding: 15px 10px 15px 0;
   white-space: nowrap;
@@ -102,7 +102,9 @@
 .entry-mini {
   width: 60px;
 }
-
+.entry-mini-half {
+  width: 30px;
+}
 .entry-normal {
   width: 160px;
 }
@@ -400,7 +402,7 @@ span.list-attr {
   height: 30px;
 }
 span.list-attr.label {
-  font-size: 13px;
+  font-size: 14px;
 }
 span.list-ctrl {
   display: table-cell;
@@ -425,7 +427,14 @@ span.list-edit input {
   font-size: 14px;
   padding: 0px;
 }
+span.list-attr.unit {
+  font-size: 11px;
+  text-align: left;
+}
 
+.list-item i.header-icon {
+  color: #1f78b4;
+}
 
 span.list-attr.short {
   width: 30px;
@@ -465,7 +474,7 @@ div.list-item i {
   vertical-align: middle;
 }
 
-#lifestyle-table {
+.recent-records-table {
   //  border: solid 1px;
   background-color: #f6e8c3;
   padding-right: 6px;

@@ -1,48 +1,60 @@
-<form id="heart-form">
-    <input id="meas-user_id" name="measurement[user_id]" value="<%= @user.id %>" type="hidden">
-    <input id="meas-source" name="measurement[source]" value="smartsport" type="hidden">
+<!--<form id="heart-form">-->
+<div>
     <input id="current-measurement-data" type="hidden"/>
     <div class="logform clearfix" id="health-form-div">
-        <fieldset>
-            <div id="action-table" class="list-container">
+        <!--<fieldset>-->
+        <form id="heart-form">
+            <div id="heart-meas-form" class="list-container">
                 <div class="list-item">
-                    <i class="fa fa-heart fa-2x"></i>
+                    <!--<span class="list-attr">BP</span>-->
+                    <i class="fa fa-heart header-icon fa-lg"></i>
                     <span class="list-attr label">SYS</span>
-                    <span class="list-attr"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini"></span>
+                    <span class="list-attr"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini-half"></span>
+                    <span class="list-attr unit">mmHg</span>
                     <span class="list-attr label">DIA</span>
-                    <span class="list-attr"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini"></span>
+                    <span class="list-attr"><input id="meas-dia" name="measurement[diastolicbp]" class="entry-mini-half"></span>
+                    <span class="list-attr unit">mmHg</span>
                     <span class="list-attr label">HR</span>
-                    <span class="list-attr"><input id="meas-hr" name="measurement[pulse]" class="entry-mini"></span>
-                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
+                    <span class="list-attr"><input id="meas-hr" name="measurement[pulse]" class="entry-mini-half"></span>
+                    <span class="list-attr unit">bpm</span>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add heart-meas"></i>
                 </div>
 
                 <div class="list-item">
-                    <i class="fa fa-tint fa-2x"></i>
-                    <span class="list-attr label">Blood Sugar<br/>(mmol/L)</span>
-                    <span class="list-attr"><input id="meas-blood_sugar" name="measurement[blood_sugar]" class="entry-mini"></span>
+                    <!--<span class="list-attr">Sugar</span>-->
+                    <i class="fa fa-tint header-icon fa-lg"></i>
+                    <span class="list-attr label">Blood Sugar</span>
+                    <span class="list-attr"><input id="meas-blood_sugar" name="measurement[blood_sugar]" class="entry-mini-half"></span>
+                    <span class="list-attr unit">mmol/L</span>
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
-                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
+                    <span class="list-attr"></span>
+                    <span class="list-attr"></span>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add blood-meas"></i>
                 </div>
 
                 <div class="list-item">
-                    <i class="fa fa-area-chart fa-2x"></i>
-                    <span class="list-attr label">Weight (kg)</span>
-                    <span class="list-attr"><input id="meas-weight" name="measurement[weight]" class="entry-mini"></span>
-                    <span class="list-attr label">Waist (cm)</span>
-                    <span class="list-attr"><input id="meas-waist" name="measurement[waist]" class="entry-mini"></span>
+                    <!--<span class="list-attr">Body</span>-->
+                    <i class="fa fa-area-chart header-icon fa-lg"></i>
+                    <span class="list-attr label">Weight</span>
+                    <span class="list-attr"><input id="meas-weight" name="measurement[weight]" class="entry-mini-half"></span>
+                    <span class="list-attr unit">kg</span>
+                    <span class="list-attr label">Waist</span>
+                    <span class="list-attr"><input id="meas-waist" name="measurement[waist]" class="entry-mini-half"></span>
+                    <span class="list-attr unit">cm</span>
                     <!--<span class="list-attr"></span>-->
                     <!--<span class="list-attr"></span>-->
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
-                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add"></i>
+                    <span class="list-attr"></span>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add body-meas"></i>
                 </div>
             </div>
+            </form>
 
-
-            <div id="meas-table" class="list-container">
+            <div id="meas-table" class="list-container recent-records-table">
                 <div class="list-item">
                     <span class="list-header"></span>
                     <span class="list-header">Time</span>
@@ -87,4 +99,5 @@
         </div>
     </div>
 
-</form>
+<!--</form>-->
+</div>

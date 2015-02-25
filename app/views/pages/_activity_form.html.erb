@@ -1,126 +1,85 @@
-<form id="act-form">
+<div>
     <input id="activity-form-userid" name="user_id" value="<%= @user.id %>" type="hidden">
     <input id="activity-form-source" name="activity[source]" value="smartsport" type="hidden">
     <input id="current-activity-data" type="hidden"/>
+
     <div class="logform clearfix hidden" id="act-form-div">
-        <fieldset>
+        <form id="act-form">
 
-            <div id="action-table" class="action-list">
-                <% for curr in ['walking', 'cycling', 'pingpong'] %>
-                    <%= render partial: 'activity_action_item', locals: {:curr => curr} %>
-                <% end %>
+            <div id="act-form-elem" class="list-container">
+                <div class="list-item">
+                    <span class="list-attr">Walking</span>
+                    <i class="fa fa-child header-icon fa-lg"></i>
+                    <span class="list-attr label">Dutation</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="duration" value=""></span>
+                    <span class="list-attr label">Steps</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="steps" value=""></span>
+                    <span class="list-attr label">Distance</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="distance" value=""></span>
+                    <i id="walk-activity-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                </div>
+                <div class="list-item">
+                    <span class="list-attr">Running</span>
+                    <i class="fa fa-child header-icon fa-lg"></i>
+                    <span class="list-attr label">Dutation</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="duration" value=""></span>
+                    <span class="list-attr label">Steps</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="steps" value=""></span>
+                    <span class="list-attr label">Distance</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="distance" value=""></span>
+                    <i id="walk-running-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                </div>
+                <div class="list-item">
+                    <span class="list-attr">Cycling</span>
+                    <i class="fa fa-bicycle header-icon fa-lg"></i>
+                    <span class="list-attr label">Dutation</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="duration" value=""></span>
+                    <span class="list-attr label">Distance</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="steps" value=""></span>
+                    <span class="list-attr"></span>
+                    <span class="list-attr"></span>
+                    <i id="walk-running-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                </div>
+            </div>
+        </form>
+
+            <div id="activity-table" class="list-container recent-records-table">
+                <div class="list-item">
+                    <span class="list-header"></span>
+                    <span class="list-header">Time</span>
+                    <span class="list-header">Type</span>
+                    <span class="list-header">Duration</span>
+                    <span class="list-header">Steps</span>
+                    <span class="list-header"></span>
+                </div>
+                <!--place of rows-->
+                <div id="act-iid" class="list-item measure-item">
+                    <i class="fa fa-check success"></i>
+                    <span class="list-attr attr-date long">2015-02-11 09:35</span>
+                    <span class="list-edit hidden"><input class="long attr-date" type="text" name="date" value="2015-02-11 09:35"></span>
+                    <span class="list-attr attr-bp medium">Running</span>
+
+                    <span class="list-attr attr-bp medium">61.0</span>
+                    <span class="list-edit hidden"><input class="medium attr-bp" type="text" name="heart" value="123"></span>
+
+                    <span class="list-ctrl show">
+                        <div class="edit-meas-control">Edit</div>
+                    </span>
+                    <span class="list-ctrl show">
+                        <div class="delete-meas-control">Delete</div>
+                    </span>
+                </div>
             </div>
 
-            <div id="activity-container">
-
-                <!-- walking -->
-                <div class="field-temp walking-ui hidden">
-                    <h3>Walking activity</h3>
+            <div id="activity-row-template" class="hidden">
+                <div id="actt-iid" class="list-item measure-item">
+                    <i class="fa fa-check success"></i>
+                    <span class="list-attr attr-date long">2015-02-11 09:35</span>
+                    <span class="list-edit hidden"><input class="long attr-date" type="text" name="date" value="2015-02-11 09:35"></span>
+                    <span class="list-attr attr-bp medium">123/66/45</span>
                 </div>
-                <input id="walking-id" name="activity[id]" type="hidden" class="walking-param">
-                <div class="field field-temp walking-ui hidden">
-                    <label for="walking-start_time">Time</label>
-                    <span class="entry">
-                        <input id="walking-start_time" name="activity[start_time]" class="date-input walking-param">
-                    </span>
-                </div>
-                <div class="field field-temp walking-ui hidden">
-                    <label for="walking-duration">Duration (min)</label>
-                    <span class="entry">
-                        <input id="walking-duration" name="activity[duration]" class="entry-mini walking-param">
-                    </span>
-                </div>
-                <div class="field field-temp walking-ui hidden">
-                    <label for="walking-steps">Steps</label>
-                    <span class="entry">
-                        <input id="walking-steps" name="activity[steps]" class="entry-mini walking-param">
-                    </span>
-                </div>
-
-                <!-- cycling -->
-                <div class="field-temp cycling-ui hidden">
-                    <h3>Cycling activity</h3>
-                </div>
-                <input id="cycling-id" name="activity[id]" type="hidden" class="cycling-param">
-                <div class="field field-temp cycling-ui hidden">
-                    <label for="cycling-start_time">Time</label>
-                    <span class="entry">
-                        <input id="cycling-start_time" name="activity[start_time]" class="date-input cycling-param">
-                    </span>
-                </div>
-                <div class="field field-temp cycling-ui hidden">
-                    <label for="cycling-duration">Duration (min)</label>
-                    <span class="entry">
-                        <input id="cycling-duration" name="activity[duration]" class="entry-mini cycling-param">
-                    </span>
-                </div>
-                <div class="field field-temp cycling-ui hidden">
-                    <label for="cycling-steps">Distance</label>
-                    <span class="entry">
-                        <input id="cycling-distance" name="activity[distance]" class="entry-mini cycling-param">
-                    </span>
-                </div>
-
-                <!-- pingpong  -->
-                <div class="field-temp pingpong-ui hidden">
-                    <h3>Ping-pong activity</h3>
-                </div>
-                <input id="pingpong-id" name="activity[id]" type="hidden" class="pingpong-param">
-                <div class="field field-temp pingpong-ui hidden">
-                    <label for="pingpong-start_time">Time</label>
-                    <span class="entry">
-                        <input id="pingpong-start_time" name="activity[start_time]" class="date-input pingpong-param">
-                    </span>
-                </div>
-                <div class="field field-temp pingpong-ui hidden">
-                    <label for="pingpong-duration">Duration (min)</label>
-                    <span class="entry">
-                        <input id="pingpong-duration" name="activity[duration]" class="entry-mini pingpong-param">
-                    </span>
-                </div>
-                <div class="field field-temp pingpong-ui hidden">
-                    <label for="pingpong-players">Players</label>
-                    <span class="entry">
-                        <select id="pingpong-activity-participant" class="entry-normal"></select>
-                    </span>
-                    <i id="add-pingpong-participant" class="fa fa-plus-square fa-ex text-green"></i>
-                    <div id="pingpong-participants">
-                    </div>
-                </div>
-                <div id="pingpong-games-container" class="field field-temp pingpong-ui hidden">
-                    <label for="pingpong-games">Games</label>
-                    <span class="entry">
-                        <select id="pingpong-games" class="entry-normal"></select>
-                    </span>
-                    <input type="text" class="entry-number">: <input type="text" class="entry-number">
-                    <i id="add-pingpong-game" class="fa fa-plus-square fa-ex text-green"></i>
-                </div>
-
-
-                <div class="act-edit-controls field-temp hidden">
-                    <span id="save-activity-button" class="edit-control">Save</span>
-                    <span id="cancel-activity-button" class="delete-control">Cancel</span>
-                </div>
-
-                <div id="act-message" class="act-message action-list">
-                    <!--<div id="act-message-item" class="action-item"></div>-->
-                    <div id="act-message-item" class="action-item hidden">
-                        <i class="fa fa-check success"></i>
-                        <span></span>
-                        <span class="edit-control-holder">
-                            <div class="edit-control">Edit</div>
-                        </span>
-                        <span class="delete-control-holder">
-                            <div class="delete-control">Delete</div>
-                        </span>
-                    </div>
-                    <div id="act-message-failed" class="action-item hidden">
-                        Failed
-                    </div>
-                </div>
-
             </div>
 
-        </fieldset>
     </div>
-</form>
+
+</div>

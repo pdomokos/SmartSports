@@ -1,6 +1,15 @@
 @register_lifestyle_cbs = () ->
   console.log "register_filestyle_cbs()"
 
+  $("#lifestyle-form-sel").click (event) ->
+    self.reset_form_sel()
+    $("#lifestyle-form-div").removeClass("hidden")
+    $("#meas-message").addClass("hidden-placed")
+    $("#lifestyle-form-sel div.log-sign").removeClass("hidden-placed")
+    $("#lifestyle-form-sel").addClass("selected")
+  #$("#meas-sys").focus()
+
+
   $("i.lifestyle-add").click (event) ->
     name =  event.target.id.split("-")[0]
     console.log name

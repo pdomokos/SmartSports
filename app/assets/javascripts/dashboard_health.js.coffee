@@ -37,7 +37,7 @@
   fill_recent_meas()
 
 @fill_recent_meas = () ->
-  current_user = $("#current-user-id")[0].value
+  current_user = $("#form-user-id")[0].value
   $("#meas-table .measure-item").remove()
   $.ajax '/users/' + current_user + '/measurements.json?source=smartsport&order=desc&limit=4',
     type: 'GET',
@@ -53,6 +53,7 @@
         new_row.insertAfter($("#meas-table > div:last-of-type"))
         $("#" + new_id + " span.attr-date").html(fmt_hm(new Date(Date.parse(d.date))))
         $("#" + new_id + " input.attr-date").val(fmt_hm(new Date(Date.parse(d.date))))
+
         syst = d.systolicbp
         if syst == null
           syst = ""
@@ -62,8 +63,10 @@
         hr = d.pulse
         if hr == null
           hr = ""
-
-        heart = syst + "/" + dia + "/" + hr
+        if syst=="" and dia=="" and hr==""
+          heart = ""
+        else
+          heart = syst + "/" + dia + "/" + hr
         $("#" + new_id + " span.attr-bp").html(heart)
         $("#" + new_id + " input.attr-bp").val(heart)
 
@@ -78,8 +81,34 @@
 
 @add_measurement_submit_handler = (event) ->
   event.preventDefault()
-  values = $("#heart-form").serialize()
-  current_user = $("#current-user-id")[0].value
+  target = event.target
+
+  if target.classList.contains("heart-meas")
+    sys = $("#meas-sys").val()
+    dia = $("#meas-dia").val()
+    hr = $("#meas-hr").val()
+    console.log "heart meas: "+sys+"/"+dia+"/"+hr
+    if sys=="" and dia =="" and hr==""
+      alert("Please specify heart measurements.")
+      return
+  if target.classList.contains("blood-meas")
+    bs = $("#meas-blood_sugar").val()
+    if bs==""
+      alert("Please specify blood sugar measurement.")
+      return
+  if target.classList.contains("body-meas")
+    weight = $("#meas-weight").val()
+    waist = $("#meas-waist").val()
+    if weight=="" and waist==""
+      alert("Please specify body measurements.")
+      return
+
+  values = @create_values("heart-form")
+  values["measurement[source]"] = "smartsport"
+  console.log "HEART MEAS"
+
+  current_user = $("#form-user-id")[0].value
+
   $("#meas-message").addClass("hidden-placed")
   console.log values
   $.ajax '/users/' + current_user + '/measurements',
@@ -98,7 +127,7 @@
         $("#meas-message").removeClass("hidden-placed")
         $("#meas-message-item").html("<i class=\"fa fa-check success\"></i><span>Added heart data</span><span class=\"edit-control-holder\"><div class=\"edit-meas-control\">Edit</div></span><span class=\"delete-control-holder\"><div class=\"delete-meas-control\">Delete</div></span>")
         $("#current-measurement-data").val(JSON.stringify(data.result))
-        $("#action-table input").val("")
+        $("#heart-form input").val("")
         fill_recent_meas()
 
 @set_m_param = (element_id, hash) ->
@@ -139,6 +168,9 @@
   delete values['heart']
   if heart!="" and heart != "//"
     heart_arr = heart.split("/")
+    if heart_arr.length !=3 or heart_arr[0]=="" or heart_arr[1]=="" or heart_arr[2]==""
+      alert("Please specify the blood pressure in a SYS/DIA/PULSE format, e.g. 119/87/75")
+      return
     values['systolicbp'] = heart_arr[0]
     values['diastolicbp'] = heart_arr[1]
     values['pulse'] = heart_arr[2]
@@ -167,14 +199,6 @@
         $("#" + parent_id + " span.list-ctrl.show").removeClass("hidden")
         $("#" + parent_id + " span.list-ctrl.edit").addClass("hidden")
         fill_recent_meas()
-#        $("#measurement-container div.measure-ui").addClass("hidden")
-#        $("#measurement-container .edit-controls").addClass("hidden")
-#        $("#health-form-div #action-table").removeClass("hidden")
-#        $("#manualdata-container #meas-message").removeClass("hidden")
-#        $("#meas-message").removeClass("hidden-placed")
-#        $("#meas-message-item").html("<i class=\"fa fa-check success\"></i><span>Updated heart data</span>")
-#        $("#current-measurement-data").val(JSON.stringify(data.result))
-#        $("div.measure-item input").val("")
       else
         $("#meas-message").html("Failed to update measurement <i class=\"fa fa-exclamation-circle failure\"></i>")
         $("#meas-message").removeClass("hidden-placed")
@@ -227,7 +251,4 @@ tmp = () ->
   $("#" + rowid + " span.list-attr").removeClass("hidden")
   $("#" + rowid + " span.list-ctrl.show").removeClass("hidden")
   $("#" + rowid + " span.list-ctrl.edit").addClass("hidden")
-#  $("#health-form-div #action-table").removeClass("hidden")
-#  $("#manualdata-container #meas-message").removeClass("hidden")
-#  $("#measurement-container div.measure-ui").addClass("hidden")
-#  $("#measurement-container .edit-controls").addClass("hidden")
+

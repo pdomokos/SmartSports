@@ -1,0 +1,57 @@
+<div>
+
+    <div class="logform clearfix hidden" id="medication-form-div">
+        <form id="medication-form">
+
+            <div id="medication-form" class="list-container">
+                <div class="list-item">
+                    <span class="list-attr">Medication</span>
+                    <i class="fa fa-medkit header-icon fa-lg"></i>
+                    <span class="list-attr label">Name</span>
+                    <span class="list-attr"><input class="entry-normal" type="text" name="food" value=""></span>
+                    <span class="list-attr label">Amount</span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="calories" value=""></span>
+                    <i id="eat-lifestyle-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                </div>
+
+            </div>
+
+            </form>
+            <div id="medication-table" class="list-container recent-records-table">
+                <div class="list-item">
+                    <span class="list-header"></span>
+                    <span class="list-header">Time</span>
+                    <span class="list-header">Name</span>
+                    <span class="list-header">Amount</span>
+                    <span class="list-header"></span>
+                    <span class="list-header"></span>
+                </div>
+                <!--place of rows-->
+                <div id="med-iid1" class="list-item medication-item">
+                    <i class="fa fa-check success"></i>
+                    <span class="list-attr attr-date long">2015-02-11 09:35</span>
+                    <span class="list-edit hidden"><input class="long attr-date" type="text" name="date" value="2015-02-11 09:35"></span>
+                    <span class="list-attr attr-bp medium">Kalmopyrin 50mg</span>
+
+                    <span class="list-attr attr-bp medium">1</span>
+                    <span class="list-edit hidden"><input class="medium attr-bp" type="text" name="heart" value="123"></span>
+
+                    <span class="list-ctrl show">
+                        <div class="edit-meas-control">Edit</div>
+                    </span>
+                    <span class="list-ctrl show">
+                        <div class="delete-meas-control">Delete</div>
+                    </span>
+                </div>
+            </div>
+
+            <div id="medication-row-template" class="hidden">
+                <div id="med-iid" class="list-item measure-item">
+                    <i class="fa fa-check success"></i>
+                    <span class="list-attr attr-date long">2015-02-11 09:35</span>
+                    <span class="list-edit hidden"><input class="long attr-date" type="text" name="date" value="2015-02-11 09:35"></span>
+                    <span class="list-attr attr-bp medium">123/66/45</span>
+                </div>
+            </div>
+    </div>
+</div>

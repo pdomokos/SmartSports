@@ -1,19 +1,36 @@
-<form id="friend-form">
-    <input name="user_id" value="<%= @user.id %>" type="hidden">
+<div>
+
     <div class="logform clearfix hidden" id="friend-form-div">
-        <fieldset>
-            <div class="field">
-                <label for="friend_name">Friend</label><span class="entry"><input id="friend_name" name="friend_name" class="entry-normal"></span>
-
-                <button id="new-friend-button" class="button minibutton primary">Add</button>
+        <form id="friend-form">
+            <div id="act-form-elem" class="list-container">
+                <div class="list-item">
+                    <span class="list-attr">Friend</span>
+                    <i class="fa fa-child header-icon fa-lg"></i>
+                    <span class="list-attr label">Username</span>
+                    <span class="list-attr"><input class="entry-mini" type="text" name="username" value=""></span>
+                    <span class="list-attr label"></span>
+                    <span class="list-attr"></span>
+                    <span class="list-attr label"></span>
+                    <span class="list-attr"></span>
+                    <i id="walk-activity-add" class="fa fa-plus-circle fa-2x text-green friend-add"></i>
+                </div>
             </div>
-            <div id="friend-message" class="hidden-placed">
-                &nbsp;
+        </form>
+        <div id="friend-table" class="list-container recent-records-table">
+            <div class="list-item">
+                <span class="list-header"></span>
+                <span class="list-header">Date</span>
+                <span class="list-header">Name</span>
+                <span class="list-header"></span>
+                <span class="list-header"></span>
+                <span class="list-header"></span>
             </div>
-            <div class="friend-list">
-
+            <div id="fr-iid" class="list-item friend-item">
+                <i class="fa fa-check success"></i>
+                <span class="list-attr attr-date long">2015-02-11 09:35</span>
+                <span class="list-attr attr-date long">Zoli</span>
             </div>
+        </div>
 
-        </fieldset>
     </div>
-</form>
+</div>

@@ -1,6 +1,15 @@
 @register_activity_cbs = () ->
   console.log "register_activity_cbs()"
 
+  $("#act-form-sel").click (event) ->
+    self.reset_form_sel()
+    $("#act-form-div").removeClass("hidden")
+    $("#act-form-sel div.log-sign").removeClass("hidden-placed")
+    $("#act-form-sel").addClass("selected")
+    $("#act-message-item").addClass("hidden")
+    $("#act-message-failed").addClass("hidden")
+    $("#act-steps").focus()
+
   $("#save-activity-button").click (event) ->
     save_activity_handler(event)
 

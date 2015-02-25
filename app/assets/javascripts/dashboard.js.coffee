@@ -16,39 +16,13 @@
 
   @load_notifications()
 
-  @register_activity_cbs()
   @register_health_cbs()
   @register_lifestyle_cbs()
-
-  $("#lifestyle-form-sel").click (event) ->
-    self.reset_form_sel()
-    $("#lifestyle-form-div").removeClass("hidden")
-    $("#meas-message").addClass("hidden-placed")
-    $("#lifestyle-form-sel div.log-sign").removeClass("hidden-placed")
-    $("#lifestyle-form-sel").addClass("selected")
-#    $("#meas-sys").focus()
-
-  $("#act-form-sel").click (event) ->
-    self.reset_form_sel()
-    $("#act-form-div").removeClass("hidden")
-    $("#act-form-sel div.log-sign").removeClass("hidden-placed")
-    $("#act-form-sel").addClass("selected")
-    $("#act-message-item").addClass("hidden")
-    $("#act-message-failed").addClass("hidden")
-    $("#act-steps").focus()
-
-  # friendship events
-  $("#friend-form-sel").click (event) ->
-    self.reset_form_sel()
-    $("#friend_name").val("")
-    $("#friend-message").addClass("hidden-placed")
-    $("#friend-form-div").removeClass("hidden")
-    $("#friend-form-sel div.log-sign").removeClass("hidden-placed")
-    $("#friend-form-sel").addClass("selected")
-    $("#friend_name").focus()
-
-  $("#new-friend-button").click (event) ->
-    new_friend_submit_handler(event)
+  @register_medication_cbs()
+  @register_activity_cbs()
+  #@register_genetics_cbs()
+  # emotional -> friendsips
+  @register_emotional_cbs()
 
 @get_days_ago_ymd = (n) ->
   d = new Date()
@@ -87,14 +61,17 @@ new_friend_submit_handler = (event) ->
 @reset_form_sel = () ->
   $("#health-form-div").addClass("hidden")
   $("#lifestyle-form-div").addClass("hidden")
+  $("#medication-form-div").addClass("hidden")
   $("#act-form-div").addClass("hidden")
   $("#friend-form-div").addClass("hidden")
   $("#act-form-sel div.log-sign").addClass("hidden-placed")
   $("#lifestyle-form-sel div.log-sign").addClass("hidden-placed")
+  $("#medication-form-sel div.log-sign").addClass("hidden-placed")
   $("#heart-form-sel div.log-sign").addClass("hidden-placed")
   $("#friend-form-sel div.log-sign").addClass("hidden-placed")
   $("#heart-form-sel").removeClass("selected")
   $("#lifestyle-form-sel").removeClass("selected")
+  $("#medication-form-sel").removeClass("selected")
   $("#act-form-sel").removeClass("selected")
   $("#friend-form-sel").removeClass("selected")
   @setdate()
