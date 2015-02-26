@@ -54,13 +54,21 @@ class LifestylesController < ApplicationController
   # POST /lifestyles
   # POST /lifestyles.json
   def create
-    @user = User.find(params[:user_id])
-    @lifestyle = @user.lifestyles.create(lifestyle_params)
+    # @user = User.find(params[:user_id])
+
+    user_id = params[:user_id]
+    par = lifestyle_params
+    par.merge!(:user_id => user_id)
+    print par
+    @lifestyle = Lifestyle.new(par)
+    @lifestyle.start_time = DateTime.now
+
+    # @lifestyle = @user.lifestyles.create(lifestyle_params)
     respond_to do |format|
       if @lifestyle.save
         puts "SAVE OK"
         format.html { redirect_to [@user, @lifestyle], notice: 'Lifestyle was successfully created.' }
-        format.json { render  json: {:status =>"ok", :msg =>"", :result => @lifestyle} }
+        format.json { render  json: {:status =>"OK", :result => @lifestyle} }
       else
         format.html { render :new }
         format.json { render json: @lifestyle.errors, status: :unprocessable_entity }

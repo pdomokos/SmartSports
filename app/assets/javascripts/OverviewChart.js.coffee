@@ -1,4 +1,3 @@
-#= require BaseChart
 
 class OverviewChart
   constructor: (@connection, @chart_element, @data, @data_helper) ->

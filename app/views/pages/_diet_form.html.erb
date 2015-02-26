@@ -1,15 +1,7 @@
 <div>
-    <!--<form id="lifestyle-form">-->
-    <input id="lifestyle-form-userid" name="user_id" value="<%= @user.id %>" type="hidden">
-    <!--<input id="activity-form-source" name="activity[source]" value="smartsport" type="hidden">-->
-    <input id="lifestyle-form-source" name="lifestyle[source]" value="smartsport" type="hidden">
-    <!--<input id="current-activity-data" type="hidden"/>-->
-    <input id="current-lifestyle-data" type="hidden"/>
-
-    <div class="logform clearfix hidden" id="lifestyle-form-div">
+    <div class="logform clearfix hidden" id="lifestyle-data">
         <form id="lifestyle-form">
-
-            <div id="lifestyle-form-elem" class="list-container">
+            <div id="lifestyle-data-form" class="list-container">
                 <div class="list-item">
                     <span class="list-attr">Eat</span>
                     <i class="fa fa-birthday-cake header-icon fa-lg"></i>
@@ -17,7 +9,7 @@
                     <span class="list-attr"><input class="entry-normal" type="text" name="food" value=""></span>
                     <span class="list-attr label">Calories</span>
                     <span class="list-attr"><input class="entry-mini-half" type="text" name="calories" value=""></span>
-                    <i id="eat-lifestyle-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                    <i id="eat-lifestyle-add" class="fa fa-plus-circle fa-2x text-green add-icon eat-event"></i>
                 </div>
                 <div class="list-item">
                     <span class="list-attr">Drink</span>
@@ -26,7 +18,7 @@
                     <span class="list-attr"><input class="entry-normal" type="text" name="drink" value=""></span>
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
-                    <i id="drink-lifestyle-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                    <i id="drink-lifestyle-add" class="fa fa-plus-circle fa-2x text-green add-icon drink-event"></i>
                 </div>
                 <div class="list-item">
                     <span class="list-attr">Cigarette</span>
@@ -34,20 +26,20 @@
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
                     <span class="list-attr label">Amount</span>
-                    <span class="list-attr"><input class="entry-mini-half" type="text" name="drink" value=""></span>
+                    <span class="list-attr"><input class="entry-mini-half" type="text" name="cigarette" value=""></span>
 
-                    <i id="cigarette-lifestyle-add" class="fa fa-plus-circle fa-2x text-green lifestyle-add"></i>
+                    <i id="cigarette-lifestyle-add" class="fa fa-plus-circle fa-2x text-green add-icon cigarette-event"></i>
                 </div>
             </div>
             </form>
 
 
-            <div id="lifestyle-table" class="list-container recent-records-table">
+            <div id="lifestyle-data-table" class="list-container recent-records-table">
                 <div class="list-item">
                     <span class="list-header"></span>
                     <span class="list-header">Time</span>
-                    <span class="list-header">Type</span>
-                    <span class="list-header">Amount</span>
+                    <span class="list-header">Name</span>
+                    <span class="list-header"></span>
                     <span class="list-header"></span>
                     <span class="list-header"></span>
                 </div>

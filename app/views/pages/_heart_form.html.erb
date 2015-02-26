@@ -1,12 +1,8 @@
-<!--<form id="heart-form">-->
 <div>
-    <input id="current-measurement-data" type="hidden"/>
-    <div class="logform clearfix" id="health-form-div">
-        <!--<fieldset>-->
-        <form id="heart-form">
-            <div id="heart-meas-form" class="list-container">
+    <div class="logform clearfix" id="health-data">
+        <form id="health-form">
+            <div id="health-data-form" class="list-container">
                 <div class="list-item">
-                    <!--<span class="list-attr">BP</span>-->
                     <i class="fa fa-heart header-icon fa-lg"></i>
                     <span class="list-attr label">SYS</span>
                     <span class="list-attr"><input id="meas-sys" name="measurement[systolicbp]" class="entry-mini-half"></span>
@@ -17,11 +13,10 @@
                     <span class="list-attr label">HR</span>
                     <span class="list-attr"><input id="meas-hr" name="measurement[pulse]" class="entry-mini-half"></span>
                     <span class="list-attr unit">bpm</span>
-                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add heart-meas"></i>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green add-icon heart-meas"></i>
                 </div>
 
                 <div class="list-item">
-                    <!--<span class="list-attr">Sugar</span>-->
                     <i class="fa fa-tint header-icon fa-lg"></i>
                     <span class="list-attr label">Blood Sugar</span>
                     <span class="list-attr"><input id="meas-blood_sugar" name="measurement[blood_sugar]" class="entry-mini-half"></span>
@@ -32,11 +27,10 @@
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
-                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add blood-meas"></i>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green add-icon blood-meas"></i>
                 </div>
 
                 <div class="list-item">
-                    <!--<span class="list-attr">Body</span>-->
                     <i class="fa fa-area-chart header-icon fa-lg"></i>
                     <span class="list-attr label">Weight</span>
                     <span class="list-attr"><input id="meas-weight" name="measurement[weight]" class="entry-mini-half"></span>
@@ -44,17 +38,15 @@
                     <span class="list-attr label">Waist</span>
                     <span class="list-attr"><input id="meas-waist" name="measurement[waist]" class="entry-mini-half"></span>
                     <span class="list-attr unit">cm</span>
-                    <!--<span class="list-attr"></span>-->
-                    <!--<span class="list-attr"></span>-->
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
                     <span class="list-attr"></span>
-                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green measurement-add body-meas"></i>
+                    <i id="save-measurement-button" class="fa fa-plus-circle fa-2x text-green add-icon body-meas"></i>
                 </div>
             </div>
             </form>
 
-            <div id="meas-table" class="list-container recent-records-table">
+            <div id="health-data-table" class="list-container recent-records-table">
                 <div class="list-item">
                     <span class="list-header"></span>
                     <span class="list-header">Time</span>
@@ -68,20 +60,19 @@
                 <!--place of rows-->
            </div>
 
-        </fieldset>
-        <div id="meas-row-template" class="hidden">
-            <div id="meas-iid" class="list-item measure-item">
+        <div class="hidden row-template">
+            <div id="meas-iid" class="list-item row-item">
                 <i class="fa fa-check success"></i>
-                <span class="list-attr attr-date long">2015-02-11 09:35</span>
-                <span class="list-edit hidden"><input class="long attr-date" type="text" name="date" value="2015-02-11 09:35"></span>
-                <span class="list-attr attr-bp medium">123/66/45</span>
-                <span class="list-edit hidden"><input class="medium attr-bp" type="text" name="heart" value="123/66/45"></span>
-                <span class="list-attr attr-bloodsugar short">124</span>
-                <span class="list-edit hidden"><input class="short attr-bloodsugar" type="text" name="blood_sugar" value="124"></span>
-                <span class="list-attr attr-weight short">55</span>
-                <span class="list-edit hidden"><input class="short attr-weight" type="text" name="weight" value="55"></span>
-                <span class="list-attr attr-waist short">90</span>
-                <span class="list-edit hidden"><input class="short attr-waist" type="text" name="waist" value="90"></span>
+                <span class="list-attr attr-date long"></span>
+                <span class="list-edit hidden"><input class="long attr-date" type="text" name="date" value=""></span>
+                <span class="list-attr attr-heart medium"></span>
+                <span class="list-edit hidden"><input class="medium attr-heart" type="text" name="heart" value=""></span>
+                <span class="list-attr attr-blood_sugar short"></span>
+                <span class="list-edit hidden"><input class="short attr-blood_sugar" type="text" name="blood_sugar" value=""></span>
+                <span class="list-attr attr-weight short"></span>
+                <span class="list-edit hidden"><input class="short attr-weight" type="text" name="weight" value=""></span>
+                <span class="list-attr attr-waist short"></span>
+                <span class="list-edit hidden"><input class="short attr-waist" type="text" name="waist" value=""></span>
 
                 <span class="list-ctrl show">
                     <div class="edit-meas-control">Edit</div>
@@ -98,6 +89,4 @@
             </div>
         </div>
     </div>
-
-<!--</form>-->
 </div>
