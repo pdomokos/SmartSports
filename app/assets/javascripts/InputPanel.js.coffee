@@ -3,26 +3,32 @@ class InputPanel
     @validate_cb = null
     @validate_save_cb = null
     @preproc_cb = null
+    if @model_name != null
+      if @model_name == 'activity'
+        @model_name_plural = "activities"
+      else
+        @model_name_plural = @model_name+"s"
 
   start: () ->
     console.log @name+" input started"
     self = this
+
     $("#"+@name+"-form i.add-icon").click (event) ->
       self.add_data_handler(event)
 
-    $("#"+@name+"-table").on("click", "div.edit-meas-control",
+    $("#"+@name+"-table").on("click", "div.edit-control",
       (event) ->
         self.edit_data_handler(event)
       )
-    $("#"+@name+"-table").on("click", "div.cancel-meas-control",
+    $("#"+@name+"-table").on("click", "div.cancel-control",
       (event) ->
         self.cancel_edit_handler(event)
       )
-    $("#"+@name+"-table").on("click", "div.delete-meas-control",
+    $("#"+@name+"-table").on("click", "div.delete-control",
       (event) ->
         self.delete_data_handler(event)
       )
-    $("#"+@name+"-table").on("click", "div.save-meas-control",
+    $("#"+@name+"-table").on("click", "div.save-control",
       (event) ->
         self.save_data_handler(event)
       )
@@ -63,7 +69,6 @@ class InputPanel
 
   edit_data_handler: (event) ->
     event.preventDefault()
-    console.log "edit pressed"
     rowid = event.target.parentNode.parentNode.id
     $("#" + rowid + " span.list-edit").removeClass("hidden")
     $("#" + rowid + " span.list-attr").addClass("hidden")
@@ -72,7 +77,6 @@ class InputPanel
 
   cancel_edit_handler: (event) ->
     event.preventDefault()
-    console.log "cancel pressed"
     rowid = event.target.parentNode.parentNode.id
     $("#" + rowid + " span.list-edit").addClass("hidden")
     $("#" + rowid + " span.list-attr").removeClass("hidden")
@@ -84,10 +88,8 @@ class InputPanel
     self = this
     event.preventDefault()
     id = event.target.parentNode.parentNode.id.split("-")[-1..]
-    console.log "delete pressed id=" + id
     current_user = $("#form-user-id")[0].value
-    console.log id
-    $.ajax '/users/' + current_user + '/'+@model_name+'s/' + id,
+    $.ajax '/users/' + current_user + '/'+@model_name_plural+'/' + id,
       type: 'DELETE',
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
@@ -114,7 +116,7 @@ class InputPanel
 
     current_user = $("#form-user-id")[0].value
 
-    $.ajax '/users/' + current_user + '/'+@model_name+'s/' + meas_id,
+    $.ajax '/users/' + current_user + '/'+@model_name_plural+'/' + meas_id,
       type: 'PUT',
       data: values_processed,
       dataType: 'json'
@@ -138,7 +140,7 @@ class InputPanel
     self = this
     current_user = $("#form-user-id")[0].value
     $("#"+@name+"-table .row-item").remove()
-    $.ajax '/users/' + current_user + '/'+@model_name+'s.json?source=smartsport&order=desc&limit=4',
+    $.ajax '/users/' + current_user + '/'+@model_name_plural+'.json?source=smartsport&order=desc&limit=4',
       type: 'GET',
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
@@ -153,8 +155,6 @@ class InputPanel
             if class_name.startsWith("attr-")
               params.push(class_name.substr(5))
 
-        console.log params
-
         for d in data
           new_row = $("#"+self.name+" div.row-template").children().first().clone()
           new_id = "data-row-" + d.id
@@ -167,20 +167,10 @@ class InputPanel
           console.log d
           for p in params
 
-#            $("#" + new_id + " span.attr-date").html(fmt_hm(new Date(Date.parse(d.date))))
-#            $("#" + new_id + " input.attr-date").val(fmt_hm(new Date(Date.parse(d.date))))
             console.log "   "+p+" ->"+d[p]
             $("#" + new_id + " span.attr-"+p).html(d[p])
             $("#" + new_id + " input.attr-"+p).val(d[p])
 
-#          $("#" + new_id + " span.attr-bloodsugar").html(d.blood_sugar)
-#          $("#" + new_id + " input.attr-bloodsugar").val(d.blood_sugar)
-#
-#          $("#" + new_id + " span.attr-weight").html(d.weight)
-#          $("#" + new_id + " input.attr-weight").val(d.weight)
-#
-#          $("#" + new_id + " span.attr-waist").html(d.waist)
-#          $("#" + new_id + " input.attr-waist").val(d.waist)
 
   # Helpers
 

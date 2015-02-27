@@ -70,6 +70,7 @@ class LifestylesController < ApplicationController
         format.html { redirect_to [@user, @lifestyle], notice: 'Lifestyle was successfully created.' }
         format.json { render  json: {:status =>"OK", :result => @lifestyle} }
       else
+        print @lifestyle.errors.full_messages.to_sentence+"\n"
         format.html { render :new }
         format.json { render json: @lifestyle.errors, status: :unprocessable_entity }
       end
@@ -82,7 +83,7 @@ class LifestylesController < ApplicationController
     respond_to do |format|
       if @lifestyle.update(lifestyle_params)
         format.html { redirect_to user_lifestyle_url(@lifestyle.user, @lifestyle), notice: 'Lifestyle was successfully updated.' }
-        format.json { render json: { :status => :ok, :result => @lifestyle } }
+        format.json { render json: { :status => "OK", :result => @lifestyle } }
       else
         format.html { render :edit }
         format.json { render json: @lifestyle.errors, status: :unprocessable_entity }

@@ -61,8 +61,8 @@ new_friend_submit_handler = (event) ->
 @reset_form_sel = () ->
   $("#health-data").addClass("hidden")
   $("#lifestyle-data").addClass("hidden")
-  $("#medication-form-div").addClass("hidden")
-  $("#act-form-div").addClass("hidden")
+  $("#medication-data").addClass("hidden")
+  $("#activity-data").addClass("hidden")
   $("#friend-form-div").addClass("hidden")
   $("#act-form-sel div.log-sign").addClass("hidden-placed")
   $("#lifestyle-form-sel div.log-sign").addClass("hidden-placed")

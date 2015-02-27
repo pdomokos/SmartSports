@@ -29,12 +29,14 @@
       delete values['calories']
       delete values['cigarette']
     else if "cigarette-event" in target.classList
-      values[this.model_name+'[group'] = 'cigarette'
+      values[this.model_name+'[group]'] = 'cigarette'
       values[this.model_name+'[amount]'] = values['cigarette']
       delete values['food']
       delete values['drink']
       delete values['calories']
       delete values['cigarette']
     return true
+  ipanel.preproc_cb = (data) ->
+    data.start_time = fmt_hm(new Date(Date.parse(data.start_time)))
 
   ipanel.start()

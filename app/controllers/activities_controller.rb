@@ -6,10 +6,23 @@ class ActivitiesController < ApplicationController
   def index
     user_id = params[:user_id]
     source = params[:source]
+
+    order = params[:order]
+    limit = params[:limit]
+
     @activities = Activity.where("user_id = #{user_id}")
     if source
       @activities = @activities.where("source = '#{source}'")
     end
+    if order and order=="desc"
+      @activities = @activities.order(start_time: :desc)
+    else
+      @activities = @activities.order(start_time: :asc)
+    end
+    if limit and limit.to_i>0
+      @activities = @activities.limit(limit)
+    end
+
     if params[:year] and params[:month]
       year = params[:year].to_i
       month = params[:month].to_i
@@ -64,7 +77,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       if @activity.update(activity_params)
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
-        format.json { render json: { :status => :ok, :result => @activity } }
+        format.json { render json: { :status => "OK", :result => @activity } }
       else
         format.html { render :edit }
         format.json { render json: @activity.errors, status: :unprocessable_entity }

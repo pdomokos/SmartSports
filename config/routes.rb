@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :medications
+
   get 'password_resets/create'
   get 'password_resets/edit'
   get 'password_resets/update'
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
     resources :summaries
     resources :activities
     resources :measurements
+    resources :medications
     resources :notifications
     resources :friendships
     resources :outline
