@@ -75,7 +75,7 @@ class MeasurementsController < ApplicationController
           values = daily.select { |d| !d[meas].nil?}.map { |d| d[meas] }
           num = values.length
           if num > 0
-            temp[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num).round
+            temp[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num)
             # puts "#{day} #{meas} #{num} min:#{values.min()} #{temp[meas]}"
           else
             temp[meas] = nil
