@@ -61,3 +61,5 @@ gem 'omniauth-google-oauth2'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
+
+gem 'doorkeeper'

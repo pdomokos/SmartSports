@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
   resources :medications
 
   get 'password_resets/create'
