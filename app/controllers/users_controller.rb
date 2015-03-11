@@ -27,6 +27,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    @user.username = @user.email.split("@")[0]
+    @user.name = @user.username
     respond_to do |format|
       if @user.save
         demo_user = User.where( :email => "balint.domokos@larkbio.com").first
@@ -35,6 +37,8 @@ class UsersController < ApplicationController
           friendship.save
           print("created friendship with demo user")
         end
+        UserMailer.delay.user_created_email(@user)
+
         format.html { redirect_to :root, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -74,6 +78,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :username, :email, :password, :password_confirmation)
+      params.require(:user).permit( :email, :password, :password_confirmation)
     end
 end

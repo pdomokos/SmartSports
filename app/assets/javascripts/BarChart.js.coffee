@@ -1,8 +1,6 @@
-#= require BaseChart
 
-class BarChart extends BaseChart
-  constructor: ( @chart_element, data, @datekey, @key) ->
-    super(data)
+class BarChart
+  constructor: ( @chart_element, @data, @datekey, @key) ->
 
   draw: (date, meas) ->
 

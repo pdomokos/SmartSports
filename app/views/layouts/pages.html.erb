@@ -1,116 +1,89 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>SmartDiab</title>
+    <title>Forgotten Password | SmartDiab</title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <link rel="icon" type="image/png" href="<%= asset_path('logo.png') %>" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
 </head>
-<body>
+<body class="nobgAnimation">
 
-<div class="content clearfix">
-    <input id="current-user-id" value="<%= current_user.id %>" class="hidden" >
-    <input id="current-user-name" value="<%= current_user.username %>" class="hidden" >
-    <input id="shown-user-id" type="hidden" value="<%= if @shown_user then @shown_user.id else '' end %>">
-    <!--<div class="contenthead-spaceonly"></div>-->
+    <div class="topBannerBg bgAnimation">
 
-    <div id="browser-menu-tab" class="browser-content clearfix">
-        <div class="browser-subnav clearfix">
-            <div class="userinfo-container left">
-                <i class="fa fa-user fa-3x usericon"></i>
-                <div class="userinfo">
+    </div>
+    <div class="topBanner">
+        <div class="left">
+            <%= image_tag "logo-login.png", alt: "Login", style: "width: 60px;float:left;", id: "headerLoginLogo", class: "loginLogo" %>
+            <span class="logoTitle">SmartDiab</span>
+        </div>
+        <div class="right">
+            <button style="width: 60px;height: 60px;padding: 0;background: transparent;border: none;">
+                <%= image_tag "top_settings.png", style:"width: 50px;height: 50px;", id: "settings-button" %>
+            </button>
 
-                    <p class="title">
-                    <span><%= @shown_user.name %></span>
-                    <% if @shown_user.id == current_user.id %>
-                        <span class="user-classifier user-me">Me</span>
-                    <% else %>
-                        <span class="user-classifier">Friend</span>
-                    <% end %>
-                    <i class="fa fa-sort-down fa-1x friend-select-arrow"></i>
-                    </p>
-                    <p class="detail">(<%= @shown_user.username %>) Active since <%= time_ago_in_words(@shown_user.created_at) %></p>
-                </div>
-                <div class="friend-select-holder hidden">
-                    <div class="friend-select">
-                        <div class="friend-select-header">
-                            <span class="friend-select-title">Switch to</span>
-
-                        </div>
-                        <div class="friend-select-list">
-
-                        </div>
-                    </div>
-                </div>
-                <div id="friend-select-item-template" class=" hidden">
-                    <div class="friend-select-item">
-                        <span class="friend-select-item-icon"></span>
-                        <div class="friend-select-item-text">abc</div>
-                    </div>
-                </div>
+            <div class="logoutDiv">
+                <%= form_tag logout_path, :method => :post do %>
+                    <input type="submit" class="logoutButton" value="">
+                <% end %>
             </div>
-            <div class="browser-links right">
-                <% if @shown_user.id == current_user.id %>
-                    <%= link_to "", {:href => "/", :class => "browser-subnav-item selected ", :id => "dashboard-button"}  do %>
-                        <i class="fa fa-home fa-2x"></i>
-                        <div>Dashboard</div>
-                    <% end %>
+        </div>
+    </div>
 
-                    <%= link_to "", { :href => "/pages/health", :class => "browser-subnav-item" , :id => "health-button"} do %>
-                        <i class="fa fa-stethoscope fa-2x"></i>
-                        <div>Health</div>
-                    <%end %>
-                    <%= link_to "", {:href => "/pages/training", :class => "browser-subnav-item" , :id => "training-button"} do %>
-                        <i class="fa fa-bicycle fa-2x"></i>
-                        <div>Training</div>
-                    <% end %>
-                    <%= link_to "", {:href => "/pages/lifestyle", :class => "browser-subnav-item" , :id => "lifestyle-button"} do %>
-                        <i class="fa fa-cutlery fa-2x"></i>
-                        <div>Lifestyle</div>
-                    <%end %>
 
-                    <%= link_to "", {:href => "/pages/explore", :class => "browser-subnav-item" , :id => "explore-button"} do %>
-                        <i class="fa fa-bar-chart fa-2x"></i>
-                        <div>Explore</div>
-                    <%end %>
-                    <%= link_to "", {:href => "/pages/settings", :class => "browser-subnav-item" , :id => "settings-button"} do %>
-                        <i class="fa fa-cogs fa-2x"></i>
-                        <div>Settings</div>
-                    <%end %>
-                <% else %>
-                    <%= link_to "", { :href => "/pages/health?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "health-button"} do %>
-                        <i class="fa fa-stethoscope fa-2x"></i>
-                        <div>Health</div>
-                    <%end %>
-                    <%= link_to "", {:href => "/pages/training?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "training-button"} do %>
-                        <i class="fa fa-bicycle fa-2x"></i>
-                        <div>Training</div>
-                    <% end %>
-                    <%= link_to "", {:href => "/pages/lifestyle?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "lifestyle-button"} do %>
-                        <i class="fa fa-cutlery fa-2x"></i>
-                        <div>Lifestyle</div>
-                    <%end %>
-                    <%= link_to "", {:href => "/pages/explore?shown_user="+@shown_user.id.to_s, :class => "browser-subnav-item" , :id => "explore-button"} do %>
-                        <i class="fa fa-bar-chart fa-2x"></i>
-                        <div>Explore</div>
-                    <%end %>
-            <%end %>
+    <div class="leftMenu">
+
+        <div style="padding-left: 40px;padding-right: 20px;padding-top: 40px;">
+
+
+            <div style="width: 160px;height: 200px;background: #6CC5CC">
+            <%= image_tag "unknown.jpeg", alt: "username", class: "noClickSelect" %>
+
+            </div>
+            <div class="noClickSelect">
+                <span class="infoName"><%= current_user.name.split().join("</br>").html_safe %></span><br/>
+                Joined <%= time_ago_in_words(current_user.created_at) %> ago.
             </div>
 
         </div>
 
-        <div id="browser-list-header-tab" class="browser-list-header clearfix">
+    </div>
+
+    <div style="margin-left: 300px; margin-top: 80px;margin-right: 80px;">
+        <div style="margin-left: 40px;margin-top: 120px;">
+            <div class="appMenu noClickSelect">
+                <button id="dashboard-button" class="b0">Dashboard</button>
+                |
+                <button id="diet-button" class="c1 b1">Diet</button>
+                |
+                <button id="excercise-button" class="c2 b2">Exercise</button>
+                |
+                <button id="health-button" class="c3 b3">Health</button>
+                |
+                <button id="medication-button" class="c5 b4">Medication</button>
+                |
+                <button id="wellbeing-button" class="c4 b5">Well-Being</button>
+                |
+                <button id="genetics-button" class="c6 b6">Genetics</button>
+            </div>
+
+            <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
+            <%= yield %>
 
         </div>
     </div>
+
+    <!--<button class="prevScreen"></button>-->
+    <!--<button class="nextScreen"></button>-->
+
     <script type="text/javascript">
-        pages_menu();
+
+        pages_menu()
+        <%= yield :page_logic %>
+
     </script>
-    <%= yield %>
-</div>
 
 </body>
-
 </html>
-

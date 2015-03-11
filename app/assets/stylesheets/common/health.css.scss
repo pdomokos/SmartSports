@@ -1,5 +1,128 @@
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+
+.columns {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+.mainContent {
+  position: relative;
+  z-index: 3;
+}
+.columns:before {
+  display: table;
+  content: "";
+}
+
+.columns:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.column {
+  float: left;
+}
+
+.columnLeft {
+  float: left;
+  padding-right: 10px;
+}
+
+.columnRight {
+  float: right;
+  padding-left: 10px;
+}
+
+.columns .column:nth-child(2) {
+  padding-left: 5px;
+}
+.columns .column:nth-child(1) {
+  padding-right: 5px;
+}
+.one-half {
+  width: 49%;
+}
+
+.boxed-group {
+  position: relative;
+  border-radius: 3px;
+  margin-bottom: 30px;
+}
+
+.one-half .boxed-group, .dashboard-sidebar .boxed-group {
+  margin-bottom: 20px;
+}
+
+.boxed-group>h3, .boxed-group .heading {
+  height: 42px;
+  background-color: #f5f5f5;
+  margin: 0;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid #d8d8d8;
+  border-bottom: 0;
+  padding: 9px 10px 10px;
+  font-size: 14px;
+  line-height: 17px;
+  display: block;
+
+}
+.boxed-group>h3 div {
+  line-height: 21px;
+  vertical-align: middle;
+  padding-left: 4px;
+  color: #666;
+}
+
+.boxed-group>h3 div.selected-meas {
+  padding-left: 16px;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.boxed-group.flush .boxed-group-inner {
+  padding: 0;
+}
+
+.boxed-group-inner {
+  //  padding: 1px 10px;
+  background: #fff;
+  border: 1px solid #d8d8d8;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  color: #666;
+  font-size: 13px;
+}
+
+.boxed-group-inner.gray {
+  background: whitesmoke;
+}
+
+.boxed-group-inner.spaced {
+  padding: 15px;
+}
+
+
+
+// ===============================
+
+
+
+
 .health-block {
   margin-top: 20px;
+
 }
 
 
@@ -33,6 +156,12 @@ circle {
 
 circle.hr {
   fill: rgb(47, 181, 233);
+}
+
+path.line {
+  fill: none;
+  stroke: #fc4e2a;
+  stroke-width: 1.5px;
 }
 
 path.line.systolicbp-avg {
@@ -70,7 +199,7 @@ circle.pulse-avg {
   color: #fff;
 }
 
-.legend-label {
+.noClickSelect {
   -webkit-user-select: none;  /* Chrome all / Safari all */
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */

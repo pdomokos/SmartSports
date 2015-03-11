@@ -1,4 +1,3 @@
-#= require BaseChart
 
 class HealthChart
   constructor: (@connection, @chart_element, @data) ->

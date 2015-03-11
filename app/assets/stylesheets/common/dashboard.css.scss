@@ -1,244 +1,138 @@
-.dashboard-block {
-  margin-top: 40px;
+body.nobgAnimation {
+    /*  background: #9DCFFE; */
+    background: #ECEEE4;
+    font-family: Arial;
+    padding: 0;
+    margin: 0;
 }
 
-.input-mini {
-  width: 60px;
-  margin-left: 4px;
-}
-
-.manual-row {
-  padding: 10px;
-  width: 100%;
-  background-color: white;
-  overflow: hidden;
-}
-
-.two-third {
-  width: 66%;
-}
-
-.one-third {
-  width: 34%;
-}
-
-.logbutton {
-  width: 16%;
-  padding: 4px;
-  padding-top: 0;
-  display: inline-block;
-  color: #999;
-  text-align: center;
-}
-
-.logbutton.selected i{
-  color: #60b044;
-}
-
-.logbutton.selected div{
-  color: #333;
-}
-
-.log-sign {
-  height: 19px;
-  margin: 0 auto;
-  position: relative;
-  width: 20px;
-  color: white;
-  background: image-url('log-sign.png') no-repeat ;
-  top: -1px;
-}
-.log-icon {
-  position: relative;
+.bgAnimation {
 
 }
 
-.logform {
-  border: 1px solid #d8d8d8;
-  min-height: 280px;
+.topBanner {
+    position: fixed;
+    z-index: 90;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.1);
 }
 
-.logform>form {
-  display: table;
-  table-layout: fixed;
-  background-color: white;
-  border: 0;
+.topBannerBg {
+    background: #9DCFFE;
+    position: fixed;
+    z-index: 80;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80px;
 }
 
-.logform .entry {
-//  display: inline-block;
-  position: relative;
-  margin-right: 5px;
-  padding: 5px;
-//  border: 1px solid #d4d4d4;
-//  border-radius: 5px;
-  font-family: sans-serif;
-  white-space: nowrap;
-  background: #fbfbfb no-repeat;
-//  box-shadow: 0 0 0 3px #efefef;
-  box-sizing: border-box;
+.topBanner .left {
+    padding-left: 20px;
+    float: left;
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
 }
 
-.logform>form div.field {
-  display: table-row;
-}
-.logform>form div.field>:first-child {
-  display: table-cell;
-//  padding: 15px 10px 15px 0;
-  white-space: nowrap;
+.topBanner .logoTitle {
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    line-height: 60px;
 }
 
+.topBanner .right {
+    padding-right: 20px;
+    float: right;
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
-.logform label {
-  margin-right: 5px;
-  font-size: 16px;
-  color: #666;
-}
-
-.boxed-group-inner form {
-  background-color: white;
 }
 
-.entry-mini {
-  width: 60px;
-}
-.entry-mini-half {
-  width: 30px;
-}
-.entry-normal {
-  width: 160px;
-}
-
-.entry-number {
-  width: 30px;
-  margin-right: 5px;
+.dashboardButton {
+    width: 160px;
+    height: 160px;
+    padding: 0;
+    float: left;
+    margin-right: 10px;
+    border-radius: 20px;;
 }
 
-.logform .log-actions {
-  display: table-cell;
-  width: 100%;
-  padding-top: 20px;
-  text-align: right;
+.dashboardButton img {
+
+    width: 70px;
+    height: 70px;
+    margin-top: 20px;
+    margin-left: 45px;
 }
 
-
-//
-.event-list-header {
-  margin: 0 0 15px;
-  color: #666;
-  border-bottom: 1px solid #ddd;
-}
-.event-list-header-item {
-  display: inline-block;
-  padding: 8px 12px 7px;
-  font-size: 14px;
-  line-height: 20px;
+.dashboardButton .dashboardButtonTitle {
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
 }
 
-.events {
-  float: none;
-  width: auto;
+.colorButton {
+    font-size: 14px;
+    border: solid 1px #4FBDF2;
+    height: 40px;
+    text-align: center;
+    background: #4FBDF2;
+    color: white;
+
 }
 
-.events .event:first-child {
-  border-top: 0;
-}
-.events .event {
-  position: relative;
-  padding: 0 0 1em 45px;
-  overflow: hidden;
-  border-top: 1px solid #f1f1f1;
+.c1 {
+    color: #57C88A !important;
 }
 
-.body {
-  font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-  color: #333333;
+.c2 {
+    color: #F09938 !important;;
 }
 
-.event-icon {
-  position: absolute;
-  top: 14px;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  padding: 3px;
-  color: #bbb;
+.c3 {
+    color: #8980CA !important;;
 }
 
-.event-time {
-  font-size: 12px;
-  color: #bbb;
+.c4 {
+    color: #EA70B5 !important;;
 }
 
-.event-title {
-  font-weight: bold;
-  font-size: 14px;
-}
-.event-title a {
-  color: #4183c4;
-  text-decoration: none;
-  cursor: pointer;
-}
-.event-title a:visited {
-  color: #4183c4;
-}
-.event-title a:hover {
-  color: #4183c4;
-  text-decoration: underline;
-  background-color: #fff;
+.c5 {
+    color: #6CC5CC !important;;
 }
 
-.event-details {
-  color: #666;
-}
-.event-details a {
-  text-decoration: none;
-  color: #4183c4;
-  background-color: #fff;
+.c6 {
+    color: #2BC7EC !important;;
 }
 
-.event-details a:visited {
-  color: #4183c4;
-}
-.event-details a:hover {
-  color: #4183c4;
-  text-decoration: underline;
-  background-color: #fff;
-}
-
-// otherwise half of the spinner is not visible
-#event-list div.progress-sign {
-  padding-bottom: 30px;
-}
-
-.text-green {
-  color: #60b044;
-}
-.text-red {
-  color: red;
-}
-
-div.field i {
-  vertical-align: middle;
-  cursor: pointer;
+.forgottenDiv {
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 120px;
+    width: 1100px;
+    margin-left: -550px;
 }
 
 
-.timer-time {
-  color: #494847;
-  font-size: 30px;
-  font-weight: bold;
-  padding: 8px 8px 8px 0;
-  vertical-align: middle;
-  width: 200px;
-}
-
-.delete-control {
+button.deleteForm {
   padding: 3px 4px;
   margin-left: 3px;
   font-size: 11px;
   font-weight: bold;
   line-height: 1;
+  border: none;
+  border-color: red;
   border-radius: 2px;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
   color: #fff;
@@ -247,198 +141,305 @@ div.field i {
   cursor: pointer;
 }
 
-.edit-control, .save-control, .cancel-control  {
-  padding: 3px 4px;
-  margin-left: 3px;
-  font-size: 11px;
-  font-weight: bold;
-  line-height: 1;
-  border-radius: 2px;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
-  color: #fff;
-  background-color: #60b044;
-  vertical-align: middle;
-  cursor: pointer;
+.mainFrame {
+    position: absolute;
+    left: 50%;
+    margin-left: -520px;;
+    top: 300px;
+    width: 1000px;
+    min-height: 500px;
+    background: white;
+    padding: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px 5px rgba(50, 50, 50, 0.2);
+    text-align: center;
+
+}
+
+.mainFrame .title {
+    color: #767676;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+}
+
+.prevScreen {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    margin-top: -50px;
+    width: 45px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.2) image-url("prev_s.png") 10px 30px no-repeat;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border: none;
+}
+
+.nextScreen {
+    position: fixed;
+    left: 100%;
+    margin-left: -45px;
+    top: 50%;
+    margin-top: -50px;
+    width: 45px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.2) image-url("next_s.png") 15px 30px no-repeat;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border: none;
+}
+
+.leftMenu {
+    color: #7A7A6F;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.leftMenu .infoName {
+    font-variant: small-caps;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.appMenu {
+    background: rgba(255, 255, 255, 0.7);
+    color: #c8c9c3;
+    width: 100%;
+    height: 40px;
+}
+
+.contentBg {
+    background: rgba(255, 255, 255, 1);
+    color: #c8c9c3;
+    width: 100%;
+}
+
+.appMenu button {
+    border: none;
+    background: transparent;
+    color: #7A7A6F;
+    height: 40px;
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 40px;
+    padding: 0 10px 0 35px;
+}
+
+.appMenu button:hover {
+    border-bottom: solid 1px #7A7A6F;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.appMenu button.selected {
+//  border-bottom: solid 1px #7A7A6F;
+  background-color:  rgb(242, 224, 152);
+}
+
+.appMenu .b0 {
+    background: image-url("menu_dashboard.png") 10px 10px no-repeat;
+
+}
+
+.appMenu .b1 {
+    background: image-url("menu_diet.png") 10px 10px no-repeat;
+
+}
+
+.appMenu .b2 {
+    background: image-url("menu_exercise.png") 10px 10px no-repeat;
+
+}
+
+.appMenu .b3 {
+    background: image-url("menu_health.png") 10px 10px no-repeat;
+
+}
+
+.appMenu .b4 {
+    background: image-url("menu_medication.png") 10px 10px no-repeat;
+
+}
+
+.appMenu .b5 {
+    background: image-url("menu_wellbeing.png") 10px 10px no-repeat;
+
+}
+
+.appMenu .b6 {
+    background: image-url("menu_genetics.png") 10px 10px no-repeat;
+
+}
+
+.bl0 {
+    background: image-url("dashboard60.png") 10px 10px no-repeat;
+
+}
+
+.bl1 {
+    background: image-url("diet60.png") 10px 10px no-repeat;
+
+}
+
+.bl2 {
+    background: image-url("exercise60.png") 10px 10px no-repeat;
+
+}
+
+.bl3 {
+    background: image-url("health60.png") 10px 10px no-repeat;
+    background-size: 40px 40px;;
+
+}
+
+.bl4 {
+    background: image-url("medication60.png") 10px 10px no-repeat;
+
+}
+
+.bl5 {
+    background: image-url("wellbeing60.png") 10px 10px no-repeat;
+
+}
+
+.bl6 {
+    background: image-url("genetics60.png") 10px 10px no-repeat;
+
+}
+
+.sectionTitle {
+    margin-top: 40px;
+    /*background-color: rgba(0, 0, 0, 0.1);*/
+    height: 60px;
+    padding-left: 60px;
+    line-height: 60px;
+    font-variant: small-caps;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+div.dataFormContainer {
+    width: 240px;
+    height: 300px;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*margin : 10 px;*/
+    color: #7A7A6F;
+    /*border: solid 1px #8980CA;*/
+    /*box-shadow: 0px 0px 15px 5px rgba(50, 50, 50, 0.2);*/
+}
+
+.dataFormSeparator {
+    background: #7A7A6F;
+    width: 1px;
+    height: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.dataFormTitle {
+    height: 100px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+
+}
+
+.dataForm {
+    height: 160px;
+}
+
+.dataFormButton button {
+    border: none;
+    background: #8980CA;
+    width: 170px;
+    margin-left: 20px;
+    height: 40px;
+    color: white;
+
+}
+
+.dataFormField {
+    margin-left: 20px;
+    font-size: 14px;
+    border: solid 1px #8980CA;
+    background: white;
+    height: 40px;
+    width: 170px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    float: left;
+
+}
+
+.dataFormFieldUnit {
+    width: 45px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    float: left;
+    padding-left: 5px;
+}
+
+.historyTable {
+    width: 100%;
+    color: #7A7A6F;
+}
+
+.historyTable .historyTitle {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+}
+
+.historyTable tr.bg:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.4);
+    padding: 20px;
+}
+
+.historyTable tr.bg:nth-child(even) {
+    background: rgba(255, 255, 255, 1);
+}
+
+.padded {
+    padding: 20px;
 }
 
 
 
 //
-div.action-list {
-  display: table;
-  font-size: 15px;
-  font-weight: bold;
+
+input.dataFormField {
+  box-sizing: border-box;
 }
 
-div.action-item {
-  display: table-row;
-}
-div.action-item span {
-  display: table-cell;
-  vertical-align: middle;
-  padding-left: 4px;
-}
-div.action-item i {
-  display: table-cell;
-  padding-left: 4px;
-  cursor: pointer;
-}
-
-div.lifestyle-item {
-  display: table-row;
-}
-div.lifestyle-item span {
-  display: table-cell;
-  vertical-align: middle;
-  padding-left: 4px;
-}
-div.lifestyle-item i {
-  display: table-cell;
-  padding-left: 4px;
-  cursor: pointer;
-}
-
-/*
-div.measure-list {
-  display: table;
-  font-size: 15px;
-  margin-top: 10px;
-}
-
-div.measure-item {
-  display: table-row;
-}
-
-div.measure-item span {
-  display: table-cell;
-  font-weight: bold;
-  vertical-align: middle;
-  height: 30px;
-}
-
-div.measure-item label {
-  vertical-align: middle;
-}
-
-div.measure-item i {
-  display: table-cell;
-  padding-left: 4px;
-  cursor: pointer;
-  vertical-align: middle;
-}
-
-div.measure-item i:first-child {
-  padding-right: 6px;
-}
-*/
-//div.act-message {
-//  padding-top: 8px;
-//}
-
-
-
-
-div.list-container {
-//  display: table;
-  font-size: 15px;
-  margin-top: 10px;
-}
-span.list-header {
-  display: table-cell;
-  padding-left: 4px;
+.logoutDiv {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
   text-align: center;
-  color: #333;
-
-  font-size: 11px;
-  font-weight: bold;
-  vertical-align: middle;
-  height: 30px;
-}
-span.list-attr {
-  display: table-cell;
-  padding-left: 4px;
-  text-align: center;
-
-  font-weight: bold;
-  vertical-align: middle;
-  height: 30px;
-}
-span.list-attr.label {
-  font-size: 14px;
-}
-span.list-ctrl {
-  display: table-cell;
-  padding-left: 4px;
-  text-align: center;
-
-  font-weight: bold;
-  vertical-align: middle;
-  height: 30px;
-}
-span.list-edit {
-  display: table-cell;
-  padding-left: 4px;
-  text-align: center;
-
-  font-weight: bold;
-  vertical-align: middle;
-  height: 30px;
-}
-span.list-edit input {
-  width: 100%;
-  font-size: 14px;
-  padding: 0px;
-}
-span.list-attr.unit {
-  font-size: 11px;
-  text-align: left;
 }
 
-.list-item i.header-icon {
-  color: #1f78b4;
-}
-
-span.list-attr.short {
-  width: 30px;
-//  max-width: 30px;
-}
-span.list-attr.medium {
-  width: 70px;
-//  max-width: 67px;
-}
-span.list-attr.long {
-  width: 124px;
-  max-width: 124px;
-}
-
-span.list-edit input.short {
-  width: 26px;
-}
-span.list-edit input.medium {
-  width: 67px;
-}
-span.list-edit input.long {
-  width: 120px;
-}
-span.list-edit input {
-  font-size: 13px;
-}
-div.list-item {
-  display: table-row;
-}
-div.list-item span:first-of-type {
-  text-align: right;
-}
-div.list-item i {
-  display: table-cell;
-  padding-left: 4px;
+input.logoutButton {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  background: image-url('top_logout.png');
+  background-size: 50px 50px;
+  border: none;
   cursor: pointer;
-  vertical-align: middle;
-}
-
-.recent-records-table {
-  //  border: solid 1px;
-  background-color: #f6e8c3;
-  padding-right: 6px;
-  margin-top: 10px;
 }

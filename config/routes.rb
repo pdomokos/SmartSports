@@ -24,7 +24,11 @@ Rails.application.routes.draw do
   get 'pages/health'
   get 'pages/training'
   get 'pages/lifestyle'
+  get 'pages/wellbeing'
+  get 'pages/genetics'
+  get 'pages/medication'
   get 'pages/explore'
+
   get 'pages/settings'
   get 'pages/mdestroy'
   get 'pages/wdestroy'

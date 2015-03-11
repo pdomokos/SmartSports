@@ -16,8 +16,8 @@ class MeasurementsController < ApplicationController
       if @measurement.save
         format.json { render json: { :status => "OK", :msg => "Saved successfully", :result => @measurement } }
       else
-        print @measurement.errors.full_messages.to_sentence+"\n"
-        format.json { render json: { :status => "NOK", :msg => "Save error" } }
+        msg =  @measurement.errors.full_messages.to_sentence+"\n"
+        format.json { render json: { :msg => msg }, :status => 400 }
       end
     end
   end
@@ -29,8 +29,17 @@ class MeasurementsController < ApplicationController
       if @measurement.update(measurement_params)
         format.json { render json: { :status => "OK", :msg => "Updated successfully", :result => @measurement } }
       else
-        format.json { render json: { :status => "NOK", :msg => "Update errror" } }
+        format.json { render json: { :status => "NOK", :msg => "Update errror" }, :status => 400 }
       end
+    end
+  end
+
+  def load_recent
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    @measurements = user.measurements.where(source: source).order(date: :desc).limit(4)
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -60,6 +69,7 @@ class MeasurementsController < ApplicationController
       @measurements = @measurements.limit(limit)
     end
     if summary
+      print("measurement summary")
       daily_data = Hash.new { |h,k| h[k] = [] }
       for m in @measurements
         k = m.date.strftime("%F")
@@ -88,6 +98,7 @@ class MeasurementsController < ApplicationController
         format.json {render json: result}
       end
     else if hourly
+      print("measurement summary")
       result = []
       data = user.measurements.collect{|it| [it.date.hour, it[hourly]]}.select{|it| !it[1].nil?}
 
@@ -118,9 +129,11 @@ class MeasurementsController < ApplicationController
         format.json {render json: result}
       end
     else
+      print("measurement JS!!!")
       respond_to do |format|
         format.html
         format.json {render json: @measurements}
+        format.js
       end
     end
     end
@@ -164,7 +177,7 @@ class MeasurementsController < ApplicationController
       if @measurement.destroy
         format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
       else
-        format.json { render json: { :status => "NOK", :msg => "Delete errror" } }
+        format.json { render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400 }
       end
     end
   end

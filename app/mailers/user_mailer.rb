@@ -15,4 +15,14 @@ class UserMailer < ActionMailer::Base
       format.text
     end
   end
+
+  def user_created_email(user)
+    @user = user
+    @url  = login_url
+    logger.info "Sending mail with: "+@url
+
+    mail(:to => user.email, :subject => "Your account is created!") do |format|
+      format.text
+    end
+  end
 end

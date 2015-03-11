@@ -20,8 +20,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @user = current_user
-
+    @measurements = current_user.measurements.where(source: 'smartsport').order(date: :desc).limit(4)
   end
 
   def health
@@ -39,12 +38,24 @@ class PagesController < ApplicationController
     # render :text => "<pre>"+request.env["omniauth.auth"].to_yaml+"</pre>"
   end
 
-  def lifestyle
-  end
-
   def explore
   end
 
+  def medication
+
+  end
+
+  def wellbeing
+
+  end
+
+  def genetics
+
+  end
+
+  def medication
+
+  end
   def settings
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first

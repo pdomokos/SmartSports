@@ -1,0 +1,118 @@
+$arc_stroke: white;
+
+.explore-block {
+  margin-top: 20px;
+}
+
+path.colset6_0 {
+  fill: #d73027;
+  stroke: $arc_stroke;
+}
+path.colset6_1 {
+  fill: #f46d43;
+  stroke: $arc_stroke;
+}
+path.colset6_2 {
+  fill: #fdae61;
+  stroke: $arc_stroke;
+}
+path.colset6_3 {
+  fill: #fee090;
+  stroke: $arc_stroke;
+}
+path.colset6_4 {
+  fill: #e0f3f8;
+  stroke: $arc_stroke;
+}
+path.colset6_5 {
+  fill: #abd9e9;
+  stroke: $arc_stroke;
+}
+path.colset6_6 {
+  fill: #74add1;
+  stroke: $arc_stroke;
+}
+path.colset6_7 {
+  fill: #4575b4;
+  stroke: $arc_stroke;
+}
+
+path.selected {
+  fill: #abd9e9 !important;
+  stroke: $arc_stroke !important;
+}
+
+
+#daily-piechart-container .pie1.text {
+  stroke: black;
+}
+#daily-piechart-container .pie2.text {
+  stroke: black;
+}
+
+#daily-piechart-container div.pie-label {
+  width: 100%;
+  display: table;
+}
+
+#daily-piechart-container div.pie-label span {
+  width: 50%;
+  display: table-cell;
+  text-align: center;
+}
+
+
+.chart-legend.transport { background-color: #f46d43 };
+.chart-legend.walking { background-color: #01665e };
+.chart-legend.sleep { background-color: #4575b4 };
+.chart-legend.other { background-color: #fdae61 };
+.chart-legend.cycling { background-color: #fee090 };
+.chart-legend.running { background-color: #d73027 };
+.chart-legend.s5 { background-color: #74add1 };
+.chart-legend.s6 { background-color: #35978f };
+.chart-legend.s4 { background-color: #abd9e9 };
+.chart-legend.s3 { background-color: #e0f3f8 };
+
+circle.transport { fill: #f46d43 };
+circle.walking { fill: #01665e };
+circle.sleep { fill: #4575b4 };
+circle.other { fill: #fdae61 };
+circle.cycling { fill: #fee090 };
+circle.running { fill: #d73027 };
+circle.s5 { fill: #74add1 };
+circle.s6 { fill: #35978f };
+circle.s4 { fill: #abd9e9 };
+circle.s3 { fill: #e0f3f8 };
+
+path.line { fill: none !important;}
+path.line.transport { stroke: #f46d43 };
+path.line.walking { stroke: #01665e };
+path.line.sleep { stroke: #4575b4 };
+path.line.other { stroke: #fdae61 };
+path.line.cycling { stroke: #fee090 };
+path.line.running { stroke: #d73027 };
+path.line.s5 { stroke: #74add1 };
+path.line.s6 { stroke: #35978f };
+path.line.s4 { stroke: #abd9e9 };
+path.line.s3 { stroke: #e0f3f8 };
+
+path.transport { stroke: white; fill: #f46d43 };
+path.walking { stroke: white; fill: #01665e };
+path.sleep { stroke: white; fill: #4575b4 };
+path.other { stroke: white; fill: #fdae61 };
+path.cycling { stroke: white; fill: #fee090 };
+path.running { stroke: white; fill: #d73027 };
+path.s5 { stroke: white; fill: #74add1 };
+path.s6 { stroke: white; fill: #35978f };
+path.s4 { stroke: white; fill: #abd9e9 };
+path.s3 { stroke: white; fill: #e0f3f8 };
+
+#daily-piechart-container div.notes {
+  color: black;
+  font-size: 12px;
+}
+
+#explore-trend-container div.notes {
+  color: black;
+  font-size: 12px;
+}

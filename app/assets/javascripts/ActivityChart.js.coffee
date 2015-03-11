@@ -1,7 +1,6 @@
-#= require BaseChart
 
 class ActivityChart
-  constructor: (@connection, @chart_element, @data, @data_helper) ->
+  constructor: (@connection, @chart_element, @data ) ->
     @time_scale = null
     @callback = null
 
@@ -12,7 +11,7 @@ class ActivityChart
 
     $("#"+@chart_element+" input.curr-date")[0].value = date_ymd
 
-    currdata = @data_helper.get_week_activities(date_ymd, @data)
+    currdata = get_week_activities(date_ymd, @data)
     margin = {top: 30, right: 10, bottom: 40, left: 50}
     aspect = 400/700
     width = $("#"+@chart_element).parent().width()-margin.left-margin.right
@@ -167,41 +166,41 @@ class ActivityChart
     else
       $("#"+@chart_element+" div.chart-date").html(fmt_words(new Date(Date.parse(sel_date))))
 
-    daily = @data_helper.get_daily_activities(sel_date)
-    sum_steps = @data_helper.get_sum_measure(daily, 'steps', ['walking'])
+    daily = get_daily_activities(sel_date, @data)
+    sum_steps = get_sum_measure(daily, 'steps', ['walking'])
     $("#"+@chart_element+" div.steps").html(sum_steps)
     percent = (sum_steps/10000.0*100.0).toFixed(1)
     $("#"+@chart_element+" div.avg-percent").html(percent+"%")
     draw_percent(@chart_element, percent)
 
     $("#"+@chart_element+" div.avg-description").html("of 10,000 steps")
-    $("#"+@chart_element+" div.km-running").html(@data_helper.get_sum_measure(daily, 'distance', ['running']).toFixed(2))
-    $("#"+@chart_element+" div.km-cycling").html(@data_helper.get_sum_measure(daily, 'distance', ['cycling']).toFixed(2))
-    $("#"+@chart_element+" div.calories").html(Math.round(@data_helper.get_sum_measure(daily, 'calories', ['walking', 'running', 'cycling'])))
-    $("#"+@chart_element+" div.distance").html(@data_helper.get_sum_measure(daily, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
-    duration_sec = @data_helper.get_sum_measure(daily, 'total_duration', ['walking', 'running', 'cycling'])
+    $("#"+@chart_element+" div.km-running").html(get_sum_measure(daily, 'distance', ['running']).toFixed(2))
+    $("#"+@chart_element+" div.km-cycling").html(get_sum_measure(daily, 'distance', ['cycling']).toFixed(2))
+    $("#"+@chart_element+" div.calories").html(Math.round(get_sum_measure(daily, 'calories', ['walking', 'running', 'cycling'])))
+    $("#"+@chart_element+" div.distance").html(get_sum_measure(daily, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
+    duration_sec = get_sum_measure(daily, 'total_duration', ['walking', 'running', 'cycling'])
     timestr = get_hour(duration_sec)+"h "+get_min(duration_sec)+"min"
     $("#"+@chart_element+" div.duration").html(timestr)
 
   update_weekly: (sel_date) ->
     $("#"+@chart_element+" input.is-weekly")[0].value = "yes"
-    weekly = @data_helper.get_week_activities(sel_date, @data)
+    weekly = get_week_activities(sel_date, @data)
     monday = get_monday(sel_date)
     sunday = get_sunday(sel_date)
     $("#"+@chart_element+" div.chart-date").html("Week of "+fmt_month_day(monday)+" - "+fmt_month_day(sunday)+" "+fmt_year(sunday))
 
-    sum_steps = @data_helper.get_sum_measure(weekly, 'steps', ['walking'])
+    sum_steps = get_sum_measure(weekly, 'steps', ['walking'])
     percent = (sum_steps/70000.0*100.0).toFixed(1)
     $("#"+@chart_element+" div.avg-percent").html(percent+"%")
     draw_percent(@chart_element, percent)
     $("#"+@chart_element+" div.avg-description").html("of 70,000 steps")
 
     $("#"+@chart_element+" div.steps").html(sum_steps)
-    $("#"+@chart_element+" div.km-running").html(@data_helper.get_sum_measure(weekly, 'distance', ['running']).toFixed(2))
-    $("#"+@chart_element+" div.km-cycling").html(@data_helper.get_sum_measure(weekly, 'distance', ['cycling']).toFixed(2))
-    $("#"+@chart_element+" div.calories").html(Math.round(@data_helper.get_sum_measure(weekly, 'calories', ['walking', 'running', 'cycling'])))
-    $("#"+@chart_element+" div.distance").html(@data_helper.get_sum_measure(weekly, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
-    duration_sec = @data_helper.get_sum_measure(weekly, 'total_duration', ['walking', 'running', 'cycling'])
+    $("#"+@chart_element+" div.km-running").html(get_sum_measure(weekly, 'distance', ['running']).toFixed(2))
+    $("#"+@chart_element+" div.km-cycling").html(get_sum_measure(weekly, 'distance', ['cycling']).toFixed(2))
+    $("#"+@chart_element+" div.calories").html(Math.round(get_sum_measure(weekly, 'calories', ['walking', 'running', 'cycling'])))
+    $("#"+@chart_element+" div.distance").html(get_sum_measure(weekly, 'distance', ['walking', 'running', 'cycling']).toFixed(2))
+    duration_sec = get_sum_measure(weekly, 'total_duration', ['walking', 'running', 'cycling'])
     timestr = get_hour(duration_sec)+"h "+get_min(duration_sec)+"min"
     $("#"+@chart_element+" div.duration").html(timestr)
 

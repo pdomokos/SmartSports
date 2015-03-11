@@ -3,8 +3,69 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @pages_menu = () ->
+  self = this
   console.log "pages layout"
   define_globals()
+
+
+  setInterval( () ->
+    self.rotateLogo()
+    self.changeColor()
+  , 1000 * 30)
+
+  @rotateLogo()
+
+  $('img.loginLogo').click () ->
+    self.rotateLogo()
+    self.changeColor()
+
+  $('#settings-button').click () ->
+    window.location = '/pages/settings'
+  $('#dashboard-button').click () ->
+    window.location = '/pages/dashboard'
+  $('#diet-button').click () ->
+    window.location = '/pages/lifestyle'
+  $('#excercise-button').click () ->
+    window.location = '/pages/training'
+  $('#health-button').click () ->
+    window.location = '/pages/health'
+  $('#medication-button').click () ->
+    window.location = '/pages/medication'
+  $('#wellbeing-button').click () ->
+    window.location = '/pages/wellbeing'
+  $('#genetics-button').click () ->
+    window.location = '/pages/genetics  '
+
+
+
+@rotateLogo = () ->
+  $('img.loginLogo').animate({borderSpacing: -360}, {
+    step: (now, fx) ->
+      $(this).css('-webkit-transform', 'rotate(' + now + 'deg)')
+      $(this).css('-moz-transform', 'rotate(' + now + 'deg)')
+      $(this).css('transform', 'rotate(' + now + 'deg)')
+    , duration: 2000
+    }, 'linear')
+
+@colorIndex = 0
+@changeColor = () ->
+  self = this
+  backgrounds = ['#9DCFFE', '#74CED7', '#ffd29b']
+  buttonBackgrounds = ['#4FBDF2', '#5DD09A', '#FE9A6C']
+
+  if (self.colorIndex < 2)
+    self.colorIndex++
+  else
+    self.colorIndex = 0
+
+  $('.bgAnimation').animate({backgroundColor: backgrounds[self.colorIndex]}, 2000)
+  $('.animButton').animate({
+    backgroundColor: buttonBackgrounds[self.colorIndex],
+    borderColor: buttonBackgrounds[self.colorIndex]
+  }, 2000)
+  $('.animField').animate({borderColor: buttonBackgrounds[self.colorIndex]}, 2000)
+
+
 
 define_globals = () ->
   window.fmt = d3.time.format("%Y-%m-%d")
@@ -76,6 +137,42 @@ define_globals = () ->
     d.setSeconds(59)
     return new Date(d)
 
+  window.get_week_activities = (date_ymd, data) ->
+    result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
+    keys = ['walking', 'running', 'cycling', 'transport']
+    monday = get_monday(date_ymd)
+    sunday = get_sunday(date_ymd)
+    for k in keys
+      if data[k]
+        for d in data[k]
+          curr = new Date(Date.parse(d.date))
+          if curr >= monday and curr<=sunday
+            result[k].push(d)
+    return result
+
+  window.get_daily_activities = (date, data) ->
+    result = {'walking': [], 'running':[], 'cycling': [], 'transport': []}
+    walking = if data.walking then data.walking else []
+    running = if data.running then data.running else []
+    cycling = if data.cycling then data.cycling else []
+    transport = if data.transport then data.transport else []
+
+    for d in walking.concat(running.concat(cycling.concat(transport)))
+      if fmt(new Date(Date.parse(d.date))) == date
+        if d.group
+          result[d.group].push(d)
+        else
+          result['walking'].push(d)
+    return result
+
+  window.get_sum_measure = (dat, measure, activity_types) ->
+    result = 0.0
+    for k in activity_types
+      if dat[k]
+        for item in dat[k]
+          result = result + item[measure]
+    return result
+
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")
   $("#friend-form-div div.friend-message").addClass("hidden")
@@ -91,7 +188,7 @@ define_globals = () ->
       event.preventDefault()
       close_modals()
 
-  load_friends()
+#  load_friends()
 
 load_friends = () ->
   $.ajax '/users/'+$("#current-user-id")[0].value+'/friendships',

@@ -1,0 +1,3 @@
+console.log("load_recent.js called");
+$("#recentMeasTable").html("");
+$("#recentMeasTable").html("<%= escape_javascript(render :partial=> 'shared/meas_item', :collection=> @measurements ) %>");

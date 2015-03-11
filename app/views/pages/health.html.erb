@@ -1,7 +1,9 @@
-<div class="health-block">
+<div class="health-block mainContent">
     <div class="columns">
+
         <div id="heart-trend-container" class="boxed-group connection-block">
-            <h3 class="legend-label">
+
+            <h3 class="noClickSelect">
                 <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
                 <div class="training-type left">Heart trend</div>
                 <div class="selected-meas legend-container right"></div>
@@ -14,26 +16,14 @@
         </div>
     </div>
     <div class="columns">
-        <div class="column one-half">
-
-            <div id="bloodpressure-container" class="boxed-group connection-block">
-                <h3 class="legend-label">
-                    <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Blood pressure SYS/DIA (mmHg)</div>
-                    <div class="selected-meas left"></div>
-                </h3>
-
-                <div class="boxed-group-inner chart bloodpressure-chart">
-                    <svg class="bloodpressure-chart-svg">
-                    </svg>
-                </div>
-            </div>
+        <div class="columnLeft one-half">
 
             <div id="bloodsugar-container" class="boxed-group connection-block">
-                <h3 class="legend-label">
-                    <img src="<%= asset_path( "logo.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Blood sugar level</div>
+                <h3 class="noClickSelect">
+                    <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+                    <div class="training-type left">Blood glucose level</div>
                     <div class="selected-meas left"></div>
+                    <div class="selected-meas legend-container right"></div>
                 </h3>
 
                 <div class="boxed-group-inner chart bloodsugar-chart">
@@ -43,9 +33,9 @@
             </div>
 
         </div>
-        <div class="column one-half">
+        <div class="columnRight one-half">
             <div id="heartrate-container" class="boxed-group connection-block">
-                <h3 class="legend-label">
+                <h3 class="noClickSelect">
                     <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
                     <div class="training-type left">Heart rate / SPO2</div>
                     <div class="selected-meas left"></div>
@@ -65,6 +55,6 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    health_loaded();
-</script>
+<% content_for :page_logic do %>
+    health_loaded()
+<% end %>

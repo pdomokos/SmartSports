@@ -1,17 +1,24 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>SmartDiab</title>
+    <title>Login | SmartDiab</title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <link rel="icon" type="image/png" href="<%= asset_path('logo.png') %>" />
-</head>
-<body class="login-body">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
+</head>
+<body class="bodyBg bgAnimation">
 
 <%= yield %>
 
+
+<script type="text/javascript">
+
+pages_menu()
+
+</script>
+
 </body>
 </html>
-

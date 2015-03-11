@@ -10,7 +10,10 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery-2.1.3.min
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.color-2.1.2.min
+//= require jquery.watermark.min
+//= require d3.min
 //= require_tree .

@@ -1,9 +1,11 @@
-#= require BaseChart
-
 class TrendChart
+  @count: 0
+
   constructor: (@chart_element, @data, @series_keys, series_names, @side_keys, series_colors, @labels, @zero_when_missing=false, @aspect=2.0/7) ->
-    console.log "TrendChart"
-#    console.log @data
+    TrendChart.count += 1
+
+    console.log "Creating TrendChart "+TrendChart.count
+
     @base_r = 3
     @selected_r = 8
     @preproc_cb = null
@@ -30,6 +32,14 @@ class TrendChart
     @tick_unit = d3.time.week
     @ticks = 1
   # get_series() needs to be provided in subclass
+
+    if TrendChart.count==1
+      $("body").on("click", "span.chart-legend",  (evt) ->
+        $("#"+this.id).toggleClass("graph-hidden")
+        [..., ch_elem, last] = this.id.split("SEP")
+        op = $("#"+this.id).hasClass("graph-hidden")
+        d3.selectAll("svg."+ch_elem+"-chart-svg ."+last).classed("hidden", op)
+      )
 
   get_series: () ->
     return @data
@@ -58,8 +68,8 @@ class TrendChart
     if @preproc_cb != null
       @preproc_cb(@series)
     console.log "draw series - "+@chart_element
-#    console.log @series
     #window.series = @series
+
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     svg
       .attr("width", self.width)
@@ -131,6 +141,7 @@ class TrendChart
         .x( (d) -> return(time_scale(new Date(d.date))))
         .y( (d) -> return(self.scale_map[k](d[k])))
 
+    console.log("TICKS: "+@tick_unit+" "+@ticks)
     time_axis = d3.svg.axis()
       .scale(time_scale)
       .ticks(self.tick_unit, self.ticks)
@@ -197,7 +208,6 @@ class TrendChart
     num = 0
     for k in @series_keys
       arr = @series.filter( (d) -> d[k] !=null )
-#      console.log arr
       num += arr.length
     return num
 
@@ -205,17 +215,10 @@ class TrendChart
     self = this
     for k in @series_keys
       new_label = $("#legend-template").children().first().clone()
-      tmp = @chart_element.replace("-", "_")
-      new_id =  "legend-label_"+tmp+"-" + k
+      new_id =  "legend-labelSEP"+@chart_element+"SEP" + k
       new_label.attr('id', new_id)
       new_label.appendTo($("#"+@chart_element+"-container .legend-container"))
       $("#"+new_id).html(@name_map[k])
       $("#"+new_id).addClass(@color_map[k])
-
-      $("#"+new_id).click (evt) ->
-        $("#"+evt.target.id).toggleClass("graph-hidden")
-        [..., last] = evt.target.id.split("-")
-        op = $("#"+evt.target.id).hasClass("graph-hidden")
-        d3.selectAll("svg."+self.chart_element+"-chart-svg ."+last).classed("hidden", op)
 
 window.TrendChart = TrendChart

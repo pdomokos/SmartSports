@@ -1,0 +1,59 @@
+<tr class="bg">
+    <!-- TODO change this, add measurement type to model-->
+    <% if not meas_item.systolicbp.nil? %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "bloodpressure40.png" %>
+        </td>
+        <td class="historyTitle padded">
+            Systolic/Diastolic/Heart Rate: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %>
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= meas_item.date.strftime("%F %T") %>
+        </td>
+    <% elsif not meas_item.blood_sugar.nil? %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "bloodglucose.png" %>
+        </td>
+        <td class="historyTitle padded">
+            Blood Sugar: <%= meas_item.blood_sugar %>mmol/L
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= meas_item.date.strftime("%F %T") %>
+        </td>
+    <% elsif not meas_item.weight.nil? %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "weight40.png" %>
+        </td>
+        <td class="historyTitle padded">
+            Weight: <%= meas_item.weight %>kg
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= meas_item.date.strftime("%F %T") %>
+        </td>
+    <% elsif not meas_item.waist.nil? %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "abdominal40.png" %>
+        </td>
+        <td class="historyTitle padded">
+            Waist Circumfence: <%= meas_item.waist %>cm
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= meas_item.date.strftime("%F %T") %>
+        </td>
+    <% else %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "abdominal40.png" %>
+        </td>
+        <td class="historyTitle padded">
+            Empty measurement
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= meas_item.date.strftime("%F %T") %>
+        </td>
+    <% end %>
+    <td>
+        <%= form_tag( "/users/#{current_user.id}/measurements/#{meas_item.id}", id: "delete_meas_#{meas_item.id}", remote: true, method: :delete, class: "resource-delete-form") do %>
+            <button class="deleteForm">Delete</button>
+        <% end %>
+    </td>
+</tr>
