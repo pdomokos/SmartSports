@@ -1,15 +1,22 @@
 Rails.application.routes.draw do
 
   use_doorkeeper
+
+  namespace :api do
+    namespace :v1 do
+      resources :users do
+        resources :measurements
+      end
+    end
+  end
+
   resources :medications
 
   get 'password_resets/create'
   get 'password_resets/edit'
   get 'password_resets/update'
   resources :password_resets
-
   resources :notifications
-
   resources :users do
     resources :summaries
     resources :activities
