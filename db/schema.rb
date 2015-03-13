@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306103902) do
+ActiveRecord::Schema.define(version: 20150313134749) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -194,17 +194,18 @@ ActiveRecord::Schema.define(version: 20150306103902) do
   add_index "summaries", ["user_id"], name: "index_summaries_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "name",                            null: false
-    t.string   "username",                        null: false
-    t.string   "email",                           null: false
-    t.string   "crypted_password",                null: false
-    t.string   "salt",                            null: false
+    t.string   "name",                                            null: false
+    t.string   "username",                                        null: false
+    t.string   "email",                                           null: false
+    t.string   "crypted_password",                                null: false
+    t.string   "salt",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "connection_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.boolean  "admin",                           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_action :doorkeeper_authorize!, only: [:create]
+
   skip_before_filter :require_login, only: [:create]
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
   def new
