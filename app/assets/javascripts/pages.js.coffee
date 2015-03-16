@@ -24,9 +24,9 @@
   $('#dashboard-button').click () ->
     window.location = '/pages/dashboard'
   $('#diet-button').click () ->
-    window.location = '/pages/lifestyle'
-  $('#excercise-button').click () ->
-    window.location = '/pages/training'
+    window.location = '/pages/diet'
+  $('#exercise-button').click () ->
+    window.location = '/pages/exercise'
   $('#health-button').click () ->
     window.location = '/pages/health'
   $('#medication-button').click () ->

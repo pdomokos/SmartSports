@@ -141,7 +141,6 @@ class TrendChart
         .x( (d) -> return(time_scale(new Date(d.date))))
         .y( (d) -> return(self.scale_map[k](d[k])))
 
-    console.log("TICKS: "+@tick_unit+" "+@ticks)
     time_axis = d3.svg.axis()
       .scale(time_scale)
       .ticks(self.tick_unit, self.ticks)

@@ -2,11 +2,13 @@
 
 <html>
 <head>
-    <title>Forgotten Password | SmartDiab</title>
+    <title><%= yield :title_text %></title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <%= favicon_link_tag 'logo-login.png' %>
 
 </head>
 <body class="nobgAnimation">
@@ -58,7 +60,7 @@
                 |
                 <button id="diet-button" class="c1 b1">Diet</button>
                 |
-                <button id="excercise-button" class="c2 b2">Exercise</button>
+                <button id="exercise-button" class="c2 b2">Exercise</button>
                 |
                 <button id="health-button" class="c3 b3">Health</button>
                 |

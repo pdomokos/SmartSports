@@ -37,6 +37,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {render json: @activities }
+      format.js
     end
   end
 
@@ -60,13 +61,15 @@ class ActivitiesController < ApplicationController
     user_id = params[:user_id]
     user = User.find(user_id)
     @activity = user.activities.build(activity_params)
+    if not @activity.start_time
+      @activity.start_time = DateTime.now
+    end
     respond_to do |format|
       if @activity.save
-        format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
         format.json { render json: {:status => "ok", :result => @activity} }
       else
-        format.html { render :new }
-        format.json { render json: { :status => "nok", :msg => @activity.errors } }
+        logger.error @activity.errors.full_messages.to_sentence
+        format.json { render json: { :msg =>  @activity.errors.full_messages.to_sentence }, :status => 400 }
       end
     end
   end
@@ -83,15 +86,19 @@ class ActivitiesController < ApplicationController
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
+
+
   end
 
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
-    @activity.destroy
     respond_to do |format|
-      format.html { redirect_to activities_url, notice: 'Activity was successfully destroyed.' }
-      format.json { head :no_content }
+      if @activity.destroy
+        format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
+      else
+        format.json { render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400 }
+      end
     end
   end
 

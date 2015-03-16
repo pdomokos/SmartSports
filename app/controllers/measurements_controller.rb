@@ -74,8 +74,10 @@ class MeasurementsController < ApplicationController
       print("measurement summary")
       daily_data = Hash.new { |h,k| h[k] = [] }
       for m in @measurements
-        k = m.date.strftime("%F")
-        daily_data[k] << m
+        if m.date
+          k = m.date.strftime("%F")
+          daily_data[k] << m
+        end
       end
 
       days = daily_data.keys().sort()

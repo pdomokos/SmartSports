@@ -3,10 +3,68 @@
 #= require OverviewChart
 #= require TrainingTrendChart
 
-@training_loaded = () ->
+@exercise_loaded = () ->
   uid = $("#current-user-id")[0].value
   register_events()
+  init_exercise()
+
+  $("div.appMenu button").removeClass("selected")
+  $("#exercise-button").addClass("selected")
+
   d3.json("/users/"+uid+"/summaries.json", data_received)
+
+init_exercise = () ->
+  @init_meas = () ->
+  console.log "init exercise"
+
+  $('#walking_steps').watermark('Steps, eg: 8120')
+  $('#walking_duration').watermark('Duration, eg: 90')
+  $('#walking_distance').watermark('Distance, eg: 1200')
+  $('#running_steps').watermark('Steps, eg: 8120')
+  $('#running_duration').watermark('Duration, eg: 90')
+  $('#running_distance').watermark('Distance, eg: 1200')
+  $('#cycling_duration').watermark('Duration, eg: 120')
+  $('#cycling_distance').watermark('Distance, eg: 9200')
+  $('#swimming_duration').watermark('Duration, eg: 60')
+  $('#swimming_distance').watermark('Distance, eg: 1200')
+  $('#walking_steps').focus()
+
+
+  $("form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
+    console.log e
+    console.log xhr.responseText
+    $("#"+form_id+" input.dataFormField").val("")
+
+    load_exercise()
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    alert("Failed to create measurement.")
+  )
+
+  $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
+    form_item = e.currentTarget
+    console.log "delete success "+form_item
+
+    load_exercise()
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    alert("Failed to delete measurement.")
+  )
+
+@load_exercise = () ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load recent meas"
+  $.ajax '/users/' + current_user + '/activities.js?source=smartsport&order=desc&limit=4',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent measurements AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load recent measurements  Successful AJAX call"
+      console.log textStatus
+
 
 data_received = (jsondata) ->
   draw_trends(jsondata)

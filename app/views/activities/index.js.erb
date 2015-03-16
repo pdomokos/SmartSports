@@ -1,0 +1,3 @@
+console.log("load activities js called");
+$("#recentResourcesTable").html("");
+$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/activity_item', :collection=> @activities ) %>");

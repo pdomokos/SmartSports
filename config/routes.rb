@@ -30,8 +30,8 @@ Rails.application.routes.draw do
 
   get 'pages/dashboard'
   get 'pages/health'
-  get 'pages/training'
-  get 'pages/lifestyle'
+  get 'pages/exercise'
+  get 'pages/diet'
   get 'pages/wellbeing'
   get 'pages/genetics'
   get 'pages/medication'

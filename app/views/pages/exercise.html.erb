@@ -1,0 +1,184 @@
+
+
+<div class="training-block mainContent" id="training-container">
+
+
+    <div class="sectionTitle excerciseBodyLogo excerciseColor">
+        Excercise
+    </div>
+    <div class="contentBg" style="">
+        <div style="padding: 10px;">
+            <div class="dataFormContainer">
+                <div class="dataFormTitle">
+                    <%= image_tag "weight40.png" %><br/>
+                    Walking
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="activity[source]" value="smartsport">
+                        <input type="hidden" name="activity[group]" value="walking">
+                        <input id="walking_steps" type="text" name="activity[steps]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">steps</div>
+                        <br>
+                        <input id="walking_duration" type="text" name="activity[duration]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">min</div>
+                        <br>
+                        <input id="walking_distance" type="text" name="activity[distance]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">m</div>
+                        <br>
+
+
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+            <div class="dataFormContainer contentBg">
+                <div class="dataFormTitle">
+                    <%= image_tag "weight40.png" %><br/>
+                    Running
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "running-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="activity[source]" value="smartsport">
+                        <input type="hidden" name="activity[group]" value="running">
+
+                        <input id="running_steps" type="text" name="activity[steps]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">steps</div>
+                        <br>
+                        <input id="running_duration" type="text" name="activity[duration]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">min</div>
+                        <br>
+                        <input id="running_distance" type="text" name="activity[distance]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">m</div>
+                        <br>
+
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+            <div class="dataFormContainer contentBg">
+                <div class="dataFormTitle">
+                    <%= image_tag "weight40.png" %><br/>
+                    Cycling
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "cycling-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="activity[source]" value="smartsport">
+                        <input type="hidden" name="activity[group]" value="cycling">
+
+                        <input id="cycling_duration" type="text" name="activity[duration]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">min</div>
+
+                        <input id="cycling_distance" type="text" name="activity[distance]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">m</div>
+
+                        <br>
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+            <div class="dataFormContainer contentBg">
+                <div class="dataFormTitle">
+                    <%= image_tag "weight40.png" %><br/>
+                    Swimming
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "swimming-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="activity[source]" value="smartsport">
+                        <input type="hidden" name="activity[group]" value="swimming">
+
+                        <input id="swimming_duration" type="text" name="activity[duration]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">min</div>
+
+                        <input id="swimming_distance" type="text" name="activity[distance]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">m</div>
+
+                        <br>
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+
+            <div style="clear: both"></div>
+        </div>
+
+    </div>
+
+    <div class="sectionTitle excerciseBodyLogo excerciseColor" style="margin-top: 40px;">
+        Latest Excercise
+    </div>
+
+    <table class="historyTable"  cellpadding="0" cellspacing="0">
+        <tbody id="recentResourcesTable">
+
+        <%= render partial: "shared/activity_item", collection: @activities %>
+
+        </tbody>
+    </table>
+
+
+    <div class="sectionTitle excerciseBodyLogo excerciseColor" style="margin-top: 40px;">
+        Visual Analysis
+    </div>
+
+    <div class="columns">
+        <div id="activity-trend-container" class="boxed-group">
+            <h3 class="noClickSelect">
+                <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+                <div class="training-type left">Activity trend</div>
+                <div class="selected-meas legend-container right"></div>
+            </h3>
+
+            <div class="boxed-group-inner chart activity-trend-chart">
+                <svg class="activity-trend-chart-svg">
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column one-half">
+            <% if @conn.size > 0 %>
+                <% for i in (0..@conn.size-1).select {|it| it%2==0} %>
+                    <%= render partial: 'training_chart', locals: { :connection_name => @conn[i].name} %>
+                <% end %>
+            <% end %>
+        </div>
+
+        <div class="column one-half">
+            <% if @conn.size > 1 %>
+                <% for i in (1..@conn.size-1).select {|it| it%2==1} %>
+                    <%= render partial: 'training_chart', locals: { :connection_name => @conn[i].name} %>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+
+    <div id="legend-template" class="hidden">
+        <span class="chart-legend"></span>
+    </div>
+</div>
+
+<% content_for :page_logic do %>
+    exercise_loaded()
+<% end %>
+<% content_for :title_text do %>
+    Exercise | SmartDiab
+<% end %>

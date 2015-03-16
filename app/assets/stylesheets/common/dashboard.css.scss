@@ -95,7 +95,7 @@ body.nobgAnimation {
     color: #57C88A !important;
 }
 
-.c2 {
+.c2, .excerciseColor {
     color: #F09938 !important;;
 }
 
@@ -296,8 +296,13 @@ button.deleteForm {
 
 .bl3 {
     background: image-url("health60.png") 10px 10px no-repeat;
-    background-size: 40px 40px;;
+    background-size: 40px 40px;
 
+}
+
+.excerciseBodyLogo {
+  background: image-url("exercise60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
 }
 
 .bl4 {

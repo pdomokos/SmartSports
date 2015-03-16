@@ -1,5 +1,9 @@
 @wellbeing_loaded = () ->
   uid = $("#current-user-id")[0].value
+
+  $("div.appMenu button").removeClass("selected")
+  $("#wellbeing-button").addClass("selected")
+
   d3.json("/users/"+uid+"/summaries.json", @data_received)
 
 @data_received = (jsondata) ->

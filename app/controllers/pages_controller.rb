@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :set_user_data, only: [:dashboard, :health, :training, :lifestyle, :explore, :settings]
+  before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings]
   has_mobile_fu
   layout 'pages'
 
@@ -26,11 +26,13 @@ class PagesController < ApplicationController
   def health
       @activity = Summary.new
       @measurement = Measurement.new
+      @measurements = current_user.measurements.where(source: 'smartsport').order(date: :desc).limit(4)
   end
 
-  def training
+  def exercise
     @uid = current_user.id
     @conn = @shown_user.connections
+    @activities = current_user.activities.where(source: 'smartsport').order(start_time: :desc).limit(4)
     respond_to do |format|
       format.html
       format.json
@@ -39,6 +41,10 @@ class PagesController < ApplicationController
   end
 
   def explore
+  end
+
+  def diet
+
   end
 
   def medication
