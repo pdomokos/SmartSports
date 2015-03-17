@@ -7,15 +7,15 @@
 
   init_meas()
 
-  console.log "getting health data for user:"+uid
-  meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
-  d3.json(meas_summary_url, draw_trend)
-
-  d = new Date()
-  d.setDate(d.getDate()-31)
-  day_2week = fmt(d)
-  actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
-  d3.json(actions_lastweek_url, draw_detail)
+#  console.log "getting health data for user:"+uid
+#  meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
+#  d3.json(meas_summary_url, draw_trend)
+#
+#  d = new Date()
+#  d.setDate(d.getDate()-31)
+#  day_2week = fmt(d)
+#  actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
+#  d3.json(actions_lastweek_url, draw_detail)
 
 draw_trend = (data) ->
 

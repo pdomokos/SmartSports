@@ -29,13 +29,13 @@ Rails.application.routes.draw do
   end
 
   get 'pages/dashboard'
-  get 'pages/health'
-  get 'pages/exercise'
   get 'pages/diet'
+  get 'pages/exercise'
+  get 'pages/health'
+  get 'pages/medication'
   get 'pages/wellbeing'
   get 'pages/genetics'
-  get 'pages/medication'
-  get 'pages/explore'
+  get 'pages/analytics'
 
   get 'pages/settings'
   get 'pages/mdestroy'

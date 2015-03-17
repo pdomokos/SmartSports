@@ -1,51 +1,89 @@
-<div class="explore-block" id="explore-container">
-    <div class="columns">
-        <div id="explore-trend-container" class="boxed-group">
-            <h3 class="noClickSelect">
-                <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-                <div class="training-type left">Activity times</div>
-                <div class="notes left"></div>
-                <div class="selected-meas legend-container right"></div>
-            </h3>
+<div class="wellbeing-block mainContent" id="wellbeing-container">
 
-            <div class="boxed-group-inner chart activity-trend-chart">
-                <svg class="explore-trend-chart-svg">
-                </svg>
-            </div>
+
+        <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
+            Well-Being
         </div>
-    </div>
-    <div class="columns">
-        <div class="column one-half">
-
-            <div id="daily-piechart-container" class="boxed-group">
-                <h3 class="noClickSelect">
-                    <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Time tracker</div>
-                    <div class="notes left"></div>
-                    <div class="selected-meas legend-container right"></div>
-                </h3>
-
-                <div class="boxed-group-inner chart daily-piechart">
-                    <svg class="pie-chart">
-                    </svg>
-                    <div class="pie-label">
-                        <span class="pie1-label">2015-02-01</span>
-                        <span class="pie2-label">Weekly</span>
+        <div class="contentBg wellbeingStyle">
+            <div style="padding: 10px;">
+                <div class="dataFormContainer">
+                    <div class="dataFormTitle">
+                        <%= image_tag "sleep40.png" %><br/>
+                        Sleep
                     </div>
-                </div>
+                    <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                        <div class="dataForm">
+                            <input type="hidden" name="measurement[source]" value="smartsport">
 
+                            <input id="sleep_duration" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit">hh:mm</div>
+                            <br>
+
+                            <input id="sleep_wakeup" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit"></div>
+                            <br>
+
+                            <input id="sleep_remark" type="text" name="measurement[pulse]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit"></div>
+                            <br>
+
+
+                        </div>
+                        <div class="dataFormButton">
+                            <button class="sendForm">Add</button>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="dataFormSeparator"></div>
+
+                <div class="dataFormContainer">
+                    <div class="dataFormTitle">
+                        <%= image_tag "stress40.png" %><br/>
+                        Stress
+                    </div>
+                    <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                        <div class="dataForm">
+                            <input type="hidden" name="measurement[source]" value="smartsport">
+
+                            <input id="sleep_duration" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit">hh:mm</div>
+                            <br>
+
+                            <input id="sleep_wakeup" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit"></div>
+                            <br>
+
+                            <input id="sleep_remark" type="text" name="measurement[pulse]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit"></div>
+                            <br>
+
+
+                        </div>
+                        <div class="dataFormButton">
+                            <button class="sendForm">Add</button>
+                        </div>
+                    <% end %>
+                </div>
+                <div class="dataFormSeparator"></div>
+
+                <div style="clear: both"></div>
             </div>
 
         </div>
 
-        <div class="column one-half">
-
+        <div class="sectionTitle wellbeingBodyLogo wellbeingColor" style="margin-top: 40px;">
+            <span>History</span> | <span>Favorites</span>
         </div>
+
+        <table class="historyTable"  cellpadding="0" cellspacing="0">
+            <tbody id="recentMeasTable">
+
+            <%= render partial: "shared/meas_item", collection: @measurements %>
+
+            </tbody>
+        </table>
     </div>
 
-    <div id="legend-template" class="hidden">
-        <span class="chart-legend"></span>
-    </div>
 </div>
 
 <% content_for :page_logic do %>

@@ -1,4 +1,60 @@
-<h3>Not yet...</h3>
+<div class="genetics-block mainContent" id="genetics-container">
+
+
+    <div class="sectionTitle geneticsBodyLogo geneticsColor">
+        Genetics
+    </div>
+    <div class="contentBg geneticsStyle">
+        <div style="padding: 10px;">
+            <div class="dataFormContainer">
+                <div class="dataFormTitle">
+                    <%= image_tag "family40.png" %><br/>
+                    Family History
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="measurement[source]" value="smartsport">
+
+                        <input id="sleep_duration" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">hh:mm</div>
+                        <br>
+
+                        <input id="sleep_wakeup" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+                        <input id="sleep_remark" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+
+            <div style="clear: both"></div>
+        </div>
+
+    </div>
+
+    <div class="sectionTitle geneticsBodyLogo geneticsColor" style="margin-top: 40px;">
+        <span>History</span> | <span>Favorites</span>
+    </div>
+
+    <table class="historyTable"  cellpadding="0" cellspacing="0">
+        <tbody id="recentMeasTable">
+
+        <%= render partial: "shared/meas_item", collection: @measurements %>
+
+        </tbody>
+    </table>
+
+
+</div>
 
 <% content_for :page_logic do %>
     genetics_loaded()

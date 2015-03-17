@@ -34,8 +34,9 @@
   $('#wellbeing-button').click () ->
     window.location = '/pages/wellbeing'
   $('#genetics-button').click () ->
-    window.location = '/pages/genetics  '
-
+    window.location = '/pages/genetics'
+  $('#analytics-button').click () ->
+    window.location = '/pages/analytics'
 
 
 @rotateLogo = () ->

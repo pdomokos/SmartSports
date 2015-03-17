@@ -5,13 +5,13 @@
 
 @exercise_loaded = () ->
   uid = $("#current-user-id")[0].value
-  register_events()
+#  register_events()
   init_exercise()
 
   $("div.appMenu button").removeClass("selected")
   $("#exercise-button").addClass("selected")
 
-  d3.json("/users/"+uid+"/summaries.json", data_received)
+#  d3.json("/users/"+uid+"/summaries.json", data_received)
 
 init_exercise = () ->
   @init_meas = () ->

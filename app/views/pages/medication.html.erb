@@ -1,4 +1,97 @@
-<h3>Not yet...</h3>
+<div class="medication-block mainContent">
+
+    <div class="sectionTitle medicationBodyLogo medicationColor">
+        Medication
+    </div>
+    <div class="contentBg medicationStyle">
+        <div style="padding: 10px;">
+            <div class="dataFormContainer">
+                <div class="dataFormTitle">
+                    <%= image_tag "capsules40.png" %><br/>
+                    Medications
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="measurement[source]" value="smartsport">
+
+                        <input id="medication_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+                        <input id="medication_dosage" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">mg</div>
+                        <br>
+
+                        <input id="medication_amount" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+
+            <div class="dataFormContainer">
+                <div class="dataFormTitle">
+                    <%= image_tag "insulin40.png" %><br/>
+                    Insulin
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="measurement[source]" value="smartsport">
+
+                        <input id="medication_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+                        <input id="medication_dosage" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">mg</div>
+                        <br>
+
+                        <input id="medication_amount" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+
+                    </div>
+                    <div class="dataFormButton">
+                        <button class="sendForm">Add</button>
+                    </div>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+
+
+
+            <div style="clear: both"></div>
+        </div>
+
+    </div>
+
+    <div class="sectionTitle medicationBodyLogo medicationColor" style="margin-top: 40px;">
+        <span>History</span> | <span>Favorites</span>
+    </div>
+
+    <table class="historyTable"  cellpadding="0" cellspacing="0">
+        <tbody id="recentMeasTable">
+
+        <%= render partial: "shared/meas_item", collection: @measurements %>
+
+        </tbody>
+    </table>
+
+</div>
+
+<% content_for :page_logic do %>
+    diet_loaded()
+<% end %>
+<% content_for :title_text do %>
+    Diet | SmartDiab
+<% end %>
 
 <% content_for :page_logic do %>
     medications_loaded()

@@ -91,28 +91,120 @@ body.nobgAnimation {
 
 }
 
-.c1 {
+.c1, .dietColor {
     color: #57C88A !important;
 }
+.dietStyle input.dataFormField {
+  border: solid 1px #57C88A !important;
+};
+.dietStyle input.dataFormField {
+  border: solid 1px #57C88A !important;
+};
+.dietStyle button {
+  background: #57C88A !important;
+};
+.dietStyle div.dataFormContainer {
+  width: 320px;
+  height: 345px;
+}
+.dietStyle input.dataFormField {
+  width: 245px;
+}
+.dietStyle div.dataFormButton button {
+  width: 245px;
+}
+.dietStyle div.dataFormSeparator {
+  height: 345px !important;
+}
 
-.c2, .excerciseColor {
+.c2, .exerciseColor {
     color: #F09938 !important;;
 }
+.exerciseStyle input.dataFormField {
+  border: solid 1px #F09938 !important;
+};
+.exerciseStyle input.dataFormField {
+  border: solid 1px #F09938 !important;
+};
+.exerciseStyle button {
+  background: #F09938 !important;
+};
+
 
 .c3 {
     color: #8980CA !important;;
 }
 
-.c4 {
+.c4, .wellbeingColor {
     color: #EA70B5 !important;;
 }
-
-.c5 {
-    color: #6CC5CC !important;;
+.wellbeingStyle input.dataFormField {
+  border: solid 1px #EA70B5 !important;
+};
+.wellbeingStyle input.dataFormField {
+  border: solid 1px #EA70B5 !important;
+};
+.wellbeingStyle button {
+  background: #EA70B5 !important;
+};
+.wellbeingStyle div.dataFormContainer {
+  width: 320px;
+}
+.wellbeingStyle input.dataFormField {
+  width: 245px;
+}
+.wellbeingStyle div.dataFormButton button {
+  width: 245px;
 }
 
-.c6 {
-    color: #2BC7EC !important;;
+
+.c5, .medicationColor {
+    color: #6CC5CC !important;;
+}
+.medicationStyle input.dataFormField {
+  border: solid 1px #6CC5CC !important;
+};
+.medicationStyle input.dataFormField {
+  border: solid 1px #6CC5CC !important;
+};
+.medicationStyle button {
+  background: #6CC5CC !important;
+};
+.medicationStyle div.dataFormContainer {
+  width: 320px;
+}
+.medicationStyle input.dataFormField {
+  width: 245px;
+}
+.medicationStyle div.dataFormButton button {
+  width: 245px;
+}
+
+
+.c6, .geneticsColor {
+    color: #2BC7EC !important;
+}
+.geneticsStyle input.dataFormField {
+  border: solid 1px #2BC7EC !important;
+};
+.geneticsStyle input.dataFormField {
+  border: solid 1px #2BC7EC !important;
+};
+.geneticsStyle button {
+  background: #2BC7EC !important;
+};
+.geneticsStyle div.dataFormContainer {
+  width: 320px;
+}
+.geneticsStyle input.dataFormField {
+  width: 245px;
+}
+.geneticsStyle div.dataFormButton button {
+  width: 245px;
+}
+
+.analyticsColor {
+  color: #f46d43 !important;
 }
 
 .forgottenDiv {
@@ -270,8 +362,8 @@ button.deleteForm {
 }
 
 .appMenu .b5 {
-    background: image-url("menu_wellbeing.png") 10px 10px no-repeat;
-
+    background: image-url("palmtree60.png") 10px 10px no-repeat;
+    background-size: 20px 20px;
 }
 
 .appMenu .b6 {
@@ -279,15 +371,21 @@ button.deleteForm {
 
 }
 
+.appMenu .analyticsMenu {
+  background: image-url("analytics60.png") 10px 10px no-repeat;
+  background-size: 20px 20px;
+}
+
 .bl0 {
     background: image-url("dashboard60.png") 10px 10px no-repeat;
 
 }
 
-.bl1 {
-    background: image-url("diet60.png") 10px 10px no-repeat;
-
+.bl1, .dietBodyLogo {
+    background: image-url("food60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
 }
+
 
 .bl2 {
     background: image-url("exercise60.png") 10px 10px no-repeat;
@@ -300,24 +398,38 @@ button.deleteForm {
 
 }
 
-.excerciseBodyLogo {
+.exerciseBodyLogo {
   background: image-url("exercise60.png") 10px 10px no-repeat;
   background-size: 40px 40px;
 }
 
 .bl4 {
     background: image-url("medication60.png") 10px 10px no-repeat;
-
+}
+.medicationBodyLogo {
+  background: image-url("medication60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
 }
 
 .bl5 {
-    background: image-url("wellbeing60.png") 10px 10px no-repeat;
-
+    background: image-url("palmtree60.png") 10px 10px no-repeat;
+}
+.wellbeingBodyLogo {
+  background: image-url("palmtree60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
 }
 
 .bl6 {
     background: image-url("genetics60.png") 10px 10px no-repeat;
+}
+.geneticsBodyLogo {
+  background: image-url("genetics60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
 
+.analiticsBodyLogo {
+  background: image-url("analytics60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
 }
 
 .sectionTitle {
@@ -391,6 +503,32 @@ div.dataFormContainer {
     float: left;
 
 }
+.dataFormField2x {
+  margin-left: 20px;
+  font-size: 14px;
+  border: solid 1px #8980CA;
+  background: white;
+  height: 40px;
+  width: 340px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+
+}
+.dataFormField33 {
+  margin-left: 20px;
+  font-size: 14px;
+  border: solid 1px #8980CA;
+  background: white;
+  height: 40px;
+  width: 240px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+
+}
 
 .dataFormFieldUnit {
     width: 45px;
@@ -428,7 +566,7 @@ div.dataFormContainer {
 
 //
 
-input.dataFormField {
+input.dataFormField, input.dataFormField2x, input.dataFormField33 {
   box-sizing: border-box;
 }
 
