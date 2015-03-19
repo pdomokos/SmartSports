@@ -117,6 +117,14 @@ define_globals = () ->
     else
       word
 
+  window.get_yesterday_ymd = () ->
+    d = new Date()
+    d.setDate(d.getDate()-1)
+#    d.setHours(0)
+#    d.setMinutes(0)
+#    d.setSeconds(0)
+    return fmt(new Date(d))
+
   window.get_monday = (date_ymd) ->
     d = new Date(Date.parse(date_ymd))
     dow = d.getDay()

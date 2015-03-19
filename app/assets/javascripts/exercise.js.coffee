@@ -29,6 +29,21 @@ init_exercise = () ->
   $('#swimming_distance').watermark('Distance, eg: 1200')
   $('#walking_steps').focus()
 
+  $('#walking_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#running_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#cycling_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#swimming_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+
+
+
 
   $("form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id

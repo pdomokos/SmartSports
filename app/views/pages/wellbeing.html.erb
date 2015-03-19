@@ -15,16 +15,32 @@
                         <div class="dataForm">
                             <input type="hidden" name="measurement[source]" value="smartsport">
 
-                            <input id="sleep_duration" type="text" name="measurement[systolicbp]" class="dataFormField"/>
-                            <div class="dataFormFieldUnit">hh:mm</div>
-                            <br>
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='sleep_start_datepicker'>
+                                            <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <input id="sleep_wakeup" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
-                            <div class="dataFormFieldUnit"></div>
-                            <br>
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='sleep_end_datepicker'>
+                                            <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <input id="sleep_remark" type="text" name="measurement[pulse]" class="dataFormField"/>
-                            <div class="dataFormFieldUnit"></div>
+                            <input id="sleep_scale" type="text" name="measurement[pulse]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit">%</div>
                             <br>
 
 
@@ -45,18 +61,21 @@
                         <div class="dataForm">
                             <input type="hidden" name="measurement[source]" value="smartsport">
 
-                            <input id="sleep_duration" type="text" name="measurement[systolicbp]" class="dataFormField"/>
-                            <div class="dataFormFieldUnit">hh:mm</div>
+                            <input id="stress_scale" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                            <div class="dataFormFieldUnit">%</div>
                             <br>
 
-                            <input id="sleep_wakeup" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
-                            <div class="dataFormFieldUnit"></div>
-                            <br>
-
-                            <input id="sleep_remark" type="text" name="measurement[pulse]" class="dataFormField"/>
-                            <div class="dataFormFieldUnit"></div>
-                            <br>
-
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='stress_datepicker'>
+                                            <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="dataFormButton">

@@ -11,19 +11,19 @@
                     <%= image_tag "family40.png" %><br/>
                     Family History
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/diseases", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="measurement[source]" value="smartsport">
 
-                        <input id="sleep_duration" type="text" name="measurement[systolicbp]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">hh:mm</div>
-                        <br>
-
-                        <input id="sleep_wakeup" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <input id="gen_hist_relative" type="text" name="measurement[systolicbp]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
-                        <input id="sleep_remark" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <input id="gen_hist_disease" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+                        <input id="gen_hist_note" type="text" name="measurement[pulse]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 

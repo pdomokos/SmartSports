@@ -5,6 +5,19 @@
   $("div.appMenu button").removeClass("selected")
   $("#health-button").addClass("selected")
 
+  $('#bloodpressure_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#bloodsugar_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#weight_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#waist_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+
   init_meas()
 
 #  console.log "getting health data for user:"+uid

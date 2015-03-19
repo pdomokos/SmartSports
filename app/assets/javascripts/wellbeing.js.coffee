@@ -4,7 +4,16 @@
   $("div.appMenu button").removeClass("selected")
   $("#wellbeing-button").addClass("selected")
 
-  $('#sleep_duration').watermark('Sleep Duration, eg: 7:20')
-  $('#sleep_wakeup').watermark('Times Awake, eg: 2')
-  $('#sleep_remark').watermark('Remark, eg: good')
+  $('#sleep_scale').watermark('Quality of sleep, e.g. 60')
+  $('#stress_scale').watermark('Stressfull day, e.g. 60')
 
+  $('#sleep_start_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+  $('#sleep_end_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })
+
+  $('#stress_datepicker').datetimepicker({
+    "format": "YYYY-MM-DD HH:mm"
+  })

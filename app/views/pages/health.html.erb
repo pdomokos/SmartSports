@@ -3,7 +3,7 @@
     <div class="sectionTitle bl3 c3">
         Health
     </div>
-    <div class="contentBg" style="">
+    <div class="contentBg healthStyle">
         <div style="padding: 10px;">
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
@@ -26,6 +26,18 @@
                         <div class="dataFormFieldUnit">1/min</div>
                         <br>
 
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='bloodpressure_datepicker'>
+                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
 
                     </div>
                     <div class="dataFormButton">
@@ -47,6 +59,18 @@
                         <div class="dataFormFieldUnit">mmol/L</div>
                         <br>
 
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='bloodsugar_datepicker'>
+                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                     </div>
                     <div class="dataFormButton">
                         <button class="sendForm">Add</button>
@@ -66,6 +90,19 @@
 
                         <div class="dataFormFieldUnit">kg</div>
                         <br>
+
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='weight_datepicker'>
+                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                     </div>
                     <div class="dataFormButton">
                         <button class="sendForm">Add</button>
@@ -84,6 +121,19 @@
                         <input id="waist" type="text" name="measurement[waist]" class="dataFormField"/>
 
                         <div class="dataFormFieldUnit">cm</div>
+                        <br>
+
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='waist_datepicker'>
+                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <br>
                     </div>
                     <div class="dataFormButton">
@@ -110,67 +160,6 @@
         </tbody>
     </table>
 
-<!--
-    <div class="sectionTitle bl3 c3" style="margin-top: 40px;">
-        Visual Analysis
-    </div>
-
-
-    <div class="columns">
-
-        <div id="heart-trend-container" class="boxed-group connection-block">
-
-            <h3 class="noClickSelect">
-                <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
-                <div class="training-type left">Heart trend</div>
-                <div class="selected-meas legend-container right"></div>
-            </h3>
-
-            <div class="boxed-group-inner chart bloodpressure-chart">
-                <svg class="heart-trend-chart-svg">
-                </svg>
-            </div>
-        </div>
-    </div>
-    <div class="columns">
-        <div class="columnLeft one-half">
-
-            <div id="bloodsugar-container" class="boxed-group connection-block">
-                <h3 class="noClickSelect">
-                    <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Blood glucose level</div>
-                    <div class="selected-meas left"></div>
-                    <div class="selected-meas legend-container right"></div>
-                </h3>
-
-                <div class="boxed-group-inner chart bloodsugar-chart">
-                    <svg class="bloodsugar-chart-svg">
-                    </svg>
-                </div>
-            </div>
-
-        </div>
-        <div class="columnRight one-half">
-            <div id="heartrate-container" class="boxed-group connection-block">
-                <h3 class="noClickSelect">
-                    <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Heart rate / SPO2</div>
-                    <div class="selected-meas left"></div>
-                    <div class="selected-meas legend-container right"></div>
-                </h3>
-
-                <div class="boxed-group-inner chart bloodpressure-chart">
-                    <svg class="heartrate-chart-svg">
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="legend-template" class="hidden">
-        <span class="chart-legend"></span>
-    </div>
-    -->
 </div>
 
 <% content_for :page_logic do %>

@@ -16,4 +16,8 @@
 //= require jquery.color-2.1.2.min
 //= require jquery.watermark.min
 //= require d3.min
+//= require bootstrap
+//= require moment
+//= require bootstrap-datetimepicker
+//= require jquery.scombobox.min
 //= require_tree .

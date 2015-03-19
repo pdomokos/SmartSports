@@ -8,16 +8,22 @@
   $('#sleep_wakeup').watermark('Times Awake, eg: 2')
   $('#sleep_remark').watermark('Remark, eg: good')
 
-  d3.json("/users/"+uid+"/summaries.json", @data_received)
   d3.json("/users/"+uid+"/summaries.json", act_data_received)
 
   console.log "getting health data for user:"+uid
   meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
   d3.json(meas_summary_url, draw_health_trend)
 
+  d = new Date()
+  d.setDate(d.getDate()-31)
+  day_2week = fmt(d)
+  actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
+  d3.json(actions_lastweek_url, draw_blood_sugar)
+
 act_data_received = (jsondata) ->
   draw_trends(jsondata)
-#  draw_conn(jsondata)
+  @explore_data = jsondata
+  @draw_pie(get_yesterday_ymd())
 
 draw_trends = (jsondata) ->
   act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
@@ -36,121 +42,6 @@ draw_trends = (jsondata) ->
   act_trend_chart.margin = {top: 20, right: 50, bottom: 20, left: 35}
   act_trend_chart.draw()
 
-
-@data_received = (jsondata) ->
-  @explore_data = jsondata
-#  @draw_trends()
-  @draw_pie("2015-02-05")
-
-@draw_trends = () ->
-  console.log @explore_data
-
-  self = this
-  act_trend_chart = new TrendChart("explore-trend", @explore_data,
-    ["walking_duration", "sleep_duration", "transport_duration"],
-    ["Walking", "Sleep", "Transport"],
-    ["left", "left", "left"],
-    ["walking", "sleep", "transport" ],
-    ["minutes"]
-    false
-  )
-
-  act_trend_chart.get_series = () ->
-    self=this
-    template = {'date': null, 'walking_duration': 0, 'transport_duration': 0, 'sleep_duration': null}
-    result = Object()
-    for actkey in ['walking', 'sleep', 'transport']
-      daily_activity = Object()
-      if this.data[actkey]
-        for d in this.data[actkey]
-          key = fmt(new Date(Date.parse(d.date)))
-          if daily_activity[key]
-            daily_activity[key].push(d)
-          else
-            daily_activity[key] = [d]
-
-      days = Object.keys(daily_activity)
-      if days == null
-        continue
-      days.sort()
-
-      for day in days
-        daily_data = daily_activity[day]
-        result_daily = result[day]
-        if !result_daily
-          result_daily = $.extend({}, template)
-          result_daily['date'] = day
-          result[day] = result_daily
-        this.aggregate(daily_data, result_daily)
-
-    days = Object.keys(result)
-    days.sort()
-    res = []
-    for day in days
-      res.push(result[day])
-    return(res)
-
-  act_trend_chart.aggregate = (data, result) ->
-    len = data.length
-    current_items = data.filter( (d) -> d['group'] == 'walking')
-    if current_items.length != 0
-      result['walking_duration'] = current_items[0]['total_duration']
-
-    current_items = data.filter( (d) -> d['group'] == 'transport')
-
-    if current_items.length != 0
-      result['transport_duration'] = current_items[0]['total_duration']
-
-    current_items =  data.filter( (d) -> d['source'] == 'fitbit')
-    if current_items.length != 0
-      walk_times = current_items.filter( (d) -> d['group'] == 'walking')
-      if walk_times.length != 0
-        result['walking_duration'] = current_items[0]['total_duration']
-
-    current_items =  data.filter( (d) -> d['source'] == 'withings')
-    if current_items.length != 0
-      sleep_times = current_items.filter( (d) -> d['group'] == 'sleep')
-      if sleep_times.length != 0
-        result['sleep_duration'] = sleep_times[0]['total_duration']
-      else
-        result['sleep_duration'] = null
-
-      walk_times = current_items.filter( (d) -> d['group'] == 'walking')
-      if walk_times.length != 0
-        result['walking_duration'] = walk_times[0]['total_duration']
-
-  act_trend_chart.preproc_cb = (data) ->
-    keys = ["walking_duration", "sleep_duration", "transport_duration"]
-    for d in data
-      for k in keys
-        if d[k] != null
-          d[k] = d[k]/60.0
-  act_trend_chart.margin = {top: 20, right: 30, bottom: 20, left: 35}
-  get_duration = (val_min) ->
-    if val_min<60
-      result = val_min.toFixed(1)+" minutes"
-    else
-      result = (val_min/60.0).toFixed(1)+" hours"
-  act_trend_chart.cb_over = (d, node) ->
-    node = d3.select(node)
-    date_with_day = fmt_day(new Date(Date.parse(d.date)))
-    if node.classed("walking")
-      txt = date_with_day+" Walking: "+get_duration(d.walking_duration)
-    else if node.classed("transport")
-      txt = date_with_day+" Transport: "+get_duration(d.transport_duration)
-    else if node.classed("sleep")
-      txt = date_with_day+" Sleep: "+get_duration(d.sleep_duration)
-    else
-      txt = d.date
-    $("#explore-trend-container div.notes").html(txt)
-
-  act_trend_chart.cb_out = (d, node) ->
-    $("#explore-trend-container div.notes").html("")
-
-  act_trend_chart.cb_click = (d, node) ->
-    draw_pie(d.date, self.explore_data)
-  act_trend_chart.base_r = 4
-  act_trend_chart.draw()
 
 @draw_pie = (day_ymd) ->
   pie_data = get_daily_data(day_ymd, @explore_data)
@@ -236,7 +127,6 @@ get_weekly_data = (day_ymd, act) ->
   return pie_data
 
 draw_health_trend = (data) ->
-
   heart_trend_chart = new TrendChart("heart-trend", data,
     ["systolicbp", "pulse", "diastolicbp"],
     ["SYS", "HR", "DIA"],
@@ -247,3 +137,19 @@ draw_health_trend = (data) ->
   )
   heart_trend_chart.margin = {top: 20, right: 45, bottom: 20, left: 30}
   heart_trend_chart.draw()
+
+
+draw_blood_sugar = (data) ->
+
+  blood_chart = new TrendChart("bloodsugar", data,
+    ["blood_sugar", "waist"],
+    ["Blood Glucose", "Waist"],
+    ["left", "right"]
+    ["colset6_1", "colset6_2"],
+    ["mmol/L", "cm"],
+    false
+  )
+  blood_chart.margin = {top: 20, right: 30, bottom: 20, left: 45}
+  blood_chart.tick_unit = d3.time.day
+  blood_chart.ticks = 4
+  blood_chart.draw()
