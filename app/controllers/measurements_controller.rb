@@ -63,9 +63,9 @@ class MeasurementsController < ApplicationController
       @measurements = @measurements.where(source: source)
     end
     if order
-      @measurements = @measurements.order(date: :desc)
+      @measurements = @measurements.order(created_at: :desc)
     else
-      @measurements = @measurements.order(date: :asc)
+      @measurements = @measurements.order(created_at: :asc)
     end
     if limit
       @measurements = @measurements.limit(limit)

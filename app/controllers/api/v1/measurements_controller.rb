@@ -12,11 +12,13 @@ module Api::V1
       user_id = params[:user_id]
 
       if current_resource_owner.id != user_id.to_i
-        self.response.status = 403
+        render json: nil, status: 403
+        return
       end
 
       user = User.find(user_id)
-      respond_with @measurements = user.measurements.where(source: 'smartsport').order(date: :desc).limit(lim)
+      measurements = user.measurements.where(source: 'smartsport').order(date: :desc).limit(lim)
+      render json: measurements
     end
 
     def create
@@ -25,7 +27,8 @@ module Api::V1
 
       puts "RESOWN=#{current_resource_owner.id}"
       if current_resource_owner.id != user_id.to_i
-        self.response.status = 403
+        render json: { :ok => false}, status: 403
+        return
       end
 
       measurement = user.measurements.new(measurement_params)
@@ -33,10 +36,9 @@ module Api::V1
         measurement.date = DateTime.now
       end
       if measurement.save
-        self.response_body = { :ok => true, :id => measurement.id }.to_json
+        render json: { :ok => true, :id => measurement.id }
       else
-        self.response_body = { :ok => false, :message =>  measurement.errors.full_messages.to_sentence}.to_json
-        self.response.status = 400
+        render json: { :ok => false, :message =>  measurement.errors.full_messages.to_sentence}, status: 400
       end
     end
 
@@ -48,7 +50,7 @@ module Api::V1
     def general_error_handler(ex)
       logger.error ex.message
       logger.error ex.backtrace.join("\n")
-      self.response.status = 400
+      render json: nil, status: 400
     end
   end
 

@@ -15,9 +15,9 @@ class ActivitiesController < ApplicationController
       @activities = @activities.where("source = '#{source}'")
     end
     if order and order=="desc"
-      @activities = @activities.order(start_time: :desc)
+      @activities = @activities.order(created_at: :desc)
     else
-      @activities = @activities.order(start_time: :asc)
+      @activities = @activities.order(created_at: :asc)
     end
     if limit and limit.to_i>0
       @activities = @activities.limit(limit)
