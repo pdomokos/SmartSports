@@ -45,8 +45,8 @@ end
 
 module SyncWithings
 
-  Withings.consumer_key = APP_CONFIG['WITHINGS_KEY']
-  Withings.consumer_secret = APP_CONFIG['WITHINGS_SECRET']
+  Withings.consumer_key = CONNECTION_CONFIG['WITHINGS_KEY']
+  Withings.consumer_secret = CONNECTION_CONFIG['WITHINGS_SECRET']
 
   def sync_withings
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first

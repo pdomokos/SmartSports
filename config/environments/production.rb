@@ -81,13 +81,19 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config_fname = ENV['HOME']+'/.smartsport_connection_data'
-  if not File.exists?(config_fname)
-    raise "Connections configuration file "+config_fname+" does not exist."
+  app_config_fname = '/data/.smartdiab_app_config'
+  if not File.exists?(app_config_fname)
+    raise "Smartdiab app configuration file "+app_config_fname+" does not exist."
   end
-  APP_CONFIG = YAML.load_file('/data/.smartsport_connection_data')[::Rails.env]
+  APP_CONFIG = YAML.load_file(app_config_fname)[::Rails.env]
 
-  mail_config_fname =  File.join(ENV['HOME'], '.mail.conf')
+  connection_config_fname = '/data/.smartdiab_connection_config'
+  if not File.exists?(connection_config_fname)
+    raise "Connections configuration file "+connection_config_fname+" does not exist."
+  end
+  CONNECTION_CONFIG = YAML.load_file(connection_config_fname)[::Rails.env]
+
+  mail_config_fname =  File.join('/data/.mail.conf')
   if not File.exists?(mail_config_fname)
     raise "Configuration file "+mail_config_fname+" does not exist."
   end

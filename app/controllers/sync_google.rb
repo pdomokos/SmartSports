@@ -158,8 +158,8 @@ private
 
   def to_params
     {'refresh_token' => @refresh_token,
-    'client_id' => APP_CONFIG["GOOGLE_CLIENT_ID"],
-    'client_secret' => APP_CONFIG["GOOGLE_CLIENT_SECRET"],
+    'client_id' => CONNECTION_CONFIG["GOOGLE_CLIENT_ID"],
+    'client_secret' => CONNECTION_CONFIG["GOOGLE_CLIENT_SECRET"],
     'grant_type' => 'refresh_token'}
   end
 

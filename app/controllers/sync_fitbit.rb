@@ -4,7 +4,7 @@ module SyncFitbit
     fitbit_conn = Connection.where(user_id: current_user.id, name: 'fitbit').first
     if fitbit_conn
       connection_data = JSON.parse(fitbit_conn.data)
-      client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'], :consumer_key => APP_CONFIG['FITBIT_KEY'], :consumer_secret => APP_CONFIG['FITBIT_SECRET'])
+      client = Fitgem::Client.new(:token => connection_data['token'], :secret => connection_data['secret'], :consumer_key => CONNECTION_CONFIG['FITBIT_KEY'], :consumer_secret => CONNECTION_CONFIG['FITBIT_SECRET'])
       userinfo = client.user_info
       member_since = userinfo['user']['memberSince']
 

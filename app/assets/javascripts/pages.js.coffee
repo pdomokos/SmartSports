@@ -20,6 +20,7 @@
     self.changeColor()
 
   $('#settings-button').click () ->
+    console.log "clicked"
     window.location = '/pages/settings'
   $('#dashboard-button').click () ->
     window.location = '/pages/dashboard'

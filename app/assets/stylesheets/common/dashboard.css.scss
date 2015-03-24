@@ -670,9 +670,11 @@ div.input-group.date input {
   border-radius: 0;
 }
 
-div.right button img {
-  vertical-align: initial;
+div.right button {
+  vertical-align: bottom;
 }
 
-
-
+//div.right button img {
+//  position: fixed;
+//  z-index: 100;
+//}

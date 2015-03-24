@@ -37,11 +37,12 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config_fname = ENV['HOME']+'/.smartsport_connection_data'
-  if not File.exists?(config_fname)
-    raise "Connections configuration file "+config_fname+" does not exist."
+  APP_CONFIG = {}
+  connection_config_fname = ENV['HOME']+'/.smartsport_connection_data'
+  if not File.exists?(connection_config_fname)
+    raise "Connections configuration file "+connection_config_fname+" does not exist."
   end
-  APP_CONFIG = YAML.load_file(config_fname)[::Rails.env]
+  CONNECTION_CONFIG = YAML.load_file(connection_config_fname)[::Rails.env]
 
   mail_config_fname =  File.join(ENV['HOME'], '.mail.conf')
   if not File.exists?(mail_config_fname)
