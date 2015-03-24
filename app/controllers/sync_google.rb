@@ -51,7 +51,6 @@ private
     #            {"startTimeNanos"=>"
 
     remove_summary_not_final(current_user.id, 'google')
-    puts 'after remove not final summary'
     oneDayNanos = 8.64 * (10 ** 13)
     dataPoints = jsonarr["point"]
     minStartTimeNs = jsonarr["minStartTimeNs"].to_i
@@ -64,7 +63,6 @@ private
         if steps != 0
           date = getDateOfSummary(startTime, startTimeNanos, oneDayNanos)
           saveSummary(steps, date, total_duration, true)
-          puts 'save final'
         end
         valueArr = datapoint["value"]
         startTimeNanos = datapoint["startTimeNanos"].to_i
@@ -83,7 +81,6 @@ private
     end
     date = getDateOfSummary(startTime, startTimeNanos, oneDayNanos)
     saveSummary(steps, date, total_duration, false)
-    puts 'save not final'
   end
 
    def newDayData(startTime, startTimeNanos, newStartTimeNanos, oneDayNanos)
@@ -144,9 +141,7 @@ private
     #post request to renew expired access token
     url = URI("https://accounts.google.com/o/oauth2/token")
     response = Net::HTTP.post_form(url, to_params())
-    puts response
     data = JSON.parse(response.body)
-    puts data
     new_access_token = data["access_token"]
     if new_access_token
       @access_token = data["access_token"]

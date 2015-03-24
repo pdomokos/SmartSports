@@ -54,8 +54,6 @@ class OutlineController < ApplicationController
       summary['activity'] = 0
       summary['calories'] =0
       walk = sums.select{|it| it.group == 'walking'}
-      puts "WALK"
-      puts walk
       if walk.length >0
         summary['walking'] = walk[0].total_duration
         summary['steps'] = walk[0].steps
@@ -65,7 +63,6 @@ class OutlineController < ApplicationController
       end
     end
 
-    puts summary
     respond_to do |format|
       format.json {render json: summary.to_json}
     end

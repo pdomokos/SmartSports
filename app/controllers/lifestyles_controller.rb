@@ -66,7 +66,6 @@ class LifestylesController < ApplicationController
     # @lifestyle = @user.lifestyles.create(lifestyle_params)
     respond_to do |format|
       if @lifestyle.save
-        puts "SAVE OK"
         format.html { redirect_to [@user, @lifestyle], notice: 'Lifestyle was successfully created.' }
         format.json { render  json: {:status =>"OK", :result => @lifestyle} }
       else

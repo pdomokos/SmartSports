@@ -71,7 +71,6 @@ class MeasurementsController < ApplicationController
       @measurements = @measurements.limit(limit)
     end
     if summary
-      print("measurement summary")
       daily_data = Hash.new { |h,k| h[k] = [] }
       for m in @measurements
         if m.date
@@ -90,7 +89,6 @@ class MeasurementsController < ApplicationController
           num = values.length
           if num > 0
             temp[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num)
-            # puts "#{day} #{meas} #{num} min:#{values.min()} #{temp[meas]}"
           else
             temp[meas] = nil
           end
@@ -102,7 +100,6 @@ class MeasurementsController < ApplicationController
         format.json {render json: result}
       end
     else if hourly
-      print("measurement summary")
       result = []
       data = user.measurements.collect{|it| [it.date.hour, it[hourly]]}.select{|it| !it[1].nil?}
 
@@ -113,7 +110,6 @@ class MeasurementsController < ApplicationController
 
       hours = hash.keys().sort()
       hours.each do |hour|
-        # puts "#{hour} - #{hash[hour].sort()}"
         if hash[hour] and hash[hour].size!=0
           stats = get_stats(hash[hour])
           result << {
@@ -133,7 +129,6 @@ class MeasurementsController < ApplicationController
         format.json {render json: result}
       end
     else
-      print("measurement JS!!!")
       respond_to do |format|
         format.html
         format.json {render json: @measurements}
@@ -156,8 +151,6 @@ class MeasurementsController < ApplicationController
     if (len>1)
       med_index -= 1
     end
-    puts "#{len} #{med_index}"
-
     result[:median] = arr[med_index]
     result[:lower] = arr[(len*0.25).floor()]
     result[:upper] = arr[(len*0.75).floor()]

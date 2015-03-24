@@ -39,7 +39,6 @@ class MedicationsController < ApplicationController
 
     respond_to do |format|
       if medication.save
-        puts "SAVE OK"
         format.json { render  json: {:status =>"OK", :result => medication} }
       else
         print medication.errors.full_messages.to_sentence+"\n"

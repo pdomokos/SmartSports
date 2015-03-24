@@ -25,7 +25,6 @@ module Api::V1
       user_id = params[:user_id]
       user = User.find(user_id)
 
-      puts "RESOWN=#{current_resource_owner.id}"
       if current_resource_owner.id != user_id.to_i
         render json: { :ok => false}, status: 403
         return

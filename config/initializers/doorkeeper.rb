@@ -28,7 +28,7 @@ Doorkeeper.configure do
      # Put your admin authentication logic here.
      # Example implementation:
     if not current_user.admin?
-      puts "Admin auth fail: #{current_user.name}/#{current_user.id}/admin=#{current_user.admin?}"
+      logger.error "Admin auth fail: #{current_user.name}/#{current_user.id}/admin=#{current_user.admin?}"
     end
     redirect_to root_url unless current_user.admin?
   end

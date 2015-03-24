@@ -35,7 +35,6 @@ class UsersController < ApplicationController
         if demo_user
           friendship = Friendship.new({:user1_id => @user.id, :user2_id => demo_user.id, :authorized => true})
           friendship.save
-          print("created friendship with demo user")
         end
         UserMailer.delay.user_created_email(@user)
 

@@ -216,7 +216,6 @@ module SyncWithings
                                                         :action => "getsummary"})
 
       for item in sleep_data['series']
-        puts item
         save_withings_sleep_summary(item)
       end
     end

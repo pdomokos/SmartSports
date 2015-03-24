@@ -14,7 +14,6 @@ class SessionsController < ApplicationController
 
       redirect_back_or_to({controller: 'pages', action: 'dashboard'}, {notice: 'Login successful'})
     else
-      puts "login failed"
       flash.now[:alert] = 'Login failed'
       redirect_to('/login', {notice: 'Login failed!'})
     end
