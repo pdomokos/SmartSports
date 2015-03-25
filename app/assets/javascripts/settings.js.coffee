@@ -42,6 +42,24 @@
         else
           $("#withings-sync-status").html(failure_message)
 
+  $("#sync-misfit-button").click (event) ->
+    $("#misfit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
+    failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $.ajax "/sync/sync_misfit",
+      type: "GET"
+      dataType: "json"
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "AJAX Error: #{textStatus}"
+        $("#misfit-sync-status").html(failure_message)
+      success: (result, textStatus, jqXHR) ->
+        console.log "Successful AJAX call"
+        console.log result
+        if result['status'] == "OK"
+          $("#misfit-sync-status").html("Synced just now <i class='fa fa-check' style='color: green'></i>")
+          console.log result['data']
+        else
+          $("#misfit-sync-status").html(failure_message)
+
   $("#sync-fitbit-button").click (event) ->
     $("#fitbit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"

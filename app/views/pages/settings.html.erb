@@ -50,6 +50,20 @@
             </div>
 
             <div class="boxed-group">
+                <h3>Misfit</h3>
+                <div class="boxed-group-inner">
+                    <p>Active since 2014-10-01</p>
+                    <p id="misfit-sync-status">Synced 1 day ago</p>
+                    <% if @misfitconn %>
+                        <p><%= link_to "Sync Misfit", "#", :class => "button primary", :id => "sync-misfit-button" %>
+                            <%= link_to "Disconnect", "/sync/misfit_destroy", :class => "button danger", :id => "disconnect-misfit-button" %>
+                        </p>
+                    <% else %>
+                        <p><%= link_to "Sign in to Misfit", "/auth/shine", :class => "button primary", :id => "signin-misfit-button" %></p>
+                    <% end %>
+                </div>
+            </div>
+            <div class="boxed-group">
                 <h3>Google Fit</h3>
                 <div class="boxed-group-inner">
                     <p>Active since 2014-10-01</p>

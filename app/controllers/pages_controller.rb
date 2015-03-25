@@ -72,10 +72,25 @@ class PagesController < ApplicationController
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
     @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
     @googleconn = Connection.where(user_id: current_user.id, name: 'google').first
+    @misfitconn = Connection.where(user_id: current_user.id, name: 'misfit').first
   end
 
   def error
     # to display some error in case of app failure
+  end
+
+  def misfitcb
+    auth = request.env['omniauth.auth']
+    if auth
+      u = User.find(current_user.id)
+      data = auth['credentials']
+      conn  = u.connections.create(name: 'misfit', data: data.to_json, user_id: u.id)
+      conn.save!
+      redirect_to :controller => 'pages', :action => 'settings'
+    else
+      #TODO please sign in first message
+      redirect_to pages_settings_path
+    end
   end
 
   def movescb
@@ -142,6 +157,8 @@ class PagesController < ApplicationController
     end
     redirect_to pages_settings_path
   end
+
+
 
   def wdestroy
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first

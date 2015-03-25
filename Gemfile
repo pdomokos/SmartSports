@@ -41,7 +41,6 @@ gem 'spring', group: :development
 gem 'font-awesome-sass'
 gem 'sorcery'
 
-gem 'omniauth-oauth'
 
 gem 'moves'
 gem 'omniauth-moves'
@@ -51,6 +50,9 @@ gem 'omniauth-withings'
 
 gem 'fitgem'
 gem 'omniauth-fitbit'
+
+gem 'omniauth-shine', :git => 'git@github.com:socialworkout/omniauth-shine.git'
+gem 'misfit_gem'
 
 gem 'mobile-fu'
 

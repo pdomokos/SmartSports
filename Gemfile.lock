@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:socialworkout/omniauth-shine.git
+  revision: e5ccb245ad990f17ed40b2534e89a82f48ee0457
+  specs:
+    omniauth-shine (0.0.1)
+      omniauth-oauth2 (~> 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -74,6 +81,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (5.5.1)
+    misfit_gem (0.1.2)
+      oauth
     mobile-fu (1.3.1)
       rack-mobile-detect
       rails
@@ -197,13 +206,14 @@ DEPENDENCIES
   fitgem
   font-awesome-sass
   jbuilder (~> 2.0)
+  misfit_gem
   mobile-fu
   momentjs-rails (>= 2.8.1)
   moves
   omniauth-fitbit
   omniauth-google-oauth2
   omniauth-moves
-  omniauth-oauth
+  omniauth-shine!
   omniauth-withings
   rails (= 4.1.0)
   sass-rails (~> 4.0.3)

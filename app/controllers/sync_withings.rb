@@ -105,19 +105,6 @@ module SyncWithings
     to_remove.each { |it| it.destroy!}
   end
 
-  def get_last_synced_final_date(user_id, source, group=nil)
-    last_sync_date = nil
-    query = Summary.where(user_id: user_id).where(source: source)
-    if not group.nil?
-      query = query.where(group: group)
-    end
-    if  query.size() > 0
-      last_sync = query.where("sync_final = 't'").order(date: :desc).limit(1)[0]
-      last_sync_date = last_sync.date
-    end
-    return last_sync_date
-  end
-
   def save_withings_act(rec)
     soft = rec['soft']
     moderate = rec['moderate']
