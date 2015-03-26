@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :users do
         resources :measurements
       end
+      get 'profile' => "api#profile"
     end
   end
 
