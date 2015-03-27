@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
-
   use_doorkeeper
 
   namespace :api do
     namespace :v1 do
       resources :users do
         resources :measurements
+        resources :activities
+        resources :diets
       end
       get 'profile' => "api#profile"
     end
   end
-
-  resources :medications
 
   get 'password_resets/create'
   get 'password_resets/edit'
@@ -27,6 +26,8 @@ Rails.application.routes.draw do
     resources :friendships
     resources :outline
     resources :lifestyles
+    resources :diets
+    resources :medications
   end
 
   get 'pages/dashboard'

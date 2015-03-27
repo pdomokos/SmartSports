@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326135418) do
+ActiveRecord::Schema.define(version: 20150327102743) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -60,6 +60,19 @@ ActiveRecord::Schema.define(version: 20150326135418) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+
+  create_table "diets", force: true do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.string   "source"
+    t.text     "name"
+    t.datetime "date"
+    t.float    "calories"
+    t.float    "carbs"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "friendships", force: true do |t|
     t.integer  "user1_id"

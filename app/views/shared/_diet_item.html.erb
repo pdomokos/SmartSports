@@ -1,0 +1,30 @@
+<tr class="bg">
+
+    <% if diet_item.type %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "#{diet_item.type.downcase}40.png" %>
+        </td>
+        <td class="historyTitle padded">
+            <%= diet_item.type %>
+            <%= diet_item.name %>
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= diet_item.date.strftime("%F %T") if diet_item.date %>
+        </td>
+    <% else %>
+        <td style="width:40px;" class="padded">
+            <%= image_tag "food40.png" %>
+        </td>
+        <td class="historyTitle padded">
+            Unknown <%= diet_item.name %>
+        </td>
+        <td class="padded" style="width: 150px">
+            <%= diet_item.date.strftime("%F %T") if diet_item.date %>
+        </td>
+    <% end %>
+    <td>
+        <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "delete_diet_#{diet_item.id}", remote: true, method: :delete, class: "resource-delete-form") do %>
+            <button class="deleteForm">Delete</button>
+        <% end %>
+    </td>
+</tr>

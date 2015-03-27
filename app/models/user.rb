@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :connections
   has_many :activities
   has_many :measurements
+  has_many :diets
   has_many :medications
   has_many :lifestyles
   has_many :notifications

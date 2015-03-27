@@ -26,13 +26,13 @@ class PagesController < ApplicationController
   def health
       @activity = Summary.new
       @measurement = Measurement.new
-      @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
+      @measurements = current_user.measurements.where(source: @default_source).order(created_at: :desc).limit(4)
   end
 
   def exercise
     @uid = current_user.id
     @conn = @shown_user.connections
-    @activities = current_user.activities.where(source: @default_source).order(start_time: :desc).limit(4)
+    @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
     respond_to do |format|
       format.html
       format.json
@@ -44,7 +44,7 @@ class PagesController < ApplicationController
   end
 
   def diet
-
+    @diets = current_user.diets.where(source: @default_source).order(created_at: :desc).limit(4)
   end
 
   def medication

@@ -1,0 +1,3 @@
+class Smoke < Diet
+
+end

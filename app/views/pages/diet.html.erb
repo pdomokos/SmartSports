@@ -12,17 +12,18 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="diet[type]" value="Food">
 
-                        <input id="diet_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                        <input id="diet_name" type="text" name="diet[name]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
-                        <input id="diet_cal" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <input id="diet_cal" type="text" name="diet[calories]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">Cal</div>
                         <br>
 
-                        <input id="diet_fat" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <input id="diet_fat" type="text" name="diet[carbs]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">g</div>
                         <br>
 
@@ -55,9 +56,10 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="diet[type]" value="Drink">
 
-                        <select class="form-control dataFormField" name="diet[drink_type]" id="diet_drink_type">
+                        <select class="form-control dataFormField" name="diet[name]" id="diet_drink_type">
                             <option>Water</option>
                             <option>Soft Drink</option>
                             <option>Coffee</option>
@@ -66,15 +68,15 @@
                         </select>
 
 
-                        <input  id="diet_drink_amount" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <input  id="diet_drink_amount" type="text" name="diet[amount]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">dl</div>
 
 
-                        <input id="diet_drink_calories" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <input id="diet_drink_calories" type="text" name="diet[calories]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">Cal</div>
 
 
-                        <input  id="diet_drink_carbs" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <input  id="diet_drink_carbs" type="text" name="diet[carbs]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">g</div>
 
                         <div class="row">
@@ -100,14 +102,15 @@
 
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
-                    <%= image_tag "smoking40.png" %><br/>
+                    <%= image_tag "smoke40.png" %><br/>
                     Smoking
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="diet[type]" value="Smoke">
 
-                        <select class="form-control dataFormField" name="diet[type]" id="diet_smoke_type">
+                        <select class="form-control dataFormField" name="diet[name]" id="diet_smoke_type">
                             <option>1 Cigarette</option>
                             <option>1 Cigar</option>
                             <option>1 Pipe</option>
@@ -143,9 +146,9 @@
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
-        <tbody id="recentMeasTable">
+        <tbody id="recentResourcesTable">
 
-        <%= render partial: "shared/meas_item", collection: @measurements %>
+        <%= render partial: "shared/diet_item", collection: @diets %>
 
         </tbody>
     </table>
