@@ -1,7 +1,7 @@
 <form id="new-activity-form">
 
     <input type="hidden" id="user_id" name="activity[user_id]" value="<%= @current_user.id %>">
-    <input type="hidden" id="source" name="activity[source]" value="smartsport">
+    <input type="hidden" id="source" name="activity[source]" value="<%= @default_source %>">
 
     <p>
         <label for="activity">Activity</label><br>

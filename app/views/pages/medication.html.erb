@@ -12,7 +12,7 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
 
                         <select  name="medication[name]" id="oral_medication_name">
@@ -98,7 +98,7 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
                         <select name="medication[name]" id="insulin_name">
                             <option value="0"></option>

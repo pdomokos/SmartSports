@@ -13,7 +13,7 @@
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                         <div class="dataForm">
-                            <input type="hidden" name="measurement[source]" value="smartsport">
+                            <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
                             <div class="row">
                                 <div class='col-sm-6'>
@@ -59,7 +59,7 @@
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                         <div class="dataForm">
-                            <input type="hidden" name="measurement[source]" value="smartsport">
+                            <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
                             <input id="stress_scale" type="text" name="measurement[systolicbp]" class="dataFormField"/>
                             <div class="dataFormFieldUnit">%</div>

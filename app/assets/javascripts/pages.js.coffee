@@ -70,6 +70,7 @@
 
 
 define_globals = () ->
+  window.default_source = "smartdiab"
   window.fmt = d3.time.format("%Y-%m-%d")
   window.fmt_day = d3.time.format("%Y-%m-%d %a")
   window.fmt_hms = d3.time.format("%Y-%m-%d %H:%M:%S")

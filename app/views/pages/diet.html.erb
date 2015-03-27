@@ -12,7 +12,7 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
                         <input id="diet_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
@@ -55,7 +55,7 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
                         <select class="form-control dataFormField" name="diet[drink_type]" id="diet_drink_type">
                             <option>Water</option>
@@ -105,7 +105,7 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
 
                         <select class="form-control dataFormField" name="diet[type]" id="diet_smoke_type">
                             <option>1 Cigarette</option>

@@ -20,19 +20,19 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @measurements = current_user.measurements.where(source: 'smartsport').order(date: :desc).limit(4)
+    @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
   end
 
   def health
       @activity = Summary.new
       @measurement = Measurement.new
-      @measurements = current_user.measurements.where(source: 'smartsport').order(date: :desc).limit(4)
+      @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
   end
 
   def exercise
     @uid = current_user.id
     @conn = @shown_user.connections
-    @activities = current_user.activities.where(source: 'smartsport').order(start_time: :desc).limit(4)
+    @activities = current_user.activities.where(source: @default_source).order(start_time: :desc).limit(4)
     respond_to do |format|
       format.html
       format.json
@@ -75,6 +75,13 @@ class PagesController < ApplicationController
     @misfitconn = Connection.where(user_id: current_user.id, name: 'misfit').first
   end
 
+  def profile
+    prf_json = current_user.as_json
+    prf_json.delete("crypted_password")
+    prf_json.delete("salt")
+    prf_json.delete("reset_password_token")
+    @prf = JSON.pretty_generate( prf_json )
+  end
   def error
     # to display some error in case of app failure
   end

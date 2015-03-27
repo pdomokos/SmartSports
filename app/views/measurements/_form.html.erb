@@ -1,7 +1,7 @@
 <%= form_for [@user, @measurement] do |f| %>
 
     <input type="hidden" id="user_id" name="measurement[user_id]" value="<%= @current_user.id %>">
-    <input type="hidden" id="source" name="measurement[source]" value="smartsport">
+    <input type="hidden" id="source" name="measurement[source]" value="<%= @default_source %>">
 
     <p>
         <label for="systolic">Systolic</label><br>

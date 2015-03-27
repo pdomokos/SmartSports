@@ -1,18 +1,24 @@
 class MeasurementsController < ApplicationController
-
   skip_before_filter :require_login, only: [:create]
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
+
   def new
     @measurement = Measurement.new
   end
 
   def create
-    user_id = params[:user_id]
+    user_id = params[:user_id].to_i
+    if user_id != current_user.id
+      render json: { :msg => "Unauthorized" }, :status => 401
+      return
+    end
     par = measurement_params
     par.merge!(:user_id => user_id)
-    print par
+
     @measurement = Measurement.new(par)
-    @measurement.date = DateTime.now
+    if @measurement.date.nil?
+      @measurement.date = DateTime.now
+    end
 
     respond_to do |format|
       if @measurement.save
@@ -186,7 +192,7 @@ class MeasurementsController < ApplicationController
   end
 
   def measurement_params
-    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date)
+    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type)
   end
 
 end

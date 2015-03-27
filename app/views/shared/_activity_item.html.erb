@@ -8,7 +8,7 @@
             Walking <%= activity_item.steps %>
         </td>
         <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") %>
+            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
         </td>
     <% elsif activity_item.group == "running" %>
         <td style="width:40px;" class="padded">
@@ -18,7 +18,7 @@
             Running <%= activity_item.distance %>
         </td>
         <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") %>
+            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
         </td>
     <% elsif activity_item.group == "cycling" %>
         <td style="width:40px;" class="padded">
@@ -28,7 +28,7 @@
             Cycling <%= activity_item.distance %>
         </td>
         <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") %>
+            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
         </td>
     <% elsif activity_item.group == "swimming" %>
         <td style="width:40px;" class="padded">
@@ -38,7 +38,7 @@
             Swimming <%= activity_item.distance %>
         </td>
         <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") %>
+            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
         </td>
     <% else %>
         <td style="width:40px;" class="padded">
@@ -48,7 +48,7 @@
             Unknown <%= activity_item.distance %>
         </td>
         <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") %>
+            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
         </td>
     <% end %>
     <td>

@@ -17,7 +17,7 @@ module Api::V1
       end
 
       user = User.find(user_id)
-      measurements = user.measurements.where(source: 'smartsport').order(date: :desc).limit(lim)
+      measurements = user.measurements.where(source: @default_source).order(date: :desc).limit(lim)
       render json: measurements
     end
 
@@ -43,7 +43,7 @@ module Api::V1
 
     private
     def measurement_params
-      params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date)
+      params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type)
     end
 
     def general_error_handler(ex)

@@ -112,7 +112,7 @@ draw_detail = (data) ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent meas"
-  $.ajax '/users/' + current_user + '/measurements.js?source=smartsport&order=desc&limit=4',
+  $.ajax '/users/' + current_user + '/measurements.js?source='+window.default_source+'&order=desc&limit=4',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent measurements AJAX Error: #{textStatus}"

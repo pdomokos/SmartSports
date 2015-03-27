@@ -12,7 +12,9 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
+                        <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
+
                         <input id="bp_sys" type="text" name="measurement[systolicbp]" class="dataFormField"/>
 
                         <div class="dataFormFieldUnit">mmHg</div>
@@ -30,7 +32,7 @@
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='bloodpressure_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <input type='text' class="form-control" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -53,7 +55,8 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bs-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
                         <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField"/>
 
                         <div class="dataFormFieldUnit">mmol/L</div>
@@ -63,7 +66,7 @@
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='bloodsugar_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <input type='text' class="form-control" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -85,7 +88,9 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "weight-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="measurement[meas_type]" value="weight" />
+
                         <input id="weight" type="text" name="measurement[weight]" class="dataFormField"/>
 
                         <div class="dataFormFieldUnit">kg</div>
@@ -95,7 +100,7 @@
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='weight_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <input type='text' class="form-control" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -117,7 +122,9 @@
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "waist-create-form", class: "resource-create-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="smartsport">
+                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="measurement[meas_type]" value="waist" />
+
                         <input id="waist" type="text" name="measurement[waist]" class="dataFormField"/>
 
                         <div class="dataFormFieldUnit">cm</div>
@@ -127,7 +134,7 @@
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='waist_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <input type='text' class="form-control" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>

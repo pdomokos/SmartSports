@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get 'pages/wellbeing'
   get 'pages/genetics'
   get 'pages/analytics'
+  get 'pages/profile'
 
   get 'pages/settings'
   get 'pages/mdestroy'
