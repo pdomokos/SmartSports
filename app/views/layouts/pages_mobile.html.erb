@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title><%= yield :title_text %></title>
+    <%= stylesheet_link_tag 'application_mobile', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <%= favicon_link_tag 'logo-login.png' %>
+
+</head>
+<body class="nobgAnimation">
+
+    <div class="topBannerBg bgAnimation">
+
+    </div>
+    <div class="topBanner">
+        <div class="left">
+            <%= image_tag "logo-login.png", alt: "Login", style: "width: 50px;float:left;", id: "headerLoginLogo", class: "loginLogo" %>
+            <span class="logoTitle">SmartDiab</span>
+        </div>
+        <div class="right">
+            <button id="settings-button" style="width: 60px;height: 60px;padding: 0;background: transparent;border: none;">
+                <%= image_tag "top_settings.png", style:"margin-top: 7px;width: 40px;height: 40px;" %>
+            </button>
+
+            <div class="logoutDiv">
+                <%= form_tag logout_path, :method => :post do %>
+                    <input type="submit" class="logoutButton" value="">
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div style="margin-top: 80px;">
+            <div class="appMenu noClickSelect">
+                <button id="dashboard-button" class="b0">Dashboard</button>
+
+                <button id="diet-button" class="c1 b1">Diet</button>
+
+                <button id="exercise-button" class="c2 b2">Exercise</button>
+
+                <button id="health-button" class="c3 b3">Health</button>
+
+                <button id="medication-button" class="c5 b4">Medication</button>
+
+                <button id="wellbeing-button" class="c4 b5">Well-Being</button>
+
+                <button id="genetics-button" class="c6 b6">Genetics</button>
+
+                <button id="analytics-button" class="analyticsColor analyticsMenu">Analytics</button>
+            </div>
+
+            <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
+            <div style="margin-top: 80px;">
+                <%= yield %>
+            </div>
+    </div>
+
+
+
+    <!--<button class="prevScreen"></button>-->
+    <!--<button class="nextScreen"></button>-->
+
+    <script type="text/javascript">
+
+        pages_menu()
+        <%= yield :page_logic %>
+
+    </script>
+
+</body>
+</html>

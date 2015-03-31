@@ -1,0 +1,707 @@
+body.nobgAnimation {
+    /*  background: #9DCFFE; */
+    background: #ECEEE4;
+    font-family: Arial;
+    padding: 0;
+    margin: 0;
+}
+
+.bgAnimation {
+
+}
+
+.topBanner {
+    position: fixed;
+    z-index: 90;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.topBannerBg {
+    background: #9DCFFE;
+    position: fixed;
+    z-index: 80;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80px;
+}
+
+.topBanner .left {
+    padding-left: 20px;
+    float: left;
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.topBanner .logoTitle {
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.topBanner .right {
+    padding-right: 20px;
+    float: right;
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.dashboardButton {
+    width: 160px;
+    height: 160px;
+    padding: 0;
+    float: left;
+    margin-right: 10px;
+    border-radius: 20px;;
+}
+
+.dashboardButton img {
+
+    width: 70px;
+    height: 70px;
+    margin-top: 20px;
+    margin-left: 45px;
+}
+
+.dashboardButton .dashboardButtonTitle {
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.colorButton {
+    font-size: 14px;
+    border: solid 1px #4FBDF2;
+    height: 40px;
+    text-align: center;
+    background: #4FBDF2;
+    color: white;
+
+}
+
+.c1, .dietColor {
+    color: #57C88A !important;
+}
+.dietStyle input.dataFormField {
+  border: solid 1px #57C88A !important;
+  width: 245px;
+};
+.dietStyle button {
+  background: #57C88A !important;
+};
+.dietStyle div.input-group.date input {
+  border: solid 1px #57C88A !important;
+}
+.dietStyle div.dataFormContainer {
+  width: 300px;
+  height: 395px;
+}
+.dietStyle div.dataFormSeparator {
+  height: 400px !important;
+}
+.dietStyle div.dataFormButton button {
+  width: 175px;
+}
+.dietStyle .dataForm {
+  height: 255px;
+}
+
+.dietStyle select {
+  width: 175px;
+  height: 40px;
+  margin-bottom: 10px;
+
+  margin-left: 16px;
+
+
+  border: solid 1px #57C88A !important;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  background: no-repeat right;
+  background-image: url(data:image/png;base64,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);
+
+  font-family: inherit;
+  font-size: inherit;
+  color: #7A7A6F;
+}
+
+.c2, .exerciseColor {
+    color: #F09938 !important;;
+}
+.exerciseStyle input.dataFormField {
+  border: solid 1px #F09938 !important;
+};
+.exerciseStyle button {
+  background: #F09938 !important;
+};
+.exerciseStyle div.input-group.date input {
+  border: solid 1px #F09938 !important;
+}
+.exerciseStyle div.dataFormContainer {
+  width: 240px;
+  height: 350px;
+}
+.exerciseStyle div.dataFormSeparator {
+  height: 345px !important;
+}
+.exerciseStyle .dataForm {
+  height: 205px;
+}
+.exerciseStyle div.input-group.date  {
+  width: 209px;
+}
+
+
+.c3, .healthColor {
+    color: #8980CA !important;;
+}
+.healthStyle input.dataFormField {
+  border: solid 1px #8980CA !important;
+};
+.healthStyle button {
+  background: #8980CA !important;
+};
+.healthStyle div.input-group.date input {
+  border: solid 1px #8980CA !important;
+}
+.healthStyle div.dataFormContainer {
+  width: 240px;
+  height: 350px;
+}
+.healthStyle div.dataFormSeparator {
+  height: 345px !important;
+}
+.healthStyle .dataForm {
+  height: 205px;
+}
+.healthStyle div.input-group.date  {
+  width: 209px;
+}
+
+
+.c4, .wellbeingColor {
+    color: #EA70B5 !important;;
+}
+.wellbeingStyle input.dataFormField {
+  border: solid 1px #EA70B5 !important;
+};
+.wellbeingStyle button {
+  background: #EA70B5 !important;
+};
+.wellbeingStyle div.input-group.date input {
+  border: solid 1px #EA70B5 !important;
+}
+.wellbeingStyle div.dataFormContainer {
+  width: 300px;
+}
+.wellbeingStyle input.dataFormField {
+  width: 245px;
+}
+.wellbeingStyle div.dataFormButton button {
+  width: 175px;
+}
+
+
+.c5, .medicationColor {
+    color: #6CC5CC !important;;
+}
+.medicationStyle input.dataFormField {
+  border: solid 1px #6CC5CC !important;
+};
+.medicationStyle input.dataFormField {
+  border: solid 1px #6CC5CC !important;
+};
+.medicationStyle button {
+  background: #6CC5CC !important;
+};
+.medicationStyle div.input-group.date input {
+  border: solid 1px #6CC5CC !important;
+}
+.medicationStyle div.dataFormContainer {
+  width: 300px;
+  height: 305px;
+}
+.medicationStyle input.dataFormField {
+  width: 245px;
+}
+.medicationStyle div.dataFormButton button {
+  width: 175px;
+}
+.medicationStyle div.dataFormSeparator {
+  height:295px !important;
+}
+.medicationStyle .dataForm {
+  height: 150px;
+}
+
+//.medicationStyle .scombobox {
+//
+//  margin-top: 0px;
+//  margin-left: 20px;
+//  margin-bottom: 10px;
+//  font-size: 14px;
+////  background: white;
+//  height: 40px;
+//  width: 245px;
+//}
+//.medicationStyle .scombobox-display  {
+//  border: solid 1px #6CC5CC !important;
+//  border-radius: 0px;
+//}
+//.medicationStyle .scombobox-dropdown-arrow {
+//  border-top: solid 1px #6CC5CC !important;
+//  border-right: solid 1px #6CC5CC !important;
+//  border-bottom: solid 1px #6CC5CC !important;
+//  border-left: none;
+//}
+
+.medicationStyle select {
+  width: 175px;
+  height: 40px;
+  margin-top: 0px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+
+
+  border: solid 1px #6CC5CC !important;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  background: no-repeat right;
+  background-image: url(data:image/png;base64,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);
+
+  font-family: inherit;
+  font-size: inherit;
+  color: #7A7A6F;
+}
+
+.c6, .geneticsColor {
+    color: #2BC7EC !important;
+}
+.geneticsStyle input.dataFormField {
+  border: solid 1px #2BC7EC !important;
+};
+.geneticsStyle input.dataFormField {
+  border: solid 1px #2BC7EC !important;
+};
+.geneticsStyle button {
+  background: #2BC7EC !important;
+};
+.geneticsStyle div.dataFormContainer {
+  width: 300px;
+}
+.geneticsStyle input.dataFormField {
+  width: 275px;
+}
+.geneticsStyle div.dataFormButton button {
+  width: 175px;
+}
+
+.analyticsColor {
+  color: #f46d43 !important;
+}
+
+.forgottenDiv {
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 120px;
+    width: 1100px;
+    margin-left: -550px;
+}
+
+
+button.deleteForm {
+  padding: 3px 4px;
+  margin-left: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  border: none;
+  border-color: red;
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+  color: #fff;
+  background-color: red;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.mainFrame {
+    position: absolute;
+    left: 50%;
+    margin-left: -520px;;
+    top: 300px;
+    width: 1000px;
+    min-height: 500px;
+    background: white;
+    padding: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px 5px rgba(50, 50, 50, 0.2);
+    text-align: center;
+
+}
+
+.mainFrame .title {
+    color: #767676;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+}
+
+.prevScreen {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    margin-top: -50px;
+    width: 45px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.2) image-url("prev_s.png") 10px 30px no-repeat;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border: none;
+}
+
+.nextScreen {
+    position: fixed;
+    left: 100%;
+    margin-left: -45px;
+    top: 50%;
+    margin-top: -50px;
+    width: 45px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.2) image-url("next_s.png") 15px 30px no-repeat;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border: none;
+}
+
+.leftMenu {
+    color: #7A7A6F;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.leftMenu .infoName {
+    font-variant: small-caps;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.appMenu {
+//    background: rgba(255, 255, 255, 0.7);
+      background: #ECEEE4;
+      color: #c8c9c3;
+      width: 100%;
+//    height: 40px;
+}
+
+.contentBg {
+    background: rgba(255, 255, 255, 1);
+    color: #c8c9c3;
+    width: 100%;
+}
+
+.appMenu button {
+    border: none;
+    background: transparent;
+    color: #7A7A6F;
+    height: 40px;
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 40px;
+    padding: 0 10px 0 35px;
+}
+
+.appMenu button:hover {
+    border-bottom: solid 1px #7A7A6F;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.appMenu button.selected {
+//  border-bottom: solid 1px #7A7A6F;
+  background-color:  rgb(242, 224, 152);
+}
+
+.appMenu .b0 {
+    background: image-url("menu_dashboard.png") 10px 10px no-repeat;
+    font-size: 12px;
+}
+
+.appMenu .b1 {
+    background: image-url("menu_diet.png") 10px 10px no-repeat;
+    font-size: 12px;
+}
+
+.appMenu .b2 {
+    background: image-url("menu_exercise.png") 10px 10px no-repeat;
+    font-size: 12px;
+}
+
+.appMenu .b3 {
+    background: image-url("menu_health.png") 10px 10px no-repeat;
+    font-size: 12px;
+}
+
+.appMenu .b4 {
+    background: image-url("menu_medication.png") 10px 10px no-repeat;
+    font-size: 12px;
+}
+
+.appMenu .b5 {
+    background: image-url("palmtree60.png") 10px 10px no-repeat;
+    background-size: 20px 20px;
+    font-size: 12px;
+}
+
+.appMenu .b6 {
+    background: image-url("menu_genetics.png") 10px 10px no-repeat;
+    font-size: 12px;
+}
+
+.appMenu .analyticsMenu {
+  background: image-url("analytics60.png") 10px 10px no-repeat;
+  background-size: 20px 20px;
+  font-size: 12px;
+}
+
+.bl0 {
+    background: image-url("dashboard60.png") 10px 10px no-repeat;
+
+}
+
+.bl1, .dietBodyLogo {
+    background: image-url("food60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+
+.bl2 {
+    background: image-url("exercise60.png") 10px 10px no-repeat;
+
+}
+
+.bl3 {
+    background: image-url("health60.png") 10px 10px no-repeat;
+    background-size: 40px 40px;
+
+}
+
+.exerciseBodyLogo {
+  background: image-url("exercise60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+.bl4 {
+    background: image-url("medication60.png") 10px 10px no-repeat;
+}
+.medicationBodyLogo {
+  background: image-url("medication60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+.bl5 {
+    background: image-url("palmtree60.png") 10px 10px no-repeat;
+}
+.wellbeingBodyLogo {
+  background: image-url("palmtree60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+.bl6 {
+    background: image-url("genetics60.png") 10px 10px no-repeat;
+}
+.geneticsBodyLogo {
+  background: image-url("genetics60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+.analiticsBodyLogo {
+  background: image-url("analytics60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+.sectionTitle {
+    margin-top: 40px;
+    /*background-color: rgba(0, 0, 0, 0.1);*/
+    height: 60px;
+    padding-left: 60px;
+    line-height: 60px;
+    font-variant: small-caps;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+div.dataFormContainer {
+    width: 240px;
+    height: 300px;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*margin : 10 px;*/
+    color: #7A7A6F;
+    /*border: solid 1px #8980CA;*/
+    /*box-shadow: 0px 0px 15px 5px rgba(50, 50, 50, 0.2);*/
+}
+
+.dataFormSeparator {
+//    background: #7A7A6F;
+    background: #FFFFFF;
+    width: 1px;
+    height: 300px;
+//    margin-left: 10px;
+//    margin-right: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.dataFormTitle {
+    height: 100px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+
+}
+
+.dataForm {
+    height: 160px;
+}
+
+.dataFormButton button {
+    border: none;
+    background: #8980CA;
+    width: 170px;
+    margin-left: 20px;
+    height: 40px;
+    color: white;
+
+}
+
+.dataFormField {
+    margin-left: 20px;
+    font-size: 14px;
+    border: solid 1px #8980CA;
+    background: white;
+    height: 40px;
+    max-width: 170px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    float: left;
+
+}
+
+
+.dataFormFieldUnit {
+    width: 45px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    float: left;
+    padding-left: 5px;
+}
+
+.historyTable {
+    width: 100%;
+    color: #7A7A6F;
+}
+
+.historyTable .historyTitle {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+}
+
+.historyTable tr.bg:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.4);
+    padding: 20px;
+}
+
+.historyTable tr.bg:nth-child(even) {
+    background: rgba(255, 255, 255, 1);
+}
+
+.padded {
+    padding: 20px;
+}
+
+
+
+//
+
+input.dataFormField {
+  box-sizing: border-box;
+}
+
+.logoutDiv {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+
+input.logoutButton {
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: image-url('top_logout.png');
+  background-size: 40px 40px;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+div.input-group.date  {
+  width: 284px;
+  height: 40px;
+
+  margin-left: 20px;
+  margin-bottom: 10px;
+
+}
+
+
+div.input-group.date > input {
+  color: #7A7A6F;
+}
+
+
+div.input-group.date input {
+  height: 40px;
+  border-radius: 0;
+}
+
+div.right button {
+  vertical-align: bottom;
+}
+
+
+//div.right button img {
+//  position: fixed;
+//  z-index: 100;
+//}

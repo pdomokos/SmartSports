@@ -1,4 +1,3 @@
-
 #= require ActivityChart
 #= require OverviewChart
 #= require TrainingTrendChart

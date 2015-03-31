@@ -1,12 +1,16 @@
 class PagesController < ApplicationController
   before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings]
   has_mobile_fu
-  layout 'pages'
+  layout :which_layout
 
   @movesconn = nil
   @withingsconn = nil
   @fitbitconn = nil
   @googleconn = nil
+
+  def which_layout
+    is_mobile_device? || is_tablet_device? ? 'pages_mobile' : 'pages'
+  end
 
   def formats=(values)
     # fall back to the browser view if the mobile or tablet version does not exist
@@ -33,10 +37,10 @@ class PagesController < ApplicationController
     @uid = current_user.id
     @conn = @shown_user.connections
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
-    respond_to do |format|
-      format.html
-      format.json
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.json
+    # end
     # render :text => "<pre>"+request.env["omniauth.auth"].to_yaml+"</pre>"
   end
 

@@ -1,8 +1,28 @@
 class SessionsController < ApplicationController
-  layout 'auth'
+  # layout 'auth'
+  has_mobile_fu
+  layout :which_layout
   skip_before_filter :require_login, except: [:destroy]
 
+  def which_layout
+    is_mobile_device? || is_tablet_device? ? 'auth_mobile' : 'auth'
+  end
+
+  def formats=(values)
+    # fall back to the browser view if the mobile or tablet version does not exist
+    values << :html if values == [:mobile] or values == [:tablet]
+
+    # DEBUG: force mobile. Uncomment if not debugging!
+    #values = [:mobile, :html] if values == [:html]
+    # values = [:tablet, :html] if values == [:html]
+
+    super(values)
+  end
+
   def reset_password
+  end
+
+  def signup
   end
 
   def signin

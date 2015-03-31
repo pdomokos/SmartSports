@@ -1,14 +1,30 @@
-<div style="position:absolute;left:50%;margin-left:-240px;top:100px;">
 
-    <div style="width: 480px;height: 128px;color: white;">
-        <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
+<% if is_mobile_device? || is_tablet_device? %>
+    <div style="position:absolute;left:50%;margin-left:-240px;top:0px;">
 
-        <div style="float: left;padding-top: 35px;padding-left: 20px;">
-            <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Sign up to SmartDiab</span><br>
-            <span>Your health is our mission</span>
+        <div style="width: 480px;height: 228px;color: white;">
+            <div style="padding-left: 100px;padding-top:20px;">
+                <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
+            </div>
+            <div style="float: left;padding-top: 15px;padding-left: 100px;">
+                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Sign up to SmartDiab</span><br>
+                <span>Your health is our mission</span>
+            </div>
         </div>
     </div>
-</div>
+<% else %>
+    <div style="position:absolute;left:50%;margin-left:-240px;top:100px;">
+
+        <div style="width: 480px;height: 128px;color: white;">
+            <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
+
+            <div style="float: left;padding-top: 35px;padding-left: 20px;">
+                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Sign up to SmartDiab</span><br>
+                <span>Your health is our mission</span>
+            </div>
+        </div>
+    </div>
+<% end %>
 
 <div id="registerDiv" class="registerDiv">
     <div>
@@ -24,7 +40,11 @@
     </div>
 </div>
 
-<%= render partial: 'features', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
+<% if is_mobile_device? || is_tablet_device? %>
+    <%= render partial: 'features_mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
+<% else %>
+    <%= render partial: 'features', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
+<% end %>
 
 <script>
     signup_loaded()

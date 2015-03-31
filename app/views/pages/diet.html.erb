@@ -59,13 +59,15 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Drink">
 
-                        <select class="form-control dataFormField" name="diet[name]" id="diet_drink_type">
-                            <option>Water</option>
-                            <option>Soft Drink</option>
-                            <option>Coffee</option>
-                            <option>Energy</option>
-                            <option>Alcohol</option>
-                        </select>
+
+                                    <select class="form-control" name="diet[name]" id="diet_drink_type">
+                                        <option>Water</option>
+                                        <option>Soft Drink</option>
+                                        <option>Coffee</option>
+                                        <option>Energy</option>
+                                        <option>Alcohol</option>
+                                    </select>
+
 
 
                         <input  id="diet_drink_amount" type="text" name="diet[amount]" class="dataFormField"/>
@@ -110,7 +112,7 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Smoke">
 
-                        <select class="form-control dataFormField" name="diet[name]" id="diet_smoke_type">
+                        <select class="form-control" name="diet[name]" id="diet_smoke_type">
                             <option>1 Cigarette</option>
                             <option>1 Cigar</option>
                             <option>1 Pipe</option>

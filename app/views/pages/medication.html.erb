@@ -14,7 +14,6 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-
                         <select  name="medication[medication_type_id]" id="oral_medication_name" class="dataFormField">
                             <option value="0"></option>
                             <% for omed in @oral_medication_types %>
@@ -24,6 +23,17 @@
 
 
                         <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField"/>
+
+                        <!--
+                        <input id="medication_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit"></div>
+                        <br>
+
+                        <input id="medication_dosage" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <div class="dataFormFieldUnit">mg</div>
+                        <br>
+-->
+
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
