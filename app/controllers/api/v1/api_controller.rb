@@ -15,6 +15,12 @@ module Api::V1
       User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
     end
 
+    def general_error_handler(ex)
+      logger.error ex.message
+      logger.error ex.backtrace.join("\n")
+      render json: nil, status: 400
+    end
+
     private
     def set_default_variables
       @default_source = "smartdiab"

@@ -13,7 +13,7 @@
                     <%= image_tag "walking40.png" %><br/>
                     Walking
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="activity[source]" value="<%= @default_source %>">
                         <input type="hidden" name="activity[group]" value="walking">
@@ -56,7 +56,7 @@
                     <%= image_tag "running40.png" %><br/>
                     Running
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "running-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "running-create-form", class: "resource-create-form exercise-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="activity[source]" value="<%= @default_source %>">
                         <input type="hidden" name="activity[group]" value="running">
@@ -100,7 +100,7 @@
                     <%= image_tag "cycling40.png" %><br/>
                     Cycling
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "cycling-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "cycling-create-form", class: "resource-create-form exercise-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="activity[source]" value="<%= @default_source %>">
                         <input type="hidden" name="activity[group]" value="cycling">
@@ -137,7 +137,7 @@
                     <%= image_tag "swimming40.png" %><br/>
                     Swimming
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "swimming-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "swimming-create-form", class: "resource-create-form exercise-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="activity[source]" value="<%= @default_source %>">
                         <input type="hidden" name="activity[group]" value="swimming">

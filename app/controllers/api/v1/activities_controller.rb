@@ -47,11 +47,6 @@ module Api::V1
       params.require(:activity).permit(:source, :activity, :group, :game_id, :start_time, :end_time, :steps, :duration, :distance, :calories, :manual)
     end
 
-    def general_error_handler(ex)
-      logger.error ex.message
-      logger.error ex.backtrace.join("\n")
-      render json: nil, status: 400
-    end
   end
 
 end

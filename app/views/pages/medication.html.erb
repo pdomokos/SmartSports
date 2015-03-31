@@ -7,66 +7,23 @@
         <div style="padding: 10px;">
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
-                    <%= image_tag "capsules40.png" %><br/>
+                    <%= image_tag "oral40.png" %><br/>
                     Medications
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "oral-med-create-form", class: "resource-create-form medication-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
 
-                        <select  name="medication[name]" id="oral_medication_name">
+                        <select  name="medication[medication_type_id]" id="oral_medication_name" class="dataFormField">
                             <option value="0"></option>
-                            <option value="580">Actos</option>
-                            <option value="581">Actos 15 mg</option>
-                            <option value="582">Actos 30 mg</option>
-                            <option value="583">Actos 45 mg</option>
-                            <option value="1">Amaryl 1</option>
-                            <option value="2">Amaryl 2</option>
-                            <option value="3">Amaryl 3</option>
-                            <option value="4">Amaryl 4</option>
-                            <option value="5">Amaryl 5</option>
-                            <option value="6">Amaryl 6</option>
-                            <option value="584">Atoris</option>
-                            <option value="586">Atoris 30 mg</option>
-                            <option value="587">Atoris 60 mg</option>
-                            <option value="585">Atoris 80 mg</option>
-                            <option value="588">Avamina</option>
-                            <option value="591">Avamina 1000 mg</option>
-                            <option value="590">Avamina 500 mg</option>
-                            <option value="589">Avamina 850 mg</option>
-                            <option value="7">Avandia</option>
-                            <option value="8">Diabetol</option>
-                            <option value="592">Diamicron</option>
-                            <option value="593">Fenofibrate</option>
-                            <option value="594">Glibenclamide</option>
-                            <option value="70">Gliclazide</option>
-                            <option value="595">Glimepiride</option>
-                            <option value="72">Glipizide</option>
-                            <option value="596">Glucophage</option>
-                            <option value="597">Glucophage 1000 mg</option>
-                            <option value="599">Glucophage 500 mg</option>
-                            <option value="598">Glucophage 850 mg</option>
-                            <option value="600">Glucophage XR</option>
-                            <option value="601">Glucovance</option>
-                            <option value="602">Glumetza</option>
-                            <option value="603">Glyburide</option>
-                            <option value="71">Janumet</option>
-                            <option value="69">Metformin</option>
+                            <% for omed in @oral_medication_types %>
+                                <option value="<%= omed.id %>"><%= omed.name %></option>
+                            <% end %>
                         </select>
 
 
-                        <!--
-                        <input id="medication_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit"></div>
-                        <br>
-
-                        <input id="medication_dosage" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">mg</div>
-                        <br>
--->
-
-                        <input id="medication_amount" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
@@ -74,7 +31,7 @@
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='medications_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <input type='text' class="form-control" name="medication[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -96,100 +53,20 @@
                     <%= image_tag "insulin40.png" %><br/>
                     Insulin
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "insulin-create-form", class: "resource-create-form medication-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <select name="medication[name]" id="insulin_name">
+                        <select name="medication[medication_type_id]" id="insulin_name" class="dataFormField">
                             <option value="0"></option>
-                            <option value="20">Actraphane 10 NovoLet</option>
-                            <option value="21">Actraphane 20 NovoLet</option>
-                            <option value="22">Actraphane 30 FlexPen</option>
-                            <option value="23">Actraphane 40 NovoLet</option>
-                            <option value="24">Actraphane 50 NovoLet</option>
-                            <option value="25">Actrapid</option>
-                            <option value="45">Apidra</option>
-                            <option value="38">Exubera</option>
-                            <option value="4">Gensulin M10 (10/90)</option>
-                            <option value="5">Gensulin M20 (20/80)</option>
-                            <option value="6">Gensulin M30 (30/70)</option>
-                            <option value="7">Gensulin M40 (40/60)</option>
-                            <option value="8">Gensulin M50 (50/50)</option>
-                            <option value="9">Gensulin N</option>
-                            <option value="10">Gensulin R</option>
-                            <option value="1">Humalog</option>
-                            <option value="11">Humalog Mix 25</option>
-                            <option value="12">Humalog Mix 50</option>
-                            <option value="13">Humalog NPL</option>
-                            <option value="60">Humulin 50/50</option>
-                            <option value="61">Humulin 70/30</option>
-                            <option value="62">Humulin L</option>
-                            <option value="63">Humulin M2</option>
-                            <option value="14">Humulin M3</option>
-                            <option value="15">Humulin N</option>
-                            <option value="16">Humulin R</option>
-                            <option value="64">Humulin U</option>
-                            <option value="26">Insulatard</option>
-                            <option value="46">Insulin Human Winthrop Bosal</option>
-                            <option value="47">Insulin Human Winthrop Comb 15</option>
-                            <option value="48">Insulin Human Winthrop Comb 25</option>
-                            <option value="49">Insulin Human Winthrop Comb 50</option>
-                            <option value="50">Insulin Human Winthrop Infusat</option>
-                            <option value="51">Insulin Human Winthrop Rapid</option>
-                            <option value="66">Insulinum Isophanicum ChO-S</option>
-                            <option value="67">Insulinum Isophanicum WOS alto depuratum</option>
-                            <option value="68">Insulinum Lente ChO-S</option>
-                            <option value="69">Insulinum Lente WO-S alto depuratum</option>
-                            <option value="70">Insulinum Maxirapid ChO-S</option>
-                            <option value="71">Insulinum Maxirapid WO-S alto depuratum</option>
-                            <option value="72">Insulinum Semilente ChO-S</option>
-                            <option value="73">Insulinum Semilente WO-S alto depuratum</option>
-                            <option value="74">Insulinum Solutio Neutralis ChO-S</option>
-                            <option value="75">Insulinum Solutio Neutralis WO-S alto depuratum</option>
-                            <option value="76">Insulinum Ultralente ChO-S</option>
-                            <option value="77">Insulinum Ultralente WO-S alto depuratum</option>
-                            <option value="52">Insuman Bosal</option>
-                            <option value="53">Insuman Comb 15</option>
-                            <option value="54">Insuman Comb 25</option>
-                            <option value="55">Insuman Comb 50</option>
-                            <option value="56">Insuman Infusat</option>
-                            <option value="57">Insuman Rapid</option>
-                            <option value="78">Iso-Mix 3 WO-S</option>
-                            <option value="79">Iso-Mix 4 WO-S</option>
-                            <option value="80">Iso-Mix 5 WO-S</option>
-                            <option value="58">Lantus</option>
-                            <option value="81">LENTE WO-S </option>
-                            <option value="27">Levemir</option>
-                            <option value="17">Liprolog</option>
-                            <option value="18">Liprolog Mix 25</option>
-                            <option value="19">Liprolog Mix 50</option>
-                            <option value="82">MAXIRAPID ChO-S</option>
-                            <option value="83">MAXIRAPID WO-S</option>
-                            <option value="28">Mixtard 10</option>
-                            <option value="29">Mixtard 20</option>
-                            <option value="30">Mixtard 30</option>
-                            <option value="31">Mixtard 40</option>
-                            <option value="32">Mixtard 50</option>
-                            <option value="33">NovoMix 30</option>
-                            <option value="34">NovoMix 50</option>
-                            <option value="35">NovoMix 70</option>
-                            <option value="36">NovoRapid</option>
-                            <option value="59">Optisulin</option>
-                            <option value="39">Polhumin Mix 2</option>
-                            <option value="40">Polhumin Mix 3</option>
-                            <option value="41">Polhumin Mix 4</option>
-                            <option value="42">Polhumin Mix 5</option>
-                            <option value="43">Polhumin N</option>
-                            <option value="44">Polhumin R</option>
-                            <option value="37">Protaphane</option>
-                            <option value="84">SEMILENTE ChO-S</option>
-                            <option value="85">SOLUTIO NEUTRALIS WO-S</option>
-                            <option value="65">Velosulin</option>
+                            <% for ins in @insulin_types %>
+                            <option value="<%= ins.id %>"><%= ins.name %></option>
+                            <% end %>
                         </select>
 
 
 
-                        <input id="medication_insulin_dosage" type="text" name="measurement[diastolicbp]" class="dataFormField "/>
+                        <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField "/>
                         <div class="dataFormFieldUnit ">unit</div>
                         <br>
 
@@ -197,7 +74,7 @@
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='medications_insulin_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                        <input type='text' class="form-control" name="medication[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -227,9 +104,9 @@
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
-        <tbody id="recentMeasTable">
+        <tbody id="recentResourcesTable">
 
-        <%= render partial: "shared/meas_item", collection: @measurements %>
+        <%= render partial: "shared/medication_item", collection: @medications %>
 
         </tbody>
     </table>

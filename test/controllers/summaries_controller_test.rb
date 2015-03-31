@@ -1,8 +1,9 @@
 require 'test_helper'
 
-class SummaryControllerTest < ActionController::TestCase
+class SummariesControllerTest < ActionController::TestCase
+
   test "should get index" do
-    get :index
+    get , {:user_id => 1}
     assert_response :success
   end
 

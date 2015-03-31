@@ -7,23 +7,24 @@ class MedicationsController < ApplicationController
     limit = params[:limit]
 
     u = User.find(user_id)
-    medications = u.medications
+    @medications = u.medications
 
     if source and source !=""
-      medications = medications.where(source: source)
+      @medications = @medications.where(source: source)
     end
     if order and order=="desc"
-      medications = medications.order(date: :desc)
+      @medications = @medications.order(date: :desc)
     else
-      medications = medications.order(date: :asc)
+      @medications = @medications.order(date: :asc)
     end
     if limit and limit.to_i>0
-      medications = medications.limit(limit)
+      @medications = @medications.limit(limit)
     end
     @user = u
 
     respond_to do |format|
-      format.json {render json: medications}
+      format.json {render json: @medications}
+      format.js
     end
   end
 
@@ -75,7 +76,7 @@ class MedicationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def medication_params
-    params.require(:medication).permit(:user_id, :source, :group, :name, :amount, :date)
+    params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date)
   end
 
 end

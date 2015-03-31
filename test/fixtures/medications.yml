@@ -2,10 +2,10 @@
 
 one:
   date: 2015-02-27 12:22:01
-  name: MyString
+  medication_type_id: 1
   amount: 1
 
 two:
   date: 2015-02-27 12:22:01
-  name: MyString
+  medication_type_id: 1
   amount: 1

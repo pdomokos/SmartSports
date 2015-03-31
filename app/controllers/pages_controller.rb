@@ -48,7 +48,9 @@ class PagesController < ApplicationController
   end
 
   def medication
-
+    @insulin_types = MedicationType.where(:group => "insulin")
+    @oral_medication_types = MedicationType.where(:group => "oral")
+    @medications = current_user.medications.order(created_at: :desc).limit(4)
   end
 
   def wellbeing
@@ -56,10 +58,6 @@ class PagesController < ApplicationController
   end
 
   def genetics
-
-  end
-
-  def medication
 
   end
 

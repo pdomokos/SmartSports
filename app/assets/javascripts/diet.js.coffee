@@ -28,7 +28,7 @@
   $("#testbtn").click (evt) ->
     $('#diet_food_datepicker').data("DateTimePicker").toggle()
 
-  $("form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
+  $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     console.log e

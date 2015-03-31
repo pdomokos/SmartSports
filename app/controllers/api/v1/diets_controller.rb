@@ -47,11 +47,6 @@ module Api::V1
       params.require(:diet).permit(:source, :name, :date, :calories, :carbs, :amount, :type, :user_id)
     end
 
-    def general_error_handler(ex)
-      logger.error ex.message
-      logger.error ex.backtrace.join("\n")
-      render json: nil, status: 400
-    end
   end
 
 end

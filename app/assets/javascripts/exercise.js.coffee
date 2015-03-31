@@ -42,7 +42,7 @@ init_exercise = () ->
     "format": "YYYY-MM-DD HH:mm"
   })
 
-  $("form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
+  $("form.resource-create-form.exercise-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     console.log e

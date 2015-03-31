@@ -1,5 +1,5 @@
 module Api::V1
-  class MeasurementsController < ApiController
+  class MedicationsController < ApiController
     rescue_from Exception, :with => :general_error_handler
     before_action :doorkeeper_authorize!, only: [:index, :create]
     respond_to :json
@@ -17,8 +17,8 @@ module Api::V1
       end
 
       user = User.find(user_id)
-      measurements = user.measurements.where(source: @default_source).order(date: :desc).limit(lim)
-      render json: measurements
+      medications = user.medications.where(source: @default_source).order(date: :desc).limit(lim)
+      render json: medications
     end
 
     def create
@@ -30,20 +30,21 @@ module Api::V1
         return
       end
 
-      measurement = user.measurements.new(measurement_params)
-      if not measurement.date
-        measurement.date = DateTime.now
+      medication = Medication.new(medication_params)
+      medication.user_id = user.id
+      if not medication.date
+        medication.date = DateTime.now
       end
-      if measurement.save
-        render json: { :ok => true, :id => measurement.id }
+      if medication.save
+        render json: { :ok => true, :id => medication.id }
       else
-        render json: { :ok => false, :message =>  measurement.errors.full_messages.to_sentence}, status: 400
+        render json: { :ok => false, :message =>  medication.errors.full_messages.to_sentence}, status: 400
       end
     end
 
     private
-    def measurement_params
-      params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type)
+    def diet_params
+      params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date)
     end
 
   end

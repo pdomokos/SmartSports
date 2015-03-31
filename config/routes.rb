@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         resources :activities
         resources :diets
       end
+      resources :medication_types
       get 'profile' => "api#profile"
     end
   end

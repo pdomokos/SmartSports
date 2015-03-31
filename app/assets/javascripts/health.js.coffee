@@ -85,7 +85,7 @@ draw_detail = (data) ->
   $('#bp_sys').focus()
 
 
-  $("form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
+  $("form.resource-create-form.health-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     console.log e

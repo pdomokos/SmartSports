@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327102743) do
+ActiveRecord::Schema.define(version: 20150330082846) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -119,15 +119,20 @@ ActiveRecord::Schema.define(version: 20150327102743) do
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"
   add_index "measurements", ["user_id"], name: "index_measurements_on_user_id"
 
+  create_table "medication_types", force: true do |t|
+    t.string "group"
+    t.string "name"
+    t.float  "dosage"
+  end
+
   create_table "medications", force: true do |t|
     t.integer  "user_id"
     t.datetime "date"
     t.string   "source"
-    t.string   "group"
-    t.string   "name"
     t.integer  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "medication_type_id"
   end
 
   create_table "notifications", force: true do |t|
