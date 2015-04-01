@@ -60,5 +60,5 @@
   <%= @activity.manual %>
 </p>
 
-<%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', activities_path %>
+<%= link_to 'Edit', edit_user_activity_path(@activity.user, @activity) %> |
+<%= link_to 'Back', user_activities_path(@activity.user) %>

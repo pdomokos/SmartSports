@@ -38,7 +38,7 @@ class UsersController < ApplicationController
         end
         UserMailer.delay.user_created_email(@user)
 
-        format.html { redirect_to :root, notice: 'User was successfully created.' }
+        format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -51,9 +51,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      par = params.require(:user).permit( :password, :password_confirmation, :name)
+      if @user.update(par)
+        format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
         format.json { render json: { :status => "OK", :msg => "Updated successfully" } }
       else
+        format.html { redirect_to users_path, notice: 'Create user failed.' }
         format.json { render json: { :status => "NOK", :msg => "Update errror" } }
       end
     end
@@ -77,6 +80,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit( :email, :password, :password_confirmation)
+      params.require(:user).permit( :email, :password, :password_confirmation, :name)
     end
 end

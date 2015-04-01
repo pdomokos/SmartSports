@@ -49,10 +49,12 @@ class ActivitiesController < ApplicationController
   # GET /activities/new
   def new
     @activity = Activity.new
+    @user = current_user
   end
 
   # GET /activities/1/edit
   def edit
+    @user = current_user
   end
 
   # POST /activities
@@ -66,7 +68,7 @@ class ActivitiesController < ApplicationController
     end
     respond_to do |format|
       if @activity.save
-        format.json { render json: {:status => "ok", :result => @activity} }
+        format.json { render json: {:status => "OK", :result => @activity} }
       else
         logger.error @activity.errors.full_messages.to_sentence
         format.json { render json: { :msg =>  @activity.errors.full_messages.to_sentence }, :status => 400 }
@@ -79,7 +81,7 @@ class ActivitiesController < ApplicationController
   def update
     respond_to do |format|
       if @activity.update(activity_params)
-        format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
+        format.html { redirect_to user_activity_path(@activity.user, @activity), notice: 'Activity was successfully updated.' }
         format.json { render json: { :status => "OK", :result => @activity } }
       else
         format.html { render :edit }

@@ -163,8 +163,6 @@ class PagesController < ApplicationController
     redirect_to pages_settings_path
   end
 
-
-
   def wdestroy
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
     if withings_conn

@@ -51,7 +51,7 @@ class DietsController < ApplicationController
     end
     respond_to do |format|
       if @diet.save
-        format.json { render json: {:status => "ok", :result => @diet} }
+        format.json { render json: {:status => "OK", :result => @diet} }
       else
         logger.error @diet.errors.full_messages.to_sentence
         format.json { render json: { :msg =>  @diet.errors.full_messages.to_sentence }, :status => 400 }

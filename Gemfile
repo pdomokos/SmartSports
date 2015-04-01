@@ -39,33 +39,34 @@ gem 'spring', group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'font-awesome-sass'
-gem 'sorcery'
 
+gem 'sorcery'
+gem 'doorkeeper'
 
 gem 'moves'
 gem 'omniauth-moves'
-
 gem 'simplificator-withings'
 gem 'omniauth-withings'
-
 gem 'fitgem'
 gem 'omniauth-fitbit'
-
 gem 'omniauth-shine', :git => 'git@github.com:socialworkout/omniauth-shine.git'
 gem 'misfit_gem'
+gem 'omniauth-google-oauth2'
 
 gem 'mobile-fu'
 
 gem 'chronic'
 
-gem 'omniauth-google-oauth2'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
 
 
-gem 'doorkeeper'
-
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
+
+group :test do
+  gem 'minitest-reporters', '1.0.5'
+  gem 'mocha'
+end

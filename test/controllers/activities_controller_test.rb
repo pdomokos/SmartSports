@@ -3,47 +3,75 @@ require 'test_helper'
 class ActivitiesControllerTest < ActionController::TestCase
   setup do
     @activity = activities(:one)
+    @user = users(:one)
+    login_user
   end
 
   test "should get index" do
-    get :index
+    get :index, user_id: @user
     assert_response :success
     assert_not_nil assigns(:activities)
   end
 
   test "should get new" do
-    get :new
+    get :new, user_id: @user
     assert_response :success
   end
 
   test "should create activity" do
     assert_difference('Activity.count') do
-      post :create, activity: { activity: @activity.activity, calories: @activity.calories, distance: @activity.distance, duration: @activity.duration, end_time: @activity.end_time, game_id: @activity.game_id, group: @activity.group, manual: @activity.manual, source: @activity.source, start_time: @activity.start_time, steps: @activity.steps, user_id: @activity.user_id }
+      post :create, user_id: @user.id, activity: {
+          activity: @activity.activity,
+          calories: @activity.calories,
+          distance: @activity.distance,
+          duration: @activity.duration,
+          end_time: @activity.end_time,
+          game_id: @activity.game_id,
+          group: @activity.group,
+          manual: @activity.manual,
+          source: @activity.source,
+          start_time: @activity.start_time,
+          steps: @activity.steps
+           }, format: :json
     end
-
-    assert_redirected_to activity_path(assigns(:activity))
+    json_result = JSON.parse(response.body)
+    assert_equal json_result["status"], "OK"
+    assert_not json_result["result"]["id"].nil?
   end
 
   test "should show activity" do
-    get :show, id: @activity
+    get :show, user_id: @user, id: @activity
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @activity
+    get :edit, user_id: @user, id: @activity
     assert_response :success
   end
 
   test "should update activity" do
-    patch :update, id: @activity, activity: { activity: @activity.activity, calories: @activity.calories, distance: @activity.distance, duration: @activity.duration, end_time: @activity.end_time, game_id: @activity.game_id, group: @activity.group, manual: @activity.manual, source: @activity.source, start_time: @activity.start_time, steps: @activity.steps, user_id: @activity.user_id }
-    assert_redirected_to activity_path(assigns(:activity))
+    patch :update, user_id: @user.id, id: @activity.id, activity: {
+        activity: @activity.activity,
+        calories: @activity.calories,
+        distance: @activity.distance,
+        duration: @activity.duration,
+        end_time: @activity.end_time,
+        game_id: @activity.game_id,
+        group: @activity.group,
+        manual: @activity.manual,
+        source: @activity.source,
+        start_time: @activity.start_time,
+        steps: @activity.steps
+    }
+    assert_redirected_to user_activity_path(@user, @activity)
   end
 
   test "should destroy activity" do
     assert_difference('Activity.count', -1) do
-      delete :destroy, id: @activity
+      delete :destroy, user_id: @user, id: @activity, format: :json
     end
 
-    assert_redirected_to activities_path
+    json_result = JSON.parse(response.body)
+    assert_equal json_result["status"], "OK"
   end
 end

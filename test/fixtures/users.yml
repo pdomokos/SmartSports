@@ -1,13 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   username: balint
   email: balint@abc.de
   name: balint
   crypted_password: testpw
   salt: testsalt
+  reset_password_token: resetpwtok
 
 two:
+  id: 2
   username: balint2
   email: balint2@abc.de
   name: balint2
