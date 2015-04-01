@@ -14,7 +14,6 @@
 
   $('#diet_smoking_amount').watermark('Amount, eg: 3')
 
-
   $('#diet_food_datepicker').datetimepicker({
       "format": "YYYY-MM-DD HH:mm"
     })

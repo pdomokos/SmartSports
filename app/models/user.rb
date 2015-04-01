@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :diets
   has_many :medications
   has_many :lifestyles
+  has_many :family_histories
   has_many :notifications
   authenticates_with_sorcery!
   validates :password, length: { minimum: 3 }

@@ -1,0 +1,20 @@
+<tr class="bg">
+
+    <td style="width:40px;" class="padded">
+        <%= image_tag "family40.png" %>
+    </td>
+    <td class="historyTitle padded">
+        <%= family_history_item.relative %>
+        <%= family_history_item.disease %>
+        <%= family_history_item.note %>
+    </td>
+    <td class="padded" style="width: 150px">
+        <%= family_history_item.created_at.strftime("%F %T") if family_history_item.created_at %>
+    </td>
+
+    <td>
+        <%= form_tag( "/users/#{current_user.id}/family_histories/#{family_history_item.id}", id: "delete_hist_#{family_history_item.id}", remote: true, method: :delete, class: "resource-delete-form") do %>
+            <button class="deleteForm">Delete</button>
+        <% end %>
+    </td>
+</tr>

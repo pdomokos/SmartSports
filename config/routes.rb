@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :lifestyles
     resources :diets
     resources :medications
+    resources :family_histories
   end
 
   get 'pages/dashboard'

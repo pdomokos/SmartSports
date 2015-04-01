@@ -11,19 +11,19 @@
                     <%= image_tag "family40.png" %><br/>
                     Family History
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/diseases", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/family_histories", remote: true, id: "bp-create-form", class: "resource-create-form family-history-form") do %>
                     <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="family_history[source]" value="<%= @default_source %>">
 
-                        <input id="gen_hist_relative" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                        <input id="gen_hist_relative" type="text" name="family_history[relative]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
-                        <input id="gen_hist_disease" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
+                        <input id="gen_hist_disease" type="text" name="family_history[disease]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
-                        <input id="gen_hist_note" type="text" name="measurement[pulse]" class="dataFormField"/>
+                        <input id="gen_hist_note" type="text" name="family_history[note]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
@@ -46,9 +46,9 @@
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
-        <tbody id="recentMeasTable">
+        <tbody id="recentResourcesTable">
 
-        <%= render partial: "shared/meas_item", collection: @measurements %>
+        <%= render partial: "shared/family_history_item", collection: @family_histories %>
 
         </tbody>
     </table>
