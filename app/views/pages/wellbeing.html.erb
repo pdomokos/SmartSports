@@ -1,6 +1,4 @@
 <div class="wellbeing-block mainContent" id="wellbeing-container">
-
-
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
             Well-Being
         </div>
@@ -11,15 +9,16 @@
                         <%= image_tag "sleep40.png" %><br/>
                         Sleep
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
-                            <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                            <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+                            <input type="hidden" name="lifestyle[group]" value="sleep"/>
 
                             <div class="row">
                                 <div class='col-sm-6'>
                                     <div class="form-group">
                                         <div class='input-group date' id='sleep_start_datepicker'>
-                                            <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                            <input type='text' class="form-control" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                         </div>
@@ -31,7 +30,7 @@
                                 <div class='col-sm-6'>
                                     <div class="form-group">
                                         <div class='input-group date' id='sleep_end_datepicker'>
-                                            <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                            <input type='text' class="form-control" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                         </div>
@@ -39,7 +38,7 @@
                                 </div>
                             </div>
 
-                            <input id="sleep_scale" type="text" name="measurement[pulse]" class="dataFormField"/>
+                            <input id="sleep_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>
                             <div class="dataFormFieldUnit">%</div>
                             <br>
 
@@ -57,11 +56,12 @@
                         <%= image_tag "stress40.png" %><br/>
                         Stress
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
-                            <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+                            <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+                            <input type="hidden" name="lifestyle[group]" value="stress"/>
 
-                            <input id="stress_scale" type="text" name="measurement[systolicbp]" class="dataFormField"/>
+                            <input id="stress_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>
                             <div class="dataFormFieldUnit">%</div>
                             <br>
 
@@ -69,7 +69,7 @@
                                 <div class='col-sm-6'>
                                     <div class="form-group">
                                         <div class='input-group date' id='stress_datepicker'>
-                                            <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                                            <input type='text' class="form-control" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                         </div>
@@ -95,9 +95,9 @@
         </div>
 
         <table class="historyTable"  cellpadding="0" cellspacing="0">
-            <tbody id="recentMeasTable">
+            <tbody id="recentResourcesTable">
 
-            <%= render partial: "shared/meas_item", collection: @measurements %>
+            <%= render partial: "shared/lifestyle_item", collection: @lifestyles %>
 
             </tbody>
         </table>

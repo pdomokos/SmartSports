@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330082846) do
+ActiveRecord::Schema.define(version: 20150401080227) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -91,12 +91,13 @@ ActiveRecord::Schema.define(version: 20150330082846) do
     t.string   "group"
     t.string   "name"
     t.float    "amount"
-    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "end_time"
   end
 
   add_index "lifestyles", ["user_id", "created_at"], name: "index_lifestyles_on_user_id_and_created_at"
+  add_index "lifestyles", ["user_id", "group"], name: "index_lifestyles_on_user_id_and_group"
   add_index "lifestyles", ["user_id", "name"], name: "index_lifestyles_on_user_id_and_name"
   add_index "lifestyles", ["user_id"], name: "index_lifestyles_on_user_id"
 

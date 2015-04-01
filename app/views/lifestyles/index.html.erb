@@ -6,10 +6,10 @@
       <th>User</th>
       <th>Source</th>
       <th>Start Time</th>
+      <th>End Time</th>
       <th>Group</th>
       <th>Name</th>
       <th>Amount</th>
-      <th>Data</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,10 +20,11 @@
         <td><%= lifestyle.user_id %></td>
         <td><%= lifestyle.source %></td>
         <td><%= lifestyle.start_time %></td>
+        <td><%= lifestyle.end_time %></td>
         <td><%= lifestyle.group %></td>
         <td><%= lifestyle.name %></td>
         <td><%= lifestyle.amount %></td>
-        <td><%= lifestyle.data %></td>
+
         <td><%= link_to 'Show', user_lifestyle_path(lifestyle.user, lifestyle) %></td>
         <td><%= link_to 'Edit', edit_user_lifestyle_path(lifestyle.user, lifestyle) %></td>
         <td><%= link_to 'Destroy', user_lifestyle_path(lifestyle.user, lifestyle), method: :delete, data: { confirm: 'Are you sure?' } %></td>

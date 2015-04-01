@@ -16,6 +16,12 @@
 </p>
 
 <p>
+    <strong>Start Time:</strong>
+    <%= @lifestyle.start_time %>
+</p>
+
+
+<p>
   <strong>Name:</strong>
   <%= @lifestyle.name %>
 </p>
@@ -25,10 +31,6 @@
   <%= @lifestyle.amount %>
 </p>
 
-<p>
-  <strong>Data:</strong>
-  <%= @lifestyle.data %>
-</p>
 
 <%= link_to 'Edit', edit_user_lifestyle_path(@lifestyle.user, @lifestyle) %> |
 <%= link_to 'Back', user_lifestyles_path(@lifestyle.user) %>

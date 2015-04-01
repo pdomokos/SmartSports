@@ -17,9 +17,9 @@ class LifestylesController < ApplicationController
       @lifestyles = @lifestyles.where(source: source)
     end
     if order and order=="desc"
-      @lifestyles = @lifestyles.order(start_time: :desc)
+      @lifestyles = @lifestyles.order(created_at: :desc)
     else
-      @lifestyles = @lifestyles.order(start_time: :asc)
+      @lifestyles = @lifestyles.order(created_at: :asc)
     end
     if limit and limit.to_i>0
       @lifestyles = @lifestyles.limit(limit)
@@ -29,6 +29,7 @@ class LifestylesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {render json: @lifestyles}
+      format.js
     end
   end
 
@@ -54,19 +55,21 @@ class LifestylesController < ApplicationController
   # POST /lifestyles
   # POST /lifestyles.json
   def create
-    # @user = User.find(params[:user_id])
+    @user = User.find(params[:user_id])
 
-    user_id = params[:user_id]
+    user_id = @user.id
     par = lifestyle_params
     par.merge!(:user_id => user_id)
     print par
     @lifestyle = Lifestyle.new(par)
-    @lifestyle.start_time = DateTime.now
+    if not @lifestyle.start_time
+      @lifestyle.start_time = DateTime.now
+    end
 
     # @lifestyle = @user.lifestyles.create(lifestyle_params)
     respond_to do |format|
       if @lifestyle.save
-        format.html { redirect_to [@user, @lifestyle], notice: 'Lifestyle was successfully created.' }
+        format.html { redirect_to user_lifestyle_path(@user, @lifestyle), notice: 'Lifestyle was successfully created.' }
         format.json { render  json: {:status =>"OK", :result => @lifestyle} }
       else
         print @lifestyle.errors.full_messages.to_sentence+"\n"
@@ -109,6 +112,6 @@ class LifestylesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lifestyle_params
-      params.require(:lifestyle).permit(:user_id, :source, :group, :name, :amount, :data, :start_time)
+      params.require(:lifestyle).permit(:user_id, :source, :group, :name, :amount, :start_time, :end_time)
     end
 end

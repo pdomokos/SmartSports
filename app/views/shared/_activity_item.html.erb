@@ -1,48 +1,29 @@
 <tr class="bg">
     <!-- TODO change this, add measurement type to model-->
-    <% if activity_item.group == "walking" %>
+    <% if activity_item.group %>
         <td style="width:40px;" class="padded">
-            <%= image_tag "weight40.png" %>
+            <%= image_tag activity_item.group+"40.png" %>
         </td>
         <td class="historyTitle padded">
-            Walking <%= activity_item.steps %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
-        </td>
-    <% elsif activity_item.group == "running" %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "weight40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            Running <%= activity_item.distance %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
-        </td>
-    <% elsif activity_item.group == "cycling" %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "weight40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            Cycling <%= activity_item.distance %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
-        </td>
-    <% elsif activity_item.group == "swimming" %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "weight40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            Swimming <%= activity_item.distance %>
+            <%= activity_item.group %>
+            <% if activity_item.steps %>
+                <%= activity_item.steps %>steps
+            <% end %>
+
+            <% if activity_item.duration %>
+                <%= activity_item.duration %>minutes
+            <% end %>
+
+            <% if activity_item.distance %>
+                <%= activity_item.distance/1000.0 %>km
+            <% end %>
         </td>
         <td class="padded" style="width: 150px">
             <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %>
         </td>
     <% else %>
         <td style="width:40px;" class="padded">
-            <%= image_tag "weight40.png" %>
+            <%= image_tag "walking40.png" %>
         </td>
         <td class="historyTitle padded">
             Unknown <%= activity_item.distance %>

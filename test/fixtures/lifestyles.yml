@@ -2,16 +2,16 @@
 
 one:
   user_id: 1
-  source: MyString
-  group: MyString
+  source: mysource1
+  group: mygroup1
+  start_time: 2014-10-27 16:37:26
   name: MyString
   amount: 1.5
-  data: MyText
 
 two:
   user_id: 1
-  source: MyString
-  group: MyString
+  source: mysource2
+  group: mygroup2
+  start_time: 2014-10-28 16:37:26
   name: MyString
-  amount: 1.5
-  data: MyText
+  amount: 1.6

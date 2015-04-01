@@ -58,7 +58,8 @@ class PagesController < ApplicationController
   end
 
   def wellbeing
-
+    @lifestyles = current_user.lifestyles.order(created_at: :desc).limit(4)
+    puts @lifestyles
   end
 
   def genetics
