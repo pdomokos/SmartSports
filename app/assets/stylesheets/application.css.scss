@@ -17,7 +17,6 @@
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
-@import "bootstrap-sprockets";
-@import 'bootstrap';
-@import 'bootstrap-datetimepicker';
-@import 'jquery.scombobox'
+@import 'jquery-ui.min';
+@import 'jquery.datetimepicker';
+@import 'jquery.scombobox';

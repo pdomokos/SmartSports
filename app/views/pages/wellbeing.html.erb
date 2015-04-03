@@ -14,34 +14,18 @@
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="sleep"/>
 
-                            <div class="row">
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='sleep_start_datepicker'>
-                                            <input type='text' class="form-control" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='sleep_end_datepicker'>
-                                            <input type='text' class="form-control" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input id="sleep_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>
+                            <div id="sleep_scale" class="dataFormField"></div>
                             <div class="dataFormFieldUnit">%</div>
-                            <br>
 
+                            <input id='sleep_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                            <div class="dataFormFieldUnit">start</div>
+
+                            <input id='sleep_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                            <div class="dataFormFieldUnit">end</div>
+
+                            <!--<input id="sleep_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>-->
+
+                            <!--<br>-->
 
                         </div>
                         <div class="dataFormButton">
@@ -61,22 +45,12 @@
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="stress"/>
 
-                            <input id="stress_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>
+                            <div id="stress_scale" class="dataFormField"></div>
+                            <!--<input id="stress_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>-->
                             <div class="dataFormFieldUnit">%</div>
-                            <br>
+                            <!--<br>-->
 
-                            <div class="row">
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='stress_datepicker'>
-                                            <input type='text' class="form-control" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <input id='stress_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
                         </div>
                         <div class="dataFormButton">
                             <button class="sendForm">Add</button>

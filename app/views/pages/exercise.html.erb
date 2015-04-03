@@ -29,21 +29,11 @@
                         <input id="walking_distance" type="text" name="activity[distance]" class="dataFormField"/>
 
                         <div class="dataFormFieldUnit">m</div>
-                        <br>
+                        <br/>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='walking_datepicker'>
-                                        <input type='text' class="form-control" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-
+                        <input id='walking_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <br/>
+                      
                     </div>
                     <div class="dataFormButton">
                         <button class="sendForm">Add</button>
@@ -75,17 +65,7 @@
                         <div class="dataFormFieldUnit">m</div>
                         <br>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='running_datepicker'>
-                                        <input type='text' class="form-control" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input id='running_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br>
 
                     </div>
@@ -113,17 +93,7 @@
                         <div class="dataFormFieldUnit">m</div>
                         <br>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='cycling_datepicker'>
-                                        <input type='text' class="form-control" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input id='cycling_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br>
                     </div>
                     <div class="dataFormButton">
@@ -150,17 +120,7 @@
                         <div class="dataFormFieldUnit">m</div>
                         <br>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='swimming_datepicker'>
-                                        <input type='text' class="form-control" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input id='swimming_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br>
                     </div>
                     <div class="dataFormButton">

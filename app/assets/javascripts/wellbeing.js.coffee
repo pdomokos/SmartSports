@@ -7,15 +7,19 @@
   $('#sleep_scale').watermark('Quality of sleep, e.g. 60')
   $('#stress_scale').watermark('Stressfull day, e.g. 60')
 
-  $('#sleep_start_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD HH:mm"
-  })
-  $('#sleep_end_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD HH:mm"
-  })
+  $('#sleep_start_datepicker').datetimepicker()
+  $('#sleep_end_datepicker').datetimepicker()
+  $('#stress_datepicker').datepicker()
 
-  $('#stress_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD"
+  $("#sleep_scale").slider({
+    min: 0,
+    max: 100,
+    value: 50
+  })
+  $("#stress_scale").slider({
+    min: 0,
+    max: 100,
+    value: 50
   })
 
   $("form.resource-create-form.lifestyle-form").on("ajax:success", (e, data, status, xhr) ->

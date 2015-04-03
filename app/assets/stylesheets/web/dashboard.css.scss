@@ -197,6 +197,9 @@ body.nobgAnimation {
 .wellbeingStyle input.dataFormField {
   border: solid 1px #EA70B5 !important;
 };
+.wellbeingStyle div.dataFormField {
+  border: solid 1px #EA70B5 !important;
+};
 .wellbeingStyle button {
   background: #EA70B5 !important;
 };
@@ -207,6 +210,9 @@ body.nobgAnimation {
   width: 320px;
 }
 .wellbeingStyle input.dataFormField {
+  width: 245px;
+}
+.wellbeingStyle div.dataFormField {
   width: 245px;
 }
 .wellbeingStyle div.dataFormButton button {
@@ -630,6 +636,10 @@ div.dataFormContainer {
 input.dataFormField {
   box-sizing: border-box;
 }
+div.dataFormField {
+  box-sizing: border-box;
+}
+
 
 .logoutDiv {
   display: inline-block;

@@ -12,12 +12,12 @@
 //
 //= require jquery-2.1.3.min
 //= require jquery_ujs
+//= require jquery-ui.min
 //= require turbolinks
 //= require jquery.color-2.1.2.min
 //= require jquery.watermark.min
-//= require d3.min
-//= require bootstrap
-//= require moment
-//= require bootstrap-datetimepicker
 //= require jquery.scombobox.min
+//= require jquery.datetimepicker
+//= require d3.min
+//= require moment
 //= require_tree .

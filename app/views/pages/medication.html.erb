@@ -14,13 +14,7 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <select  name="medication[medication_type_id]" id="oral_medication_name" class="dataFormField">
-                            <option value="0"></option>
-                            <% for omed in @oral_medication_types %>
-                                <option value="<%= omed.id %>"><%= omed.name %></option>
-                            <% end %>
-                        </select>
-
+                        <input name="medication[medication_type_id]" id="oral_medication_name" class="dataFormField">
 
                         <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField"/>
 
@@ -37,17 +31,7 @@
                         <div class="dataFormFieldUnit"></div>
                         <br>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='medications_datepicker'>
-                                        <input type='text' class="form-control" name="medication[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input id="medications_datepicker" type="text"  name="medication[date]" class="dataFormField" value='<%= DateTime.current.strftime("%F %R") %>'>
                         <br>
 
                     </div>
@@ -67,32 +51,14 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <select name="medication[medication_type_id]" id="insulin_name" class="dataFormField">
-                            <option value="0"></option>
-                            <% for ins in @insulin_types %>
-                            <option value="<%= ins.id %>"><%= ins.name %></option>
-                            <% end %>
-                        </select>
-
-
+                        <input name="medication[medication_type_id]" id="insulin_name" type="text" class="dataFormField">
 
                         <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField "/>
                         <div class="dataFormFieldUnit ">unit</div>
                         <br>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='medications_insulin_datepicker'>
-                                        <input type='text' class="form-control" name="medication[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input id="medications_insulin_datepicker" class="dataFormField" type="text"  name="medication[date]" value='<%= DateTime.current.strftime("%F %R") %>'>
                         <br>
-
 
                     </div>
                     <div class="dataFormButton">

@@ -14,15 +14,9 @@
 
   $('#diet_smoking_amount').watermark('Amount, eg: 3')
 
-  $('#diet_food_datepicker').datetimepicker({
-      "format": "YYYY-MM-DD HH:mm"
-    })
-  $('#diet_drink_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD HH:mm"
-  })
-  $('#diet_smoking_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD HH:mm"
-  })
+  $('#diet_food_datepicker').datetimepicker()
+  $('#diet_drink_datepicker').datetimepicker()
+  $('#diet_smoking_datepicker').datetimepicker()
 
   $("#testbtn").click (evt) ->
     $('#diet_food_datepicker').data("DateTimePicker").toggle()

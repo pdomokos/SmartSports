@@ -106,17 +106,14 @@ body.nobgAnimation {
 }
 .dietStyle div.dataFormContainer {
   width: 300px;
-  height: 395px;
 }
 .dietStyle div.dataFormSeparator {
-  height: 400px !important;
+//  height: 400px !important;
 }
 .dietStyle div.dataFormButton button {
   width: 175px;
 }
-.dietStyle .dataForm {
-  height: 255px;
-}
+
 
 .dietStyle select {
   width: 175px;
@@ -568,7 +565,7 @@ div.dataFormContainer {
 //    background: #7A7A6F;
     background: #FFFFFF;
     width: 1px;
-    height: 300px;
+//    height: 300px;
 //    margin-left: 10px;
 //    margin-right: 10px;
     margin-left: 3px;

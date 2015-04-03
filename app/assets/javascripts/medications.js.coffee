@@ -7,22 +7,20 @@
   $('#medication_dosage').watermark('Unit Dosage, eg: 2')
   $('#medication_amount').watermark('Amount Taken, eg: 1')
 
-  $('#medication_insulin_dosage').watermark('Dosage, eg: 2')
 
+  $('#medications_insulin_datepicker').datetimepicker()
+  $('#medications_datepicker').datetimepicker()
 
-  $('#medications_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD HH:mm"
+  meds = ["Kalmopirin", "Algopirin", "Cataflam"]
+  $("#oral_medication_name").autocomplete({
+    source: meds
   })
-
-  $('#medications_insulin_datepicker').datetimepicker({
-    "format": "YYYY-MM-DD HH:mm"
-  })
-
-
-  $("#oral_medication_name").scombobox()
   $('#oral_medication_name input').watermark('Medication Name, eg: Amaryl')
 
-  $("#insulin_name").scombobox()
+  ins = ["Exubera1", "Exubera2", "Exubera3"]
+  $("#insulin_name").autocomplete({
+    source: ins
+  })
   $('#insulin_name input').watermark('Insulin Type, eg: Exubera')
 
   $("form.resource-create-form.medication-form").on("ajax:success", (e, data, status, xhr) ->

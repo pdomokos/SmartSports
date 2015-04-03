@@ -17,28 +17,19 @@
 
                         <input id="diet_name" type="text" name="diet[name]" class="dataFormField"/>
                         <div class="dataFormFieldUnit"></div>
-                        <br>
+                        <br/>
 
                         <input id="diet_cal" type="text" name="diet[calories]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">Cal</div>
-                        <br>
+                        <br/>
 
                         <input id="diet_fat" type="text" name="diet[carbs]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">g</div>
-                        <br>
+                        <br/>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='diet_food_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
+                        <input id='diet_food_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <br/>
+
                     </div>
                     <div class="dataFormButton">
                         <button class="sendForm">Add</button>
@@ -60,39 +51,29 @@
                         <input type="hidden" name="diet[type]" value="Drink">
 
 
-                                    <select class="form-control" name="diet[name]" id="diet_drink_type">
-                                        <option>Water</option>
-                                        <option>Soft Drink</option>
-                                        <option>Coffee</option>
-                                        <option>Energy</option>
-                                        <option>Alcohol</option>
-                                    </select>
-
+                        <select class="form-control" name="diet[name]" id="diet_drink_type">
+                            <option>Water</option>
+                            <option>Soft Drink</option>
+                            <option>Coffee</option>
+                            <option>Energy</option>
+                            <option>Alcohol</option>
+                        </select>
 
 
                         <input  id="diet_drink_amount" type="text" name="diet[amount]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">dl</div>
-
+                        <br/>
 
                         <input id="diet_drink_calories" type="text" name="diet[calories]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">Cal</div>
-
+                        <br/>
 
                         <input  id="diet_drink_carbs" type="text" name="diet[carbs]" class="dataFormField"/>
                         <div class="dataFormFieldUnit">g</div>
+                        <br/>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='diet_drink_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
+                        <input id='diet_drink_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <br/>
 
                     </div>
                     <div class="dataFormButton">
@@ -118,18 +99,8 @@
                             <option>1 Pipe</option>
                         </select>
 
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='diet_smoking_datepicker'>
-                                        <input type='text' class="form-control" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
+                        <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <br/>
 
                     </div>
                     <div class="dataFormButton">
