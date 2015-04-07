@@ -49,7 +49,7 @@ gem 'simplificator-withings'
 gem 'omniauth-withings'
 gem 'fitgem'
 gem 'omniauth-fitbit'
-gem 'omniauth-shine', :git => 'git@github.com:socialworkout/omniauth-shine.git'
+gem 'omniauth-shine', :github => 'socialworkout/omniauth-shine'
 gem 'misfit_gem'
 gem 'omniauth-google-oauth2'
 

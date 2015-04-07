@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:socialworkout/omniauth-shine.git
+  remote: git://github.com/socialworkout/omniauth-shine.git
   revision: e5ccb245ad990f17ed40b2534e89a82f48ee0457
   specs:
     omniauth-shine (0.0.1)
