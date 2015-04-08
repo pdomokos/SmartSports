@@ -1,6 +1,6 @@
 <tr class="bg">
 
-    <% if medication_item.medication_type.group %>
+    <% if  medication_item.medication_type and medication_item.medication_type.group %>
         <td style="width:40px;" class="padded">
             <%= image_tag "#{medication_item.medication_type.group}40.png" %>
         </td>
@@ -16,7 +16,7 @@
             <%= image_tag "oral40.png" %>
         </td>
         <td class="historyTitle padded">
-            Unknown <%= medication_item.name %>
+            Unknown
         </td>
         <td class="padded" style="width: 150px">
             <%= medication_item.date.strftime("%F %T") if medication_item.date %>

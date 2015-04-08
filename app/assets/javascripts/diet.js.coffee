@@ -14,12 +14,12 @@
 
   $('#diet_smoking_amount').watermark('Amount, eg: 3')
 
-  $('#diet_food_datepicker').datetimepicker()
-  $('#diet_drink_datepicker').datetimepicker()
-  $('#diet_smoking_datepicker').datetimepicker()
+  $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
+  $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
+  $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
 
-  $("#testbtn").click (evt) ->
-    $('#diet_food_datepicker').data("DateTimePicker").toggle()
+  $("#diet_drink_type").selectmenu()
+  $("#diet_smoke_type").selectmenu()
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -28,6 +28,10 @@
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
 
+    $('#diet_food_datepicker').val(moment().format(moment_fmt))
+    $('#diet_drink_datepicker').val(moment().format(moment_fmt))
+    $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
+
     load_diets()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
@@ -35,9 +39,8 @@
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
-    form_item = e.currentTarget
-    console.log "delete success "+form_item
-
+    form_id = e.currentTarget.id
+    console.log "delete success "+form_id
     load_diets()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText

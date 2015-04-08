@@ -13,7 +13,6 @@
 #  d3.json("/users/"+uid+"/summaries.json", data_received)
 
 init_exercise = () ->
-  @init_meas = () ->
   console.log "init exercise"
 
   $('#walking_steps').watermark('Steps, eg: 8120')
@@ -28,10 +27,11 @@ init_exercise = () ->
   $('#swimming_distance').watermark('Distance, eg: 1200')
   $('#walking_steps').focus()
 
-  $('#walking_datepicker').datetimepicker()
-  $('#running_datepicker').datetimepicker()
-  $('#cycling_datepicker').datetimepicker()
-  $('#swimming_datepicker').datetimepicker()
+
+  $('#walking_datepicker').datetimepicker(timepicker_defaults)
+  $('#running_datepicker').datetimepicker(timepicker_defaults)
+  $('#cycling_datepicker').datetimepicker(timepicker_defaults)
+  $('#swimming_datepicker').datetimepicker(timepicker_defaults)
 
   $("form.resource-create-form.exercise-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -39,6 +39,10 @@ init_exercise = () ->
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
+    $('#walking_datepicker').val(moment().format(moment_fmt))
+    $('#running_datepicker').val(moment().format(moment_fmt))
+    $('#cycling_datepicker').val(moment().format(moment_fmt))
+    $('#swimming_datepicker').val(moment().format(moment_fmt))
 
     load_exercise()
   ).on("ajax:error", (e, xhr, status, error) ->

@@ -4,20 +4,26 @@
   $("div.appMenu button").removeClass("selected")
   $("#medication-button").addClass("selected")
 
-  $('#medication_dosage').watermark('Unit Dosage, eg: 2')
+  $('#medication_insulin_dosage').watermark('Unit Dosage, eg: 2')
   $('#medication_amount').watermark('Amount Taken, eg: 1')
 
-
-  $('#medications_insulin_datepicker').datetimepicker()
-  $('#medications_datepicker').datetimepicker()
+  $('#medications_datepicker').datetimepicker(timepicker_defaults)
+  $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
 
   meds = ["Kalmopirin", "Algopirin", "Cataflam"]
+  $("#oral_medication_name").watermark('Start typing medication, eg: Kal')
   $("#oral_medication_name").autocomplete({
     source: meds
   })
-  $('#oral_medication_name input').watermark('Medication Name, eg: Amaryl')
+
+#  .autocomplete("instance")._renderItem = (ul, item) ->
+#    return $( "<li></li>" )
+#      .data( "item.autocomplete", item )
+#      .append( "<a>" + "<img src='" + item.imgsrc + "' />" + item.id+ " - " + item.label+ "</a>" )
+#      .appendTo( ul );
 
   ins = ["Exubera1", "Exubera2", "Exubera3"]
+  $("#insulin_name").watermark('Start typing insulin, eg: Exu')
   $("#insulin_name").autocomplete({
     source: ins
   })
@@ -29,7 +35,9 @@
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
-    $("#"+form_id+" div.scombobox").scombobox("val", "")
+
+    $('#medications_datepicker').val(moment().format(moment_fmt))
+    $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
 
     load_medications()
   ).on("ajax:error", (e, xhr, status, error) ->

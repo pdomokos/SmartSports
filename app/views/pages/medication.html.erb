@@ -14,21 +14,11 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <input name="medication[medication_type_id]" id="oral_medication_name" class="dataFormField">
+                        <input id="oral_medication_name" name="medication[medication_type_id]" class="dataFormField">
 
                         <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField"/>
 
-                        <!--
-                        <input id="medication_name" type="text" name="measurement[systolicbp]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit"></div>
-                        <br>
-
-                        <input id="medication_dosage" type="text" name="measurement[diastolicbp]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">mg</div>
-                        <br>
--->
-
-                        <div class="dataFormFieldUnit"></div>
+                        <div class="dataFormFieldUnit">piece</div>
                         <br>
 
                         <input id="medications_datepicker" type="text"  name="medication[date]" class="dataFormField" value='<%= DateTime.current.strftime("%F %R") %>'>
@@ -51,7 +41,7 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <input name="medication[medication_type_id]" id="insulin_name" type="text" class="dataFormField">
+                        <input id="insulin_name" name="medication[medication_type_id]" type="text" class="dataFormField">
 
                         <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField "/>
                         <div class="dataFormFieldUnit ">unit</div>

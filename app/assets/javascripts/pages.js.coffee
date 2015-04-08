@@ -67,9 +67,15 @@
   }, 2000)
   $('.animField').animate({borderColor: buttonBackgrounds[self.colorIndex]}, 2000)
 
-
-
 define_globals = () ->
+  window.timepicker_defaults = {
+    format: 'Y-m-d H:i',
+    step: 5,
+    todayButton: true
+    onSelectTime: (ct, input) ->
+      input.datetimepicker('hide')
+  }
+  window.moment_fmt = 'YYYY-MM-DD HH:mm'
   window.default_source = "smartdiab"
   window.fmt = d3.time.format("%Y-%m-%d")
   window.fmt_day = d3.time.format("%Y-%m-%d %a")

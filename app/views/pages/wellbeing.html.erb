@@ -14,8 +14,10 @@
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="sleep"/>
 
-                            <div id="sleep_scale" class="dataFormField"></div>
-                            <div class="dataFormFieldUnit">%</div>
+                            <div class="dataScale">
+                                <div id="sleep_scale" class="dataFormField"></div>
+                            </div>
+                            <div id="sleep_percent" class="dataFormFieldUnit">50%</div>
 
                             <input id='sleep_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                             <div class="dataFormFieldUnit">start</div>
@@ -23,9 +25,7 @@
                             <input id='sleep_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                             <div class="dataFormFieldUnit">end</div>
 
-                            <!--<input id="sleep_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>-->
-
-                            <!--<br>-->
+                            <input id="sleep_amount" type="hidden" name="lifestyle[amount]" />
 
                         </div>
                         <div class="dataFormButton">
@@ -45,12 +45,17 @@
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="stress"/>
 
-                            <div id="stress_scale" class="dataFormField"></div>
-                            <!--<input id="stress_scale" type="text" name="lifestyle[amount]" class="dataFormField"/>-->
-                            <div class="dataFormFieldUnit">%</div>
-                            <!--<br>-->
+                            <div class="dataScale">
+                                <div id="stress_scale" class="dataFormField"></div>
+                            </div>
+
+                            <div id="stress_percent" class="dataFormFieldUnit">50%</div>
+                            <input id="stress_amount" type="hidden" name="lifestyle[amount]"/>
+
 
                             <input id='stress_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+                            <div class="dataFormFieldUnit">day</div>
+
                         </div>
                         <div class="dataFormButton">
                             <button class="sendForm">Add</button>
