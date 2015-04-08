@@ -9,6 +9,8 @@ class DietsController < ApplicationController
     order = params[:order]
     limit = params[:limit]
 
+    favourites = params[:favourites]
+
     @diets = Diet.where("user_id = #{user_id}")
     if source
       @diets = @diets.where("source = '#{source}'")
@@ -33,11 +35,16 @@ class DietsController < ApplicationController
 
     @diets = @diets.order(:date)
 
+    if favourites and favourites == "true"
+      @diets = @diets.where(favourite: true)
+    end
+
     respond_to do |format|
       format.html
-      format.json {render json: @diets }
+      format.json  { render :json => {:diets => @diets}}
       format.js
     end
+
   end
 
   # POST /diets
@@ -57,6 +64,21 @@ class DietsController < ApplicationController
         format.json { render json: { :msg =>  @diet.errors.full_messages.to_sentence }, :status => 400 }
       end
     end
+  end
+
+  # PATCH/PUT /diets/1
+  # PATCH/PUT /diets/1.json
+  def update
+    set_diet
+    respond_to do |format|
+      if @diet.update_attribute(:favourite, !@diet.favourite)
+        format.json { render json: { :status => "OK", :msg => "Update successfully" } }
+      else
+        format.json { render json: { :status => "NOK", :msg => "Update errror" }, :status => 400 }
+      end
+    end
+
+
   end
 
   # DELETE /diets/1

@@ -4,7 +4,18 @@
         <td style="width:40px;" class="padded">
             <%= image_tag "#{diet_item.type.downcase}40.png" %>
         </td>
-        <td class="historyTitle padded">
+        <td>
+          <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "mod_diet_#{diet_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
+              <button id="fav-icon" style="background: transparent;border: none;outline: none;">
+                <% if diet_item.favourite %>
+                    <i style="color:#FEEB80;-webkit-text-stroke-width:1px;-webkit-text-stroke-color:orange;" class="fa fa-star fa-lg"></i>
+                <% else %>
+                    <i class="fa fa-star-o fa-lg"></i>
+                <% end %>
+              </button>
+          <% end %>
+        </td>
+        <td onclick="fill_form('<%=diet_item.type%>', '<%=diet_item.name%>', '<%=diet_item.calories%>', '<%=diet_item.carbs%>', '<%=diet_item.amount%>')" class="historyTitle padded">
             <%= diet_item.type %>
             <%= diet_item.name %>
         </td>
@@ -23,7 +34,7 @@
         </td>
     <% end %>
     <td>
-        <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "delete_diet_#{diet_item.id}", remote: true, method: :delete, class: "resource-delete-form") do %>
+        <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "delete_diet_#{diet_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
             <button class="deleteForm">Delete</button>
         <% end %>
     </td>

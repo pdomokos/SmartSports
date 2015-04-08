@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407190400) do
+ActiveRecord::Schema.define(version: 20150408082556) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150407190400) do
     t.integer  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "favourite",  default: false
   end
 
   create_table "family_histories", force: true do |t|

@@ -709,6 +709,28 @@ div.right button {
   vertical-align: bottom;
 }
 
+span.hisTitle {
+  cursor:pointer
+}
+
+span.hisTitle.selected {
+  background-color:  rgb(242, 224, 152);
+}
+
+span.favTitle {
+  cursor:pointer
+}
+
+span.favTitle.selected {
+  background-color:  rgb(242, 224, 152);
+}
+
+//div.right button img {
+//  position: fixed;
+//  z-index: 100;
+//}
+
+
 .dataFormField.ui-slider {
   margin-top: 12px;
 }
