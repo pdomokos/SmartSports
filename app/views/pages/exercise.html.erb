@@ -11,117 +11,35 @@
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "walking40.png" %><br/>
-                    Walking
+                    Training
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="activity[source]" value="<%= @default_source %>">
                         <input type="hidden" name="activity[group]" value="walking">
+                        <select id="activity_group" name="activity[group]">
+                            <option>walking</option>
+                            <option>running</option>
+                            <option>cycling</option>
+                            <option>swimming</option>
+                        </select>
                         <input type="hidden" name="activity[manual]" value="true">
-                        <input id="walking_steps" type="text" name="activity[steps]" class="dataFormField"/>
 
-                        <div class="dataFormFieldUnit">steps</div>
-                        <br>
-                        <input id="walking_duration" type="text" name="activity[duration]" class="dataFormField"/>
+                        <div class="dataScale">
+                            <div id="activity_scale" class="dataFormField"></div>
+                        </div>
+                        <div id="activity_percent" class="dataFormFieldUnit">50%</div>
+                        <input id="activity_intensity" type="hidden" name="activity[intensity]"/>
 
-                        <div class="dataFormFieldUnit">min</div>
-                        <br>
-                        <input id="walking_distance" type="text" name="activity[distance]" class="dataFormField"/>
 
-                        <div class="dataFormFieldUnit">m</div>
+                        <input id='activity_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <div class="dataFormFieldUnit">start</div>
                         <br/>
 
-                        <input id='walking_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <input id='activity_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                        <div class="dataFormFieldUnit">end</div>
                         <br/>
-                      
-                    </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
-                <div class="dataFormTitle">
-                    <%= image_tag "running40.png" %><br/>
-                    Running
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "running-create-form", class: "resource-create-form exercise-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="activity[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="activity[group]" value="running">
-                        <input type="hidden" name="activity[manual]" value="true">
 
-                        <input id="running_steps" type="text" name="activity[steps]" class="dataFormField"/>
-
-                        <div class="dataFormFieldUnit">steps</div>
-                        <br>
-                        <input id="running_duration" type="text" name="activity[duration]" class="dataFormField"/>
-
-                        <div class="dataFormFieldUnit">min</div>
-                        <br>
-                        <input id="running_distance" type="text" name="activity[distance]" class="dataFormField"/>
-
-                        <div class="dataFormFieldUnit">m</div>
-                        <br>
-
-                        <input id='running_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
-
-                    </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
-                <div class="dataFormTitle">
-                    <%= image_tag "cycling40.png" %><br/>
-                    Cycling
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "cycling-create-form", class: "resource-create-form exercise-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="activity[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="activity[group]" value="cycling">
-                        <input type="hidden" name="activity[manual]" value="true">
-
-                        <input id="cycling_duration" type="text" name="activity[duration]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">min</div>
-
-                        <input id="cycling_distance" type="text" name="activity[distance]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">m</div>
-                        <br>
-
-                        <input id='cycling_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
-                    </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
-                <div class="dataFormTitle">
-                    <%= image_tag "swimming40.png" %><br/>
-                    Swimming
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "swimming-create-form", class: "resource-create-form exercise-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="activity[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="activity[group]" value="swimming">
-                        <input type="hidden" name="activity[manual]" value="true">
-
-                        <input id="swimming_duration" type="text" name="activity[duration]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">min</div>
-
-                        <input id="swimming_distance" type="text" name="activity[distance]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">m</div>
-                        <br>
-
-                        <input id='swimming_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
                     </div>
                     <div class="dataFormButton">
                         <button class="sendForm">Add</button>
