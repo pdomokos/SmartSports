@@ -10,12 +10,9 @@
   $('#medications_datepicker').datetimepicker(timepicker_defaults)
   $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
 
-  meds = ["Kalmopirin", "Algopirin", "Cataflam"]
   $("#oral_medication_name").watermark('Start typing medication, eg: Kal')
-  $("#oral_medication_name").autocomplete({
-    source: meds
-  })
 
+  load_medication_types()
 #  .autocomplete("instance")._renderItem = (ul, item) ->
 #    return $( "<li></li>" )
 #      .data( "item.autocomplete", item )
@@ -55,15 +52,72 @@
     alert("Failed to delete measurement.")
   )
 
-  @load_medications = () ->
-    self = this
-    current_user = $("#current-user-id")[0].value
-    console.log "calling load recent medications"
-    $.ajax '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=4',
-      type: 'GET',
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load recent medications AJAX Error: #{textStatus}"
-      success: (data, textStatus, jqXHR) ->
-        console.log "load recent medications  Successful AJAX call"
-        console.log textStatus
+@load_medications = () ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load recent medications"
+  $.ajax '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=4',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent medications AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load recent medications  Successful AJAX call"
+      console.log textStatus
 
+
+@load_medication_types = () ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load recent medications"
+  $.ajax '/medication_types.json',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent medication_types AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load medication_types  Successful AJAX call"
+
+      pills = data.filter( (d) ->
+        d['group'] == 'oral'
+      ).map( (d) ->
+        {
+          label: d['name'],
+          id: d['id']
+      })
+      insulin = data.filter( (d) ->
+        d['group'] == 'insulin'
+      ).map( (d) ->
+        {
+        label: d['name'],
+        id: d['id']
+        })
+      $("#oral_medication_name").autocomplete({
+        source: (request, response) ->
+          matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
+          result = []
+          cnt = 0
+          for element in pills
+            if matcher.test(element.label)
+              result.push(element)
+              cnt += 1
+            if cnt >= 20
+              break
+          response(result)
+        select: (event, ui) ->
+          $("#medname").val(ui.item.id)
+      })
+      $("#insulin_name").autocomplete({
+        source: (request, response) ->
+          matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
+          result = []
+          cnt = 0
+          for element in insulin
+            if matcher.test(element.label)
+              result.push(element)
+              cnt += 1
+            if cnt >= 20
+              break
+          response(result)
+        select: (event, ui) ->
+          console.log ui
+          $("#insname").val(ui.item.id)
+      })

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get 'password_resets/update'
   resources :password_resets
   resources :notifications
+
+  resources :medication_types
   resources :users do
     resources :summaries
     resources :activities

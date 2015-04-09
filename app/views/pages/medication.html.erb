@@ -14,7 +14,8 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <input id="oral_medication_name" name="medication[medication_type_id]" class="dataFormField">
+                        <input id="oral_medication_name" name="med_name" class="dataFormField">
+                        <input id="medname" name="medication[medication_type_id]" type="hidden">
 
                         <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField"/>
 
@@ -41,7 +42,8 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <input id="insulin_name" name="medication[medication_type_id]" type="text" class="dataFormField">
+                        <input id="insulin_name" name="ins_name" type="text" class="dataFormField">
+                        <input id="insname" name="medication[medication_type_id]" type="hidden">
 
                         <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField "/>
                         <div class="dataFormFieldUnit ">unit</div>
