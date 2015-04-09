@@ -1,4 +1,5 @@
-require 'JSON'
+require 'json'
+
 namespace :smartdiab do
   "Load default medications"
   task init_medication: :environment do

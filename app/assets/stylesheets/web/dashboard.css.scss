@@ -633,9 +633,17 @@ div.dataFormContainer {
 
 .historyTable {
     width: 100%;
+    min-height: 350px;
     color: #7A7A6F;
 }
 
+.historyTable tr {
+  vertical-align: top;
+}
+
+.historyTable button{
+  margin-top: 20px;
+}
 .historyTable .historyTitle {
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
@@ -651,7 +659,7 @@ div.dataFormContainer {
 }
 
 .padded {
-    padding: 20px;
+    padding: 10px;
 }
 
 
