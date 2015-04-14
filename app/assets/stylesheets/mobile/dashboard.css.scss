@@ -96,7 +96,7 @@ body.nobgAnimation {
 }
 .dietStyle input.dataFormField {
   border: solid 1px #57C88A !important;
-  width: 245px;
+//  width: 200px;
 };
 .dietStyle button {
   background: #57C88A !important;
@@ -108,22 +108,22 @@ body.nobgAnimation {
   width: 300px;
 }
 .dietStyle div.dataFormSeparator {
-//  height: 400px !important;
+//height: 400px !important;
+//  display: none;
+//  clear: both;
 }
-.dietStyle div.dataFormButton button {
-  width: 175px;
+div.dataFormButton button {
+  width: 75%;
 }
 
 
-.dietStyle select {
-  width: 175px;
+select {
+  width: 75%;
   height: 40px;
   margin-bottom: 10px;
 
   margin-left: 16px;
 
-
-  border: solid 1px #57C88A !important;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
   background: no-repeat right;
@@ -133,11 +133,17 @@ body.nobgAnimation {
   font-size: inherit;
   color: #7A7A6F;
 }
+//.dietStyle select {
+//  border: solid 1px #57C88A !important;
+//}
 
 .c2, .exerciseColor {
     color: #F09938 !important;;
 }
 .exerciseStyle input.dataFormField {
+  border: solid 1px #F09938 !important;
+};
+.exerciseStyle div.dataFormField {
   border: solid 1px #F09938 !important;
 };
 .exerciseStyle button {
@@ -147,19 +153,21 @@ body.nobgAnimation {
   border: solid 1px #F09938 !important;
 }
 .exerciseStyle div.dataFormContainer {
-  width: 240px;
-  height: 350px;
+  min-width: 240px;
+//  height: 350px;
 }
 .exerciseStyle div.dataFormSeparator {
   height: 345px !important;
 }
-.exerciseStyle .dataForm {
-  height: 205px;
-}
+//.exerciseStyle .dataForm {
+//  height: 205px;
+//}
 .exerciseStyle div.input-group.date  {
   width: 209px;
 }
-
+//.exerciseStyle select {
+//  width: 170px;
+//}
 
 .c3, .healthColor {
     color: #8980CA !important;;
@@ -173,16 +181,16 @@ body.nobgAnimation {
 .healthStyle div.input-group.date input {
   border: solid 1px #8980CA !important;
 }
-.healthStyle div.dataFormContainer {
-  width: 240px;
-  height: 350px;
-}
-.healthStyle div.dataFormSeparator {
-  height: 345px !important;
-}
-.healthStyle .dataForm {
-  height: 205px;
-}
+//.healthStyle div.dataFormContainer {
+//  width: 240px;
+//  height: 350px;
+//}
+//.healthStyle div.dataFormSeparator {
+//  height: 345px !important;
+//}
+//.healthStyle .dataForm {
+//  height: 205px;
+//}
 .healthStyle div.input-group.date  {
   width: 209px;
 }
@@ -200,15 +208,15 @@ body.nobgAnimation {
 .wellbeingStyle div.input-group.date input {
   border: solid 1px #EA70B5 !important;
 }
-.wellbeingStyle div.dataFormContainer {
-  width: 300px;
-}
-.wellbeingStyle input.dataFormField {
-  width: 245px;
-}
-.wellbeingStyle div.dataFormButton button {
-  width: 175px;
-}
+//.wellbeingStyle div.dataFormContainer {
+//  width: 300px;
+//}
+//.wellbeingStyle input.dataFormField {
+//  width: 245px;
+//}
+//.wellbeingStyle div.dataFormButton button {
+//  width: 175px;
+//}
 
 
 .c5, .medicationColor {
@@ -226,22 +234,22 @@ body.nobgAnimation {
 .medicationStyle div.input-group.date input {
   border: solid 1px #6CC5CC !important;
 }
-.medicationStyle div.dataFormContainer {
-  width: 300px;
-  height: 305px;
-}
+//.medicationStyle div.dataFormContainer {
+//  width: 300px;
+//  height: 305px;
+//}
 .medicationStyle input.dataFormField {
-  width: 245px;
+  width: 75%;
 }
 .medicationStyle div.dataFormButton button {
-  width: 175px;
+  width: 75%;
 }
-.medicationStyle div.dataFormSeparator {
-  height:295px !important;
-}
-.medicationStyle .dataForm {
-  height: 150px;
-}
+//.medicationStyle div.dataFormSeparator {
+//  height:295px !important;
+//}
+//.medicationStyle .dataForm {
+//  height: 150px;
+//}
 
 //.medicationStyle .scombobox {
 //
@@ -295,15 +303,15 @@ body.nobgAnimation {
 .geneticsStyle button {
   background: #2BC7EC !important;
 };
-.geneticsStyle div.dataFormContainer {
-  width: 300px;
-}
-.geneticsStyle input.dataFormField {
-  width: 275px;
-}
-.geneticsStyle div.dataFormButton button {
-  width: 175px;
-}
+//.geneticsStyle div.dataFormContainer {
+//  width: 300px;
+//}
+//.geneticsStyle input.dataFormField {
+//  width: 275px;
+//}
+//.geneticsStyle div.dataFormButton button {
+//  width: 175px;
+//}
 
 .analyticsColor {
   color: #f46d43 !important;
@@ -439,46 +447,39 @@ button.deleteForm {
   background-color:  rgb(242, 224, 152);
 }
 
+
 .appMenu .b0 {
     background: image-url("menu_dashboard.png") 10px 10px no-repeat;
-    font-size: 12px;
 }
 
 .appMenu .b1 {
     background: image-url("menu_diet.png") 10px 10px no-repeat;
-    font-size: 12px;
 }
 
 .appMenu .b2 {
     background: image-url("menu_exercise.png") 10px 10px no-repeat;
-    font-size: 12px;
 }
 
 .appMenu .b3 {
     background: image-url("menu_health.png") 10px 10px no-repeat;
-    font-size: 12px;
 }
 
 .appMenu .b4 {
     background: image-url("menu_medication.png") 10px 10px no-repeat;
-    font-size: 12px;
 }
 
 .appMenu .b5 {
     background: image-url("palmtree60.png") 10px 10px no-repeat;
     background-size: 20px 20px;
-    font-size: 12px;
 }
 
 .appMenu .b6 {
     background: image-url("menu_genetics.png") 10px 10px no-repeat;
-    font-size: 12px;
 }
 
 .appMenu .analyticsMenu {
   background: image-url("analytics60.png") 10px 10px no-repeat;
   background-size: 20px 20px;
-  font-size: 12px;
 }
 
 .bl0 {
@@ -550,8 +551,8 @@ button.deleteForm {
 }
 
 div.dataFormContainer {
-    width: 240px;
-    height: 300px;
+    min-width: 300px;
+//    height: 300px;
     float: left;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -584,9 +585,9 @@ div.dataFormContainer {
 
 }
 
-.dataForm {
-    height: 160px;
-}
+//.dataForm {
+//    height: 160px;
+//}
 
 .dataFormButton button {
     border: none;
@@ -604,7 +605,7 @@ div.dataFormContainer {
     border: solid 1px #8980CA;
     background: white;
     height: 40px;
-    max-width: 170px;
+    width: 75%;
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 10px;
@@ -702,3 +703,10 @@ div.right button {
 //  position: fixed;
 //  z-index: 100;
 //}
+
+.dataScale {
+  width: 75%;
+  height: 40px;
+  margin-bottom: 10px;
+  float: left;
+}

@@ -119,28 +119,6 @@ body.nobgAnimation {
 .dietStyle select {
   width: 245px;
 }
-.dietStyle .ui-selectmenu-button {
-  margin-left: 20px;
-  border: solid 1px #57C88A !important;
-  background: white;
-  height: 40px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 10px;
-  float: left;
-  -webkit-appearance: none;
-  -webkit-border-radius: 0px;
-
-}
-.ui-selectmenu-text{
-  line-height: 2.0em !important;
-  font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  color: black;
-  padding-left: 0px !important;
-}
 
 .c2, .exerciseColor {
     color: #F09938 !important;;
@@ -158,33 +136,23 @@ body.nobgAnimation {
   border: solid 1px #F09938 !important;
 }
 .exerciseStyle div.dataFormContainer {
-  width: 240px;
-  height: 350px;
+  width: 325px;
+  height: 395px;
 }
 .exerciseStyle div.dataFormSeparator {
   height: 345px !important;
 }
 .exerciseStyle .dataForm {
-  height: 205px;
+  height: 210px;
 }
 .exerciseStyle div.input-group.date  {
   width: 209px;
 }
 .exerciseStyle select {
-  width: 170px;
+  width: 255px;
 }
-.exerciseStyle .ui-selectmenu-button {
-  margin-left: 20px;
-  border: solid 1px #F09938 !important;
-  background: white;
-  height: 40px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 10px;
-  float: left;
-  -webkit-appearance: none;
-  -webkit-border-radius: 0px;
-
+.exerciseStyle .dataFormField {
+  width: 255px;
 }
 
 
@@ -737,11 +705,6 @@ span.favTitle.selected {
 //  position: fixed;
 //  z-index: 100;
 //}
-
-
-.dataFormField.ui-slider {
-  margin-top: 12px;
-}
 
 .dataScale {
   height: 40px;
