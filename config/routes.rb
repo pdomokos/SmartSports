@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :notifications
 
   resources :medication_types
+  resources :food_types
   resources :users do
     resources :summaries
     resources :activities

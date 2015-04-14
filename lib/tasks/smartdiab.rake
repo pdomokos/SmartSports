@@ -32,4 +32,23 @@ namespace :smartdiab do
       end
     end
   end
+
+  task init_foods: :environment do
+    if FoodType.all.size != 0
+      FoodType.all.each {|mt|
+        mt.destroy!
+      }
+    end
+
+    File.open("#{ENV['HOME']}/Downloads/foods.json") do |f|
+      foodlist = JSON.load(f)
+
+      #print foodlist.first.as_json.pretty_inspect
+      foodlist.each do |m|
+        ft = FoodType.new(:name =>  m['name'], :category => m['category'], :amount => m['amount'], :kcal => m['kcal'], :prot => m['prot'], :carb => m['carbs'], :fat => m['fat'])
+        ft.save!
+      end
+    end
+  end
+
 end

@@ -15,17 +15,24 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Food">
 
-                        <input id="diet_name" type="text" name="diet[name]" class="dataFormField"/>
+                        <input id="foodname" name="food_name" class="dataFormField">
+                        <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
+                        <input id="diet_name" name="diet[name]" type="hidden">
                         <div class="dataFormFieldUnit"></div>
                         <br/>
 
-                        <input id="diet_cal" type="text" name="diet[calories]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">Cal</div>
-                        <br/>
+                        <div class="dataScale">
+                          <div id="diet_scale"  name="diet_scale" class="dataFormField"></div>
+                        </div>
+                        <input id="diet_amount" name="diet[amount]" type="hidden">
+                        <div id="diet_unit" class="dataFormFieldUnit">250g</div>
 
-                        <input id="diet_fat" type="text" name="diet[carbs]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">g</div>
-                        <br/>
+
+                        <input id="diet_cal" name="diet[calories]" type="hidden"/>
+                        <input id="diet_fat" name="diet[fat]" type="hidden"/>
+                        <input id="diet_carbs" name="diet[carbs]" type="hidden"/>
+                        <input id="diet_prot" name="diet[prot]" type="hidden"/>
+                        <input id="diet_category" name="diet[category]" type="hidden"/>
 
                         <input id='diet_food_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>
@@ -51,26 +58,27 @@
                         <input type="hidden" name="diet[type]" value="Drink">
 
 
-                        <select id="diet_drink_type" class="dataFormField" name="diet[name]">
-                            <option>Water</option>
-                            <option>Soft Drink</option>
-                            <option>Coffee</option>
-                            <option>Energy</option>
-                            <option>Alcohol</option>
-                        </select>
-
-
-                        <input  id="diet_drink_amount" type="text" name="diet[amount]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">dl</div>
+                        <input id="drinkname" name="drink_name" class="dataFormField">
+                        <input id="diet_drink_name" name="diet[name]" type="hidden">
+                        <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
+                        <div class="dataFormFieldUnit"></div>
                         <br/>
 
-                        <input id="diet_drink_calories" type="text" name="diet[calories]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">Cal</div>
-                        <br/>
+                        <div class="dataScale">
+                          <div id="diet_drink_scale"  name="diet[amount]" class="dataFormField"></div>
+                        </div>
+                        <input id="diet_drink_amount" name="diet[amount]" type="hidden">
+                        <div id="diet_drink_unit" class="dataFormFieldUnit">2.5dl</div>
 
-                        <input  id="diet_drink_carbs" type="text" name="diet[carbs]" class="dataFormField"/>
-                        <div class="dataFormFieldUnit">g</div>
-                        <br/>
+
+                        <input id="diet_drink_cal" name="diet[calories]" type="hidden"/>
+                        <input id="diet_drink_fat" name="diet[fat]" type="hidden"/>
+                        <input id="diet_drink_carbs" name="diet[carbs]" type="hidden"/>
+                        <input id="diet_drink_prot" name="diet[prot]" type="hidden"/>
+                        <input id="diet_drink_category" name="diet[category]" type="hidden"/>
+
+
+
 
                         <input id='diet_drink_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>

@@ -52,6 +52,7 @@ class DietsController < ApplicationController
   def create
     user_id = params[:user_id]
     user = User.find(user_id)
+    puts diet_params
     @diet = user.diets.build(diet_params)
     if not @diet.date
       @diet.date = DateTime.now
@@ -102,6 +103,6 @@ class DietsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def diet_params
-    params.require(:diet).permit(:source, :name, :date, :calories, :carbs, :amount, :type)
+    params.require(:diet).permit(:source, :name, :date, :calories, :carbs, :amount, :category, :type, :fat, :prot, :food_type_id)
   end
 end

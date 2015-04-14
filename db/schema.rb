@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408082556) do
+ActiveRecord::Schema.define(version: 20150415072335) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -70,10 +70,14 @@ ActiveRecord::Schema.define(version: 20150408082556) do
     t.datetime "date"
     t.float    "calories"
     t.float    "carbs"
-    t.integer  "amount"
+    t.float    "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "favourite",  default: false
+    t.boolean  "favourite",    default: false
+    t.float    "fat"
+    t.float    "prot"
+    t.string   "category"
+    t.integer  "food_type_id"
   end
 
   create_table "family_histories", force: true do |t|
@@ -89,6 +93,16 @@ ActiveRecord::Schema.define(version: 20150408082556) do
   add_index "family_histories", ["user_id", "created_at"], name: "index_family_histories_on_user_id_and_created_at"
   add_index "family_histories", ["user_id", "source"], name: "index_family_histories_on_user_id_and_source"
   add_index "family_histories", ["user_id"], name: "index_family_histories_on_user_id"
+
+  create_table "food_types", force: true do |t|
+    t.string "name"
+    t.string "category"
+    t.string "amount"
+    t.float  "kcal"
+    t.float  "prot"
+    t.float  "carb"
+    t.float  "fat"
+  end
 
   create_table "friendships", force: true do |t|
     t.integer  "user1_id"
