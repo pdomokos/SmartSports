@@ -1,4 +1,4 @@
-#=require TrendChart
+#=require common/TrendChart
 
 class TrainingTrendChart extends TrendChart
   get_series: () ->

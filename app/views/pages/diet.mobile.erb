@@ -1,0 +1,144 @@
+<div class="diet-block mainContent">
+
+  <div class="sectionTitle dietBodyLogo dietColor">
+    Diet
+  </div>
+  <div class="contentBg dietStyle">
+    <div style="padding: 10px;">
+      <div class="dataFormContainer">
+        <div class="dataFormTitle">
+          <%= image_tag "food40.png" %><br/>
+          Food
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+            <div class="dataForm">
+              <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+              <input type="hidden" name="diet[type]" value="Food">
+
+              <input id="foodname" name="food_name" class="dataFormField">
+              <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
+              <input id="diet_name" name="diet[name]" type="hidden">
+              <div class="dataFormFieldUnit"></div>
+              <br/>
+
+              <div class="dataScale">
+                <div id="diet_scale"  name="diet_scale" class="dataFormField"></div>
+              </div>
+              <input id="diet_amount" name="diet[amount]" type="hidden">
+              <div id="diet_unit" class="dataFormFieldUnit">250g</div>
+
+
+              <input id="diet_cal" name="diet[calories]" type="hidden"/>
+              <input id="diet_fat" name="diet[fat]" type="hidden"/>
+              <input id="diet_carbs" name="diet[carbs]" type="hidden"/>
+              <input id="diet_prot" name="diet[prot]" type="hidden"/>
+              <input id="diet_category" name="diet[category]" type="hidden"/>
+
+              <input id='diet_food_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+              <br/>
+
+            </div>
+            <div class="dataFormButton">
+              <button class="sendForm">Add</button>
+            </div>
+        <% end %>
+      </div>
+
+      <div class="dataFormSeparator"></div>
+
+
+      <div class="dataFormContainer">
+        <div class="dataFormTitle">
+          <%= image_tag "drink40.png" %><br/>
+          Drink
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+            <div class="dataForm">
+              <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+              <input type="hidden" name="diet[type]" value="Drink">
+
+
+              <input id="drinkname" name="drink_name" class="dataFormField">
+              <input id="diet_drink_name" name="diet[name]" type="hidden">
+              <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
+              <div class="dataFormFieldUnit"></div>
+              <br/>
+
+              <div class="dataScale">
+                <div id="diet_drink_scale"  name="diet[amount]" class="dataFormField"></div>
+              </div>
+              <input id="diet_drink_amount" name="diet[amount]" type="hidden">
+              <div id="diet_drink_unit" class="dataFormFieldUnit">2.5dl</div>
+
+
+              <input id="diet_drink_cal" name="diet[calories]" type="hidden"/>
+              <input id="diet_drink_fat" name="diet[fat]" type="hidden"/>
+              <input id="diet_drink_carbs" name="diet[carbs]" type="hidden"/>
+              <input id="diet_drink_prot" name="diet[prot]" type="hidden"/>
+              <input id="diet_drink_category" name="diet[category]" type="hidden"/>
+
+
+
+
+              <input id='diet_drink_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+              <br/>
+
+            </div>
+            <div class="dataFormButton">
+              <button class="sendForm">Add</button>
+            </div>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator"></div>
+
+      <div class="dataFormContainer">
+        <div class="dataFormTitle">
+          <%= image_tag "smoke40.png" %><br/>
+          Smoking
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+            <div class="dataForm">
+              <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+              <input type="hidden" name="diet[type]" value="Smoke">
+
+              <select id="diet_smoke_type" name="diet[name]">
+                <option>1 Cigarette</option>
+                <option>1 Cigar</option>
+                <option>1 Pipe</option>
+              </select>
+
+              <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+              <br/>
+
+            </div>
+            <div class="dataFormButton">
+              <button class="sendForm">Add</button>
+            </div>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator"></div>
+      <div style="clear: both"></div>
+    </div>
+
+  </div>
+
+  <div class="sectionTitle dietBodyLogo dietColor" style="margin-top: 40px;">
+    <span class="hisTitle selected">History</span> | <span class="favTitle">Favorites</span>
+  </div>
+
+  <table class="historyTable"  cellpadding="0" cellspacing="0">
+    <tbody id="recentResourcesTable">
+
+    <%= render partial: "shared/diet_item", collection: @diets %>
+
+    </tbody>
+  </table>
+
+</div>
+
+<% content_for :page_logic do %>
+    diet_loaded()
+<% end %>
+<% content_for :title_text do %>
+    Mobile | SmartDiab
+<% end %>

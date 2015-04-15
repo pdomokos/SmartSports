@@ -1,11 +1,10 @@
 class SessionsController < ApplicationController
-  # layout 'auth'
   has_mobile_fu
   layout :which_layout
   skip_before_filter :require_login, except: [:destroy]
 
   def which_layout
-    is_mobile_device? || is_tablet_device? ? 'auth_mobile' : 'auth'
+    is_mobile_device? || is_tablet_device? ? 'auth.mobile' : 'auth'
   end
 
   def formats=(values)

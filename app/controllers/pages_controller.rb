@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   @googleconn = nil
 
   def which_layout
-    is_mobile_device? || is_tablet_device? ? 'pages_mobile' : 'pages'
+    is_mobile_device? || is_tablet_device? ? 'pages.mobile' : 'pages'
   end
 
   def formats=(values)

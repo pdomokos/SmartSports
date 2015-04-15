@@ -41,7 +41,7 @@
 </div>
 
 <% if is_mobile_device? || is_tablet_device? %>
-    <%= render partial: 'features_mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
+    <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
 <% else %>
     <%= render partial: 'features', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
 <% end %>

@@ -2,6 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+@pages_mobile_menu = () ->
+  self = this
+  console.log "pages mobile"
+  define_globals()
+
+  $( document ).on( "swipeleft swiperight", "#demo-page", ( e ) ->
+    if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )
+      if ( e.type == "swipeleft" )
+        $( "#right-panel" ).panel( "open" );
+      else if ( e.type == "swiperight" )
+        $( "#left-panel" ).panel( "open" );
+  )
+
 @pages_menu = () ->
   self = this
   console.log "pages layout"

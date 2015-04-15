@@ -12,12 +12,12 @@
 //
 //= require jquery-2.1.3.min
 //= require jquery_ujs
-//= require jquery-ui.min
 //= require turbolinks
 //= require jquery.color-2.1.2.min
 //= require jquery.watermark.min
 //= require jquery.datetimepicker
 //= require d3.min
 //= require moment
+//= require jquery.mobile-1.4.5.min
 //= require_tree ./common
-//= require_tree ./web
+//= require_tree ./mobile

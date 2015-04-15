@@ -1,4 +1,4 @@
-#=require TrendChart
+#=require common/TrendChart
 
 class HealthTrendChart extends TrendChart
   get_series1: () ->

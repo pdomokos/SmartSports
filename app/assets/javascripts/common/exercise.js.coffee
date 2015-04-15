@@ -1,6 +1,6 @@
-#= require ActivityChart
-#= require OverviewChart
-#= require TrainingTrendChart
+#= require common/ActivityChart
+#= require common/OverviewChart
+#= require common/TrainingTrendChart
 
 @exercise_loaded = () ->
   uid = $("#current-user-id")[0].value
