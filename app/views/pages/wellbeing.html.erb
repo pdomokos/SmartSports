@@ -75,13 +75,10 @@
 
         <table class="historyTable"  cellpadding="0" cellspacing="0">
             <tbody id="recentResourcesTable">
-
-            <%= render partial: "shared/lifestyle_item", collection: @lifestyles %>
-
+                <%= render partial: "shared/lifestyle_item", collection: @lifestyles %>
             </tbody>
         </table>
     </div>
-
 </div>
 
 <% content_for :page_logic do %>

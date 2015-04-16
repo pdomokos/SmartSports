@@ -1,8 +1,4 @@
-
-
 <div class="training-block mainContent" id="training-container">
-
-
     <div class="sectionTitle exerciseBodyLogo exerciseColor">
         Exercise
     </div>
@@ -25,21 +21,17 @@
                         </select>
                         <input type="hidden" name="activity[manual]" value="true">
 
-
                         <div class="dataScale">
                             <div id="activity_scale" class="dataFormField"></div>
                         </div>
                         <div id="activity_percent" class="dataFormFieldUnit">50%</div>
                         <input id="activity_intensity" type="hidden" name="activity[intensity]"/>
-                        <!--<br/>-->
 
                         <input id='activity_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <div class="dataFormFieldUnit">start</div>
-                        <!--<br/>-->
 
                         <input id='activity_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <div class="dataFormFieldUnit">end</div>
-                        <!--<br/>-->
 
                     </div>
                     <div class="dataFormButton">
@@ -48,10 +40,8 @@
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
-
             <div style="clear: both"></div>
         </div>
-
     </div>
 
     <div class="sectionTitle exerciseBodyLogo exerciseColor" style="margin-top: 40px;">
@@ -60,12 +50,9 @@
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
         <tbody id="recentResourcesTable">
-
-        <%= render partial: "shared/activity_item", collection: @activities %>
-
+            <%= render partial: "shared/activity_item", collection: @activities %>
         </tbody>
     </table>
-
 </div>
 
 <% content_for :page_logic do %>

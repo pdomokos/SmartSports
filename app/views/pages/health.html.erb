@@ -121,9 +121,7 @@
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
         <tbody id="recentMeasTable">
-
-        <%= render partial: "shared/meas_item", collection: @measurements %>
-
+            <%= render partial: "shared/meas_item", collection: @measurements, locals: { meas_map: @meas_map } %>
         </tbody>
     </table>
 

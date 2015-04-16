@@ -12,5 +12,12 @@ class ApplicationController < ActionController::Base
 
   def set_default_variables
     @default_source = "smartdiab"
+
+    @meas_map = {
+        'blood_sugar' => 'bloodglucose',
+        'weight' => 'weight40',
+        'waist' => 'abdominal40',
+        'blood_pressure' => 'bloodpressure40'
+    }
   end
 end

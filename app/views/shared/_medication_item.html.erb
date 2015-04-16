@@ -1,30 +1,49 @@
 <tr class="bg">
 
-    <% if  medication_item.medication_type and medication_item.medication_type.group %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "#{medication_item.medication_type.group}40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            <%= medication_item.medication_type.name %>
-            <%= medication_item.amount %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= medication_item.date.strftime("%F %T") if medication_item.date %>
-        </td>
+  <td style="width:40px;" class="padded">
+    <% if  medication_item.medication_type %>
+        <%= image_tag "#{medication_item.medication_type.group}40.png" %>
     <% else %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "oral40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            Unknown
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= medication_item.date.strftime("%F %T") if medication_item.date %>
-        </td>
+        <%= image_tag "oral40.png" %>
     <% end %>
-    <td>
-        <%= form_tag( "/users/#{current_user.id}/medications/#{medication_item.id}", id: "delete_medication_#{medication_item.id}", remote: true, method: :delete, class: "resource-delete-form") do %>
-            <button class="deleteForm">Delete</button>
+  </td>
+
+  <td class="historyTitle padded">
+    <% if  medication_item.medication_type and medication_item.medication_type.group %>
+        <strong><%= medication_item.medication_type.name %></strong>
+        <% if medication_item.amount && medication_item.amount > 0 %>
+            <br><span>Mennyiség: <%= medication_item.amount %></span>
         <% end %>
-    </td>
+    <% else %>
+        <strong>Unknown medication</strong>
+    <% end %>
+    <br>
+    <span> <%= medication_item.date.strftime("%F %T") if medication_item.date %></span>
+  </td>
+
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{current_user.id}/medications/#{medication_item.id}", id: "mod_med_#{medication_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
+        <button id="fav-icon" class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
+          <% if false %>
+              <i class="fa fa-star fa-2x is-favorite"></i>
+          <% else %>
+              <i class="fa fa-star fa-2x no-favorite"></i>
+          <% end %>
+        </button>
+    <% end %>
+  </td>
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{current_user.id}/medications/#{medication_item.id}", id: "delete_med_#{medication_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
+        <button class="tableControl">
+          <i class="fa fa-trash-o fa-2x"></i>
+        </button>
+    <% end %>
+  </td>
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{current_user.id}/medications/#{medication_item.id}/edit", id: "edit_med_#{medication_item.id}", remote: true, method: "get", class: "resource-delete-form") do %>
+        <button class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
+          <i class="fa fa-pencil fa-2x"></i>
+        </button>
+    <% end %>
+  </td>
 </tr>

@@ -697,3 +697,11 @@ span.favTitle.selected {
   font-style: normal;
   font-weight: normal;
 }
+
+
+.historyTable i.no-favorite {
+  color: #c8c9c3;
+}
+.historyTable i.is-favorite {
+  color: orange;
+}

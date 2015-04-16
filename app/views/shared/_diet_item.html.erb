@@ -1,41 +1,47 @@
 <tr class="bg">
+    <td style="width:40px;" class="padded">
+        <%= image_tag "#{diet_item.type.downcase}40.png" %>
+    </td>
 
-    <% if diet_item.type %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "#{diet_item.type.downcase}40.png" %>
-        </td>
-        <td>
-          <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "mod_diet_#{diet_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
-              <button id="fav-icon" style="background: transparent;border: none;outline: none;">
-                <% if diet_item.favourite %>
-                    <i style="color:#FEEB80;-webkit-text-stroke-width:1px;-webkit-text-stroke-color:orange;" class="fa fa-star fa-2x"></i>
-                <% else %>
-                    <i class="fa fa-star-o fa-2x"></i>
-                <% end %>
-              </button>
-          <% end %>
-        </td>
-        <td onclick="fill_form('<%=diet_item.type%>', '<%=diet_item.name%>', '<%=diet_item.calories%>', '<%=diet_item.carbs%>', '<%=diet_item.amount%>')" class="historyTitle padded">
-            <%= diet_item.type %>
-            <%= diet_item.name %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= diet_item.date.strftime("%F %T") if diet_item.date %>
-        </td>
-    <% else %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "food40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            Unknown <%= diet_item.name %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= diet_item.date.strftime("%F %T") if diet_item.date %>
-        </td>
-    <% end %>
-    <td>
+    <td onclick="fill_form('<%=diet_item.type%>', '<%=diet_item.name%>', '<%=diet_item.calories%>', '<%=diet_item.carbs%>', '<%=diet_item.amount%>')" class="historyTitle padded">
+      <strong>
+        <% if diet_item.type!= "Smoke"  && diet_item.food_type %>
+            <%= diet_item.food_type.name %>
+        <% else %>
+            <%= diet_item.type %><%= diet_item.name %>
+        <% end %>
+      </strong>
+        <% if diet_item.calories %>
+        <%= diet_item.calories.round(2) %> Cal
+        <% end %>
+        <br>
+        <%= diet_item.date.strftime("%F %T") if diet_item.date %>
+
+    </td>
+
+    <td class="iconColumn">
+        <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "mod_diet_#{diet_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
+            <button id="fav-icon" class="tableControl">
+              <% if diet_item.favourite %>
+                  <i class="fa fa-star fa-2x is-favorite"></i>
+              <% else %>
+                  <i class="fa fa-star fa-2x no-favorite"></i>
+              <% end %>
+            </button>
+        <% end %>
+    </td>
+    <td class="iconColumn">
         <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "delete_diet_#{diet_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
-            <button class="deleteForm">Delete</button>
+            <button class="tableControl">
+                <i class="fa fa-trash-o fa-2x"></i>
+            </button>
+        <% end %>
+    </td>
+    <td class="iconColumn">
+        <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}/edit", id: "edit_diet_#{diet_item.id}", remote: true, method: "get", class: "resource-delete-form") do %>
+            <button class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
+            <i class="fa fa-pencil fa-2x"></i>
+            </button>
         <% end %>
     </td>
 </tr>

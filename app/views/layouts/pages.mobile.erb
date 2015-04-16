@@ -6,103 +6,38 @@
     <%= stylesheet_link_tag 'application_mobile', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application_mobile', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />-->
     <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
     <%= favicon_link_tag 'logo-login.png' %>
-
 </head>
 <body>
-
-<div data-role="page" id="main-page" >
-      <div data-role="header">
-          <%= yield :page_title %>
-          <a href="#right-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
-
-      </div><!-- /header -->
-      <div role="main" class="ui-content">
-          <dl>
-              <%= yield %>
-          </dl>
-      </div><!-- /content -->
-      <div data-role="panel" id="right-panel" data-theme="b">
-            <ul data-role="listview"  data-inset="true">
-              <li><a href="/pages/dashboard"><%= image_tag "menu_dashboard.png", alt: "Dashboard", class: "ui-li-icon ui-corner-none" %>Dashboard</a></li>
-              <li><a href="/pages/diet.mobile"><%= image_tag "menu_diet.png", alt: "Diet", class: "ui-li-icon ui-corner-none" %>Diet</a></li>
-              <li><a href="/pages/exercise"><%= image_tag "menu_exercise.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Exercise</a></li>
-              <li><a href="/pages/health"><%= image_tag "menu_health.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Health</a></li>
-              <li><a href="/pages/medication"><%= image_tag "menu_medication.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Medication</a></li>
-              <li><a href="/pages/wellbeing"><%= image_tag "palmtree60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Well-Being</a></li>
-              <li><a href="/pages/genetics"><%= image_tag "menu_genetics.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Genetics</a></li>
-              <li><a href="/pages/analytics"><%= image_tag "analytics60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Analitics</a></li>
-            </ul>
-
-          <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Close</a>
-      </div><!-- /panel -->
-</div>
-
-<!--
-    <div class="topBannerBg bgAnimation">
-
+    <div data-role="page" id="main-page" >
+      <div data-role="header">
+        <%= yield :page_title %>
+        <a href="#right-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
+        <a href="#add-form" data-icon="gear" data-iconpos="notext">Add</a>
+      </div><!-- /header -->
+      <div role="main" class="ui-content">
+        <%= yield %>
+      </div><!-- /content -->
+      <div data-role="panel" id="right-panel" >
+        <ul data-role="listview"  data-inset="true">
+          <li><a href="/pages/dashboard"><%= image_tag "menu_dashboard.png", alt: "Dashboard", class: "ui-li-icon ui-corner-none" %>Dashboard</a></li>
+          <li><a href="/pages/diet.mobile"><%= image_tag "menu_diet.png", alt: "Diet", class: "ui-li-icon ui-corner-none" %>Diet</a></li>
+          <li><a href="/pages/exercise"><%= image_tag "menu_exercise.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Exercise</a></li>
+          <li><a href="/pages/health"><%= image_tag "menu_health.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Health</a></li>
+          <li><a href="/pages/medication"><%= image_tag "menu_medication.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Medication</a></li>
+          <li><a href="/pages/wellbeing"><%= image_tag "palmtree60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Well-Being</a></li>
+          <li><a href="/pages/genetics"><%= image_tag "menu_genetics.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Genetics</a></li>
+          <li><a href="/pages/analytics"><%= image_tag "analytics60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Analitics</a></li>
+        </ul>
+        <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Close</a>
+      </div><!-- /panel -->
     </div>
-    <div class="topBanner">
-        <div class="left">
-            <%= image_tag "logo-login.png", alt: "Login", style: "width: 50px;float:left;", id: "headerLoginLogo", class: "loginLogo" %>
-            <span class="logoTitle">SmartDiab</span>
-        </div>
-        <div class="right">
-            <button id="settings-button" style="width: 60px;height: 60px;padding: 0;background: transparent;border: none;">
-                <%= image_tag "top_settings.png", style:"margin-top: 7px;width: 40px;height: 40px;" %>
-            </button>
-
-            <div class="logoutDiv">
-                <%= form_tag logout_path, :method => :post do %>
-                    <input type="submit" class="logoutButton" value="">
-                <% end %>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div style="margin-top: 40px;">
-            <div class="appMenu noClickSelect">
-                <button id="dashboard-button" class="b0">Dashboard</button>
-
-                <button id="diet-button" class="c1 b1">Diet</button>
-
-                <button id="exercise-button" class="c2 b2">Exercise</button>
-
-                <button id="health-button" class="c3 b3">Health</button>
-
-                <button id="medication-button" class="c5 b4">Medication</button>
-
-                <button id="wellbeing-button" class="c4 b5">Well-Being</button>
-
-                <button id="genetics-button" class="c6 b6">Genetics</button>
-
-                <button id="analytics-button" class="analyticsColor analyticsMenu">Analytics</button>
-            </div>
-
-            <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
-            <div style="margin-top: 40px;">
-                <%= yield %>
-            </div>
-    </div>
--->
-
-
-
-    <!--<button class="prevScreen"></button>-->
-    <!--<button class="nextScreen"></button>-->
-
     <script type="text/javascript">
-
         pages_mobile_menu()
         <%= yield :page_logic %>
-
     </script>
-
 </body>
 </html>

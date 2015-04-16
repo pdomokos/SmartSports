@@ -40,12 +40,12 @@ namespace :smartdiab do
       }
     end
 
-    File.open("#{ENV['HOME']}/Downloads/foods.json") do |f|
+    File.open("#{ENV['HOME']}/Downloads/foods_filtered.json") do |f|
       foodlist = JSON.load(f)
 
       #print foodlist.first.as_json.pretty_inspect
       foodlist.each do |m|
-        ft = FoodType.new(:name =>  m['name'], :category => m['category'], :amount => m['amount'], :kcal => m['kcal'], :prot => m['prot'], :carb => m['carbs'], :fat => m['fat'])
+        ft = FoodType.new(:name =>  m[1], :category => m[7], :amount => m[2], :kcal => m[3], :prot => m[5], :carb => m[4], :fat => m[6])
         ft.save!
       end
     end

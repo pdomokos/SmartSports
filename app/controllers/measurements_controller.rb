@@ -52,6 +52,7 @@ class MeasurementsController < ApplicationController
   end
 
   def index
+
     user_id = params[:user_id]
     summary = (params[:summary] and params[:summary] == "true")
     start = params[:start]

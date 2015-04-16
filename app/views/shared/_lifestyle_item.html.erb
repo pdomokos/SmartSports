@@ -1,30 +1,49 @@
 <tr class="bg">
+
+  <td style="width:40px;" class="padded">
+    <%= image_tag lifestyle_item.group+"40.png" %>
+  </td>
+
+  <td class="historyTitle padded">
     <% if lifestyle_item.group %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag lifestyle_item.group+"40.png" %>
-        </td>
-        <td class="historyTitle padded">
-            <%= lifestyle_item.group %>
-            <%= lifestyle_item.name %>
-            <%= lifestyle_item.amount %>
-        </td>
-        <td class="padded" style="width: 150px">
+        <strong><%= lifestyle_item.group %></strong>
+        <span> <%= lifestyle_item.amount %></span>
+        <br>
+        <span>
+          <% if lifestyle_item.group == 'stress' %>
+            <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %>
+          <% else %>
             <%= lifestyle_item.start_time.strftime("%F %T") if lifestyle_item.start_time %>
-        </td>
+          <% end %>
+        </span>
     <% else %>
-        <td style="width:40px;" class="padded">
-            <%= image_tag "palmtree40.png" %>
-        </td>`
-        <td class="historyTitle padded">
-            Unknown <%= lifestyle_item.group %>
-        </td>
-        <td class="padded" style="width: 150px">
-            <%= lifestyle_item.start_time.strftime("%F %T") if lifestyle_item.start_time %>
-        </td>
+        <strong>Ismeretlen</strong>
     <% end %>
-    <td>
-        <%= form_tag( "/users/#{current_user.id}/lifestyles/#{lifestyle_item.id}", id: "delete_diet_#{lifestyle_item.id}", remote: true, method: :delete, class: "resource-delete-form") do %>
-            <button class="deleteForm">Delete</button>
-        <% end %>
-    </td>
+  </td>
+
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{current_user.id}/lifestyles/#{lifestyle_item.id}", id: "mod_ls_#{lifestyle_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
+        <button id="fav-icon" class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
+          <% if false %>
+              <i class="fa fa-star fa-2x is-favorite"></i>
+          <% else %>
+              <i class="fa fa-star fa-2x no-favorite"></i>
+          <% end %>
+        </button>
+    <% end %>
+  </td>
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{current_user.id}/lifestyles/#{lifestyle_item.id}", id: "delete_ls_#{lifestyle_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
+        <button class="tableControl">
+          <i class="fa fa-trash-o fa-2x"></i>
+        </button>
+    <% end %>
+  </td>
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{current_user.id}/lifestyles/#{lifestyle_item.id}/edit", id: "edit_ls_#{lifestyle_item.id}", remote: true, method: "get", class: "resource-delete-form") do %>
+        <button class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
+          <i class="fa fa-pencil fa-2x"></i>
+        </button>
+    <% end %>
+  </td>
 </tr>

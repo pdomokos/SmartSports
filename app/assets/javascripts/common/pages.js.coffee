@@ -7,10 +7,10 @@
   console.log "pages mobile"
   define_globals()
 
-  $( document ).on( "swipeleft", "#main-page", ( e ) ->
+  $( document ).on( "swiperight", "#main-page", ( e ) ->
     console.log e
     if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )
-      if ( e.type == "swipeleft" )
+      if ( e.type == "swiperight" )
         $( "#right-panel" ).panel( "open" );
   )
 
