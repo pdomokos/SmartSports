@@ -7,6 +7,8 @@
   console.log "pages mobile"
   define_globals()
 
+  $.mobile.changePage.defaults.allowSamePageTransition = true
+
   $( document ).on( "swiperight", "#main-page", ( e ) ->
     console.log e
     if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )

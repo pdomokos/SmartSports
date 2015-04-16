@@ -15,15 +15,14 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Food">
 
-                        <input id="foodname" name="food_name" class="dataFormField">
+                        <input type="text" id="foodname" name="food_name" class="dataFormField" placeholder="Search for food name">
                         <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
                         <input id="diet_name" name="diet[name]" type="hidden">
-                        <div class="dataFormFieldUnit"></div>
-                        <br/>
 
                         <div class="dataScale">
                           <div id="diet_scale"  name="diet_scale" class="dataFormField"></div>
                         </div>
+
                         <input id="diet_amount" name="diet[amount]" type="hidden">
                         <div id="diet_unit" class="dataFormFieldUnit">250g</div>
 
@@ -38,9 +37,7 @@
                         <br/>
 
                     </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
+                  <button class="dataFormField">Add</button>
                 <% end %>
             </div>
 
@@ -58,16 +55,15 @@
                         <input type="hidden" name="diet[type]" value="Drink">
 
 
-                        <input id="drinkname" name="drink_name" class="dataFormField">
+                        <input type="text" id="drinkname" name="drink_name" class="dataFormField" placeholder="Search for drink name">
                         <input id="diet_drink_name" name="diet[name]" type="hidden">
                         <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
-                        <div class="dataFormFieldUnit"></div>
-                        <br/>
 
                         <div class="dataScale">
-                          <div id="diet_drink_scale"  name="diet[amount]" class="dataFormField"></div>
+                          <div id="diet_drink_scale" name="diet[amount]" class="dataFormField"></div>
                         </div>
-                        <input id="diet_drink_amount" name="diet[amount]" type="hidden">
+
+                      <input id="diet_drink_amount" name="diet[amount]" type="hidden">
                         <div id="diet_drink_unit" class="dataFormFieldUnit">2.5dl</div>
 
 
@@ -81,9 +77,7 @@
                         <br/>
 
                     </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
+                  <button class="dataFormField">Add</button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -98,7 +92,7 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Smoke">
 
-                        <select id="diet_smoke_type" name="diet[name]">
+                        <select id="diet_smoke_type" name="diet[name]" class="dataFormField">
                             <option>1 Cigarette</option>
                             <option>1 Cigar</option>
                             <option>1 Pipe</option>
@@ -108,9 +102,7 @@
                         <br/>
 
                     </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
+                    <button class="dataFormField">Add</button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>

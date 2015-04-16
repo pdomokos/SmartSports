@@ -8,6 +8,7 @@
         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
         <input type="hidden" name="diet[type]" value="Food">
         <input type="search" id="foodname" name="food_name" placeholder="Food name, eg: chicken soup">
+        <ul id="food_autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#foodname"></ul>
         <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
         <input id="diet_name" name="diet[name]" type="hidden">
         <label for="diet_scale">Amount:</label>

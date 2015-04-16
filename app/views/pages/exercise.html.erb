@@ -13,7 +13,7 @@
                     <div class="dataForm">
                         <input type="hidden" name="activity[source]" value="<%= @default_source %>">
                         <input type="hidden" name="activity[group]" value="walking">
-                        <select id="activity_group" name="activity[group]">
+                        <select id="activity_group" name="activity[group]" class="dataFormField">
                             <option>walking</option>
                             <option>running</option>
                             <option>cycling</option>
@@ -34,9 +34,7 @@
                         <div class="dataFormFieldUnit">end</div>
 
                     </div>
-                    <div class="dataFormButton">
-                        <button class="sendForm">Add</button>
-                    </div>
+                  <button class="dataFormField">Add</button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>

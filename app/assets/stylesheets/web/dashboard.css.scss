@@ -89,155 +89,102 @@ body.nobgAnimation {
     color: white;
 }
 
+button.dataFormField {
+  color: white;
+}
+
+
 .c1, .dietColor {
     color: #57C88A !important;
 }
-.dietStyle input.dataFormField {
+.dietStyle .dataFormField {
   border: solid 1px #57C88A !important;
-  width: 245px;
+  width: 235px;
 };
 .dietStyle button {
   background: #57C88A !important;
 };
-.dietStyle div.input-group.date input {
-  border: solid 1px #57C88A !important;
-}
 .dietStyle div.dataFormContainer {
-  width: 320px;
+  width: 310px;
   height: 305px;
 }
 .dietStyle div.dataFormSeparator {
-  height: 300px !important;
-}
-.dietStyle div.dataFormButton button {
-  width: 245px;
-}
-.dietStyle .dataForm {
-  height: 170px;
+  height: 310px !important;
 }
 
-.dietStyle select {
-  width: 245px;
-}
+
 
 .c2, .exerciseColor {
     color: #F09938 !important;;
 }
-.exerciseStyle input.dataFormField {
+.exerciseStyle .dataFormField {
   border: solid 1px #F09938 !important;
+  width: 255px;
 };
-.exerciseStyle div.dataFormField {
-  border: solid 1px #F09938 !important;
-};
+
 .exerciseStyle button {
   background: #F09938 !important;
 };
-.exerciseStyle div.input-group.date input {
-  border: solid 1px #F09938 !important;
-}
 .exerciseStyle div.dataFormContainer {
   width: 325px;
-  height: 395px;
+  height: 350px;
 }
 .exerciseStyle div.dataFormSeparator {
   height: 345px !important;
 }
-.exerciseStyle .dataForm {
-  height: 210px;
-}
-.exerciseStyle div.input-group.date  {
-  width: 209px;
-}
-.exerciseStyle select {
-  width: 255px;
-}
-.exerciseStyle .dataFormField {
-  width: 255px;
-}
-
 
 
 
 .c3, .healthColor {
     color: #8980CA !important;;
 }
-.healthStyle input.dataFormField {
+.healthStyle .dataFormField {
   border: solid 1px #8980CA !important;
+  width: 160px;
 };
 .healthStyle button {
   background: #8980CA !important;
 };
-.healthStyle div.input-group.date input {
-  border: solid 1px #8980CA !important;
-}
 .healthStyle div.dataFormContainer {
-  width: 240px;
+  width: 230px;
   height: 350px;
 }
 .healthStyle div.dataFormSeparator {
   height: 345px !important;
 }
 .healthStyle .dataForm {
-  height: 205px;
-}
-.healthStyle div.input-group.date  {
-  width: 209px;
+  height: 200px;
 }
 
 
 .c4, .wellbeingColor {
     color: #EA70B5 !important;;
 }
-.wellbeingStyle input.dataFormField {
+.wellbeingStyle .dataFormField {
   border: solid 1px #EA70B5 !important;
-};
-.wellbeingStyle div.dataFormField {
-  border: solid 1px #EA70B5 !important;
+  width: 245px;
 };
 .wellbeingStyle button {
   background: #EA70B5 !important;
 };
-.wellbeingStyle div.input-group.date input {
-  border: solid 1px #EA70B5 !important;
-}
 .wellbeingStyle div.dataFormContainer {
   width: 320px;
-}
-.wellbeingStyle input.dataFormField {
-  width: 245px;
-}
-.wellbeingStyle div.dataFormField {
-  width: 245px;
-}
-.wellbeingStyle div.dataFormButton button {
-  width: 245px;
 }
 
 
 .c5, .medicationColor {
     color: #6CC5CC !important;;
 }
-.medicationStyle input.dataFormField {
+.medicationStyle .dataFormField {
   border: solid 1px #6CC5CC !important;
-};
-.medicationStyle input.dataFormField {
-  border: solid 1px #6CC5CC !important;
+  width: 245px;
 };
 .medicationStyle button {
   background: #6CC5CC !important;
 };
-.medicationStyle div.input-group.date input {
-  border: solid 1px #6CC5CC !important;
-}
 .medicationStyle div.dataFormContainer {
   width: 345px;
   height: 305px;
-}
-.medicationStyle input.dataFormField {
-  width: 245px;
-}
-.medicationStyle div.dataFormButton button {
-  width: 245px;
 }
 .medicationStyle div.dataFormSeparator {
   height:295px !important;
@@ -249,11 +196,9 @@ body.nobgAnimation {
 .c6, .geneticsColor {
     color: #2BC7EC !important;
 }
-.geneticsStyle input.dataFormField {
+.geneticsStyle .dataFormField {
   border: solid 1px #2BC7EC !important;
-};
-.geneticsStyle input.dataFormField {
-  border: solid 1px #2BC7EC !important;
+  width: 275px;
 };
 .geneticsStyle button {
   background: #2BC7EC !important;
@@ -261,12 +206,8 @@ body.nobgAnimation {
 .geneticsStyle div.dataFormContainer {
   width: 350px;
 }
-.geneticsStyle input.dataFormField {
-  width: 275px;
-}
-.geneticsStyle div.dataFormButton button {
-  width: 275px;
-}
+
+
 
 .analyticsColor {
   color: #f46d43 !important;
