@@ -1,21 +1,6 @@
 @diet_loaded = () ->
   console.log("diet loaded2")
 
-  $("div.appMenu button").removeClass("selected")
-  $("#diet-button").addClass("selected")
-
-  $('#diet_name').watermark('Food name, eg: Chicken soup')
-  $('#diet_amount').watermark('Amount, eg: 1 (=100g)')
-  $('#diet_cal').watermark('Calories, eg: 324')
-  $('#diet_fat').watermark('Total Fat, eg: 24.1')
-  $('#diet_carbs').watermark('Total Carbs, eg: 11.3')
-
-  $('#diet_drink_amount').watermark('Amount: 1.5')
-  $('#diet_drink_calories').watermark('Calories, eg: 165')
-  $('#diet_drink_carbs').watermark('Total Carbs, eg: 3')
-
-  $('#diet_smoking_amount').watermark('Amount, eg: 3')
-
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
@@ -23,61 +8,61 @@
   $("#diet_drink_type").selectmenu()
   $("#diet_smoke_type").selectmenu()
 
-  load_food_types()
-  load_drink_types()
+  #load_food_types()
+  #load_drink_types()
 
-  $("#diet_scale").slider({
-    min: 0.5,
-    max: 5,
-    step: 0.5,
-    value: 2.5
-  }).slider({
-    slide: (event, ui) ->
-      $("#diet_unit").html(ui.value*100+"g")
-    change: (event, ui) ->
-      $("#diet_scale").val(ui.value)
-      id = $("#diet_type_id")[0].value
-      if id
-        $.ajax '/food_types.json?id='+id,
-          type: 'GET',
-          error: (jqXHR, textStatus, errorThrown) ->
-            console.log "load food AJAX Error: #{textStatus}"
-          success: (data, textStatus, jqXHR) ->
-            console.log "load food Successful AJAX call"
-            console.log ui.value
-            $("#diet_amount").val(ui.value)
-            $("#diet_cal").val(data[0].kcal*ui.value)
-            $("#diet_fat").val(data[0].fat*ui.value)
-            $("#diet_carbs").val(data[0].carb*ui.value)
-            $("#diet_prot").val(data[0].prot*ui.value)
-            $("#diet_category").val(data[0].category)
-  })
+#  $("#diet_scale").slider({
+#    min: 0.5,
+#    max: 5,
+#    step: 0.5,
+#    value: 2.5
+#  }).slider({
+#    slide: (event, ui) ->
+#      $("#diet_unit").html(ui.value*100+"g")
+#    change: (event, ui) ->
+#      $("#diet_scale").val(ui.value)
+#      id = $("#diet_type_id")[0].value
+#      if id
+#        $.ajax '/food_types.json?id='+id,
+#          type: 'GET',
+#          error: (jqXHR, textStatus, errorThrown) ->
+#            console.log "load food AJAX Error: #{textStatus}"
+#          success: (data, textStatus, jqXHR) ->
+#            console.log "load food Successful AJAX call"
+#            console.log ui.value
+#            $("#diet_amount").val(ui.value)
+#            $("#diet_cal").val(data[0].kcal*ui.value)
+#            $("#diet_fat").val(data[0].fat*ui.value)
+#            $("#diet_carbs").val(data[0].carb*ui.value)
+#            $("#diet_prot").val(data[0].prot*ui.value)
+#            $("#diet_category").val(data[0].category)
+#  })
 
-  $("#diet_drink_scale").slider({
-    min: 0.5,
-    max: 5,
-    step: 0.5,
-    value: 2.5
-  }).slider({
-    slide: (event, ui) ->
-      $("#diet_drink_unit").html(ui.value+"dl")
-    change: (event, ui) ->
-      $("#diet_drink_scale").val(ui.value)
-      id = $("#diet_drink_type_id")[0].value
-      if id
-        $.ajax '/food_types.json?id='+id,
-          type: 'GET',
-          error: (jqXHR, textStatus, errorThrown) ->
-            console.log "load drink AJAX Error: #{textStatus}"
-          success: (data, textStatus, jqXHR) ->
-            console.log "load drink Successful AJAX call"
-            $("#diet_drink_amount").val(ui.value)
-            $("#diet_drink_cal").val(data[0].kcal*ui.value)
-            $("#diet_drink_fat").val(data[0].fat*ui.value)
-            $("#diet_drink_carbs").val(data[0].carb*ui.value)
-            $("#diet_drink_prot").val(data[0].prot*ui.value)
-            $("#diet_drink_category").val(data[0].category)
-  })
+#  $("#diet_drink_scale").slider({
+#    min: 0.5,
+#    max: 5,
+#    step: 0.5,
+#    value: 2.5
+#  }).slider({
+#    slide: (event, ui) ->
+#      $("#diet_drink_unit").html(ui.value+"dl")
+#    change: (event, ui) ->
+#      $("#diet_drink_scale").val(ui.value)
+#      id = $("#diet_drink_type_id")[0].value
+#      if id
+#        $.ajax '/food_types.json?id='+id,
+#          type: 'GET',
+#          error: (jqXHR, textStatus, errorThrown) ->
+#            console.log "load drink AJAX Error: #{textStatus}"
+#          success: (data, textStatus, jqXHR) ->
+#            console.log "load drink Successful AJAX call"
+#            $("#diet_drink_amount").val(ui.value)
+#            $("#diet_drink_cal").val(data[0].kcal*ui.value)
+#            $("#diet_drink_fat").val(data[0].fat*ui.value)
+#            $("#diet_drink_carbs").val(data[0].carb*ui.value)
+#            $("#diet_drink_prot").val(data[0].prot*ui.value)
+#            $("#diet_drink_category").val(data[0].category)
+#  })
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id

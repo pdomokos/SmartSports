@@ -8,15 +8,16 @@
     <%= csrf_meta_tags %>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
     <%= favicon_link_tag 'logo-login.png' %>
 
 </head>
-<body class="nobgAnimation">
+<body>
 
-<div data-role="page" id="demo-page" data-url="demo-page">
-      <div data-role="header" data-theme="b">
-          <a href="#left-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+<div data-role="page" id="main-page" >
+      <div data-role="header">
+          <%= yield :page_title %>
+          <a href="#right-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
 
       </div><!-- /header -->
       <div role="main" class="ui-content">
@@ -24,10 +25,10 @@
               <%= yield %>
           </dl>
       </div><!-- /content -->
-      <div data-role="panel" id="left-panel" data-theme="b">
+      <div data-role="panel" id="right-panel" data-theme="b">
             <ul data-role="listview"  data-inset="true">
               <li><a href="/pages/dashboard"><%= image_tag "menu_dashboard.png", alt: "Dashboard", class: "ui-li-icon ui-corner-none" %>Dashboard</a></li>
-              <li><a href="/pages/diet"><%= image_tag "menu_diet.png", alt: "Diet", class: "ui-li-icon ui-corner-none" %>Diet</a></li>
+              <li><a href="/pages/diet.mobile"><%= image_tag "menu_diet.png", alt: "Diet", class: "ui-li-icon ui-corner-none" %>Diet</a></li>
               <li><a href="/pages/exercise"><%= image_tag "menu_exercise.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Exercise</a></li>
               <li><a href="/pages/health"><%= image_tag "menu_health.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Health</a></li>
               <li><a href="/pages/medication"><%= image_tag "menu_medication.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Medication</a></li>
