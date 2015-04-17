@@ -4,23 +4,10 @@
   $("div.appMenu button").removeClass("selected")
   $("#diet-button").addClass("selected")
 
-  $('#diet_name').watermark('Food name, eg: Chicken soup')
-  $('#diet_amount').watermark('Amount, eg: 1 (=100g)')
-  $('#diet_cal').watermark('Calories, eg: 324')
-  $('#diet_fat').watermark('Total Fat, eg: 24.1')
-  $('#diet_carbs').watermark('Total Carbs, eg: 11.3')
-
-  $('#diet_drink_amount').watermark('Amount: 1.5')
-  $('#diet_drink_calories').watermark('Calories, eg: 165')
-  $('#diet_drink_carbs').watermark('Total Carbs, eg: 3')
-
-  $('#diet_smoking_amount').watermark('Amount, eg: 3')
-
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
 
-  $("#diet_drink_type").selectmenu()
   $("#diet_smoke_type").selectmenu()
 
   load_food_types()
@@ -35,22 +22,7 @@
     slide: (event, ui) ->
       $("#diet_unit").html(ui.value*100+"g")
     change: (event, ui) ->
-      $("#diet_scale").val(ui.value)
-      id = $("#diet_type_id")[0].value
-      if id
-         $.ajax '/food_types.json?id='+id,
-          type: 'GET',
-          error: (jqXHR, textStatus, errorThrown) ->
-            console.log "load food AJAX Error: #{textStatus}"
-          success: (data, textStatus, jqXHR) ->
-            console.log "load food Successful AJAX call"
-            console.log ui.value
-            $("#diet_amount").val(ui.value)
-            $("#diet_cal").val(data[0].kcal*ui.value)
-            $("#diet_fat").val(data[0].fat*ui.value)
-            $("#diet_carbs").val(data[0].carb*ui.value)
-            $("#diet_prot").val(data[0].prot*ui.value)
-            $("#diet_category").val(data[0].category)
+      $("#diet_amount").val(ui.value)
   })
 
   $("#diet_drink_scale").slider({
@@ -62,21 +34,7 @@
     slide: (event, ui) ->
       $("#diet_drink_unit").html(ui.value+"dl")
     change: (event, ui) ->
-      $("#diet_drink_scale").val(ui.value)
-      id = $("#diet_drink_type_id")[0].value
-      if id
-        $.ajax '/food_types.json?id='+id,
-          type: 'GET',
-          error: (jqXHR, textStatus, errorThrown) ->
-            console.log "load drink AJAX Error: #{textStatus}"
-          success: (data, textStatus, jqXHR) ->
-            console.log "load drink Successful AJAX call"
-            $("#diet_drink_amount").val(ui.value)
-            $("#diet_drink_cal").val(data[0].kcal*ui.value)
-            $("#diet_drink_fat").val(data[0].fat*ui.value)
-            $("#diet_drink_carbs").val(data[0].carb*ui.value)
-            $("#diet_drink_prot").val(data[0].prot*ui.value)
-            $("#diet_drink_category").val(data[0].category)
+      $("#diet_drink_amount").val(ui.value)
   })
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
@@ -153,6 +111,17 @@
       console.log "load recent diets  Successful AJAX call"
       console.log textStatus
 
+foodmapFn = (d) ->
+  {
+  label: d['name'],
+  id: d['id'],
+  kcal: d['kcal'],
+  fat: d['fat'],
+  carb: d['carb'],
+  prot: d['prot'],
+  categ: d['category']
+  }
+
 @load_food_types = () ->
   self = this
   current_user = $("#current-user-id")[0].value
@@ -164,16 +133,7 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load food_types  Successful AJAX call"
 
-      foods = data.map( (d) ->
-        {
-        label: d['name'],
-        id: d['id'],
-        kcal: d['kcal'],
-        fat: d['fat'],
-        carb: d['carb'],
-        prot: d['prot'],
-        categ: d['category']
-        })
+      foods = data.map( foodmapFn )
 
       $("#foodname").autocomplete({
         source: (request, response) ->
@@ -193,13 +153,7 @@
           $("#diet_scale" ).slider({
               value: "2.5"
             })
-#          $("#diet_name").val(ui.item.label)
           $("#diet_amount").val(2.5)
-          $("#diet_cal").val(ui.item.kcal*2.5)
-          $("#diet_fat").val(ui.item.fat*2.5)
-          $("#diet_carbs").val(ui.item.carb*2.5)
-          $("#diet_prot").val(ui.item.prot*2.5)
-          $("#diet_category").val(ui.item.categ)
       })
 
 @load_drink_types = () ->
@@ -213,16 +167,7 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load drink_types  Successful AJAX call"
 
-      foods = data.map( (d) ->
-        {
-        label: d['name'],
-        id: d['id'],
-        kcal: d['kcal'],
-        fat: d['fat'],
-        carb: d['carb'],
-        prot: d['prot'],
-        categ: d['category']
-        })
+      foods = data.map( foodmapFn )
 
       $("#drinkname").autocomplete({
         source: (request, response) ->

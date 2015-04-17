@@ -1,5 +1,4 @@
 class DietsController < ApplicationController
-
   # GET /diets
   # GET /diets.json
   def index
@@ -8,6 +7,12 @@ class DietsController < ApplicationController
 
     order = params[:order]
     limit = params[:limit]
+
+    @is_mobile = false
+    mobile = params[:mobile]
+    if mobile and mobile=="true"
+      @is_mobile = true
+    end
 
     favourites = params[:favourites]
 
@@ -44,7 +49,13 @@ class DietsController < ApplicationController
       format.json  { render :json => {:diets => @diets}}
       format.js
     end
+  end
 
+  def show
+    set_diet
+    respond_to do |format|
+      format.json
+    end
   end
 
   # POST /diets
@@ -56,6 +67,14 @@ class DietsController < ApplicationController
     @diet = user.diets.build(diet_params)
     if not @diet.date
       @diet.date = DateTime.now
+    end
+
+    if @diet.food_type
+      ft = @diet.food_type
+      @diet.calories = @diet.amount*ft.kcal
+      @diet.carbs = @diet.amount*ft.prot
+      @diet.fat = @diet.amount*ft.carb
+      @diet.prot = @diet.amount*ft.fat
     end
     respond_to do |format|
       if @diet.save

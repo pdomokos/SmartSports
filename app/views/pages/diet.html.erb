@@ -26,13 +26,6 @@
                         <input id="diet_amount" name="diet[amount]" type="hidden">
                         <div id="diet_unit" class="dataFormFieldUnit">250g</div>
 
-
-                        <input id="diet_cal" name="diet[calories]" type="hidden"/>
-                        <input id="diet_fat" name="diet[fat]" type="hidden"/>
-                        <input id="diet_carbs" name="diet[carbs]" type="hidden"/>
-                        <input id="diet_prot" name="diet[prot]" type="hidden"/>
-                        <input id="diet_category" name="diet[category]" type="hidden"/>
-
                         <input id='diet_food_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>
 
@@ -60,18 +53,11 @@
                         <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
 
                         <div class="dataScale">
-                          <div id="diet_drink_scale" name="diet[amount]" class="dataFormField"></div>
+                          <div id="diet_drink_scale" name="diet_drink_scale" class="dataFormField"></div>
                         </div>
 
-                      <input id="diet_drink_amount" name="diet[amount]" type="hidden">
+                        <input id="diet_drink_amount" name="diet[amount]" type="hidden">
                         <div id="diet_drink_unit" class="dataFormFieldUnit">2.5dl</div>
-
-
-                        <input id="diet_drink_cal" name="diet[calories]" type="hidden"/>
-                        <input id="diet_drink_fat" name="diet[fat]" type="hidden"/>
-                        <input id="diet_drink_carbs" name="diet[carbs]" type="hidden"/>
-                        <input id="diet_drink_prot" name="diet[prot]" type="hidden"/>
-                        <input id="diet_drink_category" name="diet[category]" type="hidden"/>
 
                         <input id='diet_drink_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>

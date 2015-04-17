@@ -5,73 +5,17 @@
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
 
-
   load_food_types()
 #  load_drink_types()
 
-#  $("#diet_scale").slider({
-#    min: 0.5,
-#    max: 5,
-#    step: 0.5,
-#    value: 2.5
-#  }).slider({
-#    slide: (event, ui) ->
-#      $("#diet_unit").html(ui.value*100+"g")
-#    change: (event, ui) ->
-#      $("#diet_scale").val(ui.value)
-#      id = $("#diet_type_id")[0].value
-#      if id
-#        $.ajax '/food_types.json?id='+id,
-#          type: 'GET',
-#          error: (jqXHR, textStatus, errorThrown) ->
-#            console.log "load food AJAX Error: #{textStatus}"
-#          success: (data, textStatus, jqXHR) ->
-#            console.log "load food Successful AJAX call"
-#            console.log ui.value
-#            $("#diet_amount").val(ui.value)
-#            $("#diet_cal").val(data[0].kcal*ui.value)
-#            $("#diet_fat").val(data[0].fat*ui.value)
-#            $("#diet_carbs").val(data[0].carb*ui.value)
-#            $("#diet_prot").val(data[0].prot*ui.value)
-#            $("#diet_category").val(data[0].category)
-#  })
-
-#  $("#diet_drink_scale").slider({
-#    min: 0.5,
-#    max: 5,
-#    step: 0.5,
-#    value: 2.5
-#  }).slider({
-#    slide: (event, ui) ->
-#      $("#diet_drink_unit").html(ui.value+"dl")
-#    change: (event, ui) ->
-#      $("#diet_drink_scale").val(ui.value)
-#      id = $("#diet_drink_type_id")[0].value
-#      if id
-#        $.ajax '/food_types.json?id='+id,
-#          type: 'GET',
-#          error: (jqXHR, textStatus, errorThrown) ->
-#            console.log "load drink AJAX Error: #{textStatus}"
-#          success: (data, textStatus, jqXHR) ->
-#            console.log "load drink Successful AJAX call"
-#            $("#diet_drink_amount").val(ui.value)
-#            $("#diet_drink_cal").val(data[0].kcal*ui.value)
-#            $("#diet_drink_fat").val(data[0].fat*ui.value)
-#            $("#diet_drink_carbs").val(data[0].carb*ui.value)
-#            $("#diet_drink_prot").val(data[0].prot*ui.value)
-#            $("#diet_drink_category").val(data[0].category)
-#  })
-
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
-    console.log "success "+form_id
-    console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
-    loadHistory()
+    load_diets()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to create diet.")
@@ -80,24 +24,35 @@
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "update/delete success "+form_id
-    loadHistory()
+    load_diets()
+    $("#hist-button").addClass("ui-btn-active")
+    $("#fav-button").removeClass("ui-btn-active")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to update/delete diet.")
   )
 
-  $('.hisTitle').click ->
-    loadHistory()
+  $('#hist-button').click ->
+    load_diets()
 
-  $(".favTitle").click ->
-    load_favs()
-    $(".hisTitle").removeClass("selected")
-    $(".favTitle").addClass("selected")
+  $("#fav-button").click ->
+    load_diets(true)
 
-@loadHistory = () ->
-  load_diets()
-  $(".hisTitle").addClass("selected")
-  $(".favTitle").removeClass("selected")
+@load_diets = (fav=false) ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load recent diets"
+  url = '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=4&mobile=true'
+  if fav
+    console.log "loading favorites"
+    url = url+"&favourites=true"
+  $.ajax url,
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent diets AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load recent diets  Successful AJAX call"
+      console.log textStatus
 
 @fill_form = (type, name, calories, carbs, amount) ->
   if type == 'Food'
@@ -112,29 +67,6 @@
   else if type == 'Smoke'
     $("#diet_smoke_type" ).val(name).change()
 
-@load_diets = () ->
-  self = this
-  current_user = $("#current-user-id")[0].value
-  console.log "calling load recent diets"
-  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=4',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load recent diets  Successful AJAX call"
-      console.log textStatus
-
-@load_favs = () ->
-  self = this
-  current_user = $("#current-user-id")[0].value
-  console.log "calling load recent diets"
-  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&favourites=true&order=desc&limit=4',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load recent diets  Successful AJAX call"
-      console.log textStatus
 
 @load_food_types = () ->
   self = this
@@ -181,46 +113,20 @@
 
           console.log result
           $.each( result, ( i, val ) ->
-            html += "<li>" + val.label + "</li>";
+            html += "<li id='food_id_"+val.id+"'>" + val.label + "</li>";
           )
           $ul.html( html );
           $ul.listview( "refresh" );
-          $ul.trigger( "updatelayout");
+          $ul.trigger( "updatelayout")
       )
 
       $("#food_autocomplete").on("click", "li", (e) ->
-        console.log "clicked "+e.currentTarget
-        console.log $(this).text()
         $("#foodname").val($(this).text())
         $("#food_autocomplete").html("")
+        [..., food_id] = $(this)[0].id.split("_")
+        $("#diet_type_id").val( food_id )
+        console.log $(this).text()+" id: "+food_id
       )
-
-#      $("#foodname").autocomplete({
-#        source: (request, response) ->
-#          matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term, ""), "i")
-#          result = []
-#          cnt = 0
-#          for element in foods
-#            if matcher.test(element.label)
-#              result.push(element)
-#              cnt += 1
-#            if cnt >= 20
-#              break
-#          response(result)
-#        select: (event, ui) ->
-#          $("#diet_type_id").val(ui.item.id)
-#          $("#diet_unit").text("250g")
-#          $("#diet_scale" ).slider({
-#            value: "2.5"
-#          })
-#          #          $("#diet_name").val(ui.item.label)
-#          $("#diet_amount").val(2.5)
-#          $("#diet_cal").val(ui.item.kcal*2.5)
-#          $("#diet_fat").val(ui.item.fat*2.5)
-#          $("#diet_carbs").val(ui.item.carb*2.5)
-#          $("#diet_prot").val(ui.item.prot*2.5)
-#          $("#diet_category").val(ui.item.categ)
-#      })
 
 @load_drink_types = () ->
   self = this

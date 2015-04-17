@@ -12,29 +12,9 @@
     <%= favicon_link_tag 'logo-login.png' %>
 </head>
 <body>
-    <div data-role="page" id="main-page" >
-      <div data-role="header">
-        <%= yield :page_title %>
-        <a href="#right-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
-        <a href="#add-form" data-icon="gear" data-iconpos="notext">Add</a>
-      </div><!-- /header -->
-      <div role="main" class="ui-content">
-        <%= yield %>
-      </div><!-- /content -->
-      <div data-role="panel" id="right-panel" >
-        <ul data-role="listview"  data-inset="true">
-          <li><a href="/pages/dashboard"><%= image_tag "menu_dashboard.png", alt: "Dashboard", class: "ui-li-icon ui-corner-none" %>Dashboard</a></li>
-          <li><a href="/pages/diet.mobile"><%= image_tag "menu_diet.png", alt: "Diet", class: "ui-li-icon ui-corner-none" %>Diet</a></li>
-          <li><a href="/pages/exercise"><%= image_tag "menu_exercise.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Exercise</a></li>
-          <li><a href="/pages/health"><%= image_tag "menu_health.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Health</a></li>
-          <li><a href="/pages/medication"><%= image_tag "menu_medication.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Medication</a></li>
-          <li><a href="/pages/wellbeing"><%= image_tag "palmtree60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Well-Being</a></li>
-          <li><a href="/pages/genetics"><%= image_tag "menu_genetics.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Genetics</a></li>
-          <li><a href="/pages/analytics"><%= image_tag "analytics60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Analitics</a></li>
-        </ul>
-        <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Close</a>
-      </div><!-- /panel -->
-    </div>
+
+    <%= yield %>
+
     <script type="text/javascript">
         pages_mobile_menu()
         <%= yield :page_logic %>

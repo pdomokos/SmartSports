@@ -1,5 +1,5 @@
 <li>
-  <a href="#">
+  <a id="diet_item_<%= diet_item.id %>" href="#editFoodPage" data-transition="slidefade">
     <%= image_tag "#{diet_item.type.downcase}40.png" %>
     <% if diet_item.type != "Smoke" %>
       <h2><%= diet_item.food_type.name if diet_item.food_type %></h2>
@@ -9,5 +9,5 @@
       <p><%= diet_item.date %></p>
     <% end %>
   </a>
-  <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Edit</a>
+
 </li>
