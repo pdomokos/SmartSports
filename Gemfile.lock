@@ -75,6 +75,9 @@ GEM
     jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     json (1.8.2)
     jwt (1.2.0)
     mail (2.5.4)
@@ -216,6 +219,7 @@ DEPENDENCIES
   fitgem
   font-awesome-sass
   jbuilder (~> 2.0)
+  jquery-turbolinks
   minitest-reporters (= 1.0.5)
   misfit_gem
   mobile-fu

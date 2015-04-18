@@ -11,13 +11,97 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <%= favicon_link_tag 'logo-login.png' %>
 </head>
-<body>
+    <body>
 
-    <%= yield %>
 
-    <script type="text/javascript">
-        pages_mobile_menu()
-        <%= yield :page_logic %>
-    </script>
-</body>
+        <div data-role="page" id="main-page" >
+          <div data-role="header">
+            <h1><%= yield :header_text %></h1>
+            <a href="#right-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
+            <a href="#settingsPage" data-icon="gear" data-iconpos="notext">Settings</a>
+          </div><!-- /header -->
+
+          <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
+
+          <%= yield :main_content %>
+
+          <div data-role="panel" id="right-panel" >
+            <ul data-role="listview"  data-inset="true">
+              <li><a href="/pages/dashboard"><%= image_tag "menu_dashboard.png", alt: "Dashboard", class: "ui-li-icon ui-corner-none" %>Dashboard</a></li>
+              <li><a href="/pages/diet"><%= image_tag "menu_diet.png", alt: "Diet", class: "ui-li-icon ui-corner-none" %>Diet</a></li>
+              <li><a href="/pages/exercise"><%= image_tag "menu_exercise.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Exercise</a></li>
+              <li><a href="/pages/health"><%= image_tag "menu_health.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Health</a></li>
+              <li><a href="/pages/medication"><%= image_tag "menu_medication.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Medication</a></li>
+              <li><a href="/pages/wellbeing"><%= image_tag "palmtree60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Well-Being</a></li>
+              <li><a href="/pages/genetics"><%= image_tag "menu_genetics.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Genetics</a></li>
+              <li><a href="/pages/analytics"><%= image_tag "analytics60.png", alt: "Exercise", class: "ui-li-icon ui-corner-none" %>Analitics</a></li>
+            </ul>
+            <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Close</a>
+          </div><!-- /panel -->
+        </div>
+
+        <div id="settingsPage" data-role="page" data-theme="a" class="ui-corner-all">
+          <div data-role="header">
+            <h1>Settings</h1>
+            <a href="<%= yield :back_link%>" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-rel="back" data-transition="slide" data-direction="reverse">Back</a>
+          </div>
+          <div class="ui-content">
+
+            <p><strong>User Account</strong></p>
+            <div class="ui-field-contain">
+                <form>
+                  <label for="s_name">Screen Name</label>
+                  <input id="s_name" type="text" name="food_name" value="" data-theme="a" >
+                </form>
+
+                <ul data-role="listview" data-inset="true">
+                  <li><a href="#passwordPage">Password</a>
+                  </li>
+                </ul>
+            </div>
+
+            <p><strong>Connections</strong></p>
+            <ul data-role="listview" data-inset="true">
+              <li><a href="#">Moves</a>
+              </li>
+              <li><a href="#">Withings</a>
+              </li>
+              <li><a href="#">Misfit</a>
+              </li>
+              <li><a href="#">Google Fit</a>
+              </li>
+              <li><a href="#">Fitbit</a>
+              </li>
+              <li><a href="#">Polar</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div id="passwordPage" data-role="page" data-theme="a" class="ui-corner-all">
+          <div data-role="header">
+            <h1>Authentication</h1>
+            <a href="#" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-rel="back" data-transition="slide" data-direction="reverse">Back</a>
+          </div>
+          <div class="ui-content">
+              <form>
+              <div class="ui-field-contain">
+                <label for="s_pass">Password</label>
+                <input id="s_pass" type="text" name="food_name" value="" data-theme="a" readonly="true">
+                <label for="s_pass_conf">Password Confirmation</label>
+                <input id="s_pass_conf" type="text" name="food_name" data-theme="a" readonly="true">
+              </div>
+              <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
+            </form>
+          </div>
+        </div>
+        <%= yield :subpages%>
+
+        <script type="text/javascript">
+            pages_mobile_menu()
+            <%= yield :page_logic %>
+        </script>
+
+    </body>
 </html>
