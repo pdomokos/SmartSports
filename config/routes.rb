@@ -7,9 +7,11 @@ Rails.application.routes.draw do
         resources :measurements
         resources :activities
         resources :diets
+        resources :medications
         resources :lifestyles
       end
       resources :medication_types
+      resources :food_types
       get 'profile' => "api#profile"
     end
   end

@@ -43,7 +43,7 @@ module Api::V1
     end
 
     private
-    def diet_params
+    def medication_params
       params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date)
     end
 

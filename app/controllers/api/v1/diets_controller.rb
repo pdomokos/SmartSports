@@ -35,6 +35,25 @@ module Api::V1
       if not diet.date
         diet.date = DateTime.now
       end
+
+      if diet.food_type_id && FoodType.where(id: diet.food_type_id).empty?
+        render json: { :ok => false, :msg => "Invalid food type"}, status: 400
+        return
+      end
+
+      if not diet.amount
+        render json: { :ok => false, :msg => "Amount missing"}, status: 400
+        return
+      end
+
+      if diet.food_type
+        ft = diet.food_type
+        diet.calories = diet.amount*ft.kcal
+        diet.carbs = diet.amount*ft.prot
+        diet.fat = diet.amount*ft.carb
+        diet.prot = diet.amount*ft.fat
+      end
+
       if diet.save
         render json: { :ok => true, :id => diet.id }
       else
@@ -44,7 +63,7 @@ module Api::V1
 
     private
     def diet_params
-      params.require(:diet).permit(:source, :name, :date, :calories, :carbs, :amount, :type, :user_id)
+      params.require(:diet).permit(:type, :user_id, :source, :name, :date, :calories, :carbs, :amount, :food_type_id)
     end
 
   end

@@ -1,4 +1,5 @@
 require 'json'
+require 'csv'
 
 namespace :smartdiab do
   "Load default medications"
@@ -40,15 +41,50 @@ namespace :smartdiab do
       }
     end
 
-    File.open("#{ENV['HOME']}/Downloads/foods_filtered.json") do |f|
+    foodlist = nil
+    File.open("#{ENV['HOME']}/Downloads/foods_exported.json") do |f|
       foodlist = JSON.load(f)
 
       #print foodlist.first.as_json.pretty_inspect
       foodlist.each do |m|
-        ft = FoodType.new(:name =>  m[1], :category => m[7], :amount => m[2], :kcal => m[3], :prot => m[5], :carb => m[4], :fat => m[6])
+        # ["id", "name", "category", "amount", "kcal", "prot", "carb", "fat"]
+        ft = FoodType.new(:id => m['id'], :name =>  m['name'], :category => m['category'], :amount => m['amount'], :kcal => m['kcal'], :prot => m['prot'], :carb => m['carb'], :fat => m['fat'])
         ft.save!
       end
     end
   end
 
+  task export_foods: :environment do
+    k = ["id", "name", "category", "amount", "kcal", "prot", "carb", "fat"]
+    CSV.open("#{ENV['HOME']}/Downloads/foods_exported.csv", 'w') do |csv|
+      csv << k
+      prev = nil
+      FoodType.all.order("name").order("kcal").each do |ft|
+        row = ft.as_json
+        cmp = row.clone
+        cmp.delete('id')
+        if cmp!=prev
+          prev=cmp
+          csv << k.map{|it| row[it]}
+        end
+      end
+    end
+  end
+
+  task export_json: :environment do
+    File.open("#{ENV['HOME']}/Downloads/foods_exported.json", 'w') do |f|
+      arr = []
+      prev = nil
+      FoodType.all.order("name").order("kcal").each do |ft|
+        curr = ft.as_json
+        cmp = curr.clone
+        cmp.delete('id')
+        if cmp!=prev
+          arr << curr
+          prev = cmp
+        end
+      end
+      JSON.dump(arr, f)
+    end
+  end
 end
