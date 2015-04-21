@@ -15,7 +15,9 @@ class PagesController < ApplicationController
   end
 
   def redir_mobile
-    redirect_to action: 'mobilepage'
+    if is_mobile_device? || is_tablet_device?
+      redirect_to action: 'mobilepage'
+    end
   end
 
   def formats=(values)
@@ -45,7 +47,7 @@ class PagesController < ApplicationController
 
   def exercise
     @uid = current_user.id
-    @conn = @shown_user.connections
+    @conn = current_user.connections
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
     # respond_to do |format|
     #   format.html
