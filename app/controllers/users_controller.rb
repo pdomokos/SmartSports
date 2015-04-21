@@ -47,10 +47,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def upload
+    # par = params.require(:user).permit( :name, :avatar)
+    user = User.find(params[:user_id])
+    user.avatar = params[:avatar]
+    user.save!
+    respond_to do |format|
+      format.html { redirect_to '/pages/mobilepage#settingsPage' }
+    end
+  end
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
+     respond_to do |format|
       par = params.require(:user).permit( :password, :password_confirmation, :name)
       if @user.update(par)
         format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
@@ -80,6 +89,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit( :email, :password, :password_confirmation, :name)
+      params.require(:user).permit( :email, :password, :password_confirmation, :name, :avatar)
     end
 end

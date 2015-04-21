@@ -40,8 +40,9 @@
         <div style="padding-left: 40px;padding-right: 20px;padding-top: 40px;">
 
 
-            <div style="width: 160px;height: 200px;background: #6CC5CC">
-            <%= image_tag "unknown.jpeg", alt: "username", class: "noClickSelect" %>
+            <div style="width: 150px;height: 200px;background: #6CC5CC">
+              <%= image_tag current_user.avatar.url(:medium) %>
+              <!--<%= image_tag "unknown.jpeg", alt: "username", class: "noClickSelect" %>-->
 
             </div>
             <div class="noClickSelect">

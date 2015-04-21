@@ -66,6 +66,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 
 gem 'jquery-turbolinks'
 
+gem "paperclip", "~> 4.2"
+
 group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mocha'

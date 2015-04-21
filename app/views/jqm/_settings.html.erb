@@ -8,6 +8,15 @@
   <div class="ui-content">
 
     <p><strong>User Account</strong></p>
+
+    <%= image_tag current_user.avatar.url(:medium) %>
+
+    <%= form_tag( "/users/#{current_user.id}/upload", :multipart => true, :'data-ajax' => false) do %>
+        <label for="takePictureField">Upload Photo</label>
+        <input type="file" name="avatar" capture="camera" data-clear-btn="true" accept="image/*;capture=camera" id="takePictureField">
+        <%= submit_tag %>
+    <% end %>
+
     <div class="ui-field-contain">
       <form>
         <label for="s_name">Screen Name</label>

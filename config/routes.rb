@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :diets
     resources :medications
     resources :family_histories
+    post 'upload'
   end
 
   get 'pages/mobilepage'

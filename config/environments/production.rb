@@ -117,4 +117,5 @@ Rails.application.configure do
       :openssl_verify_mode => 'none',
   }
 
+  Paperclip.options[:command_path] = "/usr/bin/"
 end
