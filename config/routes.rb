@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :family_histories
   end
 
+  get 'pages/mobilepage'
   get 'pages/dashboard'
   get 'pages/diet'
   get 'pages/exercise'

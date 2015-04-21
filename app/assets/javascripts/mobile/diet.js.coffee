@@ -1,3 +1,5 @@
+
+
 @diet_loaded = () ->
   console.log("diet loaded2")
 

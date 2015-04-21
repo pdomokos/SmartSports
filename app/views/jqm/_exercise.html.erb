@@ -1,0 +1,39 @@
+<div data-role="page" id="exercisePage" >
+
+  <div data-role="header" id="exerciseHeader">
+    <h1>Exercise</h1>
+    <a href="#menuPanel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <div class="ui-corner-all custom-corners">
+      <div class="ui-bar ui-bar-a">
+        <%= image_tag "walking40.png" %>
+        <h3>Food</h3>
+      </div>
+      <div class="ui-body ui-body-a">
+        <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+            <input type="hidden" name="activity[source]" value="<%= @default_source %>">
+
+            <select id="activity_group" name="activity[group]">
+              <option>walking</option>
+              <option>running</option>
+              <option>cycling</option>
+              <option>swimming</option>
+            </select>
+
+            <label for="diet_scale">Intensity:</label>
+            <input id="diet_scale" type="range" name="activity[intensity]" min="0.5" max="5" step="0.5" value="2.5">
+
+            <label for="activity_start_datepicker">Start Time:</label>
+            <input id='activity_start_datepicker' type='text' readonly="true" name="activity[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+
+            <label for="activity_end_datepicker">End Time:</label>
+            <input id='activity_end_datepicker' type='text' readonly="true" name="activity[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+
+            <button class="ui-shadow ui-btn ui-corner-all sendForm">Add Exercise</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

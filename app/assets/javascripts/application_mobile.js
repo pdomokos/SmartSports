@@ -19,6 +19,7 @@
 //= require jquery.datetimepicker
 //= require d3.min
 //= require moment
+//= require mobileinit
 //= require jquery.mobile-1.4.5.min
 //= require_tree ./common
 //= require_tree ./mobile

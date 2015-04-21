@@ -13,7 +13,7 @@
     console.log e
     if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )
       if ( e.type == "swiperight" )
-        $( "#right-panel" ).panel( "open" );
+        $( "#menuPanel" ).panel( "open" );
   )
 
 @pages_menu = () ->

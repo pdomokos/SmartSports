@@ -1,0 +1,64 @@
+
+<div id="settingsPage" data-role="page" data-theme="a" class="ui-corner-all" >
+  <div data-role="header">
+    <h1>Settings</h1>
+    <a href="#menuPanel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
+    <!--<a href="#" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-rel="back" data-transition="slide" data-direction="reverse">Back</a>-->
+  </div>
+  <div class="ui-content">
+
+    <p><strong>User Account</strong></p>
+    <div class="ui-field-contain">
+      <form>
+        <label for="s_name">Screen Name</label>
+        <input id="s_name" type="text" name="food_name" value="" data-theme="a" >
+      </form>
+
+      <ul data-role="listview" data-inset="true">
+        <li><a href="#passwordPage">Password</a>
+        </li>
+      </ul>
+
+      <label for="language_select">Language</label>
+      <select id="language_select" name="settings[lang]">
+        <option>English</option>
+        <option>Hungarian</option>
+      </select>
+    </div>
+
+    <p><strong>Connections</strong></p>
+    <ul data-role="listview" data-inset="true">
+      <li><a href="#">Moves</a>
+      </li>
+      <li><a href="#">Withings</a>
+      </li>
+      <li><a href="#">Misfit</a>
+      </li>
+      <li><a href="#">Google Fit</a>
+      </li>
+      <li><a href="#">Fitbit</a>
+      </li>
+      <li><a href="#">Polar</a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<div id="passwordPage" data-role="page" data-theme="a" class="ui-corner-all">
+  <div data-role="header">
+    <h1>Authentication</h1>
+    <a href="#settingsPage" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-direction="reverse">Back</a>
+  </div>
+  <div class="ui-content">
+    <form>
+      <div class="ui-field-contain">
+        <label for="s_pass">Password</label>
+        <input id="s_pass" type="text" name="food_name" value="" data-theme="a" readonly="true">
+        <label for="s_pass_conf">Password Confirmation</label>
+        <input id="s_pass_conf" type="text" name="food_name" data-theme="a" readonly="true">
+      </div>
+      <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
+    </form>
+  </div>
+</div>

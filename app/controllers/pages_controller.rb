@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
-  before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings]
+  # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
+  before_action :redir_mobile, except: [:mobilepage]
+
   has_mobile_fu
   layout :which_layout
 
@@ -12,6 +14,10 @@ class PagesController < ApplicationController
     is_mobile_device? || is_tablet_device? ? 'pages.mobile' : 'pages'
   end
 
+  def redir_mobile
+    redirect_to action: 'mobilepage'
+  end
+
   def formats=(values)
     # fall back to the browser view if the mobile or tablet version does not exist
     values << :html if values == [:mobile] or values == [:tablet]
@@ -21,6 +27,10 @@ class PagesController < ApplicationController
     # values = [:tablet, :html] if values == [:html]
 
     super(values)
+  end
+
+  def mobilepage
+
   end
 
   def dashboard
@@ -229,7 +239,7 @@ private
     return shown_user
   end
 
-  def set_user_data
-    @shown_user = get_shown_user(params)
-  end
+  # def set_user_data
+  #   @shown_user = get_shown_user(params)
+  # end
 end
