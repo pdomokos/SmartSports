@@ -9,12 +9,12 @@
 
   $.mobile.changePage.defaults.allowSamePageTransition = true
 
-  $( document ).on( "swiperight", "#main-page", ( e ) ->
-    console.log e
-    if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )
-      if ( e.type == "swiperight" )
-        $( "#menuPanel" ).panel( "open" );
-  )
+#  $( document ).on( "swiperight", "#main-page", ( e ) ->
+#    console.log e
+#    if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )
+#      if ( e.type == "swiperight" )
+#        $( "#menuPanel" ).panel( "open" );
+#  )
 
 @pages_menu = () ->
   self = this

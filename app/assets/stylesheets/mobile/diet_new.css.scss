@@ -19,3 +19,23 @@ dd { font-size: 1.25em; margin: 1em 0 0; padding-bottom: 1em; border-bottom: 1px
   vertical-align: middle;
   text-align: center;
 }
+
+.ui-header.diet-style {
+  background-color: #57C88A !important;
+  text-shadow: 0 0 0 !important;
+}
+
+.ui-header.exercise-style {
+  background-color: #F09938 !important;
+  text-shadow: 0 0 0 !important;
+}
+
+.ui-header.health-style {
+  background-color: #8980CA !important;
+  text-shadow: 0 0 0 !important;
+}
+
+.ui-header.medication-style {
+  background-color: #6CC5CC !important;
+  text-shadow: 0 0 0 !important;
+}

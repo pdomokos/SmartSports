@@ -1,7 +1,11 @@
 <tr class="bg">
 
     <td style="width:40px;" class="padded">
+      <% if meas_item.meas_type %>
         <%= image_tag meas_map[meas_item.meas_type]+".png" %>
+      <% else %>
+          <%= image_tag meas_map['weight']+".png" %>
+      <% end %>
     </td>
 
     <td class="historyTitle padded">
