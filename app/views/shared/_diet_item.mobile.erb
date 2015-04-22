@@ -1,5 +1,5 @@
 <li>
-  <a id="diet_item_<%= diet_item.id %>" href="#editFoodPage" data-transition="slidefade">
+  <a id="diet_item_<%= diet_item.id %>" href="#editFoodPage" data-foodid="<%= diet_item.id %>" data-transition="slidefade">
     <%= image_tag "#{diet_item.type.downcase}40.png" %>
     <% if diet_item.type != "Smoke" %>
       <h2><%= diet_item.food_type.name if diet_item.food_type %></h2>

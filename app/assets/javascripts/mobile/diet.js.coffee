@@ -1,5 +1,3 @@
-
-
 @diet_loaded = () ->
   console.log("diet loaded2")
 
@@ -8,7 +6,8 @@
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
 
   load_food_types()
-#  load_drink_types()
+  load_drink_types()
+  load_diets()
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -40,11 +39,15 @@
   $("#fav-button").click ->
     load_diets(true)
 
+  $("#dietPage").on("click" , ".recentResourcesListview a", () ->
+    $("#editFoodPage").attr("data-foodid", this.dataset.foodid)
+  )
+
 @load_diets = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent diets"
-  url = '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=4&mobile=true'
+  url = '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=10&mobile=true'
   if fav
     console.log "loading favorites"
     url = url+"&favourites=true"
@@ -73,23 +76,14 @@
 @load_food_types = () ->
   self = this
   console.log "calling load recent foods"
-  $.ajax '/food_types.json',
+  $.ajax '/food_types.json?type=food',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent food_types AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load food_types  Successful AJAX call"
 
-      foods = data.map( (d) ->
-        {
-        label: d['name'],
-        id: d['id'],
-        kcal: d['kcal'],
-        fat: d['fat'],
-        carb: d['carb'],
-        prot: d['prot'],
-        categ: d['category']
-        })
+      foods = data.map( food_map_fn )
 
       $( "#food_autocomplete" ).on( "filterablebeforefilter",  ( e, data ) ->
         $ul = $( this )
@@ -141,40 +135,69 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load drink_types  Successful AJAX call"
 
-      foods = data.map( (d) ->
-        {
-        label: d['name'],
-        id: d['id'],
-        kcal: d['kcal'],
-        fat: d['fat'],
-        carb: d['carb'],
-        prot: d['prot'],
-        categ: d['category']
-        })
+      drinks = data.map( food_map_fn )
 
-      $("#drinkname").autocomplete({
-        source: (request, response) ->
-          matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term, ""), "i")
+      $( "#drink_autocomplete" ).on( "filterablebeforefilter",  ( e, data ) ->
+        $ul = $( this )
+        $input = $( data.input )
+        value = $input.val()
+
+        html = ""
+        $ul.html( "" )
+        if ( value && value.length > 1 )
+          console.log "started "+value
+          $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" )
+          $ul.listview( "refresh" )
+
+          matcher = new RegExp($input.val(), "i")
           result = []
           cnt = 0
-          for element in foods
+          for element in drinks
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            if cnt >= 20
+            if cnt >= 6
               break
-          response(result)
-        select: (event, ui) ->
-          $("#diet_drink_type_id").val(ui.item.id)
-          $("#diet_drink_unit").text("2.5dl")
-          $("#diet_drink_scale" ).slider({
-            value: "2.5"
-          })
-          #          $("#diet_drink_name").val(ui.item.label)
-          $("#diet_drink_amount").val(2.5)
-          $("#diet_drink_cal").val(ui.item.kcal*2.5)
-          $("#diet_drink_fat").val(ui.item.fat*2.5)
-          $("#diet_drink_carbs").val(ui.item.carb*2.5)
-          $("#diet_drink_prot").val(ui.item.prot*2.5)
-          $("#diet_drink_category").val(ui.item.categ)
-      })
+
+          console.log result
+          $.each( result, ( i, val ) ->
+            html += "<li id='food_id_"+val.id+"'>" + val.label + "</li>";
+          )
+          $ul.html( html );
+          $ul.listview( "refresh" );
+          $ul.trigger( "updatelayout")
+      )
+
+      $("#drink_autocomplete").on("click", "li", (e) ->
+        $("#drinkname").val($(this).text())
+        $("#drink_autocomplete").html("")
+        [..., food_id] = $(this)[0].id.split("_")
+        $("#drink_type_id").val( food_id )
+        console.log $(this).text()+" id: "+food_id
+      )
+
+@show_food = (e, ui) ->
+  foodid = ui.toPage[0].dataset.foodid
+  console.log("show food id cb: "+foodid)
+  current_user = $("#current-user-id")[0].value
+  foodurl = '/users/' + current_user + '/diets/'+foodid+'.json'
+  $.ajax foodurl,
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load diet AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load diet  Successful AJAX call"
+      console.log data
+      $("#editFoodPage h1.diet-group").html(data.type)
+
+      if(data.type=="Smoke")
+        $("#edit_food_category_label").hide()
+        $("#edit_food_category").hide()
+      else
+        $("#edit_food_category_label").show()
+        $("#edit_food_category").show()
+        $("#edit_food_name").val(data.food_name)
+        $("#edit_food_category").val(data.food_category)
+        $("#edit_food_date").val(moment(data.date).format("YYYY-MM-DD HH:mm"))
+        $("#food_amount_edit_scale").val(data.amount).slider("refresh")
+        $("#food_favorite").prop("checked", data.favourite).flipswitch("refresh")

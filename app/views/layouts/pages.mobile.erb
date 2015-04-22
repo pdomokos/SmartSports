@@ -31,14 +31,20 @@
       });
       $(document).on("pagebeforecreate", "#dietPage", function(e) {
           console.log("dietPage pagebeforecreate called");
-          diet_loaded()
+          diet_loaded();
       });
       $(document).on("pagebeforecreate", "#exercisePage", function(e) {
           console.log("exercisePage pagebeforecreate called");
-          exercise_loaded()
+          exercise_loaded();
       });
       $(document).on("pagebeforecreate", "#healthPage", function(e) {
           console.log("healthPage pagebeforecreate called");
+      });
+      $(document).on("pagecontainerbeforeshow", function(e, ui) {
+          console.log("beforeshow called");
+          if(ui.toPage[0].id=="editFoodPage") {
+              show_food(e, ui);
+          }
       });
   </script>
 

@@ -39,22 +39,14 @@
         <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
             <input type="hidden" name="diet[source]" value="<%= @default_source %>">
             <input type="hidden" name="diet[type]" value="Drink">
-            <input type="search" id="drinkname" name="drink_name" placeholder="Drink name, eg: coke">
-            <input id="diet_drink_name" name="diet[name]" type="hidden">
-            <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
-
-            <label for="diet_drink_scale">Amount:</label>
-            <input type="range" name="diet[amount]" id="diet_drink_scale" min="0.5" max="5" step="0.5" value="2.5">
-
-            <!--<div id="diet_drink_unit" class="dataFormFieldUnit">2.5dl</div>-->
-            <input id="diet_drink_cal" name="diet[calories]" type="hidden"/>
-            <input id="diet_drink_fat" name="diet[fat]" type="hidden"/>
-            <input id="diet_drink_carbs" name="diet[carbs]" type="hidden"/>
-            <input id="diet_drink_prot" name="diet[prot]" type="hidden"/>
-            <input id="diet_drink_category" name="diet[category]" type="hidden"/>
-
+            <input type="search" id="drinkname" name="drink_name" placeholder="Food name, eg: chicken soup">
+            <ul id="drink_autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#drinkname"></ul>
+            <input id="drink_type_id" name="diet[food_type_id]" type="hidden">
+            <input id="drink_name" name="diet[name]" type="hidden">
+            <label for="drink_scale">Amount:</label>
+            <input id="drink_scale" type="range" name="diet[amount]" min="0.5" max="5" step="0.5" value="2.5">
             <label for="diet_drink_datepicker">Time:</label>
-            <input id='diet_drink_datepicker' type='text' name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+            <input id='diet_drink_datepicker' type='text' readonly="true" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
             <button class="ui-shadow ui-btn ui-corner-all sendForm">Add Drink</button>
         <% end %>
       </div>
@@ -90,38 +82,37 @@
           <li><a id="fav-button"href="#" data-icon="star">Favs</a></li>
         </ul>
       </div>
-      <ul id="recentResourcesListview" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body">
+      <ul id="recentResourcesListview" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
         <%= render partial: "shared/diet_item", collection: @diets, as: "diet_item" %>
       </ul>
     </div>
   </div><!-- /content -->
 
+</div>
 
-  <div id="editFoodPage" data-role="page" data-theme="a" class="ui-corner-all">
-    <div data-role="header">
-      <h1>Food</h1>
-      <a href="/pages/diet" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-rel="back" data-transition="slide" data-direction="reverse">Back</a>
-    </div>
-    <div class="ui-content">
-      <form>
-        <div class="ui-field-contain">
-          <label for="food_name">Name</label>
-          <input id="food_name" type="text" name="food_name" value="" placeholder="Food Name" data-theme="a" readonly="true">
-          <label for="food_category">Category</label>
-          <input id="food_category" type="text" name="food_name" value="" placeholder="Food Name" data-theme="a" readonly="true">
-          <label for="food_date">Date</label>
-          <input id="food_date" type="text" name="food_name" value="2015-01-23 12:44" placeholder="Food Name" data-theme="a" readonly="true">
-
-          <label for="food_amount_edit_scale">Amount:</label>
-          <input type="range" name="diet[amount]" id="food_amount_edit_scale" min="0.5" max="5" step="0.5" value="2.5">
-          <label for="food_favorite">Favorite</label>
-          <input id="food_favorite" type="checkbox" name="food_favorite" value="" data-theme="a" data-role="flipswitch">
-        </div>
-        <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
-      </form>
-    </div>
+<div id="editFoodPage" data-role="page" data-theme="a" class="ui-corner-all">
+  <div data-role="header">
+    <h1 class="diet-group">Food</h1>
+    <a href="#dietPage" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-transition="slide" data-direction="reverse">Back</a>
   </div>
+  <div class="ui-content">
+    <form>
+      <div class="ui-field-contain">
+        <label for="edit_food_name">Name</label>
+        <input id="edit_food_name" type="text" name="food_name" value="" placeholder="Name" data-theme="a" readonly="true">
+        <label id="edit_food_category_label" for="edit_food_category">Category</label>
+        <input id="edit_food_category" type="text" name="food_name" value="" placeholder="Food Name" data-theme="a" readonly="true">
+        <label for="edit_food_date">Date</label>
+        <input id="edit_food_date" type="text" name="food_name" value="" data-theme="a" readonly="true">
 
+        <label for="food_amount_edit_scale">Amount:</label>
+        <input type="range" name="diet[amount]" id="food_amount_edit_scale" min="0.5" max="5" step="0.5" value="2.5">
+        <label for="food_favorite">Favorite</label>
+        <input id="food_favorite" type="checkbox" name="food_favorite" value="" data-theme="a" data-role="flipswitch">
+      </div>
+      <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
+    </form>
+  </div>
 </div>
 
 <!--diet_loaded()-->

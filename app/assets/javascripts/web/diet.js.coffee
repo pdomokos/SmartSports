@@ -111,29 +111,19 @@
       console.log "load recent diets  Successful AJAX call"
       console.log textStatus
 
-foodmapFn = (d) ->
-  {
-  label: d['name'],
-  id: d['id'],
-  kcal: d['kcal'],
-  fat: d['fat'],
-  carb: d['carb'],
-  prot: d['prot'],
-  categ: d['category']
-  }
 
 @load_food_types = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent foods"
-  $.ajax '/food_types.json',
+  $.ajax '/food_types.json?type=food',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent food_types AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load food_types  Successful AJAX call"
 
-      foods = data.map( foodmapFn )
+      foods = data.map( window.food_map_fn )
 
       $("#foodname").autocomplete({
         source: (request, response) ->
@@ -167,7 +157,7 @@ foodmapFn = (d) ->
     success: (data, textStatus, jqXHR) ->
       console.log "load drink_types  Successful AJAX call"
 
-      foods = data.map( foodmapFn )
+      foods = data.map( window.food_map_fn )
 
       $("#drinkname").autocomplete({
         source: (request, response) ->

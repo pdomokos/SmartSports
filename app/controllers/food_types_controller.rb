@@ -3,14 +3,14 @@ class FoodTypesController < ApplicationController
 
   def index
     id = params[:id]
-    type = params[:type]
+    ftype = params[:type]
     limit = params[:limit]
     if id
       food_types = FoodType.where("id = '#{id}'")
     else
-      if type
+      if ftype == 'drink'
         food_types = FoodType.where("category = 'Ital'")
-      else
+      elsif ftype=='food'
         food_types = FoodType.where("category != 'Ital'")
       end
     end

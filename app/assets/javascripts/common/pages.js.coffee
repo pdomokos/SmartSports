@@ -204,6 +204,17 @@ define_globals = () ->
           result = result + item[measure]
     return result
 
+  window.food_map_fn = (d) ->
+    {
+      label: d['name'],
+      id: d['id'],
+      kcal: d['kcal'],
+      fat: d['fat'],
+      carb: d['carb'],
+      prot: d['prot'],
+      categ: d['category']
+    }
+
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")
   $("#friend-form-div div.friend-message").addClass("hidden")

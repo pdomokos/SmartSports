@@ -53,9 +53,6 @@ class DietsController < ApplicationController
 
   def show
     set_diet
-    respond_to do |format|
-      format.json
-    end
   end
 
   # POST /diets
@@ -69,7 +66,7 @@ class DietsController < ApplicationController
       @diet.date = DateTime.now
     end
 
-    if @diet.food_type
+    if (@diet.type=='food' || @diet.type=='drink' ) && @diet.food_type
       ft = @diet.food_type
       @diet.calories = @diet.amount*ft.kcal
       @diet.carbs = @diet.amount*ft.prot
