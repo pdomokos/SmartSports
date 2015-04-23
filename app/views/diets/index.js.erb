@@ -4,8 +4,8 @@ $("#recentResourcesTable").html("");
 $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/diet_item', :collection=> @diets ) %>");
 <% else %>
 console.log("load diets js mobile called");
-$("#recentResourcesListview").html("");
-$("#recentResourcesListview").html("<%= escape_javascript( render partial: "shared/diet_item", formats: [:mobile], collection: @diets, as: "diet_item" ) %>");
-$("#recentResourcesListview").listview( "refresh" );
-$("#recentResourcesListview").trigger( "updatelayout");
+$("#dietPage .recentResourcesListview").html("");
+$("#dietPage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/diet_item", formats: [:mobile], collection: @diets, as: "diet_item" ) %>");
+$("#dietPage .recentResourcesListview").listview( "refresh" );
+$("#dietPage .recentResourcesListview").trigger( "updatelayout");
 <% end %>

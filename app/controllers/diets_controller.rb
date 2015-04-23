@@ -87,14 +87,14 @@ class DietsController < ApplicationController
   # PATCH/PUT /diets/1.json
   def update
     set_diet
+    puts params['diet']['amount']
     respond_to do |format|
-      if @diet.update_attribute(:favourite, !@diet.favourite)
+      if @diet.update_attributes(:favourite => !params['diet']['favourite'].nil?, :amount => params['diet']['amount'])
         format.json { render json: { :status => "OK", :msg => "Update successfully" } }
       else
         format.json { render json: { :status => "NOK", :msg => "Update errror" }, :status => 400 }
       end
     end
-
 
   end
 
@@ -120,5 +120,8 @@ class DietsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def diet_params
     params.require(:diet).permit(:source, :name, :date, :calories, :carbs, :amount, :category, :type, :fat, :prot, :food_type_id)
+  end
+  def diet_update_params
+    params.require(:diet).permit(:favourite, :amount, :date)
   end
 end

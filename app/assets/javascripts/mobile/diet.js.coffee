@@ -22,15 +22,33 @@
     alert("Failed to create diet.")
   )
 
-  $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
-    form_id = e.currentTarget.id
-    console.log "update/delete success "+form_id
-    load_diets()
-    $("#hist-button").addClass("ui-btn-active")
-    $("#fav-button").removeClass("ui-btn-active")
+#  $("#dietPage .recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
+#    form_id = e.currentTarget.id
+#    console.log "get resource success "+form_id
+#    load_diets()
+#    $("#hist-button").addClass("ui-btn-active")
+#    $("#fav-button").removeClass("ui-btn-active")
+#  ).on("ajax:error", (e, xhr, status, error) ->
+#    console.log xhr.responseText
+#    alert("Failed to update/delete diet.")
+#  )
+
+  $("#updateFoodForm").on("ajax:success", (e, data, status, xhr) ->
+    console.log("update successfull")
+    $("#dietPage").attr("data-scrolltotable", true)
+    $( ":mobile-pagecontainer" ).pagecontainer("change", "#dietPage")
+
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to update/delete diet.")
+    alert("Failed to update diet.")
+  )
+  $("#deleteFoodForm").on("ajax:success", (e, data, status, xhr) ->
+    console.log("delete successfull")
+    $.mobile.navigate( "#dietPage" )
+
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    alert("Failed to delete diet.")
   )
 
   $('#hist-button').click ->
@@ -41,6 +59,12 @@
 
   $("#dietPage").on("click" , ".recentResourcesListview a", () ->
     $("#editFoodPage").attr("data-foodid", this.dataset.foodid)
+  )
+
+  $(document).on("pagecontainershow", (event, ui) ->
+    console.log("diet pagecontainershow")
+    if $("#dietPage").data('scrolltotable')
+      load_diets()
   )
 
 @load_diets = (fav=false) ->
@@ -58,6 +82,10 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load recent diets  Successful AJAX call"
       console.log textStatus
+      if $("#dietPage").attr('data-scrolltotable')
+        $.mobile.silentScroll($("div.ui-navbar").offset().top)
+        $("#dietPage").attr('data-scrolltotable', null)
+
 
 @fill_form = (type, name, calories, carbs, amount) ->
   if type == 'Food'
@@ -178,6 +206,9 @@
 
 @show_food = (e, ui) ->
   foodid = ui.toPage[0].dataset.foodid
+  window.tmpe = e
+  window.tmpui = ui
+
   console.log("show food id cb: "+foodid)
   current_user = $("#current-user-id")[0].value
   foodurl = '/users/' + current_user + '/diets/'+foodid+'.json'
@@ -186,9 +217,14 @@
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load diet AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
-      console.log "load diet  Successful AJAX call"
+      console.log "load diet  Successful AJAX call    "
       console.log data
       $("#editFoodPage h1.diet-group").html(data.type)
+
+      f = $("#updateFoodForm")[0]
+      f.action = "/users/"+current_user+"/diets/"+foodid
+      f = $("#deleteFoodForm")[0]
+      f.action = "/users/"+current_user+"/diets/"+foodid
 
       if(data.type=="Smoke")
         $("#edit_food_category_label").hide()
@@ -201,3 +237,4 @@
         $("#edit_food_date").val(moment(data.date).format("YYYY-MM-DD HH:mm"))
         $("#food_amount_edit_scale").val(data.amount).slider("refresh")
         $("#food_favorite").prop("checked", data.favourite).flipswitch("refresh")
+

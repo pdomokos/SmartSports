@@ -82,7 +82,7 @@
           <li><a id="fav-button"href="#" data-icon="star">Favs</a></li>
         </ul>
       </div>
-      <ul id="recentResourcesListview" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
+      <ul data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
         <%= render partial: "shared/diet_item", collection: @diets, as: "diet_item" %>
       </ul>
     </div>
@@ -96,22 +96,26 @@
     <a href="#dietPage" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-transition="slide" data-direction="reverse">Back</a>
   </div>
   <div class="ui-content">
-    <form>
+    <%= form_tag(  "#", remote: true, id: "updateFoodForm", method: 'patch') do %>
       <div class="ui-field-contain">
         <label for="edit_food_name">Name</label>
-        <input id="edit_food_name" type="text" name="food_name" value="" placeholder="Name" data-theme="a" readonly="true">
+        <input id="edit_food_name" type="text" name="food_name" value="" data-theme="a" readonly="true">
         <label id="edit_food_category_label" for="edit_food_category">Category</label>
-        <input id="edit_food_category" type="text" name="food_name" value="" placeholder="Food Name" data-theme="a" readonly="true">
+        <input id="edit_food_category" type="text" name="food_category" value="" data-theme="a" readonly="true">
         <label for="edit_food_date">Date</label>
-        <input id="edit_food_date" type="text" name="food_name" value="" data-theme="a" readonly="true">
+        <input id="edit_food_date" type="text" name="food_date" value="" data-theme="a" readonly="true">
 
         <label for="food_amount_edit_scale">Amount:</label>
         <input type="range" name="diet[amount]" id="food_amount_edit_scale" min="0.5" max="5" step="0.5" value="2.5">
         <label for="food_favorite">Favorite</label>
-        <input id="food_favorite" type="checkbox" name="food_favorite" value="" data-theme="a" data-role="flipswitch">
+        <input id="food_favorite" type="checkbox" name="diet[favourite]" value="" data-theme="a" data-role="flipswitch">
       </div>
       <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
-    </form>
+    <% end %>
+    <%= form_tag(  "#", remote: true, id: "deleteFoodForm", method: 'delete') do %>
+      <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-delete ui-icon-check">Delete</button>
+    <% end %>
+
   </div>
 </div>
 

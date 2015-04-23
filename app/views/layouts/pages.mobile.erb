@@ -41,7 +41,6 @@
           console.log("healthPage pagebeforecreate called");
       });
       $(document).on("pagecontainerbeforeshow", function(e, ui) {
-          console.log("beforeshow called");
           if(ui.toPage[0].id=="editFoodPage") {
               show_food(e, ui);
           }
