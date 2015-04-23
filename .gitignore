@@ -17,6 +17,6 @@
 /tmp
 /.idea
 *.iml
-public/*.csv
-public/system/
-
+/public/*.csv
+/public/files
+/public/system

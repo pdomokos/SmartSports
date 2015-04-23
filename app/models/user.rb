@@ -13,7 +13,9 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, if: :password
   validates :email, uniqueness: true
 
-  has_attached_file :avatar, :styles => { :medium => "150x200>", :thumb => "75x100>" }, :default_url => ":style/unknown.png"
+  has_attached_file :avatar, :styles => { :medium => "150x200>", :thumb => "75x100>" }, :default_url => ":style/unknown.png",
+                    :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
+                    :path => ":rails_root/system/:class/:attachment/:id/:style/:basename.:extension"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def is_friend?(fid)
