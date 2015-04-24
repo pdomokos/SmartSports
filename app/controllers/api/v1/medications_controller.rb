@@ -42,11 +42,61 @@ module Api::V1
       end
     end
 
-    private
-    def medication_params
-      params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date)
+    # PATCH/PUT /users/:user_id/medications/:id
+    # PATCH/PUT /users/:user_id/medications/:id
+    def update
+      medication = Medication.find(params[:id])
+      if !check(medication)
+        return
+      end
+
+      if params['medication'] && params['medication']['medication_type_id']
+        med = MedicationType.find_by_id( params['medication']['medication_type_id'])
+        if med.nil?
+          render json: { :ok => false, :msg => "Invalid medication type id" }, status: 400
+          return
+        end
+      end
+
+      if medication.update(medication_params)
+        render json: { :ok => true, :result => medication }
+      else
+        render json: { :ok => false }, status: 400
+      end
+
     end
 
+    # DELETE /users/:user_id/medications/:id
+    # DELETE /users/:user_id/medications/:id.json
+    def destroy
+      medication = Medication.find(params[:id])
+      if !check(medication)
+        return
+      end
+
+      if medication.destroy
+        render json: { :ok => true, :msg => "Deleted successfully" }
+      else
+        render json: { :ok => false, :msg => "Delete errror" }, :status => 400
+      end
+    end
+
+    private
+    def medication_params
+      params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date, :favourite)
+    end
+
+    def check(medication)
+      if medication.nil?
+        render json: { :ok => false }, status: 400
+        return false
+      end
+      if medication.user_id != current_resource_owner.id
+        render json: { :ok => false }, status: 403
+        return false
+      end
+      return true
+    end
   end
 
 end

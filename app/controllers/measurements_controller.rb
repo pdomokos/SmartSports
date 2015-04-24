@@ -193,7 +193,7 @@ class MeasurementsController < ApplicationController
   end
 
   def measurement_params
-    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type)
+    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite)
   end
 
 end

@@ -112,6 +112,6 @@ class LifestylesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lifestyle_params
-      params.require(:lifestyle).permit(:user_id, :source, :group, :name, :amount, :start_time, :end_time)
+      params.require(:lifestyle).permit(:user_id, :source, :group, :name, :amount, :start_time, :end_time, :favourite)
     end
 end

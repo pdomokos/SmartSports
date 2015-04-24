@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421120050) do
+ActiveRecord::Schema.define(version: 20150423210522) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150421120050) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "intensity"
+    t.boolean  "favourite",  default: false
   end
 
   add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(version: 20150421120050) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "end_time"
+    t.boolean  "favourite",  default: false
   end
 
   add_index "lifestyles", ["user_id", "created_at"], name: "index_lifestyles_on_user_id_and_created_at"
@@ -145,6 +147,7 @@ ActiveRecord::Schema.define(version: 20150421120050) do
     t.float    "weight"
     t.float    "waist"
     t.string   "meas_type"
+    t.boolean  "favourite",   default: false
   end
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"
@@ -164,6 +167,7 @@ ActiveRecord::Schema.define(version: 20150421120050) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "medication_type_id"
+    t.boolean  "favourite",          default: false
   end
 
   create_table "notifications", force: true do |t|

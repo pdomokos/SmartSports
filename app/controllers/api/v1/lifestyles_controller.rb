@@ -42,11 +42,48 @@ module Api::V1
       end
     end
 
-    private
-    def lifestyle_params
-      params.require(:lifestyle).permit(:source, :name, :group, :amount, :start_time, :end_time, :user_id)
+    # PATCH/PUT /lifestyles/1
+    # PATCH/PUT /lifestyles/1.json
+    def update
+      lifestyle = Lifestyle.find_by_id(params[:id])
+      if lifestyle.nil?
+        render json: { :ok => false }, status: 400
+        return
+      end
+      if lifestyle.user_id != current_resource_owner.id
+        render json: { :ok => false }, status: 403
+        return
+      end
+      if lifestyle.update(lifestyle_params)
+        render json: { :ok => true }
+      else
+        render json: {:ok => false, :msg => "Update failed" }, status: 400
+      end
     end
 
+    # DELETE /lifestyles/1
+    # DELETE /lifestyles/1.json
+    def destroy
+      lifestyle = Lifestyle.find_by_id(params[:id])
+      if lifestyle.nil?
+        render json: { :ok => false }, status: 400
+        return
+      end
+      if lifestyle.user_id != current_resource_owner.id
+        render json: { :ok => false }, status: 403
+        return
+      end
+      if lifestyle.destroy
+        render json: { :ok => false, :msg => "Deleted successfully" }
+      else
+        render json: { :ok => false, :msg => "Delete error" }, :status => 400
+      end
+    end
+
+    private
+    def lifestyle_params
+      params.require(:lifestyle).permit(:source, :name, :group, :amount, :start_time, :end_time, :user_id, :favourite)
+    end
   end
 
 end

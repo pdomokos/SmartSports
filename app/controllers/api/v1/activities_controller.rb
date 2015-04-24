@@ -1,7 +1,7 @@
 module Api::V1
   class ActivitiesController < ApiController
     rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:index, :create]
+    before_action :doorkeeper_authorize!
     respond_to :json
 
     def index
@@ -42,9 +42,45 @@ module Api::V1
       end
     end
 
+    def update
+      activity = Activity.find_by_id(params[:id])
+      if activity.nil?
+        render json: { :ok => false }, status: 400
+        return
+      end
+      if activity.user_id != current_resource_owner.id
+        render json: { :ok => false }, status: 403
+        return
+      end
+      if activity.update(activity_params)
+        render json: { :ok => true }
+      else
+        render json: {:ok => false, :msg => "Update failed" }, status: 400
+      end
+    end
+
+    # DELETE /activities/1
+    # DELETE /activities/1.json
+    def destroy
+      activity = Activity.find_by_id(params[:id])
+      if activity.nil?
+        render json: { :ok => false }, status: 400
+        return
+      end
+      if activity.user_id != current_resource_owner.id
+        render json: { :ok => false }, status: 403
+        return
+      end
+      if activity.destroy
+         render json: { :status => "OK", :msg => "Deleted successfully" }
+      else
+        render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400
+      end
+    end
+
     private
     def activity_params
-      params.require(:activity).permit(:source, :activity, :group, :game_id, :start_time, :end_time, :steps, :duration, :distance, :calories, :manual, :intensity)
+      params.require(:activity).permit(:source, :activity, :group, :game_id, :start_time, :end_time, :steps, :duration, :distance, :calories, :manual, :intensity, :favourite)
     end
 
   end

@@ -1,0 +1,89 @@
+module DietsCommon
+
+  # PATCH/PUT /diets/1
+  # PATCH/PUT /diets/1.json
+  def update
+    @diet = Diet.find_by_id(params[:id])
+
+    if @diet.nil?
+      render json: { :ok => false}, status: 400
+      return
+    end
+
+    if !check_owner()
+      render json: { :ok => false}, status: 403
+      return
+    end
+
+    fav = true
+    if params['diet'].nil? || params['diet']['favourite'].nil? || params['diet']['favourite']=='false'
+      fav = false
+    end
+    update_hash = {:favourite => fav}
+    if params['diet'] && params['diet']['amount']
+      update_hash[:amount] = params['diet']['amount'].to_f
+    end
+    if params['diet'] && params['diet']['food_type_id']
+      ft = FoodType.find_by_id(params['diet']['food_type_id'].to_i)
+      if !ft.nil?
+        amount = @diet.amount
+        if !update_hash[:amount].nil?
+          amount = update_hash[:amount].to_f
+        end
+        update_hash[:food_type_id] = ft.id
+        update_hash[:calories] = amount*ft.kcal
+        update_hash[:carbs] = amount*ft.carb
+        update_hash[:fat] = amount*ft.fat
+        update_hash[:prot] = amount*ft.prot
+      else
+        render json: { :ok => false, :msg => "Invalid food_type_id"}, status: 400
+        return
+      end
+
+    end
+    respond_to do |format|
+      if @diet.update_attributes(update_hash)
+        format.json { render json: { :ok => true, :msg => "Updated successfully" } }
+      else
+        format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
+      end
+    end
+
+  end
+
+  # DELETE /diets/1
+  # DELETE /diets/1.json
+  def destroy
+    @diet = Diet.find(params[:id])
+    if @diet.nil?
+      render json: { :ok => false}, status: 400
+      return
+    end
+
+    if !check_owner()
+      render json: { :ok => false}, status: 403
+      return
+    end
+
+    respond_to do |format|
+      if @diet.destroy
+        format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
+      else
+        format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
+      end
+    end
+  end
+
+  def check_owner()
+    if (defined? current_user) and @diet.user_id != current_user.id
+      return false
+    end
+    if (defined? current_resource_owner) and @diet.user_id != current_resource_owner.id
+      return false
+    end
+    if !(defined? current_resource_owner) && !(defined? current_user)
+      return false
+    end
+    return true
+  end
+end

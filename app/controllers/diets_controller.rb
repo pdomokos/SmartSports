@@ -1,4 +1,6 @@
 class DietsController < ApplicationController
+  include DietsCommon
+
   # GET /diets
   # GET /diets.json
   def index
@@ -69,9 +71,9 @@ class DietsController < ApplicationController
     if (@diet.type=='food' || @diet.type=='drink' ) && @diet.food_type
       ft = @diet.food_type
       @diet.calories = @diet.amount*ft.kcal
-      @diet.carbs = @diet.amount*ft.prot
-      @diet.fat = @diet.amount*ft.carb
-      @diet.prot = @diet.amount*ft.fat
+      @diet.carbs = @diet.amount*ft.carb
+      @diet.fat = @diet.amount*ft.fat
+      @diet.prot = @diet.amount*ft.prot
     end
     respond_to do |format|
       if @diet.save
@@ -79,34 +81,6 @@ class DietsController < ApplicationController
       else
         logger.error @diet.errors.full_messages.to_sentence
         format.json { render json: { :msg =>  @diet.errors.full_messages.to_sentence }, :status => 400 }
-      end
-    end
-  end
-
-  # PATCH/PUT /diets/1
-  # PATCH/PUT /diets/1.json
-  def update
-    set_diet
-    puts params['diet']['amount']
-    respond_to do |format|
-      if @diet.update_attributes(:favourite => !params['diet']['favourite'].nil?, :amount => params['diet']['amount'])
-        format.json { render json: { :status => "OK", :msg => "Update successfully" } }
-      else
-        format.json { render json: { :status => "NOK", :msg => "Update errror" }, :status => 400 }
-      end
-    end
-
-  end
-
-  # DELETE /diets/1
-  # DELETE /diets/1.json
-  def destroy
-    set_diet
-    respond_to do |format|
-      if @diet.destroy
-        format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
-      else
-        format.json { render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400 }
       end
     end
   end

@@ -1,8 +1,10 @@
 module Api::V1
   class DietsController < ApiController
     rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:index, :create]
+    before_action :doorkeeper_authorize!
     respond_to :json
+
+    include DietsCommon
 
     def index
       lim = 10
@@ -63,7 +65,7 @@ module Api::V1
 
     private
     def diet_params
-      params.require(:diet).permit(:type, :user_id, :source, :name, :date, :calories, :carbs, :amount, :food_type_id)
+      params.require(:diet).permit(:type, :user_id, :source, :name, :date, :calories, :carbs, :amount, :food_type_id, :favourite)
     end
 
   end

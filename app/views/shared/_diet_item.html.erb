@@ -24,8 +24,10 @@
             <button id="fav-icon" class="tableControl">
               <% if diet_item.favourite %>
                   <i class="fa fa-star fa-2x is-favorite"></i>
+                  <input type="hidden" name="diet[favourite]" value="false" >
               <% else %>
                   <i class="fa fa-star fa-2x no-favorite"></i>
+                  <input type="hidden" name="diet[favourite]" value="true" >
               <% end %>
             </button>
         <% end %>
