@@ -34,3 +34,18 @@
 td.iconColumn {
   width: 30px;
 }
+
+span.tag {
+  padding: 3px 4px;
+  margin-left: 3px;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+  color: #fff;
+  font-variant: normal !important;
+}
+.tag.kcal { background-color: #f46d43 };
+.tag.fat { background-color: #01665e };
+.tag.carbs { background-color: #4575b4 };

@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
                     :default_url => ":style/unknown.png",
                     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
                     :path => APP_CONFIG['PAPERCLIP_PATH']
-  
+
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def is_friend?(fid)
