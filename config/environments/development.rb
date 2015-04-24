@@ -38,6 +38,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   APP_CONFIG = {}
+  APP_CONFIG['PAPERCLIP_PATH'] = ":rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension"
+
   connection_config_fname = ENV['HOME']+'/.smartsport_connection_data'
   if not File.exists?(connection_config_fname)
     raise "Connections configuration file "+connection_config_fname+" does not exist."
