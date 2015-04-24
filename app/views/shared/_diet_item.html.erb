@@ -5,10 +5,20 @@
 
     <td onclick="fill_form('<%=diet_item.type%>', '<%=diet_item.name%>', '<%=diet_item.calories%>', '<%=diet_item.carbs%>', '<%=diet_item.amount%>')" class="historyTitle padded">
       <strong>
-        <% if diet_item.type!= "Smoke"  && diet_item.food_type %>
-            <%= diet_item.food_type.name %>
-        <% else %>
-            <%= diet_item.type %><%= diet_item.name %>
+        <% if diet_item.type== "Smoke"  %>
+            <%= diet_item.type %> <%= diet_item.name %>
+        <% elsif  diet_item.type== "Food" %>
+            <% if diet_item.food_type %>
+                <%= diet_item.food_type.name %> ( <%=diet_item.amount * 50%>g )
+            <% else %>
+                Food <%= diet_item.name %>
+            <% end %>
+        <% elsif  diet_item.type== "Drink" %>
+            <% if diet_item.food_type %>
+                <%= diet_item.food_type.name %> ( <%=diet_item.amount %>dl )
+            <% else %>
+                Drink <%= diet_item.name %>
+            <% end %>
         <% end %>
       </strong>
 
@@ -16,11 +26,14 @@
           <% if diet_item.calories %>
             <span class="tag kcal"><%= diet_item.calories.round(2) %> kcal</span>
           <% end %>
+          <% if diet_item.carbs %>
+              <span class="tag carbs"><%= diet_item.carbs.round(2) %> g</span>
+          <% end %>
           <% if diet_item.fat %>
             <span class="tag fat"><%= diet_item.fat.round(2) %> g</span>
           <% end %>
-          <% if diet_item.carbs %>
-            <span class="tag carbs"><%= diet_item.carbs.round(2) %> g</span>
+          <% if diet_item.prot %>
+            <span class="tag prot"><%= diet_item.prot.round(2) %> g</span>
           <% end %>
         </div>
         <br>

@@ -91,7 +91,7 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent diets"
-  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=4',
+  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=10',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent diets AJAX Error: #{textStatus}"
@@ -103,7 +103,7 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent diets"
-  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&favourites=true&order=desc&limit=4',
+  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&favourites=true&order=desc&limit=10',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent diets AJAX Error: #{textStatus}"
