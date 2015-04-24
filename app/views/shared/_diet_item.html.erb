@@ -3,7 +3,16 @@
         <%= image_tag "#{diet_item.type.downcase}40.png" %>
     </td>
 
-    <td onclick="fill_form('<%=diet_item.type%>', '<%=diet_item.name%>', '<%=diet_item.calories%>', '<%=diet_item.carbs%>', '<%=diet_item.amount%>')" class="historyTitle padded">
+    <td id="diet_item_<%=diet_item.id%>" class="historyTitle padded dietItem">
+      <input id="diet_data_<%=diet_item.id%>" type="hidden" value="<%=
+          d = diet_item.as_json
+          if diet_item.food_type
+            d.merge!({'food_name' => diet_item.food_type.name})
+          else
+            d.merge!({'food_name' => diet_item.name})
+          end
+          JSON.dump(d)
+      %>">
       <strong>
         <% if diet_item.type== "Smoke"  %>
             <%= diet_item.type %> <%= diet_item.name %>

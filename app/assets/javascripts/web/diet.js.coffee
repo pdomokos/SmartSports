@@ -10,6 +10,8 @@
 
   $("#diet_smoke_type").selectmenu()
 
+  load_diets()
+
   load_food_types()
   load_drink_types()
 
@@ -68,6 +70,17 @@
     load_favs()
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
+
+  $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
+    console.log "loading diet"
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    if data.type=="Food"
+      $("#foodname").val(data.food_name)
+      $("#diet_type_id").val(data.food_type_id)
+      $("#diet_scale").val(data.amount).slider("refresh")
+    else if data.type=="Drink"
+      $("#drinkname").val(data.food_name)
+  )
 
 @loadHistory = () ->
   load_diets()
