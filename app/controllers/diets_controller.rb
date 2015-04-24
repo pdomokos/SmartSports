@@ -68,7 +68,7 @@ class DietsController < ApplicationController
       @diet.date = DateTime.now
     end
 
-    if (@diet.type=='food' || @diet.type=='drink' ) && @diet.food_type
+    if (@diet.type=='Food' || @diet.type=='Drink' ) && @diet.food_type
       ft = @diet.food_type
       @diet.calories = @diet.amount*ft.kcal
       @diet.carbs = @diet.amount*ft.carb

@@ -13,9 +13,15 @@
       </strong>
 
         <div class="right">
+          <% if diet_item.calories %>
             <span class="tag kcal"><%= diet_item.calories.round(2) %> kcal</span>
+          <% end %>
+          <% if diet_item.fat %>
             <span class="tag fat"><%= diet_item.fat.round(2) %> g</span>
+          <% end %>
+          <% if diet_item.carbs %>
             <span class="tag carbs"><%= diet_item.carbs.round(2) %> g</span>
+          <% end %>
         </div>
         <br>
         <%= diet_item.date.strftime("%F %T") if diet_item.date %>
