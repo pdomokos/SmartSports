@@ -75,15 +75,24 @@ module DietsCommon
   end
 
   def check_owner()
-    if (defined? current_user) and @diet.user_id != current_user.id
-      return false
+    puts "try"
+    if self.try(:current_user)
+      puts "current_user defined"
+    else
+      puts "current_user NOT defined"
     end
-    if (defined? current_resource_owner) and @diet.user_id != current_resource_owner.id
-      return false
+    if self.try(:current_resource_owner)
+      puts "current_resource_owner defined"
+    else
+      puts "current_resource_owner NOT defined"
     end
-    if !(defined? current_resource_owner) && !(defined? current_user)
-      return false
+
+    if self.try(:current_user).try(:id) == @diet.user_id
+      return true
     end
-    return true
+    if self.try(:current_resource_owner).try(:id) == @diet.user_id
+      return true
+    end
+    return false
   end
 end
