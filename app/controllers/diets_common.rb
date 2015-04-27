@@ -6,7 +6,7 @@ module DietsCommon
     @diet = Diet.find_by_id(params[:id])
 
     if @diet.nil?
-      render json: { :ok => false}, status: 400
+      render json: { :ok => false, :msg => "Param 'diet' missing"}, status: 400
       return
     end
 

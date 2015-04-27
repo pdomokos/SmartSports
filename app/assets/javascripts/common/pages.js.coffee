@@ -204,6 +204,9 @@ define_globals = () ->
           result = result + item[measure]
     return result
 
+  window.remove_accents = (astr) ->
+    astr.trim().toLowerCase().replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/[őöó]/g, 'o').replace(/[üúű]/g, 'u')
+
   window.food_map_fn = (d) ->
     {
       label: d['name'],
@@ -214,6 +217,7 @@ define_globals = () ->
       prot: d['prot'],
       categ: d['category']
     }
+
 
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")

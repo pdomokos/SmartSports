@@ -45,9 +45,17 @@
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
+    $("#diet_scale").slider({ value: 2.5 })
+    fval = $("#diet_scale").slider("value")
+    $("#diet_unit").html(fval*100+"g")
+    $("#diet_drink_scale").slider({ value: 2.5 })
+    dval = $("#diet_drink_scale").slider("value")
+    $("#diet_drink_unit").html(dval+"dl")
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
+    $("#diet_smoke_type option:nth-child(1)").attr("selected", true)
+    $("#diet_smoke_type").selectmenu("refresh")
     loadHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
@@ -74,12 +82,30 @@
   $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
     console.log "loading diet"
     data = JSON.parse(e.currentTarget.querySelector("input").value)
+    console.log data
     if data.type=="Food"
       $("#foodname").val(data.food_name)
       $("#diet_type_id").val(data.food_type_id)
-      $("#diet_scale").val(data.amount).slider("refresh")
+      $("#diet_amount").val(data.amount)
+      $("#diet_unit").html(data.amount*100+"g")
+      $("#diet_scale").slider({value: data.amount})
     else if data.type=="Drink"
       $("#drinkname").val(data.food_name)
+      $("#drink_type_id").val(data.food_type_id)
+      $("#diet_drink_amount").val(data.amount)
+      $("#diet_drink_unit").html(data.amount+"dl")
+      $("#diet_drink_scale").slider({value: data.amount})
+    else if data.type=="Smoke"
+      console.log data
+      n = 1
+      if(data.name=="1 Cigarette")
+        n = 1
+      else if(data.name=="1 Cigar")
+        n = 2
+      else if(data.name=="1 Pipe")
+        n = 3
+      $("#diet_smoke_type option:nth-child("+n+")").attr("selected", true)
+      $("#diet_smoke_type").selectmenu("refresh")
   )
 
 @loadHistory = () ->
@@ -87,18 +113,18 @@
   $(".hisTitle").addClass("selected")
   $(".favTitle").removeClass("selected")
 
-@fill_form = (type, name, calories, carbs, amount) ->
-  if type == 'Food'
-    $('#diet_name').val(name)
-    $('#diet_cal').val(calories)
-    $('#diet_fat').val(carbs)
-  else if type == 'Drink'
-    $('#diet_drink_type').val(name)
-    $('#diet_drink_amount').val(amount)
-    $('#diet_drink_calories').val(calories)
-    $('#diet_drink_carbs').val(carbs)
-  else if type == 'Smoke'
-    $("#diet_smoke_type" ).val(name).change()
+#@fill_form = (type, name, calories, carbs, amount) ->
+#  if type == 'Food'
+#    $('#diet_name').val(name)
+#    $('#diet_cal').val(calories)
+#    $('#diet_fat').val(carbs)
+#  else if type == 'Drink'
+#    $('#diet_drink_type').val(name)
+#    $('#diet_drink_amount').val(amount)
+#    $('#diet_drink_calories').val(calories)
+#    $('#diet_drink_carbs').val(carbs)
+#  else if type == 'Smoke'
+#    $("#diet_smoke_type" ).val(name).change()
 
 @load_diets = () ->
   self = this
@@ -140,11 +166,11 @@
 
       $("#foodname").autocomplete({
         source: (request, response) ->
-          matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term, ""), "i")
+          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
           cnt = 0
           for element in foods
-            if matcher.test(element.label)
+            if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
             if cnt >= 20
@@ -174,11 +200,11 @@
 
       $("#drinkname").autocomplete({
         source: (request, response) ->
-          matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term, ""), "i")
+          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
           cnt = 0
           for element in foods
-            if matcher.test(element.label)
+            if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
             if cnt >= 20

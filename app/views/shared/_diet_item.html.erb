@@ -6,7 +6,7 @@
     <td id="diet_item_<%=diet_item.id%>" class="historyTitle padded dietItem">
       <input id="diet_data_<%=diet_item.id%>" type="hidden" value="<%=
           d = diet_item.as_json
-          if diet_item.food_type
+          if diet_item.type!= "Smoke" && diet_item.food_type
             d.merge!({'food_name' => diet_item.food_type.name})
           else
             d.merge!({'food_name' => diet_item.name})
@@ -18,7 +18,7 @@
             <%= diet_item.type %> <%= diet_item.name %>
         <% elsif  diet_item.type== "Food" %>
             <% if diet_item.food_type %>
-                <%= diet_item.food_type.name %> ( <%=diet_item.amount * 50%>g )
+                <%= diet_item.food_type.name %> ( <%=diet_item.amount * 100%>g )
             <% else %>
                 Food <%= diet_item.name %>
             <% end %>
