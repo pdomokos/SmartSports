@@ -113,19 +113,6 @@
   $(".hisTitle").addClass("selected")
   $(".favTitle").removeClass("selected")
 
-#@fill_form = (type, name, calories, carbs, amount) ->
-#  if type == 'Food'
-#    $('#diet_name').val(name)
-#    $('#diet_cal').val(calories)
-#    $('#diet_fat').val(carbs)
-#  else if type == 'Drink'
-#    $('#diet_drink_type').val(name)
-#    $('#diet_drink_amount').val(amount)
-#    $('#diet_drink_calories').val(calories)
-#    $('#diet_drink_carbs').val(carbs)
-#  else if type == 'Smoke'
-#    $("#diet_smoke_type" ).val(name).change()
-
 @load_diets = () ->
   self = this
   current_user = $("#current-user-id")[0].value

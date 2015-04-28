@@ -8,6 +8,8 @@
   define_globals()
 
   $.mobile.changePage.defaults.allowSamePageTransition = true
+  $.mobile.filterable.prototype.options.filterCallback = ( index, searchValue ) ->
+    return false
 
 #  $( document ).on( "swiperight", "#main-page", ( e ) ->
 #    console.log e

@@ -22,17 +22,6 @@
     alert("Failed to create diet.")
   )
 
-#  $("#dietPage .recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
-#    form_id = e.currentTarget.id
-#    console.log "get resource success "+form_id
-#    load_diets()
-#    $("#hist-button").addClass("ui-btn-active")
-#    $("#fav-button").removeClass("ui-btn-active")
-#  ).on("ajax:error", (e, xhr, status, error) ->
-#    console.log xhr.responseText
-#    alert("Failed to update/delete diet.")
-#  )
-
   $("#updateFoodForm").on("ajax:success", (e, data, status, xhr) ->
     console.log("update successfull")
     $("#dietPage").attr("data-scrolltotable", true)
@@ -121,15 +110,14 @@
         html = ""
         $ul.html( "" )
         if ( value && value.length > 1 )
-          console.log "started "+value
           $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" )
           $ul.listview( "refresh" )
 
-          matcher = new RegExp($input.val(), "i")
+          matcher = new RegExp(remove_accents(value), "i")
           result = []
           cnt = 0
           for element in foods
-            if matcher.test(element.label)
+            if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
             if cnt >= 6
@@ -177,11 +165,11 @@
           $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" )
           $ul.listview( "refresh" )
 
-          matcher = new RegExp($input.val(), "i")
+          matcher = new RegExp(remove_accents($input.val()), "i")
           result = []
           cnt = 0
           for element in drinks
-            if matcher.test(element.label)
+            if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
             if cnt >= 6
