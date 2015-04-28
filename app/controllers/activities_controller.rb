@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+  include ActivitiesCommon
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
   # GET /activities
@@ -9,6 +10,8 @@ class ActivitiesController < ApplicationController
 
     order = params[:order]
     limit = params[:limit]
+
+    favourites = params[:favourites]
 
     @activities = Activity.where("user_id = #{user_id}")
     if source
@@ -30,6 +33,10 @@ class ActivitiesController < ApplicationController
       from = "#{year}-#{month}-01 00:00:00"
       to = "#{year}-#{month}-#{numdays} 23:59:59"
       @activities = @activities.where("date between '#{from}' and '#{to}'")
+    end
+
+    if favourites and favourites == "true"
+      @activities = @activities.where(favourite: true)
     end
 
     @activities = @activities.order(:start_time)
@@ -72,34 +79,6 @@ class ActivitiesController < ApplicationController
       else
         logger.error @activity.errors.full_messages.to_sentence
         format.json { render json: { :msg =>  @activity.errors.full_messages.to_sentence }, :status => 400 }
-      end
-    end
-  end
-
-  # PATCH/PUT /activities/1
-  # PATCH/PUT /activities/1.json
-  def update
-    respond_to do |format|
-      if @activity.update(activity_params)
-        format.html { redirect_to user_activity_path(@activity.user, @activity), notice: 'Activity was successfully updated.' }
-        format.json { render json: { :status => "OK", :result => @activity } }
-      else
-        format.html { render :edit }
-        format.json { render json: @activity.errors, status: :unprocessable_entity }
-      end
-    end
-
-
-  end
-
-  # DELETE /activities/1
-  # DELETE /activities/1.json
-  def destroy
-    respond_to do |format|
-      if @activity.destroy
-        format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
-      else
-        format.json { render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400 }
       end
     end
   end

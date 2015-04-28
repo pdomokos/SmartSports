@@ -6,7 +6,7 @@
   uid = $("#current-user-id")[0].value
 #  register_events()
   init_exercise()
-
+  loadHistory()
   $("div.appMenu button").removeClass("selected")
   $("#exercise-button").addClass("selected")
 
@@ -53,7 +53,7 @@ init_exercise = () ->
     $('#activity_start_datepicker').val(moment().format(moment_fmt))
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
 
-    load_exercise()
+    loadHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to create measurement.")
@@ -63,24 +63,61 @@ init_exercise = () ->
     form_item = e.currentTarget
     console.log "delete success "+form_item
 
-    load_exercise()
+    loadHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to delete measurement.")
   )
 
-@load_exercise = () ->
+  $('.hisTitle').click ->
+    loadHistory()
+
+  $(".favTitle").click ->
+    load_exercise(true)
+    $(".hisTitle").removeClass("selected")
+    $(".favTitle").addClass("selected")
+
+  $("#recentResourcesTable").on("click", "td.activityItem", (e) ->
+    console.log "loading activity"
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    console.log data
+    $("#activity_intensity").val(data.intensity)
+    $("#activity_percent").html(data.intensity+"%")
+    $("#activity_scale").slider({value: data.intensity})
+    console.log data
+    n = 1
+    if(data.group=="walking")
+      n = 1
+    else if(data.group=="running")
+      n = 2
+    else if(data.group=="cycling")
+      n = 3
+    else if(data.group=="swimming")
+      n = 4
+    $("#activity_group option:nth-child("+n+")").attr("selected", true)
+    $("#activity_group").selectmenu("refresh")
+  )
+
+@loadHistory = () ->
+  load_exercise()
+  $(".hisTitle").addClass("selected")
+  $(".favTitle").removeClass("selected")
+
+@load_exercise = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
-  console.log "calling load recent meas"
-  $.ajax '/users/' + current_user + '/activities.js?source='+window.default_source+'&order=desc&limit=4',
+  console.log "calling load recent exercises"
+  url = '/users/' + current_user + '/activities.js?source='+window.default_source+'&order=desc&limit=10'
+  if fav
+    console.log "loading favorites"
+    url = url+"&favourites=true"
+  $.ajax url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent measurements AJAX Error: #{textStatus}"
+      console.log "load recent activities AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
-      console.log "load recent measurements  Successful AJAX call"
+      console.log "load recent activities  Successful AJAX call"
       console.log textStatus
-
 
 data_received = (jsondata) ->
   draw_trends(jsondata)

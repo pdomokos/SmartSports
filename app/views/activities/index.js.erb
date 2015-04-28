@@ -1,3 +1,7 @@
-console.log("load activities js called");
-$("#recentResourcesTable").html("");
-$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/activity_item', :collection=> @activities ) %>");
+<% if not @is_mobile %>
+    console.log("load activities js called");
+    $("#recentResourcesTable").html("");
+    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/activity_item', :collection=> @activities ) %>");
+<% else %>
+
+<% end %>
