@@ -56,7 +56,7 @@
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
     $("#diet_smoke_type option:nth-child(1)").attr("selected", true)
     $("#diet_smoke_type").selectmenu("refresh")
-    loadHistory()
+    loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to create diet.")
@@ -65,14 +65,14 @@
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "update/delete success "+form_id
-    loadHistory()
+    loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to update/delete diet.")
   )
 
   $('.hisTitle').click ->
-    loadHistory()
+    loadDietHistory()
 
   $(".favTitle").click ->
     load_favs()
@@ -108,7 +108,7 @@
       $("#diet_smoke_type").selectmenu("refresh")
   )
 
-@loadHistory = () ->
+@loadDietHistory = () ->
   load_diets()
   $(".hisTitle").addClass("selected")
   $(".favTitle").removeClass("selected")

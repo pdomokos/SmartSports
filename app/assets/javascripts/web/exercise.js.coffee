@@ -6,7 +6,7 @@
   uid = $("#current-user-id")[0].value
 #  register_events()
   init_exercise()
-  loadHistory()
+  loadExerciseHistory()
   $("div.appMenu button").removeClass("selected")
   $("#exercise-button").addClass("selected")
 
@@ -53,7 +53,7 @@ init_exercise = () ->
     $('#activity_start_datepicker').val(moment().format(moment_fmt))
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
 
-    loadHistory()
+    loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to create measurement.")
@@ -63,14 +63,14 @@ init_exercise = () ->
     form_item = e.currentTarget
     console.log "delete success "+form_item
 
-    loadHistory()
+    loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to delete measurement.")
   )
 
   $('.hisTitle').click ->
-    loadHistory()
+    loadExerciseHistory()
 
   $(".favTitle").click ->
     load_exercise(true)
@@ -98,7 +98,7 @@ init_exercise = () ->
     $("#activity_group").selectmenu("refresh")
   )
 
-@loadHistory = () ->
+@loadExerciseHistory = () ->
   load_exercise()
   $(".hisTitle").addClass("selected")
   $(".favTitle").removeClass("selected")
