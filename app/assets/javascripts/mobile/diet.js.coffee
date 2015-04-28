@@ -12,32 +12,43 @@
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log xhr.responseText
-    $("#"+form_id+" input.dataFormField").val("")
+    $("#foodname").val("")
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
+    $("#diet_scale").val(2.5).slider("refresh")
+
     load_diets()
+    $("#successPopup").popup("open")
+
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to create diet.")
+    $("#failurePopup").popup("open")
   )
 
   $("#updateFoodForm").on("ajax:success", (e, data, status, xhr) ->
     console.log("update successfull")
     $("#dietPage").attr("data-scrolltotable", true)
     $( ":mobile-pagecontainer" ).pagecontainer("change", "#dietPage")
-
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to update diet.")
   )
   $("#deleteFoodForm").on("ajax:success", (e, data, status, xhr) ->
     console.log("delete successfull")
+    $("#dietPage").attr("data-scrolltotable", true)
     $.mobile.navigate( "#dietPage" )
-
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to delete diet.")
+  )
+  $("#createNewFoodForm").on("ajax:success", (e, data, status, xhr) ->
+    console.log("add new diet successfull")
+    $("#dietPage").attr("data-scrolltotable", true)
+    $.mobile.navigate( "#dietPage" )
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    alert("Failed to add new diet.")
   )
 
   $('#hist-button').click ->
@@ -52,8 +63,7 @@
 
   $(document).on("pagecontainershow", (event, ui) ->
     console.log("diet pagecontainershow")
-    if $("#dietPage").data('scrolltotable')
-      load_diets()
+    load_diets()
   )
 
 @load_diets = (fav=false) ->
@@ -64,6 +74,7 @@
   if fav
     console.log "loading favorites"
     url = url+"&favourites=true"
+
   $.ajax url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
@@ -71,23 +82,18 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load recent diets  Successful AJAX call"
       console.log textStatus
+      if fav
+        $("#hist-button").removeClass("ui-btn-active")
+        $("#fav-button").addClass("ui-btn-active")
+        $("#editFoodPage").attr("data-isfavourite", true)
+      else
+        $("#hist-button").addClass("ui-btn-active")
+        $("#fav-button").removeClass("ui-btn-active")
+        $("#editFoodPage").attr("data-isfavourite", null)
+
       if $("#dietPage").attr('data-scrolltotable')
         $.mobile.silentScroll($("div.ui-navbar").offset().top)
         $("#dietPage").attr('data-scrolltotable', null)
-
-
-@fill_form = (type, name, calories, carbs, amount) ->
-  if type == 'Food'
-    $('#diet_name').val(name)
-    $('#diet_cal').val(calories)
-    $('#diet_fat').val(carbs)
-  else if type == 'Drink'
-    $('#diet_drink_type').val(name)
-    $('#diet_drink_amount').val(amount)
-    $('#diet_drink_calories').val(calories)
-    $('#diet_drink_carbs').val(carbs)
-  else if type == 'Smoke'
-    $("#diet_smoke_type" ).val(name).change()
 
 
 @load_food_types = () ->
@@ -194,12 +200,20 @@
 
 @show_food = (e, ui) ->
   foodid = ui.toPage[0].dataset.foodid
-  window.tmpe = e
-  window.tmpui = ui
 
   console.log("show food id cb: "+foodid)
   current_user = $("#current-user-id")[0].value
   foodurl = '/users/' + current_user + '/diets/'+foodid+'.json'
+
+  if $("#editFoodPage").attr("data-isfavourite")
+    $("#deleteFoodForm").addClass("ui-screen-hidden")
+    $("#updateFoodForm").addClass("ui-screen-hidden")
+    $("#createNewFoodForm").removeClass("ui-screen-hidden")
+  else
+    $("#deleteFoodForm").removeClass("ui-screen-hidden")
+    $("#updateFoodForm").removeClass("ui-screen-hidden")
+    $("#createNewFoodForm").addClass("ui-screen-hidden")
+
   $.ajax foodurl,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
@@ -213,16 +227,43 @@
       f.action = "/users/"+current_user+"/diets/"+foodid
       f = $("#deleteFoodForm")[0]
       f.action = "/users/"+current_user+"/diets/"+foodid
+      f = $("#createNewFoodForm")[0]
+      f.action = "/users/"+current_user+"/diets"
 
       if(data.type=="Smoke")
         $("#edit_food_category_label").hide()
         $("#edit_food_category").hide()
+        $("#new_food_category_label").hide()
+        $("#new_food_category").hide()
+        $("#new_food_amount_edit_scale_label").hide()
+        $("#createNewFoodForm div.ui-slider").hide()
+
+        $("#edit_food_name").val(data.name)
+        $("#edit_food_date").val(moment(data.date).format("YYYY-MM-DD HH:mm"))
+        $("#food_favorite").prop("checked", data.favourite).flipswitch("refresh")
+
+        $("#new_diet_type").val("Smoke")
+        $("#new_food_name").val(data.name)
+        $("#new_food_date").val(moment().format("YYYY-MM-DD HH:mm"))
       else
         $("#edit_food_category_label").show()
         $("#edit_food_category").show()
+        $("#new_food_amount_edit_scale_label").show()
+        $("#createNewFoodForm div.ui-slider").show()
+
         $("#edit_food_name").val(data.food_name)
         $("#edit_food_category").val(data.food_category)
         $("#edit_food_date").val(moment(data.date).format("YYYY-MM-DD HH:mm"))
         $("#food_amount_edit_scale").val(data.amount).slider("refresh")
         $("#food_favorite").prop("checked", data.favourite).flipswitch("refresh")
 
+        $("#new_food_category_label").show()
+        $("#new_food_category").show()
+        $("#new_food_name").val(data.food_name)
+        $("#new_food_category").val(data.food_category)
+        $("#new_food_date").val(moment().format("YYYY-MM-DD HH:mm"))
+        $("#new_food_amount_edit_scale").val(data.amount).slider("refresh")
+        $("#new_food_favorite").prop("checked", data.favourite).flipswitch("refresh")
+
+        $("#new_diet_type").val(data.type)
+        $("#new_diet_type_id").val(data.food_type_id)

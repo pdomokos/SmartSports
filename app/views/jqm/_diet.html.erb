@@ -85,8 +85,17 @@
       <ul data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
         <%= render partial: "shared/diet_item", collection: @diets, as: "diet_item" %>
       </ul>
+
     </div>
   </div><!-- /content -->
+
+  <div data-role="popup" id="successPopup" class="ui-content" style="max-width:280px" data-history="false" data-theme="b">
+    <p>Item successfully created.</p>
+  </div>
+
+  <div data-role="popup" id="failurePopup" class="ui-content" style="max-width:280px" data-history="false" data-theme="b">
+    <p>Failed to create item.</p>
+  </div>
 
 </div>
 
@@ -111,6 +120,25 @@
         <input id="food_favorite" type="checkbox" name="diet[favourite]" value="" data-theme="a" data-role="flipswitch">
       </div>
       <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
+    <% end %>
+
+    <%= form_tag(  "#", remote: true, id: "createNewFoodForm", method: 'post') do %>
+        <div class="ui-field-contain">
+          <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+          <input id="new_diet_type" type="hidden" name="diet[type]" >
+          <input id="new_diet_type_id" name="diet[food_type_id]" type="hidden">
+          <label for="new_food_name">Name</label>
+          <input id="new_food_name" type="text" name="diet[name]" value="" data-theme="a" readonly="true">
+          <label id="new_food_category_label" for="edit_food_category">Category</label>
+          <input id="new_food_category" type="text" name="food_category" value="" data-theme="a" readonly="true">
+          <label for="new_food_date">Date</label>
+          <input id="new_food_date" type="text" name="diet[date]" value="" data-theme="a">
+
+          <label id="new_food_amount_edit_scale_label" for="new_food_amount_edit_scale">Amount:</label>
+          <input type="range" name="diet[amount]" id="new_food_amount_edit_scale" min="0.5" max="5" step="0.5" value="2.5">
+
+        </div>
+        <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Create New</button>
     <% end %>
     <%= form_tag(  "#", remote: true, id: "deleteFoodForm", method: 'delete') do %>
       <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-delete ui-icon-check">Delete</button>
