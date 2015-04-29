@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
       resources :medication_types
       resources :food_types
+      post 'sensordata' => "sensors#create"
       get 'profile' => "api#profile"
     end
   end
