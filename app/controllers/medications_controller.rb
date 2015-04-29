@@ -1,10 +1,12 @@
 class MedicationsController < ApplicationController
+  include MedicationsCommon
   def index
     user_id = params[:user_id]
 
     source = params[:source]
     order = params[:order]
     limit = params[:limit]
+    favourites = params[:favourites]
 
     u = User.find(user_id)
     @medications = u.medications
@@ -21,6 +23,10 @@ class MedicationsController < ApplicationController
       @medications = @medications.limit(limit)
     end
     @user = u
+
+    if favourites and favourites == "true"
+      @medications = @medications.where(favourite: true)
+    end
 
     respond_to do |format|
       format.json {render json: @medications}
@@ -45,30 +51,6 @@ class MedicationsController < ApplicationController
         print medication.errors.full_messages.to_sentence+"\n"
         format.json { render json: medication.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PATCH/PUT /users/:user_id/medications/:id
-  # PATCH/PUT /users/:user_id/medications/:id
-  def update
-    medication = Medication.find(params[:id])
-    respond_to do |format|
-      if medication.update(medication_params)
-        format.json { render json: { :status => "OK", :result => medication } }
-      else
-        format.json { render json: medication.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /users/:user_id/medications/:id
-  # DELETE /users/:user_id/medications/:id.json
-  def destroy
-    medication = Medication.find(params[:id])
-    user = medication.user
-    medication.destroy
-    respond_to do |format|
-      format.json { head :no_content }
     end
   end
 

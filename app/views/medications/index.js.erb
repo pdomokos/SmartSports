@@ -1,2 +1,6 @@
-$("#recentResourcesTable").html("");
-$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/medication_item', :collection=> @medications ) %>");
+<% if not @is_mobile %>
+    $("#recentResourcesTable").html("");
+    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/medication_item', :collection=> @medications ) %>");
+<% else %>
+
+<% end %>

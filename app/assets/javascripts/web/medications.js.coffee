@@ -1,6 +1,5 @@
 @medications_loaded = () ->
   console.log("medications loaded")
-
   $("div.appMenu button").removeClass("selected")
   $("#medication-button").addClass("selected")
 
@@ -13,6 +12,7 @@
   $("#oral_medication_name").watermark('Start typing medication, eg: Kal')
 
   load_medication_types()
+  loadMedicationHistory()
 #  .autocomplete("instance")._renderItem = (ul, item) ->
 #    return $( "<li></li>" )
 #      .data( "item.autocomplete", item )
@@ -36,7 +36,7 @@
     $('#medications_datepicker').val(moment().format(moment_fmt))
     $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
 
-    load_medications()
+    loadMedicationHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to create diet.")
@@ -46,17 +46,48 @@
     form_item = e.currentTarget
     console.log "delete success "+form_item
 
-    load_medications()
+    loadMedicationHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to delete measurement.")
   )
 
-@load_medications = () ->
+  $('.hisTitle').click ->
+    loadMedicationHistory()
+
+  $(".favTitle").click ->
+    load_medications(true)
+    $(".hisTitle").removeClass("selected")
+    $(".favTitle").addClass("selected")
+
+  $("#recentResourcesTable").on("click", "td.medicationItem", (e) ->
+    console.log "loading medication"
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    console.log data
+    if data.medication_type=="oral"
+      $("#oral_medication_name").val(data.medication_name)
+      $("#medname").val(data.medication_type_id)
+      $("#medication_amount").val(data.amount)
+    else if data.medication_type=="insulin"
+      $("#insulin_name").val(data.medication_name)
+      $("#insname").val(data.medication_type_id)
+      $("#medication_insulin_dosage").val(data.amount)
+  )
+
+@loadMedicationHistory = () ->
+  load_medications()
+  $(".hisTitle").addClass("selected")
+  $(".favTitle").removeClass("selected")
+
+@load_medications = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent medications"
-  $.ajax '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=4',
+  url = '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=10'
+  if fav
+    console.log "loading favorites"
+    url = url+"&favourites=true"
+  $.ajax url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent medications AJAX Error: #{textStatus}"
