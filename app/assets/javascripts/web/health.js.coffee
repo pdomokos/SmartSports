@@ -11,6 +11,7 @@
   $('#waist_datepicker').datetimepicker(timepicker_defaults)
 
   init_meas()
+  loadHealthHistory()
 
 #  console.log "getting health data for user:"+uid
 #  meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
@@ -88,7 +89,7 @@ draw_detail = (data) ->
     $('#weight_datepicker').val(moment().format(moment_fmt))
     $('#waist_datepicker').val(moment().format(moment_fmt))
 
-    load_meas()
+    loadHealthHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to create measurement.")
@@ -98,17 +99,50 @@ draw_detail = (data) ->
     form_item = e.currentTarget
     console.log "delete success "+form_item
 
-    load_meas()
+    loadHealthHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     alert("Failed to delete measurement.")
   )
 
-@load_meas = () ->
+  $('.hisTitle').click ->
+    loadHealthHistory()
+
+  $(".favTitle").click ->
+    load_meas(true)
+    $(".hisTitle").removeClass("selected")
+    $(".favTitle").addClass("selected")
+
+  $("#recentMeasTable").on("click", "td.measItem", (e) ->
+    console.log "loading measurement"
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    console.log data
+    if(data.meas_type=="blood_pressure")
+      $("#bp_sys").val(data.systolicbp)
+      $("#bp_dia").val(data.diastolicbp)
+      $("#bp_hr").val(data.pulse)
+    else if(data.meas_type=="blood_sugar")
+      $("#glucose").val(data.blood_sugar)
+    else if(data.meas_type=="weight")
+      $("#weight").val(data.weight)
+    else if(data.meas_type=="waist")
+      $("#waist").val(data.waist)
+  )
+
+@loadHealthHistory = () ->
+  load_meas()
+  $(".hisTitle").addClass("selected")
+  $(".favTitle").removeClass("selected")
+
+@load_meas = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent meas"
-  $.ajax '/users/' + current_user + '/measurements.js?source='+window.default_source+'&order=desc&limit=4',
+  url = '/users/' + current_user + '/measurements.js?source='+window.default_source+'&order=desc&limit=10'
+  if fav
+    console.log "loading favorites"
+    url = url+"&favourites=true"
+  $.ajax url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent measurements AJAX Error: #{textStatus}"

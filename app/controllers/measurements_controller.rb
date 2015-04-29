@@ -1,4 +1,5 @@
 class MeasurementsController < ApplicationController
+  include MeasurementsCommon
   skip_before_filter :require_login, only: [:create]
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
 
@@ -30,18 +31,6 @@ class MeasurementsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /measurements/1
-  # PATCH/PUT /measurements/1.json
-  def update
-    respond_to do |format|
-      if @measurement.update(measurement_params)
-        format.json { render json: { :status => "OK", :msg => "Updated successfully", :result => @measurement } }
-      else
-        format.json { render json: { :status => "NOK", :msg => "Update errror" }, :status => 400 }
-      end
-    end
-  end
-
   def load_recent
     user_id = params[:user_id]
     user = User.find(user_id)
@@ -61,6 +50,7 @@ class MeasurementsController < ApplicationController
     source = params[:source]
     order = params[:order]
     limit = params[:limit]
+    favourites = params[:favourites]
 
     @measurements = user.measurements
     if start
@@ -77,6 +67,10 @@ class MeasurementsController < ApplicationController
     if limit
       @measurements = @measurements.limit(limit)
     end
+    if favourites and favourites == "true"
+      @measurements = @measurements.where(favourite: true)
+    end
+
     if summary
       daily_data = Hash.new { |h,k| h[k] = [] }
       for m in @measurements
@@ -166,24 +160,6 @@ class MeasurementsController < ApplicationController
   end
 
   def show
-  end
-
-  # DELETE /measurements/1
-  # DELETE /measurements/1.json
-  def destroy
-    # user = @measurement.user
-    # @measurement.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to user_measurements_url(user), notice: 'Measurement was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
-    respond_to do |format|
-      if @measurement.destroy
-        format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
-      else
-        format.json { render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400 }
-      end
-    end
   end
 
   private

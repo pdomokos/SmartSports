@@ -1,2 +1,6 @@
-$("#recentMeasTable").html("");
-$("#recentMeasTable").html("<%= escape_javascript(render :partial=> 'shared/meas_item', :collection=> @measurements , :locals => {:meas_map => @meas_map }) %>");
+<% if not @is_mobile %>
+    $("#recentMeasTable").html("");
+    $("#recentMeasTable").html("<%= escape_javascript(render :partial=> 'shared/meas_item', :collection=> @measurements , :locals => {:meas_map => @meas_map }) %>");
+<% else %>
+
+<% end %>

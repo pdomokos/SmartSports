@@ -8,7 +8,11 @@
       <% end %>
     </td>
 
-    <td class="historyTitle padded">
+    <td class="historyTitle padded measItem">
+      <input id="measurement_data_<%=meas_item.id%>" type="hidden" value="<%=
+          m = meas_item.as_json
+          JSON.dump(m)
+      %>">
       <% if meas_item.meas_type=='blood_pressure' %>
           <strong>SYS/DIA/HR: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
       <% elsif  meas_item.meas_type=='blood_sugar' %>
@@ -26,11 +30,13 @@
 
   <td class="iconColumn">
     <%= form_tag( "/users/#{current_user.id}/measurements/#{meas_item.id}", id: "mod_meas_#{meas_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
-        <button id="fav-icon" class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
-          <% if false %>
+        <button id="fav-icon" class="tableControl">
+          <% if meas_item.favourite %>
               <i class="fa fa-star fa-2x is-favorite"></i>
+              <input type="hidden" name="measurement[favourite]" value="false" >
           <% else %>
               <i class="fa fa-star fa-2x no-favorite"></i>
+              <input type="hidden" name="measurement[favourite]" value="true" >
           <% end %>
         </button>
     <% end %>
