@@ -1,3 +1,6 @@
-console.log("load lifestyles js called");
-$("#recentResourcesTable").html("");
-$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/lifestyle_item', :collection=> @lifestyles ) %>");
+<% if not @is_mobile %>
+    console.log("load lifestyles js called");
+    $("#recentResourcesTable").html("");
+    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/lifestyle_item', :collection=> @lifestyles ) %>");
+<% else %>
+<% end %>

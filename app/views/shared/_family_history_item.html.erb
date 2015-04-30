@@ -4,7 +4,11 @@
         <%= image_tag "family40.png" %>
     </td>
 
-    <td class=historyTitle padded">
+    <td class="historyTitle padded familyhistoryItem">
+      <input id="family_history_data_<%=family_history_item.id%>" type="hidden" value="<%=
+          f = family_history_item.as_json
+          JSON.dump(f)
+      %>">
       <strong><%= family_history_item.disease %></strong>
       <span> <%= family_history_item.relative %></span>
       <br>
@@ -14,17 +18,6 @@
     </td>
 
 
-  <td class="iconColumn">
-    <%= form_tag( "/users/#{current_user.id}/family_histories/#{family_history_item.id}", id: "mod_ls_#{family_history_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
-        <button id="fav-icon" class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
-          <% if false %>
-              <i class="fa fa-star fa-2x is-favorite"></i>
-          <% else %>
-              <i class="fa fa-star fa-2x no-favorite"></i>
-          <% end %>
-        </button>
-    <% end %>
-  </td>
   <td class="iconColumn">
     <%= form_tag( "/users/#{current_user.id}/family_histories/#{family_history_item.id}", id: "delete_ls_#{family_history_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">

@@ -28,6 +28,7 @@ init_exercise = () ->
   $('#walking_steps').focus()
 
   $('#activity_group').selectmenu()
+  $("#activity_intensity").val(50)
 
   $("#activity_scale").slider({
     min: 0,
