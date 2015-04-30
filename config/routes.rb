@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :medication_types
   resources :food_types
+  resources :activity_types
   resources :users do
     resources :summaries
     resources :activities

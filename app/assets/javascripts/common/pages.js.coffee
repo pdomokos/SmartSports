@@ -220,6 +220,11 @@ define_globals = () ->
       categ: d['category']
     }
 
+  window.activity_map_fn = (d) ->
+    {
+    label: d['name'],
+    id: d['id']
+    }
 
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")

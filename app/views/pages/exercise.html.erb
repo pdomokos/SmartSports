@@ -1,56 +1,95 @@
 <div class="training-block mainContent" id="training-container">
-    <div class="sectionTitle exerciseBodyLogo exerciseColor">
-        Exercise
-    </div>
-    <div class="contentBg exerciseStyle" >
-        <div style="padding: 10px;">
-            <div class="dataFormContainer">
-                <div class="dataFormTitle">
-                    <%= image_tag "walking40.png" %><br/>
-                    Training
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="activity[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="activity[group]" value="walking">
-                        <select id="activity_group" name="activity[group]" class="dataFormField">
-                            <option>walking</option>
-                            <option>running</option>
-                            <option>cycling</option>
-                            <option>swimming</option>
-                        </select>
-                        <input type="hidden" name="activity[manual]" value="true">
-
-                      <label for="activity_scale" style="margin-left: 20px;">Intensity</label>
-                      <div class="dataScale">
-                          <div id="activity_scale" class="dataFormField"></div>
-                        </div>
-                        <div id="activity_percent" class="dataFormFieldUnit">50%</div>
-                        <input id="activity_intensity" type="hidden" name="activity[intensity]"/>
-
-                        <input id='activity_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <div class="dataFormFieldUnit">start</div>
-
-                        <input id='activity_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <div class="dataFormFieldUnit">end</div>
-
-                    </div>
-                  <button class="dataFormField">Add</button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator"></div>
-            <div style="clear: both"></div>
+  <div class="sectionTitle exerciseBodyLogo exerciseColor">
+    Exercise
+  </div>
+  <div class="contentBg exerciseStyle">
+    <div style="padding: 10px;">
+      <div class="dataFormContainer">
+        <div class="dataFormTitle">
+          <%= image_tag "running40.png" %><br/>
+          Sport
         </div>
-    </div>
+        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
+            <div class="dataForm">
+              <input type="hidden" name="activity[source]" value="<%= @default_source %>">
 
-    <div class="sectionTitle exerciseBodyLogo exerciseColor" style="margin-top: 40px;">
-         <span class="hisTitle selected">History</span> | <span class="favTitle">Favorites</span>
-    </div>
 
-    <table class="historyTable"  cellpadding="0" cellspacing="0">
-        <tbody id="recentResourcesTable">
-        </tbody>
-    </table>
+              <input type="hidden" name="activity[group]" value="sport">
+              <input type="text" id="activityname" name="activity_name" class="dataFormField" placeholder="Search for activity">
+
+              <input id="activity_type_id" name="activity[activity_type_id]" type="hidden">
+
+              <label for="activity_scale" style="margin-left: 20px;">Intensity</label>
+
+              <div class="dataScale">
+                <div id="activity_scale" class="dataFormField"></div>
+              </div>
+              <div id="activity_percent" class="dataFormFieldUnit">2</div>
+              <input id="activity_intensity" type="hidden" name="activity[intensity]"/>
+
+              <input id='activity_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+
+              <div class="dataFormFieldUnit">start</div>
+
+              <input id='activity_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+
+              <div class="dataFormFieldUnit">end</div>
+
+            </div>
+            <button class="dataFormField">Add</button>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator"></div>
+
+      <div class="dataFormContainer">
+        <div class="dataFormTitle">
+          <%= image_tag "walking40.png" %><br/>
+          Day-to-day
+        </div>
+        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
+            <div class="dataForm">
+              <input type="hidden" name="activity[source]" value="<%= @default_source %>">
+
+
+              <input type="hidden" name="activity[group]" value="other">
+              <input type="text" id="otheractivityname" name="activity_name" class="dataFormField" placeholder="Search for day-to-day activity">
+
+              <input id="activity_other_type_id" name="activity[activity_type_id]" type="hidden">
+
+              <label for="activity_other_scale" style="margin-left: 20px;">Intensity</label>
+
+              <div class="dataScale">
+                <div id="activity_other_scale" class="dataFormField"></div>
+              </div>
+              <div id="activity_other_percent" class="dataFormFieldUnit">2</div>
+              <input id="activity_other_intensity" type="hidden" name="activity[intensity]"/>
+
+              <input id='activity_other_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+
+              <div class="dataFormFieldUnit">start</div>
+
+              <input id='activity_other_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+
+              <div class="dataFormFieldUnit">end</div>
+
+            </div>
+            <button class="dataFormField">Add</button>
+        <% end %>
+      </div>
+
+      <div class="dataFormSeparator"></div>
+      <div style="clear: both"></div>
+    </div>
+  </div>
+
+  <div class="sectionTitle exerciseBodyLogo exerciseColor" style="margin-top: 40px;">
+    <span class="hisTitle selected">History</span> | <span class="favTitle">Favorites</span>
+  </div>
+
+  <table class="historyTable" cellpadding="0" cellspacing="0">
+    <tbody id="recentResourcesTable">
+    </tbody>
+  </table>
 </div>
 
 <% content_for :page_logic do %>

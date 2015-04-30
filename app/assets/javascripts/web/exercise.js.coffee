@@ -6,6 +6,8 @@
   uid = $("#current-user-id")[0].value
 #  register_events()
   init_exercise()
+  load_activity_types()
+  load_other_activity_types()
   loadExerciseHistory()
   $("div.appMenu button").removeClass("selected")
   $("#exercise-button").addClass("selected")
@@ -28,21 +30,36 @@ init_exercise = () ->
   $('#walking_steps').focus()
 
   $('#activity_group').selectmenu()
-  $("#activity_intensity").val(50)
+  $("#activity_intensity").val(2)
+  $("#activity_other_intensity").val(2)
 
   $("#activity_scale").slider({
-    min: 0,
-    max: 100,
-    value: 50
+    min: 1,
+    max: 3,
+    value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#activity_percent").html(ui.value+"%")
+      $("#activity_percent").html(ui.value)
     change: (event, ui) ->
       $("#activity_intensity").val(ui.value)
   })
 
+  $("#activity_other_scale").slider({
+    min: 1,
+    max: 3,
+    value: 2
+  }).slider({
+    slide: (event, ui) ->
+      $("#activity_other_percent").html(ui.value)
+    change: (event, ui) ->
+      $("#activity_other_intensity").val(ui.value)
+  })
+
   $('#activity_start_datepicker').datetimepicker(timepicker_defaults)
   $('#activity_end_datepicker').datetimepicker(timepicker_defaults)
+
+  $('#activity_other_start_datepicker').datetimepicker(timepicker_defaults)
+  $('#activity_other_end_datepicker').datetimepicker(timepicker_defaults)
 #  $('#running_datepicker').datetimepicker(timepicker_defaults)
 
   $("form.resource-create-form.exercise-form").on("ajax:success", (e, data, status, xhr) ->
@@ -53,6 +70,8 @@ init_exercise = () ->
     $("#"+form_id+" input.dataFormField").val("")
     $('#activity_start_datepicker').val(moment().format(moment_fmt))
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
+    $('#activity_other_start_datepicker').val(moment().format(moment_fmt))
+    $('#activity_other_end_datepicker').val(moment().format(moment_fmt))
 
     loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
@@ -82,21 +101,18 @@ init_exercise = () ->
     console.log "loading activity"
     data = JSON.parse(e.currentTarget.querySelector("input").value)
     console.log data
-    $("#activity_intensity").val(data.intensity)
-    $("#activity_percent").html(data.intensity+"%")
-    $("#activity_scale").slider({value: data.intensity})
-    console.log data
-    n = 1
-    if(data.group=="walking")
-      n = 1
-    else if(data.group=="running")
-      n = 2
-    else if(data.group=="cycling")
-      n = 3
-    else if(data.group=="swimming")
-      n = 4
-    $("#activity_group option:nth-child("+n+")").attr("selected", true)
-    $("#activity_group").selectmenu("refresh")
+    if data.activity_category=="sport"
+      $("#activityname").val(data.activity_name)
+      $("#activity_type_id").val(data.activity_type_id)
+      $("#activity_intensity").val(data.intensity)
+      $("#activity_percent").html(data.intensity)
+      $("#activity_scale").slider({value: data.intensity})
+    else if data.activity_category!="sport"
+      $("#otheractivityname").val(data.activity_name)
+      $("#activity_other_type_id").val(data.activity_type_id)
+      $("#activity_other_intensity").val(data.intensity)
+      $("#activity_other_percent").html(data.intensity)
+      $("#activity_other_scale").slider({value: data.intensity})
   )
 
 @loadExerciseHistory = () ->
@@ -339,3 +355,69 @@ set_selected = (evt) ->
   clicked_block = evt.toElement.parentNode
   $("div.meas-block").removeClass("selected")
   clicked_block.classList.add("selected")
+
+@load_activity_types = () ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load activity types"
+  $.ajax '/activity_types.json?category=sport',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load activity_types AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load activity_types  Successful AJAX call"
+
+      activities = data.map( window.activity_map_fn )
+
+      $("#activityname").autocomplete({
+        source: (request, response) ->
+          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
+          result = []
+          cnt = 0
+          for element in activities
+            if matcher.test(remove_accents(element.label))
+              result.push(element)
+              cnt += 1
+            if cnt >= 20
+              break
+          response(result)
+        select: (event, ui) ->
+          $("#activity_type_id").val(ui.item.id)
+          $("#activity_scale" ).slider({
+            value: "2"
+          })
+          $("#activity_percent").text("2")
+      })
+
+@load_other_activity_types = () ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load other activity types"
+  $.ajax '/activity_types.json?category=other',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load other activity_types AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load other activity_types  Successful AJAX call"
+
+      activities = data.map( window.activity_map_fn )
+
+      $("#otheractivityname").autocomplete({
+        source: (request, response) ->
+          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
+          result = []
+          cnt = 0
+          for element in activities
+            if matcher.test(remove_accents(element.label))
+              result.push(element)
+              cnt += 1
+            if cnt >= 20
+              break
+          response(result)
+        select: (event, ui) ->
+          $("#activity_other_type_id").val(ui.item.id)
+          $("#activity_other_scale" ).slider({
+            value: "2"
+          })
+          $("#activity_other_percent").text("2")
+      })
