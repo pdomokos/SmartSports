@@ -17,12 +17,12 @@
 
   $("#diet_scale").slider({
     min: 0.5,
-    max: 5,
+    max: 5.0,
     step: 0.5,
-    value: 2.5
+    value: 1
   }).slider({
     slide: (event, ui) ->
-      $("#diet_unit").html(ui.value*100+"g")
+      $("#diet_unit").html(" "+ui.value+" adag")
     change: (event, ui) ->
       $("#diet_amount").val(ui.value)
   })
@@ -31,10 +31,10 @@
     min: 0.5,
     max: 5,
     step: 0.5,
-    value: 2.5
+    value: 1
   }).slider({
     slide: (event, ui) ->
-      $("#diet_drink_unit").html(ui.value+"dl")
+      $("#diet_drink_unit").html(ui.value+" adag")
     change: (event, ui) ->
       $("#diet_drink_amount").val(ui.value)
   })
@@ -45,12 +45,12 @@
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
-    $("#diet_scale").slider({ value: 2.5 })
+    $("#diet_scale").slider({ value: 1 })
     fval = $("#diet_scale").slider("value")
-    $("#diet_unit").html(fval*100+"g")
-    $("#diet_drink_scale").slider({ value: 2.5 })
+    $("#diet_unit").html(fval+" adag")
+    $("#diet_drink_scale").slider({ value: 1 })
     dval = $("#diet_drink_scale").slider("value")
-    $("#diet_drink_unit").html(dval+"dl")
+    $("#diet_drink_unit").html(dval+" adag")
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
@@ -87,13 +87,13 @@
       $("#foodname").val(data.food_name)
       $("#diet_type_id").val(data.food_type_id)
       $("#diet_amount").val(data.amount)
-      $("#diet_unit").html(data.amount*100+"g")
+      $("#diet_unit").html(data.amount+" adag")
       $("#diet_scale").slider({value: data.amount})
     else if data.type=="Drink"
       $("#drinkname").val(data.food_name)
       $("#drink_type_id").val(data.food_type_id)
       $("#diet_drink_amount").val(data.amount)
-      $("#diet_drink_unit").html(data.amount+"dl")
+      $("#diet_drink_unit").html(data.amount+" adag")
       $("#diet_drink_scale").slider({value: data.amount})
     else if data.type=="Smoke"
       console.log data
@@ -165,11 +165,6 @@
           response(result)
         select: (event, ui) ->
           $("#diet_type_id").val(ui.item.id)
-          $("#diet_unit").text("250g")
-          $("#diet_scale" ).slider({
-              value: "2.5"
-            })
-          $("#diet_amount").val(2.5)
       })
 
 @load_drink_types = () ->
@@ -199,15 +194,4 @@
           response(result)
         select: (event, ui) ->
           $("#diet_drink_type_id").val(ui.item.id)
-          $("#diet_drink_unit").text("2.5dl")
-          $("#diet_drink_scale" ).slider({
-            value: "2.5"
-          })
-#          $("#diet_drink_name").val(ui.item.label)
-          $("#diet_drink_amount").val(2.5)
-          $("#diet_drink_cal").val(ui.item.kcal*2.5)
-          $("#diet_drink_fat").val(ui.item.fat*2.5)
-          $("#diet_drink_carbs").val(ui.item.carb*2.5)
-          $("#diet_drink_prot").val(ui.item.prot*2.5)
-          $("#diet_drink_category").val(ui.item.categ)
       })

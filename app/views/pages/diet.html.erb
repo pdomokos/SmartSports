@@ -24,7 +24,7 @@
                         </div>
 
                         <input id="diet_amount" name="diet[amount]" type="hidden">
-                        <div id="diet_unit" class="dataFormFieldUnit">250g</div>
+                        <div id="diet_unit" class="dataFormFieldUnit">1 adag</div>
 
                         <input id='diet_food_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>
@@ -57,7 +57,7 @@
                         </div>
 
                         <input id="diet_drink_amount" name="diet[amount]" type="hidden">
-                        <div id="diet_drink_unit" class="dataFormFieldUnit">2.5dl</div>
+                        <div id="diet_drink_unit" class="dataFormFieldUnit">1 adag</div>
 
                         <input id='diet_drink_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>
@@ -79,9 +79,15 @@
                         <input type="hidden" name="diet[type]" value="Smoke">
 
                         <select id="diet_smoke_type" name="diet[name]" class="dataFormField">
-                            <option value="1 Cigarette">1 Cigarette</option>
-                            <option value="1 Cigar">1 Cigar</option>
-                            <option value="1 Pipe">1 Pipe</option>
+
+                            <option value="1 Cigaretta">1 Cigaretta</option>
+                            <option value="1 Szivar">1 Szivar</option>
+                            <option value="1 Szivarka">1 Szivarka</option>
+                            <option value="1 Pipa">1 Pipa</option>
+                            <option value="1 Elektromos cigaretta">1 Elektromos cigaretta</option>
+                            <option value="1 Nikotinos orrspray">1 Nikotinos orrspray</option>
+                            <option value="1 Nikotinos rágó">1 Nikotinos rágó</option>
+                            <option value="1 Nikotinos tapasz">1 Nikotinos tapasz</option>
                         </select>
 
                         <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>

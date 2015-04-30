@@ -22,9 +22,10 @@
 </div>
 
 <% if is_mobile_device? || is_tablet_device? %>
-    <%= render partial: 'features.mobile', locals: { msg: "Not a Member? <a class=\"signupLink\" href=\"#{signup_path}\">Sign Up Now</a> and Start Managing Your Diabetes-related Data!"} %>
+    Don't have an account yet? Create yours now and start managing your diabetes-related data
+    <%= render partial: 'features.mobile', locals: { msg: "Don't have an account yet? Create yours <a class=\"signupLink\" href=\"#{signup_path}\">now</a> and and start managing your diabetes-related data"} %>
 <% else %>
-    <%= render partial: 'features', locals: { msg: "Not a Member? <a class=\"signupLink\" href=\"#{signup_path}\">Sign Up Now</a> and Start Managing Your Diabetes-related Data!"} %>
+    <%= render partial: 'features', locals: { msg: "Don't have an account yet? Create yours <a class=\"signupLink\" href=\"#{signup_path}\">now</a> and and start managing your diabetes-related data"} %>
 <% end %>
 
 <script>

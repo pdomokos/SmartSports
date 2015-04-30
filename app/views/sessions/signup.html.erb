@@ -7,20 +7,20 @@
                 <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
             </div>
             <div style="float: left;padding-top: 15px;padding-left: 100px;">
-                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Sign up to SmartDiab</span><br>
-                <span>Your health is our mission</span>
+                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Create your SmartDiab account</span><br>
+                <span>Your Data. Your Problem. Solved!</span>
             </div>
         </div>
     </div>
 <% else %>
-    <div style="position:absolute;left:50%;margin-left:-240px;top:100px;">
+    <div style="position:absolute;left:47%;margin-left:-240px;top:100px;">
 
-        <div style="width: 480px;height: 128px;color: white;">
+        <div style="width: 600px;height: 128px;color: white;">
             <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
 
             <div style="float: left;padding-top: 35px;padding-left: 20px;">
-                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Sign up to SmartDiab</span><br>
-                <span>Your health is our mission</span>
+                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Create your SmartDiab account</span><br>
+                <span>Your Data. Your Problem. Solved!</span>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
 <% if is_mobile_device? || is_tablet_device? %>
     <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
 <% else %>
-    <%= render partial: 'features', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
+    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"#{login_path}\">I already have a SmarDiab account</a>"} %>
 <% end %>
 
 <script>
