@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423210522) do
+ActiveRecord::Schema.define(version: 20150430112713) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -30,11 +30,18 @@ ActiveRecord::Schema.define(version: 20150423210522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "intensity"
-    t.boolean  "favourite",  default: false
+    t.boolean  "favourite",        default: false
+    t.integer  "activity_type_id"
   end
 
   add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"
+
+  create_table "activity_types", force: true do |t|
+    t.string "name"
+    t.float  "kcal"
+    t.string "category"
+  end
 
   create_table "connections", force: true do |t|
     t.string   "name"
@@ -223,6 +230,19 @@ ActiveRecord::Schema.define(version: 20150423210522) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true
+
+  create_table "photos", force: true do |t|
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pictures", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "summaries", force: true do |t|
     t.integer  "user_id"

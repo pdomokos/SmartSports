@@ -34,6 +34,20 @@ namespace :smartdiab do
     end
   end
 
+  task init_activity: :environment do
+    if ActivityType.all.size != 0
+      ActivityType.all.each {|at|
+        at.destroy!
+      }
+    end
+
+    csv_text = File.read("#{ENV['HOME']}/Downloads/activities.csv")
+    csv = CSV.parse(csv_text, :headers => true)
+    csv.each do |row|
+      ActivityType.create!(row.to_hash)
+    end
+  end
+
   task init_foods: :environment do
     if FoodType.all.size != 0
       FoodType.all.each {|mt|
