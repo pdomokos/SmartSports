@@ -54,6 +54,25 @@ namespace :smartdiab do
     end
   end
 
+  task load_foods_csv: :environment do
+    if FoodType.all.size != 0
+      FoodType.all.each {|mt|
+        mt.destroy!
+      }
+    end
+
+    foodlist = nil
+    f = "#{ENV['HOME']}/Downloads/foods_exported_final.csv"
+    foodlist = CSV.read(f, headers: true)
+
+    #print foodlist.first.as_json.pretty_inspect
+    foodlist.each do |m|
+      # ["id", "name", "category", "amount", "kcal", "prot", "carb", "fat"]
+      ft = FoodType.new(:id => m['ID'], :name =>  m['Description'], :category => m['Category'], :amount => m['Quantity'], :kcal => m['Kcal'], :prot => m['Protein'], :carb => m['Carb'], :fat => m['Fat'])
+      ft.save!
+    end
+
+  end
   task export_foods: :environment do
     k = ["id", "name", "category", "amount", "kcal", "prot", "carb", "fat"]
     CSV.open("#{ENV['HOME']}/Downloads/foods_exported.csv", 'w') do |csv|
