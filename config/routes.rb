@@ -9,10 +9,10 @@ Rails.application.routes.draw do
         resources :diets
         resources :medications
         resources :lifestyles
+        resources :sensor_measurements
       end
       resources :medication_types
       resources :food_types
-      post 'sensordata' => "sensors#create"
       get 'profile' => "api#profile"
     end
   end

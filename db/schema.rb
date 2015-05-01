@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430112713) do
+ActiveRecord::Schema.define(version: 20150501135908) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -230,6 +230,14 @@ ActiveRecord::Schema.define(version: 20150430112713) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true
+
+  create_table "sensor_measurements", force: true do |t|
+    t.integer  "user_id"
+    t.string   "group"
+    t.text     "rr_data"
+    t.text     "hr_data"
+    t.datetime "start_time"
+  end
 
   create_table "summaries", force: true do |t|
     t.integer  "user_id"

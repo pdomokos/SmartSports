@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :lifestyles
   has_many :family_histories
   has_many :notifications
+  has_many :sensor_measurements
   authenticates_with_sorcery!
   validates :password, length: { minimum: 3 }, allow_nil: true
   validates :password, confirmation: true
