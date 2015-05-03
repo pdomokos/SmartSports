@@ -68,6 +68,8 @@ gem 'jquery-turbolinks'
 
 gem "paperclip", "~> 4.2"
 
+gem "time_zone_ext"
+
 group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mocha'

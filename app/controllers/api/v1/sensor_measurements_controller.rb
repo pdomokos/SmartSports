@@ -23,6 +23,7 @@ module Api::V1
 
       sens = SensorMeasurement.new(sensor_measurement_params)
       sens.user_id = user.id
+      # sens.start_time = Time.zone.strptime(sens.start_time, "%Y-%m-%d %H:%M:%S %Z")
       if sens.save
         render json: {:ok => "true", :id => sens.id}
       else
@@ -34,7 +35,7 @@ module Api::V1
     def proc
       s = nil
       rootdir = "/Users/bdomokos/Downloads/"
-      File.open("#{rootdir}hrdata2.json", 'r') do |f|
+      File.open("#{rootdir}hr_cycling_0501.json", 'r') do |f|
         s = f.read()
       end
       hrdata = JSON.parse(s)
@@ -52,7 +53,7 @@ module Api::V1
 
     private
     def sensor_measurement_params
-      params.require(:sensor_measurement).permit(:user_id, :hr_data, :rr_data, :start_time, :group)
+      params.require(:sensor_measurement).permit(:user_id, :hr_data, :rr_data, :cr_data, :start_time, :group)
     end
 
   end
