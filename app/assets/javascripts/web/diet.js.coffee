@@ -155,7 +155,7 @@
       foods = data.map( window.food_map_fn )
 
       $("#foodname").autocomplete({
-        minLength: 0,
+        minLength: 3,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
@@ -164,8 +164,8 @@
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            if cnt >= 100
-              break
+            #if cnt >= 100
+            #  break
           response(result)
         select: (event, ui) ->
           $("#diet_type_id").val(ui.item.id)

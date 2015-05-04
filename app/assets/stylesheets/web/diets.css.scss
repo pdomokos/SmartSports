@@ -58,3 +58,14 @@ span.tag {
   /* prevent horizontal scrollbar */
   overflow-x: hidden;
 }
+
+
+input[type=search] {
+  background-image: image-url("search-icon.png");
+  background-position: 10px center;
+  background-repeat: no-repeat;
+//  border: 1px solid #ccc;
+
+  padding: 10px 5px;
+  text-indent: 20px;
+}

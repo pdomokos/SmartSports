@@ -3,28 +3,11 @@
   $("div.appMenu button").removeClass("selected")
   $("#medication-button").addClass("selected")
 
-  $('#medication_insulin_dosage').watermark('Unit Dosage, eg: 2')
-  $('#medication_amount').watermark('Amount Taken, eg: 1')
-
   $('#medications_datepicker').datetimepicker(timepicker_defaults)
   $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
 
-  $("#oral_medication_name").watermark('Start typing medication, eg: Kal')
-
   load_medication_types()
   loadMedicationHistory()
-#  .autocomplete("instance")._renderItem = (ul, item) ->
-#    return $( "<li></li>" )
-#      .data( "item.autocomplete", item )
-#      .append( "<a>" + "<img src='" + item.imgsrc + "' />" + item.id+ " - " + item.label+ "</a>" )
-#      .appendTo( ul );
-
-  ins = ["Exubera1", "Exubera2", "Exubera3"]
-  $("#insulin_name").watermark('Start typing insulin, eg: Exu')
-  $("#insulin_name").autocomplete({
-    source: ins
-  })
-  $('#insulin_name input').watermark('Insulin Type, eg: Exubera')
 
   $("form.resource-create-form.medication-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -122,7 +105,7 @@
         id: d['id']
         })
       $("#oral_medication_name").autocomplete({
-        minLength: 0,
+        minLength: 3,
         source: (request, response) ->
           matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
           result = []
@@ -131,8 +114,8 @@
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            if cnt >= 100
-              break
+            #if cnt >= 100
+            #  break
           response(result)
         select: (event, ui) ->
           $("#medname").val(ui.item.id)
@@ -148,8 +131,8 @@
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            if cnt >= 100
-              break
+            #if cnt >= 100
+            #  break
           response(result)
         select: (event, ui) ->
           console.log ui
