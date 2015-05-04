@@ -122,6 +122,7 @@
         id: d['id']
         })
       $("#oral_medication_name").autocomplete({
+        minLength: 0,
         source: (request, response) ->
           matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
           result = []
@@ -130,13 +131,15 @@
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            if cnt >= 20
+            if cnt >= 100
               break
           response(result)
         select: (event, ui) ->
           $("#medname").val(ui.item.id)
-      })
+      }).focus ->
+        $(this).autocomplete("search")
       $("#insulin_name").autocomplete({
+        minLength: 0,
         source: (request, response) ->
           matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
           result = []
@@ -145,10 +148,11 @@
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            if cnt >= 20
+            if cnt >= 100
               break
           response(result)
         select: (event, ui) ->
           console.log ui
           $("#insname").val(ui.item.id)
-      })
+      }).focus ->
+        $(this).autocomplete("search")

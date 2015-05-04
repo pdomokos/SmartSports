@@ -379,8 +379,8 @@ set_selected = (evt) ->
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            if cnt >= 20
-              break
+            #if cnt >= 20
+            #  break
           response(result)
         select: (event, ui) ->
           $("#activity_type_id").val(ui.item.id)
@@ -414,8 +414,8 @@ set_selected = (evt) ->
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            if cnt >= 20
-              break
+            #if cnt >= 20
+            #  break
           response(result)
         select: (event, ui) ->
           $("#activity_other_type_id").val(ui.item.id)

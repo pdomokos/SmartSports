@@ -50,3 +50,11 @@ span.tag {
 .tag.carbs { background-color: #fdae61 };
 .tag.fat { background-color: #01665e };
 .tag.prot { background-color: #4575b4 };
+
+
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
