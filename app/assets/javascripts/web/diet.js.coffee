@@ -15,6 +15,9 @@
   load_food_types()
   load_drink_types()
 
+  $("#diet_drink_amount").val(1)
+  $("#diet_amount").val(1)
+
   $("#diet_scale").slider({
     min: 0.5,
     max: 5.0,
