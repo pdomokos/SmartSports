@@ -370,6 +370,7 @@ set_selected = (evt) ->
       activities = data.map( window.activity_map_fn )
 
       $("#activityname").autocomplete({
+        minLength: 0
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
@@ -387,7 +388,8 @@ set_selected = (evt) ->
             value: "2"
           })
           $("#activity_percent").text("2")
-      })
+      }).focus ->
+        $(this).autocomplete("search")
 
 @load_other_activity_types = () ->
   self = this
@@ -403,6 +405,7 @@ set_selected = (evt) ->
       activities = data.map( window.activity_map_fn )
 
       $("#otheractivityname").autocomplete({
+        minLength: 0
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
@@ -420,4 +423,5 @@ set_selected = (evt) ->
             value: "2"
           })
           $("#activity_other_percent").text("2")
-      })
+      }).focus ->
+        $(this).autocomplete("search")
