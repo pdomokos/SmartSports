@@ -6,6 +6,7 @@
   uid = $("#current-user-id")[0].value
 #  register_events()
   init_exercise()
+  document.body.style.cursor = 'wait'
   load_activity_types()
   load_other_activity_types()
   loadExerciseHistory()
@@ -388,6 +389,9 @@ set_selected = (evt) ->
             value: "2"
           })
           $("#activity_percent").text("2")
+        create: (event, ui) ->
+          document.body.style.cursor = 'auto'
+          $("#activityname").removeAttr("disabled")
       }).focus ->
         $(this).autocomplete("search")
 
@@ -423,5 +427,7 @@ set_selected = (evt) ->
             value: "2"
           })
           $("#activity_other_percent").text("2")
+        create: (event, ui) ->
+          $("#otheractivityname").removeAttr("disabled")
       }).focus ->
         $(this).autocomplete("search")

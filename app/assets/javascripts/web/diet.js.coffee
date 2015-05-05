@@ -11,7 +11,7 @@
   $("#diet_smoke_type").selectmenu()
 
   load_diets()
-
+  document.body.style.cursor = 'wait'
   load_food_types()
   load_drink_types()
 
@@ -164,13 +164,13 @@
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            #if cnt >= 100
-            #  break
           response(result)
         select: (event, ui) ->
           $("#diet_type_id").val(ui.item.id)
-      }).focus ->
-        $(this).autocomplete("search")
+        create: (event, ui) ->
+          document.body.style.cursor = 'auto'
+          $("#foodname").removeAttr("disabled")
+      })
 
 @load_drink_types = () ->
   self = this
@@ -195,10 +195,10 @@
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            #if cnt >= 20
-            #  break
           response(result)
         select: (event, ui) ->
           $("#diet_drink_type_id").val(ui.item.id)
+        create: (event, ui) ->
+          $("#drinkname").removeAttr("disabled")
       }).focus ->
         $(this).autocomplete("search")

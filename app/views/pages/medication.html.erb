@@ -17,7 +17,7 @@
                         <input id="oral_medication_name" type="search" name="med_name" class="dataFormField" placeholder="Medication, type 3 letters.">
                         <input id="medname" name="medication[medication_type_id]" type="hidden">
 
-                        <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField" placeholder="Amount Taken, eg: 1"/>
+                        <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField" placeholder="Amount Taken, eg: 1" disabled/>
 
                         <div class="dataFormFieldUnit">piece</div>
                         <br>
@@ -40,7 +40,7 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <input id="insulin_name" name="ins_name" type="search" class="dataFormField" placeholder="Start typing insulin name.">
+                        <input id="insulin_name" name="ins_name" type="search" class="dataFormField" placeholder="Start typing insulin name." disabled>
                         <input id="insname" name="medication[medication_type_id]" type="hidden">
 
                         <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField" placeholder="Unit Dosage, eg: 2"/>

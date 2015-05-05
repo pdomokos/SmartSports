@@ -15,7 +15,7 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Food">
 
-                        <input id="foodname" type="search" name="food_name" class="dataFormField" placeholder="Type at least 3 letters...">
+                        <input id="foodname" type="search" name="food_name" class="dataFormField" placeholder="Type at least 3 letters..." disabled>
                         <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
                         <input id="diet_name" name="diet[name]" type="hidden">
 
@@ -33,9 +33,7 @@
                   <button class="dataFormField">Add</button>
                 <% end %>
             </div>
-
             <div class="dataFormSeparator"></div>
-
 
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
@@ -47,7 +45,7 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Drink">
 
-                        <input id="drinkname" type="search" name="drink_name" class="dataFormField" placeholder="Start typing drink name...">
+                        <input id="drinkname" type="search" name="drink_name" class="dataFormField" placeholder="Start typing drink name..." disabled>
                         <input id="diet_drink_name" name="diet[name]" type="hidden">
                         <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
 

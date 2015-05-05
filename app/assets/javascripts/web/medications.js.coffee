@@ -5,7 +5,7 @@
 
   $('#medications_datepicker').datetimepicker(timepicker_defaults)
   $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
-
+  document.body.style.cursor = 'wait'
   load_medication_types()
   loadMedicationHistory()
 
@@ -80,9 +80,10 @@
 
 
 @load_medication_types = () ->
+
   self = this
   current_user = $("#current-user-id")[0].value
-  console.log "calling load recent medications"
+  console.log "calling load medication types"
   $.ajax '/medication_types.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
@@ -107,35 +108,38 @@
       $("#oral_medication_name").autocomplete({
         minLength: 3,
         source: (request, response) ->
-          matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
+          matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
           result = []
           cnt = 0
           for element in pills
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            #if cnt >= 100
-            #  break
           response(result)
         select: (event, ui) ->
           $("#medname").val(ui.item.id)
-      }).focus ->
-        $(this).autocomplete("search")
+        create: (event, ui) ->
+          console.log "med create called"
+          $("#oral_medication_name").removeAttr("disabled")
+          document.body.style.cursor = 'auto'
+      })
       $("#insulin_name").autocomplete({
         minLength: 0,
         source: (request, response) ->
-          matcher = new RegExp("^"+$.ui.autocomplete.escapeRegex(request.term, ""), "i")
+          matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
           result = []
           cnt = 0
           for element in insulin
             if matcher.test(element.label)
               result.push(element)
               cnt += 1
-            #if cnt >= 100
-            #  break
           response(result)
         select: (event, ui) ->
           console.log ui
           $("#insname").val(ui.item.id)
+        create: (event, ui) ->
+          console.log "insulin create called"
+          $("#insulin_name").removeAttr("disabled")
       }).focus ->
+        console.log "insulin focus called"
         $(this).autocomplete("search")

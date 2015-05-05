@@ -14,7 +14,7 @@
               <input type="hidden" name="activity[source]" value="<%= @default_source %>">
               <input type="hidden" name="activity[group]" value="sport">
 
-              <input  id="activityname" type="search" name="activity_name" class="dataFormField" placeholder="Start typing activity...">
+              <input  id="activityname" type="search" name="activity_name" class="dataFormField" placeholder="Start typing activity..." disabled>
               <input id="activity_type_id" name="activity[activity_type_id]" type="hidden">
 
               <label for="activity_scale" style="margin-left: 20px;">Intensity</label>
@@ -46,7 +46,7 @@
               <input type="hidden" name="activity[source]" value="<%= @default_source %>">
               <input type="hidden" name="activity[group]" value="other">
 
-              <input id="otheractivityname" type="search" name="activity_name" class="dataFormField" placeholder="Start typing activity...">
+              <input id="otheractivityname" type="search" name="activity_name" class="dataFormField" placeholder="Start typing activity..." disabled>
               <input id="activity_other_type_id" name="activity[activity_type_id]" type="hidden">
 
               <label for="activity_other_scale" style="margin-left: 20px;">Intensity</label>
