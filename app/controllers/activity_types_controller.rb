@@ -8,10 +8,11 @@ class ActivityTypesController < ApplicationController
     if id
       activity_types = ActivityType.where("id = '#{id}'")
     else
+      activity_types = ActivityType.all
       if category == 'sport'
-        activity_types = ActivityType.where("category = 'sport'")
+        activity_types = activity_types.where("category = 'sport'")
       elsif category == 'other'
-        activity_types = ActivityType.where("category != 'sport'")
+        activity_types = activity_types.where("category != 'sport'")
       end
     end
     if limit
