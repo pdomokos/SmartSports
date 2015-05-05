@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     resources :diets
     resources :medications
     resources :family_histories
+    resources :lab_results
     post 'upload'
   end
 
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
   get 'pages/genetics'
   get 'pages/analytics'
   get 'pages/profile'
+  get 'pages/labresult'
 
   get 'pages/settings'
   get 'pages/mdestroy'

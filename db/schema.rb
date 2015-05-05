@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150503152514) do
+ActiveRecord::Schema.define(version: 20150505081454) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -121,6 +121,19 @@ ActiveRecord::Schema.define(version: 20150503152514) do
   end
 
   add_index "friendships", ["user1_id", "user2_id"], name: "index_friendships_on_user1_id_and_user2_id"
+
+  create_table "lab_results", force: true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.string   "category"
+    t.float    "hba1c"
+    t.float    "ldl_chol"
+    t.float    "egfr_epi"
+    t.string   "ketone"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lifestyles", force: true do |t|
     t.integer  "user_id"

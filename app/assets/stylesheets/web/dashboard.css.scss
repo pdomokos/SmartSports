@@ -207,6 +207,27 @@ button.dataFormField {
   width: 360px;
 }
 
+.c7, .labresultColor {
+  color: #74899C !important;;
+}
+.labresultStyle .dataFormField {
+  border: solid 1px #74899C !important;
+  width: 160px;
+};
+.labresultStyle button {
+  background: #74899C !important;
+};
+.labresultStyle div.dataFormContainer {
+  width: 250px;
+  height: 260px;
+}
+.labresultStyle div.dataFormSeparator {
+  height:255px !important;
+}
+.labresultStyle .dataForm {
+  height: 110px;
+}
+
 
 
 .analyticsColor {
@@ -377,6 +398,11 @@ button.deleteForm {
 
 }
 
+.appMenu .b7 {
+  background: image-url("menu_labresults.png") 10px 10px no-repeat;
+
+}
+
 .appMenu .analyticsMenu {
   background: image-url("analytics60.png") 10px 10px no-repeat;
   background-size: 20px 20px;
@@ -428,6 +454,13 @@ button.deleteForm {
 .bl6 {
     background: image-url("genetics60.png") 10px 10px no-repeat;
 }
+
+.bl7 {
+  background: image-url("lab60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+
+}
+
 .geneticsBodyLogo {
   background: image-url("genetics60.png") 10px 10px no-repeat;
   background-size: 40px 40px;

@@ -1,0 +1,128 @@
+<div class="labresult-block mainContent">
+
+    <div class="sectionTitle bl7 c7">
+        Lab results
+    </div>
+    <div class="contentBg labresultStyle">
+        <div style="padding: 10px;">
+            <div class="dataFormContainer">
+                <div class="dataFormTitle">
+                    <%= image_tag "test_tube40.png" %><br/>
+                    HbA1c
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "bp-create-form", class: "resource-create-form lab_results-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>" />
+                        <input type="hidden" name="labresult[category]" value="hba1c" />
+
+                        <input id="hba1c" type="text" name="labresult[hba1c]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">mmol/L</div>
+                        <br>
+
+                        <input id='hba1c_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= Date.current.strftime("%F") %>"/>
+                        <br>
+
+                    </div>
+                    <button class="dataFormField">Add</button>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+            <div class="dataFormContainer contentBg">
+                <div class="dataFormTitle">
+                    <%= image_tag "water40.png" %><br/>
+                    LDL-chol
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "bp-create-form", class: "resource-create-form lab_results-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="labresult[category]" value="ldl_chol" />
+
+                        <input id="ldl_chol" type="text" name="labresult[ldl_chol]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">mmol/L</div>
+                        <br>
+
+                        <input id='ldl_chol_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
+                        <br>
+                    </div>
+                    <button class="dataFormField">Add</button>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+            <div class="dataFormContainer contentBg">
+                <div class="dataFormTitle">
+                    <%= image_tag "kidney40.png" %><br/>
+                    eGFR-EPI
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "bp-create-form", class: "resource-create-form lab_results-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="labresult[category]" value="egfr_epi" />
+
+                        <input id="egfr_epi" type="text" name="labresult[egfr_epi]" class="dataFormField"/>
+
+                        <div class="dataFormFieldUnit">ml/min/1.73m2 </div>
+                        <br>
+
+                        <input id='egfr_epi_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
+                        <br>
+                    </div>
+
+                    <button class="dataFormField">Add</button>
+
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+            <div class="dataFormContainer contentBg">
+                <div class="dataFormTitle">
+                    <%= image_tag "ketone40.png" %><br/>
+                    Ketone
+                </div>
+                <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "bp-create-form", class: "resource-create-form lab_results-form") do %>
+                    <div class="dataForm">
+                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
+                        <input type="hidden" name="labresult[category]" value="ketone" />
+
+                        <select id="ketone" name="labresult[ketone]" class="dataFormField">
+                            <option value="negative">Negatív</option>
+                            <option value="+">+</option>
+                            <option value="++">++</option>
+                            <option value="+++">+++</option>
+                            <option value="++++">++++</option>
+                            <option value="+++++">+++++</option>
+                        </select>
+
+                      <div class="dataFormFieldUnit"></div>
+                        <br>
+
+                        <input id='ketone_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
+                        <br>
+                    </div>
+                    <button class="dataFormField">Add</button>
+                <% end %>
+            </div>
+            <div class="dataFormSeparator"></div>
+
+            <div style="clear: both"></div>
+        </div>
+
+    </div>
+
+    <div class="sectionTitle bl7 c7" style="margin-top: 40px;">
+      <span class="hisTitle selected">History</span>
+    </div>
+
+    <table class="historyTable"  cellpadding="0" cellspacing="0">
+        <tbody id="recentResourcesTable">
+        </tbody>
+    </table>
+
+</div>
+
+<% content_for :page_logic do %>
+    labresults_loaded()
+<% end %>
+<% content_for :title_text do %>
+    Lab results | SmartDiab
+<% end %>

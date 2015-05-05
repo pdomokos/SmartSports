@@ -50,6 +50,8 @@
     window.location = '/pages/medication'
   $('#wellbeing-button').click () ->
     window.location = '/pages/wellbeing'
+  $('#labresults-button').click () ->
+    window.location = '/pages/labresult'
   $('#genetics-button').click () ->
     window.location = '/pages/genetics'
   $('#analytics-button').click () ->

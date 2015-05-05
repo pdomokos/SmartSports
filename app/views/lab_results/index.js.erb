@@ -1,0 +1,7 @@
+<% if not @is_mobile %>
+    console.log("load lab_results js called");
+    $("#recentResourcesTable").html("");
+    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/labresult_item', :collection=> @labresults ) %>");
+<% else %>
+
+<% end %>
