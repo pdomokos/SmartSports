@@ -75,16 +75,7 @@
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Smoke">
 
-                        <select id="diet_smoke_type" name="diet[name]" class="dataFormField">
-                            <option value="1 Cigaretta">1 Cigaretta</option>
-                            <option value="1 Szivar">1 Szivar</option>
-                            <option value="1 Szivarka">1 Szivarka</option>
-                            <option value="1 Pipa">1 Pipa</option>
-                            <option value="1 Elektromos cigaretta">1 Elektromos cigaretta</option>
-                            <option value="1 Nikotinos orrspray">1 Nikotinos orrspray</option>
-                            <option value="1 Nikotinos rágó">1 Nikotinos rágó</option>
-                            <option value="1 Nikotinos tapasz">1 Nikotinos tapasz</option>
-                        </select>
+                        <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="Smoke type">
 
                         <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>

@@ -15,7 +15,7 @@
                         <input type="hidden" name="labresult[source]" value="<%= @default_source %>" />
                         <input type="hidden" name="labresult[category]" value="hba1c" />
 
-                        <input id="hba1c" type="text" name="labresult[hba1c]" class="dataFormField"/>
+                        <input id="hba1c" type="text" name="labresult[hba1c]" class="dataFormField" placeholder="HbA1c"/>
 
                         <div class="dataFormFieldUnit">mmol/L</div>
                         <br>
@@ -38,7 +38,7 @@
                         <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
                         <input type="hidden" name="labresult[category]" value="ldl_chol" />
 
-                        <input id="ldl_chol" type="text" name="labresult[ldl_chol]" class="dataFormField"/>
+                        <input id="ldl_chol" type="text" name="labresult[ldl_chol]" class="dataFormField" placeholder="LDL-chol"/>
 
                         <div class="dataFormFieldUnit">mmol/L</div>
                         <br>
@@ -60,9 +60,9 @@
                         <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
                         <input type="hidden" name="labresult[category]" value="egfr_epi" />
 
-                        <input id="egfr_epi" type="text" name="labresult[egfr_epi]" class="dataFormField"/>
+                        <input id="egfr_epi" type="text" name="labresult[egfr_epi]" class="dataFormField" placeholder="eGFR-EPI"/>
 
-                        <div class="dataFormFieldUnit">ml/min/1.73m2 </div>
+                        <div class="dataFormFieldUnit egfr">ml/min/1.73m<sup>2</sup></div>
                         <br>
 
                         <input id='egfr_epi_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
@@ -84,14 +84,7 @@
                         <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
                         <input type="hidden" name="labresult[category]" value="ketone" />
 
-                        <select id="ketone" name="labresult[ketone]" class="dataFormField">
-                            <option value="negative">Negatív</option>
-                            <option value="+">+</option>
-                            <option value="++">++</option>
-                            <option value="+++">+++</option>
-                            <option value="++++">++++</option>
-                            <option value="+++++">+++++</option>
-                        </select>
+                      <input id="ketone" type="search" name="labresult[ketone]" class="dataFormField" placeholder="Ketone">
 
                       <div class="dataFormFieldUnit"></div>
                         <br>

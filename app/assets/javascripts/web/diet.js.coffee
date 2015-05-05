@@ -4,11 +4,26 @@
   $("div.appMenu button").removeClass("selected")
   $("#diet-button").addClass("selected")
 
+  smokeList = [
+    {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },
+    {label: "1 Szivar"                ,value: "1 Szivar"               },
+    {label: "1 Szivarka"              ,value: "1 Szivarka"             },
+    {label: "1 Pipa"                  ,value: "1 Pipa"                 },
+    {label: "1 Elektromos cigaretta"  ,value: "1 Elektromos cigaretta" },
+    {label: "1 Nikotinos orrspray"    ,value: "1 Nikotinos orrspray"   },
+    {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
+    {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
+
+  $("#diet_smoke_type").autocomplete({
+    minLength: 0,
+    source: smokeList
+  }).focus ->
+    $(this).autocomplete("search")
+
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
 
-  $("#diet_smoke_type").selectmenu()
 
   load_diets()
   document.body.style.cursor = 'wait'
@@ -57,8 +72,6 @@
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
-    $("#diet_smoke_type option:nth-child(1)").attr("selected", true)
-    $("#diet_smoke_type").selectmenu("refresh")
     loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
@@ -98,17 +111,6 @@
       $("#diet_drink_amount").val(data.amount)
       $("#diet_drink_unit").html(data.amount+" adag")
       $("#diet_drink_scale").slider({value: data.amount})
-    else if data.type=="Smoke"
-      console.log data
-      n = 1
-      if(data.name=="1 Cigarette")
-        n = 1
-      else if(data.name=="1 Cigar")
-        n = 2
-      else if(data.name=="1 Pipe")
-        n = 3
-      $("#diet_smoke_type option:nth-child("+n+")").attr("selected", true)
-      $("#diet_smoke_type").selectmenu("refresh")
   )
 
 @loadDietHistory = () ->

@@ -29,9 +29,9 @@
 <div id="registerDiv" class="registerDiv">
     <div>
         <%= form_tag users_path, :method => :post do %>
-        <input id="username_field" name="user[email]" type="text" class="loginField animField"/><br>
-        <input id="password_field" name="user[password]" type="password" class="loginField animField"/><br>
-        <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField"/><br>
+        <input id="username_field" name="user[email]" type="text" class="loginField animField" placeholder="Email address"/><br>
+        <input id="password_field" name="user[password]" type="password" class="loginField animField" placeholder="Password"/><br>
+        <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField" placeholder="Password again"/><br>
         <input type="submit" class="loginButton animButton" value="Join"/>
         <% end %>
         <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">

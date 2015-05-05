@@ -4,9 +4,6 @@
   $("div.appMenu button").removeClass("selected")
   $("#wellbeing-button").addClass("selected")
 
-  $('#sleep_scale').watermark('Quality of sleep, e.g. 60')
-  $('#stress_scale').watermark('Stressfull day, e.g. 60')
-
   $("#sleep_amount").val(50)
   $("#stress_amount").val(50)
 

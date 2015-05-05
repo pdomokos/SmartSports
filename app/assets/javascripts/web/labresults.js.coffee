@@ -40,11 +40,21 @@
 @init_labresult = () ->
   console.log "init labres"
 
-  $('#hba1c').watermark('HbA1c')
-  $('#ldl_chol').watermark('LDL-chol')
-  $('#egfr_epi').watermark('eGFR-EPI')
-  $('#ketone').watermark('Ketone')
   $('#hba1c').focus()
+
+  ketoneList = [ { label: "Negative", value: "Negative" },
+    { label: "+", value: "+" },
+    { label: "++", value: "++" },
+    { label: "+++", value: "+++" },
+    { label: "++++", value: "++++" },
+    { label: "+++++", value: "+++++" }
+  ]
+
+  $("#ketone").autocomplete({
+    minLength: 0,
+    source: ketoneList
+  }).focus ->
+    $(this).autocomplete("search")
 
   $("form.resource-create-form.lab_results-form").on("ajax:success", (e, data, status, xhr) ->
     load_labresult()

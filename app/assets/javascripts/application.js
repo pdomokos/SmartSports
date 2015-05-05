@@ -15,7 +15,6 @@
 //= require jquery-ui.min
 //= require turbolinks
 //= require jquery.color-2.1.2.min
-//= require jquery.watermark.min
 //= require jquery.datetimepicker
 //= require d3.min
 //= require moment

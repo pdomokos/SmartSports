@@ -18,22 +18,6 @@
 init_exercise = () ->
   console.log "init exercise"
 
-  $('#walking_steps').watermark('Steps, eg: 8120')
-  $('#walking_duration').watermark('Duration, eg: 90')
-  $('#walking_distance').watermark('Distance, eg: 1200')
-  $('#running_steps').watermark('Steps, eg: 8120')
-  $('#running_duration').watermark('Duration, eg: 90')
-  $('#running_distance').watermark('Distance, eg: 1200')
-  $('#cycling_duration').watermark('Duration, eg: 120')
-  $('#cycling_distance').watermark('Distance, eg: 9200')
-  $('#swimming_duration').watermark('Duration, eg: 60')
-  $('#swimming_distance').watermark('Distance, eg: 1200')
-  $('#walking_steps').focus()
-
-  $('#activity_group').selectmenu()
-  $("#activity_intensity").val(2)
-  $("#activity_other_intensity").val(2)
-
   $("#activity_scale").slider({
     min: 1,
     max: 3,

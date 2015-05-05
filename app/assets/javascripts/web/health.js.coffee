@@ -13,16 +13,6 @@
   init_meas()
   loadHealthHistory()
 
-#  console.log "getting health data for user:"+uid
-#  meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
-#  d3.json(meas_summary_url, draw_trend)
-#
-#  d = new Date()
-#  d.setDate(d.getDate()-31)
-#  day_2week = fmt(d)
-#  actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
-#  d3.json(actions_lastweek_url, draw_detail)
-
 draw_trend = (data) ->
 
   heart_trend_chart = new TrendChart("heart-trend", data,
@@ -68,13 +58,6 @@ draw_detail = (data) ->
 
 @init_meas = () ->
   console.log "init meas"
-
-  $('#bp_sys').watermark('Systolic, eg: 120')
-  $('#bp_dia').watermark('Diastolic, eg: 80')
-  $('#bp_hr').watermark('Heart rate, eg: 60')
-  $('#glucose').watermark('Blood Sugar, eg: 6.3')
-  $('#weight').watermark('Body Weight, eg: 72')
-  $('#waist').watermark('Waist, eg: 63')
   $('#bp_sys').focus()
 
 
