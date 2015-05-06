@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     resources :medications
     resources :family_histories
     resources :lab_results
+    resources :sensor_measurements
     post 'upload'
   end
 
@@ -54,6 +55,7 @@ Rails.application.routes.draw do
   get 'pages/analytics'
   get 'pages/profile'
   get 'pages/labresult'
+  get 'pages/explore'
 
   get 'pages/settings'
   get 'pages/mdestroy'

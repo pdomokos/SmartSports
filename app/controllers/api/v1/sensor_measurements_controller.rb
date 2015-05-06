@@ -32,7 +32,17 @@ module Api::V1
 
     end
 
-    def proc
+    def proc_import_json
+      s = nil
+      rootdir = "/Users/bdomokos/Downloads/"
+      File.open("#{rootdir}pingpong_hr_20150504.json", 'r') do |f|
+        s = f.read()
+      end
+      sensorData = JSON.parse(s)
+
+    end
+
+    def proc_to_csv
       s = nil
       rootdir = "/Users/bdomokos/Downloads/"
       File.open("#{rootdir}hr_cycling_0501.json", 'r') do |f|
