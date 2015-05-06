@@ -6,13 +6,40 @@
 
   load_family_histories()
 
+  relativeList = [ { label: "szülő", value: "szülő" },
+                   { label: "nagyszülő", value: "nagyszülő" },
+                   { label: "dédszülő", value: "dédszülő" },
+                   { label: "testvér", value: "testvér" },
+                   { label: "unakaöcs/unokahúg", value: "unakaöcs/unokahúg" },
+                   { label: "unokatestvér", value: "unokatestvér" },
+                   { label: "nagybácsi/nagynéni(nem házassági rokon)", value: "nagybácsi/nagynéni" }
+                 ]
+
+  diseaseList = [ { label: "none", value: "none" },
+                   { label: "diabetes type 1", value: "diabetes type 1" },
+                   { label: "diabetes type 2", value: "diabetes type 2" },
+                   { label: "gestational diabetes", value: "gestational diabetes" }
+                  ]
+
+  $("#gen_hist_relative").autocomplete({
+    minLength: 0,
+    source: relativeList
+  }).focus ->
+    $(this).autocomplete("search")
+
+  $("#gen_hist_disease").autocomplete({
+    minLength: 0,
+    source: diseaseList
+  }).focus ->
+    $(this).autocomplete("search")
+
   $("form.resource-create-form.family-history-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
-
+    $("#gen_hist_note").val("")
     load_family_histories()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText

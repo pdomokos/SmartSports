@@ -199,12 +199,30 @@ button.dataFormField {
 .geneticsStyle .dataFormField {
   border: solid 1px #2BC7EC !important;
   width: 275px;
-};
+}
+.geneticsStyle .dataFormArea {
+  border: solid 1px #2BC7EC !important;
+  width: 270px;
+  resize: none;
+  margin-left: 20px;
+  font-size: 14px;
+  border: solid 1px #8980CA;
+  background: white;
+  margin-bottom: 10px;
+  float: left;
+}
 .geneticsStyle button {
   background: #2BC7EC !important;
-};
+}
 .geneticsStyle div.dataFormContainer {
-  width: 360px;
+  width: 320px;
+  height: 350px;
+}
+.geneticsStyle div.dataFormSeparator {
+  height:325px !important;
+}
+.geneticsStyle .dataForm {
+  height: 195px;
 }
 
 .c7, .labresultColor {
@@ -513,6 +531,13 @@ div.dataFormContainer {
     text-align: center;
     text-transform: uppercase;
 
+}
+
+.dataFormProperty {
+  height: 20px;
+  line-height: 30px;
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 .dataForm {
