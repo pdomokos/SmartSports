@@ -118,6 +118,10 @@ init_exercise = () ->
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent activities AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
+      if fav
+        $(".deleteExercise").addClass("hidden")
+      else
+        $(".deleteExercise").removeClass("hidden")
       console.log "load recent activities  Successful AJAX call"
       console.log textStatus
 

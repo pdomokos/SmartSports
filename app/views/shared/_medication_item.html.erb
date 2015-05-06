@@ -42,7 +42,7 @@
         </button>
     <% end %>
   </td>
-  <td class="iconColumn">
+  <td class="iconColumn deleteMedication">
     <%= form_tag( "/users/#{current_user.id}/medications/#{medication_item.id}", id: "delete_med_#{medication_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">
           <i class="fa fa-trash-o fa-2x"></i>

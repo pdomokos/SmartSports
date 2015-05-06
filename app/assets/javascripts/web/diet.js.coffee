@@ -30,8 +30,8 @@
   load_food_types()
   load_drink_types()
 
-  $("#diet_drink_amount").val(1)
-  $("#diet_amount").val(1)
+  $("#diet_drink_amount").val(2)
+  $("#diet_amount").val(2)
 
   $("#diet_scale").slider({
     min: 0.5,
@@ -40,9 +40,9 @@
     value: 1
   }).slider({
     slide: (event, ui) ->
-      $("#diet_unit").html(" "+ui.value+" adag")
+      $("#diet_unit").html(" "+ui.value+" adag ("+ui.value*200+"g)")
     change: (event, ui) ->
-      $("#diet_amount").val(ui.value)
+      $("#diet_amount").val(ui.value*2)
   })
 
   $("#diet_drink_scale").slider({
@@ -52,9 +52,9 @@
     value: 1
   }).slider({
     slide: (event, ui) ->
-      $("#diet_drink_unit").html(ui.value+" adag")
+      $("#diet_drink_unit").html(ui.value+" adag ("+ui.value*2+"dl)")
     change: (event, ui) ->
-      $("#diet_drink_amount").val(ui.value)
+      $("#diet_drink_amount").val(ui.value*2)
   })
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
@@ -103,14 +103,14 @@
       $("#foodname").val(data.food_name)
       $("#diet_type_id").val(data.food_type_id)
       $("#diet_amount").val(data.amount)
-      $("#diet_unit").html(data.amount+" adag")
-      $("#diet_scale").slider({value: data.amount})
+      $("#diet_unit").html(data.amount/2+" adag ("+data.amount*100+"g)")
+      $("#diet_scale").slider({value: data.amount/2})
     else if data.type=="Drink"
       $("#drinkname").val(data.food_name)
       $("#drink_type_id").val(data.food_type_id)
       $("#diet_drink_amount").val(data.amount)
-      $("#diet_drink_unit").html(data.amount+" adag")
-      $("#diet_drink_scale").slider({value: data.amount})
+      $("#diet_drink_unit").html(data.amount/2+" adag ("+data.amount+"dl)")
+      $("#diet_drink_scale").slider({value: data.amount/2})
   )
 
 @loadDietHistory = () ->
@@ -127,6 +127,7 @@
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent diets AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
+      $(".deleteDiet").removeClass("hidden")
       console.log "load recent diets  Successful AJAX call"
       console.log textStatus
 
@@ -139,6 +140,7 @@
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent diets AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
+      $(".deleteDiet").addClass("hidden")
       console.log "load recent diets  Successful AJAX call"
       console.log textStatus
 

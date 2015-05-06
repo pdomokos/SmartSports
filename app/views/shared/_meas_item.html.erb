@@ -41,7 +41,7 @@
         </button>
     <% end %>
   </td>
-  <td class="iconColumn">
+  <td class="iconColumn deleteMeas">
     <%= form_tag( "/users/#{current_user.id}/measurements/#{meas_item.id}", id: "delete_meas_#{meas_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">
           <i class="fa fa-trash-o fa-2x"></i>

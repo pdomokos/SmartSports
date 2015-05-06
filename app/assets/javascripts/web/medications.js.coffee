@@ -75,6 +75,10 @@
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent medications AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
+      if fav
+        $(".deleteMedication").addClass("hidden")
+      else
+        $(".deleteMedication").removeClass("hidden")
       console.log "load recent medications  Successful AJAX call"
       console.log textStatus
 

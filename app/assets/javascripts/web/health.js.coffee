@@ -130,5 +130,9 @@ draw_detail = (data) ->
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent measurements AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
+      if fav
+        $(".deleteMeas").addClass("hidden")
+      else
+        $(".deleteMeas").removeClass("hidden")
       console.log "load recent measurements  Successful AJAX call"
       console.log textStatus
