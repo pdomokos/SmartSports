@@ -1,54 +1,89 @@
 
 class RRChart
-  constructor: (@chart_element, @data) ->
+  constructor: (@chart_element, @data, @hrdata, @crdata) ->
     @base_r = 6
     @selected_r = 9
+    this.clear()
 
   draw: () ->
     self = this
 
     @margin = {top: 20, right: 30, bottom: 20, left: 40}
-    @aspect = 2.5/7.0
+    @aspect = 1.5/7.0
 
     @width = $("#"+@chart_element+"-container").width()
     @height = @aspect*@width
-    console.log "dimensions: "+@width+" x "+@height
 
-    time_extent = d3.extent(@data, (d) -> new Date(d.time))
+    total_height = @height
+    if @crdata
+      total_height *= 3
+    else
+      total_height *= 2
+
+    console.log "dimensions: "+@width+" x "+total_height
+    @svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
+    @svg
+      .attr("width", self.width)
+      .attr("height", total_height)
+
+    chart1 = @svg
+      .append("g")
+    chart2 = @svg
+      .append("g")
+      .attr("transform", "translate(0,"+(self.height)+")")
+    chart3 = null
+    if @crdata
+      console.log "display crdata"
+      chart3 = @svg
+        .append("g")
+        .attr("transform", "translate(0,"+(2*self.height)+")")
+
+    self.draw_plot(chart1, @data)
+    self.draw_plot(chart2, @hrdata, "1/min")
+    if @crdata
+      self.draw_plot(chart3, @crdata, "r/min")
+
+  clear: () ->
+    $("svg."+@chart_element+"-chart-svg").html("")
+
+  draw_plot: (chart, data, yAxisText="ms") ->
+    self = this
+    time_extent = d3.extent(data, (d) -> new Date(d.time))
     time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
-    y_extent = d3.extent(@data, (d) -> d.rr)
+    y_extent = d3.extent(data, (d) -> d.value)
     y_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(y_extent)
 
     rrline = d3.svg.line()
       .x( (d) -> return(time_scale(new Date(d.time))))
-      .y( (d) -> return(y_scale(d.rr)))
+      .y( (d) -> return(y_scale(d.value)))
 
-
-    zoomed = () ->
-      console.log "zoomed"
-
-#    zoom = d3.behavior.zoom()
-#      .x(this.time)
-#      .y(this.rr)
-#      .on("zoom", zoomed)
-
-    svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
-    canvas = svg
-      .attr("width", self.width)
-      .attr("height", self.height)
+    canvas = chart
       .append("g")
       .attr("transform", "translate("+self.margin.left+","+(self.margin.top)+")")
-#      .call(zoom)
 
-    console.log "drawing rr"
+    time_axis = d3.svg.axis()
+      .scale(time_scale)
+      .ticks(10)
 
-#    console.log @data
+    chart.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate("+self.margin.left+","+(self.height-self.margin.bottom)+")")
+      .call(time_axis)
 
+    y_axis = d3.svg.axis().scale(y_scale).orient("left")
+    chart.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
+      .attr("stroke-width", "0")
+      .call(y_axis)
+      .append("text")
+      .text(yAxisText)
 
     canvas.append("path")
       .attr("class", "line rr")
-      .attr("d", rrline(this.data))
+      .attr("d", rrline(data))
+
 
 
 tmp: () ->

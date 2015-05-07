@@ -3,8 +3,11 @@
     <%= image_tag "sleep40.png" %>
   </td>
   <td class="historyTitle padded">
-    <span class="rowtitle"><%= sensor_measurement.group%></span><span class="tag heart">heart</span><br/>
-    <span><%= sensor_measurement.start_time%></span></span><br/>
+    <span class="rowtitle"><%= sensor_measurement.group%></span>
+    <%if sensor_measurement.has_heart? %><span class="tag heart">heart</span><% end %>
+    <%if sensor_measurement.has_cadence? %><span class="tag cadence">cadence</span><% end %>
+    <br/>
+    <span><%= sensor_measurement.start_time.strftime("%F %T") %></span></span><br/>
     <span>Duration: 40 min</span><br/>
     <span class="rowsmall tag sensor">Polar H7 4790EC17</span><span class="rowsmall tag sensor">Polar CAD 385D4C18</span><br/>
   </td>
@@ -18,9 +21,9 @@
       <i class="fa fa-bar-chart fa-2x"></i>
     </button>
   </td>
-  <td class="iconColumn">
-    <button class="tableControl">
-      <i class="fa fa-trash-o fa-2x"></i>
-    </button>
-  </td>
+  <!--<td class="iconColumn">-->
+    <!--<button class="tableControl">-->
+      <!--<i class="fa fa-trash-o fa-2x"></i>-->
+    <!--</button>-->
+  <!--</td>-->
 </tr>

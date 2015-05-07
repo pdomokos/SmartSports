@@ -5,3 +5,12 @@
 .rowsmall {
   font-size: 8px !important;
 }
+
+.sensorTable {
+  max-height: 500px;
+  overflow: scroll;
+}
+
+.selectedRow {
+  background: #fff7bc !important;
+}

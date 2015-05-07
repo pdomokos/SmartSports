@@ -32,14 +32,25 @@ module Api::V1
 
     end
 
-    def proc_import_json
-      s = nil
-      rootdir = "/Users/bdomokos/Downloads/"
-      File.open("#{rootdir}pingpong_hr_20150504.json", 'r') do |f|
-        s = f.read()
-      end
-      sensorData = JSON.parse(s)
+    def proc_export_json
+      rootdir = "/home/pdomokos/Downloads/"
+      u = User.find(1)
+      lst = u.sensor_measurements.all
 
+      File.open("#{rootdir}sensordata_20150507.json", 'w') do |f|
+        JSON.dump(lst.as_json, f)
+      end
+    end
+    def proc_import_json
+      arr = nil
+      rootdir = "/Users/bdomokos/Downloads/"
+      File.open("#{rootdir}sensordata_20150507.json", 'r') do |f|
+        arr = JSON.parse(f.read())
+      end
+      for data in arr do
+        sensorData = SensorMeasurement.new(data)
+        sensorData.save!
+      end
     end
 
     def proc_to_csv
