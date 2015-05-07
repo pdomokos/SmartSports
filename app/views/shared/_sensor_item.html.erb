@@ -1,0 +1,26 @@
+<tr class="bg">
+  <td class="padded rowicon">
+    <%= image_tag "sleep40.png" %>
+  </td>
+  <td class="historyTitle padded">
+    <span class="rowtitle"><%= sensor_measurement.group%></span><span class="tag heart">heart</span><br/>
+    <span><%= sensor_measurement.start_time%></span></span><br/>
+    <span>Duration: 40 min</span><br/>
+    <span class="rowsmall tag sensor">Polar H7 4790EC17</span><span class="rowsmall tag sensor">Polar CAD 385D4C18</span><br/>
+  </td>
+  <td class="iconColumn">
+    <button id="fav-icon" class="tableControl">
+      <i class="fa fa-star fa-2x is-favorite"></i>
+    </button>
+  </td>
+  <td class="iconColumn">
+    <button id="show-sensor-button-<%= sensor_measurement.id %>" class="tableControl">
+      <i class="fa fa-bar-chart fa-2x"></i>
+    </button>
+  </td>
+  <td class="iconColumn">
+    <button class="tableControl">
+      <i class="fa fa-trash-o fa-2x"></i>
+    </button>
+  </td>
+</tr>

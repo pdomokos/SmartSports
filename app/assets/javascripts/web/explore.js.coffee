@@ -1,7 +1,14 @@
 @explore_loaded = () ->
   console.log "explore loaded"
+  $("#sensorDataTable").on("click", "button.tableControl", show_sensor)
+
+@show_sensor = (event) ->
+  console.log "show: "
+  console.log event.currentTarget.id
+  arr = event.currentTarget.id.split("-")
+  sid = arr[arr.length-1]
   uid = $("#current-user-id")[0].value
-  url = '/users/' + uid + '/sensor_measurements/20.json'
+  url = '/users/' + uid + '/sensor_measurements/'+sid+'.json'
 
   $.ajax url,
     type: 'GET',

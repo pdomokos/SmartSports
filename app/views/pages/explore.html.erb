@@ -10,6 +10,8 @@
         <table class="historyTable" cellpadding="0" cellspacing="0">
           <tbody id="sensorDataTable">
 
+          <%= render partial: 'shared/sensor_item', collection: @sensor_measurements, as: :sensor_measurement %>
+          <!--
               <tr class="bg">
                 <td class="padded rowicon">
                   <%= image_tag "sleep40.png" %>
@@ -35,7 +37,6 @@
                       <i class="fa fa-trash-o fa-2x"></i>
                     </button>
                 </td>
-
               </tr>
 
               <tr class="bg">
@@ -63,7 +64,6 @@
                     <i class="fa fa-trash-o fa-2x"></i>
                   </button>
                 </td>
-
               </tr>
 
               <tr class="bg">
@@ -92,9 +92,8 @@
                     <i class="fa fa-trash-o fa-2x"></i>
                   </button>
                 </td>
-
               </tr>
-
+-->
           </tbody>
         </table>
 

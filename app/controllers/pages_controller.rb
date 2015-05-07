@@ -57,6 +57,7 @@ class PagesController < ApplicationController
   end
 
   def explore
+    @sensor_measurements = current_user.sensor_measurements
   end
 
   def diet
