@@ -16,16 +16,16 @@
       <% if meas_item.meas_type=='blood_pressure' %>
           <strong>SYS/DIA/HR: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
       <% elsif  meas_item.meas_type=='blood_sugar' %>
-          <strong>Blood Sugar: <%= meas_item.blood_sugar %>mmol/L</strong>
+          <strong>Blood sugar: <%= meas_item.blood_sugar %> mmol/L</strong>
       <% elsif  meas_item.meas_type=='weight' %>
           <strong>Weight: <%= meas_item.weight %>kg</strong>
       <% elsif  meas_item.meas_type=='waist' %>
-          <strong>Waist Circumfence: <%= meas_item.waist %>cm</strong>
+          <strong>Waist circumfence: <%= meas_item.waist %>cm</strong>
       <% else %>
           <strong>Unknown measurement</strong>
       <% end %>
       <br>
-      <span> <%= meas_item.date.strftime("%F %T") if meas_item.date %></span>
+      <span> <%= meas_item.date.strftime("%F, %H:%M") if meas_item.date %></span>
     </td>
 
   <td class="iconColumn">

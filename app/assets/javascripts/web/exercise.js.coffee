@@ -24,7 +24,12 @@ init_exercise = () ->
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#activity_percent").html(ui.value)
+      if ui.value == 1
+        $("#activity_percent").html("Low")
+      else if ui.value == 2
+        $("#activity_percent").html("Moderate")
+      else if ui.value == 3
+        $("#activity_percent").html("High")
     change: (event, ui) ->
       $("#activity_intensity").val(ui.value)
   })
@@ -35,7 +40,12 @@ init_exercise = () ->
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#activity_other_percent").html(ui.value)
+      if ui.value == 1
+        $("#activity_other_percent").html("Low")
+      else if ui.value == 2
+        $("#activity_other_percent").html("Moderate")
+      else if ui.value == 3
+        $("#activity_other_percent").html("High")
     change: (event, ui) ->
       $("#activity_other_intensity").val(ui.value)
   })
@@ -53,9 +63,9 @@ init_exercise = () ->
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
-    $('#activity_start_datepicker').val(moment().format(moment_fmt))
+    $('#activity_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
-    $('#activity_other_start_datepicker').val(moment().format(moment_fmt))
+    $('#activity_other_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_other_end_datepicker').val(moment().format(moment_fmt))
 
     loadExerciseHistory()
@@ -90,13 +100,23 @@ init_exercise = () ->
       $("#activityname").val(data.activity_name)
       $("#activity_type_id").val(data.activity_type_id)
       $("#activity_intensity").val(data.intensity)
-      $("#activity_percent").html(data.intensity)
+      if data.intensity == 1
+        $("#activity_percent").html("Low")
+      else if data.intensity == 2
+        $("#activity_percent").html("Moderate")
+      else if data.intensity == 3
+        $("#activity_percent").html("High")
       $("#activity_scale").slider({value: data.intensity})
     else if data.activity_category!="sport"
       $("#otheractivityname").val(data.activity_name)
       $("#activity_other_type_id").val(data.activity_type_id)
       $("#activity_other_intensity").val(data.intensity)
-      $("#activity_other_percent").html(data.intensity)
+      if data.intensity == 1
+        $("#activity_other_percent").html("Low")
+      else if data.intensity == 2
+        $("#activity_other_percent").html("Moderate")
+      else if data.intensity == 3
+        $("#activity_other_percent").html("High")
       $("#activity_other_scale").slider({value: data.intensity})
   )
 
@@ -376,7 +396,7 @@ set_selected = (evt) ->
           $("#activity_scale" ).slider({
             value: "2"
           })
-          $("#activity_percent").text("2")
+          $("#activity_percent").text("Moderate")
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
           $("#activityname").removeAttr("disabled")
@@ -414,7 +434,7 @@ set_selected = (evt) ->
           $("#activity_other_scale" ).slider({
             value: "2"
           })
-          $("#activity_other_percent").text("2")
+          $("#activity_other_percent").text("Moderate")
         create: (event, ui) ->
           $("#otheractivityname").removeAttr("disabled")
       }).focus ->

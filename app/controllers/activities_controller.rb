@@ -73,6 +73,11 @@ class ActivitiesController < ApplicationController
     if not @activity.start_time
       @activity.start_time = DateTime.now
     end
+    if not @activity.duration
+      if @activity.start_time && @activity.end_time
+        @activity.duration = ((@activity.end_time-@activity.start_time) / 60).to_i
+      end
+    end
     respond_to do |format|
       if @activity.save
         format.json { render json: {:status => "OK", :result => @activity} }

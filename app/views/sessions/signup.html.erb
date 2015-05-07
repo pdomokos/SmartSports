@@ -43,7 +43,7 @@
 <% if is_mobile_device? || is_tablet_device? %>
     <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
 <% else %>
-    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"#{login_path}\">I already have a SmarDiab account</a>"} %>
+    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"#{login_path}\">I already have a SmartDiab account</a>"} %>
 <% end %>
 
 <script>

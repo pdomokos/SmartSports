@@ -17,7 +17,7 @@
           <% if lifestyle_item.group == 'stress' %>
             <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %>
           <% else %>
-            <%= lifestyle_item.start_time.strftime("%F %T") if lifestyle_item.start_time %>
+            <%= lifestyle_item.start_time.strftime("%F, %H:%M") if lifestyle_item.start_time %>
           <% end %>
         </span>
     <% else %>

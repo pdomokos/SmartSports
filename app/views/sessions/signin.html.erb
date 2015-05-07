@@ -23,9 +23,9 @@
 
 <% if is_mobile_device? || is_tablet_device? %>
     Don't have an account yet? Create yours now and start managing your diabetes-related data
-    <%= render partial: 'features.mobile', locals: { msg: "Don't have an account yet? Create yours <a class=\"signupLink\" href=\"#{signup_path}\">now</a> and and start managing your diabetes-related data"} %>
+    <%= render partial: 'features.mobile', locals: { msg: "<a class=\"signupLink\" href=\"#{signup_path}\">Don't have an account yet?</a> Create yours now and start managing your diabetes-related data"} %>
 <% else %>
-    <%= render partial: 'features', locals: { msg: "Don't have an account yet? Create yours <a class=\"signupLink\" href=\"#{signup_path}\">now</a> and and start managing your diabetes-related data"} %>
+    <%= render partial: 'features', locals: { msg: "<a class=\"signupLink\" href=\"#{signup_path}\">Don't have an account yet?</a> Create yours now and start managing your diabetes-related data"} %>
 <% end %>
 
 <script>

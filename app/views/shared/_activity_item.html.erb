@@ -1,7 +1,12 @@
 <tr class="bg">
 
   <td style="width:40px;" class="padded">
-    <%= image_tag "running40.png" %>
+    <%=if activity_item.group == "sport"
+         image_tag "running40.png"
+       elsif  activity_item.group == "other"
+         image_tag "walking40.png"
+       end%>
+
   </td>
   <td class="historyTitle padded activityItem">
     <input id="activity_data_<%=activity_item.id%>" type="hidden" value="<%=
@@ -13,17 +18,12 @@
         JSON.dump(d)
     %>">
     <strong><%= activity_item.try(:activity_type).try(:name) || "Unknown sport" %></strong>
-    <% if activity_item.steps %>
-        <span><%= activity_item.steps %> steps</span>
-    <% end %>
+    <br>
+    <span> <%= activity_item.start_time.strftime("%F") if activity_item.start_time %></span>,
+    <span> <%= activity_item.start_time.strftime("%H:%M") if activity_item.start_time %></span>,
     <% if activity_item.duration %>
         <span><%= activity_item.duration %> minutes</span>
     <% end %>
-    <% if activity_item.distance %>
-        <span><%= activity_item.distance/1000.0 %> km</span>
-    <% end %>
-    <br>
-    <span> <%= activity_item.start_time.strftime("%F %T") if activity_item.start_time %></span>
   </td>
   <td class="iconColumn">
     <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "mod_act_#{activity_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
