@@ -1,0 +1,35 @@
+<%= form_for [@user, @sensor_measurement] do |f| %>
+    <% if @sensor_measurement.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@sensor_measurement.errors.count, "error") %> prohibited this sensor_measurement from being saved:</h2>
+
+          <ul>
+            <% @sensor_measurement.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= @user.name %>
+    </div>
+    <div class="field">
+      <%= @sensor_measurement.start_time %>
+    </div>
+    <div class="field">
+      <%= f.label :duration %><br>
+      <%= f.number_field :duration %>
+    </div>
+    <div class="field">
+      <%= f.label :group %><br>
+      <%= f.text_field :group %>
+    </div>
+    <div class="field">
+      <%= f.label :sensors %><br>
+      <%= f.text_field :sensors %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

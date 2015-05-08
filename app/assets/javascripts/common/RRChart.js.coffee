@@ -20,7 +20,6 @@ class RRChart
     else
       total_height *= 2
 
-    console.log "dimensions: "+@width+" x "+total_height
     @svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     @svg
       .attr("width", self.width)

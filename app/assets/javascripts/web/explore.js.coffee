@@ -29,11 +29,11 @@
       for rr in rr_values
         curr += rr
         rr_data.push({time: curr, value: rr})
+      console.log "sid = "+sid+" duration (sec): "+(rr_data[rr_data.length-1]['time'] - rr_data[0]['time'])/1000.0
 
       cr_data = null
       if data['cr_data'] && data['cr_data']!=""
         cr_values = decodeSensorTimeVal(data['cr_data'])
-        console.log cr_values
         curr = Date.parse(start)
         cr_prev = 0
         curr_dt = 0
@@ -49,7 +49,6 @@
       hr_data = null
       if data['hr_data'] && data['hr_data']!=""
         hr_values = decodeSensorTimeVal(data['hr_data'])
-        console.log hr_values
         curr = Date.parse(start)
         hr_data = [{time: curr, value: 0}]
         for i in [0..hr_values.length-1]

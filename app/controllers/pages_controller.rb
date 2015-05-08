@@ -57,7 +57,7 @@ class PagesController < ApplicationController
   end
 
   def explore
-    @sensor_measurements = current_user.sensor_measurements
+    @sensor_measurements = current_user.sensor_measurements.order(start_time: :desc)
   end
 
   def diet
