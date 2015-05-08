@@ -16,7 +16,7 @@
       <% if meas_item.meas_type=='blood_pressure' %>
           <strong>SYS/DIA/HR: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
       <% elsif  meas_item.meas_type=='blood_sugar' %>
-          <strong>Blood sugar: <%= meas_item.blood_sugar %> mmol/L</strong>
+          <strong>Blood glucose: <%= meas_item.blood_sugar %> mmol/L</strong>
       <% elsif  meas_item.meas_type=='weight' %>
           <strong>Weight: <%= meas_item.weight %>kg</strong>
       <% elsif  meas_item.meas_type=='waist' %>

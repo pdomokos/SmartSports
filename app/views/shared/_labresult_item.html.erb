@@ -18,11 +18,11 @@
           JSON.dump(m)
       %>">
       <% if labresult_item.category=='hba1c' %>
-          <strong>HbA1c: <%= labresult_item.hba1c %> </strong>
+          <strong>HbA1c: <%= labresult_item.hba1c %> %</strong>
       <% elsif  labresult_item.category=='ldl_chol' %>
-          <strong>LDL-chol: <%= labresult_item.ldl_chol %> </strong>
+          <strong>LDL-chol: <%= labresult_item.ldl_chol %> mmol/L</strong>
       <% elsif  labresult_item.category=='egfr_epi' %>
-          <strong>eGFR-EPI: <%= labresult_item.egfr_epi %> </strong>
+          <strong>eGFR-EPI: <%= labresult_item.egfr_epi %> ml/min/1.73m2</strong>
       <% elsif  labresult_item.category=='ketone' %>
           <strong>Ketone: <%= labresult_item.ketone %> </strong>
       <% else %>

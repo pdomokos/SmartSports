@@ -39,13 +39,13 @@
             <div class="dataFormContainer contentBg">
                 <div class="dataFormTitle">
                     <%= image_tag "bloodglucose.png" %><br/>
-                    Blood Sugar
+                    Blood Glucose
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bs-create-form", class: "resource-create-form health-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
                         <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
-                        <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField" placeholder="Blood Sugar, eg: 6.3"/>
+                        <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField" placeholder="Blood Glucose, eg: 6.3"/>
 
                         <div class="dataFormFieldUnit">mmol/L</div>
                         <br>

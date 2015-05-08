@@ -11,12 +11,16 @@
     %>">
     <% if lifestyle_item.group %>
         <strong><%= lifestyle_item.group %></strong>
-        <span> <%= lifestyle_item.amount %></span>
-        <br>
         <span>
           <% if lifestyle_item.group == 'stress' %>
+            <span> <%=  stressList = ["Below average", "Average", "Medium", "High"]
+                        stressList[lifestyle_item.amount] %></span>
+            <br>
             <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %>
           <% else %>
+            <span> <%= sleepList = ["Very bad", "Fairly bad", "Fairly good", "Very good"]
+                       sleepList[lifestyle_item.amount] %></span>
+            <br>
             <%= lifestyle_item.start_time.strftime("%F, %H:%M") if lifestyle_item.start_time %>
           <% end %>
         </span>

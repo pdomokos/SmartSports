@@ -1,13 +1,13 @@
 <div class="training-block mainContent" id="training-container">
   <div class="sectionTitle exerciseBodyLogo exerciseColor">
-    Exercise
+    Activity
   </div>
   <div class="contentBg exerciseStyle">
     <div style="padding: 10px;">
       <div class="dataFormContainer">
         <div class="dataFormTitle">
-          <%= image_tag "running40.png" %><br/>
-          Sport
+          <%= image_tag "bicycle40.png" %><br/>
+          Exercise
         </div>
         <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
             <div class="dataForm">
@@ -38,8 +38,8 @@
 
       <div class="dataFormContainer">
         <div class="dataFormTitle">
-          <%= image_tag "walking40.png" %><br/>
-          Day-to-day
+          <%= image_tag "regular40.png" %><br/>
+          Regular activity
         </div>
         <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
             <div class="dataForm">

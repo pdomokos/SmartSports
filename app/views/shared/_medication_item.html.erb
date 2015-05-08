@@ -20,13 +20,12 @@
     <% if  medication_item.medication_type and medication_item.medication_type.group %>
         <strong><%= medication_item.medication_type.name %></strong>
         <% if medication_item.amount && medication_item.amount > 0 %>
-            <br><span>Mennyiség: <%= medication_item.amount %></span>
+            <br/><span>Mennyiség: <%= medication_item.amount %></span>
         <% end %>
     <% else %>
         <strong>Unknown medication</strong>
     <% end %>
-    <br>
-    <span> <%= medication_item.date.strftime("%F, %H:%M") if medication_item.date %></span>
+    <br/><span> <%= medication_item.date.strftime("%F, %H:%M") if medication_item.date %></span>
   </td>
 
   <td class="iconColumn">

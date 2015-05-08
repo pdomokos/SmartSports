@@ -34,27 +34,27 @@
   $("#diet_amount").val(2)
 
   $("#diet_scale").slider({
-    min: 0.5,
+    min: 0.25,
     max: 5.0,
-    step: 0.5,
-    value: 1
+    step: 0.25,
+    value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#diet_unit").html(" "+ui.value+" adag ("+ui.value*200+"g)")
+      $("#diet_unit").html(" "+ui.value+" egység ("+ui.value*100+"g)")
     change: (event, ui) ->
-      $("#diet_amount").val(ui.value*2)
+      $("#diet_amount").val(ui.value)
   })
 
   $("#diet_drink_scale").slider({
-    min: 0.5,
+    min: 0.25,
     max: 5,
-    step: 0.5,
-    value: 1
+    step: 0.25,
+    value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#diet_drink_unit").html(ui.value+" adag ("+ui.value*2+"dl)")
+      $("#diet_drink_unit").html(ui.value+" dl")
     change: (event, ui) ->
-      $("#diet_drink_amount").val(ui.value*2)
+      $("#diet_drink_amount").val(ui.value)
   })
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
@@ -63,17 +63,23 @@
     console.log e
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
-    $("#diet_scale").slider({ value: 1 })
+    $("#diet_scale").slider({ value: 2 })
     fval = $("#diet_scale").slider("value")
-    $("#diet_unit").html(fval+" adag")
-    $("#diet_drink_scale").slider({ value: 1 })
+    $("#diet_unit").html(fval+" egység ("+fval*100+"g)")
+    $("#diet_drink_scale").slider({ value: 2 })
     dval = $("#diet_drink_scale").slider("value")
-    $("#diet_drink_unit").html(dval+" adag")
+    $("#diet_drink_unit").html(dval+" dl")
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
+    $('#diet_type_id').val(null)
+    $('#diet_drink_type_id').val(null)
+    $('#diet_smoke_type').val(null)
     loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
+    $('#diet_type_id').val(null)
+    $('#diet_drink_type_id').val(null)
+    $('#diet_smoke_type').val(null)
     console.log xhr.responseText
     alert("Failed to create diet.")
   )
@@ -103,14 +109,16 @@
       $("#foodname").val(data.food_name)
       $("#diet_type_id").val(data.food_type_id)
       $("#diet_amount").val(data.amount)
-      $("#diet_unit").html(data.amount/2+" adag ("+data.amount*100+"g)")
-      $("#diet_scale").slider({value: data.amount/2})
+      $("#diet_unit").html(data.amount+" egység ("+data.amount*100+"g)")
+      $("#diet_scale").slider({value: data.amount})
     else if data.type=="Drink"
       $("#drinkname").val(data.food_name)
       $("#drink_type_id").val(data.food_type_id)
       $("#diet_drink_amount").val(data.amount)
-      $("#diet_drink_unit").html(data.amount/2+" adag ("+data.amount+"dl)")
-      $("#diet_drink_scale").slider({value: data.amount/2})
+      $("#diet_drink_unit").html(data.amount+" dl")
+      $("#diet_drink_scale").slider({value: data.amount})
+    else if data.type=="Smoke"
+      $("#diet_smoke_type").val(data.name)
   )
 
 @loadDietHistory = () ->

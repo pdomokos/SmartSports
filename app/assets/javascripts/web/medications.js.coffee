@@ -16,11 +16,15 @@
     console.log xhr.responseText
     $("#"+form_id+" input.dataFormField").val("")
 
+    $('#medname').val(null)
+    $('#insname').val(null)
     $('#medications_datepicker').val(moment().format(moment_fmt))
     $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
 
     loadMedicationHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
+    $('#medname').val(null)
+    $('#insname').val(null)
     console.log xhr.responseText
     alert("Failed to create diet.")
   )

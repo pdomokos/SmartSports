@@ -4,11 +4,15 @@
   $("div.appMenu button").removeClass("selected")
   $("#wellbeing-button").addClass("selected")
 
-  $("#sleep_amount").val(50)
-  $("#stress_amount").val(50)
+  $("#sleep_amount").val(2)
+  $("#stress_amount").val(1)
 
   $('#sleep_start_datepicker').datetimepicker(timepicker_defaults)
   $('#sleep_end_datepicker').datetimepicker(timepicker_defaults)
+
+  sleepList = ["Very bad", "Fairly bad", "Fairly good", "Very good"]
+  stressList = ["Below average", "Average", "Medium", "High"]
+
   load_lifestyles()
 
   $('#stress_datepicker').datetimepicker({
@@ -21,22 +25,22 @@
 
   $("#sleep_scale").slider({
     min: 0,
-    max: 100,
-    value: 50
+    max: 3,
+    value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#sleep_percent").html(ui.value+"%")
+        $("#sleep_percent").html(sleepList[ui.value])
     change: (event, ui) ->
       $("#sleep_amount").val(ui.value)
   })
 
   $("#stress_scale").slider({
     min: 0,
-    max: 100,
-    value: 50
+    max: 3,
+    value: 1
   }).slider({
     slide: (event, ui) ->
-      $("#stress_percent").html(ui.value+"%")
+        $("#stress_percent").html(stressList[ui.value])
     change: (event, ui) ->
       $("#stress_amount").val(ui.value)
   })
@@ -67,11 +71,11 @@
     console.log data
     if(data.group=="sleep")
       $("#sleep_amount").val(data.amount)
-      $("#sleep_percent").html(data.amount+"%")
+      $("#sleep_percent").html(sleepList[data.amount])
       $("#sleep_scale").slider({value: data.amount})
     else if(data.group=="stress")
       $("#stress_amount").val(data.amount)
-      $("#stress_percent").html(data.amount+"%")
+      $("#stress_percent").html(stressList[data.amount])
       $("#stress_scale").slider({value: data.amount})
   )
 

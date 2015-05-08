@@ -8,7 +8,7 @@
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "oral40.png" %><br/>
-                    Medications
+                    Medicines
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "oral-med-create-form", class: "resource-create-form medication-form") do %>
                     <div class="dataForm">
@@ -40,7 +40,7 @@
                     <div class="dataForm">
                         <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-                        <input id="insulin_name" name="ins_name" type="search" class="dataFormField" placeholder="Start typing insulin name." disabled>
+                        <input id="insulin_name" name="ins_name" type="search" class="dataFormField" placeholder="Select..." disabled>
                         <input id="insname" name="medication[medication_type_id]" type="hidden">
 
                         <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField" placeholder="Unit Dosage, eg: 2"/>

@@ -67,9 +67,13 @@ init_exercise = () ->
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
     $('#activity_other_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_other_end_datepicker').val(moment().format(moment_fmt))
+    $('#activity_type_id').val(null)
+    $('#activity_other_type_id').val(null)
 
     loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
+    $('#activity_type_id').val(null)
+    $('#activity_other_type_id').val(null)
     console.log xhr.responseText
     alert("Failed to create measurement.")
   )
