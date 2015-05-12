@@ -48,11 +48,4 @@
         </button>
     <% end %>
   </td>
-  <td class="iconColumn">
-    <%= form_tag( "/users/#{current_user.id}/medications/#{medication_item.id}/edit", id: "edit_med_#{medication_item.id}", remote: true, method: "get", class: "resource-delete-form") do %>
-        <button class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
-          <i class="fa fa-pencil fa-2x"></i>
-        </button>
-    <% end %>
-  </td>
 </tr>

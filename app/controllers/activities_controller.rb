@@ -76,6 +76,13 @@ class ActivitiesController < ApplicationController
     if not @activity.duration
       if @activity.start_time && @activity.end_time
         @activity.duration = ((@activity.end_time-@activity.start_time) / 60).to_i
+        type = ActivityType.find(@activity.activity_type_id)
+        @activity.calories = @activity.duration * type.kcal / 10
+        if @activity.intensity == 1.0
+          @activity.calories = @activity.calories * 0.8
+        elsif @activity.intensity == 3.0
+          @activity.calories = @activity.calories * 1.2
+        end
       end
     end
     respond_to do |format|

@@ -18,6 +18,13 @@
         JSON.dump(d)
     %>">
     <strong><%= activity_item.try(:activity_type).try(:name) || "Unknown sport" %></strong>
+
+    <div class="right">
+      <% if activity_item.calories %>
+          <span class="tag kcal"><%= activity_item.calories.round(2) %> kcal</span>
+      <% end %>
+    </div>
+
     <br>
     <span> <%= activity_item.start_time.strftime("%F") if activity_item.start_time %></span>,
     <span> <%= activity_item.start_time.strftime("%H:%M") if activity_item.start_time %></span>,
@@ -42,13 +49,6 @@
     <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "delete_act_#{activity_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">
           <i class="fa fa-trash-o fa-2x"></i>
-        </button>
-    <% end %>
-  </td>
-  <td class="iconColumn">
-    <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}/edit", id: "edit_act_#{activity_item.id}", remote: true, method: "get", class: "resource-delete-form") do %>
-        <button class="tableControl" onclick="alert('Not implemented yet...'); return(false);">
-          <i class="fa fa-pencil fa-2x"></i>
         </button>
     <% end %>
   </td>
