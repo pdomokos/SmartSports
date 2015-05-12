@@ -87,6 +87,29 @@ namespace :smartdiab do
     end
 
   end
+
+  task load_illness_csv: :environment do
+    if IllnessType.all.size != 0
+      IllnessType.all.each {|mt|
+        mt.destroy!
+      }
+    end
+
+    illnesslist = nil
+    f = "#{ENV['HOME']}/Downloads/illnesses.csv"
+    illnesslist = CSV.read(f, headers: true)
+
+    #print foodlist.first.as_json.pretty_inspect
+    i = 0
+    illnesslist.each do |m|
+      # ["id", "name", "category", "amount", "kcal", "prot", "carb", "fat"]
+      ft = IllnessType.new(:id => i, :name =>  m['Name'])
+      ft.save!
+      i += 1
+    end
+
+  end
+
   task export_foods: :environment do
     k = ["id", "name", "category", "amount", "kcal", "prot", "carb", "fat"]
     CSV.open("#{ENV['HOME']}/Downloads/foods_exported.csv", 'w') do |csv|

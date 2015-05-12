@@ -16,11 +16,12 @@ class LifestylesController < ApplicationController
     if source and source !=""
       @lifestyles = @lifestyles.where(source: source)
     end
-    if order and order=="desc"
-      @lifestyles = @lifestyles.order(created_at: :desc)
-    else
-      @lifestyles = @lifestyles.order(created_at: :asc)
-    end
+    @lifestyles = @lifestyles.order(created_at: :desc)
+    # if order and order=="desc"
+    #   @lifestyles = @lifestyles.order(created_at: :desc)
+    # else
+    #   @lifestyles = @lifestyles.order(created_at: :asc)
+    # end
     if limit and limit.to_i>0
       @lifestyles = @lifestyles.limit(limit)
     end
@@ -36,6 +37,7 @@ class LifestylesController < ApplicationController
   # GET /lifestyles/1
   # GET /lifestyles/1.json
   def show
+      set_lifestyle
   end
 
   # GET /lifestyles/new
@@ -69,12 +71,10 @@ class LifestylesController < ApplicationController
     # @lifestyle = @user.lifestyles.create(lifestyle_params)
     respond_to do |format|
       if @lifestyle.save
-        format.html { redirect_to user_lifestyle_path(@user, @lifestyle), notice: 'Lifestyle was successfully created.' }
         format.json { render  json: {:status =>"OK", :result => @lifestyle} }
       else
         print @lifestyle.errors.full_messages.to_sentence+"\n"
-        format.html { render :new }
-        format.json { render json: @lifestyle.errors, status: :unprocessable_entity }
+        format.json { render json: { :msg =>  @lifestyle.errors.full_messages.to_sentence }, :status => 400 }
       end
     end
   end
@@ -112,6 +112,6 @@ class LifestylesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lifestyle_params
-      params.require(:lifestyle).permit(:user_id, :source, :group, :name, :amount, :start_time, :end_time, :favourite)
+      params.require(:lifestyle).permit(:user_id, :illness_type_id, :pain_type_name, :source, :group, :name, :amount, :period_volume, :start_time, :end_time, :favourite)
     end
 end

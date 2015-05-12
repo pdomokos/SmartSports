@@ -1,1 +1,2 @@
-json.extract! @lifestyle, :id, :user_id, :source, :group, :name, :amount, :data, :created_at, :updated_at
+json.extract! @lifestyle, :id, :user_id, :illness_type_id, :pain_type_name, :source, :group, :name, :amount, :period_volume, :data, :created_at, :updated_at
+json.illness_illname @lifestyle.illness_type.name if @lifestyle.group =='illness' and @lifestyle.illness_type

@@ -228,6 +228,12 @@ define_globals = () ->
     id: d['id']
     }
 
+  window.illness_map_fn = (d) ->
+    {
+    label: d['name'],
+    id: d['id']
+    }
+
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")
   $("#friend-form-div div.friend-message").addClass("hidden")
