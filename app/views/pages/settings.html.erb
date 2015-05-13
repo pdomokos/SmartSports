@@ -1,3 +1,55 @@
+<div style="margin-left: 220px; margin-top: 60px;margin-right: 80px;">
+  <div style="margin-left: 40px;margin-top: 80px;">
+    <div class="sectionTitle googlefit_large c0">
+      Google Fit
+    </div>
+    <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
+      <div style="padding: 10px;">
+        <table style="width: 100%;color: #3d3d3d;">
+          <tbody>
+          <tr>
+            <td style="width: 180px;height: 50px;">
+              Active since
+            </td>
+            <td>
+              2015. 01. 15
+            </td>
+            <td style="width: 200px;text-align: right;" rowspan="3">
+
+              <button style="width: 180px;height: 50px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none">
+                SYNCHRONIZE NOW
+              </button>
+              <button style="margin-top: 15px;width: 180px;height: 50px; background: #ff0000;color: #ffffff;font-size: 15px;border: none">
+                DISCONNECT
+              </button>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width: 180px;height: 50px;">
+              Last synchronization
+            </td>
+            <td>
+              2 days ago
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+<!--
 <div class="settings-block">
     <div class="columns">
         <div class="column one-half">
@@ -103,6 +155,30 @@
         </div>
     </div>
 </div>
+-->
+<!--
+    <div class="leftMenu">
+
+        <div style="padding-left: 40px;padding-right: 20px;padding-top: 40px;">
+
+
+            <div style="width: 150px;height: 200px;background: #6CC5CC">
+              <%= image_tag current_user.avatar.url(:medium) %>
+
+            </div>
+            <div class="noClickSelect">
+                <span class="infoName"><%= current_user.name.split().join("</br>").html_safe %></span><br/>
+                Joined <%= time_ago_in_words(current_user.created_at) %> ago.
+            </div>
+
+        </div>
+
+    </div>
+    -->
+
+<% content_for :menu do %>
+    <%= render "settingsmenu" %>
+<% end %>
 <script type="text/javascript">
     settings_loaded();
 </script>

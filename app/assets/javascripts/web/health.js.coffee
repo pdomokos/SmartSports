@@ -2,8 +2,8 @@
 
   uid = $("#current-user-id")[0].value
 
-  $("div.appMenu button").removeClass("selected")
-  $("#health-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#health-link").addClass("selected")
 
   $('#bloodpressure_datepicker').datetimepicker(timepicker_defaults)
   $('#bloodsugar_datepicker').datetimepicker(timepicker_defaults)

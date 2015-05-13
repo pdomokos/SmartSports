@@ -1,6 +1,6 @@
 body.nobgAnimation {
     /*  background: #9DCFFE; */
-    background: #ECEEE4;
+    background: #F2F3F8;
     font-family: Arial;
     padding: 0;
     margin: 0;
@@ -11,23 +11,26 @@ body.nobgAnimation {
 }
 
 .topBanner {
-    position: fixed;
-    z-index: 90;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 80px;
-    background: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background: #ffffff; /*rgba(255, 255, 255, 0.3);*/
+
+  z-index: 90;
 }
 
 .topBannerBg {
-    background: #9DCFFE;
-    position: fixed;
-    z-index: 80;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 80px;
+
+  background: #ffffff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60px;
+
+  z-index: 80;
 }
 
 .topBanner .left {
@@ -40,19 +43,25 @@ body.nobgAnimation {
 }
 
 .topBanner .logoTitle {
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    line-height: 60px;
+  padding-left: 20px;
+  float: left;
+  height: 60px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
+.topBanner .logoTitle {
+  color: #3d3d3d;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  line-height: 60px;
 }
 
 .topBanner .right {
-    padding-right: 20px;
-    float: right;
-    height: 60px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
+  padding-right: 20px;
+  float: right;
+  height: 60px;
+  padding-top: 10px;
 }
 
 .dashboardButton {
@@ -93,6 +102,10 @@ button.dataFormField {
   color: white;
 }
 
+
+.c0 {
+  color: #4FBDF2 !important;
+}
 
 .c1, .dietColor {
     color: #57C88A !important;
@@ -234,8 +247,9 @@ button.dataFormField {
 }
 
 .c7, .labresultColor {
-  color: #74899C !important;;
+  color: #EBAAAB !important;;
 }
+
 .labresultStyle .dataFormField {
   border: solid 1px #74899C !important;
   width: 160px;
@@ -256,7 +270,7 @@ button.dataFormField {
 
 
 
-.analyticsColor {
+.c8, .analyticsColor {
   color: #f46d43 !important;
 }
 
@@ -434,6 +448,124 @@ button.deleteForm {
   background-size: 20px 20px;
 }
 
+
+// ----------------------
+.app2Menu {
+  background: #2D3644;
+  position: fixed;
+  top: 0px;
+  width: 200px;;
+  height: 100%;
+}
+
+.app2Menu .inner {
+  padding-top: 80px;
+  //        margin-left: 20px;
+  //        margin-right: 20px;
+  //  height: 50px;
+  //    background: #ffffff;
+}
+
+.app2Menu .inner .menuitem {
+  border-bottom: solid 2px #2D3644 !important;
+  width: 196px;
+  height: 50px;
+  float: left;
+  font-size: 13px;
+  border-right-style: solid;
+  border-right-width: 4px;
+}
+
+.menulink {
+  text-decoration: none;
+  display: block;
+  width: 146px;
+  //  height: 20px;
+  padding-left: 50px;
+  //text-align: center;
+  line-height: 50px;
+  //  padding-top: 30px;;
+  color: #ffffff;
+}
+
+
+
+.app2Menu .moves {
+  background: image-url("menu/moves.png") 20px 15px no-repeat;
+}
+
+.app2Menu .fitbit {
+  background: image-url("menu/fitbit.png") 20px 15px no-repeat;
+}
+
+.app2Menu .misfit {
+  background: image-url("menu/misfit.png") 20px 15px no-repeat;
+}
+
+.app2Menu .googlefit {
+  background: image-url("menu/googlefit.png") 20px 15px no-repeat;
+}
+
+.app2Menu .dashboard {
+  background: image-url("dashboard.png") 20px 15px no-repeat;
+}
+
+.app2Menu .myprofile {
+  background: image-url("menu/myprofile.png") 20px 15px no-repeat;
+}
+
+
+.app2Menu .b0 {
+  background: image-url("menu_dashboard.png") 20px 15px no-repeat;
+
+}
+
+.app2Menu .b1 {
+  background: image-url("menu_diet.png") 20px 15px no-repeat;
+
+}
+
+.app2Menu .b2 {
+  background: image-url("menu_exercise.png") 20px 15px no-repeat;
+
+}
+
+.app2Menu .b3 {
+  background: image-url("menu_health.png") 20px 15px no-repeat;
+
+}
+
+.app2Menu .b4 {
+  background: image-url("menu_wellbeing.png") 20px 15px no-repeat;
+
+
+}
+
+.app2Menu .b5 {
+
+  background: image-url("menu_medication.png") 20px 15px no-repeat;
+}
+
+.app2Menu .b6 {
+  background: image-url("menu_genetics.png") 20px 15px no-repeat;
+
+}
+
+.app2Menu .b7 {
+  background: image-url("menu_labresults.png") 20px 15px no-repeat;
+
+}
+
+.app2Menu .b8 {
+  background: image-url("menu_analytics.png") 20px 15px no-repeat;
+
+}
+// -----------------------------------------
+
+
+.menulink.selected {
+  background: rgba(137, 130, 200, 0.3);
+}
 .bl0 {
     background: image-url("dashboard60.png") 10px 10px no-repeat;
 
@@ -482,7 +614,7 @@ button.deleteForm {
 }
 
 .bl7 {
-  background: image-url("lab60.png") 10px 10px no-repeat;
+  background: image-url("menu_labresults.png") 10px 10px no-repeat;
   background-size: 40px 40px;
 
 }
@@ -644,11 +776,11 @@ div.dataFormField {
 }
 
 input.logoutButton {
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  background: image-url('top_logout.png');
-  background-size: 50px 50px;
+  width: 20px;
+  height: 20px;
+  padding-top: 15px;
+  background: image-url('menu/logout.png');
+  background-size: 20px 20px;
   border: none;
   cursor: pointer;
 }

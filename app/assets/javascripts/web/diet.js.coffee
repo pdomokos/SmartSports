@@ -1,8 +1,8 @@
 @diet_loaded = () ->
   console.log("diet loaded2")
 
-  $("div.appMenu button").removeClass("selected")
-  $("#diet-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#diet-link").addClass("selected")
 
   smokeList = [
     {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },

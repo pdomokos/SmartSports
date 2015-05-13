@@ -106,6 +106,9 @@
     </table>
 </div>
 
+<% content_for :menu do %>
+    <%= render "menu" %>
+<% end %>
 <% content_for :page_logic do %>
     diet_loaded()
 <% end %>

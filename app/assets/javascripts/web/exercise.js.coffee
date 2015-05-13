@@ -10,8 +10,8 @@
   load_activity_types()
   load_other_activity_types()
   loadExerciseHistory()
-  $("div.appMenu button").removeClass("selected")
-  $("#exercise-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#exercise-link").addClass("selected")
 
 #  d3.json("/users/"+uid+"/summaries.json", data_received)
 

@@ -16,74 +16,37 @@
     <div class="topBannerBg bgAnimation">
 
     </div>
+
+
+    <%= yield :menu %>
+
     <div class="topBanner">
-        <div class="left">
-            <%= image_tag "logo-login.png", alt: "Login", style: "width: 60px;float:left;", id: "headerLoginLogo", class: "loginLogo" %>
-            <span class="logoTitle">SmartDiab</span>
-        </div>
-        <div class="right">
-            <button id="settings-button" style="width: 60px;height: 60px;padding: 0;background: transparent;border: none;">
-                <%= image_tag "top_settings.png", style:"width: 50px;height: 50px;" %>
-            </button>
+      <div class="left">
+        <%= image_tag "logo-login.png", alt: "Login", style: "margin-top: 10px; width: 40px; float: left;", id: "headerLoginLogo", class: "loginLogo" %>
+        <span class="logoTitle">SmartDiab</span>
+      </div>
+      <div class="right">
+        <%= image_tag current_user.avatar.url(:medium), style: "width: 40px; height: 40px; float: left;border-radius: 30px" %>
 
-            <div class="logoutDiv">
-                <%= form_tag logout_path, :method => :post do %>
-                    <input type="submit" class="logoutButton" value="">
-                <% end %>
-            </div>
+        <div style="float: right;width: 30px;text-align: center;">
+          <%= form_tag logout_path, :method => :post do %>
+              <input type="image" src="<%= image_url "menu/logout.png" %>"  style="width: 20px;padding-top: 15px;">
+          <% end %>
         </div>
+
+        <div style="float: right;width: 30px;text-align: center;"><%= image_tag "menu/settings.png", style: "width: 20px;padding-top: 15px", id:"settings-link"%></div>
+        <div style="float: right;height: 50px;line-height: 50px;color: #3d3d3d;font-size: 13px;padding-left: 5px"><%= current_user.name %></div>
+      </div>
     </div>
 
 
-    <div class="leftMenu">
-
-        <div style="padding-left: 40px;padding-right: 20px;padding-top: 40px;">
-
-
-            <div style="width: 150px;height: 200px;background: #6CC5CC">
-              <%= image_tag current_user.avatar.url(:medium) %>
-              <!--<%= image_tag "unknown.jpeg", alt: "username", class: "noClickSelect" %>-->
-
-            </div>
-            <div class="noClickSelect">
-                <span class="infoName"><%= current_user.name.split().join("</br>").html_safe %></span><br/>
-                Joined <%= time_ago_in_words(current_user.created_at) %> ago.
-            </div>
-
-        </div>
-
-    </div>
-
-    <div style="margin-left: 300px; margin-top: 80px;margin-right: 60px;">
-        <div style="margin-left: 40px;margin-top: 120px;">
-            <div class="appMenu noClickSelect">
-                <button id="dashboard-button" class="b0">Dashboard</button>
-                |
-                <button id="diet-button" class="c1 b1">Diet</button>
-                |
-                <button id="exercise-button" class="c2 b2">Activity</button>
-                |
-                <button id="health-button" class="c3 b3">Health</button>
-                |
-                <button id="medication-button" class="c5 b4">Medication</button>
-                |
-                <button id="wellbeing-button" class="c4 b5">Well-Being</button>
-                |
-                <button id="labresults-button" class="c7 b7">Lab results</button>
-                |
-                <button id="genetics-button" class="c6 b6">Genetics</button>
-                |
-                <button id="analytics-button" class="analyticsColor analyticsMenu">Analytics</button>
-            </div>
-
+    <div style="margin-left: 220px; margin-top: 60px;margin-right: 80px;">
+        <div style="margin-left: 40px;margin-top: 80px;">
             <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
             <%= yield %>
 
         </div>
     </div>
-
-    <!--<button class="prevScreen"></button>-->
-    <!--<button class="nextScreen"></button>-->
 
     <script type="text/javascript">
 

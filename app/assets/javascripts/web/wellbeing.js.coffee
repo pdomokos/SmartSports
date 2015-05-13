@@ -1,8 +1,8 @@
 @wellbeing_loaded = () ->
   uid = $("#current-user-id")[0].value
 
-  $("div.appMenu button").removeClass("selected")
-  $("#wellbeing-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#wellbeing-link").addClass("selected")
 
   $("#sleep_amount").val(2)
   $("#stress_amount").val(1)

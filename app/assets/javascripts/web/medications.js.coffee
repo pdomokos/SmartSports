@@ -1,7 +1,7 @@
 @medications_loaded = () ->
   console.log("medications loaded")
-  $("div.appMenu button").removeClass("selected")
-  $("#medication-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#medication-link").addClass("selected")
 
   $('#medications_datepicker').datetimepicker(timepicker_defaults)
   $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)

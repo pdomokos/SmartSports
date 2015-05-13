@@ -71,6 +71,9 @@
 
 </div>
 
+<% content_for :menu do %>
+    <%= render "menu" %>
+<% end %>
 <% content_for :page_logic do %>
     medications_loaded()
 <% end %>

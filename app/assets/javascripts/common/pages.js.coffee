@@ -35,26 +35,35 @@
     self.rotateLogo()
     self.changeColor()
 
-  $('#settings-button').click () ->
+  $('#settings-link').click () ->
     console.log "clicked"
     window.location = '/pages/settings'
-  $('#dashboard-button').click () ->
+  $('#dashboard-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/dashboard'
-  $('#diet-button').click () ->
+  $('#diet-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/diet'
-  $('#exercise-button').click () ->
+  $('#exercise-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/exercise'
-  $('#health-button').click () ->
+  $('#health-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/health'
-  $('#medication-button').click () ->
+  $('#medication-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/medication'
-  $('#wellbeing-button').click () ->
+  $('#wellbeing-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/wellbeing'
-  $('#labresults-button').click () ->
+  $('#labresults-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/labresult'
-  $('#genetics-button').click () ->
+  $('#genetics-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/genetics'
-  $('#analytics-button').click () ->
+  $('#analytics-link').click (e) ->
+    e.preventDefault()
     window.location = '/pages/analytics'
 
 

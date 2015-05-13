@@ -1,4 +1,4 @@
 
 @dashboard_loaded = () ->
-  $("div.appMenu button").removeClass("selected")
-  $("#dashboard-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#dashboard-link").addClass("selected")

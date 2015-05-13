@@ -113,6 +113,9 @@
 
 </div>
 
+<% content_for :menu do %>
+    <%= render "menu" %>
+<% end %>
 <% content_for :page_logic do %>
     analytics_loaded()
 <% end %>

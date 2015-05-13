@@ -2,8 +2,8 @@
 
   uid = $("#current-user-id")[0].value
 
-  $("div.appMenu button").removeClass("selected")
-  $("#labresults-button").addClass("selected")
+  $("div.app2Menu a.menulink").removeClass("selected")
+  $("#labresults-link").addClass("selected")
 
   $('#hba1c_datepicker').datetimepicker({
     format: 'Y-m-d',
