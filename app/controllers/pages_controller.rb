@@ -57,7 +57,15 @@ class PagesController < ApplicationController
   end
 
   def explore
-    @sensor_measurements = current_user.sensor_measurements.order(start_time: :desc)
+    user = nil
+    if params[:user_id]
+      user_id = params[:user_id].to_i
+      user = User.where("id = #{user_id}").first
+    end
+    if user.nil?
+      user = current_user
+    end
+    @sensor_measurements = user.sensor_measurements.order(start_time: :desc)
   end
 
   def diet
