@@ -5,6 +5,7 @@ require 'csv'
 module Api::V1
   class SensorMeasurementsController < ApiController
     rescue_from Exception, :with => :general_error_handler
+    before_action :doorkeeper_authorize!, only: [:index, :create]
 
     respond_to :json
 
@@ -12,7 +13,10 @@ module Api::V1
       user_id = params[:user_id]
       user = User.find(user_id)
 
-      puts params
+      if current_resource_owner.id != user.id
+        render json: { :ok => false}, status: 403
+        return
+      end
 
       #rr1 = "zAO7A80D2gO4A80DwAOTA2wDgAOVA5oDjAM="
       #Base64.decode64(rr1).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}
@@ -74,7 +78,7 @@ module Api::V1
 
     private
     def sensor_measurement_params
-      params.require(:sensor_measurement).permit(:user_id, :hr_data, :rr_data, :cr_data, :start_time, :group)
+      params.require(:sensor_measurement).permit(:user_id, :hr_data, :rr_data, :cr_data, :start_time, :group, :duration, :sensors)
     end
 
   end
