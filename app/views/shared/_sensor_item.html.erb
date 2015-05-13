@@ -1,6 +1,6 @@
-<tr class="bg">
+<tr class="bg" id="sensor-meas-<%= sensor_measurement.id %>">
   <td class="padded rowicon">
-    <%= image_tag "sleep40.png" %>
+    <%= image_tag get_sensor_image(sensor_measurement.group) %>
   </td>
   <td class="historyTitle padded">
     <span class="rowtitle"><%= sensor_measurement.group%></span>
@@ -8,13 +8,10 @@
     <%if sensor_measurement.has_cadence? %><span class="tag cadence">cadence</span><% end %>
     <br/>
     <span><%= sensor_measurement.start_time.strftime("%F %T") %></span></span><br/>
-    <% if sensor_measurement.duration %>
-        <span>Duration: <%= sensor_measurement.duration/60 %> min</span><br/>
-    <% else %>
-        <span>Duration: -</span><br/>
-    <%end%>
-    <span class="rowsmall tag sensor">Polar H7 4790EC17</span>
-    <span class="rowsmall tag sensor">Polar CAD 385D4C18</span><br/>
+    <span>Duration: <%= get_duration(sensor_measurement.duration) %></span><br/>
+    <% sensor_measurement.sensors.try(:split, ";").try(:each) do |sens| %>
+        <span class="rowsmall tag sensor"><%= sens %></span>
+    <% end %>
   </td>
   <td class="iconColumn">
     <button id="fav-icon" class="tableControl">
@@ -26,9 +23,4 @@
       <i class="fa fa-bar-chart fa-2x"></i>
     </button>
   </td>
-  <!--<td class="iconColumn">-->
-    <!--<button class="tableControl">-->
-      <!--<i class="fa fa-trash-o fa-2x"></i>-->
-    <!--</button>-->
-  <!--</td>-->
 </tr>

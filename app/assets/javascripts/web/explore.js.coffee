@@ -6,6 +6,14 @@
   console.log "show: "
   console.log event.currentTarget.id
 
+  arr = event.currentTarget.id.split("-")
+  sid = arr[arr.length-1]
+  uid = $("#current-user-id")[0].value
+
+  if event.metaKey
+    window.open("/users/"+uid+"/sensor_measurements/"+sid+"/edit", "_blank")
+    return
+
   $("div.sensorTable tr").removeClass("selectedRow")
   event.currentTarget.parentNode.parentNode.classList.add("selectedRow")
 
@@ -22,6 +30,7 @@
       console.log "load recent activities  Successful AJAX call"
       console.log textStatus
 
+      $("#sensor-data-group").html(data['group']+" data ("+moment(data['start_time']).format("YYYY-MM-DD hh:mm:ss")+")")
       rr_values = decodeSensorTimeVal(data['rr_data'])
       start = data['start_time']
       curr = Date.parse(start)

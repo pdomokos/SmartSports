@@ -12,90 +12,6 @@
 
           <%= render partial: 'shared/sensor_item', collection: @sensor_measurements, as: :sensor_measurement %>
 
-
-          <!--
-              <tr class="bg">
-                <td class="padded rowicon">
-                  <%= image_tag "sleep40.png" %>
-                </td>
-                <td class="historyTitle padded">
-                  <span class="rowtitle">Sleep</span><span class="tag heart">heart</span><br/>
-                  <span>2015-05-05 09:15</span><br/>
-                  <span>Duration: 40 min</span><br/>
-                  <span class="rowsmall tag sensor">Polar H7 4790EC17</span><span class="rowsmall tag sensor">Polar CAD 385D4C18</span><br/>
-                </td>
-                <td class="iconColumn">
-                  <button id="fav-icon" class="tableControl">
-                    <i class="fa fa-star fa-2x is-favorite"></i>
-                  </button>
-                </td>
-                <td class="iconColumn">
-                  <button class="tableControl">
-                    <i class="fa fa-bar-chart fa-2x"></i>
-                  </button>
-                </td>
-                <td class="iconColumn">
-                    <button class="tableControl">
-                      <i class="fa fa-trash-o fa-2x"></i>
-                    </button>
-                </td>
-              </tr>
-
-              <tr class="bg">
-                <td class="padded rowicon">
-                  <%= image_tag "cycling40.png" %>
-                </td>
-                <td class="historyTitle padded">
-                  <span class="rowtitle">Cycling</span><span class="tag heart">heart</span><span class="tag cadence">cadence</span><br/>
-                  <span>2015-05-05 09:15</span><br>
-                  <span>Duration: 40 min</span><br/>
-                  <span class="rowsmall tag sensor">Polar H7 4790EC17</span><br/>
-                </td>
-                <td class="iconColumn">
-                  <button id="fav-icon" class="tableControl">
-                    <i class="fa fa-star fa-2x no-favorite"></i>
-                  </button>
-                </td>
-                <td class="iconColumn">
-                  <button class="tableControl">
-                    <i class="fa fa-bar-chart fa-2x"></i>
-                  </button>
-                </td>
-                <td class="iconColumn">
-                  <button class="tableControl">
-                    <i class="fa fa-trash-o fa-2x"></i>
-                  </button>
-                </td>
-              </tr>
-
-              <tr class="bg">
-                <td class="padded rowicon">
-                  <%= image_tag "running40.png" %>
-                </td>
-                <td class="historyTitle padded">
-                  <span class="rowtitle">Running</span><span class="tag heart">heart</span><span class="tag stride">stride</span><br/>
-
-                  <span>2015-05-05 09:15</span><br>
-                  <span>Duration: 40 min</span><br>
-                  <span class="rowsmall tag sensor">Polar H7 4790EC17</span><span class="rowsmall tag sensor">Polar Y8 385D4C18</span><br/>
-                </td>
-                <td class="iconColumn">
-                  <button id="fav-icon" class="tableControl">
-                    <i class="fa fa-star fa-2x no-favorite"></i>
-                  </button>
-                </td>
-                <td class="iconColumn">
-                  <button class="tableControl">
-                    <i class="fa fa-bar-chart fa-2x"></i>
-                  </button>
-                </td>
-                <td class="iconColumn">
-                  <button class="tableControl">
-                    <i class="fa fa-trash-o fa-2x"></i>
-                  </button>
-                </td>
-              </tr>
--->
           </tbody>
         </table>
 
@@ -105,7 +21,7 @@
 
           <h3 class="noClickSelect">
             <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-            <div class="training-type left">Sleep Data</div>
+            <div id="sensor-data-group" class="training-type left">Sleep Data</div>
             <div class="selected-meas left"></div>
             <div class="selected-meas legend-container right"></div>
           </h3>
