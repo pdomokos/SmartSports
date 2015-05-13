@@ -1,4 +1,4 @@
-class MyValidator < ActiveModel::Validator
+class DietValidator < ActiveModel::Validator
   def validate(record)
     if (record.type == 'Food' || record.type == 'Drink') && record.food_type_id == nil
       record.errors[:food_type_id] << 'No value'
@@ -11,7 +11,7 @@ end
 class Diet < ActiveRecord::Base
   belongs_to :user
   validates :user_id, presence: true
-  validates_with MyValidator
+  validates_with DietValidator
 
   def as_json(options={})
     super(options.merge({:methods => :type}))

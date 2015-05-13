@@ -1,4 +1,4 @@
-class MyValidator < ActiveModel::Validator
+class LabValidator < ActiveModel::Validator
   def validate(record)
     if record.category == 'hba1c' && (record.hba1c == nil)
       record.errors[:hba1c] << 'No value'
@@ -18,5 +18,5 @@ class LabResult < ActiveRecord::Base
   validates :hba1c, :numericality => true, :allow_nil => true
   validates :ldl_chol, :numericality => true, :allow_nil => true
   validates :egfr_epi, :numericality => true, :allow_nil => true
-  validates_with MyValidator
+  validates_with LabValidator
 end

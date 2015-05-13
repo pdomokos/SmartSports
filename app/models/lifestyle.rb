@@ -1,4 +1,4 @@
-class MyValidator < ActiveModel::Validator
+class LifeStyleValidator < ActiveModel::Validator
   def validate(record)
     if (record.group == 'illness' && record.illness_type_id == nil)
       record.errors[:illness_type_id] << 'No value'
@@ -15,5 +15,5 @@ class Lifestyle < ActiveRecord::Base
   validates :group, presence: true
   validates :start_time, presence: true
   validates :amount, :numericality => true, :allow_nil => true
-  validates_with MyValidator
+  validates_with LifeStyleValidator
 end

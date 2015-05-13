@@ -1,4 +1,4 @@
-class MyValidator < ActiveModel::Validator
+class MeasValidator < ActiveModel::Validator
   def validate(record)
     if record.meas_type == 'blood_pressure' && (record.systolicbp == nil || record.diastolicbp == nil || record.pulse == nil)
       record.errors[:systolicbp] << 'No value'
@@ -22,6 +22,6 @@ class Measurement < ActiveRecord::Base
   validates :weight, :numericality => true, :allow_nil => true
   validates :waist, :numericality => true, :allow_nil => true
   # validates :SPO2, :numericality => true
-  validates_with MyValidator
+  validates_with MeasValidator
 
 end
