@@ -87,7 +87,7 @@ class ActivitiesController < ApplicationController
     end
     respond_to do |format|
       if @activity.save
-        format.json { render json: {:status => "OK", :result => @activity} }
+        format.json { render json: {:status => "OK", :result =>{ id: @activity.id, activity_name: @activity.activity_type.name}} }
       else
         logger.error @activity.errors.full_messages.to_sentence
         format.json { render json: { :msg =>  @activity.errors.full_messages.to_sentence }, :status => 400 }

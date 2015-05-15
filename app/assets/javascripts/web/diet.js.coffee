@@ -14,11 +14,24 @@
     {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
     {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
 
+  smokeSelected = null
   $("#diet_smoke_type").autocomplete({
     minLength: 0,
-    source: smokeList
+    source: smokeList,
+    change: (event, ui) ->
+      console.log "change "+ui['item']
+      smokeSelected = ui['item']
   }).focus ->
     $(this).autocomplete("search")
+
+  $("#smoke-create-form button").click ->
+    if(!smokeSelected)
+      val = $("#diet_smoke_type").val()
+      if !val
+        val = "empty item"
+      popup_error("Failed to add "+val)
+      return false
+
 
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
@@ -60,8 +73,7 @@
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
-    console.log e
-    console.log xhr.responseText
+    console.log data
     $("#"+form_id+" input.dataFormField").val("")
     $("#diet_scale").slider({ value: 2 })
     fval = $("#diet_scale").slider("value")
@@ -76,12 +88,13 @@
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     loadDietHistory()
+    popup_success(data['result']['diet_name']+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     console.log xhr.responseText
-    alert("Failed to create diet.")
+    popup_error("Failed to save diet")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -90,7 +103,7 @@
     loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to update/delete diet.")
+    popup_error("Failed to delete diet")
   )
 
   $('.hisTitle').click ->
@@ -166,6 +179,7 @@
 
       foods = data.map( window.food_map_fn )
 
+      foodSelected = null
       $("#foodname").autocomplete({
         minLength: 3,
         source: (request, response) ->
@@ -182,7 +196,16 @@
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
           $("#foodname").removeAttr("disabled")
+        change: (event, ui) ->
+          foodSelected = ui['item']
       })
+      $("#food-create-form button").click ->
+        if(!foodSelected)
+          val = $("#foodname").val()
+          if !val
+            val = "empty item"
+          popup_error("Failed to add "+val)
+          return false
 
 @load_drink_types = () ->
   self = this
@@ -197,6 +220,7 @@
 
       foods = data.map( window.food_map_fn )
 
+      drinkSelected = null
       $("#drinkname").autocomplete({
         minLength: 0,
         source: (request, response) ->
@@ -212,5 +236,14 @@
           $("#diet_drink_type_id").val(ui.item.id)
         create: (event, ui) ->
           $("#drinkname").removeAttr("disabled")
+        change: (event, ui) ->
+          drinkSelected = ui['item']
       }).focus ->
         $(this).autocomplete("search")
+      $("#drink-create-form button").click ->
+        if(!drinkSelected)
+          val = $("#dinkname").val()
+          if !val
+            val = "empty item"
+          popup_error("Failed to add "+val)
+          return false

@@ -9,7 +9,7 @@
           <%= image_tag "bicycle40.png" %><br/>
           Exercise
         </div>
-        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
+        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "exercise-create-form", class: "resource-create-form exercise-form") do %>
             <div class="dataForm">
               <input type="hidden" name="activity[source]" value="<%= @default_source %>">
               <input type="hidden" name="activity[group]" value="sport">
@@ -41,7 +41,7 @@
           <%= image_tag "regular40.png" %><br/>
           Regular activity
         </div>
-        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "walking-create-form", class: "resource-create-form exercise-form") do %>
+        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "regular-activity-create-form", class: "resource-create-form exercise-form") do %>
             <div class="dataForm">
               <input type="hidden" name="activity[source]" value="<%= @default_source %>">
               <input type="hidden" name="activity[group]" value="other">

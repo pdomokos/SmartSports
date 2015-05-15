@@ -66,6 +66,10 @@
     e.preventDefault()
     window.location = '/pages/analytics'
 
+  $('#infoOkButton').click ->
+    $("#infoPopup").addClass("hidden")
+  $('#errorOkButton').click ->
+    $("#errorPopup").addClass("hidden")
 
 @rotateLogo = () ->
   $('img.loginLogo').animate({borderSpacing: -360}, {
@@ -242,6 +246,14 @@ define_globals = () ->
     label: d['name'],
     id: d['id']
     }
+
+  window.popup_success = (msg) ->
+    $("#infoPopup span.msg").html(msg)
+    $("#infoPopup").removeClass("hidden");
+
+  window.popup_error = (msg) ->
+    $("#errorPopup span.msg").html(msg)
+    $("#errorPopup").removeClass("hidden");
 
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")

@@ -68,16 +68,21 @@ class DietsController < ApplicationController
       @diet.date = DateTime.now
     end
 
+    name = nil
     if (@diet.type=='Food' || @diet.type=='Drink' ) && @diet.food_type
       ft = @diet.food_type
       @diet.calories = @diet.amount*ft.kcal
       @diet.carbs = @diet.amount*ft.carb
       @diet.fat = @diet.amount*ft.fat
       @diet.prot = @diet.amount*ft.prot
+      name = @diet.food_type.name
+    end
+    if @diet.type=="Smoke"
+      name = @diet.name
     end
     respond_to do |format|
       if @diet.save
-        format.json { render json: {:status => "OK", :result => @diet} }
+        format.json { render json: {:status => "OK", :result => {id: @diet.id, diet_name: name}} }
       else
         logger.error @diet.errors.full_messages.to_sentence
         format.json { render json: { :msg =>  @diet.errors.full_messages.to_sentence }, :status => 400 }

@@ -42,7 +42,7 @@ module ActivitiesCommon
   # DELETE /diets/1
   # DELETE /diets/1.json
   def destroy
-    @activity = Activity.find(params[:id])
+    @activity = Activity.find_by_id(params[:id])
     if @activity.nil?
       render json: { :ok => false}, status: 400
       return

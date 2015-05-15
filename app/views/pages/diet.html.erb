@@ -10,7 +10,7 @@
                     <%= image_tag "food40.png" %><br/>
                     Food
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Food">
@@ -40,7 +40,7 @@
                     <%= image_tag "drink40.png" %><br/>
                     Drink
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "drink-create-form", class: "resource-create-form diet-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Drink">
@@ -70,7 +70,7 @@
                     <%= image_tag "smoke40.png" %><br/>
                     Smoking
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "smoke-create-form", class: "resource-create-form diet-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Smoke">
