@@ -255,6 +255,11 @@ define_globals = () ->
     $("#errorPopup span.msg").html(msg)
     $("#errorPopup").removeClass("hidden");
 
+  window.isempty = (sel) ->
+    return $(sel).length==0 || $(sel).val()==""
+  window.notnumeric = (sel) ->
+    return $(sel).length==0 || $(sel).val()=="" || !isFinite($(sel).val())
+
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")
   $("#friend-form-div div.friend-message").addClass("hidden")

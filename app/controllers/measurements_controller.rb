@@ -23,7 +23,7 @@ class MeasurementsController < ApplicationController
 
     respond_to do |format|
       if @measurement.save
-        format.json { render json: { :status => "OK", :msg => "Saved successfully", :result => @measurement } }
+        format.json { render json: { :status => "OK", :msg => "Saved successfully", :id => @measurement.id, :msg=> create_success_message() } }
       else
         msg =  @measurement.errors.full_messages.to_sentence+"\n"
         format.json { render json: { :msg => msg }, :status => 400 }
@@ -172,4 +172,21 @@ class MeasurementsController < ApplicationController
     params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite)
   end
 
+  def create_success_message()
+    if @measurement.meas_type == 'blood_pressure'
+      sys = @measurement.systolicbp || '-'
+      dia = @measurement.diastolicbp|| '-'
+      pulse = @measurement.pulse|| '-'
+      return "Blood pressure #{sys}/#{dia}/#{pulse} created"
+    end
+    if @measurement.meas_type == 'blood_sugar'
+      return "Blood glucose measurement #{@measurement.blood_sugar} created"
+    end
+    if @measurement.meas_type == 'weight'
+      return "Weight measurement #{@measurement.weight} created"
+    end
+    if @measurement.meas_type == 'waist'
+      return "Waist circumfence measurement #{@measurement.waist} created"
+    end
+  end
 end

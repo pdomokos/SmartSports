@@ -30,8 +30,10 @@
       if !val
         val = "empty item"
       popup_error("Failed to add "+val)
+      smokeSelected = null
       return false
-
+    smokeSelected = null
+    return true
 
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
@@ -205,7 +207,10 @@
           if !val
             val = "empty item"
           popup_error("Failed to add "+val)
+          foodSelected = null
           return false
+        foodSelected = null
+        return true
 
 @load_drink_types = () ->
   self = this
@@ -240,10 +245,14 @@
           drinkSelected = ui['item']
       }).focus ->
         $(this).autocomplete("search")
+
       $("#drink-create-form button").click ->
         if(!drinkSelected)
           val = $("#dinkname").val()
           if !val
             val = "empty item"
           popup_error("Failed to add "+val)
+          drinkSelected = null
           return false
+        drinkSelected = null
+        return true

@@ -197,6 +197,8 @@ init_exercise = () ->
           popup_error("Failed to add "+val)
           activitySelected = null
           return false
+        activitySelected = null
+        return true
 
 @load_other_activity_types = () ->
   self = this
@@ -245,3 +247,5 @@ init_exercise = () ->
           popup_error("Failed to add "+val)
           otherActivitySelected = null
           return false
+        otherActivitySelected = null
+        return true

@@ -1,5 +1,4 @@
 @health_loaded = () ->
-
   uid = $("#current-user-id")[0].value
 
   $("div.app2Menu a.menulink").removeClass("selected")
@@ -10,56 +9,32 @@
   $('#weight_datepicker').datetimepicker(timepicker_defaults)
   $('#waist_datepicker').datetimepicker(timepicker_defaults)
 
+  $("#bp-create-form button").click ->
+    if( (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
+        (!isempty("#bp_sys") && isempty("#bp_dia")) ||
+        (isempty("#bp_sys") && !isempty("#bp_dia")) ||
+        (notnumeric("#bp_sys") || notnumeric("#bp_dia") || notnumeric("#bp_hr")))
+      popup_error("Please fill in valid heart rate or blood pressure data")
+      return false
+
+  $("#bg-create-form button").click ->
+    if isempty("#glucose") || notnumeric("#glucose")
+      popup_error("Please fill in valid blood glucose data")
+      return false
+  $("#weight-create-form button").click ->
+    if isempty("#weight")|| notnumeric("#weight")
+      popup_error("Please fill in valid weight data")
+      return false
+  $("#waist-create-form button").click ->
+    if isempty("#waist")|| notnumeric("#waist")
+      popup_error("Please fill in valid waist circumfence data")
+      return false
   init_meas()
   loadHealthHistory()
-
-draw_trend = (data) ->
-
-  heart_trend_chart = new TrendChart("heart-trend", data,
-    ["systolicbp", "pulse", "diastolicbp"],
-    ["SYS", "HR", "DIA"],
-    ["left", "left", "right"]
-    ["colset4_0", "colset4_1", "colset4_2"],
-    ["mmHg", "1/min"],
-    false
-    )
-  heart_trend_chart.margin = {top: 20, right: 45, bottom: 20, left: 30}
-  heart_trend_chart.draw()
-
-draw_detail = (data) ->
-
-  heart_chart = new TrendChart("heartrate", data,
-    ["pulse", "SPO2"],
-    ["HR", "SPO2"],
-    ["left", "right"]
-    ["colset6_1", "colset6_2"],
-    ["1/minutes", "SPO2%"],
-    false,
-    4.0/7
-  )
-  heart_chart.margin = {top: 20, right: 50, bottom: 20, left: 30}
-  heart_chart.tick_unit = d3.time.day
-  heart_chart.ticks = 4
-  heart_chart.draw()
-
-  blood_chart = new TrendChart("bloodsugar", data,
-    ["blood_sugar", "waist"],
-    ["Blood Glucose", "Waist"],
-    ["left", "right"]
-    ["colset6_1", "colset6_2"],
-    ["mmol/L", "cm"],
-    false,
-      4.0/7
-  )
-  blood_chart.margin = {top: 20, right: 30, bottom: 20, left: 45}
-  blood_chart.tick_unit = d3.time.day
-  blood_chart.ticks = 4
-  blood_chart.draw()
 
 @init_meas = () ->
   console.log "init meas"
   $('#bp_sys').focus()
-
 
   $("form.resource-create-form.health-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -73,9 +48,11 @@ draw_detail = (data) ->
     $('#waist_datepicker').val(moment().format(moment_fmt))
 
     loadHealthHistory()
+    popup_success(data['msg'])
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to create measurement.")
+    console.log error
+    popup_error("Failed to create health data")
   )
 
   $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->

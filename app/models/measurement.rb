@@ -1,13 +1,15 @@
 class MeasValidator < ActiveModel::Validator
   def validate(record)
-    if record.meas_type == 'blood_pressure' && (record.systolicbp == nil || record.diastolicbp == nil || record.pulse == nil)
-      record.errors[:systolicbp] << 'No value'
+    if record.meas_type == 'blood_pressure' &&
+        ((record.systolicbp == nil && record.diastolicbp == nil && record.pulse == nil) ||
+        (record.systolicbp != nil && record.diastolicbp == nil)||(record.systolicbp == nil && record.diastolicbp != nil))
+      record.errors[:systolicbp] << 'Invalid blood pressure and pulse measurements'
     elsif record.meas_type == 'blood_sugar' && record.blood_sugar == nil
-      record.errors[:blood_sugar] << 'No value'
+      record.errors[:blood_sugar] << 'Missing blood sugar value'
     elsif record.meas_type == 'weight' && record.weight == nil
-      record.errors[:weight] << 'No value'
+      record.errors[:weight] << 'Missing weight value'
     elsif record.meas_type == 'waist' && record.waist == nil
-      record.errors[:waist] << 'No value'
+      record.errors[:waist] << 'Missing waist value'
     end
   end
 end
