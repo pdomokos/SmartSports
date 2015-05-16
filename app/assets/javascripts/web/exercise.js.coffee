@@ -1,23 +1,18 @@
-#= require common/ActivityChart
-#= require common/OverviewChart
-#= require common/TrainingTrendChart
-
 @exercise_loaded = () ->
   uid = $("#current-user-id")[0].value
-#  register_events()
-  init_exercise()
-  document.body.style.cursor = 'wait'
-  load_activity_types()
-  load_other_activity_types()
-  loadExerciseHistory()
+
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#exercise-link").addClass("selected")
 
-#  d3.json("/users/"+uid+"/summaries.json", data_received)
+  init_exercise()
+
+  document.body.style.cursor = 'wait'
+  loadExerciseHistory()
+
+  load_activity_types()
 
 init_exercise = () ->
   console.log "init exercise"
-
   $("#activity_scale").slider({
     min: 1,
     max: 3,
@@ -81,7 +76,6 @@ init_exercise = () ->
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.currentTarget
     console.log "delete success "+form_item
-
     loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
@@ -95,34 +89,6 @@ init_exercise = () ->
     load_exercise(true)
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
-
-  $("#recentResourcesTable").on("click", "td.activityItem", (e) ->
-    console.log "loading activity"
-    data = JSON.parse(e.currentTarget.querySelector("input").value)
-    console.log data
-    if data.activity_category=="sport"
-      $("#activityname").val(data.activity_name)
-      $("#activity_type_id").val(data.activity_type_id)
-      $("#activity_intensity").val(data.intensity)
-      if data.intensity == 1
-        $("#activity_percent").html("Low")
-      else if data.intensity == 2
-        $("#activity_percent").html("Moderate")
-      else if data.intensity == 3
-        $("#activity_percent").html("High")
-      $("#activity_scale").slider({value: data.intensity})
-    else if data.activity_category!="sport"
-      $("#otheractivityname").val(data.activity_name)
-      $("#activity_other_type_id").val(data.activity_type_id)
-      $("#activity_other_intensity").val(data.intensity)
-      if data.intensity == 1
-        $("#activity_other_percent").html("Low")
-      else if data.intensity == 2
-        $("#activity_other_percent").html("Moderate")
-      else if data.intensity == 3
-        $("#activity_other_percent").html("High")
-      $("#activity_other_scale").slider({value: data.intensity})
-  )
 
 @loadExerciseHistory = () ->
   load_exercise()
@@ -153,14 +119,28 @@ init_exercise = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load activity types"
-  $.ajax '/activity_types.json?category=sport',
+  $.ajax '/activity_types.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load activity_types AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load activity_types  Successful AJAX call"
 
-      activities = data.map( window.activity_map_fn )
+      activities = data.filter( (d) ->
+        d['category'] == 'sport'
+      ).map( (d) ->
+        {
+        label: d['name'],
+        id: d['id']
+        })
+      other_activities = data.filter( (d) ->
+        d['category'] != 'sport'
+      ).map( (d) ->
+        {
+        label: d['name'],
+        id: d['id']
+        })
+
       activitySelected = null
       $("#activityname").autocomplete({
         minLength: 0
@@ -172,8 +152,6 @@ init_exercise = () ->
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            #if cnt >= 20
-            #  break
           response(result)
         select: (event, ui) ->
           $("#activity_type_id").val(ui.item.id)
@@ -186,6 +164,8 @@ init_exercise = () ->
           $("#activityname").removeAttr("disabled")
         change: (event, ui) ->
           activitySelected = ui['item']
+          console.log "activity change"
+          console.log ui['item']
       }).focus ->
         $(this).autocomplete("search")
 
@@ -200,18 +180,6 @@ init_exercise = () ->
         activitySelected = null
         return true
 
-@load_other_activity_types = () ->
-  self = this
-  current_user = $("#current-user-id")[0].value
-  console.log "calling load other activity types"
-  $.ajax '/activity_types.json?category=other',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load other activity_types AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load other activity_types  Successful AJAX call"
-
-      activities = data.map( window.activity_map_fn )
       otherActivitySelected = null
       $("#otheractivityname").autocomplete({
         minLength: 0
@@ -219,12 +187,10 @@ init_exercise = () ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
           cnt = 0
-          for element in activities
+          for element in other_activities
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
-            #if cnt >= 20
-            #  break
           response(result)
         select: (event, ui) ->
           $("#activity_other_type_id").val(ui.item.id)
@@ -249,3 +215,33 @@ init_exercise = () ->
           return false
         otherActivitySelected = null
         return true
+
+      load_fn =  (e) ->
+        console.log "loading activity"
+        data = JSON.parse(e.currentTarget.querySelector("input").value)
+        console.log data
+        if data.activity_category=="sport"
+          activitySelected = data.activity_name
+          $("#activityname").val(data.activity_name)
+          $("#activity_type_id").val(data.activity_type_id)
+          $("#activity_intensity").val(data.intensity)
+          if data.intensity == 1
+            $("#activity_percent").html("Low")
+          else if data.intensity == 2
+            $("#activity_percent").html("Moderate")
+          else if data.intensity == 3
+            $("#activity_percent").html("High")
+          $("#activity_scale").slider({value: data.intensity})
+        else if data.activity_category!="sport"
+          otherActivitySelected = data.activity_name
+          $("#otheractivityname").val(data.activity_name)
+          $("#activity_other_type_id").val(data.activity_type_id)
+          $("#activity_other_intensity").val(data.intensity)
+          if data.intensity == 1
+            $("#activity_other_percent").html("Low")
+          else if data.intensity == 2
+            $("#activity_other_percent").html("Moderate")
+          else if data.intensity == 3
+            $("#activity_other_percent").html("High")
+          $("#activity_other_scale").slider({value: data.intensity})
+      $("#recentResourcesTable").on("click", "td.activityItem", load_fn)

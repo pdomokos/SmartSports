@@ -1,11 +1,11 @@
 <tr class="bg">
 
   <td style="width:40px;" class="padded">
-    <%=if activity_item.group == "sport"
-         image_tag "bicycle40.png"
-       elsif  activity_item.group == "other"
-         image_tag "regular40.png"
-       end%>
+    <% if activity_item.activity_type %>
+        <%= image_tag get_activity_image(activity_item.activity_type.name) %>
+    <% else %>
+        <%= image_tag 'walking40.png' %>
+    <% end %>
 
   </td>
   <td class="historyTitle padded activityItem">
@@ -17,21 +17,17 @@
         end
         JSON.dump(d)
     %>">
-    <strong><%= activity_item.try(:activity_type).try(:name) || "Unknown sport" %></strong>
+    <span class="itemTitle"><%= activity_item.title %></span><span> <%= activity_item.subtitle %></span><br/>
+    <span><%= activity_item.start_time.strftime("%F %H:%M") if activity_item.start_time %> </span>
 
     <div class="right">
       <% if activity_item.calories %>
           <span class="tag kcal"><%= activity_item.calories.round(2) %> kcal</span>
       <% end %>
     </div>
-
-    <br>
-    <span> <%= activity_item.start_time.strftime("%F") if activity_item.start_time %></span>,
-    <span> <%= activity_item.start_time.strftime("%H:%M") if activity_item.start_time %></span>,
-    <% if activity_item.duration %>
-        <span><%= activity_item.duration %> minutes</span>
-    <% end %>
   </td>
+
+
   <td class="iconColumn">
     <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "mod_act_#{activity_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
         <button id="fav-icon" class="tableControl">
@@ -45,6 +41,7 @@
         </button>
     <% end %>
   </td>
+
   <td class="iconColumn deleteExercise">
     <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "delete_act_#{activity_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">

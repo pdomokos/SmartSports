@@ -13,20 +13,16 @@
     </td>
 
     <td class="historyTitle padded labresultItem">
-      <input id="labresult_data_<%=labresult_item.id%>" type="hidden" value="<%=
-          m = labresult_item.as_json
-          JSON.dump(m)
-      %>">
       <% if labresult_item.category=='hba1c' %>
-          <strong>HbA1c: <%= labresult_item.hba1c %> %</strong>
+          <span class="itemTitle">HbA1c: </span><span><%= labresult_item.hba1c %> %</span>
       <% elsif  labresult_item.category=='ldl_chol' %>
-          <strong>LDL-chol: <%= labresult_item.ldl_chol %> mmol/L</strong>
+          <span class="itemTitle">LDL-chol: </span><span><%= labresult_item.ldl_chol %> mmol/L</span>
       <% elsif  labresult_item.category=='egfr_epi' %>
-          <strong>eGFR-EPI: <%= labresult_item.egfr_epi %> ml/min/1.73m2</strong>
+          <span class="itemTitle">eGFR-EPI: </span><span><%= labresult_item.egfr_epi %> ml/min/1.73m2</span>
       <% elsif  labresult_item.category=='ketone' %>
-          <strong>Ketone: <%= labresult_item.ketone %> </strong>
+          <span class="itemTitle">Ketone: </span><span><%= labresult_item.ketone %> </span>
       <% else %>
-          <strong>Unknown labresult</strong>
+          <span class="itemTitle">Unknown labresult</span>
       <% end %>
       <br>
       <span> <%= labresult_item.date.strftime("%F") if labresult_item.date %></span>

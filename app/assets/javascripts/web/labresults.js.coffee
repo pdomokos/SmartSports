@@ -50,42 +50,63 @@
     { label: "+++++", value: "+++++" }
   ]
 
+  ketoneSelected = null
   $("#ketone").autocomplete({
     minLength: 0,
-    source: ketoneList
+    source: ketoneList,
+    change: (event, ui) ->
+      ketoneSelected = ui['item']
   }).focus ->
     $(this).autocomplete("search")
 
+  $("#ketone-create-form button").click ->
+    if(!ketoneSelected)
+      val = $("#ketone").val()
+      if !val
+        val = "empty item"
+      popup_error("Failed to add "+val)
+      ketoneSelected = null
+      return false
+    ketoneSelected = null
+    return true
+
+  $("#hba1c-create-form button").click ->
+    if( isempty("#hba1c") || notpositive("#hba1c"))
+      popup_error("Failed to create HBA1C")
+      return false
+    return true
+  $("#ldlchol-create-form button").click ->
+    if( isempty("#ldl_chol") || notpositive("#ldl_chol"))
+      popup_error("Failed to create LDL-CHOL")
+      return false
+    return true
+  $("#egfrepi-create-form button").click ->
+    if( isempty("#egfr_epi") || notpositive("#egfr_epi"))
+      popup_error("Failed to create EGFR-EPI")
+      return false
+    return true
+
   $("form.resource-create-form.lab_results-form").on("ajax:success", (e, data, status, xhr) ->
     load_labresult()
+    console.log data
+    $("#hba1c").val(null)
+    $("#ldl_chol").val(null)
+    $("#egfr_epi").val(null)
+    $("#ketone").val(null)
+    popup_success(capitalize(data['result']['category'])+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to create labresult.")
+    popup_error("Failed to create labresult")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.currentTarget
-    console.log "delete success "+form_item
-
     load_labresult()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to delete labresult.")
+    popup_error("Failed to delete labresult")
   )
 
-  $("#recentResourcesTable").on("click", "td.labresultItem", (e) ->
-    console.log "loading labresult"
-    data = JSON.parse(e.currentTarget.querySelector("input").value)
-    console.log data
-    if(data.category=="hba1c")
-      $("#hba1c").val(data.hba1c)
-    else if(data.category=="ldl_chol")
-      $("#ldl_chol").val(data.ldl_chol)
-    else if(data.category=="egfr_epi")
-      $("#egfr_epi").val(data.egfr_epi)
-    else if(data.category=="ketone")
-      $("#ketone").val(data.ketone)
-  )
 
 @load_labresult = () ->
   self = this

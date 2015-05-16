@@ -37,4 +37,32 @@ module ApplicationHelper
 
     return "sensor40.png"
   end
+
+  def get_activity_image(name)
+    if /alvás/i =~ name
+      return "sleep40.png"
+    end
+    if /ping/i =~ name
+      return "pingpong40.png"
+    end
+    if /kerékpár/i =~ name
+      return "cycling40.png"
+    end
+    if /bicikli/i =~ name
+      return "cycling40.png"
+    end
+    if /séta/i =~ name
+      return "walking40.png"
+    end
+    if /futás/i =~ name
+      return "running40.png"
+    end
+    if /munka/i =~ name
+      return "regular40.png"
+    end
+    if /ülés/i =~ name
+      return "regular40.png"
+    end
+    return "walking40.png"
+  end
 end

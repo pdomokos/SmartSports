@@ -46,7 +46,7 @@ class MedicationsController < ApplicationController
 
     respond_to do |format|
       if medication.save
-        format.json { render  json: {:status =>"OK", :result => medication} }
+        format.json { render  json: {:status =>"OK", :result => {id: medication.id, medication_name: medication.medication_type.name}} }
       else
         print medication.errors.full_messages.to_sentence+"\n"
         format.json { render json: medication.errors, status: :unprocessable_entity }

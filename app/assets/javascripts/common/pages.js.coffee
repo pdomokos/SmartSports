@@ -259,6 +259,14 @@ define_globals = () ->
     return $(sel).length==0 || $(sel).val()==""
   window.notnumeric = (sel) ->
     return $(sel).length==0 || $(sel).val()=="" || !isFinite($(sel).val())
+  window.positive = (sel) ->
+    val = $(sel).val()
+    return $(sel).length==0 || val=="" || (isFinite(val) && parseInt(val)>0)
+  window.notpositive = (sel) ->
+    return !positive(sel)
+  window.capitalize = (string) ->
+    return string.charAt(0).toUpperCase() + string.slice(1);
+
 
 @reset_ui = () ->
   $("#browser-menu-tab a.browser-subnav-item").removeClass("selected")

@@ -1,6 +1,7 @@
+<input id="relativeList" type="hidden" value="<%= @relativeList %>">
+<input id="diseaseList" type="hidden" value="<%= @diseaseList %>">
+
 <div class="genetics-block mainContent" id="genetics-container">
-
-
     <div class="sectionTitle geneticsBodyLogo geneticsColor">
         Genetics
     </div>
@@ -11,7 +12,7 @@
                     <%= image_tag "family40.png" %><br/>
                     Family History
                 </div>
-                <%= form_tag( "/users/#{current_user.id}/family_histories", remote: true, id: "bp-create-form", class: "resource-create-form family-history-form") do %>
+                <%= form_tag( "/users/#{current_user.id}/family_histories", remote: true, id: "familyhist-create-form", class: "resource-create-form family-history-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="family_history[source]" value="<%= @default_source %>">
 
@@ -24,21 +25,17 @@
                         <textarea id="gen_hist_note" type="text" name="family_history[note]" rows="5" class="dataFormArea" placeholder="Betegtörténet"></textarea>
                         <br>
                     </div>
-
                     <button class="dataFormField">Add</button>
-
                 <% end %>
             </div>
         </div>
             <div class="dataFormSeparator"></div>
-
             <div style="clear: both"></div>
         </div>
-
     </div>
 
     <div class="sectionTitle geneticsBodyLogo geneticsColor" style="margin-top: 40px;">
-      <span class="hisTitle">History</span>
+      <span>History</span>
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">

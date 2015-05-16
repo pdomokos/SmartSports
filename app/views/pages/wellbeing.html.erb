@@ -1,3 +1,11 @@
+<input id="sleepList" type="hidden" value="<%= @sleepList %>">
+<input id="stressList" type="hidden" value="<%= @stressList %>">
+<input id="illnessList" type="hidden" value="<%= @illnessList %>">
+<input id="painList" type="hidden" value="<%= @painList %>">
+<input id="periodPainList" type="hidden" value="<%= @periodPainList %>">
+<input id="periodVolumeList" type="hidden" value="<%= @periodVolumeList %>">
+<input id="painTypeList" type="hidden" value="<%= @painTypeList %>">
+
 <div class="wellbeing-block mainContent" id="wellbeing-container">
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
             Well-Being
@@ -9,7 +17,7 @@
                         <%= image_tag "sleep40.png" %><br/>
                         Sleep
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", id: "sleep-create-form", remote: true, class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="sleep"/>
@@ -40,7 +48,7 @@
                         <%= image_tag "stress40.png" %><br/>
                         Stress
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "stress-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="stress"/>
@@ -70,12 +78,12 @@
                       <%= image_tag "illness40.png" %><br/>
                       Illness
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "illness-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
                           <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                           <input type="hidden" name="lifestyle[group]" value="illness"/>
 
-                          <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="Type at least 3 letters...">
+                          <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="Type at least 3 characters">
                           <input id="illnessname" name="lifestyle[illness_type_id]" type="hidden">
 
                           <label for="illness_scale" style="margin-left: 20px;">Intensity</label>
@@ -92,8 +100,6 @@
 
                           <input id='illness_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
                           <div class="dataFormFieldUnit">end</div>
-
-
                         </div>
 
                         <button class="dataFormField">Add</button>
@@ -107,7 +113,7 @@
                       <%= image_tag "pain40.png" %><br/>
                       Pain
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "pain-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
                           <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                           <input type="hidden" name="lifestyle[group]" value="pain"/>
@@ -128,7 +134,6 @@
 
                           <input id='pain_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                           <div class="dataFormFieldUnit">end</div>
-
                         </div>
 
                         <button class="dataFormField">Add</button>
@@ -142,12 +147,10 @@
                       <%= image_tag "period40.png" %><br/>
                       Periods(for Women)
                     </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "bp-create-form", class: "resource-create-form lifestyle-form") do %>
+                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "period-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
                           <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                           <input type="hidden" name="lifestyle[group]" value="period"/>
-
-
 
                           <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                           <div class="dataFormFieldUnit">start</div>
@@ -159,11 +162,11 @@
                           <div class="dataScale">
                             <div id="periods_scale" class="dataFormField"></div>
                           </div>
-
                           <div id="periods_percent" class="dataFormFieldUnitHalf">Mild pain</div>
-                          <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
 
-                            <br/>
+                          <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
+                          <br/>
+
                           <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;">Volume</label>
                           <div class="dataScale">
                             <div id="periods_volume_scale" class="dataFormField"></div>
@@ -171,8 +174,6 @@
 
                           <div id="periods_volume_percent" class="dataFormFieldUnitHalf">Moderate</div>
                           <input id="periods_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
-
-
                         </div>
 
                         <button class="dataFormField">Add</button>
@@ -183,7 +184,6 @@
 
                 <div style="clear: both"></div>
             </div>
-
         </div>
 
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor" style="margin-top: 40px;">

@@ -13,23 +13,23 @@
         end
         JSON.dump(d)
     %>">
-    <strong>
-      <% if diet_item.type== "Smoke" %>
-          <%= diet_item.name %>
-      <% elsif diet_item.type== "Food" %>
-          <% if diet_item.food_type %>
-              <%= diet_item.food_type.name %> ( <%= diet_item.amount * 100 %>g )
-          <% else %>
-              Food <%= diet_item.name %>
-          <% end %>
-      <% elsif diet_item.type== "Drink" %>
-          <% if diet_item.food_type %>
-              <%= diet_item.food_type.name %> ( <%= diet_item.amount %>dl )
-          <% else %>
-              Drink <%= diet_item.name %>
-          <% end %>
+
+  <% if diet_item.type== "Smoke" %>
+      <span class="itemTitle"><%= diet_item.name %></span>
+  <% elsif diet_item.type== "Food" %>
+      <% if diet_item.food_type %>
+          <span class="itemTitle"><%= diet_item.food_type.name %></span><span> <%= diet_item.amount * 100 %>g</span>
+      <% else %>
+          Food <%= diet_item.name %>
       <% end %>
-    </strong>
+  <% elsif diet_item.type== "Drink" %>
+      <% if diet_item.food_type %>
+          <span class="itemTitle"><%= diet_item.food_type.name %></span><span> <%= diet_item.amount %>dl</span>
+      <% else %>
+          Drink <%= diet_item.name %>
+      <% end %>
+  <% end %>
+
 
     <div class="right">
       <% if diet_item.calories %>

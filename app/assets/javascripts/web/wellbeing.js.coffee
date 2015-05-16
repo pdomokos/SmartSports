@@ -4,9 +4,6 @@
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#wellbeing-link").addClass("selected")
 
-  $("#sleep_amount").val(2)
-  $("#stress_amount").val(1)
-
   $('#sleep_start_datepicker').datetimepicker(timepicker_defaults)
   $('#sleep_end_datepicker').datetimepicker(timepicker_defaults)
   $('#pain_start_datepicker').datetimepicker(timepicker_defaults)
@@ -14,22 +11,37 @@
   $('#periods_start_datepicker').datetimepicker(timepicker_defaults)
   $('#periods_end_datepicker').datetimepicker(timepicker_defaults)
 
-  sleepList = ["Very bad", "Fairly bad", "Fairly good", "Very good"]
-  stressList = ["Below average", "Average", "Medium", "High"]
-  illnessList = ["Slight mild", "Mild", "Moderate", "Severe", "More severe"]
-  painList = ["Slight mild", "Mild", "Moderate", "Severe", "Worst possible pain"]
-  periodPainList = ["No pain","Mild pain","Moderate pain","Severe pain","Very painful"]
-  periodVolumeList = ["Light", "Moderate", "Strong", "Quite heavy","Heavy"]
-  painTypeList = ["Acute","Nociceptive","Neuropathic(central)","Neuropathic(peripheral)","Visceral","Mixed"]
+  sleepList = $("#sleepList").val().split(";")
+  stressList = $("#stressList").val().split(";")
+  illnessList = $("#illnessList").val().split(";")
+  painList = $("#painList").val().split(";")
+  periodPainList = $("#periodPainList").val().split(";")
+  periodVolumeList = $("#periodVolumeList").val().split(";")
+  painTypeList = $("#painTypeList").val().split(";")
 
-  load_lifestyles()
   load_illness_types()
+  load_lifestyles()
 
+  painSelected = null
   $("#pain_name").autocomplete({
     minLength: 0,
-    source: painTypeList
+    source: painTypeList,
+    change: (event, ui) ->
+      painSelected = ui['item']
   }).focus ->
     $(this).autocomplete("search")
+
+  $("#pain-create-form button").click ->
+    if(!painSelected)
+      val = $("#pain_name").val()
+      if !val
+        val = "empty item"
+      console.log("painsel "+val)
+      popup_error("Failed to add "+val)
+      painSelected = null
+      return false
+    painSelected = null
+    return true
 
   $('#stress_datepicker').datetimepicker({
     format: 'Y-m-d',
@@ -65,6 +77,7 @@
     change: (event, ui) ->
       $("#sleep_amount").val(ui.value)
   })
+  $("#sleep_amount").val(2)
 
   $("#stress_scale").slider({
     min: 0,
@@ -76,6 +89,7 @@
     change: (event, ui) ->
       $("#stress_amount").val(ui.value)
   })
+  $("#stress_amount").val(1)
 
   $("#illness_scale").slider({
     min: 0,
@@ -87,6 +101,7 @@
   change: (event, ui) ->
     $("#illness_amount").val(ui.value)
   })
+  $("#illness_amount").val(1)
 
   $("#pain_scale").slider({
     min: 0,
@@ -98,7 +113,10 @@
     change: (event, ui) ->
       $("#pain_amount").val(ui.value)
   })
+  $("#pain_amount").val(1)
 
+  $("#periods_amount").val(1)
+  $("#periods_volume_amount").val(1)
   $("#periods_scale").slider({
     min: 0,
     max: 4,
@@ -109,6 +127,7 @@
   change: (event, ui) ->
     $("#periods_amount").val(ui.value)
   })
+  $("#periods_amount").val(1)
 
   $("#periods_volume_scale").slider({
     min: 0,
@@ -120,6 +139,7 @@
   change: (event, ui) ->
     $("#periods_volume_amount").val(ui.value)
   })
+  $("#periods_volume_amount").val(1)
 
   $("form.resource-create-form.lifestyle-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -127,6 +147,14 @@
     $('#illness_name').val(null)
     $('#illnessname').val(null)
     $('#pain_name').val(null)
+    console.log data
+    msg = capitalize(data['result']['group'])
+    if data['result']['group']=='illness'
+      msg = data['result']['illness_name']
+    else
+      if data['result']['group'] =='pain'
+        msg = data['result']['pain_name']
+    popup_success(msg+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     alert("Failed to create object.")
     $('#illness_name').val(null)
@@ -148,37 +176,6 @@
   $('.hisTitle').click ->
     load_lifestyles()
 
-  $("#recentResourcesTable").on("click", "td.lifestyleItem", (e) ->
-    console.log "loading lifestyle"
-    data = JSON.parse(e.currentTarget.querySelector("input").value)
-    if(data.group=="sleep")
-      $("#sleep_amount").val(data.amount)
-      $("#sleep_percent").html(sleepList[data.amount])
-      $("#sleep_scale").slider({value: data.amount})
-    else if(data.group=="stress")
-      $("#stress_amount").val(data.amount)
-      $("#stress_percent").html(stressList[data.amount])
-      $("#stress_scale").slider({value: data.amount})
-    else if(data.group=="illness")
-      $("#illness_name").val(data.illness_illname)
-      $("#illnessname").val(data.illness_type_id)
-      $("#illness_amount").val(data.amount)
-      $("#illness_percent").html(illnessList[data.amount])
-      $("#illness_scale").slider({value: data.amount})
-    else if(data.group=="pain")
-      $("#pain_name").val(data.pain_type_name)
-      $("#pain_amount").val(data.amount)
-      $("#pain_percent").html(painList[data.amount])
-      $("#pain_scale").slider({value: data.amount})
-    else if(data.group=="period")
-      $("#periods_amount").val(data.amount)
-      $("#periods_percent").html(periodPainList[data.amount])
-      $("#periods_scale").slider({value: data.amount})
-      $("#periods_volume_amount").val(data.period_volume)
-      $("#periods_volume_percent").html(periodVolumeList[data.period_volume])
-      $("#periods_volume_scale").slider({value: data.period_volume})
-  )
-
 @load_lifestyles = () ->
   self = this
   current_user = $("#current-user-id")[0].value
@@ -186,7 +183,7 @@
   $.ajax '/users/' + current_user + '/lifestyles.js?source='+window.default_source+'&order=desc&limit=10',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
+      console.log "load recent lifestyles AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log textStatus
 
@@ -203,6 +200,7 @@
 
       illnesses = data.map( window.illness_map_fn )
 
+      illnessSelected = null
       $("#illness_name").autocomplete({
         minLength: 3,
         source: (request, response) ->
@@ -219,4 +217,16 @@
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
           $("#illness_name").removeAttr("disabled")
+        change: (event, ui) ->
+          illnessSelected = ui['item']
       })
+      $("#illness-create-form button").click ->
+        if(!illnessSelected)
+          val = $("#illness_name").val()
+          if !val
+            val = "empty item"
+          popup_error("Failed to add "+val)
+          illnessSelected = null
+          return false
+        illnessSelected = null
+        return true

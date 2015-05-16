@@ -6,44 +6,46 @@
 
   load_family_histories()
 
-  relativeList = [ { label: "szülő", value: "szülő" },
-                   { label: "nagyszülő", value: "nagyszülő" },
-                   { label: "dédszülő", value: "dédszülő" },
-                   { label: "testvér", value: "testvér" },
-                   { label: "unakaöcs/unokahúg", value: "unakaöcs/unokahúg" },
-                   { label: "unokatestvér", value: "unokatestvér" },
-                   { label: "nagybácsi/nagynéni(nem házassági rokon)", value: "nagybácsi/nagynéni" }
-                 ]
+  relativeList = JSON.parse($("#relativeList").val())
+  diseaseList = JSON.parse($("#diseaseList").val())
 
-  diseaseList = [ { label: "none", value: "none" },
-                   { label: "diabetes type 1", value: "diabetes type 1" },
-                   { label: "diabetes type 2", value: "diabetes type 2" },
-                   { label: "gestational diabetes", value: "gestational diabetes" }
-                  ]
-
+  relativeSelected = null
   $("#gen_hist_relative").autocomplete({
     minLength: 0,
-    source: relativeList
+    source: relativeList,
+    change: (event, ui) ->
+      relativeSelected = ui['item']
   }).focus ->
     $(this).autocomplete("search")
 
+  diseaseSelected = null
   $("#gen_hist_disease").autocomplete({
     minLength: 0,
-    source: diseaseList
+    source: diseaseList,
+    change: (event, ui) ->
+      diseaseSelected = ui['item']
   }).focus ->
     $(this).autocomplete("search")
+
+  $("#familyhist-create-form button").click ->
+    if(relativeSelected==null || diseaseSelected==null)
+      popup_error("Failed to add family history, enter valid relative and disease")
+
+      return false
+    relativeSelected = null
+    diseaseSelected = null
+    return true
 
   $("form.resource-create-form.family-history-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
-    console.log e
-    console.log xhr.responseText
+    console.log data
     $("#"+form_id+" input.dataFormField").val("")
     $("#gen_hist_note").val("")
     load_family_histories()
+    popup_success(data['result']['disease']+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
-    console.log xhr.responseText
-    alert("Failed to create diet.")
+    popup_error("Failed to save family history")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -53,19 +55,7 @@
     load_family_histories()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    alert("Failed to delete measurement.")
-  )
-
-  $('.hisTitle').click ->
-    load_family_histories()
-
-  $("#recentResourcesTable").on("click", "td.familyhistoryItem", (e) ->
-    console.log "loading familyhistory"
-    data = JSON.parse(e.currentTarget.querySelector("input").value)
-    console.log data
-    $("#gen_hist_relative").val(data.relative)
-    $("#gen_hist_disease").val(data.disease)
-    $("#gen_hist_note").val(data.note)
+    popup_error("Failed to delete family history")
   )
 
 @load_family_histories = () ->

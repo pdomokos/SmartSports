@@ -5,12 +5,8 @@
     </td>
 
     <td class="historyTitle padded familyhistoryItem">
-      <input id="family_history_data_<%=family_history_item.id%>" type="hidden" value="<%=
-          f = family_history_item.as_json
-          JSON.dump(f)
-      %>">
-      <strong><%= family_history_item.disease %></strong>
-      <span> <%= family_history_item.relative %></span>
+      <span class="itemTitle"><%= family_history_item.disease %></span><span> <%= family_history_item.relative %></span><br/>
+      <span><%= family_history_item.note %></span>
     </td>
 
 

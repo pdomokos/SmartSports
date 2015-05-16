@@ -80,9 +80,18 @@ class PagesController < ApplicationController
 
   def wellbeing
     @lifestyles = current_user.lifestyles.order(created_at: :desc).limit(4)
+    @sleepList = Lifestyle.sleepList.join(";")
+    @stressList = Lifestyle.stressList.join(";")
+    @illnessList = Lifestyle.illnessList.join(";")
+    @painList = Lifestyle.painList.join(";")
+    @periodPainList = Lifestyle.periodPainList.join(";")
+    @periodVolumeList = Lifestyle.periodVolumeList.join(";")
+    @painTypeList = Lifestyle.painTypeList.join(";")
   end
 
   def genetics
+    @relativeList = JSON.dump(FamilyHistory.relativeList)
+    @diseaseList = JSON.dump(FamilyHistory.diseaseList)
     @family_histories = current_user.family_histories.order(created_at: :desc).limit(4)
   end
 

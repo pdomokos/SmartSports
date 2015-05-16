@@ -4,46 +4,15 @@
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#diet-link").addClass("selected")
 
-  smokeList = [
-    {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },
-    {label: "1 Szivar"                ,value: "1 Szivar"               },
-    {label: "1 Szivarka"              ,value: "1 Szivarka"             },
-    {label: "1 Pipa"                  ,value: "1 Pipa"                 },
-    {label: "1 Elektromos cigaretta"  ,value: "1 Elektromos cigaretta" },
-    {label: "1 Nikotinos orrspray"    ,value: "1 Nikotinos orrspray"   },
-    {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
-    {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
 
-  smokeSelected = null
-  $("#diet_smoke_type").autocomplete({
-    minLength: 0,
-    source: smokeList,
-    change: (event, ui) ->
-      console.log "change "+ui['item']
-      smokeSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
-
-  $("#smoke-create-form button").click ->
-    if(!smokeSelected)
-      val = $("#diet_smoke_type").val()
-      if !val
-        val = "empty item"
-      popup_error("Failed to add "+val)
-      smokeSelected = null
-      return false
-    smokeSelected = null
-    return true
 
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
 
-
   load_diets()
   document.body.style.cursor = 'wait'
   load_food_types()
-  load_drink_types()
 
   $("#diet_drink_amount").val(2)
   $("#diet_amount").val(2)
@@ -116,26 +85,6 @@
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
 
-  $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
-    console.log "loading diet"
-    data = JSON.parse(e.currentTarget.querySelector("input").value)
-    console.log data
-    if data.type=="Food"
-      $("#foodname").val(data.food_name)
-      $("#diet_type_id").val(data.food_type_id)
-      $("#diet_amount").val(data.amount)
-      $("#diet_unit").html(data.amount+" egység ("+data.amount*100+"g)")
-      $("#diet_scale").slider({value: data.amount})
-    else if data.type=="Drink"
-      $("#drinkname").val(data.food_name)
-      $("#drink_type_id").val(data.food_type_id)
-      $("#diet_drink_amount").val(data.amount)
-      $("#diet_drink_unit").html(data.amount+" dl")
-      $("#diet_drink_scale").slider({value: data.amount})
-    else if data.type=="Smoke"
-      $("#diet_smoke_type").val(data.name)
-  )
-
 @loadDietHistory = () ->
   load_diets()
   $(".hisTitle").addClass("selected")
@@ -172,14 +121,20 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent foods"
-  $.ajax '/food_types.json?type=food',
+  $.ajax '/food_types.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent food_types AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load food_types  Successful AJAX call"
 
-      foods = data.map( window.food_map_fn )
+      foods = data.filter( (d) ->
+        d['category'] != 'Ital'
+      ).map( window.food_map_fn )
+
+      drinks = data.filter( (d) ->
+        d['category'] == 'Ital'
+      ).map( window.food_map_fn )
 
       foodSelected = null
       $("#foodname").autocomplete({
@@ -212,19 +167,6 @@
         foodSelected = null
         return true
 
-@load_drink_types = () ->
-  self = this
-  current_user = $("#current-user-id")[0].value
-  console.log "calling load rdrinks"
-  $.ajax '/food_types.json?type=drink',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load drink_types AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load drink_types  Successful AJAX call"
-
-      foods = data.map( window.food_map_fn )
-
       drinkSelected = null
       $("#drinkname").autocomplete({
         minLength: 0,
@@ -232,7 +174,7 @@
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
           cnt = 0
-          for element in foods
+          for element in drinks
             if matcher.test(remove_accents(element.label))
               result.push(element)
               cnt += 1
@@ -256,3 +198,58 @@
           return false
         drinkSelected = null
         return true
+
+      smokeList = [
+        {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },
+        {label: "1 Szivar"                ,value: "1 Szivar"               },
+        {label: "1 Szivarka"              ,value: "1 Szivarka"             },
+        {label: "1 Pipa"                  ,value: "1 Pipa"                 },
+        {label: "1 Elektromos cigaretta"  ,value: "1 Elektromos cigaretta" },
+        {label: "1 Nikotinos orrspray"    ,value: "1 Nikotinos orrspray"   },
+        {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
+        {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
+
+      smokeSelected = null
+      $("#diet_smoke_type").autocomplete({
+        minLength: 0,
+        source: smokeList,
+        change: (event, ui) ->
+          console.log "change "+ui['item']
+          smokeSelected = ui['item']
+      }).focus ->
+        $(this).autocomplete("search")
+
+      $("#smoke-create-form button").click ->
+        if(!smokeSelected)
+          val = $("#diet_smoke_type").val()
+          if !val
+            val = "empty item"
+          popup_error("Failed to add "+val)
+          smokeSelected = null
+          return false
+        smokeSelected = null
+        return true
+
+      diet_load_fn =  (e) ->
+        console.log "loading diet"
+        data = JSON.parse(e.currentTarget.querySelector("input").value)
+        console.log data
+        if data.type=="Food"
+          foodSelected = data.food_name
+          $("#foodname").val(data.food_name)
+          $("#diet_type_id").val(data.food_type_id)
+          $("#diet_amount").val(data.amount)
+          $("#diet_unit").html(data.amount+" egység ("+data.amount*100+"g)")
+          $("#diet_scale").slider({value: data.amount})
+        else if data.type=="Drink"
+          $("#drinkname").val(data.food_name)
+          drinkSelected = data.food_name
+          $("#drink_type_id").val(data.food_type_id)
+          $("#diet_drink_amount").val(data.amount)
+          $("#diet_drink_unit").html(data.amount+" dl")
+          $("#diet_drink_scale").slider({value: data.amount})
+        else if data.type=="Smoke"
+          $("#diet_smoke_type").val(data.name)
+          smokeSelected = data.name
+
+      $("#recentResourcesTable").on("click", "td.dietItem", diet_load_fn)

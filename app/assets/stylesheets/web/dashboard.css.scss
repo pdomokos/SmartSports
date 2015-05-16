@@ -181,7 +181,7 @@ button.dataFormField {
   background: #EA70B5 !important;
 };
 .wellbeingStyle div.dataFormContainer {
-  width: 340px;
+  width: 338px;
   height: 390px;
 }
 
@@ -258,7 +258,7 @@ button.dataFormField {
   background: #74899C !important;
 };
 .labresultStyle div.dataFormContainer {
-  width: 250px;
+  width: 248px;
   height: 260px;
 }
 .labresultStyle div.dataFormSeparator {
@@ -463,9 +463,7 @@ button.deleteForm {
 }
 
 .bl7 {
-  background: image-url("menu_labresults.png") 10px 10px no-repeat;
-  background-size: 40px 40px;
-
+  background: image-url("labResult_c40.png") 10px 10px no-repeat;
 }
 
 .geneticsBodyLogo {
@@ -755,7 +753,7 @@ div.egfr {
 .dataCaptured {
   width: 400px;
   height: 310px;
-  position: absolute;
+  position: fixed;
   left:50%;
   margin-left: -200px;
   top: 50%;
@@ -788,4 +786,9 @@ div.egfr {
 .error-icon {
   margin-top: 10px;
   color: red;
+}
+
+.itemTitle {
+  font-weight: bold;
+  color: black;
 }

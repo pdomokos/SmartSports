@@ -5,47 +5,9 @@
   </td>
 
   <td class="historyTitle padded lifestyleItem">
-    <input id="lifestyle_data_<%=lifestyle_item.id%>" type="hidden" value="<%=
-        l = lifestyle_item.as_json
-        if lifestyle_item.group == "illness" && lifestyle_item.illness_type
-            l.merge!({'illness_illname' => lifestyle_item.illness_type.name})
-        end
-        JSON.dump(l)
-    %>">
     <% if lifestyle_item.group %>
-        <strong><%= lifestyle_item.group %></strong>
-        <span>
-          <% if lifestyle_item.group == 'stress' %>
-            <span> <%=  stressList = ["Below average", "Average", "Medium", "High"]
-                        stressList[lifestyle_item.amount] %></span>
-            <br>
-            <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %>
-          <% elsif lifestyle_item.group == 'sleep' %>
-            <span> <%= sleepList = ["Very bad", "Fairly bad", "Fairly good", "Very good"]
-                       sleepList[lifestyle_item.amount] %></span>
-            <br>
-            <%= lifestyle_item.start_time.strftime("%F, %H:%M") if lifestyle_item.start_time %> ---
-            <%= lifestyle_item.end_time.strftime("%F, %H:%M") if lifestyle_item.end_time %>
-          <% elsif lifestyle_item.group == 'illness' %>
-            <span> <%= lifestyle_item.illness_type.name if lifestyle_item.illness_type %></span>
-            <br>
-              <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %> ---
-              <%= lifestyle_item.end_time.strftime("%F") if lifestyle_item.end_time %>
-          <% elsif lifestyle_item.group == 'pain' && lifestyle_item.pain_type_name%>
-            <span> <%= lifestyle_item.pain_type_name %></span>
-            <br>
-              <%= lifestyle_item.start_time.strftime("%F, %H:%M") if lifestyle_item.start_time %> ---
-              <%= lifestyle_item.end_time.strftime("%F, %H:%M") if lifestyle_item.end_time %>
-          <% elsif lifestyle_item.group == 'period' %>
-            <span> <%= periodList = ["No pain","Mild pain","Moderate pain","Severe pain","Very painful"]
-                       periodList[lifestyle_item.amount]
-                       periodVolumeList = ["Light", "Moderate", "Strong", "Quite heavy","Heavy"]
-                       periodVolumeList[lifestyle_item.period_volume] %></span>
-            <br>
-              <%= lifestyle_item.start_time.strftime("%F, %H:%M") if lifestyle_item.start_time %> ---
-              <%= lifestyle_item.end_time.strftime("%F, %H:%M") if lifestyle_item.end_time %>
-          <% end %>
-        </span>
+        <span class="itemTitle"><%= lifestyle_item.title %> </span><span><%= lifestyle_item.subtitle %></span><br/>
+        <span><%= lifestyle_item.interval %></span>
     <% else %>
         <strong>Ismeretlen</strong>
     <% end %>

@@ -13,20 +13,20 @@
     if( (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
         (!isempty("#bp_sys") && isempty("#bp_dia")) ||
         (isempty("#bp_sys") && !isempty("#bp_dia")) ||
-        (notnumeric("#bp_sys") || notnumeric("#bp_dia") || notnumeric("#bp_hr")))
+        (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr")))
       popup_error("Please fill in valid heart rate or blood pressure data")
       return false
 
   $("#bg-create-form button").click ->
-    if isempty("#glucose") || notnumeric("#glucose")
+    if isempty("#glucose") || notpositive("#glucose")
       popup_error("Please fill in valid blood glucose data")
       return false
   $("#weight-create-form button").click ->
-    if isempty("#weight")|| notnumeric("#weight")
+    if isempty("#weight")|| notpositive("#weight")
       popup_error("Please fill in valid weight data")
       return false
   $("#waist-create-form button").click ->
-    if isempty("#waist")|| notnumeric("#waist")
+    if isempty("#waist")|| notpositive("#waist")
       popup_error("Please fill in valid waist circumfence data")
       return false
   init_meas()

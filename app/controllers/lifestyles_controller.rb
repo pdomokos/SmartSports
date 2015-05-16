@@ -13,7 +13,7 @@ class LifestylesController < ApplicationController
     u = User.find(user_id)
     @lifestyles = u.lifestyles
 
-    if source and source !=""
+    if source and source != ''
       @lifestyles = @lifestyles.where(source: source)
     end
     @lifestyles = @lifestyles.order(created_at: :desc)
@@ -71,7 +71,15 @@ class LifestylesController < ApplicationController
     # @lifestyle = @user.lifestyles.create(lifestyle_params)
     respond_to do |format|
       if @lifestyle.save
-        format.json { render  json: {:status =>"OK", :result => @lifestyle} }
+        illness_name = nil
+        if @lifestyle.illness_type
+          illness_name = @lifestyle.illness_type.name
+        end
+
+        format.json { render  json: {:status =>"OK", :result => {id: @lifestyle.id,
+                                                                 group: @lifestyle.group,
+                                                                 pain_name: @lifestyle.pain_type_name,
+                                                                 illness_name: illness_name} }}
       else
         print @lifestyle.errors.full_messages.to_sentence+"\n"
         format.json { render json: { :msg =>  @lifestyle.errors.full_messages.to_sentence }, :status => 400 }
