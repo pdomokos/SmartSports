@@ -4,8 +4,6 @@
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#diet-link").addClass("selected")
 
-
-
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)

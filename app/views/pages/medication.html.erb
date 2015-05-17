@@ -1,14 +1,14 @@
 <div class="medication-block mainContent">
 
     <div class="sectionTitle medicationBodyLogo medicationColor">
-        Medication
+        <%=t 'medication' %>
     </div>
     <div class="contentBg medicationStyle">
         <div style="padding: 10px;">
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "oral40.png" %><br/>
-                    Medicines
+                    <%=t 'medicines'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "oral-med-create-form", class: "resource-create-form medication-form") do %>
                     <div class="dataForm">
@@ -26,7 +26,7 @@
                         <br>
 
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -34,7 +34,7 @@
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "insulin40.png" %><br/>
-                    Insulin
+                    <%=t 'insulin' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "insulin-create-form", class: "resource-create-form medication-form") do %>
                     <div class="dataForm">
@@ -51,7 +51,7 @@
                         <br>
 
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -61,7 +61,7 @@
     </div>
 
     <div class="sectionTitle medicationBodyLogo medicationColor" style="margin-top: 40px;">
-      <span class="hisTitle selected">History</span> | <span class="favTitle">Favorites</span>
+      <span class="hisTitle selected"><%=t 'history_link'%></span> | <span class="favTitle"><%=t 'fav_link'%></span>
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
@@ -71,12 +71,13 @@
 
 </div>
 
+<script>
+    pages_menu();
+    medications_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    medications_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Medication | SmartDiab
+    <%=t 'medication'%> | SmartDiab
 <% end %>

@@ -1,11 +1,11 @@
-
+<script>
+    pages_menu();
+    dashboard_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    dashboard_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Dashboard | SmartDiab
+    <%=t 'menu_dashboard' %> | SmartDiab
 <% end %>
 

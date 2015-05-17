@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
   def create
     if @user = login(params[:email], params[:password])
 
-      redirect_back_or_to({controller: 'pages', action: 'dashboard'}, {notice: 'Login successful'})
+      redirect_back_or_to('/hu/pages/diet', {notice: 'Login successful'})
     else
       flash.now[:alert] = 'Login failed'
       redirect_to('/login', {notice: 'Login failed!'})

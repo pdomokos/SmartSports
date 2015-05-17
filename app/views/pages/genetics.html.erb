@@ -3,14 +3,14 @@
 
 <div class="genetics-block mainContent" id="genetics-container">
     <div class="sectionTitle geneticsBodyLogo geneticsColor">
-        Genetics
+        <%=t 'genetics' %>
     </div>
     <div class="contentBg geneticsStyle">
         <div style="padding: 10px;">
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "family40.png" %><br/>
-                    Family History
+                  <%=t 'family_hist'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/family_histories", remote: true, id: "familyhist-create-form", class: "resource-create-form family-history-form") do %>
                     <div class="dataForm">
@@ -25,7 +25,7 @@
                         <textarea id="gen_hist_note" type="text" name="family_history[note]" rows="5" class="dataFormArea" placeholder="Betegtörténet"></textarea>
                         <br>
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
         </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="sectionTitle geneticsBodyLogo geneticsColor" style="margin-top: 40px;">
-      <span>History</span>
+      <span><%=t 'history_link'%></span>
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
@@ -45,13 +45,14 @@
 
 
 </div>
+<script>
+    pages_menu();
+    genetics_loaded();
+</script>
 
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    genetics_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Genetics | SmartDiab
+    <%=t 'genetics'%> | SmartDiab
 <% end %>

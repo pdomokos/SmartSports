@@ -1,6 +1,6 @@
 <div class="analytics-block mainContent" id="analytics-container">
     <div class="sectionTitle analiticsBodyLogo analyticsColor">
-        Analytics
+        <%=t 'analytics' %>
     </div>
     <div class="contentBg ">
 
@@ -113,12 +113,13 @@
 
 </div>
 
+<script>
+    pages_menu();
+    analytics_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    analytics_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Analitics | SmartDiab
+    <%=t 'analytics' %> | SmartDiab
 <% end %>

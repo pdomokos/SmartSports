@@ -1,0 +1,68 @@
+hu:
+  menu_dashboard: "Asztal"
+  menu_diet:      "Étrend"
+  menu_exercise:  "Testmozgás"
+  menu_health:    "Egészség"
+  menu_medication: "Gyógyszer"
+  menu_wellbeing: "Közérzet"
+  menu_genetics:  "Genetika"
+  menu_labresults: "Labor"
+  menu_analytics:  "Elemzés"
+
+  button_add:     "Hozzáad"
+  history_link:   "Történet"
+  fav_link:       "Kedvencek"
+
+# diet
+  food:             "Étel"
+  food_placeholer: "Írjon legalább 3 betűt..."
+  drink:            "Ital"
+  drink_placeholder: "Írjon vagy válasszon..."
+  smoking:            "Dohányzás"
+  smoking_placeholder: "Válasszon..."
+
+  calories:        "kalória"
+  carbs:           "szénhidrát"
+  fat:             "zsír"
+  prot:            "fehérje"
+
+# activity
+  activity:         "Testmozgás"
+  exercise:         "Edzés"
+  regular_activity: "Általános tevékenység"
+  intensity:        "Intenzitás"
+
+# health
+  health:           "Egészség"
+  blood_pressure:   "Vérnyomás"
+  blood_glucose:    "Vér cukor"
+  body_weight:      "Testsúly"
+  waist_circumfence: "Haskörfogat"
+
+# medication
+  medication:        "Gyógykezelés"
+  medicines:         "Gyógyszer"
+  insulin:           "Inzulin"
+
+# wellbeing
+  wellbeing:          "Közérzet"
+  sleep:              "Alvás"
+  stress:             "Stressz"
+  illness:            "Betegség"
+  pain:               "Fájdalom"
+  periods:            "Menstruációs ciklus"
+  quality:            "Minőség"
+  intensity:          "Intenzitás"
+
+# genetics
+  genetics:           "Genetika"
+  family_hist:        "Családi előzmények"
+  relative:           "Rokon"
+  diabetes:           "Diabétesz"
+  genetics_history:   "Betegtörténet"
+
+# lab results
+  lab_results:        "Labor"
+
+# analytics
+  analytics:          "Elemzés"

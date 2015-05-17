@@ -46,25 +46,29 @@ Rails.application.routes.draw do
     post 'upload'
   end
 
-  get 'pages/mobilepage'
-  get 'pages/dashboard'
-  get 'pages/diet'
-  get 'pages/exercise'
-  get 'pages/health'
-  get 'pages/medication'
-  get 'pages/wellbeing'
-  get 'pages/genetics'
-  get 'pages/analytics'
-  get 'pages/profile'
-  get 'pages/labresult'
-  get 'pages/explore'
+  scope ':locale', locale: /#{I18n.available_locales.join("|")}/ do
+    get 'pages/mobilepage'
+    get 'pages/dashboard'
+    get 'pages/diet'
+    get 'pages/exercise'
+    get 'pages/health'
+    get 'pages/medication'
+    get 'pages/wellbeing'
+    get 'pages/genetics'
+    get 'pages/analytics'
+    get 'pages/profile'
+    get 'pages/labresult'
+    get 'pages/explore'
+    get 'pages/settings'
+  end
 
-  get 'pages/settings'
+
   get 'pages/mdestroy'
   get 'pages/wdestroy'
-  get 'sync/misfit_destroy'
   get 'pages/fdestroy'
   get 'pages/gfdestroy'
+
+  get 'sync/misfit_destroy'
 
   # resources :summaries
   # resources :notifications
@@ -148,4 +152,7 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  get '/pages/:path', to: redirect("/#{I18n.default_locale}/pages/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
+
 end

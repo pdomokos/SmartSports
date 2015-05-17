@@ -1,7 +1,7 @@
 <div class="labresult-block mainContent">
 
     <div class="sectionTitle bl7 c7">
-        Lab results
+        <%=t 'lab_results'%>
     </div>
     <div class="contentBg labresultStyle">
         <div style="padding: 10px;">
@@ -24,7 +24,7 @@
                         <br>
 
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -46,7 +46,7 @@
                         <input id='ldl_chol_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
                         <br>
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -69,7 +69,7 @@
                         <br>
                     </div>
 
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
 
                 <% end %>
             </div>
@@ -92,7 +92,7 @@
                         <input id='ketone_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
                         <br>
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -103,7 +103,7 @@
     </div>
 
     <div class="sectionTitle bl7 c7" style="margin-top: 40px;">
-      <span class="hisTitle">History</span>
+      <span class="hisTitle"><%=t 'history_link'%></span>
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
@@ -113,12 +113,14 @@
 
 </div>
 
+<script>
+    pages_menu();
+    labresults_loaded();
+</script>
+
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    labresults_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Lab results | SmartDiab
+    <%=t 'lab_results'%> | SmartDiab
 <% end %>

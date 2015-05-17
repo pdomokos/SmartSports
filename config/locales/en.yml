@@ -20,4 +20,70 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  menu_dashboard: "Dashboard"
+  menu_diet:      "Diet"
+  menu_exercise:  "Exercise"
+  menu_health:    "Health"
+  menu_medication: "Medication"
+  menu_wellbeing: "Well-being"
+  menu_genetics:  "Genetics"
+  menu_labresults: "Lab Results"
+  menu_analytics:  "Analytics"
+
+  button_add:     "Add"
+  history_link:   "History"
+  fav_link:       "Favourites"
+
+# diet
+  food: "Food"
+  food_placeholer: "Type at least three letters..."
+  drink: "Drink"
+  drink_placeholder: "Start typing or select..."
+  smoking: "Smoking"
+  smoking_placeholder: "Select..."
+
+  calories:        "calories"
+  carbs:           "carbs"
+  fat:             "fat"
+  prot:            "prot"
+
+# activity
+  activity:         "Activity"
+  exercise:         "Exercise"
+  regular_activity: "Regular Activity"
+  intensity:        "Intensity"
+
+# health
+  health:           "Health"
+  blood_pressure:   "Blood Pressure"
+  blood_glucose:   "Blood Glucose"
+  body_weight:      "Body Weight"
+  waist_circumfence: "Waist Circumfence"
+
+# medication
+  medication:        "Medication"
+  medicines:         "Medicines"
+  insulin:           "Insulin"
+
+# wellbeing
+  wellbeing:          "Well-Being"
+  sleep:              "Sleep"
+  stress:             "Stress"
+  illness:            "Illness"
+  pain:               "Pain"
+  periods:            "Periods(For Women)"
+  quality:            "Quality"
+  intensity:          "Intensity"
+
+# genetics
+  genetics:           "Genetics"
+  family_hist:        "Family History"
+  relative:           "Relative"
+  diabetes:           "Diabetes"
+  genetics_history:   "Patient history"
+
+# lab results
+  lab_results:        "Lab Results"
+
+# analytics
+  analytics:          "Analytics"

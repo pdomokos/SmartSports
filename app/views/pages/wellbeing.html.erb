@@ -8,14 +8,14 @@
 
 <div class="wellbeing-block mainContent" id="wellbeing-container">
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
-            Well-Being
+            <%=t 'wellbeing'%>
         </div>
         <div class="contentBg wellbeingStyle">
             <div style="padding: 10px;">
                 <div class="dataFormContainer">
                     <div class="dataFormTitle">
                         <%= image_tag "sleep40.png" %><br/>
-                        Sleep
+                      <%=t 'sleep'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", id: "sleep-create-form", remote: true, class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
@@ -38,7 +38,7 @@
                             <input id="sleep_amount" type="hidden" name="lifestyle[amount]" />
 
                         </div>
-                        <button class="dataFormField">Add</button>
+                        <button class="dataFormField"><%=t 'button_add'%></button>
                     <% end %>
                 </div>
                 <div class="dataFormSeparator"></div>
@@ -46,7 +46,7 @@
                 <div class="dataFormContainer">
                     <div class="dataFormTitle">
                         <%= image_tag "stress40.png" %><br/>
-                        Stress
+                        <%=t 'stress'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "stress-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
@@ -67,7 +67,7 @@
 
                         </div>
 
-                        <button class="dataFormField">Add</button>
+                        <button class="dataFormField"><%=t 'button_add'%></button>
 
                     <% end %>
                 </div>
@@ -76,7 +76,7 @@
                   <div class="dataFormContainer">
                     <div class="dataFormTitle">
                       <%= image_tag "illness40.png" %><br/>
-                      Illness
+                      <%=t 'illness'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "illness-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
@@ -102,7 +102,7 @@
                           <div class="dataFormFieldUnit">end</div>
                         </div>
 
-                        <button class="dataFormField">Add</button>
+                        <button class="dataFormField"><%=t 'button_add'%></button>
 
                     <% end %>
                   </div>
@@ -111,7 +111,7 @@
                   <div class="dataFormContainer">
                     <div class="dataFormTitle">
                       <%= image_tag "pain40.png" %><br/>
-                      Pain
+                      <%=t 'pain'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "pain-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
@@ -136,7 +136,7 @@
                           <div class="dataFormFieldUnit">end</div>
                         </div>
 
-                        <button class="dataFormField">Add</button>
+                        <button class="dataFormField"><%=t 'button_add'%></button>
 
                     <% end %>
                   </div>
@@ -145,7 +145,7 @@
                   <div class="dataFormContainer">
                     <div class="dataFormTitle">
                       <%= image_tag "period40.png" %><br/>
-                      Periods(for Women)
+                      <%=t 'periods'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "period-create-form", class: "resource-create-form lifestyle-form") do %>
                         <div class="dataForm">
@@ -176,7 +176,7 @@
                           <input id="periods_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
                         </div>
 
-                        <button class="dataFormField">Add</button>
+                        <button class="dataFormField"><%=t 'button_add'%></button>
 
                     <% end %>
                   </div>
@@ -187,7 +187,7 @@
         </div>
 
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor" style="margin-top: 40px;">
-            <span class="hisTitle">History</span>
+            <span class="hisTitle"><%=t 'history_link'%></span>
         </div>
 
         <table class="historyTable"  cellpadding="0" cellspacing="0">
@@ -197,11 +197,12 @@
     </div>
 </div>
 
+<script>
+    pages_menu();
+    wellbeing_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
-<% end %>
-<% content_for :page_logic do %>
-    wellbeing_loaded()
 <% end %>
 <% content_for :title_text do %>
     Well-being | SmartDiab

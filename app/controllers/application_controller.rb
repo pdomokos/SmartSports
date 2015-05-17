@@ -4,8 +4,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :require_login
   before_filter :set_default_variables
+  before_action :set_locale
 
   private
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
   def not_authenticated
      redirect_to login_path, alert: "Please login first"
   end

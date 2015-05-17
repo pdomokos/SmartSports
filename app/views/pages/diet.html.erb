@@ -1,21 +1,21 @@
 <div class="diet-block mainContent">
 
     <div class="sectionTitle dietBodyLogo dietColor">
-        Diet
+      <%=t 'menu_diet' %>
     </div>
     <div class="contentBg dietStyle">
         <div style="padding: 10px;">
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "food40.png" %><br/>
-                    Food
+                  <%=t 'food' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Food">
 
-                        <input id="foodname" type="search" name="food_name" class="dataFormField" placeholder="Type at least 3 letters..." disabled>
+                        <input id="foodname" type="search" name="food_name" class="dataFormField" placeholder="<%=t 'food_placeholer' %>" disabled>
                         <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
                         <input id="diet_name" name="diet[name]" type="hidden">
 
@@ -30,7 +30,7 @@
                         <br/>
 
                     </div>
-                  <button class="dataFormField">Add</button>
+                  <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -38,14 +38,14 @@
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "drink40.png" %><br/>
-                    Drink
+                  <%=t 'drink' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "drink-create-form", class: "resource-create-form diet-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Drink">
 
-                        <input id="drinkname" type="search" name="drink_name" class="dataFormField" placeholder="Start typing or select..." disabled>
+                        <input id="drinkname" type="search" name="drink_name" class="dataFormField" placeholder="<%=t 'drink_placeholder' %>" disabled>
                         <input id="diet_drink_name" name="diet[name]" type="hidden">
                         <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
 
@@ -60,7 +60,7 @@
                         <br/>
 
                     </div>
-                  <button class="dataFormField">Add</button>
+                  <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -68,20 +68,20 @@
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "smoke40.png" %><br/>
-                    Smoking
+                  <%=t 'smoking' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "smoke-create-form", class: "resource-create-form diet-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="diet[source]" value="<%= @default_source %>">
                         <input type="hidden" name="diet[type]" value="Smoke">
 
-                        <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="Select...">
+                        <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="<%=t 'smoking_placeholder' %>">
 
                         <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br/>
 
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
@@ -91,12 +91,12 @@
     </div>
 
     <div class="sectionTitle dietBodyLogo dietColor" style="margin-top: 40px;">
-        <span class="hisTitle selected">History</span> | <span class="favTitle">Favorites</span>
+        <span class="hisTitle selected"><%=t 'history_link'%></span> | <span class="favTitle"><%=t 'fav_link'%></span>
           <div class="right">
-            <span class="tag kcal">calories</span>
-            <span class="tag carbs">carbs</span>
-            <span class="tag fat">fat</span>
-            <span class="tag prot">prot</span>
+            <span class="tag kcal"><%=t 'calories'%></span>
+            <span class="tag carbs"><%=t 'carbs'%></span>
+            <span class="tag fat"><%=t 'fat'%></span>
+            <span class="tag prot"><%=t 'prot'%></span>
           </div>
     </div>
 
@@ -105,13 +105,13 @@
         </tbody>
     </table>
 </div>
-
+<script>
+  pages_menu();
+  diet_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    diet_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Diet | SmartDiab
+    <%=t 'menu_diet' %> | SmartDiab
 <% end %>

@@ -20,7 +20,7 @@
 
 @pages_menu = () ->
   self = this
-  console.log "pages layout"
+  console.log "pages menu"
   define_globals()
 
 
@@ -38,33 +38,7 @@
   $('#settings-link').click () ->
     console.log "clicked"
     window.location = '/pages/settings'
-  $('#dashboard-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/dashboard'
-  $('#diet-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/diet'
-  $('#exercise-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/exercise'
-  $('#health-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/health'
-  $('#medication-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/medication'
-  $('#wellbeing-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/wellbeing'
-  $('#labresults-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/labresult'
-  $('#genetics-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/genetics'
-  $('#analytics-link').click (e) ->
-    e.preventDefault()
-    window.location = '/pages/analytics'
+
 
   $('#infoOkButton').click ->
     $("#infoPopup").addClass("hidden")

@@ -1,14 +1,14 @@
 <div class="health-block mainContent">
 
     <div class="sectionTitle bl3 c3">
-        Health
+        <%=t 'health'%>
     </div>
     <div class="contentBg healthStyle">
         <div style="padding: 10px;">
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "bloodpressure40.png" %><br/>
-                    Blood Pressure
+                    <%=t 'blood_pressure'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "bp-create-form", remote: true, class: "resource-create-form health-form") do %>
                     <div class="dataForm">
@@ -32,14 +32,14 @@
                         <br>
 
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
             <div class="dataFormContainer contentBg">
                 <div class="dataFormTitle">
                     <%= image_tag "bloodglucose.png" %><br/>
-                    Blood Glucose
+                  <%=t 'blood_glucose'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "bg-create-form", remote: true, class: "resource-create-form health-form") do %>
                     <div class="dataForm">
@@ -53,14 +53,14 @@
                         <input id='bloodsugar_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br>
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <div class="dataFormSeparator"></div>
             <div class="dataFormContainer contentBg">
                 <div class="dataFormTitle">
                     <%= image_tag "weight40.png" %><br/>
-                    Body Weight
+                    <%=t 'body_weight'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "weight-create-form", remote: true, class: "resource-create-form health-form") do %>
                     <div class="dataForm">
@@ -76,7 +76,7 @@
                         <br>
                     </div>
 
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
 
                 <% end %>
             </div>
@@ -84,7 +84,7 @@
             <div class="dataFormContainer contentBg">
                 <div class="dataFormTitle">
                     <%= image_tag "abdominal40.png" %><br/>
-                    Waist Circumference
+                  <%=t 'waist_circumfence'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "waist-create-form", remote: true, class: "resource-create-form health-form") do %>
                     <div class="dataForm">
@@ -99,7 +99,7 @@
                         <input id='waist_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br>
                     </div>
-                    <button class="dataFormField">Add</button>
+                    <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
             <!--<div class="dataFormSeparator"></div>-->
@@ -110,7 +110,7 @@
     </div>
 
     <div class="sectionTitle bl3 c3" style="margin-top: 40px;">
-      <span class="hisTitle selected">History</span> | <span class="favTitle">Favorites</span>
+      <span class="hisTitle selected"><%=t 'history_link'%></span> | <span class="favTitle"><%=t 'fav_link'%></span>
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
@@ -120,12 +120,13 @@
 
 </div>
 
+<script>
+    pages_menu();
+    health_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
-<% content_for :page_logic do %>
-    health_loaded()
-<% end %>
 <% content_for :title_text do %>
-    Health | SmartDiab
+    <%=t 'health'%> | SmartDiab
 <% end %>
