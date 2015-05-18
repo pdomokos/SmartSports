@@ -62,7 +62,7 @@ en:
 
 # medication
   medication:        "Medication"
-  medicines:         "Medicines"
+  drugs:             "Drugs"
   insulin:           "Insulin"
 
 # wellbeing
@@ -71,7 +71,7 @@ en:
   stress:             "Stress"
   illness:            "Illness"
   pain:               "Pain"
-  periods:            "Periods(For Women)"
+  periods:            "Periods (For Women)"
   quality:            "Quality"
   intensity:          "Intensity"
 

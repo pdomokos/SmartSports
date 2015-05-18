@@ -26,4 +26,13 @@ class ApplicationController < ActionController::Base
         'blood_pressure' => 'bloodpressure40'
     }
   end
+
+  def get_last_synced_date(user_id, source)
+    last_sync_date = nil
+    last_sync = Summary.where(user_id: user_id).where(source: source).order(synced_at: :desc).limit(1)[0]
+    if  last_sync
+      last_sync_date = last_sync.synced_at
+    end
+    return last_sync_date
+  end
 end

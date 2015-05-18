@@ -340,10 +340,17 @@ button.deleteForm {
   color: #ffffff;
 }
 
+.menulink-selected {
+  background: RGBA(143, 188, 227, 0.3);
+}
 
 
 .app2Menu .moves {
   background: image-url("menu/moves.png") 20px 15px no-repeat;
+}
+
+.app2Menu .withings {
+  background: image-url("menu/withings.png") 20px 15px no-repeat;
 }
 
 .app2Menu .fitbit {
@@ -728,6 +735,30 @@ div.egfr {
   background-size: 40px 40px;;
 }
 
+.misfit_large {
+  background: image-url("menu/misfit60.png") 20px 15px no-repeat;
+  background-size: 40px 40px;;
+}
+
+.moves_large {
+  background: image-url("menu/moves60.png") 20px 15px no-repeat;
+  background-size: 40px 40px;;
+}
+
+.withings_large {
+  background: image-url("menu/withings60.png") 20px 15px no-repeat;
+  background-size: 40px 40px;;
+}
+
+.fitbit_large {
+  background: image-url("menu/fitbit60.png") 20px 15px no-repeat;
+  background-size: 40px 40px;;
+}
+
+.hiddenSection {
+  display: none !important;
+  visibility: hidden;
+}
 
 // ====================
 

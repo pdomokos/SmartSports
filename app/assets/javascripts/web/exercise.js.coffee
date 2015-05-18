@@ -134,7 +134,7 @@ init_exercise = () ->
         id: d['id']
         })
       other_activities = data.filter( (d) ->
-        d['category'] != 'sport'
+        d['category'] == 'custom'
       ).map( (d) ->
         {
         label: d['name'],

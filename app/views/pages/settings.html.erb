@@ -1,178 +1,22 @@
-
-    <div class="sectionTitle googlefit_large c0">
-      Google Fit
-    </div>
-    <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
-      <div style="padding: 10px;">
-        <table style="width: 100%;color: #3d3d3d;">
-          <tbody>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              Active since
-            </td>
-            <td>
-              2015. 01. 15
-            </td>
-            <td style="width: 200px;text-align: right;" rowspan="3">
-
-              <button style="width: 180px;height: 50px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none">
-                SYNCHRONIZE NOW
-              </button>
-              <button style="margin-top: 15px;width: 180px;height: 50px; background: #ff0000;color: #ffffff;font-size: 15px;border: none">
-                DISCONNECT
-              </button>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              Last synchronization
-            </td>
-            <td>
-              2 days ago
-            </td>
-
-          </tr>
-          <tr>
-            <td>
-
-            </td>
-            <td>
-
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-
-
-<!--
-<div class="settings-block">
-    <div class="columns">
-        <div class="column one-half">
-            <div class="boxed-group">
-                <h3>Moves</h3>
-                <div class="boxed-group-inner">
-                    <p>Active since 2014-10-01</p>
-                    <p id="moves-sync-status">Synced 1 day ago</p>
-                    <% if @movesconn %>
-                        <p>
-                            <%= link_to "Sync Moves", "#", :class => "button primary", :id => "sync-moves-button" %>
-                            <%= link_to "Disconnect", "/pages/mdestroy", :class => "button danger", :id => "disconnect-moves-button" %>
-                        </p>
-                    <% else %>
-                        <p>
-                            <%= link_to "Sign in to Moves", "/auth/moves", :class => "button primary", :id => "signin-moves-button" %>
-                        </p>
-                    <% end %>
-                </div>
-            </div>
-
-            <div class="boxed-group">
-                <h3>Withings</h3>
-                <div class="boxed-group-inner">
-                    <p>Active since 2014-10-01</p>
-                    <p id="withings-sync-status">Synced 1 day ago</p>
-                    <% if @withingsconn %>
-                       <p><%= link_to "Sync Withings", "#", :class => "button primary", :id => "sync-withings-button" %>
-                          <%= link_to "Disconnect", "/pages/wdestroy", :class => "button danger", :id => "disconnect-withings-button" %>
-                        </p>
-                    <% else %>
-                        <p><%= link_to "Sign in to Withings", "/auth/withings", :class => "button primary", :id => "signin-withings-button" %></p>
-                    <% end %>
-                </div>
-            </div>
-
-            <div class="boxed-group">
-                <h3>Fitbit</h3>
-                <div class="boxed-group-inner">
-                    <p>Active since 2014-10-01</p>
-                    <p id="fitbit-sync-status">Synced 1 day ago</p>
-                    <% if @fitbitconn %>
-                        <p><%= link_to "Sync Fitbit", "#", :class => "button primary", :id => "sync-fitbit-button" %>
-                            <%= link_to "Disconnect", "/pages/fdestroy", :class => "button danger", :id => "disconnect-fitbit-button" %>
-                        </p>
-                    <% else %>
-                        <p><%= link_to "Sign in to Fitbit", "/auth/fitbit", :class => "button primary", :id => "signin-fitbit-button" %></p>
-                    <% end %>
-                </div>
-            </div>
-
-            <div class="boxed-group">
-                <h3>Misfit</h3>
-                <div class="boxed-group-inner">
-                    <p>Active since 2014-10-01</p>
-                    <p id="misfit-sync-status">Synced 1 day ago</p>
-                    <% if @misfitconn %>
-                        <p><%= link_to "Sync Misfit", "#", :class => "button primary", :id => "sync-misfit-button" %>
-                            <%= link_to "Disconnect", "/sync/misfit_destroy", :class => "button danger", :id => "disconnect-misfit-button" %>
-                        </p>
-                    <% else %>
-                        <p><%= link_to "Sign in to Misfit", "/auth/shine", :class => "button primary", :id => "signin-misfit-button" %></p>
-                    <% end %>
-                </div>
-            </div>
-            <div class="boxed-group">
-                <h3>Google Fit</h3>
-                <div class="boxed-group-inner">
-                    <p>Active since 2014-10-01</p>
-                    <p id="google-sync-status">Synced 1 day ago</p>
-                    <% if @googleconn %>
-                        <p><%= link_to "Sync Google", "#", :class => "button primary", :id => "sync-google-button" %>
-                            <%= link_to "Disconnect", "/pages/gfdestroy", :class => "button danger", :id => "disconnect-google-button" %>
-                        </p>
-                    <% else %>
-                        <p><%= link_to "Sign in to Google", "/auth/google_oauth2", :class => "button primary", :id => "signin-google-button" %></p>
-                    <% end %>
-                </div>
-            </div>
-        </div>
-
-        <div class="column one-half">
-            <div class="boxed-group">
-                <h3>Settings</h3>
-                <ul class="boxed-group-inner table-list nomargin-top">
-                    <li class="table-list-item">
-                        <div class="table-list-cell table-list-cell-type">
-                            <i class="fa fa-cog"></i>
-                        </div>
-                        <div class="table-list-cell">
-                            <%= link_to "Edit Profile", "#", :class => "title-link", :id => "edit-profile-button" %>
-
-                            <p id="update-profile-info"/>
-                            <div id="update-profile-form" class="hidden">
-                                <%= render 'edit_profile_form' %>
-                            </div>
-
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
+<div id="sectionProfile" class="menu-section">
+  <%= render "profile" %>
 </div>
--->
-<!--
-    <div class="leftMenu">
+<div id="sectionMoves" class="menu-section hiddenSection">
+  <%= render "moves" %>
+</div>
+<div id="sectionWithings" class="menu-section hiddenSection">
+  <%= render "withings" %>
+</div>
+<div id="sectionFitbit" class="menu-section hiddenSection">
+  <%= render "fitbit" %>
+</div>
+<div id="sectionMisfit" class="menu-section hiddenSection">
+  <%= render "misfit" %>
+</div>
+<div id="sectionGooglefit" class="menu-section hiddenSection">
+  <%= render "googlefit" %>
+</div>
 
-        <div style="padding-left: 40px;padding-right: 20px;padding-top: 40px;">
-
-
-            <div style="width: 150px;height: 200px;background: #6CC5CC">
-              <%= image_tag current_user.avatar.url(:medium) %>
-
-            </div>
-            <div class="noClickSelect">
-                <span class="infoName"><%= current_user.name.split().join("</br>").html_safe %></span><br/>
-                Joined <%= time_ago_in_words(current_user.created_at) %> ago.
-            </div>
-
-        </div>
-
-    </div>
-    -->
 
 <% content_for :menu do %>
     <%= render "settingsmenu" %>

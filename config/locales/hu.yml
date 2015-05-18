@@ -41,7 +41,7 @@ hu:
 
 # medication
   medication:        "Gyógykezelés"
-  medicines:         "Gyógyszer"
+  drugs:             "Gyógyszer"
   insulin:           "Inzulin"
 
 # wellbeing

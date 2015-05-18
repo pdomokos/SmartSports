@@ -57,10 +57,10 @@ module ApplicationHelper
     if /futás/i =~ name
       return "running40.png"
     end
-    if /munka/i =~ name
-      return "regular40.png"
+    if /"Álló munka"/i =~ name || /"fizikai munka"/i =~ name
+      return "walking40.png"
     end
-    if /ülés/i =~ name
+    if /ülés/i =~ name || /Űlő/i =~ name
       return "regular40.png"
     end
     return "walking40.png"

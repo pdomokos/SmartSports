@@ -1,0 +1,59 @@
+  <div class="sectionTitle fitbit_large c0">
+    Fitbit
+  </div>
+  <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
+    <div style="padding: 10px;">
+      <table style="width: 100%;color: #3d3d3d;">
+        <tbody>
+        <tr>
+          <td style="width: 180px;height: 50px;">
+            Active since
+          </td>
+          <td>
+            <% if @active_since_fitbit %>
+                <%=@active_since_fitbit.strftime("%Y. %m. %d.  %H:%M")%>
+            <% end %>
+          </td>
+          <td style="width: 200px;text-align: right;" rowspan="3">
+
+            <% if @fitbitconn %>
+                <p>
+                  <button id="sync-fitbit-button" style="width: 180px;height: 50px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none">
+                    SYNCHRONIZE NOW
+                  </button>
+                  <button id="disconnect-fitbit-button" style="margin-top: 15px;width: 180px;height: 50px; background: #ff0000;color: #ffffff;font-size: 15px;border: none">
+                    DISCONNECT
+                  </button>
+                </p>
+            <% else %>
+                <p>
+                  <button id="signin-fitbit-button" style="width: 180px;height: 50px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none">
+                    CONNECT
+                  </button>
+                </p>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 180px;height: 50px;">
+            Last synchronization
+          </td>
+          <td>
+            <% if @last_sync_date_fitbit %>
+                <%=@last_sync_date_fitbit.strftime("%Y. %m. %d.  %H:%M")%>
+            <%end %>
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

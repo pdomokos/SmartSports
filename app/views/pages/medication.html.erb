@@ -8,7 +8,7 @@
             <div class="dataFormContainer">
                 <div class="dataFormTitle">
                     <%= image_tag "oral40.png" %><br/>
-                    <%=t 'medicines'%>
+                    <%=t 'drugs'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "oral-med-create-form", class: "resource-create-form medication-form") do %>
                     <div class="dataForm">

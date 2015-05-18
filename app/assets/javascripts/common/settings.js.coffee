@@ -4,8 +4,82 @@
   reset_ui()
   $("#settings-button").addClass("selected")
 
+  $("#myprofile-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#myprofile-link").addClass("menulink-selected")
+    $("#sectionProfile").removeClass("hiddenSection")
+
+  $("#moves-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#moves-link").addClass("menulink-selected")
+    $("#sectionMoves").removeClass("hiddenSection")
+
+  $("#googlefit-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#googlefit-link").addClass("menulink-selected")
+    $("#sectionGooglefit").removeClass("hiddenSection")
+
+  $("#misfit-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#misfit-link").addClass("menulink-selected")
+    $("#sectionMisfit").removeClass("hiddenSection")
+
+  $("#fitbit-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#fitbit-link").addClass("menulink-selected")
+    $("#sectionFitbit").removeClass("hiddenSection")
+
+  $("#withings-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#withings-link").addClass("menulink-selected")
+    $("#sectionWithings").removeClass("hiddenSection")
+
+
+  $("#signin-moves-button").click (event) ->
+    event.preventDefault()
+    window.location = '/auth/moves'
+
   $("#disconnect-moves-button").click (event) ->
-    console.log "disconnecting Moves..."
+    event.preventDefault()
+    window.location = '/pages/mdestroy'
+
+  $("#signin-withings-button").click (event) ->
+    event.preventDefault()
+    window.location = '/auth/withings'
+
+  $("#disconnect-withings-button").click (event) ->
+    event.preventDefault()
+    window.location = '/pages/wdestroy'
+
+  $("#signin-misfit-button").click (event) ->
+    event.preventDefault()
+    window.location = '/auth/shine'
+
+  $("#disconnect-misfit-button").click (event) ->
+    event.preventDefault()
+    window.location = '/sync/misfit_destroy'
+
+  $("#signin-fitbit-button").click (event) ->
+    event.preventDefault()
+    window.location = '/auth/fitbit'
+
+  $("#disconnect-fitbit-button").click (event) ->
+    event.preventDefault()
+    window.location = '/pages/fdestroy'
+
+  $("#signin-google-button").click (event) ->
+    event.preventDefault()
+    window.location = '/auth/google_oauth2'
+
+  $("#disconnect-google-button").click (event) ->
+    event.preventDefault()
+    window.location = '/pages/gfdestroy'
 
   $("#sync-moves-button").click (event) ->
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
@@ -122,3 +196,6 @@
           $("#update-profile-info").html("Profile updated successfully")
           $('#update-profile-form').addClass("hidden")
 
+@reset_settings_ui = () ->
+  $(".menuitem a.menulink").removeClass("menulink-selected")
+  $(".menu-section").addClass("hiddenSection")

@@ -100,11 +100,36 @@ class PagesController < ApplicationController
   end
 
   def settings
+    prf_json = current_user.as_json
+    prf_json.delete("crypted_password")
+    prf_json.delete("salt")
+    prf_json.delete("reset_password_token")
+    @prf = JSON.pretty_generate( prf_json )
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
+    if @movesconn
+      @active_since_moves = @movesconn.created_at
+      @last_sync_date_moves = get_last_synced_date(current_user.id, "moves")
+    end
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
+    if @withingsconn
+        @active_since_withings = @withingsconn.created_at
+        @last_sync_date_withings = get_last_synced_date(current_user.id, "withings")
+    end
     @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
+    if @fitbitconn
+      @active_since_fitbit = @fitbitconn.created_at
+      @last_sync_date_fitbit = get_last_synced_date(current_user.id, "fitbit")
+    end
     @googleconn = Connection.where(user_id: current_user.id, name: 'google').first
+    if @googleconn
+      @active_since_google = @googleconn.created_at
+      @last_sync_date_google = get_last_synced_date(current_user.id, "google")
+    end
     @misfitconn = Connection.where(user_id: current_user.id, name: 'misfit').first
+    if @misfitconn
+      @active_since_misfit = @misfitconn.created_at
+      @last_sync_date_misfit = get_last_synced_date(current_user.id, "misfit")
+    end
   end
 
   def profile
