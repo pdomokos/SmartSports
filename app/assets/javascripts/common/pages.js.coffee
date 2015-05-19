@@ -37,7 +37,7 @@
 
   $('#settings-link').click () ->
     console.log "clicked"
-    window.location = '/pages/settings'
+    window.location = $("#settings-url")[0].value
 
 
   $('body').on('click', "#infoOkButton", () ->

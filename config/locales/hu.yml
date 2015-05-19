@@ -8,6 +8,14 @@ hu:
   menu_genetics:  "Genetika"
   menu_labresults: "Labor"
   menu_analytics:  "Elemzés"
+  menu_profile: "Profil"
+
+  settings_active_since: "Csatlakozás dátuma"
+  settings_not_connected: "Nincs csatlakozva"
+  settings_last_sync: "Utolsó szinkronizáció"
+  settings_sync_now: "SZINKRONIZÁLÁS"
+  settings_disconnect: "KAPCSOLAT BONTÁSA"
+  settings_connect: "CSATLAKOZÁS"
 
   button_add:     "Hozzáad"
   history_link:   "Történet"

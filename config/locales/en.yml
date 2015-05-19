@@ -29,6 +29,14 @@ en:
   menu_genetics:  "Genetics"
   menu_labresults: "Lab Results"
   menu_analytics:  "Analytics"
+  menu_profile: "My profile"
+
+  settings_active_since: "Active since"
+  settings_not_connected: "Not connected"
+  settings_last_sync: "Last synchronization"
+  settings_sync_now: "SYNCHRONIZE NOW"
+  settings_disconnect: "DISCONNECT"
+  settings_connect: "CONNECT"
 
   button_add:     "Add"
   history_link:   "History"

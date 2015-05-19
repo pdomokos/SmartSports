@@ -28,7 +28,9 @@
           <% end %>
         </div>
 
-        <div style="float: right;width: 30px;text-align: center;"><%= image_tag "menu/settings.png", style: "width: 20px;padding-top: 15px", id:"settings-link"%></div>
+        <div style="float: right;width: 30px;text-align: center;"><%= image_tag "menu/settings.png", style: "width: 20px;padding-top: 15px", id:"settings-link"%>
+          <input id="settings-url" value=<%= url_for( :action => 'settings') %> type="hidden" >
+        </div>
         <div style="float: right;height: 50px;line-height: 50px;color: #3d3d3d;font-size: 13px;padding-left: 5px"><%= current_user.name %></div>
       </div>
     </div>

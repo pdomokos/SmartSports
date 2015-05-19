@@ -1,13 +1,13 @@
 <div class="app2Menu">
   <div class="inner ">
     <div id="dashboard-link" class="menuitem c0 b0 dashboard">
-      <a class="menulink" href="#">
-        Dashboard
+      <a class="menulink" href="<%= url_for( :action => 'dashboard') %>">
+        <%=t 'menu_dashboard' %>
       </a>
     </div>
     <div class="menuitem c0 myprofile">
       <a id="myprofile-link" class="menulink menulink-selected" href="#">
-        My profile
+        <%=t 'menu_profile' %>
       </a>
     </div>
     <div class="menuitem c0 moves">
