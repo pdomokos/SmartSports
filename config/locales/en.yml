@@ -48,6 +48,28 @@ en:
   duration:       "duration"
   minute_abbr:    "min"
 
+#login
+  sign_in: "Sign in to SmartDiab"
+  login_button: "Login"
+  username: "User name"
+  forgotten_password: "Forgotten password"
+  create_account_part1: "Don't have an account yet?"
+  create_account_part2: "Create yours now and start managing your diabetes-related data"
+  password_restore_button: "Restore"
+  password_restore_text: "Please enter your email address below and we will send you a link to restore your password."
+  welcome_message: "Controlling diabetes involves thinking about all the factors that impact on blood glucose, including the carbohydrate you eat, and the amount of insulin you need for it, the exercise you have recently done and the exercise you are planning to do, and learning how your body responds to different circumstances. SmartDiab offers you an easy-to-use interface to track and analyze all important factors that may impact the way you feel and your blood glucose level."
+  sign_up_text_part1: "Create your SmartDiab account"
+  sign_up_text_part2: "Your Data. Your Problem. Solved!"
+  join_button: "Join"
+  sign_up_info: "By joining SmartDiab, you agree to our Terms of Service and Privacy Policy."
+  have_account: "I already have a SmartDiab account"
+  email: "E-mail address"
+  your_email: "Your email address"
+  first_name: "First name"
+  last_name: "Last name"
+  password: "Password"
+  password_confirm: "Confirm password"
+
 # diet
   food: "Food"
   food_placeholer: "Type at least three letters..."

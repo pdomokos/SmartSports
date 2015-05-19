@@ -1,31 +1,32 @@
 
 
-<div style="position:absolute;left:50%;margin-left:-144px;width: 288px;top:100px;font-family: 'Open Sans', sans-serif;font-size: 30px;">
+<div style="position:absolute;left:50%;margin-left:-144px;width: 288px;top:100px;font-family: 'Open Sans', sans-serif;font-size: 20px;">
     <center>
         <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
         <br/>
-        <span style="color:white">Sign in to SmartDiab</span>
+        <span style="color:white"><%=t 'sign_in' %></span>
     </center>
 </div>
 
 <div id="loginDiv" class="loginDiv">
     <div>
         <%= form_tag sessions_path, :method => :post do %>
-        <input id="username_field" name="email" type="text" class="loginField animField" placeholder="User name"/><br>
-        <input id="password_field" name="password" type="password" class="loginField animField" placeholder="Password"/><br>
-        <input type="submit" class="loginButton animButton" value="Login"/>
+        <input id="username_field" name="email" type="text" class="loginField animField" placeholder="<%=t 'username' %>"/><br>
+        <input id="password_field" name="password" type="password" class="loginField animField" placeholder="<%=t 'password' %>"/><br>
+        <input type="submit" class="loginButton animButton" value="<%=t 'login_button' %>"/>
         <% end %>
         <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
-            <a class="forgottenPwLink" href="<%= sessions_reset_password_path %>">Forgotten password</a>
+            <a class="forgottenPwLink" href="<%= sessions_reset_password_path %>"><%=t 'forgotten_password' %></a>
         </div>
     </div>
 </div>
 
+<% msg = "<a class=\"signupLink\" href=\"#{signup_path}\">"+ translate('create_account_part1')+ "</a> "+ translate('create_account_part2') %>
 <% if is_mobile_device? || is_tablet_device? %>
-    Don't have an account yet? Create yours now and start managing your diabetes-related data
-    <%= render partial: 'features.mobile', locals: { msg: "<a class=\"signupLink\" href=\"#{signup_path}\">Don't have an account yet?</a> Create yours now and start managing your diabetes-related data"} %>
+    <!--Don't have an account yet? Create yours now and start managing your diabetes-related data-->
+    <%= render partial: 'features.mobile', locals: { msg: msg} %>
 <% else %>
-    <%= render partial: 'features', locals: { msg: "<a class=\"signupLink\" href=\"#{signup_path}\">Don't have an account yet?</a> Create yours now and start managing your diabetes-related data"} %>
+    <%= render partial: 'features', locals: { msg: msg} %>
 <% end %>
 
 <script>

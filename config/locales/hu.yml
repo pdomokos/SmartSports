@@ -27,6 +27,28 @@ hu:
   duration:       "időtartam"
   minute_abbr:    "perc"
 
+#login
+  sign_in: "Jelentkezzen be a SmartDiab fiókjába"
+  login_button: "Belépés"
+  username: "Felhasználónév"
+  forgotten_password: "Elfelejtettem a jelszavam"
+  create_account_part1: "Még nincs SmartDiab fiókja?"
+  create_account_part2: "Hozzon létre egyet, gyűjtse és elemezze a cukorbetegségéhez kapcsolódó adatait."
+  password_restore_button: "Küldés"
+  password_restore_text: "Kérjük adja meg e-mail címét és elküldjük az új jelszó megadásához és aktiválásához szükséges linket és tudnivalókat."
+  welcome_message: "A vércukorszint megfelelő szinten tartása során figyelembe kell venni mindazokat a tényezőket, amelyek befolyásolják azt, így az elfogyasztott szénhidrát mennyiségét és a feldolgozásához szükséges inzulint, a már elvégzett és a tervezett testmozgást, valamint meg kell tanulni a testünk milyen választ ad a különböző körülményekre. A SmartDiab egy könnyen kezelhető felületet biztosít minden olyan fontos tényező követésére és elemzésére, amely hatással van a vércukorszintre és a közérzetre."
+  sign_up_text_part1: "Hozza létre SmartDiab fiókját."
+  sign_up_text_part2: ""
+  join_button: "Fiók létrehozása"
+  sign_up_info: "A SmartDiab fiók létrehozásával elfogadja a Felhasználási feltételek és Adatvédelmi szabályokat."
+  have_account: "Már van SmartDiab fiókom."
+  email: "E-mail cím"
+  your_email: "Adja meg e-mail címét"
+  first_name: "Keresztnév"
+  last_name: "Vezetéknév"
+  password: "Jelszó"
+  password_confirm: "Jelszó megerősítése"
+
 # diet
   food:             "Étel"
   food_placeholer: "Írjon legalább 3 betűt..."

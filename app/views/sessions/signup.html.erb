@@ -7,8 +7,8 @@
                 <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
             </div>
             <div style="float: left;padding-top: 15px;padding-left: 100px;">
-                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Create your SmartDiab account</span><br>
-                <span>Your Data. Your Problem. Solved!</span>
+                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;"><%=t 'sign_up_text_part1' %></span><br>
+                <span><%=t 'sign_up_text_part2' %></span>
             </div>
         </div>
     </div>
@@ -19,8 +19,8 @@
             <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
 
             <div style="float: left;padding-top: 35px;padding-left: 20px;">
-                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;">Create your SmartDiab account</span><br>
-                <span>Your Data. Your Problem. Solved!</span>
+                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;"><%=t 'sign_up_text_part1' %></span><br>
+                <span><%=t 'sign_up_text_part2' %></span>
             </div>
         </div>
     </div>
@@ -29,13 +29,13 @@
 <div id="registerDiv" class="registerDiv">
     <div>
         <%= form_tag users_path, :method => :post do %>
-        <input id="username_field" name="user[email]" type="text" class="loginField animField" placeholder="Email address"/><br>
-        <input id="password_field" name="user[password]" type="password" class="loginField animField" placeholder="Password"/><br>
-        <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField" placeholder="Password again"/><br>
-        <input type="submit" class="loginButton animButton" value="Join"/>
+        <input id="username_field" name="user[email]" type="text" class="loginField animField" placeholder="<%=t 'email' %>"/><br>
+        <input id="password_field" name="user[password]" type="password" class="loginField animField" placeholder="<%=t 'password' %>"/><br>
+        <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField" placeholder="<%=t 'password_confirm' %>"/><br>
+        <input type="submit" class="loginButton animButton" value="<%=t 'join_button' %>"/>
         <% end %>
         <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
-            By joining SmartDiab, you agree to our Terms of Service and Privacy Policy.
+          <%=t 'sign_up_info' %>
         </div>
     </div>
 </div>
@@ -43,7 +43,8 @@
 <% if is_mobile_device? || is_tablet_device? %>
     <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
 <% else %>
-    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"#{login_path}\">I already have a SmartDiab account</a>"} %>
+    <% have_account = t 'have_account' %>
+    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"#{login_path}\">" + have_account +"</a>"} %>
 <% end %>
 
 <script>
