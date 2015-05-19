@@ -40,10 +40,12 @@
     window.location = '/pages/settings'
 
 
-  $('#infoOkButton').click ->
+  $('body').on('click', "#infoOkButton", () ->
     $("#infoPopup").addClass("hidden")
-  $('#errorOkButton').click ->
+  )
+  $('body').on('click',"#errorOkButton", () ->
     $("#errorPopup").addClass("hidden")
+  )
 
 @rotateLogo = () ->
   $('img.loginLogo').animate({borderSpacing: -360}, {

@@ -4,12 +4,22 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :require_login
   before_filter :set_default_variables
-  before_action :set_locale
 
   private
 
   def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
+    if params[:locale]
+      I18n.locale = params[:locale]
+    else
+      browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+      puts "browser locale: #{browser_locale}"
+      I18n.locale = browser_locale || I18n.default_locale
+    end
+    puts "set locale: #{I18n.locale}"
+  end
+
+  def default_url_options(options={})
+    { :locale => I18n.locale }
   end
 
   def not_authenticated

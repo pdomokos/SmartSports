@@ -102,7 +102,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'pages#diet'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -153,6 +152,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  get '/pages/:path', to: redirect("/#{I18n.default_locale}/pages/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
-
+  root :to => "pages#diet"
+  #get '/pages/:path', to: redirect("/#{I18n.default_locale}/pages/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
 end

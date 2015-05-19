@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
   before_action :redir_mobile, except: [:mobilepage]
+  before_action :set_locale
 
   has_mobile_fu
   layout :which_layout
