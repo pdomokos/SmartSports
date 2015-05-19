@@ -42,6 +42,12 @@ en:
   history_link:   "History"
   fav_link:       "Favourites"
 
+  start:          "Start"
+  end:            "End"
+
+  duration:       "duration"
+  minute_abbr:    "min"
+
 # diet
   food: "Food"
   food_placeholer: "Type at least three letters..."
@@ -61,12 +67,31 @@ en:
   regular_activity: "Regular Activity"
   intensity:        "Intensity"
 
+  activity_name_placeholder: "Type or select..."
+  other_activity_name_placeholder: "Select..."
+
+  activity_intensity_low: "Low"
+  activity_intensity_moderate: "Moderate"
+  activity_intensity_high: "High"
+
+  activity_unknown: "Unknown activity"
+
 # health
   health:           "Health"
   blood_pressure:   "Blood Pressure"
   blood_glucose:   "Blood Glucose"
   body_weight:      "Body Weight"
   waist_circumfence: "Waist Circumfence"
+
+  bp_systolic_placeholer: "Systolic, eg: 120"
+  bp_diastolic_placeholer: "Diastolic, eg: 70"
+  bp_pulse_placeholer: "Heart rate, eg: 80"
+
+  glucose_placeholder: "Blood glucose, eg: 6.5"
+
+  weight_placeholder: "Body weight, eg: 85"
+
+  waist_placeholder: "Waist circumfence, eg: 94"
 
 # medication
   medication:        "Medication"

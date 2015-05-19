@@ -21,6 +21,12 @@ hu:
   history_link:   "Történet"
   fav_link:       "Kedvencek"
 
+  start:          "Kezdet"
+  end:            "Vég"
+
+  duration:       "időtartam"
+  minute_abbr:    "perc"
+
 # diet
   food:             "Étel"
   food_placeholer: "Írjon legalább 3 betűt..."
@@ -40,12 +46,31 @@ hu:
   regular_activity: "Általános tevékenység"
   intensity:        "Intenzitás"
 
+  activity_name_placeholder: "Írjon vagy válasszon..."
+  other_activity_name_placeholder: "Válasszon..."
+
+  activity_intensity_low: "Alacsony"
+  activity_intensity_moderate: "Közepes"
+  activity_intensity_high: "Magas"
+
+  activity_unknown: "Ismeretlen aktivitás"
+
 # health
   health:           "Egészség"
   blood_pressure:   "Vérnyomás"
-  blood_glucose:    "Vér cukor"
+  blood_glucose:    "Vércukor"
   body_weight:      "Testsúly"
   waist_circumfence: "Haskörfogat"
+
+  bp_systolic_placeholer: "Szisztolés, pl: 120"
+  bp_diastolic_placeholer: "Diasztolés, pl: 70"
+  bp_pulse_placeholer: "Pulzus, pl: 80"
+
+  glucose_placeholder: "Vércukor, pl: 6.5"
+
+  weight_placeholder: "Testsúly, pl: 85"
+
+  waist_placeholder: "Haskörfogat, pl: 94"
 
 # medication
   medication:        "Gyógykezelés"

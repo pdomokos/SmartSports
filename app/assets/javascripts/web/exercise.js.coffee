@@ -12,6 +12,7 @@
   load_activity_types()
 
 init_exercise = () ->
+  intensities = $("#intensity_values").val().split(";")
   console.log "init exercise"
   $("#activity_scale").slider({
     min: 1,
@@ -20,11 +21,11 @@ init_exercise = () ->
   }).slider({
     slide: (event, ui) ->
       if ui.value == 1
-        $("#activity_percent").html("Low")
+        $("#activity_percent").html(intensities[0])
       else if ui.value == 2
-        $("#activity_percent").html("Moderate")
+        $("#activity_percent").html(intensities[1])
       else if ui.value == 3
-        $("#activity_percent").html("High")
+        $("#activity_percent").html(intensities[2])
     change: (event, ui) ->
       $("#activity_intensity").val(ui.value)
   })
@@ -36,11 +37,11 @@ init_exercise = () ->
   }).slider({
     slide: (event, ui) ->
       if ui.value == 1
-        $("#activity_other_percent").html("Low")
+        $("#activity_other_percent").html(intensities[0])
       else if ui.value == 2
-        $("#activity_other_percent").html("Moderate")
+        $("#activity_other_percent").html(intensities[0])
       else if ui.value == 3
-        $("#activity_other_percent").html("High")
+        $("#activity_other_percent").html(intensities[0])
     change: (event, ui) ->
       $("#activity_other_intensity").val(ui.value)
   })

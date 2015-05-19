@@ -50,6 +50,7 @@ class PagesController < ApplicationController
     @uid = current_user.id
     @conn = current_user.connections
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
+    @intensity_values = Activity.intensity_values
     # respond_to do |format|
     #   format.html
     #   format.json

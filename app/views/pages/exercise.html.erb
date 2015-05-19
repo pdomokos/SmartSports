@@ -1,4 +1,5 @@
 <div class="training-block mainContent" id="training-container">
+  <input id="intensity_values" value="<%= @intensity_values.join(';')%>" type="hidden" >
   <div class="sectionTitle exerciseBodyLogo exerciseColor">
     <%=t 'activity' %>
   </div>
@@ -14,21 +15,21 @@
               <input type="hidden" name="activity[source]" value="<%= @default_source %>">
               <input type="hidden" name="activity[group]" value="sport">
 
-              <input  id="activityname" type="search" name="activity_name" class="dataFormField" placeholder="Start typing or select..." disabled>
+              <input  id="activityname" type="search" name="activity_name" class="dataFormField" placeholder="<%=t :activity_name_placeholder%>" disabled>
               <input id="activity_type_id" name="activity[activity_type_id]" type="hidden">
 
-              <label for="activity_scale" style="margin-left: 20px;">Intensity</label>
+              <label for="activity_scale" style="margin-left: 20px;"><%=t :intensity%>"</label>
               <div class="dataScale">
                 <div id="activity_scale" class="dataFormField"></div>
               </div>
-              <div id="activity_percent" class="dataFormFieldUnit">Moderate</div>
+              <div id="activity_percent" class="dataFormFieldUnit"><%=t :activity_intensity_moderate%></div>
               <input id="activity_intensity" type="hidden" name="activity[intensity]"/>
 
               <input id='activity_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= (DateTime.current-30.minutes).strftime("%F %R") %>"/>
-              <div class="dataFormFieldUnit">start</div>
+              <div class="dataFormFieldUnit"><%=t :start%></div>
 
               <input id='activity_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-              <div class="dataFormFieldUnit">end</div>
+              <div class="dataFormFieldUnit"><%=t :end%></div>
 
             </div>
             <button class="dataFormField"><%=t 'button_add'%></button>
@@ -46,21 +47,21 @@
               <input type="hidden" name="activity[source]" value="<%= @default_source %>">
               <input type="hidden" name="activity[group]" value="other">
 
-              <input id="otheractivityname" type="search" name="activity_name" class="dataFormField" placeholder="Select..." disabled>
+              <input id="otheractivityname" type="search" name="activity_name" class="dataFormField" placeholder="<%=t :other_activity_name_placeholder%>" disabled>
               <input id="activity_other_type_id" name="activity[activity_type_id]" type="hidden">
 
-              <label for="activity_other_scale" style="margin-left: 20px;">Intensity</label>
+              <label for="activity_other_scale" style="margin-left: 20px;"><%=t :intensity%></label>
               <div class="dataScale">
                 <div id="activity_other_scale" class="dataFormField"></div>
               </div>
-              <div id="activity_other_percent" class="dataFormFieldUnit">Moderate</div>
+              <div id="activity_other_percent" class="dataFormFieldUnit"><%=t :activity_intensity_moderate%></div>
               <input id="activity_other_intensity" type="hidden" name="activity[intensity]"/>
 
               <input id='activity_other_start_datepicker' type='text' class="dataFormField" name="activity[start_time]" value="<%= (DateTime.current-30.minutes).strftime("%F %R") %>"/>
-              <div class="dataFormFieldUnit">start</div>
+              <div class="dataFormFieldUnit"><%=t :start%></div>
 
               <input id='activity_other_end_datepicker' type='text' class="dataFormField" name="activity[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-              <div class="dataFormFieldUnit">end</div>
+              <div class="dataFormFieldUnit"><%=t :end%></div>
 
             </div>
             <button class="dataFormField"><%=t 'button_add'%></button>

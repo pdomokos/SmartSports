@@ -15,15 +15,15 @@
                         <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
                         <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
 
-                        <input id="bp_sys" type="text" name="measurement[systolicbp]" class="dataFormField" placeholder="Systolic, eg: 120"/>
+                        <input id="bp_sys" type="text" name="measurement[systolicbp]" class="dataFormField" placeholder="<%=t 'bp_systolic_placeholer' %>"/>
 
                         <div class="dataFormFieldUnit">mmHg</div>
                         <br>
-                        <input id="bp_dia" type="text" name="measurement[diastolicbp]" class="dataFormField" placeholder="Diastolic, eg: 80"/>
+                        <input id="bp_dia" type="text" name="measurement[diastolicbp]" class="dataFormField" placeholder="<%=t 'bp_diastolic_placeholer' %>"/>
 
                         <div class="dataFormFieldUnit">mmHg</div>
                         <br>
-                        <input id="bp_hr" type="text" name="measurement[pulse]" class="dataFormField" placeholder="Heart rate, eg: 60"/>
+                        <input id="bp_hr" type="text" name="measurement[pulse]" class="dataFormField" placeholder="<%=t 'bp_pulse_placeholer' %>"/>
 
                         <div class="dataFormFieldUnit">1/min</div>
                         <br>
@@ -45,7 +45,7 @@
                     <div class="dataForm">
                         <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
                         <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
-                        <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField" placeholder="Blood Glucose, eg: 6.3"/>
+                        <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField" placeholder="<%=t 'glucose_placeholder' %>"/>
 
                         <div class="dataFormFieldUnit">mmol/L</div>
                         <br>
@@ -67,7 +67,7 @@
                         <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
                         <input type="hidden" name="measurement[meas_type]" value="weight" />
 
-                        <input id="weight" type="text" name="measurement[weight]" class="dataFormField"  placeholder="Body Weight, eg: 72"/>
+                        <input id="weight" type="text" name="measurement[weight]" class="dataFormField"  placeholder="<%=t 'weight_placeholder' %>"/>
 
                         <div class="dataFormFieldUnit">kg</div>
                         <br>
@@ -91,7 +91,7 @@
                         <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
                         <input type="hidden" name="measurement[meas_type]" value="waist" />
 
-                        <input id="waist" type="text" name="measurement[waist]" class="dataFormField" placeholder="Waist, eg: 63"/>
+                        <input id="waist" type="text" name="measurement[waist]" class="dataFormField" placeholder="<%=t 'waist_placeholder' %>"/>
 
                         <div class="dataFormFieldUnit">cm</div>
                         <br>
