@@ -39,18 +39,11 @@ class UsersController < ApplicationController
     @user.name = @user.username
     respond_to do |format|
       if @user.save
-        demo_user = User.where( :email => "balint.domokos@larkbio.com").first
-        if demo_user
-          friendship = Friendship.new({:user1_id => @user.id, :user2_id => demo_user.id, :authorized => true})
-          friendship.save
-        end
         UserMailer.delay.user_created_email(@user)
-
-        format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        format.json { render json: {:ok => true, :id => @user.id} }
       else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        puts @user.errors.full_messages.to_sentence
+        format.json { render json: { ok: false, msg: @user.errors.full_messages.to_sentence}, status: 401 }
       end
     end
   end

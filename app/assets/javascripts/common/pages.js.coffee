@@ -24,6 +24,7 @@
   define_globals()
 
 
+
   setInterval( () ->
     self.rotateLogo()
     self.changeColor()
@@ -39,6 +40,19 @@
     console.log "clicked"
     window.location = $("#settings-url")[0].value
 
+  $("#logoutForm").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
+
+    #    redir to main page
+    document.location = "/"
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log e
+    console.log xhr
+    console.log error
+
+    popup_error("Logout failed")
+  )
 
   $('body').on('click', "#infoOkButton", () ->
     $("#infoPopup").addClass("hidden")

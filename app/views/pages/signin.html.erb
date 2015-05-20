@@ -10,19 +10,19 @@
 
 <div id="loginDiv" class="loginDiv">
     <div>
-        <%= form_tag sessions_path, :method => :post do %>
+        <%= form_tag sessions_path, :method => :post, :remote => true, :id => 'loginForm' do %>
         <input id="username_field" name="email" type="text" class="loginField animField" placeholder="<%=t 'username' %>"/><br>
         <input id="password_field" name="password" type="password" class="loginField animField" placeholder="<%=t 'password' %>"/><br>
         <input type="submit" class="loginButton animButton" value="<%=t 'login_button' %>"/>
         <% end %>
         <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
-            <a class="forgottenPwLink" href="<%= sessions_reset_password_path %>"><%=t 'forgotten_password' %></a>
+            <a class="forgottenPwLink" href="<%= pages_reset_password_path %>"><%=t 'forgotten_password' %></a>
         </div>
     </div>
 </div>
 
 <% msg = "<a class=\"signupLink\" href=\"#{signup_path}\">"+ translate('create_account_part1')+ "</a> "+ translate('create_account_part2') %>
-<% if is_mobile_device? || is_tablet_device? %>
+<% if is_mobile_device? %>
     <!--Don't have an account yet? Create yours now and start managing your diabetes-related data-->
     <%= render partial: 'features.mobile', locals: { msg: msg} %>
 <% else %>

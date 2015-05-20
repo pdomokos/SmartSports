@@ -23,7 +23,7 @@
         <%= image_tag current_user.avatar.url(:medium), style: "width: 40px; height: 40px; float: left;border-radius: 30px" %>
 
         <div style="float: right;width: 30px;text-align: center;">
-          <%= form_tag logout_path, :method => :post do %>
+          <%= form_tag logout_path, :method => :post, :id => 'logoutForm', :remote => true do %>
               <input type="image" src="<%= image_url "menu/logout.png" %>"  style="width: 20px;padding-top: 15px;">
           <% end %>
         </div>
@@ -44,40 +44,7 @@
         </div>
     </div>
 
-    <div id="infoPopup" class="dataCaptured hidden">
-      <div class="inner">
-        <center>
-          <i class="fa fa-check-circle-o fa-5x info-icon"></i>
-        </center>
-        <div style="text-align: center;font-size: 24px;padding-top: 20px;">Done</div>
-        <div style="text-align: center;padding-left: 20px;padding-right: 20px;padding-top: 20px;color: #bababa;">
-          <span class="msg">Blood Pressure 120/80/60</span>
-        </div>
-      </div>
-      <div class="bottom">
-        <center>
-          <button id="infoOkButton" style="background: #8982c8;border: none;color: #ffffff;width: 90px; height: 40px;margin-top: 10px;">OK</button>
-        </center>
-      </div>
-    </div>
-
-    <div id="errorPopup" class="dataCaptured hidden">
-      <div class="inner">
-        <center>
-          <i class="fa fa-times-circle-o fa-5x error-icon"></i>
-        </center>
-        <div style="text-align: center;font-size: 24px;padding-top: 20px;">Failed</div>
-        <div style="text-align: center;padding-left: 20px;padding-right: 20px;padding-top: 20px;color: #bababa;">
-          <span class="msg">Blood Pressure 120/80/60</span>
-        </div>
-      </div>
-      <div class="bottom">
-        <center>
-          <button id="errorOkButton" style="background: #8982c8;border: none;color: #ffffff;width: 90px; height: 40px;margin-top: 10px;">OK</button>
-        </center>
-      </div>
-    </div>
-
+    <%= render partial: 'shared/popups' %>
 
 </body>
 </html>

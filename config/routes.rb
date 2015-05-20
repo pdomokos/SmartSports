@@ -93,12 +93,12 @@ Rails.application.routes.draw do
   get '/auth/shine/callback' => 'pages#misfitcb'
   get '/auth/google_oauth2/callback' => 'pages#googlecb'
 
+  get 'pages/reset_password'
+  get 'pages/signin'
+  get 'login' => 'pages#signin', :as => :login
+  get 'signup' => 'pages#signup', :as => :signup
+  post 'logout' => 'sessions#signout', :as => :logout
 
-  get 'sessions/reset_password'
-  get 'sessions/signin'
-  get 'login' => 'sessions#signin', :as => :login
-  get 'signup' => 'sessions#signup', :as => :signup
-  post 'logout' => 'sessions#destroy', :as => :logout
   resources :sessions
 
   # The priority is based upon order of creation: first created -> highest priority.

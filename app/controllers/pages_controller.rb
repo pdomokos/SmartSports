@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
   before_action :redir_mobile, except: [:mobilepage]
   before_action :set_locale
-
+  before_filter :require_login, except: [:signin, :signup, :reset_password]
   has_mobile_fu
   layout :which_layout
 
@@ -11,25 +11,18 @@ class PagesController < ApplicationController
   @fitbitconn = nil
   @googleconn = nil
 
-  def which_layout
-    is_mobile_device? || is_tablet_device? ? 'pages.mobile' : 'pages'
+  # login/register, resetpw
+  def reset_password
   end
 
-  def redir_mobile
-    if is_mobile_device? || is_tablet_device?
-      redirect_to action: 'mobilepage'
-    end
+  def signup
   end
 
-  def formats=(values)
-    # fall back to the browser view if the mobile or tablet version does not exist
-    values << :html if values == [:mobile] or values == [:tablet]
-
-    # DEBUG: force mobile. Uncomment if not debugging!
-    #values = [:mobile, :html] if values == [:html]
-    # values = [:tablet, :html] if values == [:html]
-
-    super(values)
+  def signin
+    browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    puts "browser locale: #{browser_locale}"
+    I18n.locale = browser_locale || I18n.default_locale
+    @user = User.new
   end
 
   def mobilepage
@@ -253,6 +246,33 @@ class PagesController < ApplicationController
   end
 
 private
+
+  def which_layout
+    if is_mobile_device?
+      'pages.mobile'
+    elsif action_name=='signin' || action_name=='signup' || action_name=='reset_password'
+      'auth'
+    else
+      'pages'
+    end
+  end
+
+  def redir_mobile
+    if is_mobile_device? || is_tablet_device?
+      redirect_to action: 'mobilepage'
+    end
+  end
+
+  def formats=(values)
+    # fall back to the browser view if the mobile or tablet version does not exist
+    values << :html if values == [:mobile] or values == [:tablet]
+
+    # DEBUG: force mobile. Uncomment if not debugging!
+    #values = [:mobile, :html] if values == [:html]
+    # values = [:tablet, :html] if values == [:html]
+
+    super(values)
+  end
 
   def get_shown_user(params)
     failed = false
