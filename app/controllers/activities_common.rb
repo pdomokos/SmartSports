@@ -31,8 +31,10 @@ module ActivitiesCommon
 
     respond_to do |format|
       if @activity.update_attributes(update_hash)
+        save_click_record(current_user.id, true, nil)
         format.json { render json: { :ok => true, :msg => "Updated successfully" } }
       else
+        save_click_record(current_user.id, false, "Update errror")
         format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
       end
     end
@@ -55,8 +57,10 @@ module ActivitiesCommon
 
     respond_to do |format|
       if @activity.destroy
+        save_click_record(current_user.id, true, nil)
         format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
       else
+        save_click_record(current_user.id, false, "Delete error")
         format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
       end
     end

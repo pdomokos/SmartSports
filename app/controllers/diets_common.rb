@@ -36,6 +36,7 @@ module DietsCommon
         update_hash[:fat] = amount*ft.fat
         update_hash[:prot] = amount*ft.prot
       else
+        save_click_record(current_user.id, false, "Invalid food_type_id")
         render json: { :ok => false, :msg => "Invalid food_type_id"}, status: 400
         return
       end
@@ -43,8 +44,10 @@ module DietsCommon
     end
     respond_to do |format|
       if @diet.update_attributes(update_hash)
+        save_click_record(current_user.id, true, nil)
         format.json { render json: { :ok => true, :msg => "Updated successfully" } }
       else
+        save_click_record(current_user.id, false, "Update error")
         format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
       end
     end
@@ -67,8 +70,10 @@ module DietsCommon
 
     respond_to do |format|
       if @diet.destroy
+        save_click_record(current_user.id, true, nil)
         format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
       else
+        save_click_record(current_user.id, false, "Delete error")
         format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
       end
     end

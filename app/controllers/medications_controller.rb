@@ -1,5 +1,7 @@
 class MedicationsController < ApplicationController
   include MedicationsCommon
+  include SaveClickRecord
+
   def index
     user_id = params[:user_id]
 
@@ -46,9 +48,11 @@ class MedicationsController < ApplicationController
 
     respond_to do |format|
       if medication.save
+        save_click_record(current_user.id, true, nil)
         format.json { render  json: {:status =>"OK", :result => {id: medication.id, medication_name: medication.medication_type.name}} }
       else
         print medication.errors.full_messages.to_sentence+"\n"
+        save_click_record(current_user.id, false, medication.errors.full_messages.to_sentence)
         format.json { render json: medication.errors, status: :unprocessable_entity }
       end
     end

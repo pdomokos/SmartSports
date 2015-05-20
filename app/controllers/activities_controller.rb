@@ -1,6 +1,7 @@
 class ActivitiesController < ApplicationController
   include ActivitiesCommon
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  include SaveClickRecord
 
   # GET /activities
   # GET /activities.json
@@ -87,9 +88,11 @@ class ActivitiesController < ApplicationController
     end
     respond_to do |format|
       if @activity.save
+        save_click_record(current_user.id, true, nil)
         format.json { render json: {:status => "OK", :result =>{ id: @activity.id, activity_name: @activity.activity_type.name}} }
       else
         logger.error @activity.errors.full_messages.to_sentence
+        save_click_record(current_user.id, false, @activity.errors.full_messages.to_sentence)
         format.json { render json: { :msg =>  @activity.errors.full_messages.to_sentence }, :status => 400 }
       end
     end

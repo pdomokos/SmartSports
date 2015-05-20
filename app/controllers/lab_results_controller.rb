@@ -1,5 +1,7 @@
 class LabResultsController < ApplicationController
   include LabResultsCommon
+  include SaveClickRecord
+
   def index
     user_id = params[:user_id]
 
@@ -34,9 +36,11 @@ class LabResultsController < ApplicationController
 
     respond_to do |format|
       if labresult.save
+        save_click_record(current_user.id, true, nil)
         format.json { render  json: {:status =>"OK", :result => labresult} }
       else
         print labresult.errors.full_messages.to_sentence+"\n"
+        save_click_record(current_user.id, false, labresult.errors.full_messages.to_sentence)
         format.json { render json: labresult.errors, status: :unprocessable_entity }
       end
     end

@@ -1,5 +1,6 @@
 class LifestylesController < ApplicationController
   before_action :set_lifestyle, only: [:show, :edit, :update, :destroy]
+  include SaveClickRecord
 
   # GET /lifestyles
   # GET /lifestyles.json
@@ -75,13 +76,14 @@ class LifestylesController < ApplicationController
         if @lifestyle.illness_type
           illness_name = @lifestyle.illness_type.name
         end
-
+        save_click_record(current_user.id, true, nil)
         format.json { render  json: {:status =>"OK", :result => {id: @lifestyle.id,
                                                                  group: @lifestyle.group,
                                                                  pain_name: @lifestyle.pain_type_name,
                                                                  illness_name: illness_name} }}
       else
         print @lifestyle.errors.full_messages.to_sentence+"\n"
+        save_click_record(current_user.id, false, @lifestyle.errors.full_messages.to_sentence)
         format.json { render json: { :msg =>  @lifestyle.errors.full_messages.to_sentence }, :status => 400 }
       end
     end

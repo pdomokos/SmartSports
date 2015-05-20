@@ -1,5 +1,6 @@
 class DietsController < ApplicationController
   include DietsCommon
+  include SaveClickRecord
 
   # GET /diets
   # GET /diets.json
@@ -82,9 +83,11 @@ class DietsController < ApplicationController
     end
     respond_to do |format|
       if @diet.save
+        save_click_record(current_user.id, true, nil)
         format.json { render json: {:status => "OK", :result => {id: @diet.id, diet_name: name}} }
       else
         logger.error @diet.errors.full_messages.to_sentence
+        save_click_record(current_user.id, false, @diet.errors.full_messages.to_sentence)
         format.json { render json: { :msg =>  @diet.errors.full_messages.to_sentence }, :status => 400 }
       end
     end

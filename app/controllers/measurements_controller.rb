@@ -2,6 +2,7 @@ class MeasurementsController < ApplicationController
   include MeasurementsCommon
   skip_before_filter :require_login, only: [:create]
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
+  include SaveClickRecord
 
   def new
     @measurement = Measurement.new
@@ -23,9 +24,11 @@ class MeasurementsController < ApplicationController
 
     respond_to do |format|
       if @measurement.save
+        save_click_record(current_user.id, true, nil)
         format.json { render json: { :status => "OK", :msg => "Saved successfully", :id => @measurement.id, :msg=> create_success_message() } }
       else
         msg =  @measurement.errors.full_messages.to_sentence+"\n"
+        save_click_record(current_user.id, false, @measurement.errors.full_messages.to_sentence)
         format.json { render json: { :msg => msg }, :status => 400 }
       end
     end

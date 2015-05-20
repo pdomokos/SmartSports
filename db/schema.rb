@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512115907) do
+ActiveRecord::Schema.define(version: 20150520134720) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -42,6 +42,20 @@ ActiveRecord::Schema.define(version: 20150512115907) do
     t.float  "kcal"
     t.string "category"
   end
+
+  create_table "click_records", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "operation_time"
+    t.string   "operation"
+    t.string   "url"
+    t.string   "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "success"
+  end
+
+  add_index "click_records", ["user_id", "operation_time", "operation"], name: "index_click_records"
+  add_index "click_records", ["user_id"], name: "index_click_records_on_user_id"
 
   create_table "connections", force: true do |t|
     t.string   "name"

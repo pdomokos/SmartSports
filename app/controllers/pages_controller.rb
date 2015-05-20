@@ -11,6 +11,8 @@ class PagesController < ApplicationController
   @fitbitconn = nil
   @googleconn = nil
 
+  include SaveClickRecord
+
   # login/register, resetpw
   def reset_password
   end
@@ -31,12 +33,14 @@ class PagesController < ApplicationController
 
   def dashboard
     @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
+    save_click_record(current_user.id, true, nil)
   end
 
   def health
       @activity = Summary.new
       @measurement = Measurement.new
       @measurements = current_user.measurements.where(source: @default_source).order(created_at: :desc).limit(4)
+      save_click_record(current_user.id, true, nil)
   end
 
   def exercise
@@ -44,6 +48,7 @@ class PagesController < ApplicationController
     @conn = current_user.connections
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
     @intensity_values = Activity.intensity_values
+    save_click_record(current_user.id, true, nil)
     # respond_to do |format|
     #   format.html
     #   format.json
@@ -61,16 +66,19 @@ class PagesController < ApplicationController
       user = current_user
     end
     @sensor_measurements = user.sensor_measurements.order(start_time: :desc)
+    save_click_record(current_user.id, true, nil)
   end
 
   def diet
     @diets = current_user.diets.where(source: @default_source).order(created_at: :desc).limit(4)
+    save_click_record(current_user.id, true, nil)
   end
 
   def medication
     @insulin_types = MedicationType.where(:group => "insulin")
     @oral_medication_types = MedicationType.where(:group => "oral")
     @medications = current_user.medications.order(created_at: :desc).limit(4)
+    save_click_record(current_user.id, true, nil)
   end
 
   def wellbeing
@@ -82,16 +90,18 @@ class PagesController < ApplicationController
     @periodPainList = Lifestyle.periodPainList.join(";")
     @periodVolumeList = Lifestyle.periodVolumeList.join(";")
     @painTypeList = Lifestyle.painTypeList.join(";")
+    save_click_record(current_user.id, true, nil)
   end
 
   def genetics
     @relativeList = JSON.dump(FamilyHistory.relativeList)
     @diseaseList = JSON.dump(FamilyHistory.diseaseList)
     @family_histories = current_user.family_histories.order(created_at: :desc).limit(4)
+    save_click_record(current_user.id, true, nil)
   end
 
   def analytics
-
+    save_click_record(current_user.id, true, nil)
   end
 
   def settings
@@ -125,6 +135,7 @@ class PagesController < ApplicationController
       @active_since_misfit = @misfitconn.created_at
       @last_sync_date_misfit = get_last_synced_date(current_user.id, "misfit")
     end
+    save_click_record(current_user.id, true, nil)
   end
 
   def profile
