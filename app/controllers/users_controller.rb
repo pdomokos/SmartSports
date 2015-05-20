@@ -5,6 +5,14 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    puts current_user.email
+    if !current_user.admin
+      respond_to do |format|
+        format.html { redirect_to errors_unauthorized_path }
+        format.json { render json: { :status => 'NOK', :msg => 'error_unauthorized' }, status: 403  }
+      end
+      return
+    end
     @users = User.all
   end
 

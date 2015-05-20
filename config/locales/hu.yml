@@ -49,6 +49,12 @@ hu:
   password: "Jelszó"
   password_confirm: "Jelszó megerősítése"
 
+# erorrs
+  back_home:      "Vissza"
+  failed:         "Hiba"
+  error_general:  "Hiba történt. Menjen vissza a főoldalra."
+  error_not_allowed: "Nem jogosult a kérés végrehajtására."
+
 # diet
   food:             "Étel"
   food_placeholer: "Írjon legalább 3 betűt..."

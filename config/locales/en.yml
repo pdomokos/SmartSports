@@ -70,6 +70,12 @@ en:
   password: "Password"
   password_confirm: "Confirm password"
 
+# erorrs
+  back_home:      "Back"
+  failed:         "Error"
+  error_general:  "An error occurred. Go back."
+  error_not_allowed: "Not authorized for this resource."
+
 # diet
   food: "Food"
   food_placeholer: "Type at least three letters..."

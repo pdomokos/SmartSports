@@ -1,0 +1,16 @@
+<div id="errorPopup" class="dataCaptured">
+  <div class="inner">
+    <center>
+      <i class="fa fa-times-circle-o fa-5x error-icon"></i>
+    </center>
+    <div style="text-align: center;font-size: 24px;padding-top: 20px;"><%=t :failed %></div>
+    <div style="text-align: center;padding-left: 20px;padding-right: 20px;padding-top: 20px;color: #bababa;">
+      <span class="msg"><%=t :error_not_allowed%></span>
+    </div>
+  </div>
+  <div class="bottom">
+    <center>
+      <button id="goBackButton" class="errorBox" onclick="location.href = '<%= url_for( controller: 'pages', action: 'diet') %>';"><%=t :back_home%></button>
+    </center>
+  </div>
+</div>

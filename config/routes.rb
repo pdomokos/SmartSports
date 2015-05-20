@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'errors/general'
+  get 'errors/unauthorized'
+
   use_doorkeeper
 
   namespace :api do
@@ -153,5 +156,10 @@ Rails.application.routes.draw do
   #   end
 
   root :to => "pages#diet"
+  #handles invalid locale
+  #get '/*locale/*path', to: redirect("/#{I18n.default_locale}/%{path}")
+  # handles /pages/... without locale
   get '/pages/:path', to: redirect("/#{I18n.default_locale}/pages/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
+  # handles /
+  get '', to: redirect("/#{I18n.locale}/pages/diet")
 end

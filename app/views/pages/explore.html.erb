@@ -37,9 +37,10 @@
 
 </div>
 
+<script>
+    pages_menu();
+    explore_loaded();
+</script>
 <% content_for :menu do %>
     <%= render "menu" %>
-<% end %>
-<% content_for :page_logic do %>
-    explore_loaded()
 <% end %>
