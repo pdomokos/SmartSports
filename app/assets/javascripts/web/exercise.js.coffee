@@ -39,9 +39,9 @@ init_exercise = () ->
       if ui.value == 1
         $("#activity_other_percent").html(intensities[0])
       else if ui.value == 2
-        $("#activity_other_percent").html(intensities[0])
+        $("#activity_other_percent").html(intensities[1])
       else if ui.value == 3
-        $("#activity_other_percent").html(intensities[0])
+        $("#activity_other_percent").html(intensities[2])
     change: (event, ui) ->
       $("#activity_other_intensity").val(ui.value)
   })

@@ -13,8 +13,6 @@ class Activity < ActiveRecord::Base
   end
 
   def title
-    puts I18n.t :intensity
-
     self.try(:activity_type).try(:name) || (I18n.t :activity_unknown)
   end
 

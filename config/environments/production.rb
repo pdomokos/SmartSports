@@ -101,14 +101,14 @@ Rails.application.configure do
   MAIL_CONFIG = YAML.load_file(mail_config_fname)[::Rails.env]
 
   config.action_mailer.default_url_options = {
-      :host => 'app.smartsport.me'
+      :host => 'app.smartdiab.com'
   }
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-      :domain => 'smartsport.me',
+      :domain => 'smartdiab.com',
       :address              => MAIL_CONFIG['host'],
       :port                 => 465,
       :user_name            => MAIL_CONFIG['user'],

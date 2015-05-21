@@ -258,8 +258,8 @@ private
   end
 
   def redir_mobile
-    if is_mobile_device? || is_tablet_device?
-      redirect_to action: 'mobilepage'
+    if is_mobile_device?
+      redirect_to url_for( :action => 'mobilepage', :locale => I18n.locale )
     end
   end
 

@@ -1,5 +1,5 @@
 <div class="training-block mainContent" id="training-container">
-  <input id="intensity_values" value="<%= @intensity_values.join(';')%>" type="hidden" >
+  <input id="intensity_values" value="<%= Activity.intensity_values.join(";")%>" type="hidden" >
   <div class="sectionTitle exerciseBodyLogo exerciseColor">
     <%=t 'activity' %>
   </div>
@@ -18,7 +18,7 @@
               <input  id="activityname" type="search" name="activity_name" class="dataFormField" placeholder="<%=t :activity_name_placeholder%>" disabled>
               <input id="activity_type_id" name="activity[activity_type_id]" type="hidden">
 
-              <label for="activity_scale" style="margin-left: 20px;"><%=t :intensity%>"</label>
+              <label for="activity_scale" style="margin-left: 20px;"><%=t :intensity%></label>
               <div class="dataScale">
                 <div id="activity_scale" class="dataFormField"></div>
               </div>
