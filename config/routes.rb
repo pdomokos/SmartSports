@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :food_types
   resources :activity_types
   resources :illness_types
+  resources :click_records
   resources :users do
     resources :summaries
     resources :activities
