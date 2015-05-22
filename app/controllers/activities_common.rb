@@ -6,12 +6,12 @@ module ActivitiesCommon
     @activity = Activity.find_by_id(params[:id])
 
     if @activity.nil?
-      render json: { :ok => false, :msg => "Param 'activity' missing"}, status: 400
+      send_error_json( @activity.id, "Param 'activity' missing", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@activity.id, "Unauthorized", 403)
       return
     end
 
@@ -29,14 +29,11 @@ module ActivitiesCommon
       update_hash[:group] = params['activity']['group']
     end
 
-    respond_to do |format|
-      if @activity.update_attributes(update_hash)
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Updated successfully" } }
-      else
-        save_click_record(current_user.id, false, "Update errror")
-        format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
-      end
+
+    if @activity.update_attributes(update_hash)
+      send_success_json(@activity.id)
+    else
+      send_error_json(@activity.id,"Update error", 400)
     end
 
   end
@@ -46,23 +43,19 @@ module ActivitiesCommon
   def destroy
     @activity = Activity.find_by_id(params[:id])
     if @activity.nil?
-      render json: { :ok => false}, status: 400
+      send_error_json(nil, "Delete error", 400)
       return
     end
 
+    currid = @activity.id
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(currid, "Unauthorized", 403)
       return
     end
-
-    respond_to do |format|
-      if @activity.destroy
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
-      else
-        save_click_record(current_user.id, false, "Delete error")
-        format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
-      end
+    if @activity.destroy
+      send_success_json(currid, {})
+    else
+      send_error_json(currid, "Delete error", 400)
     end
   end
 

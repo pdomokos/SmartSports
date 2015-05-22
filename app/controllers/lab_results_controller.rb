@@ -25,6 +25,9 @@ class LabResultsController < ApplicationController
     end
   end
 
+  # send_success_json(medication.id, {medication_name: medication.medication_type.name})
+  # send_error_json(medication.id, medication.errors.full_messages.to_sentence, 401)
+
   # POST /users/[user_id]/lab_results
   # POST /users/[user_id]/lab_results.json
   def create
@@ -34,15 +37,10 @@ class LabResultsController < ApplicationController
     print par
     labresult = LabResult.new(par)
 
-    respond_to do |format|
-      if labresult.save
-        save_click_record(current_user.id, true, nil)
-        format.json { render  json: {:status =>"OK", :result => labresult} }
-      else
-        print labresult.errors.full_messages.to_sentence+"\n"
-        save_click_record(current_user.id, false, labresult.errors.full_messages.to_sentence)
-        format.json { render json: labresult.errors, status: :unprocessable_entity }
-      end
+    if labresult.save
+      send_success_json(labresult.id, {category: labresult.category})
+    else
+      send_error_json(nil, labresult.errors.full_messages.to_sentence, 401)
     end
   end
 

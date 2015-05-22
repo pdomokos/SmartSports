@@ -148,12 +148,12 @@
     $('#illnessname').val(null)
     $('#pain_name').val(null)
     console.log data
-    msg = capitalize(data['result']['group'])
-    if data['result']['group']=='illness'
-      msg = data['result']['illness_name']
+    msg = capitalize(data['group'])
+    if data['group']=='illness'
+      msg = data['illness_name']
     else
-      if data['result']['group'] =='pain'
-        msg = data['result']['pain_name']
+      if data['group'] =='pain'
+        msg = data['pain_name']
     popup_success(msg+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     alert("Failed to create object.")

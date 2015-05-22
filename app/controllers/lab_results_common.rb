@@ -6,12 +6,12 @@ module LabResultsCommon
     @labresult = LabResult.find_by_id(params[:id])
 
     if @labresult.nil?
-      render json: { :ok => false, :msg => "Param 'labresult' missing"}, status: 400
+      send_error_json(nil, "Param 'labresult' missing", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@labresult.id, "Unauthorized", 403)
       return
     end
 
@@ -28,14 +28,10 @@ module LabResultsCommon
       update_hash[:ketone] = params['labresult']['ketone'].to_s
     end
 
-    respond_to do |format|
-      if @labresult.update_attributes(update_hash)
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Updated successfully" } }
-      else
-        save_click_record(current_user.id, false, "Update error")
-        format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
-      end
+    if @labresult.update_attributes(update_hash)
+      send_success_json(@labresult.id, {:msg => "Updated successfully"})
+    else
+      send_error_json(@labresult.id, "Update error", 400)
     end
 
   end
@@ -45,23 +41,19 @@ module LabResultsCommon
   def destroy
     @labresult = LabResult.find(params[:id])
     if @labresult.nil?
-      render json: { :ok => false}, status: 400
+      send_error_json(nil, "Delete error", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@labresult.id, "Unauthorized", 403)
       return
     end
 
-    respond_to do |format|
-      if @labresult.destroy
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
-      else
-        save_click_record(current_user.id, false, "Delete error")
-        format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
-      end
+    if @labresult.destroy
+      send_success_json(@labresult.id, {:msg => "Deleted successfully"})
+    else
+      send_error_json(@labresult.id, "Delete error", 400)
     end
   end
 

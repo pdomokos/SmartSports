@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520134720) do
+ActiveRecord::Schema.define(version: 20150522072554) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20150520134720) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "success"
+    t.integer  "row_id"
+    t.string   "msg"
   end
 
   add_index "click_records", ["user_id", "operation_time", "operation"], name: "index_click_records"

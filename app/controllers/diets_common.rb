@@ -6,12 +6,12 @@ module DietsCommon
     @diet = Diet.find_by_id(params[:id])
 
     if @diet.nil?
-      render json: { :ok => false, :msg => "Param 'diet' missing"}, status: 400
+      send_error_json(nil,  "Param 'diet' missing", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@diet.id,  'Unauthorized', 403)
       return
     end
 
@@ -36,20 +36,16 @@ module DietsCommon
         update_hash[:fat] = amount*ft.fat
         update_hash[:prot] = amount*ft.prot
       else
-        save_click_record(current_user.id, false, "Invalid food_type_id")
-        render json: { :ok => false, :msg => "Invalid food_type_id"}, status: 400
+        send_error_json(@diet.id,  "Invalid food type", 400)
         return
       end
 
     end
-    respond_to do |format|
-      if @diet.update_attributes(update_hash)
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Updated successfully" } }
-      else
-        save_click_record(current_user.id, false, "Update error")
-        format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
-      end
+
+    if @diet.update_attributes(update_hash)
+      send_success_json(@diet.id, { diet_name: @diet.diet_name})
+    else
+      send_error_json(@diet.id,  @diet.errors.full_messages.to_sentence, 400)
     end
 
   end
@@ -59,24 +55,22 @@ module DietsCommon
   def destroy
     @diet = Diet.find(params[:id])
     if @diet.nil?
-      render json: { :ok => false}, status: 400
+      send_error_json(nil,  "Failed to delete", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@diet.id,  "Unauthorized", 403)
       return
     end
 
-    respond_to do |format|
-      if @diet.destroy
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
-      else
-        save_click_record(current_user.id, false, "Delete error")
-        format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
-      end
+    if @diet.destroy
+
+      send_success_json(@diet.id, { diet_name: @diet.diet_name})
+    else
+      send_error_json(@diet.id,  "Delete error", 400)
     end
+
   end
 
   def check_owner()

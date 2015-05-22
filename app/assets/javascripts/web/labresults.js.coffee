@@ -93,7 +93,7 @@
     $("#ldl_chol").val(null)
     $("#egfr_epi").val(null)
     $("#ketone").val(null)
-    popup_success(capitalize(data['result']['category'])+" saved successfully")
+    popup_success(capitalize(data['category'])+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     popup_error("Failed to create labresult")

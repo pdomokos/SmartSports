@@ -2,7 +2,6 @@ class MeasurementsController < ApplicationController
   include MeasurementsCommon
   skip_before_filter :require_login, only: [:create]
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
-  include SaveClickRecord
 
   def new
     @measurement = Measurement.new
@@ -11,7 +10,7 @@ class MeasurementsController < ApplicationController
   def create
     user_id = params[:user_id].to_i
     if user_id != current_user.id
-      render json: { :msg => "Unauthorized" }, :status => 401
+      send_error_json(nil, "Unauthorized", 403)
       return
     end
     par = measurement_params
@@ -22,15 +21,11 @@ class MeasurementsController < ApplicationController
       @measurement.date = DateTime.now
     end
 
-    respond_to do |format|
-      if @measurement.save
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :status => "OK", :msg => "Saved successfully", :id => @measurement.id, :msg=> create_success_message() } }
-      else
-        msg =  @measurement.errors.full_messages.to_sentence+"\n"
-        save_click_record(current_user.id, false, @measurement.errors.full_messages.to_sentence)
-        format.json { render json: { :msg => msg }, :status => 400 }
-      end
+    if @measurement.save
+      send_success_json(@measurement.id, {msg: create_success_message() } )
+    else
+      msg =  @measurement.errors.full_messages.to_sentence+"\n"
+      send_error_json(@activity.id, msg, 400)
     end
   end
 
@@ -44,7 +39,6 @@ class MeasurementsController < ApplicationController
   end
 
   def index
-
     user_id = params[:user_id]
     summary = (params[:summary] and params[:summary] == "true")
     start = params[:start]

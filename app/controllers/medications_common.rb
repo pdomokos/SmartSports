@@ -6,12 +6,12 @@ module MedicationsCommon
     @medication = Medication.find_by_id(params[:id])
 
     if @medication.nil?
-      render json: { :ok => false, :msg => "Param 'medication' missing"}, status: 400
+      send_error_json(nil, "Param 'medication' missing", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@medication.id, "Unauthorized", 403)
       return
     end
 
@@ -29,19 +29,15 @@ module MedicationsCommon
       if !mt.nil?
         update_hash[:medication_type_id] = mt.id
       else
-        render json: { :ok => false, :msg => "Invalid medication_type_id"}, status: 400
+        send_error_json(nil, "Invalid medication_type_id", 400)
         return
       end
     end
 
-    respond_to do |format|
-      if @medication.update_attributes(update_hash)
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Updated successfully" } }
-      else
-        save_click_record(current_user.id, false, "Update error")
-        format.json { render json: { :ok => false, :msg => "Update errror" }, :status => 400 }
-      end
+    if @medication.update_attributes(update_hash)
+      send_success_json(@medication.id, {:msg => "Updated successfully"})
+    else
+      send_error_json(@medication.id, "Update error", 400)
     end
 
   end
@@ -51,24 +47,21 @@ module MedicationsCommon
   def destroy
     @medication = Medication.find(params[:id])
     if @medication.nil?
-      render json: { :ok => false}, status: 400
+      send_error_json(nil, "Delete error", 400)
       return
     end
 
     if !check_owner()
-      render json: { :ok => false}, status: 403
+      send_error_json(@medication.id, "Unauthorized", 403)
       return
     end
 
-    respond_to do |format|
-      if @medication.destroy
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: { :ok => true, :msg => "Deleted successfully" } }
-      else
-        save_click_record(current_user.id, false, "Delete error")
-        format.json { render json: { :ok => false, :msg => "Delete errror" }, :status => 400 }
-      end
+    if @medication.destroy
+      send_success_json(@medication.id, {:msg => "Deleted successfully"})
+    else
+      send_error_json(@medication.id, "Delete error", 400)
     end
+
   end
 
   def check_owner()

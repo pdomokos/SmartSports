@@ -20,7 +20,7 @@
     $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
 
     loadMedicationHistory()
-    popup_success(data['result']['medication_name']+" saved successfully")
+    popup_success(data['medication_name']+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)

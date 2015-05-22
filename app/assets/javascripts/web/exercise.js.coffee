@@ -54,25 +54,39 @@ init_exercise = () ->
   $('#activity_other_end_datepicker').datetimepicker(timepicker_defaults)
 #  $('#running_datepicker').datetimepicker(timepicker_defaults)
 
-  $("form.resource-create-form.exercise-form").on("ajax:success", (e, data, status, xhr) ->
+  $("#exercise-create-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
 
     $("#"+form_id+" input.dataFormField").val("")
     $('#activity_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
+    $('#activity_type_id').val(null)
+
+    loadExerciseHistory()
+    console.log data
+    popup_success(data['activity_name']+" saved successfully")
+  ).on("ajax:error", (e, xhr, status, error) ->
+    $('#activity_type_id').val(null)
+    popup_error("Failed to create "+$("#activityname").val())
+  )
+
+  $("#regular-activity-create-form").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
+
+    $("#"+form_id+" input.dataFormField").val("")
     $('#activity_other_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_other_end_datepicker').val(moment().format(moment_fmt))
-    $('#activity_type_id').val(null)
     $('#activity_other_type_id').val(null)
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['result']['activity_name']+" saved successfully")
+    popup_success(data['activity_name']+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#activity_type_id').val(null)
     $('#activity_other_type_id').val(null)
-    popup_error("Failed to create "+$("#activityname").val())
+    popup_error("Failed to create "+$("#otheractivityname").val())
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->

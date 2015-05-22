@@ -1,7 +1,6 @@
 class ActivitiesController < ApplicationController
   include ActivitiesCommon
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
-  include SaveClickRecord
 
   # GET /activities
   # GET /activities.json
@@ -77,28 +76,32 @@ class ActivitiesController < ApplicationController
     if not @activity.start_time
       @activity.start_time = DateTime.now
     end
-    if not @activity.duration
+    actType = ActivityType.find_by_id(@activity.activity_type_id)
+    if actType.nil?
+      send_error_json(nil, "Invalid activity type", 404)
+      return
+    elsif not @activity.duration
       if @activity.start_time && @activity.end_time
         @activity.duration = ((@activity.end_time-@activity.start_time) / 60).to_i
-        type = ActivityType.find(@activity.activity_type_id)
-        @activity.calories = @activity.duration * type.kcal / 10
-        if @activity.intensity == 1.0
-          @activity.calories = @activity.calories * 0.8
-        elsif @activity.intensity == 3.0
-          @activity.calories = @activity.calories * 1.2
-        end
       end
     end
-    respond_to do |format|
+
+    if @activity.duration
+      @activity.calories = @activity.duration * actType.kcal / 10
+      if @activity.intensity == 1.0
+        @activity.calories = @activity.calories * 0.8
+      elsif @activity.intensity == 3.0
+        @activity.calories = @activity.calories * 1.2
+      end
+    end
+
+    # respond_to do |format|
       if @activity.save
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: {:status => "OK", :result =>{ id: @activity.id, activity_name: @activity.activity_type.name}} }
+        send_success_json(@activity.id, {activity_name: @activity.activity_type.name})
       else
-        logger.error @activity.errors.full_messages.to_sentence
-        save_click_record(current_user.id, false, @activity.errors.full_messages.to_sentence)
-        format.json { render json: { :msg =>  @activity.errors.full_messages.to_sentence }, :status => 400 }
+        send_error_json(nil, @activity.errors.full_messages.to_sentence, 400)
       end
-    end
+    # end
   end
 
   private

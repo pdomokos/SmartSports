@@ -57,7 +57,7 @@
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     loadDietHistory()
-    popup_success(data['result']['diet_name']+" saved successfully")
+    popup_success(data['diet_name']+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)

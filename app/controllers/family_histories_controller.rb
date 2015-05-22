@@ -35,25 +35,21 @@ class FamilyHistoriesController < ApplicationController
     user = User.find(user_id)
     @family_history = user.family_histories.build(family_history_params)
 
-    respond_to do |format|
-      if @family_history.save
-        format.json { render json: {:status => "OK", :result => @family_history} }
-      else
-        logger.error @family_history.errors.full_messages.to_sentence
-        format.json { render json: { :msg =>  @family_history.errors.full_messages.to_sentence }, :status => 400 }
-      end
+    if @family_history.save
+      send_success_json(nil, {disease: @family_history.disease})
+    else
+      send_error_json(@family_history.id, @family_history.errors.full_messages.to_sentence, 400)
     end
+
   end
 
   # DELETE /users/:user_id/family_histories/:id
   def destroy
     set_family_history
-    respond_to do |format|
-      if @family_history.destroy
-        format.json { render json: { :status => "OK", :msg => "Deleted successfully" } }
-      else
-        format.json { render json: { :status => "NOK", :msg => "Delete errror" }, :status => 400 }
-      end
+    if @family_history.destroy
+      send_success_json(@family_history.id, {:msg => "Deleted successfully"})
+    else
+      send_error_json(@family_history.id, "Delete error", 400)
     end
   end
 

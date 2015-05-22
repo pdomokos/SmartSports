@@ -1,6 +1,5 @@
 class DietsController < ApplicationController
   include DietsCommon
-  include SaveClickRecord
 
   # GET /diets
   # GET /diets.json
@@ -69,27 +68,18 @@ class DietsController < ApplicationController
       @diet.date = DateTime.now
     end
 
-    name = nil
     if (@diet.type=='Food' || @diet.type=='Drink' ) && @diet.food_type
       ft = @diet.food_type
       @diet.calories = @diet.amount*ft.kcal
       @diet.carbs = @diet.amount*ft.carb
       @diet.fat = @diet.amount*ft.fat
       @diet.prot = @diet.amount*ft.prot
-      name = @diet.food_type.name
     end
-    if @diet.type=="Smoke"
-      name = @diet.name
-    end
-    respond_to do |format|
-      if @diet.save
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: {:status => "OK", :result => {id: @diet.id, diet_name: name}} }
-      else
-        logger.error @diet.errors.full_messages.to_sentence
-        save_click_record(current_user.id, false, @diet.errors.full_messages.to_sentence)
-        format.json { render json: { :msg =>  @diet.errors.full_messages.to_sentence }, :status => 400 }
-      end
+
+    if @diet.save
+      send_success_json(@diet.id, { diet_name: @diet.diet_name})
+    else
+      send_error_json(nil,  @diet.errors.full_messages.to_sentence, 400)
     end
   end
 

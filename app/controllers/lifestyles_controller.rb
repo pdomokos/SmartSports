@@ -1,6 +1,5 @@
 class LifestylesController < ApplicationController
   before_action :set_lifestyle, only: [:show, :edit, :update, :destroy]
-  include SaveClickRecord
 
   # GET /lifestyles
   # GET /lifestyles.json
@@ -73,37 +72,26 @@ class LifestylesController < ApplicationController
       @lifestyle.start_time = DateTime.now
     end
 
-    # @lifestyle = @user.lifestyles.create(lifestyle_params)
-    respond_to do |format|
-      if @lifestyle.save
-        illness_name = nil
-        if @lifestyle.illness_type
-          illness_name = @lifestyle.illness_type.name
-        end
-        save_click_record(current_user.id, true, nil)
-        format.json { render  json: {:status =>"OK", :result => {id: @lifestyle.id,
-                                                                 group: @lifestyle.group,
-                                                                 pain_name: @lifestyle.pain_type_name,
-                                                                 illness_name: illness_name} }}
-      else
-        print @lifestyle.errors.full_messages.to_sentence+"\n"
-        save_click_record(current_user.id, false, @lifestyle.errors.full_messages.to_sentence)
-        format.json { render json: { :msg =>  @lifestyle.errors.full_messages.to_sentence }, :status => 400 }
+    if @lifestyle.save
+      illness_name = nil
+      if @lifestyle.illness_type
+        illness_name = @lifestyle.illness_type.name
       end
+      send_success_json(@lifestyle.id, {group: @lifestyle.group,
+                                        pain_name: @lifestyle.pain_type_name,
+                                        illness_name: illness_name})
+    else
+      send_error_json(nil, @lifestyle.errors.full_messages.to_sentence, 400)
     end
   end
 
   # PATCH/PUT /lifestyles/1
   # PATCH/PUT /lifestyles/1.json
   def update
-    respond_to do |format|
-      if @lifestyle.update(lifestyle_params)
-        format.html { redirect_to user_lifestyle_url(@lifestyle.user, @lifestyle), notice: 'Lifestyle was successfully updated.' }
-        format.json { render json: { :status => "OK", :result => @lifestyle } }
-      else
-        format.html { render :edit }
-        format.json { render json: @lifestyle.errors, status: :unprocessable_entity }
-      end
+    if @lifestyle.update(lifestyle_params)
+      send_success_json(@lifestyle.id, {})
+    else
+      send_error_json(@lifestyle.id, @lifestyle.errors.full_messages.to_sentence, 400)
     end
   end
 
@@ -111,10 +99,10 @@ class LifestylesController < ApplicationController
   # DELETE /lifestyles/1.json
   def destroy
     user = @lifestyle.user
-    @lifestyle.destroy
-    respond_to do |format|
-      format.html { redirect_to user_lifestyles_url(user), notice: 'Lifestyle was successfully destroyed.' }
-      format.json { head :no_content }
+    if @lifestyle.destroy
+      send_success_json(@lifestyle.id, {:msg => "Deleted successfully"})
+    else
+      send_error_json(@lifestyle.id, "Delete failed", 400)
     end
   end
 

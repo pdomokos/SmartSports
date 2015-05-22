@@ -43,7 +43,7 @@
     $("#"+form_id+" input.dataFormField").val("")
     $("#gen_hist_note").val("")
     load_family_histories()
-    popup_success(data['result']['disease']+" saved successfully")
+    popup_success(data['disease']+" saved successfully")
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error("Failed to save family history")
   )

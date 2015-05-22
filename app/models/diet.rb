@@ -16,4 +16,16 @@ class Diet < ActiveRecord::Base
   def as_json(options={})
     super(options.merge({:methods => :type}))
   end
+
+  def diet_name
+    name = nil
+    if self.type=="Smoke"
+      name = self.name
+    else
+      name = self.try(:food_type).try(:name)
+    end
+
+    return name
+  end
+
 end

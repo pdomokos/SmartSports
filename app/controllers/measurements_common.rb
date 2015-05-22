@@ -6,12 +6,12 @@ module MeasurementsCommon
     @measurement = Measurement.find_by_id(params[:id])
 
     if @measurement.nil?
-      render json: {:ok => false, :msg => "Param 'measurement' missing"}, status: 400
+      send_error_json(nil, "Param 'measurement' missing", 400)
       return
     end
 
     if !check_owner()
-      render json: {:ok => false}, status: 403
+      send_error_json(nil, "Unauthorized", 403)
       return
     end
 
@@ -42,15 +42,12 @@ module MeasurementsCommon
       end
     end
 
-    respond_to do |format|
-      if @measurement.update_attributes(update_hash)
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: {:ok => true, :msg => "Updated successfully"} }
-      else
-        save_click_record(current_user.id, false, "Update_error")
-        format.json { render json: {:ok => false, :msg => "Update errror"}, :status => 400 }
-      end
+    if @measurement.update_attributes(update_hash)
+      send_success_json(@measurement.id, {})
+    else
+      send_error_json(nil, "Update error", 400)
     end
+
   end
 
 # DELETE /measurements/1
@@ -58,23 +55,19 @@ module MeasurementsCommon
   def destroy
     @measurement = Measurement.find(params[:id])
     if @measurement.nil?
-      render json: {:ok => false}, status: 400
+      send_error_json(nil, "Delete error", 400)
       return
     end
 
     if !check_owner()
-      render json: {:ok => false}, status: 403
+      send_error_json(@measurement.id, "Unauthorized", 403)
       return
     end
 
-    respond_to do |format|
-      if @measurement.destroy
-        save_click_record(current_user.id, true, nil)
-        format.json { render json: {:ok => true, :msg => "Deleted successfully"} }
-      else
-        save_click_record(current_user.id, false, "Delete error")
-        format.json { render json: {:ok => false, :msg => "Delete errror"}, :status => 400 }
-      end
+    if @measurement.destroy
+      send_success_json(@measurement.id, {})
+    else
+      send_error_json(@measurement.id, "Delete error", 400)
     end
   end
 
