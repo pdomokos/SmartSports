@@ -9,7 +9,11 @@ class MedicationsController < ApplicationController
     order = params[:order]
     limit = params[:limit]
     favourites = params[:favourites]
+    lang = params[:lang]
 
+    if lang
+      I18n.locale=lang
+    end
     u = User.find(user_id)
     @medications = u.medications
 

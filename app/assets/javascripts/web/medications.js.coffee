@@ -55,7 +55,8 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent medications"
-  url = '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=10'
+  lang = $("#data-lang-medication")[0].value
+  url = '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
   if fav
     console.log "loading favorites"
     url = url+"&favourites=true"

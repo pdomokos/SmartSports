@@ -17,8 +17,8 @@
         end
         JSON.dump(d)
     %>">
-    <span class="itemTitle"><%= activity_item.title %></span><span> <%= activity_item.subtitle %></span><br/>
-    <span><%= activity_item.start_time.strftime("%F %H:%M") if activity_item.start_time %> </span>
+    <span class="itemTitle"><%= activity_item.title %></span><span> <%=(t :intensities).split(" ")[activity_item.intensity-1]%></span><br/>
+    <span><%=(t :start)%>: <%= activity_item.start_time.strftime("%F %H:%M") if activity_item.start_time %> <%=(t :end)%>: <%= activity_item.end_time.strftime("%F %H:%M") if activity_item.end_time %></span>
 
     <div class="right">
       <% if activity_item.calories %>
@@ -50,3 +50,4 @@
     <% end %>
   </td>
 </tr>
+

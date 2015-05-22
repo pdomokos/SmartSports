@@ -11,13 +11,13 @@
   $('#periods_start_datepicker').datetimepicker(timepicker_defaults)
   $('#periods_end_datepicker').datetimepicker(timepicker_defaults)
 
-  sleepList = $("#sleepList").val().split(";")
-  stressList = $("#stressList").val().split(";")
-  illnessList = $("#illnessList").val().split(";")
-  painList = $("#painList").val().split(";")
-  periodPainList = $("#periodPainList").val().split(";")
-  periodVolumeList = $("#periodVolumeList").val().split(";")
-  painTypeList = $("#painTypeList").val().split(";")
+  sleepList = $("#sleepList").val().split(",")
+  stressList = $("#stressList").val().split(",")
+  illnessList = $("#illnessList").val().split(",")
+  painList = $("#painList").val().split(",")
+  periodPainList = $("#periodPainList").val().split(",")
+  periodVolumeList = $("#periodVolumeList").val().split(",")
+  painTypeList = $("#painTypeList").val().split(",")
 
   load_illness_types()
   load_lifestyles()
@@ -180,7 +180,8 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lifestyles"
-  $.ajax '/users/' + current_user + '/lifestyles.js?source='+window.default_source+'&order=desc&limit=10',
+  lang = $("#data-lang-wellbeing")[0].value
+  $.ajax '/users/' + current_user + '/lifestyles.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent lifestyles AJAX Error: #{textStatus}"

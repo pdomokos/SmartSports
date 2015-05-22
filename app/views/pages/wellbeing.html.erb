@@ -1,12 +1,13 @@
-<input id="sleepList" type="hidden" value="<%= @sleepList %>">
-<input id="stressList" type="hidden" value="<%= @stressList %>">
-<input id="illnessList" type="hidden" value="<%= @illnessList %>">
-<input id="painList" type="hidden" value="<%= @painList %>">
-<input id="periodPainList" type="hidden" value="<%= @periodPainList %>">
-<input id="periodVolumeList" type="hidden" value="<%= @periodVolumeList %>">
-<input id="painTypeList" type="hidden" value="<%= @painTypeList %>">
+<input id="sleepList" type="hidden" value="<%=t :sleepList%>">
+<input id="stressList" type="hidden" value="<%=t :stressList %>">
+<input id="illnessList" type="hidden" value="<%=t :illnessList %>">
+<input id="painList" type="hidden" value="<%=t :painList %>">
+<input id="periodPainList" type="hidden" value="<%=t :periodPainList %>">
+<input id="periodVolumeList" type="hidden" value="<%=t :periodVolumeList %>">
+<input id="painTypeList" type="hidden" value="<%=t :painTypeList %>">
 
 <div class="wellbeing-block mainContent" id="wellbeing-container">
+        <input id="data-lang-wellbeing" value="<%=I18n.locale%>" type="hidden" />
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
             <%=t 'wellbeing'%>
         </div>
@@ -22,18 +23,18 @@
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="sleep"/>
 
-                            <label for="sleep_scale" style="margin-left: 20px;">Quality</label>
+                            <label for="sleep_scale" style="margin-left: 20px;"><%=t 'quality'%></label>
                             <br/>
                             <div class="dataScale">
                                 <div id="sleep_scale" class="dataFormField"></div>
                             </div>
-                            <div id="sleep_percent" class="dataFormFieldUnitHalf">Fairly good</div>
+                            <div id="sleep_percent" class="dataFormFieldUnitHalf"><%=t 'sleep_fairly_good'%></div>
 
                             <input id='sleep_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                            <div class="dataFormFieldUnit">start</div>
+                            <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
                             <input id='sleep_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                            <div class="dataFormFieldUnit">end</div>
+                            <div class="dataFormFieldUnit"><%=t 'end'%></div>
 
                             <input id="sleep_amount" type="hidden" name="lifestyle[amount]" />
 
@@ -53,17 +54,17 @@
                             <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                             <input type="hidden" name="lifestyle[group]" value="stress"/>
 
-                            <label for="stress_scale" style="margin-left: 20px;">Intensity</label>
+                            <label for="stress_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
                             <div class="dataScale">
                                 <div id="stress_scale" class="dataFormField"></div>
                             </div>
 
-                            <div id="stress_percent" class="dataFormFieldUnitHalf">Average</div>
+                            <div id="stress_percent" class="dataFormFieldUnitHalf"><%=t 'stress_amount_average'%></div>
                             <input id="stress_amount" type="hidden" name="lifestyle[amount]"/>
 
 
                             <input id='stress_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                            <div class="dataFormFieldUnit">day</div>
+                            <div class="dataFormFieldUnit"><%=t 'day'%></div>
 
                         </div>
 
@@ -83,23 +84,23 @@
                           <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                           <input type="hidden" name="lifestyle[group]" value="illness"/>
 
-                          <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="Type at least 3 characters">
+                          <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="<%=t 'illness_placeholder'%>">
                           <input id="illnessname" name="lifestyle[illness_type_id]" type="hidden">
 
-                          <label for="illness_scale" style="margin-left: 20px;">Intensity</label>
+                          <label for="illness_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
                           <div class="dataScale">
                             <div id="illness_scale" class="dataFormField"></div>
                           </div>
 
-                          <div id="illness_percent" class="dataFormFieldUnitHalf">Mild</div>
+                          <div id="illness_percent" class="dataFormFieldUnitHalf"><%=t 'illness_amount_mild'%></div>
                           <input id="illness_amount" type="hidden" name="lifestyle[amount]"/>
 
 
                           <input id='illness_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                          <div class="dataFormFieldUnit">start</div>
+                          <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
                           <input id='illness_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                          <div class="dataFormFieldUnit">end</div>
+                          <div class="dataFormFieldUnit"><%=t 'end'%></div>
                         </div>
 
                         <button class="dataFormField"><%=t 'button_add'%></button>
@@ -118,22 +119,22 @@
                           <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                           <input type="hidden" name="lifestyle[group]" value="pain"/>
 
-                          <input id="pain_name" type="search" name="lifestyle[pain_type_name]" class="dataFormField" placeholder="Select...">
+                          <input id="pain_name" type="search" name="lifestyle[pain_type_name]" class="dataFormField" placeholder="<%=t 'pain_placeholder'%>">
 
-                          <label for="pain_scale" style="margin-left: 20px;">Intensity</label>
+                          <label for="pain_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
                           <div class="dataScale">
                             <div id="pain_scale" class="dataFormField"></div>
                           </div>
 
-                          <div id="pain_percent" class="dataFormFieldUnitHalf">Mild</div>
+                          <div id="pain_percent" class="dataFormFieldUnitHalf"><%=t 'pain_amount_mild'%></div>
                           <input id="pain_amount" type="hidden" name="lifestyle[amount]"/>
 
 
                           <input id='pain_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                          <div class="dataFormFieldUnit">start</div>
+                          <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
                           <input id='pain_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                          <div class="dataFormFieldUnit">end</div>
+                          <div class="dataFormFieldUnit"><%=t 'end'%></div>
                         </div>
 
                         <button class="dataFormField"><%=t 'button_add'%></button>
@@ -153,26 +154,26 @@
                           <input type="hidden" name="lifestyle[group]" value="period"/>
 
                           <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                          <div class="dataFormFieldUnit">start</div>
+                          <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
                           <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                          <div class="dataFormFieldUnit">end</div>
+                          <div class="dataFormFieldUnit"><%=t 'end'%></div>
 
-                          <label for="periods_scale" style="margin-left: 20px;">Intensity</label>
+                          <label for="periods_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
                           <div class="dataScale">
                             <div id="periods_scale" class="dataFormField"></div>
                           </div>
-                          <div id="periods_percent" class="dataFormFieldUnitHalf">Mild pain</div>
+                          <div id="periods_percent" class="dataFormFieldUnitHalf"><%=t 'period_amount_mild_pain'%></div>
 
                           <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
                           <br/>
 
-                          <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;">Volume</label>
+                          <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;"><%=t 'period_volume'%></label>
                           <div class="dataScale">
                             <div id="periods_volume_scale" class="dataFormField"></div>
                           </div>
 
-                          <div id="periods_volume_percent" class="dataFormFieldUnitHalf">Moderate</div>
+                          <div id="periods_volume_percent" class="dataFormFieldUnitHalf"><%=t 'period_volume_moderate'%></div>
                           <input id="periods_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
                         </div>
 

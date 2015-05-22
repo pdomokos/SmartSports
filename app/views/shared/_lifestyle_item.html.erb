@@ -5,12 +5,23 @@
   </td>
 
   <td class="historyTitle padded lifestyleItem">
-    <% if lifestyle_item.group %>
-        <span class="itemTitle"><%= lifestyle_item.title %> </span><span><%= lifestyle_item.subtitle %></span><br/>
-        <span><%= lifestyle_item.interval %></span>
+
+
+    <% if lifestyle_item.group=='sleep' %>
+        <span class="itemTitle"><%=(t :sleep)%></span> <span><%=(t :sleepList).split(",")[lifestyle_item.amount-1]%></span><br/>
+    <% elsif  lifestyle_item.group=='stress' %>
+        <span class="itemTitle"><%=(t :stress)%></span> <span><%=(t :stressList).split(",")[lifestyle_item.amount-1]%></span><br/>
+    <% elsif  lifestyle_item.group=='illness' %>
+        <span class="itemTitle"><%=(t :illness)%></span> <span><%=(t :illnessList).split(",")[lifestyle_item.amount-1]%></span><br/>
+    <% elsif  lifestyle_item.group=='pain' %>
+        <span class="itemTitle"><%=(t :pain)%></span> <span><%=(t :painList).split(",")[lifestyle_item.amount-1]%></span><br/>
+    <% elsif  lifestyle_item.group=='period' %>
+        <span class="itemTitle"><%=(t :periods)%></span> <span><%=(t :periodPainList).split(",")[lifestyle_item.amount-1]%>  <%=(t :periodVolumeList).split(",")[lifestyle_item.period_volume-1]%></span><br/>
     <% else %>
-        <strong>Ismeretlen</strong>
+        <strong><%=(t :unknown)%></strong>
     <% end %>
+    <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F %H:%M") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F %H:%M") if lifestyle_item.end_time %> </span>
+
   </td>
 
   <td class="iconColumn">

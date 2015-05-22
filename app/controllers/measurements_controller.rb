@@ -54,7 +54,11 @@ class MeasurementsController < ApplicationController
     order = params[:order]
     limit = params[:limit]
     favourites = params[:favourites]
+    lang = params[:lang]
 
+    if lang
+      I18n.locale=lang
+    end
     @measurements = user.measurements
     if start
       @measurements = @measurements.where("date >= '#{start}'")

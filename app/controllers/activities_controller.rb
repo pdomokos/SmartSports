@@ -13,7 +13,10 @@ class ActivitiesController < ApplicationController
     limit = params[:limit]
 
     favourites = params[:favourites]
-
+    lang = params[:lang]
+    if lang
+      I18n.locale=lang
+    end
     @activities = Activity.where("user_id = #{user_id}")
     if source
       @activities = @activities.where("source = '#{source}'")
@@ -44,7 +47,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {render json: @activities }
+      format.json {render json: @activities}
       format.js
     end
   end

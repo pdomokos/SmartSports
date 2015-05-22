@@ -12,8 +12,9 @@
   load_activity_types()
 
 init_exercise = () ->
-  intensities = $("#intensity_values").val().split(";")
+  intensities = $("#intensity_values").val().split(" ")
   console.log "init exercise"
+  console.log intensities
   $("#activity_scale").slider({
     min: 1,
     max: 3,
@@ -100,7 +101,8 @@ init_exercise = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent exercises"
-  url = '/users/' + current_user + '/activities.js?source='+window.default_source+'&order=desc&limit=10'
+  lang = $("#data-lang-training")[0].value
+  url = '/users/' + current_user + '/activities.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
   if fav
     console.log "loading favorites"
     url = url+"&favourites=true"

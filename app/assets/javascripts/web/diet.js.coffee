@@ -22,7 +22,7 @@
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#diet_unit").html(" "+ui.value+" egység ("+ui.value*100+"g)")
+      $("#diet_unit").html(" "+ui.value*100+"g")
     change: (event, ui) ->
       $("#diet_amount").val(ui.value)
   })
@@ -46,7 +46,7 @@
     $("#"+form_id+" input.dataFormField").val("")
     $("#diet_scale").slider({ value: 2 })
     fval = $("#diet_scale").slider("value")
-    $("#diet_unit").html(fval+" egység ("+fval*100+"g)")
+    $("#diet_unit").html(fval*100+"g")
     $("#diet_drink_scale").slider({ value: 2 })
     dval = $("#diet_drink_scale").slider("value")
     $("#diet_drink_unit").html(dval+" dl")
@@ -237,7 +237,7 @@
           $("#foodname").val(data.food_name)
           $("#diet_type_id").val(data.food_type_id)
           $("#diet_amount").val(data.amount)
-          $("#diet_unit").html(data.amount+" egység ("+data.amount*100+"g)")
+          $("#diet_unit").html(data.amount*100+"g")
           $("#diet_scale").slider({value: data.amount})
         else if data.type=="Drink"
           $("#drinkname").val(data.food_name)

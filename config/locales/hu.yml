@@ -101,9 +101,17 @@ hu:
   waist_placeholder: "Haskörfogat, pl: 94"
 
 # medication
-  medication:        "Gyógykezelés"
-  drugs:             "Gyógyszer"
-  insulin:           "Inzulin"
+  medication:           "Gyógykezelés"
+  drugs:                "Gyógyszer"
+  insulin:              "Inzulin"
+  drug_placeholder:     "Írjon legalább 3 betűt..."
+  insulin_placeholder:  "Válasszon..."
+  amount_taken:         "Bevett mennyiség, pl: 1"
+  piece:                "darab"
+  insulin_dosage:       "Egység adag, pl: 2"
+  unit:                 "egység"
+  amount:               "Mennyiség"
+  unknown_med:          "Ismeretlen gyógyszer"
 
 # wellbeing
   wellbeing:          "Közérzet"
@@ -114,6 +122,26 @@ hu:
   periods:            "Menstruációs ciklus"
   quality:            "Minőség"
   intensity:          "Intenzitás"
+  sleep_fairly_good:  "Jó"
+  start:              "kezdete"
+  end:                "vége"
+  stress_amount_average: "Átlagos"
+  day:                "nap"
+  illness_amount_mild: "Gyenge"
+  pain_amount_mild:   "Gyenge"
+  period_amount_mild_pain: "Gyenge fájdalom"
+  period_volume:      "Mérték"
+  period_volume_moderate: "Mérsékelt"
+  illness_placeholder:     "Írjon legalább 3 betűt..."
+  pain_placeholder:  "Válasszon..."
+  unknown:                "Ismeretlen"
+  sleepList:              "Nagyon rossz,Rossz,Jó,Nagyon jó"
+  stressList:             "Átlag alatti,Átlagos,Átlag feletti,Magas"
+  illnessList:            "Nagyon gyenge,Gyenge,Mérsékelt,Súlyos,Nagyon súlyos"
+  painList:               "Nagyon gyenge,Gyenge,Mérsékelt,Erős,Létező legerősebb"
+  periodPainList:         "Nincs fájdalom,Gyenge fájdalom,Mérsékelt fájdalom,Erős fájdalom,Nagyon fájdalmas"
+  periodVolumeList:       "Könnyű,Mérsékelt,Erős,Erősebb,Nagyon erős"
+  painTypeList:           "Akut,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed"
 
 # genetics
   genetics:           "Genetika"
@@ -127,3 +155,5 @@ hu:
 
 # analytics
   analytics:          "Elemzés"
+
+  intensities: "Alacsony Közepes Magas"

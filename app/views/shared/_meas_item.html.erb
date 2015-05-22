@@ -14,15 +14,15 @@
           JSON.dump(m)
       %>">
       <% if meas_item.meas_type=='blood_pressure' %>
-          <strong>SYS/DIA/HR: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
+          <strong><%=(t :blood_pressure)%>: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
       <% elsif  meas_item.meas_type=='blood_sugar' %>
-          <strong>Blood glucose: <%= meas_item.blood_sugar %> mmol/L</strong>
+          <strong><%=(t :blood_glucose)%>: <%= meas_item.blood_sugar %> mmol/L</strong>
       <% elsif  meas_item.meas_type=='weight' %>
-          <strong>Weight: <%= meas_item.weight %>kg</strong>
+          <strong><%=(t :body_weight)%>: <%= meas_item.weight %>kg</strong>
       <% elsif  meas_item.meas_type=='waist' %>
-          <strong>Waist circumfence: <%= meas_item.waist %>cm</strong>
+          <strong><%=(t :waist_circumfence)%>: <%= meas_item.waist %>cm</strong>
       <% else %>
-          <strong>Unknown measurement</strong>
+          <strong><%=(t :activity_unknown)%></strong>
       <% end %>
       <br>
       <span> <%= meas_item.date.strftime("%F, %H:%M") if meas_item.date %></span>
