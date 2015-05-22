@@ -1,5 +1,28 @@
 module MeasurementsCommon
 
+  # POST
+  def create
+    user_id = params[:user_id].to_i
+    if user_id != current_user.id
+      send_error_json(nil, "Unauthorized", 403)
+      return
+    end
+    par = measurement_params
+    par.merge!(:user_id => user_id)
+
+    @measurement = Measurement.new(par)
+    if @measurement.date.nil?
+      @measurement.date = DateTime.now
+    end
+
+    if @measurement.save
+      send_success_json(@measurement.id, {msg: create_success_message() } )
+    else
+      msg =  @measurement.errors.full_messages.to_sentence+"\n"
+      send_error_json(@activity.id, msg, 400)
+    end
+  end
+
   # PATCH/PUT /measurements/1
   # PATCH/PUT /measurements/1.json
   def update
@@ -71,6 +94,8 @@ module MeasurementsCommon
     end
   end
 
+  private
+
   def check_owner()
     puts "try"
     if self.try(:current_user)
@@ -93,5 +118,30 @@ module MeasurementsCommon
     return false
   end
 
+  def set_measurement
+    @measurement = Measurement.find(params[:id])
+  end
+
+  def measurement_params
+    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite)
+  end
+
+  def create_success_message()
+    if @measurement.meas_type == 'blood_pressure'
+      sys = @measurement.systolicbp || '-'
+      dia = @measurement.diastolicbp|| '-'
+      pulse = @measurement.pulse|| '-'
+      return "Blood pressure #{sys}/#{dia}/#{pulse} created"
+    end
+    if @measurement.meas_type == 'blood_sugar'
+      return "Blood glucose measurement #{@measurement.blood_sugar} created"
+    end
+    if @measurement.meas_type == 'weight'
+      return "Weight measurement #{@measurement.weight} created"
+    end
+    if @measurement.meas_type == 'waist'
+      return "Waist circumfence measurement #{@measurement.waist} created"
+    end
+  end
 end
 

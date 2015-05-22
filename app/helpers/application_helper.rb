@@ -1,4 +1,6 @@
 module ApplicationHelper
+
+
   def get_duration(secs)
     if secs.nil?
       return "-"

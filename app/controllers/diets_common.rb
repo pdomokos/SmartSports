@@ -1,10 +1,34 @@
 module DietsCommon
 
+  # POST /diets
+  # POST /diets.json
+  def create
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    puts diet_params
+    @diet = user.diets.build(diet_params)
+    if not @diet.date
+      @diet.date = DateTime.now
+    end
+
+    if (@diet.type=='Food' || @diet.type=='Drink' ) && @diet.food_type
+      ft = @diet.food_type
+      @diet.calories = @diet.amount*ft.kcal
+      @diet.carbs = @diet.amount*ft.carb
+      @diet.fat = @diet.amount*ft.fat
+      @diet.prot = @diet.amount*ft.prot
+    end
+
+    if @diet.save
+      send_success_json(@diet.id, { diet_name: @diet.diet_name})
+    else
+      send_error_json(nil,  @diet.errors.full_messages.to_sentence, 400)
+    end
+  end
+
   # PATCH/PUT /diets/1
   # PATCH/PUT /diets/1.json
   def update
-    @diet = Diet.find_by_id(params[:id])
-
     if @diet.nil?
       send_error_json(nil,  "Param 'diet' missing", 400)
       return
@@ -53,7 +77,7 @@ module DietsCommon
   # DELETE /diets/1
   # DELETE /diets/1.json
   def destroy
-    @diet = Diet.find(params[:id])
+
     if @diet.nil?
       send_error_json(nil,  "Failed to delete", 400)
       return
@@ -71,6 +95,20 @@ module DietsCommon
       send_error_json(@diet.id,  "Delete error", 400)
     end
 
+  end
+
+  private
+
+  def set_diet
+    @diet = Diet.find_by_id(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def diet_params
+    params.require(:diet).permit(:user_id, :source, :name, :date, :calories, :carbs, :amount, :category, :type, :fat, :prot, :food_type_id, :favourite)
+  end
+  def diet_update_params
+    params.require(:diet).permit(:favourite, :amount, :date)
   end
 
   def check_owner()

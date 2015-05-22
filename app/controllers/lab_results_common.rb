@@ -1,5 +1,21 @@
 module LabResultsCommon
 
+  # POST /users/[user_id]/lab_results
+  # POST /users/[user_id]/lab_results.json
+  def create
+    user_id = params[:user_id]
+    par = labresult_params
+    par.merge!(:user_id => user_id)
+    print par
+    labresult = LabResult.new(par)
+
+    if labresult.save
+      send_success_json(labresult.id, {category: labresult.category})
+    else
+      send_error_json(nil, labresult.errors.full_messages.to_sentence, 401)
+    end
+  end
+
   # PATCH/PUT /lab_results/1
   # PATCH/PUT /lab_results/1.json
   def update
@@ -57,6 +73,13 @@ module LabResultsCommon
     end
   end
 
+  private
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def labresult_params
+    params.require(:labresult).permit(:user_id, :source, :category, :hba1c, :ldl_chol, :egfr_epi, :ketone, :date)
+  end
+
   def check_owner()
     puts "try"
     if self.try(:current_user)
@@ -78,4 +101,5 @@ module LabResultsCommon
     end
     return false
   end
+
 end

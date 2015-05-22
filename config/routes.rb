@@ -12,6 +12,8 @@ Rails.application.routes.draw do
         resources :diets
         resources :medications
         resources :lifestyles
+        resources :family_histories
+        resources :lab_results
         resources :sensor_measurements
       end
       resources :medication_types

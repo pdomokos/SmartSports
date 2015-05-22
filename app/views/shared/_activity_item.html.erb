@@ -18,7 +18,7 @@
         JSON.dump(d)
     %>">
 
-    <span class="itemTitle"><%= activity_item.title %></span><span> <%=t :intensity %>: <%=(t :intensities).split(" ")[activity_item.intensity-1]%>,  <%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></span>
+    <span class="itemTitle"><%= activity_item.title %></span><span> <%=t :intensity %>: <%=(t :intensities).split(" ")[activity_item.intensity.to_i-1]%>,  <%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></span>
     <div class="right">
       <% if activity_item.calories %>
           <span class="tag kcal"><%= activity_item.calories.round(2) %> kcal</span>

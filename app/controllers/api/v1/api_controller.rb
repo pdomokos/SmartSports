@@ -3,6 +3,9 @@ module Api::V1
     before_action :doorkeeper_authorize!, only: [:profile]
     before_action :set_default_variables
 
+    include ResponseHelper
+    include SaveClickRecord
+
     def profile
       render json: { :id => current_resource_owner.id,
                      :member_since => current_resource_owner.created_at,

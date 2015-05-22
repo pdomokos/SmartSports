@@ -1,10 +1,10 @@
 module Api::V1
-  class MedicationsController < ApiController
+  class LabResultsController < ApiController
     rescue_from Exception, :with => :general_error_handler
     before_action :doorkeeper_authorize!, only: [:index, :create]
     respond_to :json
 
-    include MedicationsCommon
+    include LabResultsCommon
 
     def index
       lim = 10
@@ -19,8 +19,9 @@ module Api::V1
       end
 
       user = User.find(user_id)
-      medications = user.medications.where(source: @default_source).order(created_at: :desc).limit(lim)
-      render json: medications
+      hist = user.lab_results.order(created_at: :desc).limit(lim)
+      render json: hist
     end
+
   end
 end

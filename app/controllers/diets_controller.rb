@@ -1,4 +1,6 @@
 class DietsController < ApplicationController
+  before_action :set_diet, only: [:edit, :update, :destroy]
+
   include DietsCommon
 
   # GET /diets
@@ -57,43 +59,4 @@ class DietsController < ApplicationController
     set_diet
   end
 
-  # POST /diets
-  # POST /diets.json
-  def create
-    user_id = params[:user_id]
-    user = User.find(user_id)
-    puts diet_params
-    @diet = user.diets.build(diet_params)
-    if not @diet.date
-      @diet.date = DateTime.now
-    end
-
-    if (@diet.type=='Food' || @diet.type=='Drink' ) && @diet.food_type
-      ft = @diet.food_type
-      @diet.calories = @diet.amount*ft.kcal
-      @diet.carbs = @diet.amount*ft.carb
-      @diet.fat = @diet.amount*ft.fat
-      @diet.prot = @diet.amount*ft.prot
-    end
-
-    if @diet.save
-      send_success_json(@diet.id, { diet_name: @diet.diet_name})
-    else
-      send_error_json(nil,  @diet.errors.full_messages.to_sentence, 400)
-    end
-  end
-
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_diet
-    @diet = Diet.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def diet_params
-    params.require(:diet).permit(:source, :name, :date, :calories, :carbs, :amount, :category, :type, :fat, :prot, :food_type_id)
-  end
-  def diet_update_params
-    params.require(:diet).permit(:favourite, :amount, :date)
-  end
 end
