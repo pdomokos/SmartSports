@@ -19,7 +19,7 @@ module MeasurementsCommon
       send_success_json(@measurement.id, {msg: create_success_message() } )
     else
       msg =  @measurement.errors.full_messages.to_sentence+"\n"
-      send_error_json(@activity.id, msg, 400)
+      send_error_json(@measurement.id, msg, 400)
     end
   end
 
