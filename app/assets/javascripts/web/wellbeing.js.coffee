@@ -8,8 +8,6 @@
   $('#sleep_end_datepicker').datetimepicker(timepicker_defaults)
   $('#pain_start_datepicker').datetimepicker(timepicker_defaults)
   $('#pain_end_datepicker').datetimepicker(timepicker_defaults)
-  $('#periods_start_datepicker').datetimepicker(timepicker_defaults)
-  $('#periods_end_datepicker').datetimepicker(timepicker_defaults)
 
   sleepList = $("#sleepList").val().split(",")
   stressList = $("#stressList").val().split(",")
@@ -60,6 +58,22 @@
   })
 
   $('#illness_end_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+
+  $('#periods_start_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+
+  $('#periods_end_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->

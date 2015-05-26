@@ -153,13 +153,13 @@
                           <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
                           <input type="hidden" name="lifestyle[group]" value="period"/>
 
-                          <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                          <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
                           <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
-                          <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                          <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
                           <div class="dataFormFieldUnit"><%=t 'end'%></div>
 
-                          <label for="periods_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
+                          <label for="periods_scale" style="margin-left: 20px;"><%=t 'pain'%></label>
                           <div class="dataScale">
                             <div id="periods_scale" class="dataFormField"></div>
                           </div>
@@ -168,7 +168,7 @@
                           <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
                           <br/>
 
-                          <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;"><%=t 'period_volume'%></label>
+                          <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;"><%=t 'amount'%></label>
                           <div class="dataScale">
                             <div id="periods_volume_scale" class="dataFormField"></div>
                           </div>

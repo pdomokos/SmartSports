@@ -135,6 +135,7 @@ init_exercise = () ->
 @load_activity_types = () ->
   self = this
   current_user = $("#current-user-id")[0].value
+  intensities = $("#intensity_values").val().split(" ")
   console.log "calling load activity types"
   $.ajax '/activity_types.json',
     type: 'GET',
@@ -175,7 +176,7 @@ init_exercise = () ->
           $("#activity_scale" ).slider({
             value: "2"
           })
-          $("#activity_percent").text("Moderate")
+          $("#activity_percent").text(intensities[1])
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
           $("#activityname").removeAttr("disabled")
@@ -214,7 +215,7 @@ init_exercise = () ->
           $("#activity_other_scale" ).slider({
             value: "2"
           })
-          $("#activity_other_percent").text("Moderate")
+          $("#activity_other_percent").text(intensities[1])
         create: (event, ui) ->
           $("#otheractivityname").removeAttr("disabled")
         change: (event, ui) ->
@@ -243,11 +244,11 @@ init_exercise = () ->
           $("#activity_type_id").val(data.activity_type_id)
           $("#activity_intensity").val(data.intensity)
           if data.intensity == 1
-            $("#activity_percent").html("Low")
+            $("#activity_percent").html(intensities[0])
           else if data.intensity == 2
-            $("#activity_percent").html("Moderate")
+            $("#activity_percent").html(intensities[1])
           else if data.intensity == 3
-            $("#activity_percent").html("High")
+            $("#activity_percent").html(intensities[2])
           $("#activity_scale").slider({value: data.intensity})
         else if data.activity_category!="sport"
           otherActivitySelected = data.activity_name
@@ -255,10 +256,10 @@ init_exercise = () ->
           $("#activity_other_type_id").val(data.activity_type_id)
           $("#activity_other_intensity").val(data.intensity)
           if data.intensity == 1
-            $("#activity_other_percent").html("Low")
+            $("#activity_other_percent").html(intensities[0])
           else if data.intensity == 2
-            $("#activity_other_percent").html("Moderate")
+            $("#activity_other_percent").html(intensities[1])
           else if data.intensity == 3
-            $("#activity_other_percent").html("High")
+            $("#activity_other_percent").html(intensities[2])
           $("#activity_other_scale").slider({value: data.intensity})
       $("#recentResourcesTable").on("click", "td.activityItem", load_fn)
