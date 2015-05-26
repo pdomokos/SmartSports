@@ -242,7 +242,7 @@
         else if data.type=="Drink"
           $("#drinkname").val(data.food_name)
           drinkSelected = data.food_name
-          $("#drink_type_id").val(data.food_type_id)
+          $("#diet_drink_type_id").val(data.food_type_id)
           $("#diet_drink_amount").val(data.amount)
           $("#diet_drink_unit").html(data.amount+" dl")
           $("#diet_drink_scale").slider({value: data.amount})
