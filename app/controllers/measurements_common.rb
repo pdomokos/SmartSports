@@ -3,16 +3,18 @@ module MeasurementsCommon
   # POST
   def create
     user_id = params[:user_id].to_i
-    if user_id != current_user.id
-      send_error_json(nil, "Unauthorized", 403)
-      return
-    end
+
     par = measurement_params
     par.merge!(:user_id => user_id)
 
     @measurement = Measurement.new(par)
     if @measurement.date.nil?
       @measurement.date = DateTime.now
+    end
+
+    if !check_owner()
+      send_error_json(nil, "Unauthorized", 403)
+      return
     end
 
     if @measurement.save
