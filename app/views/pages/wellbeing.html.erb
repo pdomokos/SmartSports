@@ -5,6 +5,7 @@
 <input id="periodPainList" type="hidden" value="<%=t :periodPainList %>">
 <input id="periodVolumeList" type="hidden" value="<%=t :periodVolumeList %>">
 <input id="painTypeList" type="hidden" value="<%=t :painTypeList %>">
+<input id="popup-messages" value="<%=@values%>" type="hidden" />
 
 <div class="wellbeing-block mainContent" id="wellbeing-container">
         <input id="data-lang-wellbeing" value="<%=I18n.locale%>" type="hidden" />
@@ -159,7 +160,7 @@
                           <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
                           <div class="dataFormFieldUnit"><%=t 'end'%></div>
 
-                          <label for="periods_scale" style="margin-left: 20px;"><%=t 'pain'%></label>
+                          <label for="periods_scale" style="margin-right: 50px; margin-left: 20px;"><%=t 'pain'%></label>
                           <div class="dataScale">
                             <div id="periods_scale" class="dataFormField"></div>
                           </div>

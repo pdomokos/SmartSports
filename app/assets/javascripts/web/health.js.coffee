@@ -1,5 +1,6 @@
 @health_loaded = () ->
   uid = $("#current-user-id")[0].value
+  popup_messages = JSON.parse($("#popup-messages").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#health-link").addClass("selected")
@@ -14,20 +15,20 @@
         (!isempty("#bp_sys") && isempty("#bp_dia")) ||
         (isempty("#bp_sys") && !isempty("#bp_dia")) ||
         (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr")))
-      popup_error("Please fill in valid heart rate or blood pressure data")
+      popup_error(popup_messages.invalid_health_hr)
       return false
 
   $("#bg-create-form button").click ->
     if isempty("#glucose") || notpositive("#glucose")
-      popup_error("Please fill in valid blood glucose data")
+      popup_error(popup_messages.invalid_health_bg)
       return false
   $("#weight-create-form button").click ->
     if isempty("#weight")|| notpositive("#weight")
-      popup_error("Please fill in valid weight data")
+      popup_error(popup_messages.invalid_health_wd)
       return false
   $("#waist-create-form button").click ->
     if isempty("#waist")|| notpositive("#waist")
-      popup_error("Please fill in valid waist circumfence data")
+      popup_error(popup_messages.invalid_health_cd)
       return false
   init_meas()
   loadHealthHistory()
@@ -48,11 +49,11 @@
     $('#waist_datepicker').val(moment().format(moment_fmt))
 
     loadHealthHistory()
-    popup_success(data['msg'])
+    popup_success(popup_messages.save_success)
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     console.log error
-    popup_error("Failed to create health data")
+    popup_error(popup_messages.failed_to_add_data)
   )
 
   $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->

@@ -54,6 +54,7 @@ init_exercise = () ->
   $('#activity_other_end_datepicker').datetimepicker(timepicker_defaults)
 #  $('#running_datepicker').datetimepicker(timepicker_defaults)
 
+  popup_messages = JSON.parse($("#popup-messages").val())
   $("#exercise-create-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
@@ -65,10 +66,10 @@ init_exercise = () ->
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+" saved successfully")
+    popup_success(data['activity_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#activity_type_id').val(null)
-    popup_error("Failed to create "+$("#activityname").val())
+    popup_error(popup_messages.failed_to_add+$("#activityname").val())
   )
 
   $("#regular-activity-create-form").on("ajax:success", (e, data, status, xhr) ->
@@ -82,11 +83,11 @@ init_exercise = () ->
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+" saved successfully")
+    popup_success(data['activity_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#activity_type_id').val(null)
     $('#activity_other_type_id').val(null)
-    popup_error("Failed to create "+$("#otheractivityname").val())
+    popup_error(popup_messages.failed_to_add+$("#otheractivityname").val())
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -95,7 +96,7 @@ init_exercise = () ->
     loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error("Failed to delete activity")
+    popup_error(popup_messages.failed_to_delete_data)
   )
 
   $('.hisTitle').click ->
@@ -158,7 +159,7 @@ init_exercise = () ->
         label: d['name'],
         id: d['id']
         })
-
+      popup_messages = JSON.parse($("#popup-messages").val())
       activitySelected = null
       $("#activityname").autocomplete({
         minLength: 0
@@ -192,7 +193,7 @@ init_exercise = () ->
           val = $("#activityname").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           activitySelected = null
           return false
         activitySelected = null
@@ -228,7 +229,7 @@ init_exercise = () ->
           val = $("#otheractivityname").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           otherActivitySelected = null
           return false
         otherActivitySelected = null

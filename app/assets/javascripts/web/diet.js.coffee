@@ -7,6 +7,7 @@
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
+  popup_messages = JSON.parse($("#popup-messages").val())
 
   load_diets()
   document.body.style.cursor = 'wait'
@@ -57,13 +58,13 @@
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     loadDietHistory()
-    popup_success(data['diet_name']+" saved successfully")
+    popup_success(data['diet_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     console.log xhr.responseText
-    popup_error("Failed to save diet")
+    popup_error(popup_messages.failed_to_add_data)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -72,7 +73,7 @@
     loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error("Failed to delete diet")
+    popup_error(popup_messages.failed_to_delete_data)
   )
 
   $('.hisTitle').click ->
@@ -118,6 +119,7 @@
 @load_food_types = () ->
   self = this
   current_user = $("#current-user-id")[0].value
+  popup_messages = JSON.parse($("#popup-messages").val())
   console.log "calling load recent foods"
   $.ajax '/food_types.json',
     type: 'GET',
@@ -159,7 +161,7 @@
           val = $("#foodname").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           foodSelected = null
           return false
         foodSelected = null
@@ -191,7 +193,7 @@
           val = $("#dinkname").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           drinkSelected = null
           return false
         drinkSelected = null
@@ -222,7 +224,7 @@
           val = $("#diet_smoke_type").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           smokeSelected = null
           return false
         smokeSelected = null

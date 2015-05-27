@@ -5,6 +5,7 @@
 
   $('#medications_datepicker').datetimepicker(timepicker_defaults)
   $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
+  popup_messages = JSON.parse($("#popup-messages").val())
 
   document.body.style.cursor = 'wait'
   load_medication_types()
@@ -20,12 +21,12 @@
     $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
 
     loadMedicationHistory()
-    popup_success(data['medication_name']+" saved successfully")
+    popup_success(data['medication_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)
     console.log xhr.responseText
-    popup_error("Failed to create medication.")
+    popup_error(popup_messages.failed_to_add_data)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -34,7 +35,7 @@
     loadMedicationHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error("Failed to delete medication.")
+    popup_error(popup_messages.failed_to_delete_data)
   )
 
   $('.hisTitle').click ->
@@ -83,7 +84,7 @@
       console.log "load recent medication_types AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load medication_types  Successful AJAX call"
-
+      popup_messages = JSON.parse($("#popup-messages").val())
       pills = data.filter( (d) ->
         d['group'] == 'oral'
       ).map( (d) ->
@@ -126,11 +127,11 @@
           val = $("#oral_medication_name").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           oralMedSelected = null
           return false
         if( isempty("#medication_amount") || notpositive("#medication_amount"))
-          popup_error("Enter a valid medication amount")
+          popup_error(popup_messages.invalid_med_amount)
           return false
         oralMedSelected = null
         return true
@@ -164,11 +165,11 @@
           val = $("#insulin_name").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           insulinSelected = null
           return false
         if ( isempty("#medication_insulin_dosage") || notpositive("#medication_insulin_dosage"))
-          popup_error("Enter valid dosage for insulin")
+          popup_error(popup_messages.invalid_dosage)
           return false
         insulinSelected = null
         return true

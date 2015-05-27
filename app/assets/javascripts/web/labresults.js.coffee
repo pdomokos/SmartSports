@@ -59,12 +59,13 @@
   }).focus ->
     $(this).autocomplete("search")
 
+  popup_messages = JSON.parse($("#popup-messages").val())
   $("#ketone-create-form button").click ->
     if(!ketoneSelected)
       val = $("#ketone").val()
       if !val
         val = "empty item"
-      popup_error("Failed to add "+val)
+      popup_error(popup_messages.failed_to_add_data)
       ketoneSelected = null
       return false
     ketoneSelected = null
@@ -72,17 +73,17 @@
 
   $("#hba1c-create-form button").click ->
     if( isempty("#hba1c") || notpositive("#hba1c"))
-      popup_error("Failed to create HBA1C")
+      popup_error(popup_messages.failed_to_create_HBA1C)
       return false
     return true
   $("#ldlchol-create-form button").click ->
     if( isempty("#ldl_chol") || notpositive("#ldl_chol"))
-      popup_error("Failed to create LDL-CHOL")
+      popup_error(popup_messages.failed_to_create_LDL)
       return false
     return true
   $("#egfrepi-create-form button").click ->
     if( isempty("#egfr_epi") || notpositive("#egfr_epi"))
-      popup_error("Failed to create EGFR-EPI")
+      popup_error(popup_messages.failed_to_create_EGFR)
       return false
     return true
 
@@ -93,10 +94,10 @@
     $("#ldl_chol").val(null)
     $("#egfr_epi").val(null)
     $("#ketone").val(null)
-    popup_success(capitalize(data['category'])+" saved successfully")
+    popup_success(capitalize(data['category'])+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error("Failed to create labresult")
+    popup_error(popup_messages.failed_to_add_data)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -104,7 +105,7 @@
     load_labresult()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error("Failed to delete labresult")
+    popup_error(popup_messages.failed_to_delete_data)
   )
 
 

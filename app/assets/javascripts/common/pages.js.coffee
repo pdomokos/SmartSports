@@ -50,8 +50,8 @@
     console.log e
     console.log xhr
     console.log error
-
-    popup_error("Logout failed")
+    popup_messages = JSON.parse($("#popup-messages").val())
+    popup_error(popup_messages.logout_failed)
   )
 
   $('body').on('click', "#infoOkButton", () ->

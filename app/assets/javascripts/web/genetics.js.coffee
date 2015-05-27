@@ -5,7 +5,9 @@
   $("#genetics-link").addClass("selected")
 
   load_family_histories()
-
+#  if $("#popup-messages").val() != null
+#    popup_messages = JSON.parse($("#popup-messages").val())
+  popup_messages = JSON.parse($("#popup-messages").val())
   relativeList = JSON.parse($("#relativeList").val())
   diseaseList = JSON.parse($("#diseaseList").val())
 
@@ -29,7 +31,7 @@
 
   $("#familyhist-create-form button").click ->
     if(relativeSelected==null || diseaseSelected==null)
-      popup_error("Failed to add family history, enter valid relative and disease")
+      popup_error(popup_messages.failed_to_add_data)
 
       return false
     relativeSelected = null
@@ -43,9 +45,9 @@
     $("#"+form_id+" input.dataFormField").val("")
     $("#gen_hist_note").val("")
     load_family_histories()
-    popup_success(data['disease']+" saved successfully")
+    popup_success(data['disease']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error("Failed to save family history")
+    popup_error(popup_messages.failed_to_add_data)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -55,7 +57,7 @@
     load_family_histories()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error("Failed to delete family history")
+    popup_error(popup_messages.failed_to_delete_data)
   )
 
 @load_family_histories = () ->

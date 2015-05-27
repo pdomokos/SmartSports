@@ -66,16 +66,12 @@ Rails.application.routes.draw do
     get 'pages/labresult'
     get 'pages/explore'
     get 'pages/settings'
+    get 'pages/mdestroy'
+    get 'pages/wdestroy'
+    get 'pages/fdestroy'
+    get 'pages/gfdestroy'
+    get 'sync/misfit_destroy'
   end
-
-
-  get 'pages/mdestroy'
-  get 'pages/wdestroy'
-  get 'pages/fdestroy'
-  get 'pages/gfdestroy'
-
-  get 'sync/misfit_destroy'
-
   # resources :summaries
   # resources :notifications
   # resources :measurements

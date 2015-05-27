@@ -1,5 +1,6 @@
 @wellbeing_loaded = () ->
   uid = $("#current-user-id")[0].value
+  popup_messages = JSON.parse($("#popup-messages").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#wellbeing-link").addClass("selected")
@@ -35,7 +36,7 @@
       if !val
         val = "empty item"
       console.log("painsel "+val)
-      popup_error("Failed to add "+val)
+      popup_error(popup_messages.failed_to_add_data)
       painSelected = null
       return false
     painSelected = null
@@ -168,7 +169,7 @@
     else
       if data['group'] =='pain'
         msg = data['pain_name']
-    popup_success(msg+" saved successfully")
+    popup_success(popup_messages.save_success)
   ).on("ajax:error", (e, xhr, status, error) ->
     alert("Failed to create object.")
     $('#illness_name').val(null)
@@ -216,6 +217,7 @@
       illnesses = data.map( window.illness_map_fn )
 
       illnessSelected = null
+      popup_messages = JSON.parse($("#popup-messages").val())
       $("#illness_name").autocomplete({
         minLength: 3,
         source: (request, response) ->
@@ -240,7 +242,7 @@
           val = $("#illness_name").val()
           if !val
             val = "empty item"
-          popup_error("Failed to add "+val)
+          popup_error(popup_messages.failed_to_add_data)
           illnessSelected = null
           return false
         illnessSelected = null

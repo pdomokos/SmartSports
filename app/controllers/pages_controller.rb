@@ -15,9 +15,11 @@ class PagesController < ApplicationController
 
   # login/register, resetpw
   def reset_password
+    @values = JSON.dump(I18n.t :popupmessages)
   end
 
   def signup
+    @values = JSON.dump(I18n.t :popupmessages)
   end
 
   def signin
@@ -25,6 +27,7 @@ class PagesController < ApplicationController
     puts "browser locale: #{browser_locale}"
     I18n.locale = browser_locale || I18n.default_locale
     @user = User.new
+    @values = JSON.dump(I18n.t :popupmessages)
   end
 
   def mobilepage
@@ -40,6 +43,7 @@ class PagesController < ApplicationController
       @activity = Summary.new
       @measurement = Measurement.new
       @measurements = current_user.measurements.where(source: @default_source).order(created_at: :desc).limit(4)
+      @values = JSON.dump(I18n.t :popupmessages)
       save_click_record(current_user.id, true, nil)
   end
 
@@ -48,6 +52,7 @@ class PagesController < ApplicationController
     @conn = current_user.connections
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
     @intensity_values = Activity.intensity_values
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
     # respond_to do |format|
     #   format.html
@@ -66,11 +71,13 @@ class PagesController < ApplicationController
       user = current_user
     end
     @sensor_measurements = user.sensor_measurements.order(start_time: :desc)
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
   end
 
   def diet
     @diets = current_user.diets.where(source: @default_source).order(created_at: :desc).limit(4)
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
   end
 
@@ -78,6 +85,7 @@ class PagesController < ApplicationController
     @insulin_types = MedicationType.where(:group => "insulin")
     @oral_medication_types = MedicationType.where(:group => "oral")
     @medications = current_user.medications.order(created_at: :desc).limit(4)
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
   end
 
@@ -90,6 +98,7 @@ class PagesController < ApplicationController
     @periodPainList = Lifestyle.periodPainList.join(";")
     @periodVolumeList = Lifestyle.periodVolumeList.join(";")
     @painTypeList = Lifestyle.painTypeList.join(";")
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
   end
 
@@ -97,6 +106,12 @@ class PagesController < ApplicationController
     @relativeList = JSON.dump(FamilyHistory.relativeList)
     @diseaseList = JSON.dump(FamilyHistory.diseaseList)
     @family_histories = current_user.family_histories.order(created_at: :desc).limit(4)
+    @values = JSON.dump(I18n.t :popupmessages)
+    save_click_record(current_user.id, true, nil)
+  end
+
+  def labresult
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
   end
 
@@ -156,7 +171,7 @@ class PagesController < ApplicationController
       data = auth['credentials']
       conn  = u.connections.create(name: 'misfit', data: data.to_json, user_id: u.id)
       conn.save!
-      redirect_to :controller => 'pages', :action => 'settings'
+      redirect_to :controller => 'pages', :action => 'settings', :locale => I18n.locale
     else
       #TODO please sign in first message
       redirect_to pages_settings_path
@@ -170,7 +185,7 @@ class PagesController < ApplicationController
       data = auth['credentials']
       conn  = u.connections.create(name: 'moves', data: data.to_json, user_id: u.id)
       conn.save!
-      redirect_to :controller => 'pages', :action => 'settings'
+      redirect_to :controller => 'pages', :action => 'settings', :locale => I18n.locale
     else
       #TODO please sign in first message
       redirect_to pages_settings_path
@@ -185,7 +200,7 @@ class PagesController < ApplicationController
       u = User.find(current_user.id)
       conn  = u.connections.create(name: 'withings', data: data.to_json, user_id: u.id)
       conn.save!
-      redirect_to :controller => 'pages', :action => 'settings'
+      redirect_to :controller => 'pages', :action => 'settings', :locale => I18n.locale
     else
       #TODO please sign in first message
       redirect_to pages_settings_path
@@ -199,7 +214,7 @@ class PagesController < ApplicationController
       u = User.find(current_user.id)
       conn  = u.connections.create(name: 'fitbit', data: data.to_json, user_id: u.id)
       conn.save!
-      redirect_to :controller => 'pages', :action => 'settings'
+      redirect_to :controller => 'pages', :action => 'settings', :locale => I18n.locale
     else
       #TODO please sign in first message
       redirect_to pages_settings_path
@@ -213,7 +228,7 @@ class PagesController < ApplicationController
       u = User.find(current_user.id)
       conn  = u.connections.create(name: 'google', data: data.to_json, user_id: u.id)
       conn.save!
-      redirect_to :controller => 'pages', :action => 'settings'
+      redirect_to :controller => 'pages', :action => 'settings', :locale => I18n.locale
     else
       #TODO please sign in first message
       redirect_to pages_settings_path
