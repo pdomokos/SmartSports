@@ -119,6 +119,10 @@ class PagesController < ApplicationController
     save_click_record(current_user.id, true, nil)
   end
 
+  def analytics2
+
+  end
+
   def settings
     prf_json = current_user.as_json
     prf_json.delete("crypted_password")

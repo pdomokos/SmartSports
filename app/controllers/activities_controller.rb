@@ -37,6 +37,9 @@ class ActivitiesController < ApplicationController
       from = "#{year}-#{month}-01 00:00:00"
       to = "#{year}-#{month}-#{numdays} 23:59:59"
       @activities = @activities.where("date between '#{from}' and '#{to}'")
+    elsif params[:date]
+      date = params[:date]
+      @activities = @activities.where("start_time between '#{date} 00:00:00' and '#{date} 23:59:59'")
     end
 
     if favourites and favourites == "true"
@@ -47,7 +50,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {render json: @activities}
+      format.json
       format.js
     end
   end

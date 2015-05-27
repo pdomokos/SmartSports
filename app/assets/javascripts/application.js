@@ -18,6 +18,7 @@
 //= require jquery.datetimepicker
 //= require d3.min
 //= require moment
+//= require jquery.qtip.min
 //= require_tree ./common
 //= require_tree ./web
 
