@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     resources :lab_results
     resources :sensor_measurements
     resources :profile
+    get 'analysis_data' => 'analysis_data#index'
     post 'upload'
   end
 

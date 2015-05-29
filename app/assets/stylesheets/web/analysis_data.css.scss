@@ -1,0 +1,39 @@
+// Place all the styles related to the AnalysisData controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "common/config";
+
+.timeLines {
+  stroke-width: 6px;
+}
+.timeLines.exercise {
+  stroke: $exercise_color;
+}
+.timeLines.diet {
+  stroke: $diet_color;
+}
+.timeLines.measurement {
+  stroke: $measurement_color;
+}
+.timeLines.lifestyle {
+  stroke: $lifestyle_color;
+}
+
+
+.timePoints.exercise {
+  fill: $exercise_color;
+}
+.timePoints.diet {
+  fill: $diet_color;
+}
+.timePoints.measurement {
+  fill: $measurement_color;
+}
+.timePoints.lifestyle {
+  fill: $lifestyle_color;
+}
+
+.timePointsInner {
+  fill: white;
+}

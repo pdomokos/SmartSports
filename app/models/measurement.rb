@@ -26,4 +26,17 @@ class Measurement < ActiveRecord::Base
   # validates :SPO2, :numericality => true
   validates_with MeasValidator
 
+  def get_title
+    result = self.meas_type
+    if self.meas_type == 'blood_pressure'
+      if self.systolicbp.nil? && !self.pulse.nil?
+        result = "Heart rate: #{self.pulse}"
+      elsif !self.systolicbp.nil? && self.pulse.nil?
+        result = "Systolic/Diastolic: #{self.systolicbp}/#{self.diastolicbp}"
+      else
+        result = "Systolic/Diastolic/HR: #{self.systolicbp}/#{self.diastolicbp}/#{self.pulse}"
+      end
+    end
+    return result
+  end
 end

@@ -81,6 +81,14 @@ class Lifestyle < ActiveRecord::Base
     return result
   end
 
+  def tooltip
+    result = self.group
+    if self.group=='sleep'
+      result = "Sleep, #{@@sleepList[self.amount] if self.amount}"
+    end
+    return result
+  end
+
   def interval
     if self.group == 'stress'
       result = "On: #{self.start_time.strftime('%F')}"
