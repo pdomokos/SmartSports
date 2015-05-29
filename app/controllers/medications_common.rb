@@ -8,7 +8,6 @@ module MedicationsCommon
     par.merge!(:user_id => user_id)
     print par
     medication = Medication.new(par)
-    medication.date = DateTime.now
 
     if medication.save
       send_success_json(medication.id, {medication_name: medication.medication_type.name})

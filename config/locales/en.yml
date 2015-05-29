@@ -70,6 +70,19 @@ en:
   password: "Password"
   password_confirm: "Confirm password"
 
+#profile
+  firstname: "First name"
+  lastname: "Last name"
+  skip: "Skip this step and go directly to SmartDiab"
+  save: "Save"
+  fill_personal_info: "Give some more data"
+  height: "Height"
+  date_of_birth: "Date of birth"
+  sex: "Sex"
+  male: "Male"
+  female: "Female"
+  update: "Update"
+
 # erorrs
   back_home:      "Back"
   failed:         "Error"

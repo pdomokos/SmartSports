@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   has_many :lab_results
   has_many :click_records
   authenticates_with_sorcery!
-  validates :password, length: { minimum: 3 }, allow_nil: true
+  validates :password, length: { minimum: 4 }, allow_nil: true
   validates :password, confirmation: true
   validates :password_confirmation, presence: true, if: :password
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
 
   has_attached_file :avatar, :styles => { :medium => "150x200>", :thumb => "75x100>" },
                     :default_url => ":style/unknown.png",
@@ -26,5 +26,10 @@ class User < ActiveRecord::Base
   def is_friend?(fid)
     f = Friendship.where("authorized = 't' and (( user1_id = #{self.id} and user2_id = #{fid} ) or ( user1_id = #{fid} and user2_id = #{self.id} ))")
     return (f.size == 1)
+  end
+
+  def has_profile
+    p = Profile.where("user_id = #{self.id}")
+    return (p.size == 1)
   end
 end

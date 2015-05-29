@@ -150,16 +150,12 @@ class PagesController < ApplicationController
       @active_since_misfit = @misfitconn.created_at
       @last_sync_date_misfit = get_last_synced_date(current_user.id, "misfit")
     end
+    @user = current_user
+    @profile = Profile.where(user_id: current_user.id).first
+    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(current_user.id, true, nil)
   end
 
-  def profile
-    prf_json = current_user.as_json
-    prf_json.delete("crypted_password")
-    prf_json.delete("salt")
-    prf_json.delete("reset_password_token")
-    @prf = JSON.pretty_generate( prf_json )
-  end
   def error
     # to display some error in case of app failure
   end

@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     resources :family_histories
     resources :lab_results
     resources :sensor_measurements
+    resources :profile
     post 'upload'
   end
 
@@ -71,6 +72,7 @@ Rails.application.routes.draw do
     get 'pages/fdestroy'
     get 'pages/gfdestroy'
     get 'sync/misfit_destroy'
+    get 'profile/new'
   end
   # resources :summaries
   # resources :notifications

@@ -68,7 +68,6 @@ init_exercise = () ->
     console.log data
     popup_success(data['activity_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
-    $('#activity_type_id').val(null)
     popup_error(popup_messages.failed_to_add+$("#activityname").val())
   )
 
@@ -85,8 +84,6 @@ init_exercise = () ->
     console.log data
     popup_success(data['activity_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
-    $('#activity_type_id').val(null)
-    $('#activity_other_type_id').val(null)
     popup_error(popup_messages.failed_to_add+$("#otheractivityname").val())
   )
 
@@ -188,17 +185,6 @@ init_exercise = () ->
       }).focus ->
         $(this).autocomplete("search")
 
-      $("#exercise-create-form button").click ->
-        if(!activitySelected)
-          val = $("#activityname").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
-          activitySelected = null
-          return false
-        activitySelected = null
-        return true
-
       otherActivitySelected = null
       $("#otheractivityname").autocomplete({
         minLength: 0
@@ -223,17 +209,6 @@ init_exercise = () ->
           otherActivitySelected = ui['item']
       }).focus ->
         $(this).autocomplete("search")
-
-      $("#regular-activity-create-form button").click ->
-        if(!otherActivitySelected)
-          val = $("#otheractivityname").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
-          otherActivitySelected = null
-          return false
-        otherActivitySelected = null
-        return true
 
       load_fn =  (e) ->
         console.log "loading activity"

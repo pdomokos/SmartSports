@@ -49,6 +49,19 @@ hu:
   password: "Jelszó"
   password_confirm: "Jelszó megerősítése"
 
+#profile
+  firstname: "Vezetéknév"
+  lastname: "Keresztnév"
+  skip: "Lépés kihagyása, tovább a SmartDiabra"
+  save: "Mentés"
+  fill_personal_info: "További adatok megadása"
+  height: "Magasság"
+  date_of_birth: "Születési dátum"
+  sex: "Neme"
+  male: "Férfi"
+  female: "Nő"
+  update: "Módosít"
+
 # erorrs
   back_home:      "Vissza"
   failed:         "Hiba"

@@ -1,3 +1,35 @@
+@profile_loaded = () ->
+  console.log "profile loaded"
+  popup_messages = JSON.parse($("#popup-messages").val())
+  $('#firstname_field').focus()
+  $('#profile_birth_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false,
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $("#profileForm").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
+
+    #    redir to main page
+    document.location = "/"
+  ).on("ajax:error", (e, data, status, error) ->
+    console.log data.responseJSON
+    popup_error(popup_messages.failed_to_add_data)
+  )
+  $("#emptyProfileForm").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
+
+    #    redir to main page
+    document.location = "/"
+  ).on("ajax:error", (e, data, status, error) ->
+    console.log data.responseJSON
+  )
+
+
 @signup_loaded = () ->
   console.log "signup loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
@@ -10,7 +42,6 @@
     document.location = "/"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
-
     popup_error(popup_messages.sign_up_failed)
   )
 
@@ -25,7 +56,10 @@
     console.log "success "+form_id
 
 #    redir to main page
-    document.location = "/"
+    if data.profile
+      document.location = "/"
+    else
+      document.location = data.locale+"/profile/new"
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log error
     popup_error(popup_messages.login_failed)

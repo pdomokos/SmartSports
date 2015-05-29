@@ -170,31 +170,38 @@
         else
           $("#google-sync-status").html(failure_message)
 
-  $("#edit-profile-button").click (event) ->
-    $("#update-profile-info").html("")
-    if $('#update-profile-form').hasClass("hidden")
-      $('#update-profile-form').removeClass("hidden")
+  popup_messages = JSON.parse($("#popup-messages").val())
+
+  $('#profile_birth_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false,
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+
+  $("form.resource-update-form.user-form").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    $("#"+form_id+" input.dataFormField").val("")
+    console.log status
+    if JSON.parse(xhr.responseText).status == "NOK"
+      popup_error(popup_messages.failed_to_add_data)
     else
-      $('#update-profile-form').addClass("hidden")
+      popup_success(popup_messages.save_success)
+  ).on("ajax:error", (e, xhr, status, error) ->
+    popup_error(popup_messages.failed_to_add_data)
+  )
 
-
-  $("#update-profile-button").click (event) ->
-    user = $("#edit-profile-form").serialize()
-    id = $("#current-user-id")[0].value
-    $.ajax '/users/'+id,
-      type: 'PUT',
-      data: user,
-      dataType: 'json'
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log "UPDATE user AJAX Error: #{textStatus}"
-        $("#update-profile-info").html("Profile update error")
-      success: (data, textStatus, jqXHR) ->
-        console.log "UPDATE user  Successful AJAX call"
-        if data.status == "NOK"
-          $("#update-profile-info").html("Profile update error")
-        else
-          $("#update-profile-info").html("Profile updated successfully")
-          $('#update-profile-form').addClass("hidden")
+  $("form.resource-update-form.profile-form").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    $("#"+form_id+" input.dataFormField").val("")
+    if JSON.parse(xhr.responseText).status == "NOK"
+      popup_error(popup_messages.failed_to_add_data)
+    else
+      popup_success(popup_messages.save_success)
+  ).on("ajax:error", (e, xhr, status, error) ->
+    popup_error(popup_messages.failed_to_add_data)
+  )
 
 @reset_settings_ui = () ->
   $(".menuitem a.menulink").removeClass("menulink-selected")

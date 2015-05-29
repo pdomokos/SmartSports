@@ -1,3 +1,11 @@
+class DateTimeValidator < ActiveModel::Validator
+  def validate(record)
+    if record.end_time < record.start_time
+      record.errors[:base] << 'End time should be greater that start time!'
+    end
+  end
+end
+
 class Activity < ActiveRecord::Base
   belongs_to :user
   belongs_to :activity_type
@@ -5,6 +13,8 @@ class Activity < ActiveRecord::Base
   validates :activity_type_id, presence: true
   validates :steps, allow_blank: true, numericality: {only_integer: true}
   validates :duration, allow_blank: true, numericality: true
+  validates_with DateTimeValidator
+
 
   @@intensity_values = [(I18n.t :activity_intensity_low), (I18n.t :activity_intensity_moderate), (I18n.t :activity_intensity_high)]
 

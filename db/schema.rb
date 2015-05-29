@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522205640) do
+ActiveRecord::Schema.define(version: 20150528074316) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -267,6 +267,20 @@ ActiveRecord::Schema.define(version: 20150522205640) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true
+
+  create_table "profiles", force: true do |t|
+    t.integer  "user_id"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.integer  "weight"
+    t.integer  "height"
+    t.string   "sex"
+    t.date     "dateofbirth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
 
   create_table "sensor_measurements", force: true do |t|
     t.integer  "user_id"

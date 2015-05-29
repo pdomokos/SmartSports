@@ -63,10 +63,8 @@ class UsersController < ApplicationController
      respond_to do |format|
       par = params.require(:user).permit( :password, :password_confirmation, :name)
       if @user.update(par)
-        format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
         format.json { render json: { :status => "OK", :msg => "Updated successfully" } }
       else
-        format.html { redirect_to users_path, notice: 'Create user failed.' }
         format.json { render json: { :status => "NOK", :msg => "Update errror" } }
       end
     end

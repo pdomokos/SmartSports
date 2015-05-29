@@ -65,6 +65,16 @@ body.bodyBg {
   color: white;
 }
 
+.skipButton {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  padding-top: 5px;
+  color: #A5A5A5;
+  font-size: 12px;
+  cursor: pointer;
+}
+
 .featuresDiv {
   position: relative;
   width: 800px;
