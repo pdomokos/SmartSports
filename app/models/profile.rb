@@ -1,5 +1,5 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
-  validates :weight, numericality: { only_integer: true }, allow_nil: true
-  validates :height, numericality: { only_integer: true }, allow_nil: true
+  validates :weight, numericality: true, allow_nil: true
+  validates :height, numericality: true, allow_nil: true
 end
