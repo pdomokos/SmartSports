@@ -237,12 +237,16 @@ define_globals = () ->
     id: d['id']
     }
 
-  window.popup_success = (msg) ->
+  window.popup_success = (msg, background='#9DCFFE') ->
     $("#infoPopup span.msg").html(msg)
+    $("#infoOkButton").css
+      background: background
     $("#infoPopup").removeClass("hidden");
 
-  window.popup_error = (msg) ->
+  window.popup_error = (msg, background='#9DCFFE') ->
     $("#errorPopup span.msg").html(msg)
+    $("#errorOkButton").css
+      background: background
     $("#errorPopup").removeClass("hidden");
 
   window.isempty = (sel) ->

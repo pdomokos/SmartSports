@@ -2,7 +2,8 @@
   console.log("diet loaded2")
 
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#diet-link").addClass("selected")
+  $("#diet-link").css
+    background: "rgba(87, 200, 138, 0.3)"
 
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
@@ -58,13 +59,14 @@
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     loadDietHistory()
-    popup_success(data['diet_name']+popup_messages.saved_successfully)
+    popup_success(data['diet_name']+popup_messages.saved_successfully, $("#addFoodButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)
     $('#diet_smoke_type').val(null)
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_add_data)
+    color = $("#addFoodButton").css("background")
+    popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -73,7 +75,7 @@
     loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data)
+    popup_error(popup_messages.failed_to_delete_data, $("#addFoodButton").css("background"))
   )
 
   $('.hisTitle').click ->
@@ -161,7 +163,7 @@
           val = $("#foodname").val()
           if !val
             val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
+          popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
           foodSelected = null
           return false
         foodSelected = null
@@ -193,7 +195,7 @@
           val = $("#dinkname").val()
           if !val
             val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
+          popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
           drinkSelected = null
           return false
         drinkSelected = null
@@ -224,7 +226,7 @@
           val = $("#diet_smoke_type").val()
           if !val
             val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
+          popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
           smokeSelected = null
           return false
         smokeSelected = null

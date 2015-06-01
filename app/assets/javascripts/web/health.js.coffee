@@ -3,7 +3,8 @@
   popup_messages = JSON.parse($("#popup-messages").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#health-link").addClass("selected")
+  $("#health-link").css
+    background: "rgba(137, 130, 200, 0.3)"
 
   $('#bloodpressure_datepicker').datetimepicker(timepicker_defaults)
   $('#bloodsugar_datepicker').datetimepicker(timepicker_defaults)
@@ -15,26 +16,27 @@
         (!isempty("#bp_sys") && isempty("#bp_dia")) ||
         (isempty("#bp_sys") && !isempty("#bp_dia")) ||
         (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr")))
-      popup_error(popup_messages.invalid_health_hr)
+      popup_error(popup_messages.invalid_health_hr, $("#addMeasurementButton").css("background"))
       return false
 
   $("#bg-create-form button").click ->
     if isempty("#glucose") || notpositive("#glucose")
-      popup_error(popup_messages.invalid_health_bg)
+      popup_error(popup_messages.invalid_health_bg, $("#addMeasurementButton").css("background"))
       return false
   $("#weight-create-form button").click ->
     if isempty("#weight")|| notpositive("#weight")
-      popup_error(popup_messages.invalid_health_wd)
+      popup_error(popup_messages.invalid_health_wd, $("#addMeasurementButton").css("background"))
       return false
   $("#waist-create-form button").click ->
     if isempty("#waist")|| notpositive("#waist")
-      popup_error(popup_messages.invalid_health_cd)
+      popup_error(popup_messages.invalid_health_cd, $("#addMeasurementButton").css("background"))
       return false
   init_meas()
   loadHealthHistory()
 
 @init_meas = () ->
   console.log "init meas"
+  popup_messages = JSON.parse($("#popup-messages").val())
   $('#bp_sys').focus()
 
   $("form.resource-create-form.health-form").on("ajax:success", (e, data, status, xhr) ->
@@ -49,11 +51,11 @@
     $('#waist_datepicker').val(moment().format(moment_fmt))
 
     loadHealthHistory()
-    popup_success(popup_messages.save_success)
+    popup_success(popup_messages.save_success, $("#addMeasurementButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     console.log error
-    popup_error(popup_messages.failed_to_add_data)
+    popup_error(popup_messages.failed_to_add_data, $("#addMeasurementButton").css("background"))
   )
 
   $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->

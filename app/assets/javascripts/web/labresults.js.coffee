@@ -3,7 +3,8 @@
   uid = $("#current-user-id")[0].value
 
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#labresults-link").addClass("selected")
+  $("#labresults-link").css
+    background: "rgba(237, 170, 171, 0.3)"
 
   $('#hba1c_datepicker').datetimepicker({
     format: 'Y-m-d',
@@ -65,7 +66,7 @@
       val = $("#ketone").val()
       if !val
         val = "empty item"
-      popup_error(popup_messages.failed_to_add_data)
+      popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
       ketoneSelected = null
       return false
     ketoneSelected = null
@@ -73,17 +74,17 @@
 
   $("#hba1c-create-form button").click ->
     if( isempty("#hba1c") || notpositive("#hba1c"))
-      popup_error(popup_messages.failed_to_create_HBA1C)
+      popup_error(popup_messages.failed_to_create_HBA1C, $("#addLabResultButton").css("background"))
       return false
     return true
   $("#ldlchol-create-form button").click ->
     if( isempty("#ldl_chol") || notpositive("#ldl_chol"))
-      popup_error(popup_messages.failed_to_create_LDL)
+      popup_error(popup_messages.failed_to_create_LDL, $("#addLabResultButton").css("background"))
       return false
     return true
   $("#egfrepi-create-form button").click ->
     if( isempty("#egfr_epi") || notpositive("#egfr_epi"))
-      popup_error(popup_messages.failed_to_create_EGFR)
+      popup_error(popup_messages.failed_to_create_EGFR, $("#addLabResultButton").css("background"))
       return false
     return true
 
@@ -94,10 +95,10 @@
     $("#ldl_chol").val(null)
     $("#egfr_epi").val(null)
     $("#ketone").val(null)
-    popup_success(capitalize(data['category'])+popup_messages.saved_successfully)
+    popup_success(capitalize(data['category'])+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_add_data)
+    popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -105,7 +106,7 @@
     load_labresult()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data)
+    popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
   )
 
 

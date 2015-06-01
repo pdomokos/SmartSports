@@ -3,7 +3,8 @@
   popup_messages = JSON.parse($("#popup-messages").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#wellbeing-link").addClass("selected")
+  $("#wellbeing-link").css
+    background: "rgba(232, 115, 180, 0.3)"
 
   $('#sleep_start_datepicker').datetimepicker(timepicker_defaults)
   $('#sleep_end_datepicker').datetimepicker(timepicker_defaults)
@@ -36,7 +37,7 @@
       if !val
         val = "empty item"
       console.log("painsel "+val)
-      popup_error(popup_messages.failed_to_add_data)
+      popup_error(popup_messages.failed_to_add_data, $("#addWellbeingButton").css("background"))
       painSelected = null
       return false
     painSelected = null
@@ -169,7 +170,7 @@
     else
       if data['group'] =='pain'
         msg = data['pain_name']
-    popup_success(popup_messages.save_success)
+    popup_success(popup_messages.save_success, $("#addWellbeingButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     alert("Failed to create object.")
     $('#illness_name').val(null)
@@ -242,7 +243,7 @@
           val = $("#illness_name").val()
           if !val
             val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
+          popup_error(popup_messages.failed_to_add_data, $("#addWellbeingButton").css("background"))
           illnessSelected = null
           return false
         illnessSelected = null

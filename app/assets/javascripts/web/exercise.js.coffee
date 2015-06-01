@@ -2,7 +2,8 @@
   uid = $("#current-user-id")[0].value
 
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#exercise-link").addClass("selected")
+  $("#exercise-link").css
+    background: "rgba(238, 152, 67, 0.3)"
 
   init_exercise()
 
@@ -66,9 +67,9 @@ init_exercise = () ->
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+popup_messages.saved_successfully)
+    popup_success(data['activity_name']+popup_messages.saved_successfully, $("#addActivityButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add+$("#activityname").val())
+    popup_error(popup_messages.failed_to_add+$("#activityname").val(), $("#addActivityButton").css("background"))
   )
 
   $("#regular-activity-create-form").on("ajax:success", (e, data, status, xhr) ->
@@ -82,9 +83,9 @@ init_exercise = () ->
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+popup_messages.saved_successfully)
+    popup_success(data['activity_name']+popup_messages.saved_successfully, $("#addActivityButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add+$("#otheractivityname").val())
+    popup_error(popup_messages.failed_to_add+$("#otheractivityname").val(), $("#addActivityButton").css("background"))
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -93,7 +94,7 @@ init_exercise = () ->
     loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data)
+    popup_error(popup_messages.failed_to_delete_data, $("#addActivityButton").css("background"))
   )
 
   $('.hisTitle').click ->

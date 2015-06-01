@@ -2,7 +2,8 @@
   uid = $("#current-user-id")[0].value
 
   $("div.appMenu button").removeClass("selected")
-  $("#analytics-button").addClass("selected")
+  $("#analytics-link").css
+    background: "rgba(240, 108, 66, 0.3)"
 
   d3.json("/users/"+uid+"/summaries.json", act_data_received)
 

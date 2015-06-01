@@ -1,7 +1,8 @@
 @medications_loaded = () ->
   console.log("medications loaded")
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#medication-link").addClass("selected")
+  $("#medication-link").css
+    background: "rgba(112, 197, 203, 0.3)"
 
   $('#medications_datepicker').datetimepicker(timepicker_defaults)
   $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
@@ -21,12 +22,12 @@
     $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
 
     loadMedicationHistory()
-    popup_success(data['medication_name']+popup_messages.saved_successfully)
+    popup_success(data['medication_name']+popup_messages.saved_successfully, $("#addMedicationButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_add_data)
+    popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -35,7 +36,7 @@
     loadMedicationHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data)
+    popup_error(popup_messages.failed_to_delete_data, $("#addMedicationButton").css("background"))
   )
 
   $('.hisTitle').click ->
@@ -127,11 +128,11 @@
           val = $("#oral_medication_name").val()
           if !val
             val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
+          popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
           oralMedSelected = null
           return false
         if( isempty("#medication_amount") || notpositive("#medication_amount"))
-          popup_error(popup_messages.invalid_med_amount)
+          popup_error(popup_messages.invalid_med_amount, $("#addMedicationButton").css("background"))
           return false
         oralMedSelected = null
         return true
@@ -165,11 +166,11 @@
           val = $("#insulin_name").val()
           if !val
             val = "empty item"
-          popup_error(popup_messages.failed_to_add_data)
+          popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
           insulinSelected = null
           return false
         if ( isempty("#medication_insulin_dosage") || notpositive("#medication_insulin_dosage"))
-          popup_error(popup_messages.invalid_dosage)
+          popup_error(popup_messages.invalid_dosage, $("#addMedicationButton").css("background"))
           return false
         insulinSelected = null
         return true

@@ -37,81 +37,83 @@
     </table>
   </div>
 </div>
-<div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
-  <div style="padding: 10px;">
-    <table style="width: 100%;color: #3d3d3d;">
-      <tbody>
-      <%= form_tag("/users/#{current_user.id}/profile/#{@profile.id}", remote: true, id: "update-profile-form", method: "PUT", class: "resource-update-form profile-form") do %>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :firstname %>
-            </td>
-            <td>
-              <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" value="<%= @profile.firstname %>"/>
-            </td>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :lastname %>
-            </td>
-            <td>
-              <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" value="<%= @profile.lastname %>"/>
-            </td>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :height %>
-            </td>
-            <td>
-              <input id="height_field" name="profile[height]" type="text" class="loginField" value="<%= @profile.height %>"/>
-            </td>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :body_weight %>
-            </td>
-            <td>
-              <input id="weight_field" name="profile[weight]" type="text" class="loginField" value="<%= @profile.weight %>"/>
-            </td>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :sex %>
-            </td>
-            <td>
-              <input type="radio" name="profile[sex]" value="male" <%= @profile.sex == "male" ? "checked" : "" %>/> <%= t 'male' %>
-              <input type="radio" name="profile[sex]" value="female" <%= @profile.sex == "female" ? "checked" : "" %>
-              "/> <%= t 'female' %>
-            </td>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :date_of_birth %>
-            </td>
-            <td>
-              <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= @profile.dateofbirth.strftime("%F") %>"/>
-            </td>
-            <td>
-              <button id="update-profile-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
-                <%= t :update %>
-              </button>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<%if @profile%>
+    <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
+      <div style="padding: 10px;">
+        <table style="width: 100%;color: #3d3d3d;">
+          <tbody>
+          <%= form_tag("/users/#{current_user.id}/profile/#{@profile.id}", remote: true, id: "update-profile-form", method: "PUT", class: "resource-update-form profile-form") do %>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :firstname %>
+                </td>
+                <td>
+                  <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" value="<%= @profile.firstname %>"/>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :lastname %>
+                </td>
+                <td>
+                  <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" value="<%= @profile.lastname %>"/>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :height %>
+                </td>
+                <td>
+                  <input id="height_field" name="profile[height]" type="text" class="loginField" value="<%= @profile.height %>"/>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :body_weight %>
+                </td>
+                <td>
+                  <input id="weight_field" name="profile[weight]" type="text" class="loginField" value="<%= @profile.weight %>"/>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :sex %>
+                </td>
+                <td>
+                  <input type="radio" name="profile[sex]" value="male" <%= @profile.sex == "male" ? "checked" : "" %>/> <%= t 'male' %>
+                  <input type="radio" name="profile[sex]" value="female" <%= @profile.sex == "female" ? "checked" : "" %>
+                  "/> <%= t 'female' %>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :date_of_birth %>
+                </td>
+                <td>
+                  <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= @profile.dateofbirth.strftime("%F") %>"/>
+                </td>
+                <td>
+                  <button id="update-profile-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                    <%= t :update %>
+                  </button>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<%end%>
 
 <%= render partial: 'shared/popups' %>
 <script>
