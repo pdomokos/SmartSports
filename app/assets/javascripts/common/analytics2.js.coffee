@@ -1,7 +1,7 @@
 @analytics2_loaded = () ->
   uid = $("#current-user-id")[0].value
   @dateToShow = moment().format("YYYY-MM-DD")
-#  @dateToShow = "2015-05-26"
+#  @dateToShow = "2015-05-29"
   d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, act_data_received)
 
 act_data_received = (jsondata) ->

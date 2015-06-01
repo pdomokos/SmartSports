@@ -63,6 +63,7 @@ class TimeLine
     linedata = $.grep(@data, (item) ->
       return (item.evt_type=='exercise'||item.evt_type=='lifestyle')
     )
+    console.log "linedata"
     console.log linedata
     @draw_linedata(canvas, linedata)
 
@@ -70,6 +71,8 @@ class TimeLine
       return (item.evt_type!='exercise' && item.evt_type!='lifestyle')
     )
 
+    console.log "pointdata"
+    console.log pointdata
     @draw_pointdata(canvas, pointdata)
 
     $(@chart_element_selector+' g[data-tooltip!=""]').qtip({
@@ -77,8 +80,9 @@ class TimeLine
         attr: 'data-tooltip'
       }
       position: {
-        target: 'mouse'
-        my: 'bottom center'
+        target: 'mouse',
+        my: 'bottom center',
+        adjust: { y: 70}
       }
     })
 
