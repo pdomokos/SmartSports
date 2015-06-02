@@ -75,7 +75,7 @@ en:
   lastname: "Last name"
   skip: "Skip this step and go directly to SmartDiab"
   save: "Save"
-  fill_personal_info: "Give some more data"
+  fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to SmartDiab."
   height: "Height"
   date_of_birth: "Date of birth"
   sex: "Sex"

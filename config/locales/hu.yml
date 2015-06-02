@@ -54,7 +54,7 @@ hu:
   lastname: "Keresztnév"
   skip: "Lépés kihagyása, tovább a SmartDiabra"
   save: "Mentés"
-  fill_personal_info: "További adatok megadása"
+  fill_personal_info: "Kérem adja meg az alábbi adatokat, melyek segítségével személyreszabott szolgáltatásokat tudunk nyújtani Önnek. Lehetősége van kihagyni ezt és azonnal elkezdheti használni a SmartDiab rendszert."
   height: "Magasság"
   date_of_birth: "Születési dátum"
   sex: "Neme"
