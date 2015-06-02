@@ -29,6 +29,11 @@ class TimeLine
       .scale(@time_scale)
       .ticks(10)
 
+    hr_extent = [20, 200]
+    @hr_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(hr_extent)
+    bp_extent = [50, 200]
+    @bp_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bp_extent)
+
     @svg.append("clipPath")
       .attr("id", "chart-clip")
       .append("rect")
@@ -59,6 +64,12 @@ class TimeLine
     #==========
 
     console.log @data
+    sensordata = $.grep(@data, (item) ->
+      return (item.evt_type=='sensor')
+    )
+    @data = $.grep(@data, (item) ->
+      return (item.evt_type!='sensor')
+    )
 
     linedata = $.grep(@data, (item) ->
       return (item.evt_type=='exercise'||item.evt_type=='lifestyle')
@@ -67,13 +78,24 @@ class TimeLine
     console.log linedata
     @draw_linedata(canvas, linedata)
 
+    bpdata = $.grep(@data, (item) ->
+      return (item.evt_type=='measurement'&&item.meas_type=='blood_pressure')
+    )
+
     pointdata = $.grep(@data, (item) ->
-      return (item.evt_type!='exercise' && item.evt_type!='lifestyle')
+      return (item.evt_type!='exercise' && item.evt_type!='lifestyle' && (item.evt_type!='measurement'||item.meas_type!='blood_pressure'))
     )
 
     console.log "pointdata"
     console.log pointdata
     @draw_pointdata(canvas, pointdata)
+
+    console.log "bpdata"
+    console.log bpdata
+    @draw_bpdata(canvas, bpdata)
+
+    for sens in sensordata
+      @draw_sensordata(canvas, sens)
 
     $(@chart_element_selector+' g[data-tooltip!=""]').qtip({
       content: {
@@ -88,12 +110,13 @@ class TimeLine
 
   draw_linedata: (canvas, data) ->
     self = this
-    groups = canvas.selectAll("g").data(data)
+    groups = canvas.selectAll("g.linedata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
       .attr("data-tooltip", (d) -> d.title)
       .attr("data-titlebar", true)
       .attr("data-title", "Exercise")
+      .attr("class", "linedata")
 
     groupsEnter.append("line").attr("class", (d)->d.evt_type+" timeLines")
     groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsA")
@@ -129,11 +152,12 @@ class TimeLine
 
   draw_pointdata: (canvas, data) ->
     self = this
-    groups = canvas.selectAll("g").data(data)
+    groups = canvas.selectAll("g.pointdata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
       .attr("data-tooltip", (d) -> d.title)
       .attr("data-titlebar", true)
+      .attr("class", "pointdata")
 
     groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsA")
     groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner timePointsAInner")
@@ -147,5 +171,72 @@ class TimeLine
       .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
       .attr("cy", (d) -> self.y_scale(d.depth))
       .attr("r", "2")
+
+  draw_bpdata: (canvas, data) ->
+    self = this
+    groups = canvas.selectAll("g.healthdata").data(data)
+    groupsEnter = groups.enter().append("g")
+      .attr("id", (d) -> d.id)
+      .attr("data-tooltip", (d) -> d.title)
+      .attr("data-titlebar", true)
+      .attr("data-title", "Health")
+      .attr("class", "healthdata")
+
+    groupsEnter.append("line").attr("class", (d)->d.evt_type+" timeLines")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsA")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner timePointsAInner")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsB")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner timePointsBInner")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsC")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner timePointsCInner")
+
+    groupsEnter.select("line")
+      .attr("x1", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("y1", (d) -> self.bp_scale(d.values[0]))
+      .attr("x2", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("y2", (d) -> self.bp_scale(d.values[1]))
+
+    groupsEnter.selectAll("circle.timePointsA")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bp_scale(d.values[0]))
+      .attr("r", "5")
+
+    groupsEnter.selectAll("circle.timePointsAInner")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bp_scale(d.values[0]))
+      .attr("r", "2")
+
+    groupsEnter.selectAll("circle.timePointsB")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bp_scale(d.values[1]))
+      .attr("r", "5")
+
+    groupsEnter.selectAll("circle.timePointsBInner")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bp_scale(d.values[1]))
+      .attr("r", "2")
+
+    groupsEnter.selectAll("circle.timePointsC")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bp_scale(d.values[2]))
+      .attr("r", "5")
+    groupsEnter.selectAll("circle.timePointsCInner")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bp_scale(d.values[2]))
+      .attr("r", "2")
+
+  draw_sensordata: (canvas, data ) ->
+    self = this
+    console.log data
+    rrline = d3.svg.line()
+      .x( (d) ->
+        t = new Date(0)
+        t.setUTCSeconds(d.time)
+        return(self.time_scale(t)))
+      .y( (d) -> return(self.hr_scale(d.data)))
+
+    canvas.append("path")
+      .attr("class", "line rr")
+      .attr("d", rrline(data.values))
 
 window.TimeLine = TimeLine

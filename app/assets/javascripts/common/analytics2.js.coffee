@@ -16,7 +16,8 @@ act_data_received = (jsondata) ->
 #    evt.depth = index
 
     console.log evt
-    evt.dates =[new Date(evt.dates[0]), new Date(evt.dates[1])]
+    if evt.dates
+      evt.dates =[new Date(evt.dates[0]), new Date(evt.dates[1])]
 
     return evt
   )
