@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :sensor_measurements
   has_many :lab_results
   has_many :click_records
+  has_many :tracker_data
   authenticates_with_sorcery!
   validates :password, length: { minimum: 4 }, allow_nil: true
   validates :password, confirmation: true

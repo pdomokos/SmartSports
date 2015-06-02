@@ -11,8 +11,9 @@ module SyncMoves
       sess = { "access_token" => auth['credentials']['token']}
     end
     status = do_sync_moves(sess)
+    status_tracker = do_sync_moves_tracker(sess)
     respond_to do |format|
-      format.json { render json: {:status => status}}
+      format.json { render json: {:status => status, :status_tracker => status_tracker}}
     end
   end
 
@@ -41,7 +42,12 @@ module SyncMoves
     dateFormat = "%Y-%m-%d"
     @moves = Moves::Client.new(sess["token"])
     @profile = @moves.profile['profile']
-    currDate = Date.parse(@profile['firstDate'])
+    currDate = get_last_synced_final_date(current_user.id, "moves")
+    if currDate
+      currDate = currDate+1.day
+    else
+      currDate = Date.parse(@profile['firstDate'])
+    end
     today = Date.today()
     todayYmd = today.strftime(dateFormat)
     while currDate <= today
@@ -82,6 +88,65 @@ module SyncMoves
           end
         end
       end
+
+      currDate = currDate+1.day
+    end
+    return "OK"
+  end
+
+  def remove_tracker_data_not_final(user_id, source)
+    to_remove = TrackerData.where("user_id= #{user_id} and source = '#{source}' and sync_final = 'f'")
+    to_remove.each { |it| it.destroy!}
+  end
+
+  def do_sync_moves_tracker(sess)
+    dateFormat = "%Y-%m-%d"
+    @moves = Moves::Client.new(sess["token"])
+    @profile = @moves.profile['profile']
+    remove_tracker_data_not_final(current_user.id, "moves")
+    currDate = get_last_synced_tracker_final_date(current_user.id, "moves")
+    if currDate
+      currDate = Date.parse(currDate)+1.day
+    else
+      currDate = Date.parse(@profile['firstDate'])
+    end
+    today = Date.today()
+    while currDate <= today
+        logger.info "syncing #{currDate}"
+        currDateYmd = currDate.strftime(dateFormat)
+        storyline = @moves.daily_storyline(currDateYmd)
+        for item in storyline
+          if item['segments']
+            segments = item['segments']
+            for sItem in segments
+              isFinal = false
+              if currDate < today
+                isFinal = true
+              end
+              if sItem['type'] == 'move'
+                activities = sItem['activities']
+                for aItem in activities
+                  tracker_data = TrackerData.new( user_id: current_user.id, source: 'moves',
+                                         start_time: aItem['startTime'],
+                                         end_time: aItem['endTime'],
+                                         activity:  aItem['activity'],
+                                         group: aItem['group'],
+                                         manual: aItem['manual'],
+                                         duration: aItem['duration'],
+                                         distance: aItem['distance'],
+                                         steps: aItem['steps'].to_i,
+                                         calories: aItem['calories'],
+                                         synced_at: DateTime.now(),
+                                         sync_final: isFinal
+                      )
+                  tracker_data.save!
+                end
+              end
+            end
+          else
+             logger.info "no segments for #{currDate}"
+          end
+        end
 
       currDate = currDate+1.day
     end

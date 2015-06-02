@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150601140648) do
+ActiveRecord::Schema.define(version: 20150602092805) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -316,6 +316,29 @@ ActiveRecord::Schema.define(version: 20150601140648) do
 
   add_index "summaries", ["user_id", "created_at"], name: "index_summaries_on_user_id_and_created_at"
   add_index "summaries", ["user_id"], name: "index_summaries_on_user_id"
+
+  create_table "tracker_data", force: true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "activity"
+    t.string   "group"
+    t.boolean  "manual"
+    t.float    "duration"
+    t.float    "distance"
+    t.integer  "steps"
+    t.string   "intensity"
+    t.float    "calories"
+    t.datetime "synced_at"
+    t.boolean  "sync_final"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tracker_data", ["user_id", "start_time", "sync_final"], name: "index_tracker_data_on_user_id_and_start_time_and_sync_final"
+  add_index "tracker_data", ["user_id", "start_time"], name: "index_tracker_data_on_user_id_and_start_time"
+  add_index "tracker_data", ["user_id"], name: "index_tracker_data_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name",                                            null: false
