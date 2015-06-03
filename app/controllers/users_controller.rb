@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    puts current_user.email
     if !current_user.admin
       respond_to do |format|
         format.html { redirect_to errors_unauthorized_path }
@@ -57,15 +56,16 @@ class UsersController < ApplicationController
       format.html { redirect_to '/pages/mobilepage#settingsPage' }
     end
   end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
      respond_to do |format|
       par = params.require(:user).permit( :password, :password_confirmation, :name)
       if @user.update(par)
-        format.json { render json: { :status => "OK", :msg => "Updated successfully" } }
+        format.json { render json: { ok: true, msg: "Updated successfully" } }
       else
-        format.json { render json: { :status => "NOK", :msg => "Update errror" } }
+        format.json { render json: { ok: true, msg: "Update errror" } }
       end
     end
   end
@@ -73,10 +73,18 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    if !current_user.admin || current_user.id==@user.id
+      respond_to do |format|
+        format.html { redirect_to errors_unauthorized_path }
+        format.json { render json: { :ok => false, :msg => 'error_unauthorized' }, status: 403  }
+      end
+      return
+    end
+
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json: { :ok => true }}
     end
   end
 

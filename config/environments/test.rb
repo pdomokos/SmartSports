@@ -38,4 +38,9 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   APP_CONFIG = {}
+
+  DATA_DIR =  File.join(ENV['HOME'], 'Downloads/hr_data')
+  if not File.exists?(DATA_DIR)
+    raise "Data dir '#{DATA_DIR}' missing"
+  end
 end

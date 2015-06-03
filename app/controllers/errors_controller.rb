@@ -15,7 +15,6 @@ class ErrorsController < ApplicationController
       I18n.locale = params[:locale]
     else
       browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-      puts "browser locale: #{browser_locale}"
       I18n.locale = browser_locale || I18n.default_locale
     end
   end

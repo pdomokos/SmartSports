@@ -18,6 +18,11 @@ module Api::V1
         return
       end
 
+      fname = File.join(DATA_DIR, "sensor_uid_#{user_id}_#{Time.zone.strptime(params[:sensor_measurement][:start_time], "%Y-%m-%d %H:%M:%S %Z").to_i}.json")
+      File.open(fname, 'w') do |f|
+        JSON.dump(params.as_json, f)
+      end
+
       #rr1 = "zAO7A80D2gO4A80DwAOTA2wDgAOVA5oDjAM="
       #Base64.decode64(rr1).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}
 
@@ -28,52 +33,13 @@ module Api::V1
       sens = SensorMeasurement.new(sensor_measurement_params)
       sens.user_id = user.id
       # sens.start_time = Time.zone.strptime(sens.start_time, "%Y-%m-%d %H:%M:%S %Z")
+
       if sens.save
         render json: {:ok => "true", :id => sens.id}
       else
-        render json: {:ok => "false"}, :status => 400
+        render json: {:ok => "false", :msg => sens.errors.full_messages.to_sentence}, :status => 400
       end
 
-    end
-
-    def proc_export_json
-      rootdir = "/home/pdomokos/Downloads/"
-      u = User.find(1)
-      lst = u.sensor_measurements.all
-
-      File.open("#{rootdir}sensordata_20150507.json", 'w') do |f|
-        JSON.dump(lst.as_json, f)
-      end
-    end
-    def proc_import_json
-      arr = nil
-      rootdir = "/Users/bdomokos/Downloads/"
-      File.open("#{rootdir}sensordata_20150507.json", 'r') do |f|
-        arr = JSON.parse(f.read())
-      end
-      for data in arr do
-        sensorData = SensorMeasurement.new(data)
-        sensorData.save!
-      end
-    end
-
-    def proc_to_csv
-      s = nil
-      rootdir = "/Users/bdomokos/Downloads/"
-      File.open("#{rootdir}hr_cycling_0501.json", 'r') do |f|
-        s = f.read()
-      end
-      hrdata = JSON.parse(s)
-      rr = Base64.decode64(hrdata['rrData']).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}
-      hr = Base64.decode64(hrdata['hrData']).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}
-
-      CSV.open("#{rootdir}/rr.csv", 'w') do |csv|
-        rr.each {|it| csv << [it]}
-      end
-
-      CSV.open("#{rootdir}/hr.csv", 'w') do |csv|
-        hr.each_slice(2) {|a, b| csv << [a, b]}
-      end
     end
 
     private

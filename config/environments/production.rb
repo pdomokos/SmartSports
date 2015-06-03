@@ -119,4 +119,9 @@ Rails.application.configure do
   }
 
   Paperclip.options[:command_path] = "/usr/bin/"
+
+  DATA_DIR =  File.path('/data/projects/SmartSports-local/hr_data')
+  if not File.exists?(DATA_DIR)
+    raise "Data dir '#{DATA_DIR}' missing"
+  end
 end

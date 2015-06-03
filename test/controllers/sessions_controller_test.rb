@@ -3,13 +3,15 @@ require 'test_helper'
 class SessionsControllerTest < ActionController::TestCase
 
   test "should get create" do
-    get :create
-    assert_redirected_to login_path
+    get :create, {email: 'balint@abc.de', password: 'testpw'}
+    assert_response :success
   end
 
   test "should get destroy" do
-    get :destroy
-    assert_redirected_to login_path
+    @user = users(:one)
+    login_user
+    get :signout
+    assert_response :success
   end
 
 end

@@ -21,9 +21,9 @@ class FamilyHistoriesControllerTest < ActionController::TestCase
           disease: @family_history.disease,
           note: @family_history.note
       }, format: :json
+      json_result = JSON.parse(response.body)
+      assert_equal json_result["ok"], true
+      assert_not json_result["id"].nil?
     end
-    json_result = JSON.parse(response.body)
-    assert_equal json_result["status"], "OK"
-    assert_not json_result["result"]["id"].nil?
   end
 end

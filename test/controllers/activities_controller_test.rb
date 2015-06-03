@@ -5,6 +5,7 @@ class ActivitiesControllerTest < ActionController::TestCase
     @activity = activities(:one)
     @user = users(:one)
     login_user
+    @act_type = activity_types(:one)
   end
 
   test "should get index" do
@@ -19,6 +20,7 @@ class ActivitiesControllerTest < ActionController::TestCase
   end
 
   test "should create activity" do
+
     assert_difference('Activity.count') do
       post :create, user_id: @user.id, activity: {
           activity: @activity.activity,
@@ -31,12 +33,13 @@ class ActivitiesControllerTest < ActionController::TestCase
           manual: @activity.manual,
           source: @activity.source,
           start_time: @activity.start_time,
-          steps: @activity.steps
-           }, format: :json
+          steps: @activity.steps,
+          activity_type_id: @act_type.id
+      }, format: :json
+      json_result = JSON.parse(response.body)
+      assert_equal json_result["ok"], true
+      assert_not json_result["id"].nil?
     end
-    json_result = JSON.parse(response.body)
-    assert_equal json_result["status"], "OK"
-    assert_not json_result["result"]["id"].nil?
   end
 
   test "should show activity" do
@@ -61,9 +64,12 @@ class ActivitiesControllerTest < ActionController::TestCase
         manual: @activity.manual,
         source: @activity.source,
         start_time: @activity.start_time,
-        steps: @activity.steps
-    }
-    assert_redirected_to user_activity_path(@user, @activity)
+        steps: @activity.steps,
+        activity_type_id: @act_type.id,
+        favourite: true
+    }, format: :json
+    json_result = JSON.parse(response.body)
+    assert_equal true, json_result["ok"]
   end
 
   test "should destroy activity" do
@@ -72,6 +78,6 @@ class ActivitiesControllerTest < ActionController::TestCase
     end
 
     json_result = JSON.parse(response.body)
-    assert_equal json_result["status"], "OK"
+    assert_equal json_result["ok"], true
   end
 end

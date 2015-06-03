@@ -6,10 +6,17 @@ class UsersControllerTest < ActionController::TestCase
     login_user
   end
 
-  test "should get index" do
+  test "should get index if admin" do
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
+  end
+
+  test "should NOT get index if NOT admin" do
+    @user = users(:two)
+    login_user
+    get :index, format: :json
+    assert_response 403
   end
 
   test "should get new" do
@@ -21,12 +28,13 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference('User.count') do
       post :create, user: {
           email: "xxx@ab.cd",
-          password: "abc",
-          password_confirmation: "abc"
-          }
+          password: "abcd",
+          password_confirmation: "abcd"
+          }, format: :json
     end
 
-    assert_redirected_to user_path(assigns(:user))
+    json_result = JSON.parse(response.body)
+    assert_equal json_result["ok"], true
   end
 
   test "should show user" do
@@ -44,15 +52,18 @@ class UsersControllerTest < ActionController::TestCase
         name: "newname",
         password: "pwx",
         password_confirmation: "pwx"
-      }
-    assert_redirected_to user_path(@user)
+      }, format: :json
+    json_result = JSON.parse(response.body)
+    assert_equal json_result["ok"], true
   end
 
   test "should destroy user" do
+    user2 = users(:two)
     assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+      delete :destroy, id: user2, format: :json
     end
 
-    assert_redirected_to users_path
+    json_result = JSON.parse(response.body)
+    assert_equal json_result["ok"], true
   end
 end

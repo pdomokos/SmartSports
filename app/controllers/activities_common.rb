@@ -69,7 +69,7 @@ module ActivitiesCommon
     if @activity.update_attributes(update_hash)
       send_success_json(@activity.id)
     else
-      send_error_json(@activity.id,"Update error", 400)
+      send_error_json(@activity.id, @activity.errors.full_messages.to_sentence, 400)
     end
 
   end
@@ -98,18 +98,6 @@ module ActivitiesCommon
   private
 
   def check_owner()
-    puts "try"
-    if self.try(:current_user)
-      puts "current_user defined"
-    else
-      puts "current_user NOT defined"
-    end
-    if self.try(:current_resource_owner)
-      puts "current_resource_owner defined"
-    else
-      puts "current_resource_owner NOT defined"
-    end
-
     if self.try(:current_user).try(:id) == @activity.user_id
       return true
     end

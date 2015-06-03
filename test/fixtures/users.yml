@@ -5,14 +5,15 @@ one:
   username: balint
   email: balint@abc.de
   name: balint
-  crypted_password: testpw
-  salt: testsalt
+  salt: <%= salt = "asdasdastr4325234324sdfds" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("testpw", salt) %>
   reset_password_token: resetpwtok
+  admin: true
 
 two:
   id: 2
   username: balint2
   email: balint2@abc.de
   name: balint2
-  crypted_password: MyString
-  salt: MyString
+  salt: <%= salt = "asdasdastr4325234324sdfds" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("mypw", salt) %>
