@@ -18,7 +18,7 @@ module Api::V1
         return
       end
 
-      fname = File.join(DATA_DIR, "sensor_uid_#{user_id}_#{Time.zone.strptime(params[:sensor_measurement][:start_time], "%Y-%m-%d %H:%M:%S %Z").to_i}.json")
+      fname = File.join(DATA_DIR, "sensor_uid_#{user_id}_#{Time.zone.strptime(params[:sensor_measurement][:start_time], "%Y-%m-%d %H:%M:%S %Z").strftime("%Y%m%d%H%M%S")}.json")
       File.open(fname, 'w') do |f|
         JSON.dump(params.as_json, f)
       end
