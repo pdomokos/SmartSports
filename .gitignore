@@ -18,6 +18,11 @@
 /.idea
 *.iml
 /public/*.csv
+
+# for avatar images in production mode
 /system
+
+# for avatar images in dev mode
+/public/system
 /public/assets
 /bak

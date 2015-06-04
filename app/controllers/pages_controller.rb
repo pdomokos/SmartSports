@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
-  before_action :redir_mobile, except: [:mobilepage]
+  before_action :redir_mobile, except: [:mobilepage, :signin]
   before_action :set_locale
   before_filter :require_login, except: [:signin, :signup, :reset_password]
   has_mobile_fu
@@ -275,7 +275,11 @@ private
 
   def which_layout
     if is_mobile_device?
-      'pages.mobile'
+      if action_name=='signin' || action_name=='signup' || action_name=='reset_password'
+        'auth.mobile'
+      else
+        'pages.mobile'
+      end
     elsif action_name=='signin' || action_name=='signup' || action_name=='reset_password'
       'auth'
     else
