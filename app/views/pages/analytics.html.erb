@@ -28,6 +28,21 @@
 -->
 
     <div class="columns">
+        <div   class="boxed-group connection-block">
+          <h3 class="noClickSelect">
+            <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+            <div class="training-type left">Daily timeline</div>
+            <div class="selected-meas legend-container right">
+              <input id='timeline_datepicker' type='text' class="dataFormField" value="<%= DateTime.current.strftime("%F") %>"/>
+            </div>
+          </h3>
+
+          <div id="timeline" class="boxed-group-inner chart bloodpressure-chart">
+          </div>
+        </div>
+    </div>
+
+    <div class="columns">
 
         <div id="heart-trend-container" class="boxed-group connection-block">
 
@@ -44,24 +59,24 @@
         </div>
     </div>
 
-    <div class="columns">
+    <!--<div class="columns">-->
 
-        <div id="bloodsugar-container" class="boxed-group connection-block">
+        <!--<div id="bloodsugar-container" class="boxed-group connection-block">-->
 
-            <h3 class="noClickSelect">
-                <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-                <div class="training-type left">Blood glucose level</div>
-                <div class="selected-meas left"></div>
-                <div class="selected-meas legend-container right"></div>
-            </h3>
+            <!--<h3 class="noClickSelect">-->
+                <!--<img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">-->
+                <!--<div class="training-type left">Blood glucose level</div>-->
+                <!--<div class="selected-meas left"></div>-->
+                <!--<div class="selected-meas legend-container right"></div>-->
+            <!--</h3>-->
 
-            <div class="boxed-group-inner chart bloodsugar-chart">
-                <svg class="bloodsugar-chart-svg">
-                </svg>
-            </div>
-        </div>
+            <!--<div class="boxed-group-inner chart bloodsugar-chart">-->
+                <!--<svg class="bloodsugar-chart-svg">-->
+                <!--</svg>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
     <div class="columns">
         <div id="activity-trend-container" class="boxed-group">
@@ -75,35 +90,6 @@
                 <svg class="activity-trend-chart-svg">
                 </svg>
             </div>
-        </div>
-    </div>
-
-    <div class="columns">
-        <div class="column one-half">
-
-            <div id="daily-piechart-container" class="boxed-group">
-                <h3 class="noClickSelect">
-                    <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-                    <div class="training-type left">Time tracker</div>
-                    <div class="notes left"></div>
-                    <div class="selected-meas legend-container right"></div>
-                </h3>
-
-                <div class="boxed-group-inner chart daily-piechart">
-                    <svg class="pie-chart">
-                    </svg>
-                    <div class="pie-label">
-                        <span class="pie1-label">2015-02-01</span>
-                        <span class="pie2-label">Weekly</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="column one-half">
-
         </div>
     </div>
 

@@ -1,9 +1,14 @@
 @analytics_loaded = () ->
+  self = this
   uid = $("#current-user-id")[0].value
 
   $("div.appMenu button").removeClass("selected")
   $("#analytics-link").css
     background: "rgba(240, 108, 66, 0.3)"
+
+  @dateToShow = moment().format("YYYY-MM-DD")
+  #  @dateToShow = "2015-05-29"
+  d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
 
   d3.json("/users/"+uid+"/summaries.json", act_data_received)
 
@@ -16,6 +21,33 @@
   day_2week = fmt(d)
   actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
   d3.json(actions_lastweek_url, draw_blood_sugar)
+
+  $('#timeline_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+      console.log "ct="
+      console.log ct
+
+      self.dateToShow = moment(ct).format("YYYY-MM-DD")
+      d3.json("/users/"+uid+"/analysis_data.json?date="+self.dateToShow, timeline_data_received)
+    todayButton: true
+  })
+
+timeline_data_received = (jsondata) ->
+  console.log "daily activities"
+  console.log jsondata
+
+  events = $.map(jsondata, (evt, index)->
+    console.log evt
+    if evt.dates
+      evt.dates =[new Date(evt.dates[0]), new Date(evt.dates[1])]
+    return evt
+  )
+  $("#timeline").html("")
+  timeline = new TimeLine("#timeline", events , @dateToShow);
+  timeline.draw()
 
 act_data_received = (jsondata) ->
   draw_trends(jsondata)
