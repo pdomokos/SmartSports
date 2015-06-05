@@ -10,6 +10,8 @@
     <!--<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <%= favicon_link_tag 'logo-login.png' %>
+    <link rel="apple-touch-icon" href="<%= image_path('logo-login.png')%>">
+    <link rel="apple-touch-icon-precomposed" href="<%= image_path('logo-login.png')%>">
 
   <script>
       console.log("pages main script executing...");
@@ -45,6 +47,20 @@
               show_food(e, ui);
           }
       });
+
+      $(document).on("ajax:success", "#logoutFormMobile", function(e, data, status, xhr) {
+          form_id = e.currentTarget.id;
+          console.log( "success " + form_id);
+          document.location = '/'
+//          $.mobile.changePage("/login");
+//          $.mobile.navigate("#dietPage");
+      }).on("ajax:error", function(e, xhr, status, error) {
+          console.log( e);
+          console.log( xhr);
+          console.log( error);
+          $("#failurePopup").popup("open");
+      });
+
   </script>
 
 </head>

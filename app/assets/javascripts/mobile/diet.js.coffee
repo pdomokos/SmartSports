@@ -9,7 +9,7 @@
   load_drink_types()
   load_diets()
 
-  $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
+  $(document).on("ajax:success", "form.resource-create-form.diet-form", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log xhr.responseText
     $("#foodname").val("")
@@ -26,7 +26,7 @@
     $("#failurePopup").popup("open")
   )
 
-  $("#updateFoodForm").on("ajax:success", (e, data, status, xhr) ->
+  $(document).on("ajax:success", "#updateFoodForm", (e, data, status, xhr) ->
     console.log("update successfull")
     $("#dietPage").attr("data-scrolltotable", true)
     $( ":mobile-pagecontainer" ).pagecontainer("change", "#dietPage")
@@ -34,7 +34,7 @@
     console.log xhr.responseText
     alert("Failed to update diet.")
   )
-  $("#deleteFoodForm").on("ajax:success", (e, data, status, xhr) ->
+  $(document).on("ajax:success", "#deleteFoodForm", (e, data, status, xhr) ->
     console.log("delete successfull")
     $("#dietPage").attr("data-scrolltotable", true)
     $.mobile.navigate( "#dietPage" )
@@ -42,7 +42,7 @@
     console.log xhr.responseText
     alert("Failed to delete diet.")
   )
-  $("#createNewFoodForm").on("ajax:success", (e, data, status, xhr) ->
+  $(document).on("ajax:success", "#createNewFoodForm", (e, data, status, xhr) ->
     console.log("add new diet successfull")
     $("#dietPage").attr("data-scrolltotable", true)
     $.mobile.navigate( "#dietPage" )

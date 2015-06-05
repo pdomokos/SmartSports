@@ -52,6 +52,9 @@
     </ul>
   </div>
 
+  <%= form_tag logout_path, :method => :post, :id => 'logoutFormMobile', :remote => true do %>
+      <%= submit_tag 'Sign out'%>
+  <% end %>
 </div>
 
 <div id="passwordPage" data-role="page" data-theme="a" class="ui-corner-all">
