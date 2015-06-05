@@ -40,6 +40,11 @@
     $("#withings-link").addClass("menulink-selected")
     $("#sectionWithings").removeClass("hiddenSection")
 
+  $("#admin-link").click (event) ->
+    event.preventDefault()
+    reset_settings_ui()
+    $("#admin-link").addClass("menulink-selected")
+    $("#sectionAdmin").removeClass("hiddenSection")
 
   $("#signin-moves-button").click (event) ->
     event.preventDefault()

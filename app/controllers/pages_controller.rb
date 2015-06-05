@@ -23,9 +23,9 @@ class PagesController < ApplicationController
   end
 
   def signin
-    browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-    puts "browser locale: #{browser_locale}"
-    I18n.locale = browser_locale || I18n.default_locale
+    # browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    # puts "browser locale: #{browser_locale}"
+    # I18n.locale = browser_locale || I18n.default_locale
     @user = User.new
     @values = JSON.dump(I18n.t :popupmessages)
   end
@@ -36,7 +36,7 @@ class PagesController < ApplicationController
 
   def dashboard
     @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def health
@@ -44,7 +44,7 @@ class PagesController < ApplicationController
       @measurement = Measurement.new
       @measurements = current_user.measurements.where(source: @default_source).order(created_at: :desc).limit(4)
       @values = JSON.dump(I18n.t :popupmessages)
-      save_click_record(current_user.id, true, nil)
+      save_click_record(:success, nil, nil)
   end
 
   def exercise
@@ -53,7 +53,7 @@ class PagesController < ApplicationController
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
     @intensity_values = Activity.intensity_values
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
     # respond_to do |format|
     #   format.html
     #   format.json
@@ -72,13 +72,13 @@ class PagesController < ApplicationController
     end
     @sensor_measurements = user.sensor_measurements.order(start_time: :desc)
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def diet
     @diets = current_user.diets.where(source: @default_source).order(created_at: :desc).limit(4)
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def medication
@@ -86,7 +86,7 @@ class PagesController < ApplicationController
     @oral_medication_types = MedicationType.where(:group => "oral")
     @medications = current_user.medications.order(created_at: :desc).limit(4)
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def wellbeing
@@ -99,7 +99,7 @@ class PagesController < ApplicationController
     @periodVolumeList = Lifestyle.periodVolumeList.join(";")
     @painTypeList = Lifestyle.painTypeList.join(";")
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def genetics
@@ -107,16 +107,16 @@ class PagesController < ApplicationController
     @diseaseList = JSON.dump(FamilyHistory.diseaseList)
     @family_histories = current_user.family_histories.order(created_at: :desc).limit(4)
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def labresult
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def analytics
-    save_click_record(current_user.id, true, nil)
+    save_click_record(:success, nil, nil)
   end
 
   def analytics2
@@ -157,7 +157,12 @@ class PagesController < ApplicationController
     @user = current_user
     @profile = Profile.where(user_id: current_user.id).first
     @values = JSON.dump(I18n.t :popupmessages)
-    save_click_record(current_user.id, true, nil)
+    if current_user.admin
+      @users = User.all
+      @profiles = Profile.all
+      @clickrecords = ClickRecord.where(msg: 'login_succ').order(created_at: :desc).group('user_id')
+    end
+    save_click_record(:success, nil, nil)
   end
 
   def error

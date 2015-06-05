@@ -35,6 +35,13 @@
         Google Fit
       </a>
     </div>
+    <% if current_user.admin %>
+        <div class="menuitem c0 admin">
+          <a id="admin-link" class="menulink" href="#">
+            Admin
+          </a>
+        </div>
+    <%end%>
 
     <div style="float: right;width: 50px;">
 

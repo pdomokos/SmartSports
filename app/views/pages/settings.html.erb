@@ -16,7 +16,11 @@
 <div id="sectionGooglefit" class="menu-section hiddenSection">
   <%= render "googlefit" %>
 </div>
-
+<% if current_user.admin %>
+    <div id="sectionAdmin" class="menu-section hiddenSection">
+      <%= render "admin" %>
+    </div>
+<% end %>
 
 <% content_for :menu do %>
     <%= render "settingsmenu" %>

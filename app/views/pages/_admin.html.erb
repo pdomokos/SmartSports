@@ -1,0 +1,48 @@
+<div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
+  <div style="padding: 10px;">
+    <table style="width: 100%;color: #3d3d3d;">
+      <tr>
+        <th>id</th>
+        <th>E-mail</th>
+        <th>Firstname</th>
+        <th>LastName</th>
+        <th>Last login</th>
+      </tr>
+      <tbody>
+        <% for u in @users %>
+          <% p = @profiles.where(user_id: u.id)[0] %>
+          <% c = @clickrecords.where(user_id: u.id)[0] %>
+          <tr>
+            <td>
+              <%= u.id %>
+            </td>
+            <td>
+              <%= u.email %>
+            </td>
+            <td>
+              <%= p.firstname %>
+            </td>
+            <td>
+              <%= p.lastname %>
+            </td>
+            <td>
+              <% if c %>
+                  <%=c.created_at %>
+              <%end%>
+            </td>
+            <td style="width: 180px;">
+              <button id="edit-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                <%= t :edit %>
+              </button>
+            </td>
+            <td style="width: 180px;">
+              <button id="delete-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                <%= t :delete %>
+              </button>
+            </td>
+          </tr>
+      <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>
