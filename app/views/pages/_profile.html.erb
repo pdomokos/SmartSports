@@ -37,7 +37,7 @@
     </table>
   </div>
 </div>
-<%if @profile%>
+<%if @profile %>
     <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
       <div style="padding: 10px;">
         <table style="width: 100%;color: #3d3d3d;">
@@ -100,7 +100,7 @@
                   <%= t :date_of_birth %>
                 </td>
                 <td>
-                  <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= @profile.dateofbirth.strftime("%F") %>"/>
+                  <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= @profile.try(:dateofbirth).try(:strftime, "%F") %>"/>
                 </td>
                 <td>
                   <button id="update-profile-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">

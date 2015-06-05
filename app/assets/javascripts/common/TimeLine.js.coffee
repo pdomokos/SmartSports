@@ -1,6 +1,6 @@
 class TimeLine
-  constructor: (@chart_element_selector, @data, @date) ->
-    console.log "TimeLine created"
+  constructor: (@chart_element_selector, @data, @day) ->
+    console.log "TimeLine created for : "+@day
 
     @svg = d3.select(@chart_element_selector).append("svg")
     console.log @svg
@@ -19,7 +19,7 @@ class TimeLine
 
   draw: () ->
     self = this
-    time_extent = [new Date(@date+" 00:00:00").getTime(), new Date(@date+" 23:59:59").getTime()]
+    time_extent = [new Date(moment(self.day+" 00:00:00")).getTime(), new Date(moment(self.day+" 23:59:59")).getTime()]
     @time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
     y_extent = [0, 10]

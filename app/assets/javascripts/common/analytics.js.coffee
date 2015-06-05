@@ -20,16 +20,13 @@
   d.setDate(d.getDate()-31)
   day_2week = fmt(d)
   actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
-  d3.json(actions_lastweek_url, draw_blood_sugar)
+  #d3.json(actions_lastweek_url, draw_blood_sugar)
 
   $('#timeline_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-      console.log "ct="
-      console.log ct
-
       self.dateToShow = moment(ct).format("YYYY-MM-DD")
       d3.json("/users/"+uid+"/analysis_data.json?date="+self.dateToShow, timeline_data_received)
     todayButton: true
@@ -52,7 +49,7 @@ timeline_data_received = (jsondata) ->
 act_data_received = (jsondata) ->
   draw_trends(jsondata)
   @explore_data = jsondata
-  @draw_pie(get_yesterday_ymd())
+  #@draw_pie(get_yesterday_ymd())
 
 draw_trends = (jsondata) ->
   act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
