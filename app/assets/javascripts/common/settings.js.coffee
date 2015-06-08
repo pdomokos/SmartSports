@@ -204,6 +204,7 @@
       popup_error(popup_messages.failed_to_add_data)
     else
       popup_success(popup_messages.save_success)
+      location.reload()
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error(popup_messages.failed_to_add_data)
   )

@@ -57,7 +57,7 @@
 
 #    redir to main page
     if data.profile
-      document.location = "/"
+      document.location = "/pages/diet"
     else
       document.location = data.locale+"/profile/new"
   ).on("ajax:error", (e, xhr, status, error) ->

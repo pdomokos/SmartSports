@@ -34,17 +34,18 @@
         <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField" placeholder="<%=t 'password_confirm' %>"/><br>
         <input type="submit" class="loginButton animButton" value="<%=t 'join_button' %>"/>
         <% end %>
-        <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
-          <%=t 'sign_up_info' %>
+        <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px; display: table; width: 260px;">
+          <div style="width: 85%;float: left; text-align: justify"><%=t 'sign_up_info' %></div>
+          <div id="langswitcher" class="langSwitcher" ><%= @lang_label %></div>
         </div>
     </div>
 </div>
 
-<% if is_mobile_device? || is_tablet_device? %>
-    <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{login_path}\">Here</a> to Login!"} %>
+<% if is_mobile_device? %>
+    <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{I18n.locale}/pages/signin\">Here</a> to Login!"} %>
 <% else %>
     <% have_account = t 'have_account' %>
-    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"#{login_path}\">" + have_account +"</a>"} %>
+    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signin\">" + have_account +"</a>"} %>
 <% end %>
 
 

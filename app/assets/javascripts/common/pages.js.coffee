@@ -36,6 +36,12 @@
   console.log "pages menu"
   define_globals()
 
+  $("#langswitcher").click ->
+    console.log "langswitcher clicked"
+    lang = this.textContent
+    console.log location.href
+    if location.pathname.startsWith("/en") ||location.pathname.startsWith("/hu")
+      location.pathname = "/"+lang+location.pathname.substr(3)
 
 
   setInterval( () ->

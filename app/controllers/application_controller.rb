@@ -18,6 +18,12 @@ class ApplicationController < ActionController::Base
       puts "browser locale: #{browser_locale}"
       I18n.locale = browser_locale || I18n.default_locale
     end
+
+    @lang_label = 'hu'
+    if I18n.locale.to_s=='hu'
+      @lang_label = 'en'
+    end
+
     puts "set locale: #{I18n.locale}"
   end
 
@@ -26,7 +32,7 @@ class ApplicationController < ActionController::Base
   # end
 
   def not_authenticated
-     redirect_to login_path, alert: "Please login first"
+     redirect_to "/#{I18n.locale}/pages/signin", alert: "Please login first"
   end
 
   def set_default_variables

@@ -20,10 +20,10 @@
               <%= u.email %>
             </td>
             <td>
-              <%= p.firstname %>
+              <%= p.try(:firstname) %>
             </td>
             <td>
-              <%= p.lastname %>
+              <%= p.try(:lastname) %>
             </td>
             <td>
               <% if c %>

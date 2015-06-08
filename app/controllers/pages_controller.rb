@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
   before_action :redir_mobile, except: [:mobilepage, :signin]
   before_action :set_locale
+  before_action :set_user_data
   before_filter :require_login, except: [:signin, :signup, :reset_password]
   has_mobile_fu
   layout :which_layout
@@ -28,6 +29,11 @@ class PagesController < ApplicationController
     # I18n.locale = browser_locale || I18n.default_locale
     @user = User.new
     @values = JSON.dump(I18n.t :popupmessages)
+
+    @lang_label = 'hu'
+    if I18n.locale.to_s=='hu'
+      @lang_label = 'en'
+    end
   end
 
   def mobilepage
@@ -341,7 +347,18 @@ private
     return shown_user
   end
 
-  # def set_user_data
-  #   @shown_user = get_shown_user(params)
-  # end
+  def set_user_data
+    @display_name = ""
+    if current_user
+      @display_name = current_user.name
+      prf = current_user.profile
+      if !prf.nil? && (prf.firstname.nil? || !prf.lastname.nil?) && prf.firstname!='' || prf.lastname!=''
+        @display_name = prf.firstname+' '+prf.lastname
+        if I18n.locale && I18n.locale.to_s=='hu'
+          @display_name = prf.lastname+' '+prf.firstname
+        end
+      end
+    end
+  end
+
 end

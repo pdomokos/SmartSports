@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :lab_results
   has_many :click_records
   has_many :tracker_data
+  has_many :summaries
   has_one :profile
   authenticates_with_sorcery!
   validates :password, length: { minimum: 4 }, allow_nil: true

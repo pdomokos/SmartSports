@@ -69,12 +69,18 @@ Rails.application.routes.draw do
     get 'pages/labresult'
     get 'pages/explore'
     get 'pages/settings'
+
+    get 'pages/signin'
+    get 'pages/signup'
+    get 'pages/reset_password'
+
+    get 'profile/new'
+
+    get 'sync/misfit_destroy'
     get 'pages/mdestroy'
     get 'pages/wdestroy'
     get 'pages/fdestroy'
     get 'pages/gfdestroy'
-    get 'sync/misfit_destroy'
-    get 'profile/new'
   end
   # resources :summaries
   # resources :notifications
@@ -96,10 +102,10 @@ Rails.application.routes.draw do
   get '/auth/shine/callback' => 'pages#misfitcb'
   get '/auth/google_oauth2/callback' => 'pages#googlecb'
 
-  get 'pages/reset_password'
-  get 'pages/signin'
-  get 'login' => 'pages#signin', :as => :login
-  get 'signup' => 'pages#signup', :as => :signup
+  # get 'pages/reset_password'
+  # get 'pages/signin'
+  get '/login',  to: redirect("/#{I18n.locale}/pages/signin")
+  get '/signup', to: redirect("/#{I18n.locale}/pages/signup")
   post 'logout' => 'sessions#signout', :as => :logout
 
   resources :sessions

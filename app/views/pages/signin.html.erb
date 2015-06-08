@@ -15,13 +15,14 @@
         <input id="password_field" name="password" type="password" class="loginField animField" placeholder="<%=t 'password' %>"/><br>
         <input type="submit" class="loginButton animButton" value="<%=t 'login_button' %>"/>
         <% end %>
-        <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
+        <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px; width: 260px;">
             <a class="forgottenPwLink" href="<%= pages_reset_password_path %>"><%=t 'forgotten_password' %></a>
+            <span id="langswitcher" class="langSwitcher" ><%= @lang_label %></span>
         </div>
     </div>
 </div>
 
-<% msg = "<a class=\"signupLink\" href=\"#{signup_path}\">"+ translate('create_account_part1')+ "</a> "+ translate('create_account_part2') %>
+<% msg = "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signup\">"+ translate('create_account_part1')+ "</a> "+ translate('create_account_part2') %>
 <% if is_mobile_device? %>
     <!--Don't have an account yet? Create yours now and start managing your diabetes-related data-->
     <%= render partial: 'features.mobile', locals: { msg: msg} %>
