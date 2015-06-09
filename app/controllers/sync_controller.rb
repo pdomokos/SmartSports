@@ -16,7 +16,7 @@ class SyncController < ApplicationController
   def get_last_synced_tracker_final_date(user_id, source, group=nil)
     last_sync_date = nil
     dateFormat = "%Y-%m-%d"
-    query = TrackerData.where(user_id: user_id).where(source: source)
+    query = TrackerDatum.where(user_id: user_id).where(source: source)
     if not group.nil?
       query = query.where(group: group)
     end

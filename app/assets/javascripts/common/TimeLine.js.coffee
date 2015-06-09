@@ -97,15 +97,22 @@ class TimeLine
     for sens in sensordata
       @draw_sensordata(canvas, sens)
 
-    $(@chart_element_selector+' g[data-tooltip!=""]').qtip({
-      content: {
-        attr: 'data-tooltip'
-      }
-      position: {
-        target: 'mouse',
-        my: 'bottom center',
-        adjust: { y: 70}
-      }
+    $(@chart_element_selector+' [data-tooltip!=""]').each () ->
+      $(this).qtip({
+        content: {
+          title: $(this).attr('data-title'),
+          text: $(this).attr('data-tooltip')
+        }
+        titlebar: {
+          attr: 'data-title'
+        }
+        position: {
+          target: 'mouse',
+          my: 'bottom center'
+        }
+        style: {
+          classes: 'qtip-default qtip qtip-green qtip-shadow qtip-rounded'
+        }
     })
 
   draw_linedata: (canvas, data) ->
@@ -113,9 +120,9 @@ class TimeLine
     groups = canvas.selectAll("g.linedata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
-      .attr("data-tooltip", (d) -> d.title)
-      .attr("data-titlebar", true)
-      .attr("data-title", "Exercise")
+      .attr("data-tooltip", (d) -> d.tooltip+"<br/>Duration:"+((d.dates[1]-d.dates[0])/60.0/1000.0).toFixed(2)+"min, Source: "+d.source )
+      .attr("data-titlebar", 'true')
+      .attr("data-title", (d) -> d.title)
       .attr("class", "linedata")
 
     groupsEnter.append("line").attr("class", (d)->d.evt_type+" timeLines")
@@ -155,8 +162,9 @@ class TimeLine
     groups = canvas.selectAll("g.pointdata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
-      .attr("data-tooltip", (d) -> d.title)
+      .attr("data-tooltip", (d) -> d.tooltip)
       .attr("data-titlebar", true)
+      .attr("data-title", (d) -> d.title)
       .attr("class", "pointdata")
 
     groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsA")
@@ -177,9 +185,9 @@ class TimeLine
     groups = canvas.selectAll("g.healthdata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
-      .attr("data-tooltip", (d) -> d.title)
+      .attr("data-tooltip", (d) -> d.tooltip)
       .attr("data-titlebar", true)
-      .attr("data-title", "Health")
+      .attr("data-title", (d) -> d.title)
       .attr("class", "healthdata")
 
     groupsEnter.append("line").attr("class", (d)->d.evt_type+" timeLines")
@@ -238,5 +246,8 @@ class TimeLine
     canvas.append("path")
       .attr("class", "line rr")
       .attr("d", rrline(data.values))
+      .attr("data-tooltip", data.tooltip)
+      .attr("data-titlebar", true)
+      .attr("data-title", data.title)
 
 window.TimeLine = TimeLine

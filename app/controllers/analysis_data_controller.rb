@@ -12,17 +12,19 @@ class AnalysisDataController < ApplicationController
     t=nil
     if params[:date]
       date = params[:date]
-      activities = activities.where("start_time between '#{date} 00:00:00' and '#{date} 23:59:59'")
       f = Time.zone.parse(date+' 00:00:00')
       t = Time.zone.parse(date+' 23:59:59')
+      activities = activities.where("start_time between ? and ?", f, t)
     end
 
     result.concat(activities.collect{|act| {
                       id: act.id,
-                      title: act.try(:activity_type).try(:name),
+                      tooltip: act.try(:activity_type).try(:name),
+                      title: 'Exercise',
                       depth: 0,
                       dates: [act.start_time, act.end_time],
-                      evt_type: 'exercise'
+                      evt_type: 'exercise',
+                      source: 'SmartDiab'
                   }})
 
     diets = user.diets
@@ -31,10 +33,12 @@ class AnalysisDataController < ApplicationController
     end
     result.concat(diets.collect{|diet| {
                       id: diet.id,
-                      title: diet.try(:food_type).try(:name),
+                      tooltip: diet.try(:food_type).try(:name),
+                      title: 'Diet',
                       depth: 0,
                       dates: [diet.date],
-                      evt_type: 'diet'
+                      evt_type: 'diet',
+                      source: 'SmartDiab'
                   }})
 
     measurements = user.measurements
@@ -44,12 +48,14 @@ class AnalysisDataController < ApplicationController
     meas_arr = []
     meas_arr.concat(measurements.collect{|measurement| {
                       id: measurement.id,
-                      title: measurement.get_title,
+                      tooltip: measurement.get_title,
+                      title: 'Health',
                       depth: 0,
                       dates: [measurement.date],
                       evt_type: 'measurement',
                       meas_type: measurement.meas_type,
-                      values: [measurement.systolicbp, measurement.diastolicbp, measurement.pulse]
+                      values: [measurement.systolicbp, measurement.diastolicbp, measurement.pulse],
+                      source: 'SmartDiab'
                   }})
     result.concat(meas_arr)
 
@@ -59,21 +65,25 @@ class AnalysisDataController < ApplicationController
     end
     result.concat(lifestyles.collect{|lifestyle| {
                       id: lifestyle.id,
-                      title: lifestyle.tooltip,
+                      tooltip: lifestyle.tooltip,
+                      title: 'Lifestyle',
                       depth: 0,
                       dates: [lifestyle.start_time, lifestyle.end_time],
-                      evt_type: 'lifestyle'
+                      evt_type: 'lifestyle',
+                      source: 'SmartDiab'
                   }})
 
 
     medications = user.medications.where("date between ? and ?", f, t)
     result.concat(medications.collect{|med| {
                       id: med.id,
-                      title: med.try(:medication_type).try(:name)+" : #{med.amount}",
+                      tooltip: med.try(:medication_type).try(:name)+" : #{med.amount}",
+                      title: 'Medication',
                       depth: 0,
                       dates: [med.date],
                       evt_type: 'medication',
                       group: med.try(:medication_type).try(:group),
+                      source: 'SmartDiab'
                   }})
     
     sensors = user.sensor_measurements.where("start_time between ? and ?", f, t)
@@ -92,13 +102,31 @@ class AnalysisDataController < ApplicationController
         end
         result.concat([{
                           id: sens.id,
-                          title: sens.group,
+                          tooltip: sens.group,
+                          title: 'Sensor',
                           start_time: sens.start_time,
                           values: val,
-                          evt_type: 'sensor'
+                          evt_type: 'sensor',
+                          source: 'SmartDiab'
                       }])
       end
     end
+
+    # tracker data
+    tracker_data = user.tracker_data.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t).where.not(group: 'transport')
+    tracker_filtered = tracker_data.select{|d|
+      d['activity']!='transport' && (d['activity']!='walking'||(d['end_time']-d['start_time']>240.0))
+    }.collect {|d| {
+                      id: d.id,
+                      tooltip: d.activity.capitalize,
+                      title: 'Exercise',
+                      source: d.source.capitalize,
+                      depth: 0,
+                      evt_type: 'exercise',
+                      dates: [d.start_time, d.end_time]
+    }}
+    result.concat(tracker_filtered)
+
     render json: result
   end
 end

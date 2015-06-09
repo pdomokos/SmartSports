@@ -36,6 +36,8 @@ module DataHelper
 
 
   # ========================
+
+
   def export_food_types
     arr = FoodType.all
     File.open("/data/tmp/food_types.json", 'w') do |f|
@@ -52,6 +54,13 @@ module DataHelper
     end
   end
 
+  def export_tracker_data
+    from_uid = 1
+    arr = TrackerData.all
+    File.open("/data/tmp/tracker_data_uid_#{from_uid}.json", 'w') do |f|
+      JSON.dump(arr.as_json, f)
+    end
+  end
 
   def export_diets
     from_uid = 1
@@ -116,7 +125,7 @@ module DataHelper
   def import_data(model, uid)
     u = User.find_by_id(uid)
     arr = nil
-    path = File.join('/Users/bdomokos/Downloads/tmp/', "#{model}_uid_1.json")
+    path = File.join('/Users/bdomokos/Downloads/tmp/', "#{model}_uid_#{uid}.json")
     File.open(path, 'r') do |f|
       arr = JSON.parse(f.read())
       arr.each do |d|

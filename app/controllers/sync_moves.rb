@@ -1,5 +1,14 @@
 module SyncMoves
 
+  def test_moves
+    movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
+    sess = JSON.parse(movesconn.data)
+    moves = Moves::Client.new(sess["token"])
+    # profile = moves.profile['profile']
+    storyline = moves.daily_storyline('20150609')
+    render json: storyline
+  end
+
   def sync_moves
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if movesconn != nil
@@ -95,7 +104,7 @@ module SyncMoves
   end
 
   def remove_tracker_data_not_final(user_id, source)
-    to_remove = TrackerData.where("user_id= #{user_id} and source = '#{source}' and sync_final = 'f'")
+    to_remove = TrackerDatum.where("user_id= #{user_id} and source = '#{source}' and sync_final = 'f'")
     to_remove.each { |it| it.destroy!}
   end
 
@@ -126,20 +135,22 @@ module SyncMoves
               if sItem['type'] == 'move'
                 activities = sItem['activities']
                 for aItem in activities
-                  tracker_data = TrackerData.new( user_id: current_user.id, source: 'moves',
-                                         start_time: aItem['startTime'],
-                                         end_time: aItem['endTime'],
-                                         activity:  aItem['activity'],
-                                         group: aItem['group'],
-                                         manual: aItem['manual'],
-                                         duration: aItem['duration'],
-                                         distance: aItem['distance'],
-                                         steps: aItem['steps'].to_i,
-                                         calories: aItem['calories'],
-                                         synced_at: DateTime.now(),
-                                         sync_final: isFinal
-                      )
-                  tracker_data.save!
+                  if aItem['activity']!='transport'
+                    tracker_data = TrackerDatum.new( user_id: current_user.id, source: 'moves',
+                                           start_time: aItem['startTime'],
+                                           end_time: aItem['endTime'],
+                                           activity:  aItem['activity'],
+                                           group: aItem['group'],
+                                           manual: aItem['manual'],
+                                           duration: aItem['duration'],
+                                           distance: aItem['distance'],
+                                           steps: aItem['steps'].to_i,
+                                           calories: aItem['calories'],
+                                           synced_at: DateTime.now(),
+                                           sync_final: isFinal
+                        )
+                    tracker_data.save!
+                  end
                 end
               end
             end
