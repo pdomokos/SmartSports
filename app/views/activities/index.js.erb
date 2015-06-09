@@ -3,5 +3,9 @@
     $("#recentResourcesTable").html("");
     $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/activity_item', :collection=> @activities ) %>");
 <% else %>
-
+    console.log("load activities js mobile called");
+    $("#exercisePage .recentResourcesListview").html("");
+    $("#exercisePage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/activity_item", formats: [:mobile], collection: @activities, as: "activity_item" ) %>");
+    $("#exercisePage .recentResourcesListview").listview( "refresh" );
+    $("#exercisePage .recentResourcesListview").trigger( "updatelayout");
 <% end %>

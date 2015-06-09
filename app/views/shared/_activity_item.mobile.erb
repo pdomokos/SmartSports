@@ -1,0 +1,41 @@
+<li>
+
+  <table>
+      <tr>
+        <td>
+          <% if activity_item.activity_type %>
+              <%= image_tag get_activity_image(activity_item.activity_type.name) %>
+          <% else %>
+              <%= image_tag 'walking40.png' %>
+          <% end %>
+        </td>
+        <td>
+          <h2><%= activity_item.title %></h2>
+        </td>
+        <td>
+          <p><%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></p>
+        </td>
+        <td class="iconColumn">
+          <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "updateExerciseForm", remote: true, method: "put", class: "resource-update-form") do %>
+              <button id="fav-icon" class="tableControl">
+                <% if activity_item.favourite %>
+                    <i class="fa fa-star fa-2x is-favorite"></i>
+                    <input type="hidden" name="activity[favourite]" value="false" >
+                <% else %>
+                    <i class="fa fa-star fa-2x no-favorite"></i>
+                    <input type="hidden" name="activity[favourite]" value="true" >
+                <% end %>
+              </button>
+          <% end %>
+        </td>
+        <td class="iconColumn deleteExercise">
+          <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "deleteExerciseForm", remote: true, method: "delete", class: "resource-delete-form") do %>
+              <button class="tableControl">
+                <i class="fa fa-trash-o fa-2x"></i>
+              </button>
+          <% end %>
+        </td>
+      </tr>
+  </table>
+
+</li>
