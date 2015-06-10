@@ -82,7 +82,7 @@
           <li><a id="fav-button"href="#" data-icon="star">Favs</a></li>
         </ul>
       </div>
-      <ul data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
+      <ul id="dietListView" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
         <%= render partial: "shared/diet_item", collection: @diets, as: "diet_item" %>
       </ul>
 

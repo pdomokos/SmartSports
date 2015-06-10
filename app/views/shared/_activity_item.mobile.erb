@@ -9,7 +9,15 @@
               <%= image_tag 'walking40.png' %>
           <% end %>
         </td>
-        <td>
+        <td class="activity_item">
+          <input id="activity_data_<%=activity_item.id%>" type="hidden" value="<%=
+                d = activity_item.as_json
+                if activity_item.activity_type
+                  d.merge!({'activity_name' => activity_item.activity_type.name})
+                  d.merge!({'activity_category' => activity_item.activity_type.category})
+                end
+                JSON.dump(d)
+          %>">
           <h2><%= activity_item.title %></h2>
         </td>
         <td>

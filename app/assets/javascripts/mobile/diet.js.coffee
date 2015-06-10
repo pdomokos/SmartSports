@@ -17,6 +17,7 @@
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
     $("#diet_scale").val(2.5).slider("refresh")
+    $("#drink_scale").val(2.5).slider("refresh")
 
     load_diets()
     $("#successPopup").popup("open")
@@ -61,10 +62,27 @@
     $("#editFoodPage").attr("data-foodid", this.dataset.foodid)
   )
 
+  $("#dietPage").on("click" , "#dietListView td.diet_item", load_diet_item)
+
   $(document).on("pagecontainershow", (event, ui) ->
     console.log("diet pagecontainershow")
     load_diets()
   )
+
+load_diet_item =  (e) ->
+    console.log "loading diet"
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    console.log data
+    if data.type=="Food"
+      $("#foodname").val(data.food_name)
+      $("#diet_type_id").val(data.food_type_id)
+      $("#diet_scale").val(data.amount).slider("refresh")
+    else if data.type=="Drink"
+      $("#drinkname").val(data.food_name)
+      $("#drink_type_id").val(data.food_type_id)
+      $("#drink_scale").val(data.amount).slider("refresh")
+    else if data.type=="Smoke"
+      $("#diet_smoke_type").val(data.name)
 
 @load_diets = (fav=false) ->
   self = this

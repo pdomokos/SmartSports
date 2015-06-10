@@ -1,5 +1,4 @@
 @exercise_loaded = () ->
-  console.log 'aaaaaaaaaaaaaaaaaaa'
   $("#exercise-link").css
     background: "rgba(238, 152, 67, 0.3)"
   init_exercise()
@@ -19,7 +18,7 @@ init_exercise = () ->
     $('#activity_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_end_datepicker').val(moment().format(moment_fmt))
     $('#activity_type_id').val(null)
-    $("#activity_scale").val(2.5).slider("refresh")
+    $("#activity_scale").val(2).slider("refresh")
 
     load_exercise()
     $("#successExercisePopup").popup("open")
@@ -36,7 +35,7 @@ init_exercise = () ->
     $('#activity_other_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('#activity_other_end_datepicker').val(moment().format(moment_fmt))
     $('#activity_other_type_id').val(null)
-    $("#activity_other_scale").val(2.5).slider("refresh")
+    $("#activity_other_scale").val(2).slider("refresh")
     load_exercise()
     $("#successExercisePopup").popup("open")
   ).on("ajax:error", (e, xhr, status, error) ->
@@ -60,6 +59,8 @@ init_exercise = () ->
     alert("Failed to delete exercise.")
   )
 
+  $("#exercisePage").on("click" , ".recentResourcesListview td.activity_item", load_activity_item)
+
   $('#hist-exercise-button').click ->
     load_exercise()
 
@@ -70,6 +71,22 @@ init_exercise = () ->
     console.log("activity pagecontainershow")
     load_exercise()
   )
+
+load_activity_item =  (e) ->
+  console.log "loading activity"
+  console.log e
+  data = JSON.parse(e.currentTarget.querySelector("input").value)
+  console.log data
+  if data.activity_category=="sport"
+    $("#activityname").val(data.activity_name)
+    $("#activity_type_id").val(data.activity_type_id)
+    $("#activity_intensity").val(data.intensity)
+    $("#activity_scale").val(data.intensity).slider("refresh")
+  else if data.activity_category!="sport"
+    $("#otheractivityname").val(data.activity_name)
+    $("#activity_other_type_id").val(data.activity_type_id)
+    $("#activity_other_intensity").val(data.intensity)
+    $("#activity_other_scale").val(data.intensity).slider("refresh")
 
 @load_exercise = (fav=false) ->
   self = this

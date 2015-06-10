@@ -15,7 +15,16 @@
       <td>
         <%= image_tag "#{diet_item.type.downcase}40.png" %>
       </td>
-      <td>
+      <td class="diet_item">
+        <input id="diet_data_<%= diet_item.id %>" type="hidden" value="<%=
+            d = diet_item.as_json
+            if diet_item.type!= "Smoke" && diet_item.food_type
+              d.merge!({'food_name' => diet_item.food_type.name})
+            else
+              d.merge!({'food_name' => diet_item.name})
+            end
+            JSON.dump(d)
+        %>">
         <% if diet_item.type != "Smoke" %>
             <h2><%= diet_item.food_type.name if diet_item.food_type %></h2>
         <% else %>
