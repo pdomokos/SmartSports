@@ -352,7 +352,7 @@ private
     if current_user
       @display_name = current_user.name
       prf = current_user.profile
-      if !prf.nil? && (prf.firstname.nil? || !prf.lastname.nil?) && prf.firstname!='' || prf.lastname!=''
+      if (!prf.nil?) && (!prf.firstname.nil? || !prf.lastname.nil?) && (prf.firstname!='' || prf.lastname!='')
         @display_name = prf.firstname+' '+prf.lastname
         if I18n.locale && I18n.locale.to_s=='hu'
           @display_name = prf.lastname+' '+prf.firstname

@@ -107,8 +107,9 @@ class TimeLine
           attr: 'data-title'
         }
         position: {
-          target: 'mouse',
-          my: 'bottom center'
+          my: 'bottom center',
+          at: 'top center',
+          viewport: $('#chart-clip')
         }
         style: {
           classes: 'qtip-default qtip qtip-green qtip-shadow qtip-rounded'
