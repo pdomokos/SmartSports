@@ -1,0 +1,54 @@
+<li>
+
+  <table>
+    <tr>
+      <td>
+        <% if meas_item.meas_type %>
+            <%= image_tag meas_map[meas_item.meas_type]+".png" %>
+        <% else %>
+            <%= image_tag meas_map['weight']+".png" %>
+        <% end %>
+      </td>
+      <td class="meas_item">
+        <input id="measurement_data_<%=meas_item.id%>" type="hidden" value="<%=
+            m = meas_item.as_json
+            JSON.dump(m)
+        %>">
+        <% if meas_item.meas_type=='blood_pressure' %>
+            <strong><%=(t :blood_pressure)%>: </strong><%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %>
+        <% elsif  meas_item.meas_type=='blood_sugar' %>
+            <strong><%=(t :blood_glucose)%>: </strong><%= meas_item.blood_sugar %> mmol/L
+        <% elsif  meas_item.meas_type=='weight' %>
+            <strong><%=(t :body_weight)%>: </strong><%= meas_item.weight %>kg
+        <% elsif  meas_item.meas_type=='waist' %>
+            <strong><%=(t :waist_circumfence)%>: </strong><%= meas_item.waist %>cm
+        <% else %>
+            <strong><%=(t :activity_unknown)%></strong>
+        <% end %>
+        <br>
+        <span> <%= meas_item.date.strftime("%F, %H:%M") if meas_item.date %></span>
+      </td>
+      <td class="iconColumn">
+        <%= form_tag( "/users/#{current_user.id}/measurements/#{meas_item.id}", id: "updateMeasForm", remote: true, method: "put", class: "resource-update-form") do %>
+            <button id="fav-icon" class="tableControl">
+              <% if meas_item.favourite %>
+                  <i class="fa fa-star fa-2x is-favorite"></i>
+                  <input type="hidden" name="measurement[favourite]" value="false" >
+              <% else %>
+                  <i class="fa fa-star fa-2x no-favorite"></i>
+                  <input type="hidden" name="measurement[favourite]" value="true" >
+              <% end %>
+            </button>
+        <% end %>
+      </td>
+      <td class="iconColumn deleteMeas">
+        <%= form_tag( "/users/#{current_user.id}/measurements/#{meas_item.id}", id: "deleteMeasForm", remote: true, method: "delete", class: "resource-delete-form") do %>
+            <button class="tableControl">
+              <i class="fa fa-trash-o fa-2x"></i>
+            </button>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+</li>

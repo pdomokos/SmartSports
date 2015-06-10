@@ -110,6 +110,9 @@ load_activity_item =  (e) ->
       else
         $("#hist-button").addClass("ui-btn-active")
         $("#fav-button").removeClass("ui-btn-active")
+      if $("#exercisePage").attr('data-scrolltotable')
+        $.mobile.silentScroll($("div.ui-navbar").offset().top)
+        $("#exercisePage").attr('data-scrolltotable', null)
 
 
 @load_activity_types = () ->

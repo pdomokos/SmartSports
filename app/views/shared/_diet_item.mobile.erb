@@ -25,14 +25,23 @@
             end
             JSON.dump(d)
         %>">
-        <% if diet_item.type != "Smoke" %>
-            <h2><%= diet_item.food_type.name if diet_item.food_type %></h2>
-        <% else %>
-            <h2><%= diet_item.name %></h2>
+        <% if diet_item.type== "Smoke" %>
+            <strong><%= diet_item.name %></strong>
+        <% elsif diet_item.type== "Food" %>
+            <% if diet_item.food_type %>
+                <strong><%= diet_item.food_type.name %></strong> <%= diet_item.amount * 100 %>g
+            <% else %>
+                <strong>Food</strong> <%= diet_item.name %>
+            <% end %>
+        <% elsif diet_item.type== "Drink" %>
+            <% if diet_item.food_type %>
+                <strong><%= diet_item.food_type.name %></strong> <%= diet_item.amount %>dl
+            <% else %>
+                <strong>Drink</strong> <%= diet_item.name %>
+            <% end %>
         <% end %>
-      </td>
-      <td>
-        <p><%= diet_item.date %></p>
+        <br/>
+        <%= diet_item.date.strftime("%F, %H:%M") if diet_item.date %>
       </td>
       <td class="iconColumn">
         <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "updateFoodForm", remote: true, method: "put", class: "resource-update-form") do %>

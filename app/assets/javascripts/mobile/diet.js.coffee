@@ -82,7 +82,7 @@ load_diet_item =  (e) ->
       $("#drink_type_id").val(data.food_type_id)
       $("#drink_scale").val(data.amount).slider("refresh")
     else if data.type=="Smoke"
-      $("#diet_smoke_type").val(data.name)
+      $("#diet_smoke_type").val(data.name).selectmenu("refresh",true)
 
 @load_diets = (fav=false) ->
   self = this

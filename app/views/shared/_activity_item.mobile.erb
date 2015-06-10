@@ -18,10 +18,9 @@
                 end
                 JSON.dump(d)
           %>">
-          <h2><%= activity_item.title %></h2>
-        </td>
-        <td>
-          <p><%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></p>
+          <strong><%= activity_item.title %></strong> <%=t :intensity %>: <%=(t :intensities).split(" ")[activity_item.intensity.to_i-1]%> <br/>
+          <%=(t :start)%>: <%= activity_item.start_time.strftime("%F %H:%M") if activity_item.start_time %>,
+          <%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></span>
         </td>
         <td class="iconColumn">
           <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "updateExerciseForm", remote: true, method: "put", class: "resource-update-form") do %>

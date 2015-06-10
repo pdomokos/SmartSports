@@ -41,6 +41,7 @@
       });
       $(document).on("pagebeforecreate", "#healthPage", function(e) {
           console.log("healthPage pagebeforecreate called");
+          health_loaded();
       });
       $(document).on("pagecontainerbeforeshow", function(e, ui) {
           if(ui.toPage[0].id=="editFoodPage") {

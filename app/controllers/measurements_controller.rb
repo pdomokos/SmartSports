@@ -27,6 +27,11 @@ class MeasurementsController < ApplicationController
     limit = params[:limit]
     favourites = params[:favourites]
     lang = params[:lang]
+    @is_mobile = false
+    mobile = params[:mobile]
+    if mobile and mobile=="true"
+      @is_mobile = true
+    end
 
     if lang
       I18n.locale=lang
