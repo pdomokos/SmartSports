@@ -1,14 +1,5 @@
 module SyncMoves
 
-  def test_moves
-    movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
-    sess = JSON.parse(movesconn.data)
-    moves = Moves::Client.new(sess["token"])
-    # profile = moves.profile['profile']
-    storyline = moves.daily_storyline('20150609')
-    render json: storyline
-  end
-
   def sync_moves
     movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if movesconn != nil

@@ -87,7 +87,7 @@ Rails.application.routes.draw do
   # resources :measurements
   resources :friendships
 
-  get 'sync/test_moves'
+  get 'sync/test_withings'
 
   get 'sync/sync_moves'
   get 'sync/sync_withings'

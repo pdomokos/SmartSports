@@ -16,8 +16,8 @@
 .timeLines.measurement {
   stroke: $measurement_color;
 }
-.timeLines.lifestyle {
-  stroke: $lifestyle_color;
+.timeLines.wellbeing {
+  stroke: $wellbeing_color;
 }
 
 
@@ -30,8 +30,8 @@
 .timePoints.measurement {
   fill: $measurement_color;
 }
-.timePoints.lifestyle {
-  fill: $lifestyle_color;
+.timePoints.wellbeing {
+  fill: $wellbeing_color;
 }
 
 .timePointsInner {

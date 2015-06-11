@@ -121,15 +121,23 @@ class AnalysisDataController < ApplicationController
     tracker_data = user.tracker_data.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t).where.not(group: 'transport')
     tracker_filtered = tracker_data.select{|d|
       d['activity']!='transport' && (d['activity']!='walking'||(d['end_time']-d['start_time']>240.0))
-    }.collect {|d| {
-                      id: d.id,
-                      tooltip: d.activity.capitalize,
-                      title: 'Exercise',
-                      source: d.source.capitalize,
-                      depth: 0,
-                      evt_type: 'exercise',
-                      dates: [d.start_time, d.end_time]
-    }}
+    }.collect {|d|
+      title = 'Exercise'
+      etype = 'exercise'
+      if d.activity=='sleep'
+        title = 'Well-being'
+        etype = 'wellbeing'
+      end
+      {
+          id: d.id,
+          tooltip: d.activity.capitalize,
+          title: title,
+          source: d.source.capitalize,
+          depth: 0,
+          evt_type: etype,
+          dates: [d.start_time, d.end_time]
+        }
+    }
     result.concat(tracker_filtered)
 
     render json: result

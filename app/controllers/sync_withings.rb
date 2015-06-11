@@ -48,6 +48,20 @@ module SyncWithings
   Withings.consumer_key = CONNECTION_CONFIG['WITHINGS_KEY']
   Withings.consumer_secret = CONNECTION_CONFIG['WITHINGS_SECRET']
 
+  def test_withings
+    withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
+    connection_data = JSON.parse(withings_conn.data)
+    withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
+    dateFormat_ymd = "%Y-%m-%d"
+    today_ymd = DateTime.now().strftime(dateFormat_ymd)
+    sleep_data = withings_user.getconn().get_request("/v2/sleep",
+                                                     {:startdateymd => '2015-06-01',
+                                                      :enddateymd => '2015-06-12',
+                                                      :action => "getsummary"})
+    render json: sleep_data
+  end
+
+
   def sync_withings
     withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
     if withings_conn
@@ -73,28 +87,6 @@ module SyncWithings
     end
   end
 
-  def sync_withings_sleep_test
-    withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
-    if withings_conn
-      connection_data = JSON.parse(withings_conn.data)
-      begin
-        withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
-        sleep_data = sync_withings_sleep(withings_user)
-        result =  {:status=> "OK", :sleep =>sleep_data}
-      rescue Exception => e
-        logger.error e.message
-        logger.error e.backtrace.join("\n")
-        result =  {:status => "ERR", :msg => e.message}
-      end
-    else
-      result = {:status => "ERR"}
-    end
-
-    respond_to do |format|
-      format.json { render json: result}
-    end
-  end
-
   private
 
   def remove_activities_on_date(user_id, source, date, group=nil)
@@ -103,6 +95,11 @@ module SyncWithings
       to_remove = to_remove.where(group: group)
     end
     to_remove.each { |it| it.destroy!}
+
+    f = Time.zone.parse(date+' 00:00:00')
+    t = Time.zone.parse(date+' 23:59:59')
+    sleep_to_remove = TrackerDatum.where('end_time between ? and ?', f, t).where(source: 'withings').where(group: 'sleep')
+    sleep_to_remove.each { |it| it.destroy!}
   end
 
   def save_withings_act(rec)
@@ -212,7 +209,7 @@ module SyncWithings
 
   def save_withings_sleep_summary(rec)
     isFinal = false
-    if DateTime.parse(rec['date']) < Date.today()
+    if Time.zone.parse(rec['date']) < Date.today().midnight()
       isFinal = true
     end
     light = rec['data']['lightsleepduration']
@@ -224,6 +221,21 @@ module SyncWithings
         group: 'sleep'
     )
     new_sleep.save!
+
+    puts "startdate=#{rec['startdate']} enddate=#{rec['enddate']}}"
+    tracker_data = TrackerDatum.new( user_id: current_user.id, source: 'withings',
+                                     start_time: Time.zone.strptime(rec['startdate'], '%s'),
+                                     end_time: Time.zone.strptime(rec['enddate'], '%s'),
+                                     activity:  'sleep',
+                                     group: 'sleep',
+                                     manual: false,
+                                     duration: nil,
+                                     distance: nil,
+                                     steps: nil,
+                                     calories: nil,
+                                     synced_at: DateTime.now(),
+                                     sync_final: isFinal)
+    tracker_data.save!
   end
 
 end

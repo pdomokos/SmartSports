@@ -72,7 +72,7 @@ class TimeLine
     )
 
     linedata = $.grep(@data, (item) ->
-      return (item.evt_type=='exercise'||item.evt_type=='lifestyle')
+      return (item.evt_type=='exercise'||item.evt_type=='wellbeing')
     )
     console.log "linedata"
     console.log linedata
@@ -117,11 +117,17 @@ class TimeLine
     })
 
   draw_linedata: (canvas, data) ->
+    getTooltip = (d) ->
+      title = d.tooltip+
+          "<br/>Duration:"+((d.dates[1]-d.dates[0])/60.0/1000.0).toFixed(2)+"min"+
+          "<br/>At: "+moment(d.dates[0]).format("YYYY-MM-DD HH:mm:SS")+
+      "<br/>Source: "+d.source
+      return title
     self = this
     groups = canvas.selectAll("g.linedata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
-      .attr("data-tooltip", (d) -> d.tooltip+"<br/>Duration:"+((d.dates[1]-d.dates[0])/60.0/1000.0).toFixed(2)+"min, Source: "+d.source )
+      .attr("data-tooltip", getTooltip  )
       .attr("data-titlebar", 'true')
       .attr("data-title", (d) -> d.title)
       .attr("class", "linedata")
@@ -160,10 +166,16 @@ class TimeLine
 
   draw_pointdata: (canvas, data) ->
     self = this
+    getTooltip = (d) ->
+      title = d.tooltip+
+          "<br/>At: "+moment(d.dates[0]).format("YYYY-MM-DD HH:mm:SS")+
+          "<br/>Source: "+d.source
+      return title
+
     groups = canvas.selectAll("g.pointdata").data(data)
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
-      .attr("data-tooltip", (d) -> d.tooltip)
+      .attr("data-tooltip", getTooltip)
       .attr("data-titlebar", true)
       .attr("data-title", (d) -> d.title)
       .attr("class", "pointdata")
@@ -184,9 +196,16 @@ class TimeLine
   draw_bpdata: (canvas, data) ->
     self = this
     groups = canvas.selectAll("g.healthdata").data(data)
+
+    getTooltip = (d) ->
+      title = d.tooltip+
+          "<br/>At: "+moment(d.dates[0]).format("YYYY-MM-DD HH:mm:SS")+
+          "<br/>Source: "+d.source
+      return title
+
     groupsEnter = groups.enter().append("g")
       .attr("id", (d) -> d.id)
-      .attr("data-tooltip", (d) -> d.tooltip)
+      .attr("data-tooltip", getTooltip)
       .attr("data-titlebar", true)
       .attr("data-title", (d) -> d.title)
       .attr("class", "healthdata")
