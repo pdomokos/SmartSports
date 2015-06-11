@@ -43,6 +43,10 @@
           console.log("healthPage pagebeforecreate called");
           health_loaded();
       });
+      $(document).on("pagebeforecreate", "#medicationPage", function(e) {
+          console.log("medicationPage pagebeforecreate called");
+          medications_loaded();
+      });
       $(document).on("pagecontainerbeforeshow", function(e, ui) {
           if(ui.toPage[0].id=="editFoodPage") {
               show_food(e, ui);

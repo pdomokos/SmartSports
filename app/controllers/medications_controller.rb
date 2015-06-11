@@ -13,6 +13,12 @@ class MedicationsController < ApplicationController
     if lang
       I18n.locale=lang
     end
+
+    @is_mobile = false
+    mobile = params[:mobile]
+    if mobile and mobile=="true"
+      @is_mobile = true
+    end
     u = User.find(user_id)
     @medications = u.medications
 
