@@ -87,8 +87,11 @@ load_diet_item =  (e) ->
 @load_diets = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
+  lang = $("#data-lang-diet")[0].value
   console.log "calling load recent diets"
   url = '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=10&mobile=true'
+  if lang
+    url = url+"&lang="+lang
   if fav
     console.log "loading favorites"
     url = url+"&favourites=true"

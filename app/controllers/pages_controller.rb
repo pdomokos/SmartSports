@@ -37,7 +37,14 @@ class PagesController < ApplicationController
   end
 
   def mobilepage
-
+    @counts = []
+    @counts[0] = Diet.where(user_id: current_user.id).count
+    @counts[1] = Activity.where(user_id: current_user.id).count
+    @counts[2] = Measurement.where(user_id: current_user.id).count
+    @counts[3] = Medication.where(user_id: current_user.id).count
+    @counts[4] = Lifestyle.where(user_id: current_user.id).count
+    @counts[5] = FamilyHistory.where(user_id: current_user.id).count
+    @counts[6] = LabResult.where(user_id: current_user.id).count
   end
 
   def dashboard
@@ -300,7 +307,7 @@ private
 
   def redir_mobile
     if is_mobile_device?
-      redirect_to url_for( :action => 'mobilepage', :locale => I18n.locale )
+      redirect_to url_for( :action => 'mobilepage', :locale => I18n.locale)
     end
   end
 

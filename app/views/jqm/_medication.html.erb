@@ -1,7 +1,7 @@
 <div data-role="page" id="medicationPage" >
-
+  <input id="data-lang-medication" value="<%=I18n.locale%>" type="hidden" />
   <div data-role="header" id="medicationHeader" class="medication-style">
-    <h1>Medication</h1>
+    <h1><%=t 'medication'%></h1>
     <a href="#menuPanel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
   </div>
 
@@ -19,7 +19,6 @@
             <ul id="medication_autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#oral_medication_name"></ul>
             <input id="medname" name="medication[medication_type_id]" type="hidden">
             <input id="medication_amount" type="text" name="medication[amount]" placeholder="<%=t 'amount_taken'%>"/>
-            <label for="medications_datepicker">Time:</label>
             <input id='medications_datepicker' type='text' readonly="true" name="medication[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
             <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
@@ -38,7 +37,6 @@
             <ul id="insulin_autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#insulin_name"></ul>
             <input id="insname" name="medication[medication_type_id]" type="hidden">
             <input id="medication_insulin_dosage" type="text" name="medication[amount]" placeholder="<%=t 'insulin_dosage'%>"/>
-            <label for="medications_insulin_datepicker">Time:</label>
             <input id="medications_insulin_datepicker" type="text" readonly="true" name="medication[date]" value='<%= DateTime.current.strftime("%F %R") %>'>
             <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
@@ -48,8 +46,8 @@
     <div class="ui-corner-all custom-corners">
       <div data-role="navbar" data-iconpos="bottom">
         <ul>
-          <li><a id="hist-medication-button" href="#" data-icon="grid" class="ui-btn-active">History</a></li>
-          <li><a id="fav-medication-button"href="#" data-icon="star">Favs</a></li>
+          <li><a id="hist-medication-button" href="#" data-icon="grid" class="ui-btn-active"><%=t 'history_link'%></a></li>
+          <li><a id="fav-medication-button"href="#" data-icon="star"><%=t 'fav_link'%></a></li>
         </ul>
       </div>
       <ul id="medicationListView" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">

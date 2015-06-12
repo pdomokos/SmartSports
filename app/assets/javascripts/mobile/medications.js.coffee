@@ -76,7 +76,10 @@ load_medication_item = (e) ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent medications"
+  lang = $("#data-lang-medication")[0].value
   url = '/users/' + current_user + '/medications.js?source='+window.default_source+'&order=desc&limit=10&mobile=true'
+  if lang
+    url = url+"&lang="+lang
   if fav
     console.log "loading favorites"
     url = url+"&favourites=true"

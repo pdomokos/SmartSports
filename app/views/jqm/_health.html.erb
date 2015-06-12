@@ -1,7 +1,7 @@
 <div data-role="page" id="healthPage" >
-
+  <input id="data-lang-health" value="<%=I18n.locale%>" type="hidden" />
   <div data-role="header" id="healthHeader" class="health-style">
-    <h1>Health</h1>
+    <h1><%=t 'health'%></h1>
     <a href="#menuPanel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" >Open left panel</a>
   </div><!-- /header -->
 
@@ -10,26 +10,25 @@
     <div class="ui-corner-all custom-corners">
       <div class="ui-bar ui-bar-a">
         <%= image_tag "bloodpressure40.png" %>
-        <h3>Blood Pressure</h3>
+        <h3><%=t 'blood_pressure'%></h3>
       </div>
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bp-create-form", class: "resource-create-form health-form") do %>
             <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
             <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
 
-            <label for="bp_sys">Systolic (mmHg)</label>
+            <label for="bp_sys"><%=t 'bp_systolic_placeholer'%></label>
             <input id="bp_sys" type="text" name="measurement[systolicbp]" />
 
-            <label for="bp_dia">Diastolic (mmHg)</label>
+            <label for="bp_dia"><%=t 'bp_diastolic_placeholer'%></label>
             <input id="bp_dia" type="text" name="measurement[diastolicbp]" />
 
-            <label for="bp_hr">Heart Rate (1/m)</label>
+            <label for="bp_hr"><%=t 'bp_pulse_placeholer'%></label>
             <input id="bp_hr" type="text" name="measurement[pulse]" />
 
-            <label for="bp_datepicker">Time:</label>
             <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
-            <button class="ui-shadow ui-btn ui-corner-all sendForm">Add Measurement</button>
+            <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
       </div>
     </div>
@@ -39,20 +38,19 @@
     <div class="ui-corner-all custom-corners">
       <div class="ui-bar ui-bar-a">
         <%= image_tag "bloodglucose.png" %>
-        <h3>Blood Glucose</h3>
+        <h3><%=t 'blood_glucose'%></h3>
       </div>
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "bg-create-form", class: "resource-create-form health-form") do %>
             <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
             <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
 
-            <label for="bs_glucose">Blood Glucose (mmol/L)</label>
+            <label for="bs_glucose"><%=t 'blood_glucose'%> (mmol/L)</label>
             <input id="bs_glucose" type="text" name="measurement[blood_sugar]" />
 
-            <label for="bp_datepicker">Time:</label>
             <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
-            <button class="ui-shadow ui-btn ui-corner-all sendForm">Add Measurement</button>
+            <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
       </div>
     </div>
@@ -62,20 +60,19 @@
     <div class="ui-corner-all custom-corners">
       <div class="ui-bar ui-bar-a">
         <%= image_tag "weight40.png" %>
-        <h3>Body Weight</h3>
+        <h3><%=t 'body_weight'%></h3>
       </div>
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "weight-create-form", class: "resource-create-form health-form") do %>
             <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
             <input type="hidden" name="measurement[meas_type]" value="weight" />
 
-            <label for="b_weight">Weight (kg)</label>
+            <label for="b_weight"><%=t 'body_weight'%> (kg)</label>
             <input id="b_weight" type="text" name="measurement[weight]" />
 
-            <label for="bp_datepicker">Time:</label>
             <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
-            <button class="ui-shadow ui-btn ui-corner-all sendForm">Add Measurement</button>
+            <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
       </div>
     </div>
@@ -86,20 +83,19 @@
     <div class="ui-corner-all custom-corners">
       <div class="ui-bar ui-bar-a">
         <%= image_tag "bloodglucose.png" %>
-        <h3>Waist Circumfence</h3>
+        <h3><%=t 'waist_circumfence'%></h3>
       </div>
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/measurements", remote: true, id: "waist-create-form", class: "resource-create-form health-form") do %>
             <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
             <input type="hidden" name="measurement[meas_type]" value="waist" />
 
-            <label for="b_waist">Waist (cm)</label>
+            <label for="b_waist"><%=t 'waist_placeholder'%></label>
             <input id="b_waist" type="text" name="measurement[waist]" />
 
-            <label for="bp_datepicker">Time:</label>
             <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
-            <button class="ui-shadow ui-btn ui-corner-all sendForm">Add Measurement</button>
+            <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
       </div>
     </div>
@@ -109,8 +105,8 @@
     <div class="ui-corner-all custom-corners">
       <div data-role="navbar" data-iconpos="bottom">
         <ul>
-          <li><a id="hist-health-button" href="#" data-icon="grid" class="ui-btn-active">History</a></li>
-          <li><a id="fav-health-button" href="#" data-icon="star">Favs</a></li>
+          <li><a id="hist-health-button" href="#" data-icon="grid" class="ui-btn-active"><%=t 'history_link'%></a></li>
+          <li><a id="fav-health-button" href="#" data-icon="star"><%=t 'fav_link'%></a></li>
         </ul>
       </div>
       <ul id="healthListView" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
