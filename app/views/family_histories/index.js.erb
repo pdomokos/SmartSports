@@ -3,5 +3,9 @@
     $("#recentResourcesTable").html("");
     $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/family_history_item', :collection=> @family_histories ) %>");
 <% else %>
-
+    console.log("load genetics js mobile called");
+    $("#geneticsPage .recentResourcesListview").html("");
+    $("#geneticsPage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/family_history_item", formats: [:mobile], collection: @family_histories, as: "family_history_item" ) %>");
+    $("#geneticsPage .recentResourcesListview").listview( "refresh" );
+    $("#geneticsPage .recentResourcesListview").trigger( "updatelayout");
 <% end %>

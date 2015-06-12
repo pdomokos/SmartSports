@@ -45,6 +45,8 @@ class PagesController < ApplicationController
     @counts[4] = Lifestyle.where(user_id: current_user.id).count
     @counts[5] = FamilyHistory.where(user_id: current_user.id).count
     @counts[6] = LabResult.where(user_id: current_user.id).count
+    @relativeList = JSON.dump(FamilyHistory.relativeList)
+    @diseaseList = JSON.dump(FamilyHistory.diseaseList)
   end
 
   def dashboard

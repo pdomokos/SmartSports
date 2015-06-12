@@ -1,0 +1,24 @@
+<li>
+    <table>
+        <tr>
+
+            <td>
+                <%= image_tag "family40.png" %>
+            </td>
+
+            <td class="family_history_item">
+              <strong><%= family_history_item.disease %></strong> <%= family_history_item.relative %><br/>
+              <%= family_history_item.note %>
+            </td>
+
+            <td class="iconColumn">
+              <%= form_tag( "/users/#{current_user.id}/family_histories/#{family_history_item.id}", id: "delete_family_history", remote: true, method: "delete", class: "resource-delete-form") do %>
+                  <button class="tableControl">
+                    <i class="fa fa-trash-o fa-2x"></i>
+                  </button>
+              <% end %>
+            </td>
+
+        </tr>
+    </table>
+</li>

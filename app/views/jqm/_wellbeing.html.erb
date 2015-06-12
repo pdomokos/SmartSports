@@ -147,7 +147,11 @@
 
 
     <div class="ui-corner-all custom-corners">
-      <div data-role="navbar" data-iconpos="bottom"></div>
+      <div data-role="navbar" data-iconpos="bottom">
+        <div class="sectionTitle wellbeingBodyLogo wellbeingColor" style="margin-top: 40px;">
+          <span><%=t 'history_link'%></span>
+        </div>
+      </div>
       <ul id="lifestyleListView" data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true" class="ui-body recentResourcesListview">
         <%= render partial: "shared/lifestyle_item", collection: @lifestyles, as: "lifestyle_item" %>
       </ul>
