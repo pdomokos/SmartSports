@@ -1,6 +1,6 @@
 
 class RRChart
-  constructor: (@chart_element, @data, @hrdata, @crdata) ->
+  constructor: (@chart_element, @data, @hrdata, @crdata, @speed_data) ->
     @base_r = 6
     @selected_r = 9
     this.clear()
@@ -8,50 +8,67 @@ class RRChart
   draw: () ->
     self = this
 
+    n = 0
+    if @data
+      n+=1
+    if @hrdata
+      n+=1
+    if @crdata
+      n+=1
+    if @speed_data
+      n+=1
+
+    chart_aspect = 1.3
     @margin = {top: 20, right: 30, bottom: 20, left: 40}
-    @aspect = 1.5/7.0
+    @aspect = chart_aspect*n/7.0
 
     @width = $("#"+@chart_element+"-container").width()
     @height = @aspect*@width
-
-    total_height = @height
-    if @crdata
-      total_height *= 3
-    else
-      total_height *= 2
+    @chart_height = chart_aspect/7.0*@width
 
     @svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])
     @svg
       .attr("width", self.width)
-      .attr("height", total_height)
+      .attr("height", self.height)
 
-    chart1 = @svg
-      .append("g")
-    chart2 = @svg
-      .append("g")
-      .attr("transform", "translate(0,"+(self.height)+")")
-    chart3 = null
-    if @crdata
-      console.log "display crdata"
-      chart3 = @svg
+    charts = []
+    for i in [0..n-1]
+      ch = @svg
         .append("g")
-        .attr("transform", "translate(0,"+(2*self.height)+")")
+        .attr("transform", "translate(0,"+(1.0*i*self.chart_height)+")")
+      charts.push(ch)
 
-    self.draw_plot(chart1, @data)
-    self.draw_plot(chart2, @hrdata, "1/min")
+    i = 0
+    if @data
+      self.draw_plot(charts[i], @data)
+      i+=1
+    if @hrdata
+      self.draw_plot(charts[i], @hrdata, "1/min")
+      i+=1
     if @crdata
-      self.draw_plot(chart3, @crdata, "r/min")
+      self.draw_plot(charts[i], @crdata, "r/min")
+      i+=1
+    if @speed_data
+      self.draw_plot(charts[i], @speed_data, "km/h")
 
   clear: () ->
     $("svg."+@chart_element+"-chart-svg").html("")
 
   draw_plot: (chart, data, yAxisText="ms") ->
     self = this
+    sum_fn = (s, a) ->
+      s+a.value
+    avg = data.reduce( sum_fn , 0)/data.length
+
+    data = data.filter( (x) ->
+      x.value<2*avg
+    )
+    console.log "avg="+avg.toFixed(2)
     time_extent = d3.extent(data, (d) -> new Date(d.time))
     time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
     y_extent = d3.extent(data, (d) -> d.value)
-    y_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(y_extent)
+    y_scale = d3.scale.linear().range([self.chart_height - self.margin.bottom- self.margin.top, 0]).domain(y_extent)
 
     rrline = d3.svg.line()
       .x( (d) -> return(time_scale(new Date(d.time))))
@@ -67,10 +84,10 @@ class RRChart
 
     chart.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate("+self.margin.left+","+(self.height-self.margin.bottom)+")")
+      .attr("transform", "translate("+self.margin.left+","+(self.chart_height-self.margin.bottom)+")")
       .call(time_axis)
 
-    y_axis = d3.svg.axis().scale(y_scale).orient("left")
+    y_axis = d3.svg.axis().scale(y_scale).orient("left").ticks(7)
     chart.append("g")
       .attr("class", "y axis")
       .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")

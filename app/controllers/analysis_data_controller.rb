@@ -93,11 +93,16 @@ class AnalysisDataController < ApplicationController
         curr_time = sens.start_time.to_f
         last_time = curr_time
         val = []
+        tot = 0
+        n = 0
         raw.in_groups_of(2) do |delta, hr|
           curr_time += delta/1000.0
           if curr_time-last_time > 60.0
-            val.append({time: curr_time.to_i, data:hr})
+            val.append({time: curr_time.to_i, data:tot/n})
             last_time = curr_time
+          else
+            tot += hr
+            n += 1
           end
         end
         result.concat([{
