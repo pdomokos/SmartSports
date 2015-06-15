@@ -86,7 +86,7 @@ class AnalysisDataController < ApplicationController
                       source: 'SmartDiab'
                   }})
     
-    sensors = user.sensor_measurements.where("start_time between ? and ?", f, t)
+    sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
     for sens in sensors do
       if sens.hr_data
         raw = Base64.decode64(sens.hr_data).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}

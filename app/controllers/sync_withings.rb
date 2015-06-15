@@ -53,12 +53,12 @@ module SyncWithings
     connection_data = JSON.parse(withings_conn.data)
     withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
     dateFormat_ymd = "%Y-%m-%d"
-    today_ymd = DateTime.now().strftime(dateFormat_ymd)
-    sleep_data = withings_user.getconn().get_request("/v2/sleep",
-                                                     {:startdateymd => '2015-06-01',
-                                                      :enddateymd => '2015-06-12',
-                                                      :action => "getsummary"})
-    render json: sleep_data
+    # today_ymd = DateTime.now().strftime(dateFormat_ymd)
+    data = withings_user.getconn().get_request("/v2/measure",
+                                                     {:startdate => Time.zone.parse("2015-06-14 00:00:00").to_i,
+                                                      :enddate => Time.zone.parse("2015-06-15 00:00:00").to_i,
+                                                      :action => "getintradayactivity"})
+    render json: data
   end
 
 

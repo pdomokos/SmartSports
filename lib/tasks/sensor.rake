@@ -54,4 +54,7 @@ namespace :sensor do
     end
   end
 
+  def set_end_time
+    SensorMeasurement.all.each{|it| it.end_time = (it.start_time + it.duration if it.duration); it.save }
+  end
 end

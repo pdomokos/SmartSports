@@ -32,6 +32,12 @@ module Api::V1
 
       sens = SensorMeasurement.new(sensor_measurement_params)
       sens.user_id = user.id
+      if params[:duration] && params[:duration].to_i > 0
+        sens.end_time = sens.start_time + params[:duration].to_i
+      end
+      if params[:version]
+        sens.version = params[:version]
+      end
       # sens.start_time = Time.zone.strptime(sens.start_time, "%Y-%m-%d %H:%M:%S %Z")
 
       if sens.save

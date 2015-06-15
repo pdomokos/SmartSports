@@ -246,11 +246,11 @@ class TimeLine
 
     groupsEnter.selectAll("circle.timePointsC")
       .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
-      .attr("cy", (d) -> self.bp_scale(d.values[2]))
+      .attr("cy", (d) -> self.hr_scale(d.values[2]))
       .attr("r", "5")
     groupsEnter.selectAll("circle.timePointsCInner")
       .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
-      .attr("cy", (d) -> self.bp_scale(d.values[2]))
+      .attr("cy", (d) -> self.hr_scale(d.values[2]))
       .attr("r", "2")
 
   draw_sensordata: (canvas, data ) ->
