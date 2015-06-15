@@ -55,6 +55,10 @@
           console.log("geneticsPage pagebeforecreate called");
           genetics_loaded();
       });
+      $(document).on("pagebeforecreate", "#labresultPage", function(e) {
+          console.log("labresultPage pagebeforecreate called");
+          labresults_loaded();
+      });
       $(document).on("pagecontainerbeforeshow", function(e, ui) {
           if(ui.toPage[0].id=="editFoodPage") {
               show_food(e, ui);

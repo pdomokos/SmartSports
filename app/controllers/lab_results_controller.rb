@@ -8,6 +8,17 @@ class LabResultsController < ApplicationController
     order = params[:order]
     limit = params[:limit]
 
+    lang = params[:lang]
+    if lang
+      I18n.locale=lang
+    end
+
+    @is_mobile = false
+    mobile = params[:mobile]
+    if mobile and mobile=="true"
+      @is_mobile = true
+    end
+
     @labresults = LabResult.where("user_id = #{user_id}")
 
     if order and order=="desc"

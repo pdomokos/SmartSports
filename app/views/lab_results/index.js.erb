@@ -3,5 +3,9 @@
     $("#recentResourcesTable").html("");
     $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/labresult_item', :collection=> @labresults ) %>");
 <% else %>
-
+    console.log("load labresult js mobile called");
+    $("#labresultPage .recentResourcesListview").html("");
+    $("#labresultPage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/labresult_item", formats: [:mobile], collection: @labresults, as: "labresult_item" ) %>");
+    $("#labresultPage .recentResourcesListview").listview( "refresh" );
+    $("#labresultPage .recentResourcesListview").trigger( "updatelayout");
 <% end %>

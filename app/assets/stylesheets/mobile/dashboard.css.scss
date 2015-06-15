@@ -287,6 +287,29 @@ body.nobgAnimation {
 //  width: 175px;
 //}
 
+
+.c7, .labresultColor {
+  color: #EBAAAB !important;;
+}
+
+.labresultStyle .dataFormField {
+  border: solid 1px #EBAAAB !important;
+  width: 160px;
+};
+.labresultStyle button {
+  background: #EBAAAB !important;
+};
+.labresultStyle div.dataFormContainer {
+  width: 248px;
+  height: 260px;
+}
+.labresultStyle div.dataFormSeparator {
+  height:255px !important;
+}
+.labresultStyle .dataForm {
+  height: 110px;
+}
+
 .analyticsColor {
   color: #f46d43 !important;
 }
@@ -504,6 +527,11 @@ button.deleteForm {
 }
 .geneticsBodyLogo {
   background: image-url("genetics60.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
+.labresultBodyLogo {
+  background: image-url("labResult_c40.png") 10px 10px no-repeat;
   background-size: 40px 40px;
 }
 
