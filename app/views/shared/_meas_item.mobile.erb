@@ -28,6 +28,8 @@
         <br>
         <span> <%= meas_item.date.strftime("%F, %H:%M") if meas_item.date %></span>
       </td>
+    </tr>
+    <tr>
       <td class="iconColumn">
         <%= form_tag( "/users/#{current_user.id}/measurements/#{meas_item.id}", id: "updateMeasForm", remote: true, method: "put", class: "resource-update-form") do %>
             <button id="fav-icon" class="tableControl">

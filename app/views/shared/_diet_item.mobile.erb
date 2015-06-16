@@ -43,6 +43,8 @@
         <br/>
         <%= diet_item.date.strftime("%F, %H:%M") if diet_item.date %>
       </td>
+    </tr>
+    <tr>
       <td class="iconColumn">
         <%= form_tag( "/users/#{current_user.id}/diets/#{diet_item.id}", id: "updateFoodForm", remote: true, method: "put", class: "resource-update-form") do %>
             <button id="fav-icon" class="tableControl">

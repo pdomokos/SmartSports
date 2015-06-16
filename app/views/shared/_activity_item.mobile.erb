@@ -22,6 +22,8 @@
           <%=(t :start)%>: <%= activity_item.start_time.strftime("%F %H:%M") if activity_item.start_time %>,
           <%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></span>
         </td>
+      </tr>
+      <tr>
         <td class="iconColumn">
           <%= form_tag( "/users/#{current_user.id}/activities/#{activity_item.id}", id: "updateExerciseForm", remote: true, method: "put", class: "resource-update-form") do %>
               <button id="fav-icon" class="tableControl">

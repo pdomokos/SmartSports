@@ -28,7 +28,8 @@
           <br>
           <span> <%= labresult_item.date.strftime("%F") if labresult_item.date %></span>
         </td>
-
+    </tr>
+    <tr>
       <td class="deleteLabresult">
         <%= form_tag( "/users/#{current_user.id}/lab_results/#{labresult_item.id}", id: "deleteLabresult", remote: true, method: "delete", class: "resource-delete-form") do %>
             <button class="tableControl">

@@ -28,7 +28,8 @@
             <%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F %H:%M") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F %H:%M") if lifestyle_item.end_time %>
         <% end %>
       </td>
-
+    </tr>
+    <tr>
       <td class="iconColumn deleteLifestyle">
         <%= form_tag( "/users/#{current_user.id}/lifestyles/#{lifestyle_item.id}", id: "deleteLifestyle", remote: true, method: "delete", class: "resource-delete-form") do %>
             <button class="tableControl">

@@ -29,7 +29,8 @@
         <% end %>
         <br/><%= medication_item.date.strftime("%F, %H:%M") if medication_item.date %>
       </td>
-
+    </tr>
+    <tr>
       <td class="iconColumn">
         <%= form_tag("/users/#{current_user.id}/medications/#{medication_item.id}", id: "updateMedicationForm", remote: true, method: "put", class: "resource-update-form") do %>
             <button id="fav-icon" class="tableControl">

@@ -10,7 +10,8 @@
               <strong><%= family_history_item.disease %></strong> <%= family_history_item.relative %><br/>
               <%= family_history_item.note %>
             </td>
-
+        </tr>
+        <tr>
             <td class="iconColumn">
               <%= form_tag( "/users/#{current_user.id}/family_histories/#{family_history_item.id}", id: "delete_family_history", remote: true, method: "delete", class: "resource-delete-form") do %>
                   <button class="tableControl">

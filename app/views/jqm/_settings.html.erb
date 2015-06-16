@@ -17,39 +17,24 @@
         <%= submit_tag %>
     <% end %>
 
-    <div class="ui-field-contain">
-      <form>
-        <label for="s_name">Screen Name</label>
-        <input id="s_name" type="text" name="food_name" value="" data-theme="a" >
-      </form>
+    <!--<div class="ui-field-contain">-->
+      <!--<form>-->
+        <!--<label for="s_name">Screen Name</label>-->
+        <!--<input id="s_name" type="text" name="food_name" value="" data-theme="a" >-->
+      <!--</form>-->
 
-      <ul data-role="listview" data-inset="true">
-        <li><a href="#passwordPage">Password</a>
-        </li>
-      </ul>
+      <!--<ul data-role="listview" data-inset="true">-->
+        <!--<li><a href="#passwordPage">Password</a>-->
+        <!--</li>-->
+      <!--</ul>-->
 
-      <label for="language_select">Language</label>
-      <select id="language_select" name="settings[lang]">
-        <option>English</option>
-        <option>Hungarian</option>
-      </select>
-    </div>
+      <!--<label for="language_select">Language</label>-->
+      <!--<select id="language_select" name="settings[lang]">-->
+        <!--<option>English</option>-->
+        <!--<option>Hungarian</option>-->
+      <!--</select>-->
+    <!--</div>-->
 
-    <p><strong>Connections</strong></p>
-    <ul data-role="listview" data-inset="true">
-      <li><a href="#">Moves</a>
-      </li>
-      <li><a href="#">Withings</a>
-      </li>
-      <li><a href="#">Misfit</a>
-      </li>
-      <li><a href="#">Google Fit</a>
-      </li>
-      <li><a href="#">Fitbit</a>
-      </li>
-      <li><a href="#">Polar</a>
-      </li>
-    </ul>
   </div>
 
   <%= form_tag logout_path, :method => :post, :id => 'logoutFormMobile', :remote => true do %>
@@ -57,20 +42,20 @@
   <% end %>
 </div>
 
-<div id="passwordPage" data-role="page" data-theme="a" class="ui-corner-all">
-  <div data-role="header">
-    <h1>Authentication</h1>
-    <a href="#settingsPage" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-direction="reverse">Back</a>
-  </div>
-  <div class="ui-content">
-    <form>
-      <div class="ui-field-contain">
-        <label for="s_pass">Password</label>
-        <input id="s_pass" type="text" name="food_name" value="" data-theme="a" readonly="true">
-        <label for="s_pass_conf">Password Confirmation</label>
-        <input id="s_pass_conf" type="text" name="food_name" data-theme="a" readonly="true">
-      </div>
-      <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
-    </form>
-  </div>
-</div>
+<!--<div id="passwordPage" data-role="page" data-theme="a" class="ui-corner-all">-->
+  <!--<div data-role="header">-->
+    <!--<h1>Authentication</h1>-->
+    <!--<a href="#settingsPage" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-direction="reverse">Back</a>-->
+  <!--</div>-->
+  <!--<div class="ui-content">-->
+    <!--<form>-->
+      <!--<div class="ui-field-contain">-->
+        <!--<label for="s_pass">Password</label>-->
+        <!--<input id="s_pass" type="text" name="food_name" value="" data-theme="a">-->
+        <!--<label for="s_pass_conf">Password Confirmation</label>-->
+        <!--<input id="s_pass_conf" type="text" name="food_name" data-theme="a">-->
+      <!--</div>-->
+      <!--<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>-->
+    <!--</form>-->
+  <!--</div>-->
+<!--</div>-->
