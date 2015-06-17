@@ -61,3 +61,192 @@ function decodeSensorTimeVal(base64Data) {
     }
     return arr;
 }
+
+var colorClasses = {
+    "health": "bgc3",
+    "medication": "bgc4"
+};
+
+function determineColor(point) {
+    if (point.kind == 'start') {
+        return "bgc0";
+    } else if (point.kind == 'health') {
+        return "bgc3";
+    } else if (point.kind == 'medication') {
+        return "bgc4";
+    } else if (point.kind == 'activity') {
+        return "bgc2";
+    } else {
+        return "";
+    }
+
+}
+
+function determineImage(point) {
+    if ( point.type == "blood_sugar") {
+        return "blood_sugar";
+    } else if ( point.type == "blood_pressure") {
+        return "blood_pressure";
+    } else if ( point.type == "insulin") {
+        return "insulin";
+    } else if ( point.type == "start") {
+        return "start";
+    } else if ( point.type == "cycling") {
+        return "cycling";
+    }
+}
+
+var historyData = [
+
+    {
+        "time": "5/14/2016",
+        "history": [
+            {
+                "id": 0,
+                "kind": "start",
+                "type": "start"
+            }
+        ]
+    },
+
+    {
+        "time": "5/15/2016",
+        "history": [
+            {
+                "id": 1,
+                "kind": "health",
+                "type": "blood_sugar",
+                "value": "12.7",
+                "unit": "mmol/L"
+            },            {
+                "id": 1,
+                "kind": "activity",
+                "type": "cycling",
+                "value": "1.5",
+                "unit": "hr"
+            },
+            {
+                "id": 2,
+                "kind": "medication",
+                "type": "insulin",
+                "value": "22",
+                "unit": "ml"
+            }
+
+        ]
+    },
+
+    {
+        "time": "5/16/2016",
+        "history": [
+            {
+                "id": 1,
+                "kind": "health",
+                "type": "blood_sugar",
+                "value": "12.7",
+                "unit": "mmol/L"
+            },
+            {
+                "id": 1,
+                "kind": "health",
+                "type": "blood_pressure",
+                "value": "120/80/60",
+                "unit": ""
+            },
+            {
+                "id": 2,
+                "kind": "medication",
+                "type": "insulin",
+                "value": "22",
+                "unit": "ml"
+            }
+
+        ]
+    }
+];
+
+function countElements(history) {
+    var count = 0;
+    jQuery.each(history, function () {
+
+        jQuery.each(this.history, function () {
+            count++;
+        });
+    });
+    return count;
+}
+
+function countElementBefore(history, A, B) {
+    var a = 0;
+    var b = 0;
+    var count = 0;
+    jQuery.each(history, function () {
+
+        jQuery.each(this.history, function () {
+            //  alert(" a: "+a+" b: "+b+" A: "+A+" B: "+B);
+            if (a < A || (a==A && b < B)) {
+                count++;
+            }
+            b++
+        });
+        a++;
+        b = 0;
+    });
+    return count;
+}
+
+function getElement(history, a, b) {
+    return history[a].history[b];
+}
+
+function computeLeft(history, w, a, b) {
+    return w/(history.length+1)*(a+1) +b*55 - (history[a].history.length*55)/2;
+}
+
+function addPoint(canvas, length, history, a, b) {
+    var w = $(canvas).width();
+    var step = w / length;
+    var count = countElements(history);
+    var rareMode = length > count;
+
+    if (rareMode) {
+        step = w / (count + 1);
+    }
+    var left = computeLeft(history, w, a, b); //(countElementBefore(history, a, b) + 1) * step;
+    var point = getElement(history, a, b);
+
+
+    //  alert("W: " + w + " C: " + count + " S:" + step + " L: " + left + " " + point.value + " " + point.unit);
+
+
+
+    return ( b == 0 ? "<div class='historyTime' style='left:"+left+"px'>"+history[a].time+"</div>" : "") + "<div class='history_item " + determineColor(point) + "' style='left:" + left + "px'><div class='inner "+determineImage(point)+"'></div></div>";
+
+}
+
+function addPoints(canvas, history) {
+    var LENGTH = 10;
+    var a = 0;
+    var b = 0;
+    var lastb = 0;
+    var w = $(canvas).width();
+    var l = computeLeft(historyData, w, 0, 0);
+    var pointsHTML = "";
+    jQuery.each(history, function () {
+        jQuery.each(this.history, function () {
+            pointsHTML += addPoint(canvas, LENGTH, history, a, b);
+            b++;
+        });
+        a++;
+        lastb = b;
+        b = 0;
+    });
+    var sl = computeLeft(history, w, 0, 0);
+    var sw = computeLeft(historyData, w, a-1, lastb-1);
+
+    pointsHTML = "<div class='historyLine' style='left:"+sl+"px;width:"+(sw-sl)+"px;"+"'></div>"+pointsHTML;
+
+    pointsHTML += "<div style='clear:both;'></div>";
+    $(canvas).html(pointsHTML);
+
+}

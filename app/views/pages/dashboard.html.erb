@@ -2,6 +2,184 @@
     pages_menu();
     dashboard_loaded();
 </script>
+
+<script>
+    $(function () {
+        addPoints($("#canv"), historyData);
+    })
+</script>
+
+
+<div class="topcolor">
+  <div class="historyContainer" style="">
+    <div style="text-align: center;color: #ffffff;">
+      LATEST WEEK
+    </div>
+
+    <div id="canv" style="position:relative;margin-left: 40px;margin-top: 20px;">
+    </div>
+    <div style="clear: both"></div>
+  </div>
+
+  <div style="clear: both;position:relative;    margin-left: 20px;margin-right: 30px;">
+
+
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc1" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner food"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Calories Taken
+        </div>
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        +<%=@calories_taken%> kcal
+      </div>
+    </div>
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc3" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner steps"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Steps walked
+        </div>
+
+
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        <%=@steps_walked%>
+      </div>
+
+
+    </div>
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc3" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner steps"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Cycling today
+        </div>
+
+
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        2.876 km
+      </div>
+
+
+    </div>
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc2" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner exercise"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Exercise calories
+        </div>
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        -<%=@calories_burned%> kcal
+      </div>
+    </div>
+
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc2" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner exercise"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Exercise time
+        </div>
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        58 min
+      </div>
+    </div>
+
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc3" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner blood_sugar"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Average/min/max blood glucose today
+        </div>
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        3.2/4.2/5.5
+      </div>
+
+    </div>
+
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc3" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner weight"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Sleep amount today
+        </div>
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        6.8 hours
+      </div>
+
+    </div>
+
+    <div class="dashboardT">
+      <div style="height: 100px;text-align: left;font-variant: small-caps">
+        <div style="height: 40px">
+          <div class="history_item bgc3" style="left: 70px;top: -10px;position:relative;">
+            <div class="inner weight"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          Body Weight Gain/Loss
+        </div>
+      </div>
+      <div style="font-size: 25px;color: #2D3643">
+        +1.5 kg
+      </div>
+
+    </div>
+
+
+    <!--<div class="dashboardT"></div>-->
+    <div style="clear: both"></div>
+    <!--<div class="roundElementContainer">-->
+    <!--<div class="roundElement exercise_large"></div>-->
+    <!--<div class="roundElementTitle">Activity</div>-->
+    <!--<div class="roundElementValue">1h 35min</div>-->
+    <!--</div>-->
+
+
+  </div>
+
+</div>
+
+
+<% content_for :background_style do %>
+    <script>
+        $('body').addClass("dashboardbody")
+    </script>
+<% end %>
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>

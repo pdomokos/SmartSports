@@ -851,3 +851,139 @@ div.egfr {
   float: right;
   cursor: pointer;
 }
+
+.historyContainer {
+  padding: 20px;
+  position: relative;
+  margin-left: 20px;
+  margin-right: 30px;
+  margin-top: 60px;
+  /*background: #F2F3F8;*/
+  /*background: RGBA(45, 54, 67, .8);*/
+  height: 100px;
+  /*background: red;*/
+  /*border-radius: 30px;*/
+}
+
+.historyLine {
+  top: 21px;
+  position: absolute;
+  height: 4px;
+  background: #ffffff;
+  /*background-color: #2D3643;*/
+}
+
+.historyTime {
+  top: 50px;
+  position: absolute;
+  margin-left: -21px;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.history_item {
+  top: 0;
+  margin-left: -21px;
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 32px;
+
+}
+
+.history_item .inner {
+  position: absolute;
+  margin: 11px;
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+}
+
+.history_item .start {
+  background-image: url("type/img_start.png");
+}
+
+.bgc0 {
+  background-color: #4FBDF2 !important;
+}
+
+.bgc1 {
+  background-color: #57C88A !important;
+}
+
+.bgc2 {
+  background-color: #F09938 !important;;
+}
+
+.bgc3 {
+  background-color: #8980CA !important;;
+}
+
+.bgc5 {
+  background-color: #EA70B5 !important;
+}
+
+.bgc4 {
+  background-color: #6CC5CC !important;;
+}
+
+.bgc6 {
+  background-color: #2BC7EC !important;;
+}
+
+.bgc7 {
+  background-color: #EBAAAB !important;;
+}
+
+.blood_pressure {
+  background-image: url("type/img_bloodPressure.png");
+}
+
+.blood_sugar {
+  background-image: url("type/img_bloodSugar.png");
+}
+
+.steps {
+  background-image: url("img_cycling.png");
+}
+
+.exercise {
+  background-image: url("img_exercise@2x.png");
+}
+
+.insulin {
+  background-image: url("type/img_insulin.png");
+}
+
+.cycling {
+  background-image: url("img_cycling.png");
+}
+
+.food {
+  background-image: url("img_food.png");
+}
+
+.weight {
+  background-image: url("img_weight.png");
+}
+
+.topcolor {
+  width: 100%;
+  min-height: 320px;
+  /*background: url("../images/dashboard_bg8.jpg");*/
+  background-position-y: bottom;
+  padding-bottom: 20px;
+}
+
+.dashboardT {
+  width: 150px;
+  height: 150px;
+  padding: 20px;
+  margin: 2px;
+  background: RGBA(255, 255, 255, 0.36);
+  float: left;
+}
+
+.dashboardbody {
+  background: url("dashboard_bg9.jpg") center no-repeat !important;
+}

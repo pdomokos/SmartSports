@@ -51,6 +51,11 @@ class PagesController < ApplicationController
 
   def dashboard
     @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
+
+    @calories_taken = Diet.where("user_id = :user_id AND date >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)}).sum("calories")
+    @calories_burned = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)}).sum("calories")
+    @steps_walked = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)}).sum("steps")
+
     save_click_record(:success, nil, nil)
   end
 
