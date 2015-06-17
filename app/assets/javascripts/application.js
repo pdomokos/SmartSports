@@ -110,7 +110,7 @@ var historyData = [
     },
 
     {
-        "time": "2015-06-09",
+        "time": "2015/06/09",
         "history": [
             {
                 "id": 1,
@@ -137,7 +137,7 @@ var historyData = [
     },
 
     {
-        "time": "2015-06-11",
+        "time": "2015/06/11",
         "history": [
             {
                 "id": 1,

@@ -94,6 +94,19 @@ hu:
     invalid_med_amount: "Kérem adjon meg érvényes mennyiséget"
     invalid_dosage: "Kérem adjon meg érvényes inzulin dózist"
 
+# dashboard
+  lastweek: "ELMÚLT HÉT"
+  calories_taken: "Bevitt kalória"
+  steps_walked: "Lépésszám"
+  cycling_today: "Kerékpározás"
+  exercise_calories: "Elhasznált kalória"
+  exercise_time: "Edzés időtartama"
+  min: "perc"
+  blood_glucose_today: "Mai átlagos/min/max vércukor"
+  sleep_amount_today: "Mai alvásidő"
+  hours: "óra"
+  body_weight_loss: "Testsúly gyarapodás/fogyás"
+
 # diet
   food:             "Étel"
   food_placeholer: "Írjon legalább 3 betűt..."

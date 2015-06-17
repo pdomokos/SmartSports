@@ -115,6 +115,19 @@ en:
     invalid_med_amount: "Enter a valid medication amount"
     invalid_dosage: "Enter valid dosage for insulin"
 
+# dashboard
+  lastweek: "LAST WEEK"
+  calories_taken: "Calories Taken"
+  steps_walked: "Steps walked"
+  cycling_today: "Cycling today"
+  exercise_calories: "Exercise calories"
+  exercise_time: "Exercise time"
+  min: "min"
+  blood_glucose_today: "Average/min/max blood glucose today"
+  sleep_amount_today: "Sleep amount today"
+  hours: "hours"
+  body_weight_loss: "Body Weight Gain/Loss"
+
 # diet
   food: "Food"
   food_placeholer: "Type at least three letters..."
