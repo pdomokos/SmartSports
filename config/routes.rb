@@ -166,11 +166,11 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  root :to => "pages#diet"
+  root :to => "pages#dashboard"
   #handles invalid locale
   #get '/*locale/*path', to: redirect("/#{I18n.default_locale}/%{path}")
   # handles /pages/... without locale
   get '/pages/:path', to: redirect("/#{I18n.default_locale}/pages/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
   # handles /
-  get '', to: redirect("/#{I18n.locale}/pages/diet")
+  get '', to: redirect("/#{I18n.locale}/pages/dashboard")
 end

@@ -99,7 +99,7 @@ function determineImage(point) {
 var historyData = [
 
     {
-        "time": "5/14/2016",
+        "time": "2015/06/07",
         "history": [
             {
                 "id": 0,
@@ -110,7 +110,7 @@ var historyData = [
     },
 
     {
-        "time": "5/15/2016",
+        "time": "2015-06-09",
         "history": [
             {
                 "id": 1,
@@ -137,7 +137,7 @@ var historyData = [
     },
 
     {
-        "time": "5/16/2016",
+        "time": "2015-06-11",
         "history": [
             {
                 "id": 1,
