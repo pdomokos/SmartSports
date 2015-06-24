@@ -59,7 +59,7 @@
     if data.profile
       document.location = "/pages/dashboard"
     else
-      document.location = data.locale+"/profile/new"
+      document.location = "/"+data.locale+"/profile/new"
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log error
     popup_error(popup_messages.login_failed)
