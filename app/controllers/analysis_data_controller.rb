@@ -46,17 +46,27 @@ class AnalysisDataController < ApplicationController
       measurements = measurements.where("date between ? and ?", f, t)
     end
     meas_arr = []
-    meas_arr.concat(measurements.collect{|measurement| {
-                      id: measurement.id,
-                      tooltip: measurement.get_title,
-                      title: 'Health',
-                      depth: 0,
-                      dates: [measurement.date],
-                      evt_type: 'measurement',
-                      meas_type: measurement.meas_type,
-                      values: [measurement.systolicbp, measurement.diastolicbp, measurement.pulse],
-                      source: 'SmartDiab'
-                  }})
+    meas_arr.concat(measurements.collect do |measurement|
+                      ret = {
+                        id: measurement.id,
+                        tooltip: measurement.get_title,
+                        title: 'Health',
+                        depth: 0,
+                        dates: [measurement.date],
+                        evt_type: 'measurement',
+                        meas_type: measurement.meas_type,
+                        source: 'SmartDiab'
+                      }
+
+                      if measurement.meas_type=='blood_pressure'
+                        ret['values']= [measurement.systolicbp, measurement.diastolicbp, measurement.pulse]
+                      elsif measurement.meas_type=='blood_sugar'
+                        ret['values'] = [measurement.blood_sugar]
+                      end
+
+                      ret
+                      end
+                    )
     result.concat(meas_arr)
 
     lifestyles = user.lifestyles.where(group: 'sleep')

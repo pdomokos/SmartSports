@@ -1,13 +1,18 @@
+<% if @selected_user %>
+    <input type="hidden" id="selected-user-id" value="<%= @selected_user.id %>" >
+<% end %>
+
 <div class="analytics-block mainContent" id="analytics-container">
     <div class="sectionTitle analiticsBodyLogo analyticsColor">
         <%=t 'analytics' %>
+        <% if @selected_user %>
+            <span>for user: id=<%= @selected_user.id%>, <%= @selected_user.email %></span>
+        <% end %>
     </div>
     <div class="contentBg ">
 
 
     </div>
-
-
 
 <!--
     <div class="columns">

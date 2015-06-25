@@ -19,6 +19,16 @@ class TimeLine
 
   draw: () ->
     self = this
+    console.log "xxxxx"
+    console.log @data
+    if @data.length == 0
+      @svg.append("text")
+        .text("No data")
+        .attr("class", "warn")
+        .attr("x", self.width/2-self.margin.left)
+        .attr("y", self.height/2)
+      return
+
     time_extent = [new Date(moment(self.day+" 00:00:00")).getTime(), new Date(moment(self.day+" 23:59:59")).getTime()]
     @time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
@@ -33,6 +43,9 @@ class TimeLine
     @hr_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(hr_extent)
     bp_extent = [50, 200]
     @bp_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bp_extent)
+
+    bg_extent = [0, 20]
+    @bg_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bg_extent)
 
     @svg.append("clipPath")
       .attr("id", "chart-clip")
@@ -63,6 +76,7 @@ class TimeLine
 
     #==========
 
+    console.log "ALL DATA="
     console.log @data
     sensordata = $.grep(@data, (item) ->
       return (item.evt_type=='sensor')
@@ -82,9 +96,18 @@ class TimeLine
       return (item.evt_type=='measurement'&&item.meas_type=='blood_pressure')
     )
 
-    pointdata = $.grep(@data, (item) ->
-      return (item.evt_type!='exercise' && item.evt_type!='lifestyle' && (item.evt_type!='measurement'||item.meas_type!='blood_pressure'))
+    bgdata = $.grep(@data, (item) ->
+      return (item.evt_type=='measurement'&&item.meas_type=='blood_sugar')
     )
+
+    pointdata = $.grep(@data, (item) ->
+      return (item.evt_type!='exercise' && item.evt_type!='lifestyle' &&
+        (item.evt_type!='measurement'||(item.meas_type!='blood_pressure'&&item.meas_type!='blood_sugar')))
+    )
+
+    console.log "bgdata"
+    console.log bgdata
+    @draw_bgdata(canvas, bgdata)
 
     console.log "pointdata"
     console.log pointdata
@@ -193,6 +216,40 @@ class TimeLine
       .attr("cy", (d) -> self.y_scale(d.depth))
       .attr("r", "2")
 
+  draw_bgdata: (canvas, data) ->
+    self = this
+    console.log "BGDATA="
+    console.log data
+    if !data || data.length==0
+      return
+
+    getTooltip = (d) ->
+      title = d.tooltip+
+          "<br/>At: "+moment(d.dates[0]).format("YYYY-MM-DD HH:mm:SS")+
+          "<br/>Source: "+d.source
+      return title
+
+    groups = canvas.selectAll("g.bgdata").data(data)
+    groupsEnter = groups.enter().append("g")
+      .attr("id", (d) -> d.id)
+      .attr("data-tooltip", getTooltip)
+      .attr("data-titlebar", true)
+      .attr("data-title", (d) -> d.title)
+      .attr("class", "bgdata")
+
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner")
+
+    groupsEnter.selectAll("circle.timePoints")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bg_scale(d.values[0]))
+      .attr("r", "5")
+
+    canvas.selectAll("g.bgdata > circle.timePointsInner")
+      .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+      .attr("cy", (d) -> self.bg_scale(d.values[0]))
+      .attr("r", "2")
+
   draw_bpdata: (canvas, data) ->
     self = this
     groups = canvas.selectAll("g.healthdata").data(data)
@@ -269,5 +326,11 @@ class TimeLine
       .attr("data-tooltip", data.tooltip)
       .attr("data-titlebar", true)
       .attr("data-title", data.title)
+      .attr("id", "sensor-"+data.id)
+      .on('click', () ->
+        sid = this.id.split("-")[1]
+        console.log "clicked "+sid
+        window.location = "/en/pages/explore?sid="+sid
+    )
 
 window.TimeLine = TimeLine

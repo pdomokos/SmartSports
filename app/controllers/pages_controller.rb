@@ -137,6 +137,9 @@ class PagesController < ApplicationController
 
   def analytics
     save_click_record(:success, nil, nil)
+    if params[:user_id] && current_user.admin?
+      @selected_user = User.find_by_id(params[:user_id])
+    end
   end
 
   def analytics2

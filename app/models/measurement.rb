@@ -36,7 +36,14 @@ class Measurement < ActiveRecord::Base
       else
         result = "Systolic/Diastolic/HR: #{self.systolicbp}/#{self.diastolicbp}/#{self.pulse}"
       end
+    elsif self.meas_type == 'blood_sugar'
+      result = "Blood Glucose: #{self.blood_sugar} mmol/L"
+    elsif self.meas_type == 'weight'
+      result = "Weight: #{self.weight}kg"
+    elsif self.meas_type == 'waist'
+      result = "Waist circumfence: #{self.waist}cm"
     end
+
     return result
   end
 end

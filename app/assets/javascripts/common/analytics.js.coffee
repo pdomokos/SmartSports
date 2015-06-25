@@ -2,6 +2,11 @@
   self = this
   uid = $("#current-user-id")[0].value
 
+  if $("#selected-user-id").length >0
+    suid = $("#selected-user-id")[0].value
+    if suid && suid != ''
+      uid = suid
+
   $("div.appMenu button").removeClass("selected")
   $("#analytics-link").css
     background: "rgba(240, 108, 66, 0.3)"

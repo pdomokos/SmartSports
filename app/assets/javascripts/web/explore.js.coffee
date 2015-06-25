@@ -1,6 +1,21 @@
 @explore_loaded = () ->
+  self = this
   console.log "explore loaded"
   $("#sensorDataTable").on("click", "button.tableControl", show_sensor)
+  uid = $("#current-user-id")[0].value
+  s = getParameterByName("sid")
+  console.log "s="+s
+  if s!=""
+    do_show(uid, s)
+
+@getParameterByName = (name) ->
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
+  regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+  results = regex.exec(location.search)
+  if results == null
+    return ""
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "))
 
 @show_sensor = (event) ->
   console.log "show: "
@@ -14,12 +29,12 @@
     window.open("/users/"+uid+"/sensor_measurements/"+sid+"/edit", "_blank")
     return
 
-  $("div.sensorTable tr").removeClass("selectedRow")
-  event.currentTarget.parentNode.parentNode.classList.add("selectedRow")
+  do_show(uid, sid)
 
-  arr = event.currentTarget.id.split("-")
-  sid = arr[arr.length-1]
-  uid = $("#current-user-id")[0].value
+@do_show = (uid, sid) ->
+  $("div.sensorTable tr").removeClass("selectedRow")
+  $("div.sensorTable tr#sensor-meas-"+sid).addClass("selectedRow")
+
   url = '/users/' + uid + '/sensor_measurements/'+sid+'.json'
 
   $.ajax url,
