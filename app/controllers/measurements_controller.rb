@@ -1,3 +1,4 @@
+require 'csv'
 class MeasurementsController < ApplicationController
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
 
@@ -117,6 +118,7 @@ class MeasurementsController < ApplicationController
       respond_to do |format|
         format.html
         format.json {render json: @measurements}
+        format.csv { send_data @measurements.to_csv}
         format.js
       end
     end

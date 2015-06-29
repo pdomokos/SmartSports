@@ -31,8 +31,68 @@
     if isempty("#waist")|| notpositive("#waist")
       popup_error(popup_messages.invalid_health_cd, $("#addMeasurementButton").css("background"))
       return false
+
+  $(document).on("click", "#health-show-table", (evt) ->
+    console.log "datatable clicked"
+    current_user = $("#current-user-id")[0].value
+    url = '/users/' + current_user + '/measurements.json'
+    $.ajax url,
+      type: 'GET',
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "datatable measurements AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        tblData = $.map(data, (item) ->
+          return([get_table_row(item)])
+        ).filter( (v) ->
+          return(v!=null)
+        )
+        $("#health-data-container").html("<table id=\"health-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
+        $("#health-data").dataTable({
+          "data": tblData,
+          "columns": [
+            {"title": "id"},
+            {"title": "date"},
+            {"title": "type"},
+            {"title": "value"}
+          ],
+          "order": [[1, "desc"]]
+        })
+        location.href = "#openModal"
+  )
+  $(document).on("click", "#download-health-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    url = '/users/' + current_user + '/measurements.csv?order=desc'
+    location.href = url
+  )
+  $(document).on("click", "#close-health-data", (evt) ->
+    $("#health-data-container").html("")
+    location.href = "#close"
+  )
   init_meas()
   loadHealthHistory()
+
+@get_table_row = (item ) ->
+  if item.meas_type==null
+    return null
+  value = ""
+  if item.meas_type == 'blood_pressure'
+    if item.systolicbp
+      value = item.systolicbp.toString()
+    if value != ""
+      value = value+"/"
+    if item.diastolicbp
+      value = value+item.diastolicbp.toString()
+    if value != ""
+      value = value+" "
+    if item.pulse
+      value= value+item.pulse.toString()
+  else if item.meas_type == 'blood_sugar'
+    value = item.blood_sugar
+  else if item.meas_type == 'weight'
+    value = item.weight
+  else if item.meas_type == 'waist'
+    value = item.waist
+  return ([item.id, moment(item.date).format("YYYY-MM-DD HH:MM"), item.meas_type, value])
 
 @init_meas = () ->
   console.log "init meas"

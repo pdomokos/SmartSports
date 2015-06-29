@@ -1,3 +1,5 @@
+require 'csv'
+
 class MeasValidator < ActiveModel::Validator
   def validate(record)
     if record.meas_type == 'blood_pressure' &&
@@ -46,4 +48,40 @@ class Measurement < ActiveRecord::Base
 
     return result
   end
+
+  def self.to_csv(options={})
+    CSV.generate(options) do |csv|
+      csv << ['ID', 'date', 'type', 'value']
+      all.each do |meas|
+        if !meas.meas_type.nil?
+          value = ''
+          if meas.meas_type == 'blood_pressure'
+            if meas.systolicbp
+              value = meas.systolicbp.to_s
+            end
+            if value != ''
+              value = value+'/'
+            end
+            if meas.diastolicbp
+              value = value+meas.diastolicbp.to_s
+            end
+            if value != ''
+              value = value+' '
+            end
+            if meas.pulse
+              value = value+meas.pulse.to_s
+            end
+          elsif meas.meas_type == 'blood_sugar'
+            value = meas.blood_sugar
+          elsif meas.meas_type == 'weight'
+            value = meas.weight
+          elsif meas.meas_type == 'waist'
+            value = meas.waist
+          end
+          csv << [meas.id, meas.date.strftime("%Y-%m-%d %H:%M"), meas.meas_type, value]
+        end
+      end
+    end
+  end
+
 end
