@@ -5,10 +5,14 @@
   $('#profile_birth_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
+    maxDate: new Date(2000, 1 - 1, 1),
+    minDate: new Date(1900, 1 - 1, 1),
+    defaultDate: new Date(1980, 1 - 1, 1)
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
+
   $("#profileForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
@@ -17,7 +21,8 @@
     document.location = "/"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
-    popup_error(popup_messages.failed_to_add_data)
+#    popup_error(popup_messages.failed_to_add_data)
+    popup_error(data.responseJSON["msg"])
   )
   $("#emptyProfileForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -27,6 +32,7 @@
     document.location = "/"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
+    popup_error(data.responseJSON["msg"])
   )
 
 
@@ -34,15 +40,20 @@
   console.log "signup loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
   $('#username_field').focus()
-  $("#signupForm").on("ajax:success", (e, data, status, xhr) ->
+  $("#signupForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
 
     #    redir to main page
-    document.location = "/"
+    #    document.location = "/"
+    if(data.ok == false)
+      popup_error(data.responseJSON["msg"])
+    else
+      document.location = "/"+data.locale+"/profile/new"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
-    popup_error(popup_messages.sign_up_failed)
+    popup_error(data.responseJSON["msg"])
+#    popup_error(popup_messages.sign_up_failed)
   )
 
 
@@ -62,7 +73,8 @@
       document.location = "/"+data.locale+"/profile/new"
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log error
-    popup_error(popup_messages.login_failed)
+    popup_error(xhr.responseJSON["msg"])
+#    popup_error(popup_messages.login_failed)
   )
 
 

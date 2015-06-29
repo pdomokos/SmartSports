@@ -34,15 +34,36 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    lang = params[:reglang]
+
+    if lang
+      I18n.locale=lang
+      puts lang
+    end
     @user.username = @user.email.split("@")[0]
     @user.name = @user.username
     respond_to do |format|
       if @user.save
         UserMailer.delay.user_created_email(@user)
-        format.json { render json: {:ok => true, :id => @user.id} }
+
+        @user = login(user_params['email'], user_params['password'])
+        lang = params[:reglang]
+        if lang
+          I18n.locale=lang
+          puts lang
+        end
+        if @user
+          save_click_record(:success, nil, "login", request.remote_ip)
+          format.json { render json: {:ok => true, :msg => 'login_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
+        else
+          format.json { render json: {:ok => false, :msg => 'login_err'} }
+        end
+
       else
-        puts @user.errors.full_messages.to_sentence
-        format.json { render json: { ok: false, msg: @user.errors.full_messages.to_sentence}, status: 401 }
+        key = @user.errors.values[0]
+        message = (I18n.translate(key))
+        puts @user.errors.full_messages
+        format.json { render json: { ok: false, msg: message}, status: 401 }
       end
     end
   end

@@ -14,10 +14,11 @@ class User < ActiveRecord::Base
   has_many :summaries
   has_one :profile
   authenticates_with_sorcery!
-  validates :password, length: { minimum: 4 }, allow_nil: true
+  validates :password, length: { minimum: 4, message: "error_registration_password"}, allow_nil: true
   validates :password, confirmation: true
-  validates :password_confirmation, presence: true, if: :password
-  validates :email, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :password_confirmation, presence: { message: "error_registration_password_confirmation"}, if: :password
+  validates :email, uniqueness: { message: "error_registration_email_used"}
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create, message: "error_registration_email_format"}
 
   has_attached_file :avatar, :styles => { :medium => "150x200>", :thumb => "75x100>" },
                     :default_url => ":style/unknown.png",

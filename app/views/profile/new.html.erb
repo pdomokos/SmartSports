@@ -35,9 +35,12 @@
         <input id="weight_field" name="profile[weight]" type="text" class="loginField" placeholder="<%=t 'body_weight' %>"/>
         <div class="profileFormFieldUnit">kg</div><br>
         <input id="height_field" name="profile[height]" type="text" class="loginField" placeholder="<%=t 'height' %>"/>
-        <div class="profileFormFieldUnit">cm</div><br>
+        <div class="profileFormFieldUnit">cm</div><br><br>
+        <%=check_box("profile", "smoke")%><%=t :smoke_question%><br>
+        <%=check_box("profile", "insulin")%><%=t :insulin_question%><br>
+
         <label for="profile_birth_datepicker" ><%=t :date_of_birth%></label>
-        <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= DateTime.current.strftime("%F") %>"/>
+        <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= DateTime.new(1980,1,1).strftime("%F") %>"/>
         <br/>
 
         <input type="submit" class="loginButton animButton" value="<%=t 'save' %>"/>

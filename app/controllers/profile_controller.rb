@@ -31,13 +31,20 @@ class ProfileController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
+    lang = params[:profilelang]
 
+    if lang
+      I18n.locale=lang
+      puts lang
+    end
     respond_to do |format|
       if @profile.save
         format.json { render json: {:ok => true} }
       else
         puts @profile.errors.full_messages.to_sentence
-        format.json { render json: { ok: false, msg: @profile.errors.full_messages.to_sentence}, status: 401 }
+        key = @profile.errors.values[0]
+        message = (I18n.translate(key))
+        format.json { render json: { ok: false, msg: message}, status: 401 }
       end
     end
   end
@@ -45,7 +52,7 @@ class ProfileController < ApplicationController
   def update
     @profile = Profile.find(params["id"])
     respond_to do |format|
-      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :dateofbirth)
+      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :dateofbirth, :smoke, :insulin)
       puts par
       if @profile.update(par)
         format.json { render json: { :status => "OK", :msg => "Updated successfully" } }
@@ -65,7 +72,7 @@ class ProfileController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :dateofbirth)
+      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :dateofbirth)
     end
 
     def which_layout

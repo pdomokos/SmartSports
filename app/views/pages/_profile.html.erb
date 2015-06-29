@@ -65,6 +65,18 @@
               </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
+                  <%= t :sex %>
+                </td>
+                <td>
+                  <input type="radio" name="profile[sex]" value="male" <%= @profile.sex == "male" ? "checked" : "" %>/> <%= t 'male' %>
+                  <input type="radio" name="profile[sex]" value="female" <%= @profile.sex == "female" ? "checked" : "" %>
+                  "/> <%= t 'female' %>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
                   <%= t :height %>
                 </td>
                 <td>
@@ -85,12 +97,20 @@
               </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
-                  <%= t :sex %>
+                  <%= t :smoke %>
                 </td>
                 <td>
-                  <input type="radio" name="profile[sex]" value="male" <%= @profile.sex == "male" ? "checked" : "" %>/> <%= t 'male' %>
-                  <input type="radio" name="profile[sex]" value="female" <%= @profile.sex == "female" ? "checked" : "" %>
-                  "/> <%= t 'female' %>
+                  <%=check_box("profile", "smoke")%>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :insulin %>
+                </td>
+                <td>
+                  <%=check_box("profile", "insulin")%>
                 </td>
                 <td>
                 </td>

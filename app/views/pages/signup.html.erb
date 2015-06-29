@@ -29,6 +29,7 @@
 <div id="registerDiv" class="registerDiv">
     <div>
         <%= form_tag users_path, :method => :post, :remote => true, :id=> 'signupForm' do %>
+        <input id="reglang" name="reglang" value="<%=I18n.locale%>" type="hidden" />
         <input id="username_field" name="user[email]" type="text" class="loginField animField" placeholder="<%=t 'email' %>"/><br>
         <input id="password_field" name="user[password]" type="password" class="loginField animField" placeholder="<%=t 'password' %>"/><br>
         <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField" placeholder="<%=t 'password_confirm' %>"/><br>

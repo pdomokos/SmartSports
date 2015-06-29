@@ -60,6 +60,8 @@ hu:
   sex: "Neme"
   male: "Férfi"
   female: "Nő"
+  smoke: "Ön dohányzik?"
+  insulin: "Használ inzulint a cukorbetegség kezelésére?"
   update: "Módosít"
 
 # erorrs
@@ -67,6 +69,16 @@ hu:
   failed:         "Hiba"
   error_general:  "Hiba történt. Menjen vissza a főoldalra."
   error_not_allowed: "Nem jogosult a kérés végrehajtására."
+  error_profile_weight_format: "A testsúly formátuma nem megfelelő!"
+  error_profile_height_format: "A magasság formátuma nem megfelelő!"
+  error_profile_weight_interval: "A testsúlynak 20 és 500kg között kell lennie!"
+  error_profile_height_interval: "A magasságnak 100 és 250cm között kell lennie!"
+  error_registration_password: "A jelszónak legalább 4 karakternek kell lennie!"
+  error_registration_password_confirmation: "Jelszó megerősítése mező kitöltése kötelező!"
+  error_registration_email_used: "A megadott e-mail cím már használatban van!"
+  error_registration_email_format: "A megadott e-mail cím formátuma nem megfelelő!"
+  error_login_password: "Helytelen jelszó"
+  error_login_username: "Helytelen felasználónév vagy jelszó"
 
   done: "Kész"
   failed: "Hiba"

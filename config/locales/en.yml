@@ -81,6 +81,8 @@ en:
   sex: "Sex"
   male: "Male"
   female: "Female"
+  smoke_question: "Do you smoke?"
+  insulin_question: "Do you use insulin for diabetes treatment?"
   update: "Update"
 
 # erorrs
@@ -88,6 +90,16 @@ en:
   failed:         "Error"
   error_general:  "An error occurred. Go back."
   error_not_allowed: "Not authorized for this resource."
+  error_profile_weight_format: "Weight must be a number!"
+  error_profile_height_format: "Height must be a number!"
+  error_profile_weight_interval: "Weight must be between 20-500kg!"
+  error_profile_height_interval: "Height must be between 100-250cm!"
+  error_registration_password: "Password must be at least 4 characters!"
+  error_registration_password_confirmation: "Please fill password confirmation field!"
+  error_registration_email_used: "Email address is already used!"
+  error_registration_email_format: "Invalid e-mail format!"
+  error_login_password: "Invalid password"
+  error_login_username: "Invalid username or password"
 
   done: "Done"
   failed: "Failed"

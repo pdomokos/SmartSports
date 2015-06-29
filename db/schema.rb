@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615111337) do
+ActiveRecord::Schema.define(version: 20150629094035) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -278,6 +278,8 @@ ActiveRecord::Schema.define(version: 20150615111337) do
     t.date     "dateofbirth"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "smoke",       default: false
+    t.boolean  "insulin",     default: false
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
