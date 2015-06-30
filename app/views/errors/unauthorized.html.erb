@@ -10,7 +10,7 @@
   </div>
   <div class="bottom">
     <center>
-      <button id="goBackButton" class="errorBox" onclick="location.href = '<%= url_for( controller: 'pages', action: 'diet') %>';"><%=t :back_home%></button>
+      <button id="goBackButton" class="errorBox" onclick="location.href = '<%= url_for( controller: 'pages', action: 'dashboard', locale: I18n.locale) %>';"><%=t :back_home%></button>
     </center>
   </div>
 </div>

@@ -182,7 +182,9 @@
     timepicker: false,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-    todayButton: true
+    todayButton: true,
+    maxDate: '0',
+    minDate: new Date(1900, 1 - 1, 1)
   })
 
   $("form.resource-update-form.user-form").on("ajax:success", (e, data, status, xhr) ->

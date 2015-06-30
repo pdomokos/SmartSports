@@ -144,46 +144,47 @@
                   </div>
                   <div class="dataFormSeparator"></div>
 
-                  <div class="dataFormContainer">
-                    <div class="dataFormTitle">
-                      <%= image_tag "period40.png" %><br/>
-                      <%=t 'periods'%>
-                    </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "period-create-form", class: "resource-create-form lifestyle-form") do %>
-                        <div class="dataForm">
-                          <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-                          <input type="hidden" name="lifestyle[group]" value="period"/>
-
-                          <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                          <div class="dataFormFieldUnit"><%=t 'start'%></div>
-
-                          <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                          <div class="dataFormFieldUnit"><%=t 'end'%></div>
-
-                          <label for="periods_scale" style="margin-right: 50px; margin-left: 20px;"><%=t 'pain'%></label>
-                          <div class="dataScale">
-                            <div id="periods_scale" class="dataFormField"></div>
-                          </div>
-                          <div id="periods_percent" class="dataFormFieldUnitHalf"><%=t 'period_amount_mild_pain'%></div>
-
-                          <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
-                          <br/>
-
-                          <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;"><%=t 'amount'%></label>
-                          <div class="dataScale">
-                            <div id="periods_volume_scale" class="dataFormField"></div>
-                          </div>
-
-                          <div id="periods_volume_percent" class="dataFormFieldUnitHalf"><%=t 'period_volume_moderate'%></div>
-                          <input id="periods_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
+                  <% if current_user.profile.nil? || current_user.profile.sex=='female' %>
+                      <div class="dataFormContainer">
+                        <div class="dataFormTitle">
+                          <%= image_tag "period40.png" %><br/>
+                          <%=t 'periods'%>
                         </div>
+                        <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "period-create-form", class: "resource-create-form lifestyle-form") do %>
+                            <div class="dataForm">
+                              <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+                              <input type="hidden" name="lifestyle[group]" value="period"/>
 
-                        <button class="dataFormField"><%=t 'button_add'%></button>
+                              <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+                              <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
+                              <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+                              <div class="dataFormFieldUnit"><%=t 'end'%></div>
+
+                              <label for="periods_scale" style="margin-right: 50px; margin-left: 20px;"><%=t 'pain'%></label>
+                              <div class="dataScale">
+                                <div id="periods_scale" class="dataFormField"></div>
+                              </div>
+                              <div id="periods_percent" class="dataFormFieldUnitHalf"><%=t 'period_amount_mild_pain'%></div>
+
+                              <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
+                              <br/>
+
+                              <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;"><%=t 'amount'%></label>
+                              <div class="dataScale">
+                                <div id="periods_volume_scale" class="dataFormField"></div>
+                              </div>
+
+                              <div id="periods_volume_percent" class="dataFormFieldUnitHalf"><%=t 'period_volume_moderate'%></div>
+                              <input id="periods_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
+                            </div>
+
+                            <button class="dataFormField"><%=t 'button_add'%></button>
+
+                        <% end %>
+                      </div>
+                      <div class="dataFormSeparator"></div>
                     <% end %>
-                  </div>
-                  <div class="dataFormSeparator"></div>
-
                 <div style="clear: both"></div>
             </div>
         </div>

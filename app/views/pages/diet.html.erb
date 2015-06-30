@@ -66,26 +66,29 @@
             </div>
             <div class="dataFormSeparator"></div>
 
-            <div class="dataFormContainer">
-                <div class="dataFormTitle">
-                    <%= image_tag "smoke40.png" %><br/>
-                  <%=t 'smoking' %>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "smoke-create-form", class: "resource-create-form diet-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="diet[type]" value="Smoke">
-
-                        <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="<%=t 'smoking_placeholder' %>">
-
-                        <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br/>
-
+              <% if current_user.profile.nil? || current_user.profile.smoke %>
+                <div class="dataFormContainer">
+                    <div class="dataFormTitle">
+                        <%= image_tag "smoke40.png" %><br/>
+                      <%=t 'smoking' %>
                     </div>
-                    <button class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator"></div>
+                    <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "smoke-create-form", class: "resource-create-form diet-form") do %>
+                        <div class="dataForm">
+                            <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+                            <input type="hidden" name="diet[type]" value="Smoke">
+
+                            <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="<%=t 'smoking_placeholder' %>">
+
+                            <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+                            <br/>
+
+                        </div>
+                        <button class="dataFormField"><%=t 'button_add'%></button>
+                    <% end %>
+                </div>
+                <div class="dataFormSeparator"></div>
+              <% end %>
+          
             <div style="clear: both"></div>
         </div>
 

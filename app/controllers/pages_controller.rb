@@ -52,9 +52,14 @@ class PagesController < ApplicationController
   def dashboard
     @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
 
-    @calories_taken = Diet.where("user_id = :user_id AND date >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)}).sum("calories")
-    @calories_burned = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)}).sum("calories")
-    @steps_walked = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)}).sum("steps")
+    @calories_taken = Diet.where("user_id = :user_id AND date >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)})
+                          .sum("calories").round(2)
+    @calories_burned = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)})
+                           .sum("calories").round(2)
+    @steps_walked = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)})
+                        .sum("steps")
+
+    # u.summaries.where(group: 'walking').where("date between ? and ?", DateTime.now.at_beginning_of_month, DateTime.now)
 
     save_click_record(:success, nil, nil)
   end
@@ -147,11 +152,7 @@ class PagesController < ApplicationController
   end
 
   def settings
-    prf_json = current_user.as_json
-    prf_json.delete("crypted_password")
-    prf_json.delete("salt")
-    prf_json.delete("reset_password_token")
-    @prf = JSON.pretty_generate( prf_json )
+
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if @movesconn
       @active_since_moves = @movesconn.created_at
@@ -178,7 +179,10 @@ class PagesController < ApplicationController
       @last_sync_date_misfit = get_last_synced_date(current_user.id, "misfit")
     end
     @user = current_user
-    @profile = Profile.where(user_id: current_user.id).first
+    if @user.profile.nil?
+      @user.profile = Profile.create()
+    end
+    @profile = @user.profile
     @values = JSON.dump(I18n.t :popupmessages)
     if current_user.admin
       @users = User.all

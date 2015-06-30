@@ -29,17 +29,20 @@
         <input type="hidden" id="user_id" name="profile[user_id]" value="<%= @current_user.id %>">
         <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" placeholder="<%=t 'firstname' %>"/><br>
         <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" placeholder="<%=t 'lastname' %>"/><br>
-        <input type="radio"  name="profile[sex]" value="male"/> <%=t 'male' %>
-        <input type="radio"  name="profile[sex]" value="female"/> <%=t 'female' %>
-        <br/>
+
         <input id="weight_field" name="profile[weight]" type="text" class="loginField" placeholder="<%=t 'body_weight' %>"/>
         <div class="profileFormFieldUnit">kg</div><br>
         <input id="height_field" name="profile[height]" type="text" class="loginField" placeholder="<%=t 'height' %>"/>
-        <div class="profileFormFieldUnit">cm</div><br><br>
-        <%=check_box("profile", "smoke")%><%=t :smoke_question%><br>
-        <%=check_box("profile", "insulin")%><%=t :insulin_question%><br>
+        <div class="profileFormFieldUnit">cm</div><br>
 
-        <label for="profile_birth_datepicker" ><%=t :date_of_birth%></label>
+        <fieldset class="loginField">
+            <div class="loginRow"><input type="radio"  name="profile[sex]" value="male"/><span><%=t 'male' %></span></div>
+            <div class="loginRow"><input type="radio"  name="profile[sex]" value="female"/><span><%=t 'female' %></span></div>
+            <div class="loginRow"><%=check_box("profile", "smoke")%><span><%=t :smoke_question%></span></div>
+            <div class="loginRow"><%=check_box("profile", "insulin")%><span><%=t :insulin_question%></span></div>
+        </fieldset>
+
+        <label for="profile_birth_datepicker" style="color: #A5A5A5;"><%=t :date_of_birth%></label>
         <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= DateTime.new(1980,1,1).strftime("%F") %>"/>
         <br/>
 

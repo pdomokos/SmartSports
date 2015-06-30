@@ -5,7 +5,7 @@
   $('#profile_birth_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
-    maxDate: new Date(2000, 1 - 1, 1),
+    maxDate: '0',
     minDate: new Date(1900, 1 - 1, 1),
     defaultDate: new Date(1980, 1 - 1, 1)
     onSelectDate: (ct, input) ->

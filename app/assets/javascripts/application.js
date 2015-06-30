@@ -221,7 +221,7 @@ function addPoint(canvas, length, history, a, b) {
 
 
 
-    return ( b == 0 ? "<div class='historyTime' style='left:"+left+"px'>"+history[a].time+"</div>" : "") + "<div class='history_item " + determineColor(point) + "' style='left:" + left + "px'><div class='inner "+determineImage(point)+"'></div></div>";
+    return ( b == 0 ? "<div class='historyTime' style='left:"+left+"px'>"+history[a].time+"</div>" : "") + "<div class='historyItem " + determineColor(point) + "' style='left:" + left + "px'><div class='inner "+determineImage(point)+"'></div></div>";
 
 }
 
