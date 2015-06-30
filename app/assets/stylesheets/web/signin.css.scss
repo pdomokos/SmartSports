@@ -72,9 +72,11 @@ fieldset.loginField {
 div.loginRow {
   display: table-row;
 }
-div.loginRow input,span {
+
+div.loginRow>input, div.loginRow>span {
   display: table-cell;
 }
+
 .loginButton {
   font-size: 14px;
   border: solid 1px #4FBDF2;
