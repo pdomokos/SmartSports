@@ -34,6 +34,20 @@
       input.datetimepicker('hide')
     todayButton: true
   })
+  $('#controll_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#next_controll_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
 
   init_labresult()
   load_labresult()
@@ -42,6 +56,19 @@
   console.log "init labres"
 
   $('#hba1c').focus()
+
+  controlList = [{ label: "general practitioner", value: "general practitioner"},
+    { label: "specialist", value: "specialist"}
+  ]
+
+  controlSelected = null
+  $("#control").autocomplete({
+    minLength: 0,
+    source: controlList,
+    change: (event, ui) ->
+      controlSelected = ui['item']
+  }).focus ->
+    $(this).autocomplete("search")
 
   ketoneList = [ { label: "Negative", value: "Negative" },
     { label: "+", value: "+" },
@@ -61,6 +88,17 @@
     $(this).autocomplete("search")
 
   popup_messages = JSON.parse($("#popup-messages").val())
+  $("#control-create-form button").click ->
+    if(!controlSelected)
+      val = $("#control").val()
+      if !val
+        val = "empty item"
+      popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+      controlSelected = null
+      return false
+    controlSelected = null
+    return true
+
   $("#ketone-create-form button").click ->
     if(!ketoneSelected)
       val = $("#ketone").val()

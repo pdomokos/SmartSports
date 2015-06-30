@@ -27,7 +27,7 @@ en:
   menu_medication: "Medication"
   menu_wellbeing: "Well-being"
   menu_genetics:  "Genetics"
-  menu_labresults: "Lab Results"
+  menu_labresults: "Doctor's visit"
   menu_analytics:  "Analytics"
   menu_profile: "My profile"
 
@@ -236,7 +236,11 @@ en:
   genetics_history:   "Patient history"
 
 # lab results
-  lab_results:        "Lab Results"
+  lab_results:        "Doctor's visit"
+  practitioner:       "general practitioner"
+  specialist:         "specialist"
+  remainder:          "Set Reminder for next visit"
+  remainder_2:        "Reminder"
 
 # analytics
   analytics:          "Analytics"

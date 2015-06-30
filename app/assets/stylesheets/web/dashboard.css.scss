@@ -259,13 +259,13 @@ button.dataFormField {
 };
 .labresultStyle div.dataFormContainer {
   width: 248px;
-  height: 260px;
+  height: 300px;
 }
 .labresultStyle div.dataFormSeparator {
-  height:255px !important;
+  height:295px !important;
 }
 .labresultStyle .dataForm {
-  height: 110px;
+  height: 150px;
 }
 
 
@@ -308,6 +308,14 @@ button.deleteForm {
   top: 0px;
   width: 200px;;
   height: 100%;
+}
+
+.app2Menu .footer{
+  position:absolute;
+  bottom:0;
+  padding: 20px;
+  font-size: 11px;
+  color: #ffffff;
 }
 
 .app2Menu .inner {

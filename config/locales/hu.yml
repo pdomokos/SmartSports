@@ -6,7 +6,7 @@ hu:
   menu_medication: "Gyógyszer"
   menu_wellbeing: "Közérzet"
   menu_genetics:  "Genetika"
-  menu_labresults: "Labor"
+  menu_labresults: "Kontroll"
   menu_analytics:  "Elemzés"
   menu_profile: "Profil"
 
@@ -215,7 +215,11 @@ hu:
   genetics_history:   "Betegtörténet"
 
 # lab results
-  lab_results:        "Labor"
+  lab_results:        "Kontroll"
+  practitioner:       "háziorvos"
+  specialist:         "szakorvos"
+  remainder:          "Emlékeztető a következő orvosi kontrollra"
+  remainder_2:        "Emlékeztető"
 
 # analytics
   analytics:          "Elemzés"

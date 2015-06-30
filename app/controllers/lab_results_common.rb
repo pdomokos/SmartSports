@@ -43,6 +43,9 @@ module LabResultsCommon
     if params['labresult'] && params['labresult']['ketone']
       update_hash[:ketone] = params['labresult']['ketone'].to_s
     end
+    if params['labresult'] && params['labresult']['controll_type']
+      update_hash[:controll_type] = params['labresult']['controll_type'].to_s
+    end
 
     if @labresult.update_attributes(update_hash)
       send_success_json(@labresult.id, {:msg => "Updated successfully"})
@@ -77,7 +80,7 @@ module LabResultsCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def labresult_params
-    params.require(:labresult).permit(:user_id, :source, :category, :hba1c, :ldl_chol, :egfr_epi, :ketone, :date)
+    params.require(:labresult).permit(:user_id, :source, :category, :hba1c, :ldl_chol, :egfr_epi, :ketone, :date, :controll_type, :remainder_date)
   end
 
   def check_owner()
