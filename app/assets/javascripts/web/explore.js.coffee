@@ -4,7 +4,6 @@
   $("#sensorDataTable").on("click", "button.tableControl", show_sensor)
   uid = $("#current-user-id")[0].value
   s = getParameterByName("sid")
-  console.log "s="+s
   if s!=""
     do_show(uid, s)
 

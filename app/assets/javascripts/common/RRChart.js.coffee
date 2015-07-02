@@ -7,10 +7,11 @@ class RRChart
     @charts = []
     @svg = []
     @data = []
-    @y_extent= []
-    @y_scale = []
+    @y_scales = []
+    @zoom = null
     @axisText = []
     @n = 0
+    @y_axis = []
 
     axisAll = ['ms', '1/min', 'r/min', 'km/h']
     if rrdata
@@ -34,6 +35,8 @@ class RRChart
 
   draw: () ->
     self = this
+    @zoom = d3.behavior.zoom()
+      .on("zoom", self.do_zoom)
 
     chart_aspect = 1.3
     @margin = {top: 20, right: 30, bottom: 20, left: 40}
@@ -48,7 +51,6 @@ class RRChart
       .attr("width", self.width)
       .attr("height", self.height)
 
-
     @svg.append("defs").append("clipPath")
       .attr("id", "clip-pane")
       .append("rect")
@@ -56,7 +58,8 @@ class RRChart
         .attr("width", self.width-self.margin.left)
         .attr("height", self.height)
 
-
+    time_extent = d3.extent(@data[0], (d) -> new Date(d.time))
+    @time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
     for i in [0..@n-1]
       ch = @svg
         .append("g")
@@ -73,72 +76,77 @@ class RRChart
       )
       console.log "avg="+avg.toFixed(2)
 
-      y_extent = d3.extent(@data[i], (d) -> d.value)
-      @y_extent.push(y_extent)
-      y_scale = d3.scale.linear().range([self.chart_height - self.margin.bottom- self.margin.top, 0]).domain(@y_extent[i])
-      @y_scale.push(y_scale)
+      y_extent = d3.extent(self.data[i], (d) -> d.value)
+      y_scale = d3.scale.linear().range([(self.chart_height - self.margin.bottom- self.margin.top), 0]).domain(y_extent)
+      @y_scales.push(y_scale)
 
+      fn = self.draw_plot(i)
+      @lines.push(fn)
 
-    time_extent = d3.extent(@data[0], (d) -> new Date(d.time))
-    @time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
+      @y_axis.push(null)
+
+    @zoom.x(self.time_scale)
+    @svg
+      .call(self.zoom)
+      .call(self.zoom.event)
+
+  do_zoom: () =>
+    self = this
+
+    for j in [0..(self.n-1)]
+      visibleData = self.data[j].filter( (d) ->
+        dt = self.time_scale(new Date(d.time))
+        return dt>0 && dt<self.width
+      )
+      #if visibleData.length < 30
+      #  console.log(visibleData)
+      currExtent = d3.extent(visibleData, (d) -> d.value )
+      self.y_scales[j].domain(currExtent).nice()
+      self.charts[j].select("path.line").attr("d", self.lines[j](self.data[j]))
+
+      self.charts[j].select("g.x.axis").call(self.time_axis)
+      self.charts[j].select("g.y.axis").call(self.y_axis[j])
+
+  draw_plot: (i) -> #chart, data, yAxisText="ms") ->
+    self = this
+    console.log "draw_plot called "+i.toString()
+    currdata = @data[i]
+
     @time_axis = d3.svg.axis()
       .scale(@time_scale)
       .ticks(10)
 
-    for i in [0..(@n-1)]
-      z = self.draw_plot(i)
-      @lines.push(z)
-
-    zoom = d3.behavior.zoom()
-      .on("zoom", self.do_zoom)
-
-    @svg
-      .call(zoom)
-
-    zoom.x(@time_scale)
-
-  do_zoom: () =>
-    self = this
-    console.log "do_zoom"
-    console.log self.lines
-    @svg.select("g.x.axis").call(@time_axis)
-    for j in [0..(self.n-1)]
-      self.charts[j].select("path.line").attr("d", self.lines[j](self.data[j]))
-
-  clear: () ->
-    $("svg."+@chart_element+"-chart-svg").html("")
-
-  draw_plot: (i) -> #chart, data, yAxisText="ms") ->
-    self = this
-
     rrline = d3.svg.line()
       .x( (d) -> return(self.time_scale(new Date(d.time))))
-      .y( (d) -> return(self.y_scale[i](d.value)))
+      .y( (d) -> return(self.y_scales[i](d.value)))
+      .interpolate("linear")
 
     canvas = @charts[i]
       .append("g")
       .attr("transform", "translate("+self.margin.left+","+(self.margin.top)+")")
       .attr("clip-path", "url(#clip-pane)")
 
-
     @charts[i].append("g")
       .attr("class", "x axis")
       .attr("transform", "translate("+self.margin.left+","+(self.chart_height-self.margin.bottom)+")")
-      .call(self.time_axis)
+      .call(@time_axis)
 
-    y_axis = d3.svg.axis().scale(self.y_scale[i]).orient("left").ticks(7)
+    @y_axis[i] = d3.svg.axis().scale(self.y_scales[i]).orient("left").ticks(7)
     @charts[i].append("g")
       .attr("class", "y axis")
       .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
       .attr("stroke-width", "0")
-      .call(y_axis)
+      .call(self.y_axis[i])
       .append("text")
       .text(@axisText[i])
 
     canvas.append("path")
       .attr("class", "line rr")
-      .attr("d", rrline(self.data[i]))
+      .attr("d", rrline(currdata))
 
     return(rrline)
+
+  clear: () ->
+    $("svg."+@chart_element+"-chart-svg").html("")
 
 window.RRChart = RRChart
