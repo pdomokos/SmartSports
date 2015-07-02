@@ -143,6 +143,9 @@ en:
 # diet
   food: "Food"
   food_placeholer: "Type at least three letters..."
+  quick_calories: "Quick calories"
+  quick_calories_placeholder: "Type calories here..."
+  quick_carbs_placeholder: "Type carbs here..."
   drink: "Drink"
   drink_placeholder: "Start typing or select..."
   smoking: "Smoking"
@@ -180,6 +183,7 @@ en:
   bp_pulse_placeholer: "Heart rate, eg: 80"
 
   glucose_placeholder: "Blood glucose, eg: 6.5"
+  stress_level:       "Stress level"
 
   weight_placeholder: "Body weight, eg: 85"
 

@@ -16,7 +16,7 @@
       <% if meas_item.meas_type=='blood_pressure' %>
           <strong><%=(t :blood_pressure)%>: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
       <% elsif  meas_item.meas_type=='blood_sugar' %>
-          <strong><%=(t :blood_glucose)%>: <%= meas_item.blood_sugar %> mmol/L</strong>
+          <strong><%=(t :blood_glucose)%>: <%= meas_item.blood_sugar %> mmol/L</strong> <%=(t :stress_level)%>:<%=(t :stressList).split(",")[meas_item.stress_amount] if meas_item.stress_amount%>
       <% elsif  meas_item.meas_type=='weight' %>
           <strong><%=(t :body_weight)%>: <%= meas_item.weight %>kg</strong>
       <% elsif  meas_item.meas_type=='waist' %>

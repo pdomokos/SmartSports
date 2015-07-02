@@ -10,9 +10,8 @@ module DietsCommon
     if not @diet.date
       @diet.date = DateTime.now
     end
-
-    if (@diet.type=='Food' || @diet.type=='Drink' ) && @diet.food_type
-      ft = @diet.food_type
+    if (@diet.diet_type=='Food' || @diet.diet_type=='Drink' )
+      ft = FoodType.find_by_id(@diet.food_type_id)
       @diet.calories = @diet.amount*ft.kcal
       @diet.carbs = @diet.amount*ft.carb
       @diet.fat = @diet.amount*ft.fat
@@ -105,7 +104,7 @@ module DietsCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def diet_params
-    params.require(:diet).permit(:user_id, :source, :name, :date, :calories, :carbs, :amount, :category, :type, :fat, :prot, :food_type_id, :favourite)
+    params.require(:diet).permit(:user_id, :source, :name, :date, :calories, :carbs, :amount, :category, :diet_type, :fat, :prot, :food_type_id, :favourite)
   end
   def diet_update_params
     params.require(:diet).permit(:favourite, :amount, :date)

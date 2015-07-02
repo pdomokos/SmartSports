@@ -1,4 +1,5 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
+<input id="stressList" type="hidden" value="<%=t :stressList %>">
 <div class="health-block mainContent">
     <input id="data-lang-health" value="<%=I18n.locale%>" type="hidden" />
     <div class="sectionTitle bl3 c3">
@@ -50,6 +51,14 @@
 
                         <div class="dataFormFieldUnit">mmol/L</div>
                         <br>
+                        <label for="bg_stress_scale" style="margin-left: 20px;"><%=t 'stress_level'%></label>
+                        <div class="dataScale">
+                          <div id="bg_stress_scale" class="dataFormField"></div>
+                        </div>
+
+                        <div id="bg_stress_percent" class="dataFormFieldUnitHalf"><%=t 'stress_amount_average'%></div>
+                        <input id="bg_stress_amount" type="hidden" name="measurement[stress_amount]"/>
+
 
                         <input id='bloodsugar_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                         <br>

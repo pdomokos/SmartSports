@@ -1035,3 +1035,9 @@ div.egfr {
 table#dashboardGraph {
   padding-left: 14px;
 }
+
+body.wait,
+body.wait button {
+    cursor: wait;
+}
+

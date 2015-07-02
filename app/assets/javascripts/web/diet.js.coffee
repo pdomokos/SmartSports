@@ -6,6 +6,7 @@
     background: "rgba(87, 200, 138, 0.3)"
 
   $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
+  $('#diet_calories_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
   popup_messages = JSON.parse($("#popup-messages").val())
@@ -53,6 +54,7 @@
     dval = $("#diet_drink_scale").slider("value")
     $("#diet_drink_unit").html(dval+" dl")
     $('#diet_food_datepicker').val(moment().format(moment_fmt))
+    $('#diet_calories_datepicker').val(moment().format(moment_fmt))
     $('#diet_drink_datepicker').val(moment().format(moment_fmt))
     $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
     $('#diet_type_id').val(null)
@@ -236,21 +238,21 @@
         console.log "loading diet"
         data = JSON.parse(e.currentTarget.querySelector("input").value)
         console.log data
-        if data.type=="Food"
+        if data.diet_type=="Food"
           foodSelected = data.food_name
           $("#foodname").val(data.food_name)
           $("#diet_type_id").val(data.food_type_id)
           $("#diet_amount").val(data.amount)
           $("#diet_unit").html(data.amount*100+"g")
           $("#diet_scale").slider({value: data.amount})
-        else if data.type=="Drink"
+        else if data.diet_type=="Drink"
           $("#drinkname").val(data.food_name)
           drinkSelected = data.food_name
           $("#diet_drink_type_id").val(data.food_type_id)
           $("#diet_drink_amount").val(data.amount)
           $("#diet_drink_unit").html(data.amount+" dl")
           $("#diet_drink_scale").slider({value: data.amount})
-        else if data.type=="Smoke"
+        else if data.diet_type=="Smoke"
           $("#diet_smoke_type").val(data.name)
           smokeSelected = data.name
 

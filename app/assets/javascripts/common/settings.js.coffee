@@ -89,12 +89,14 @@
   $("#sync-moves-button").click (event) ->
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
     $("#moves-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
+    $('body').addClass('wait');
     $.ajax "/sync/sync_moves",
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "AJAX Error: #{textStatus}"
         $("#moves-sync-status").html(failure_message)
+        $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
         console.log "Successful AJAX call"
         console.log result
@@ -102,16 +104,19 @@
           $("#moves-sync-status").html("Synced just now <i class='fa fa-check' style='color: green'></i>")
         else
           $("#moves-sync-status").html(failure_message)
+        $('body').removeClass('wait');
 
   $("#sync-withings-button").click (event) ->
     $("#withings-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $('body').addClass('wait');
     $.ajax "/sync/sync_withings",
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "AJAX Error: #{textStatus}"
         $("#withings-sync-status").html(failure_message)
+        $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
         console.log "Successful AJAX call"
         console.log result
@@ -120,16 +125,19 @@
           console.log result['data']
         else
           $("#withings-sync-status").html(failure_message)
+        $('body').removeClass('wait');
 
   $("#sync-misfit-button").click (event) ->
     $("#misfit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $('body').addClass('wait');
     $.ajax "/sync/sync_misfit",
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "AJAX Error: #{textStatus}"
         $("#misfit-sync-status").html(failure_message)
+        $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
         console.log "Successful AJAX call"
         console.log result
@@ -138,16 +146,19 @@
           console.log result['data']
         else
           $("#misfit-sync-status").html(failure_message)
+        $('body').removeClass('wait');
 
   $("#sync-fitbit-button").click (event) ->
     $("#fitbit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $('body').addClass('wait');
     $.ajax "/sync/sync_fitbit",
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "AJAX Error: #{textStatus}"
         $("#fitbit-sync-status").html(failure_message)
+        $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
         console.log "Successful AJAX call"
         console.log result
@@ -156,16 +167,19 @@
           console.log result['data']
         else
           $("#fitbit-sync-status").html(failure_message)
+        $('body').removeClass('wait');
 
   $("#sync-google-button").click (event) ->
     $("#google-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
+    $('body').addClass('wait');
     $.ajax "/sync/sync_google",
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "AJAX Error: #{textStatus}"
         $("#google-sync-status").html(failure_message)
+        $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
         console.log "Successful AJAX call"
         console.log result
@@ -174,6 +188,7 @@
           console.log result['data']
         else
           $("#google-sync-status").html(failure_message)
+        $('body').removeClass('wait');
 
   popup_messages = JSON.parse($("#popup-messages").val())
 

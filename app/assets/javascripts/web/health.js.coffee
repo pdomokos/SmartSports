@@ -11,6 +11,19 @@
   $('#weight_datepicker').datetimepicker(timepicker_defaults)
   $('#waist_datepicker').datetimepicker(timepicker_defaults)
 
+  stressList = $("#stressList").val().split(",")
+  $("#bg_stress_scale").slider({
+    min: 0,
+    max: 3,
+    value: 1
+  }).slider({
+    slide: (event, ui) ->
+        $("#bg_stress_percent").html(stressList[ui.value])
+    change: (event, ui) ->
+      $("#bg_stress_amount").val(ui.value)
+  })
+  $("#bg_stress_amount").val(1)
+
   $("#bp-create-form button").click ->
     if( (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
         (!isempty("#bp_sys") && isempty("#bp_dia")) ||
@@ -145,7 +158,18 @@
       $("#bp_dia").val(data.diastolicbp)
       $("#bp_hr").val(data.pulse)
     else if(data.meas_type=="blood_sugar")
+      stressList = $("#stressList").val().split(",")
       $("#glucose").val(data.blood_sugar)
+      $("#bg_stress_scale").val(data.stress_amount)
+      if data.stress_amount == 0
+        $("#bg_stress_percent").html(stressList[0])
+      else if data.stress_amount == 1
+        $("#bg_stress_percent").html(stressList[1])
+      else if data.stress_amount == 2
+        $("#bg_stress_percent").html(stressList[2])
+      else if data.stress_amount == 3
+        $("#bg_stress_percent").html(stressList[3])
+      $("#bg_stress_scale").slider({value: data.stress_amount})
     else if(data.meas_type=="weight")
       $("#weight").val(data.weight)
     else if(data.meas_type=="waist")
