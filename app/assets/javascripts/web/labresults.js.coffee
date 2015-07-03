@@ -57,8 +57,9 @@
 
   $('#hba1c').focus()
 
-  controlList = [{ label: "general practitioner", value: "general practitioner"},
-    { label: "specialist", value: "specialist"}
+  doctorList = $("#doctorList").val().split(";")
+  controlList = [{ label: doctorList[0], value: doctorList[0]},
+    { label: doctorList[1], value: doctorList[1]}
   ]
 
   controlSelected = null
@@ -152,7 +153,8 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lab_results"
-  url = '/users/' + current_user + '/lab_results.js?source='+window.default_source+'&order=desc&limit=10'
+  lang = $("#data-lang-labresult")[0].value
+  url = '/users/' + current_user + '/lab_results.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
   console.log url
   $.ajax url,
     type: 'GET',

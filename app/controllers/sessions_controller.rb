@@ -8,10 +8,16 @@ class SessionsController < ApplicationController
 
     if lang
       I18n.locale=lang
+      puts '1111'
       puts lang
     end
     if @user
         save_click_record(:success, nil, "login", request.remote_ip)
+        if @user.has_profile && @user.profile.default_lang
+          I18n.locale = @user.profile.default_lang
+          puts '2222'
+          puts I18n.locale
+        end
         render json: { :ok => true, :msg => 'login_succ', :locale => I18n.locale, :profile => @user.has_profile}
     else
       u = User.find_by_email(params[:email])

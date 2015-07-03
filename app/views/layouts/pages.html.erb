@@ -29,7 +29,6 @@
           <% end %>
         </div>
         <div id="langswitcher" class="langSwitcherTop" ><%= @lang_label %></div>
-
         <div style="float: right;width: 30px;text-align: center;"><%= image_tag "menu/settings.png", style: "width: 20px;padding-top: 15px", id:"settings-link"%>
           <input id="settings-url" value=<%= url_for( :action => 'settings', :locale => I18n.locale ) %> type="hidden" >
         </div>

@@ -281,8 +281,9 @@ ActiveRecord::Schema.define(version: 20150705111232) do
     t.date     "dateofbirth"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "smoke",       default: false
-    t.boolean  "insulin",     default: false
+    t.boolean  "smoke",        default: false
+    t.boolean  "insulin",      default: false
+    t.string   "default_lang"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"

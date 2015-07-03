@@ -84,6 +84,7 @@ en:
   smoke_question: "Do you smoke?"
   insulin_question: "Do you use insulin for diabetes treatment?"
   update: "Update"
+  default_lang: "Default language"
 
 # erorrs
   back_home:      "Back"
@@ -245,6 +246,8 @@ en:
   specialist:         "specialist"
   remainder:          "Set Reminder for next visit"
   remainder_2:        "Reminder"
+  select:             "Select..."
+  doctorList:         "general partitioner;specialist"
 
 # analytics
   analytics:          "Analytics"

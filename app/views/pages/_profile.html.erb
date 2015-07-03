@@ -2,32 +2,60 @@
 <div class="sectionTitle c0">
   Profile
 </div>
+
+<div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
+    <div style="padding: 10px;">
+      <table style="width: 100%;color: #3d3d3d;">
+        <tbody>
+        <%= form_tag("/users/#{current_user.id}", remote: true, id: "update-user-form", method: "PUT", class: "resource-update-form user-form") do %>
+            <tr>
+              <td style="width: 180px;height: 50px;">
+                <%= t :email %>
+              </td>
+              <td>
+                <%= @user.email %>
+              </td>
+              <td>
+
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 180px;height: 50px;">
+                <%= t :password %>
+              </td>
+              <td>
+                <input id="password_field" name="user[password]" type="password" class="loginField" placeholder="<%= t 'password' %>"/>
+                <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField" placeholder="<%= t 'password_confirm' %>"/>
+              </td>
+              <td>
+                <button id="update-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                  <%= t :update %>
+                </button>
+              </td>
+            </tr>
+        <% end %>
+    </tbody>
+  </table>
+   </div>
+</div>
+
 <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
   <div style="padding: 10px;">
     <table style="width: 100%;color: #3d3d3d;">
       <tbody>
-      <%= form_tag("/users/#{current_user.id}", remote: true, id: "update-user-form", method: "PUT", class: "resource-update-form user-form") do %>
+      <%= form_tag( "/users/#{current_user.id}/uploadAv", :multipart => true, :'data-ajax' => false, :method => "POST") do %>
           <tr>
             <td style="width: 180px;height: 50px;">
-              <%= t :email %>
+              <%= t :upload_photo %>
             </td>
             <td>
-              <%= @user.email %>
+              <input type="file" name="avatar" data-clear-btn="true" accept="image/*" id="takePictureField">
             </td>
             <td>
-
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 180px;height: 50px;">
-              <%= t :password %>
+              <%= image_tag current_user.avatar.url(:medium) %>
             </td>
             <td>
-              <input id="password_field" name="user[password]" type="password" class="loginField" placeholder="<%= t 'password' %>"/>
-              <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField" placeholder="<%= t 'password_confirm' %>"/>
-            </td>
-            <td>
-              <button id="update-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+              <button id="upload-image-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
                 <%= t :update %>
               </button>
             </td>
@@ -37,6 +65,7 @@
     </table>
   </div>
 </div>
+
 <%if @profile %>
     <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
       <div style="padding: 10px;">

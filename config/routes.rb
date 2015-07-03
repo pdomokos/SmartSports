@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     resources :profile
     get 'analysis_data' => 'analysis_data#index'
     post 'upload'
+    post 'uploadAv'
   end
 
   scope ':locale', locale: /#{I18n.available_locales.join("|")}/ do
@@ -75,12 +76,14 @@ Rails.application.routes.draw do
     get 'pages/reset_password'
 
     get 'profile/new'
+    post 'profile/set_default_lang'
 
     get 'sync/misfit_destroy'
     get 'pages/mdestroy'
     get 'pages/wdestroy'
     get 'pages/fdestroy'
     get 'pages/gfdestroy'
+
   end
   # resources :summaries
   # resources :notifications

@@ -36,8 +36,10 @@
         <div class="profileFormFieldUnit">cm</div><br>
 
         <fieldset class="loginField">
-            <div class="loginRow"><input type="radio"  name="profile[sex]" value="male"/><span><%=t 'male' %></span></div>
-            <div class="loginRow"><input type="radio"  name="profile[sex]" value="female"/><span><%=t 'female' %></span></div>
+            <div class="loginRow"><input type="radio"  name="profile[default_lang]" value="en"/><span>en</span>
+            <input type="radio"  name="profile[default_lang]" value="hu"/><span>hu</span></div>
+            <div class="loginRow"><input type="radio"  name="profile[sex]" value="male"/><span><%=t 'male' %></span>
+            <input type="radio"  name="profile[sex]" value="female"/><span><%=t 'female' %></span></div>
             <div class="loginRow"><%=check_box("profile", "smoke")%><span><%=t :smoke_question%></span></div>
             <div class="loginRow"><%=check_box("profile", "insulin")%><span><%=t :insulin_question%></span></div>
         </fieldset>

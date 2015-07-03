@@ -63,6 +63,7 @@ hu:
   smoke: "Ön dohányzik?"
   insulin: "Használ inzulint a cukorbetegség kezelésére?"
   update: "Módosít"
+  default_lang: "Alapértelmezett nyelv"
 
 # erorrs
   back_home:      "Vissza"
@@ -224,6 +225,8 @@ hu:
   specialist:         "szakorvos"
   remainder:          "Emlékeztető a következő orvosi kontrollra"
   remainder_2:        "Emlékeztető"
+  select:             "Kérem válasszon..."
+  doctorList:         "háziorvos;szakorvos"
 
 # analytics
   analytics:          "Elemzés"

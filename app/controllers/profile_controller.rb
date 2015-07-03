@@ -52,7 +52,7 @@ class ProfileController < ApplicationController
   def update
     @profile = Profile.find(params["id"])
     respond_to do |format|
-      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :dateofbirth, :smoke, :insulin)
+      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :dateofbirth, :smoke, :insulin, :default_lang)
       puts par
       if @profile.update(par)
         format.json { render json: { :status => "OK", :msg => "Updated successfully" } }
@@ -62,6 +62,16 @@ class ProfileController < ApplicationController
     end
   end
 
+  def set_default_lang
+    p = current_user.profile
+    if p
+      p.default_lang = I18n.locale
+      p.save!
+      render :json => {:msg => "Profile update successful"}
+      return
+    end
+    render :json => {:msg => "Profile update error"}
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -72,7 +82,7 @@ class ProfileController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :dateofbirth)
+      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :dateofbirth, :default_lang)
     end
 
     def which_layout

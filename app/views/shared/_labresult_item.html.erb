@@ -24,7 +24,7 @@
       <% elsif  labresult_item.category=='ketone' %>
           <span class="itemTitle">Ketone: </span><span><%= labresult_item.ketone %> </span>
       <% elsif  labresult_item.category=='controll' %>
-          <span class="itemTitle">Controll: </span><span><%= labresult_item.controll_type %> </span>
+          <span class="itemTitle"><%=(t 'lab_results') %>: </span><span><%= labresult_item.controll_type %> </span>
       <% else %>
           <span class="itemTitle">Unknown labresult</span>
       <% end %>
