@@ -76,7 +76,10 @@ class RRChart
       )
       console.log "avg="+avg.toFixed(2)
 
-      y_extent = d3.extent(self.data[i], (d) -> d.value)
+      y_extent = d3.extent(self.data[i].filter( (d) ->
+        return d.value>0
+      ), (d) -> d.value)
+      console.log y_extent
       y_scale = d3.scale.linear().range([(self.chart_height - self.margin.bottom- self.margin.top), 0]).domain(y_extent)
       @y_scales.push(y_scale)
 
@@ -96,7 +99,7 @@ class RRChart
     for j in [0..(self.n-1)]
       visibleData = self.data[j].filter( (d) ->
         dt = self.time_scale(new Date(d.time))
-        return dt>0 && dt<self.width
+        return dt>0 && dt<self.width && d.value>0
       )
       #if visibleData.length < 30
       #  console.log(visibleData)
@@ -118,6 +121,7 @@ class RRChart
 
     rrline = d3.svg.line()
       .x( (d) -> return(self.time_scale(new Date(d.time))))
+      .defined((d) -> return(d.value!=0))
       .y( (d) -> return(self.y_scales[i](d.value)))
       .interpolate("linear")
 

@@ -44,61 +44,105 @@
       console.log "load recent activities  Successful AJAX call"
       console.log textStatus
 
+
       $("#sensor-data-group").html(data['group']+" data ("+moment(data['start_time']).format("YYYY-MM-DD hh:mm:ss")+")")
-      rr_values = decodeSensorTimeVal(data['rr_data'])
-      start = data['start_time']
-      curr = Date.parse(start)
-      rr_data = [{time: curr, value: rr_values[0]}]
-      for rr in rr_values
-        curr += rr
-        rr_data.push({time: curr, value: rr})
-      console.log "sid = "+sid+" duration (sec): "+(rr_data[rr_data.length-1]['time'] - rr_data[0]['time'])/1000.0
-
-      cr_data = null
-      speed_data = null
-
-      cr_values = decodeSensorTimeVal(data['cr_data'])
-      curr = Date.parse(start)
-      cr_prev = 0
-      speed_prev = 0
-      curr_dt = 0
-
-      if data['version'] =='1.1'
-        if data['cr_data'] && data['cr_data']!=""
-          console.log "adding speed data"
-          cr_data = [{time: curr, value: cr_prev}]
-          speed_data = [{time: curr, value: speed_prev}]
-
-          for i in [0..cr_values.length-1]
-            if (i % 3) == 0
-              curr += cr_values[i]
-            else if (i%3)==1
-              cr_prev = cr_values[i]
-            else
-              cr_data.push({time: curr, value: cr_prev})
-              speed_data.push({time: curr, value: cr_values[i]})
+      res = null
+      if data['version'] && data['version']=='2.0'
+        res = proc_20(data)
       else
-        if data['cr_data'] && data['cr_data']!=""
-          cr_data = [{time: curr, value: cr_prev}]
-          for i in [0..cr_values.length-1]
-            if i % 2 == 0
-              curr += cr_values[i]
-              curr_dt = cr_values[i]
-            else
-              cr_data.push({time: curr, value: (cr_values[i]-cr_prev)*6000.0/curr_dt})
-              cr_prev = cr_values[i]
+        res = proc_old(data, sid)
 
-      hr_data = null
-      if data['hr_data'] && data['hr_data']!=""
-        hr_values = decodeSensorTimeVal(data['hr_data'])
-        curr = Date.parse(start)
-        hr_data = [{time: curr, value: 0}]
+      rr_data = res[0]
+      hr_data = res[1]
+      cr_data = res[2]
+      speed_data = res[3]
+      rr_chart = new RRChart("sensordata", rr_data, hr_data, cr_data, speed_data)
+      # rr_chart.margin = {top: 20, right: 50, bottom: 20, left: 35}
+      rr_chart.draw()
+
+@proc_20 = (data) ->
+#  window.tmpdata = data
+  for sens in data['sensor_data']
+    if sens['sensor_type'] == 'HEART'
+      hr_data = []
+      rr_data = []
+      for seg in sens['sensor_segments']
+        hr_values = decodeSensorTimeVal(seg['data_a'])
+        curr = Date.parse(seg['start_time'])
         for i in [0..hr_values.length-1]
           if i % 2 == 0
             curr += hr_values[i]
           else
             hr_data.push({time: curr, value: hr_values[i]})
 
-      rr_chart = new RRChart("sensordata", rr_data, hr_data, cr_data, speed_data)
-      # rr_chart.margin = {top: 20, right: 50, bottom: 20, left: 35}
-      rr_chart.draw()
+        rr_values = decodeSensorTimeVal(seg['data_b'])
+        curr = Date.parse(seg['start_time'])
+        for i in [0..rr_values.length-1]
+          if i % 2 == 0
+            curr += rr_values[i]
+          else
+            rr_data.push({time: curr, value: rr_values[i]})
+
+#  window.rr_data = rr_data
+#  window.hr_data = hr_data
+  return [rr_data, hr_data, null, null]
+
+@proc_old = (data, sid) ->
+  rr_data=null
+  start = data['start_time']
+  curr = Date.parse(start)
+  if data['rr_data'] && data['rr_data'].length!=0
+    rr_values = decodeSensorTimeVal(data['rr_data'])
+    rr_data = [{time: curr, value: rr_values[0]}]
+    for rr in rr_values
+      curr += rr
+      rr_data.push({time: curr, value: rr})
+    console.log "sid = " + sid + " duration (sec): " + (rr_data[rr_data.length - 1]['time'] - rr_data[0]['time']) / 1000.0
+
+  cr_data = null
+  speed_data = null
+
+  if data['cr_data'] && data['cr_data'].length!=0
+    cr_values = decodeSensorTimeVal(data['cr_data'])
+  curr = Date.parse(start)
+  cr_prev = 0
+  speed_prev = 0
+  curr_dt = 0
+
+  if data['version'] =='1.1'
+    if data['cr_data'] && data['cr_data']!=""
+      console.log "adding speed data"
+      cr_data = [{time: curr, value: cr_prev}]
+      speed_data = [{time: curr, value: speed_prev}]
+
+      for i in [0..cr_values.length-1]
+        if (i % 3) == 0
+          curr += cr_values[i]
+        else if (i%3)==1
+          cr_prev = cr_values[i]
+        else
+          cr_data.push({time: curr, value: cr_prev})
+          speed_data.push({time: curr, value: cr_values[i]})
+  else
+    if data['cr_data'] && data['cr_data']!=""
+      cr_data = [{time: curr, value: cr_prev}]
+      for i in [0..cr_values.length-1]
+        if i % 2 == 0
+          curr += cr_values[i]
+          curr_dt = cr_values[i]
+        else
+          cr_data.push({time: curr, value: (cr_values[i]-cr_prev)*6000.0/curr_dt})
+          cr_prev = cr_values[i]
+
+  hr_data = null
+  if data['hr_data'] && data['hr_data']!=""
+    hr_values = decodeSensorTimeVal(data['hr_data'])
+    curr = Date.parse(start)
+    hr_data = [{time: curr, value: 0}]
+    for i in [0..hr_values.length-1]
+      if i % 2 == 0
+        curr += hr_values[i]
+      else
+        hr_data.push({time: curr, value: hr_values[i]})
+#  window.hr_data = hr_data
+  return [rr_data, hr_data, cr_data, speed_data]

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sensor_id: MyString
+  sensor_type: MyString
+  sensor_measurement_id: 
+
+two:
+  sensor_id: MyString
+  sensor_type: MyString
+  sensor_measurement_id: 

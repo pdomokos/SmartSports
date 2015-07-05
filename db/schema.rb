@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702083509) do
+ActiveRecord::Schema.define(version: 20150705111232) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -287,6 +287,16 @@ ActiveRecord::Schema.define(version: 20150702083509) do
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
 
+  create_table "sensor_data", force: true do |t|
+    t.string   "sensor_id"
+    t.string   "sensor_type"
+    t.integer  "sensor_measurement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sensor_data", ["sensor_measurement_id"], name: "index_sensor_data_on_sensor_measurement_id"
+
   create_table "sensor_measurements", force: true do |t|
     t.integer  "user_id"
     t.string   "group"
@@ -300,6 +310,17 @@ ActiveRecord::Schema.define(version: 20150702083509) do
     t.string   "version"
     t.datetime "end_time"
   end
+
+  create_table "sensor_segments", force: true do |t|
+    t.datetime "start_time"
+    t.text     "data_a"
+    t.text     "data_b"
+    t.integer  "sensor_datum_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sensor_segments", ["sensor_datum_id"], name: "index_sensor_segments_on_sensor_datum_id"
 
   create_table "summaries", force: true do |t|
     t.integer  "user_id"
