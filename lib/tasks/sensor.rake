@@ -13,6 +13,10 @@ namespace :sensor do
         par = JSON.load(f)
 
         sens = nil
+        par.delete('action')
+        par.delete('controller')
+        data = par['data']
+        par.delete('data')
         if par.has_key?('sensor_measurement')
           sens = SensorMeasurement.create(par['sensor_measurement'])
         else
@@ -26,6 +30,25 @@ namespace :sensor do
         end
 
         sens.save!
+
+        if sens.version == '2.0'
+          data.keys.sort.each do |sid|
+            stype = data[sid]['sensor_type']
+            sd = sens.sensor_data.create({sensor_id: sid, sensor_type: stype})
+            segments = data[sid]['segments']
+            segments.each do |seg|
+              if stype=='HEART'
+                sensor_segment = sd.sensor_segments.create({start_time: seg['start_time'],
+                                                            data_a: seg['hr_data'],
+                                                            data_b: seg['rr_data']})
+              elsif stype=='BIKE'
+                sensor_segment = sd.sensor_segments.create({start_time: seg['start_time'],
+                                                            data_a: seg['cr_data']})
+              end
+            end
+          end
+        end
+
         puts  "Loaded: #{fname}, id: #{sens.id}"
       end
     end

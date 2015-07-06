@@ -98,36 +98,10 @@ class AnalysisDataController < ApplicationController
     
     sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
     for sens in sensors do
-      if sens.hr_data
-        raw = Base64.decode64(sens.hr_data).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}
-        curr_time = sens.start_time.to_f
-        last_time = curr_time
-        val = []
-        bufsize = 30
-        tot = [0]*bufsize
-        n = 0
-        raw.in_groups_of(2) do |delta, hr|
-          curr_time += delta/1000.0
-          if curr_time-last_time > 60.0
-            val.append({time: curr_time.to_i, data:tot.inject{|a,b| a+b}/bufsize.to_f})
-            last_time = curr_time
-          else
-            tot << hr
-            if(tot.size>bufsize)
-              tot = tot.drop(1)
-            end
-            n += 1
-          end
-        end
-        result.concat([{
-                          id: sens.id,
-                          tooltip: sens.group,
-                          title: 'Sensor',
-                          start_time: sens.start_time,
-                          values: val,
-                          evt_type: 'sensor',
-                          source: 'SmartDiab'
-                      }])
+      if sens.version && sens.version =='2.0'
+        proc_20_sensor(sens, result)
+      else
+        proc_old_sensor(sens, result)
       end
     end
 
@@ -155,5 +129,50 @@ class AnalysisDataController < ApplicationController
     result.concat(tracker_filtered)
 
     render json: result
+  end
+
+  def proc_20_sensor(sens, result)
+    sens.sensor_data.select{ |d| d.sensor_type=='HEART'}.each do |sd|
+      sd.sensor_segments.each do |seg|
+        result.concat(extract_hr_data(sens.id, sens.group, seg.data_a, seg.start_time))
+      end
+    end
+  end
+  def proc_old_sensor(sens, result)
+    if sens.hr_data
+      result.concat(extract_hr_data(sens.id, sens.group, sens.hr_data, sens.start_time))
+    end
+  end
+
+  def extract_hr_data(id, group, encData, start_time)
+    raw = Base64.decode64(encData).bytes.each_slice(2).to_a.collect{|it| it[1]*256+it[0]}
+    curr_time = start_time.to_f
+    last_time = curr_time
+    val = []
+    bufsize = 30
+    tot = [0]*bufsize
+    n = 0
+    raw.in_groups_of(2) do |delta, hr|
+      curr_time += delta/1000.0
+      if curr_time-last_time > 60.0
+        val.append({time: curr_time.to_i, data:tot.inject{|a,b| a+b}/bufsize.to_f})
+        last_time = curr_time
+      else
+        tot << hr
+        if(tot.size>bufsize)
+          tot = tot.drop(1)
+        end
+        n += 1
+      end
+    end
+    return([{
+                       id: id,
+                       tooltip: group,
+                       title: 'Sensor',
+                       start_time: start_time,
+                       values: val,
+                       evt_type: 'sensor',
+                       source: 'SmartDiab'
+                   }])
   end
 end

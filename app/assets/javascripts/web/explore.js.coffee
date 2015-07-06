@@ -83,9 +83,32 @@
           else
             rr_data.push({time: curr, value: rr_values[i]})
 
+    if sens['sensor_type'] == 'BIKE'
+      cr_values = []
+      cr_data = []
+      speed_data = []
+      for seg in sens['sensor_segments']
+        if seg['data_a']
+          cr_values = decodeSensorTimeVal(seg['data_a'])
+
+        curr = Date.parse(seg['start_time'])
+        cr_prev = 0
+        speed_prev = 0
+        curr_dt = 0
+        for i in [0..cr_values.length-1]
+          if (i % 3) == 0
+            curr += cr_values[i]
+          else if (i%3)==1
+            cr_prev = cr_values[i]
+          else
+            cr_data.push({time: curr, value: cr_prev})
+            speed_data.push({time: curr, value: cr_values[i]})
+
+      console.log speed_data
+      console.log cr_data
 #  window.rr_data = rr_data
 #  window.hr_data = hr_data
-  return [rr_data, hr_data, null, null]
+  return [rr_data, hr_data, cr_data, speed_data]
 
 @proc_old = (data, sid) ->
   rr_data=null
