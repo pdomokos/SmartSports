@@ -108,7 +108,8 @@ hu:
     invalid_dosage: "Kérem adjon meg érvényes inzulin dózist"
 
 # dashboard
-  lastweek: "ELMÚLT HÉT"
+  today:  "Mai nap"
+  lastweek: "Elmúlt hét"
   calories_taken: "Bevitt kalória"
   steps_walked: "Lépésszám"
   cycling_today: "Kerékpározás"

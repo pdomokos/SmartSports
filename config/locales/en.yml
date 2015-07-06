@@ -129,7 +129,8 @@ en:
     invalid_dosage: "Enter valid dosage for insulin"
 
 # dashboard
-  lastweek: "LAST WEEK"
+  today: "Today"
+  lastweek: "Last Week"
   calories_taken: "Calories Taken"
   steps_walked: "Steps walked"
   cycling_today: "Cycling today"
