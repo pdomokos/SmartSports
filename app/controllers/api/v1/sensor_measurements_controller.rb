@@ -58,7 +58,7 @@ module Api::V1
               sensor_segment = sd.sensor_segments.create({start_time: seg['start_time'],
                                                          data_a: seg['hr_data'],
                                                          data_b: seg['rr_data']})
-            elsif stype=='HEART'
+            elsif stype=='BIKE'
               sensor_segment = sd.sensor_segments.create({start_time: seg['start_time'],
                                                           data_a: seg['cr_data']})
             end

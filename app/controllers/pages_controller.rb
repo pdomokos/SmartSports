@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  include DashboardHelper
+
   # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
   before_action :redir_mobile, except: [:mobilepage, :signin]
   before_action :set_locale

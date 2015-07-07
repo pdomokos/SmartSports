@@ -36,12 +36,20 @@
           <%=t 'calories_taken'%>
         </div>
       </div>
-      <div>
-        <span class="tileContent">&nbsp;<%=@calories_taken%></span><span class="tileUnit">kcal</span>
-      </div>
-      <div>
-        <span class="tileContent worsen">+35(<i class="fa fa-arrow-up"></i>1.5%)</span>
-      </div>
+      <% if @calories_taken > 0 %>
+          <div>
+            <span class="tileContent">&nbsp;<%=@calories_taken%></span><span class="tileUnit">kcal</span>
+          </div>
+          <div>
+            <% if @calories_diff_show %>
+                <span class="tileUnit <%= @calories_status %>"><%= @calories_diff %> kcal (<i class="fa fa-arrow-<%=@calories_arrow%>"></i><%= @calories_diff_percent%>)</span>
+            <% end %>
+          </div>
+      <% else %>
+          <div>
+            <span><%=t('no_calories_today_html', :href => link_to( t('add_calorie'), pages_diet_url)) %></span>
+          </div>
+      <% end %>
     </div>
 
     <% if @steps_walked > 0 %>

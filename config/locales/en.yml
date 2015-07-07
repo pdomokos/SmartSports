@@ -131,6 +131,8 @@ en:
 # dashboard
   today: "Today"
   lastweek: "Last Week"
+  add_calorie: "Click"
+  no_calories_today_html: "No calories for today! %{href} to add some."
   calories_taken: "Calories Taken"
   steps_walked: "Steps walked"
   cycling_today: "Cycling today"

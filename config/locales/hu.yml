@@ -110,6 +110,8 @@ hu:
 # dashboard
   today:  "Mai nap"
   lastweek: "Elmúlt hét"
+  add_calorie: "Kalória hozzáadása"
+  no_calories_today_html: "Ma nincs bevitt kalória! %{href}."
   calories_taken: "Bevitt kalória"
   steps_walked: "Lépésszám"
   cycling_today: "Kerékpározás"

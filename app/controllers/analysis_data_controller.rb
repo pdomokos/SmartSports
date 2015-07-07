@@ -158,7 +158,9 @@ class AnalysisDataController < ApplicationController
         val.append({time: curr_time.to_i, data:tot.inject{|a,b| a+b}/bufsize.to_f})
         last_time = curr_time
       else
-        tot << hr
+        if hr>0
+          tot << hr
+        end
         if(tot.size>bufsize)
           tot = tot.drop(1)
         end
