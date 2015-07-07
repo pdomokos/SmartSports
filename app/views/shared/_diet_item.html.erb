@@ -1,6 +1,6 @@
 <tr class="bg">
   <td style="width:40px;" class="padded">
-    <% if diet_item.diet_type != "Calory" %>
+    <% if diet_item.diet_type && diet_item.diet_type != "Calory" %>
          <%= image_tag "#{diet_item.diet_type.downcase}40.png" %>
     <% else %>
         <%= image_tag "food40.png" %>

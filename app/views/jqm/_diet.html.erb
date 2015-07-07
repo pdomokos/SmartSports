@@ -16,7 +16,7 @@
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
             <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-            <input type="hidden" name="diet[type]" value="Food">
+            <input type="hidden" name="diet[diet_type]" value="Food">
             <input type="search" id="foodname" name="food_name" placeholder="<%=t 'food_placeholer'%>">
             <ul id="food_autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#foodname"></ul>
             <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
@@ -37,7 +37,7 @@
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
             <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-            <input type="hidden" name="diet[type]" value="Drink">
+            <input type="hidden" name="diet[diet_type]" value="Drink">
             <input type="search" id="drinkname" name="drink_name" placeholder="<%=t 'drink_placeholder'%>">
             <ul id="drink_autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#drinkname"></ul>
             <input id="drink_type_id" name="diet[food_type_id]" type="hidden">
@@ -58,7 +58,7 @@
       <div class="ui-body ui-body-a">
         <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "bp-create-form", class: "resource-create-form diet-form") do %>
             <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-            <input type="hidden" name="diet[type]" value="Smoke">
+            <input type="hidden" name="diet[diet_type]" value="Smoke">
 
             <select id="diet_smoke_type" name="diet[name]">
               <option>1 Cigaretta</option>
@@ -122,7 +122,7 @@
     <%= form_tag(  "#", remote: true, id: "createNewFoodForm", method: 'post') do %>
         <div class="ui-field-contain">
           <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-          <input id="new_diet_type" type="hidden" name="diet[type]" >
+          <input id="new_diet_type" type="hidden" name="diet[diet_type]" >
           <input id="new_diet_type_id" name="diet[food_type_id]" type="hidden">
           <label for="new_food_name">Name</label>
           <input id="new_food_name" type="text" name="diet[name]" value="" data-theme="a" readonly="true">

@@ -10,6 +10,8 @@
               <%= image_tag "kidney40.png" %>
           <% elsif  labresult_item.category=='ketone' %>
               <%= image_tag "ketone40.png" %>
+          <% elsif  labresult_item.category=='controll' %>
+              <%= image_tag "test_tube40.png" %>
           <% end %>
         </td>
 
@@ -22,6 +24,8 @@
               <strong>eGFR-EPI: </strong><%= labresult_item.egfr_epi %> ml/min/1.73m2
           <% elsif  labresult_item.category=='ketone' %>
               <strong>Ketone: </strong><%= labresult_item.ketone %>
+          <% elsif  labresult_item.category=='controll' %>
+               <strong>Kontroll: </strong><%= labresult_item.controll_type %>
           <% else %>
               <strong>Unknown labresult</strong>
           <% end %>

@@ -13,27 +13,38 @@
   <table>
     <tr>
       <td>
-        <%= image_tag "#{diet_item.type.downcase}40.png" %>
+        <% if diet_item.diet_type && diet_item.diet_type != "Calory" %>
+            <%= image_tag "#{diet_item.diet_type.downcase}40.png" %>
+        <% else %>
+            <%= image_tag "food40.png" %>
+        <%end%>
       </td>
       <td class="diet_item">
         <input id="diet_data_<%= diet_item.id %>" type="hidden" value="<%=
             d = diet_item.as_json
-            if diet_item.type!= "Smoke" && diet_item.food_type
+            if diet_item.diet_type!= "Smoke" && diet_item.diet_type!= "Calory" && diet_item.food_type
               d.merge!({'food_name' => diet_item.food_type.name})
             else
               d.merge!({'food_name' => diet_item.name})
             end
             JSON.dump(d)
         %>">
-        <% if diet_item.type== "Smoke" %>
+        <% if diet_item.diet_type== "Smoke" %>
             <strong><%= diet_item.name %></strong>
-        <% elsif diet_item.type== "Food" %>
+        <% elsif diet_item.diet_type== "Calory" %>
+            <% if diet_item.calories %>
+                <strong><%= t "quick_calories" %></strong> <%= diet_item.calories %>kcal
+            <% end %>
+            <% if diet_item.carbs %>
+                <strong> carbs: <%= diet_item.carbs %>g</strong>
+            <% end %>
+        <% elsif diet_item.diet_type== "Food" %>
             <% if diet_item.food_type %>
                 <strong><%= diet_item.food_type.name %></strong> <%= diet_item.amount * 100 %>g
             <% else %>
                 <strong>Food</strong> <%= diet_item.name %>
             <% end %>
-        <% elsif diet_item.type== "Drink" %>
+        <% elsif diet_item.diet_type== "Drink" %>
             <% if diet_item.food_type %>
                 <strong><%= diet_item.food_type.name %></strong> <%= diet_item.amount %>dl
             <% else %>
