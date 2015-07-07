@@ -47,7 +47,7 @@
           </div>
       <% else %>
           <div>
-            <span><%=t('no_calories_today_html', :href => link_to( t('add_calorie'), pages_diet_url)) %></span>
+            <span><%=t('no_calories_today_html', :href => link_to( t('add_calorie'), url_for( :action => 'diet', :locale => I18n.default_locale ))) %></span>
           </div>
       <% end %>
     </div>
