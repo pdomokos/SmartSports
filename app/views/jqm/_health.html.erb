@@ -18,13 +18,13 @@
             <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
 
             <label for="bp_sys"><%=t 'bp_systolic_placeholer'%></label>
-            <input id="bp_sys" type="text" name="measurement[systolicbp]" />
+            <input id="bp_sys" type="number" step="1" min="0" name="measurement[systolicbp]" />
 
             <label for="bp_dia"><%=t 'bp_diastolic_placeholer'%></label>
-            <input id="bp_dia" type="text" name="measurement[diastolicbp]" />
+            <input id="bp_dia" type="number" step="1" min="0" name="measurement[diastolicbp]" />
 
             <label for="bp_hr"><%=t 'bp_pulse_placeholer'%></label>
-            <input id="bp_hr" type="text" name="measurement[pulse]" />
+            <input id="bp_hr" type="number" step="1" min="0" name="measurement[pulse]" />
 
             <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
@@ -46,9 +46,9 @@
             <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
 
             <label for="bs_glucose"><%=t 'blood_glucose'%> (mmol/L)</label>
-            <input id="bs_glucose" type="text" name="measurement[blood_sugar]" />
+            <input id="bs_glucose" type="number" step="0.01" min="0" name="measurement[blood_sugar]" />
 
-            <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+            <input id='bs_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
             <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
@@ -68,9 +68,9 @@
             <input type="hidden" name="measurement[meas_type]" value="weight" />
 
             <label for="b_weight"><%=t 'body_weight'%> (kg)</label>
-            <input id="b_weight" type="text" name="measurement[weight]" />
+            <input id="b_weight" type="number" step="0.01" min="0" name="measurement[weight]" />
 
-            <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+            <input id='b_weight_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
             <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>
@@ -91,9 +91,9 @@
             <input type="hidden" name="measurement[meas_type]" value="waist" />
 
             <label for="b_waist"><%=t 'waist_placeholder'%></label>
-            <input id="b_waist" type="text" name="measurement[waist]" />
+            <input id="b_waist" type="number" step="0.1" min="0" name="measurement[waist]" />
 
-            <input id='bp_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+            <input id='b_waist_datepicker' type='text' readonly="true" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
 
             <button class="ui-shadow ui-btn ui-corner-all sendForm"><%=t 'button_add'%></button>
         <% end %>

@@ -12,7 +12,7 @@
     <div>
         <%= form_tag sessions_path, :method => :post, :remote => true, :id => 'loginForm' do %>
         <input id="signinlang" name="signinlang" value="<%=I18n.locale%>" type="hidden" />
-        <input id="username_field" name="email" type="text" class="loginField animField" placeholder="<%=t 'username' %>"/><br>
+        <input id="username_field" name="email" type="text" autocorrect="off" autocapitalize="none" class="loginField animField" placeholder="<%=t 'username' %>"/><br>
         <input id="password_field" name="password" type="password" class="loginField animField" placeholder="<%=t 'password' %>"/><br>
         <input type="submit" class="loginButton animButton" value="<%=t 'login_button' %>"/>
         <% end %>

@@ -3,10 +3,10 @@
   $("#health-link").css
     background: "rgba(137, 130, 200, 0.3)"
 
-  $('#bloodpressure_datepicker').datetimepicker(timepicker_defaults)
-  $('#bloodsugar_datepicker').datetimepicker(timepicker_defaults)
-  $('#weight_datepicker').datetimepicker(timepicker_defaults)
-  $('#waist_datepicker').datetimepicker(timepicker_defaults)
+  $('#bp_datepicker').datetimepicker(timepicker_defaults)
+  $('#bs_datepicker').datetimepicker(timepicker_defaults)
+  $('#b_weight_datepicker').datetimepicker(timepicker_defaults)
+  $('#b_waist_datepicker').datetimepicker(timepicker_defaults)
 
 #  $("#bp-create-form button").click ->
 #  if( (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
@@ -43,10 +43,10 @@
 
     $("#"+form_id+" input.dataFormField").val("")
 
-    $('#bloodpressure_datepicker').val(moment().format(moment_fmt))
-    $('#bloodsugar_datepicker').val(moment().format(moment_fmt))
-    $('#weight_datepicker').val(moment().format(moment_fmt))
-    $('#waist_datepicker').val(moment().format(moment_fmt))
+    $('#bp_datepicker').val(moment().format(moment_fmt))
+    $('#bs_datepicker').val(moment().format(moment_fmt))
+    $('#b_weight_datepicker').val(moment().format(moment_fmt))
+    $('#b_waist_datepicker').val(moment().format(moment_fmt))
 
     load_meas()
     $("#successHealthPopup").popup("open")
