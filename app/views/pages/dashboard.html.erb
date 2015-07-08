@@ -28,6 +28,51 @@
     <div class="dashboardT">
       <div class="tileTitle">
         <div style="height: 40px">
+          <div class="historyItem bgc3 titleIcon">
+            <div class="inner blood_sugar"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          <%=t 'blood_glucose_today_html'%>
+        </div>
+      </div>
+      <% if @show_day_bg %>
+          <div>
+            <span class="tileContent <%=@day_bg_status%>"><%=@day_bg_min%>/<%=@day_bg_avg%>/<%=@day_bg_max%></span><br/><span class="tileUnit">mmol/L</span>
+          </div>
+      <%else%>
+          <div>
+            <span><%=t('no_bg_today_html', :href => link_to( t('add_bg'), url_for( :action => 'health', :locale => I18n.default_locale ))) %></span>
+          </div>
+      <%end%>
+    </div>
+
+    <% if @bw_today>0 %>
+        <div class="dashboardT">
+          <div class="tileTitle">
+            <div style="height: 40px">
+              <div class="historyItem bgc3 titleIcon">
+                <div class="inner weight"></div>
+              </div>
+            </div>
+            <div class="" style="padding-top: 10px;">
+              <%=t 'body_weight'%>
+            </div>
+          </div>
+          <div>
+            <span class="tileContent">&nbsp;<%=@bw_today%></span><span class="tileUnit">kg</span>
+          </div>
+          <div>
+              <% if @show_bw_diff %>
+                  <span class="tileUnit"><%= @bw_diff %> kg (<i class="fa fa-arrow-<%=@bw_arrow%>"></i><%= @bw_diff_percent%>%)</span>
+              <% end %>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="dashboardT">
+      <div class="tileTitle">
+        <div style="height: 40px">
           <div class="historyItem bgc1 titleIcon">
             <div class="inner food"></div>
           </div>
@@ -52,6 +97,68 @@
       <% end %>
     </div>
 
+
+    <div class="dashboardT">
+      <div class="tileTitle">
+        <div style="height: 40px">
+          <div class="historyItem bgc2 titleIcon">
+            <div class="inner exercise"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          <%=t 'exercise_calories'%>
+        </div>
+      </div>
+      <% if @calories_burned > 0 %>
+          <div>
+            <span class="tileContent">&nbsp;<%=@calories_burned%></span><span class="tileUnit">kcal</span>
+          </div>
+          <div>
+            <% if @calories_burned_diff_show %>
+                <span class="tileUnit <%= @calories_burned_status %>"><%= @calories_burned_diff %> kcal (<i class="fa fa-arrow-<%=@calories_burned_arrow%>"></i><%= @calories_burned_diff_percent%>)</span>
+            <% end %>
+          </div>
+      <% else %>
+          <div>
+            <span><%=t('no_calories_burned_today_html', :href => link_to( t('add_exercise'), url_for( :action => 'exercise', :locale => I18n.default_locale ))) %></span>
+          </div>
+      <% end %>
+    </div>
+
+    <% if @day_exercise_time > 0 %>
+        <div class="dashboardT">
+          <div class="tileTitle">
+            <div style="height: 40px">
+              <div class="historyItem bgc2 titleIcon">
+                <div class="inner exercise"></div>
+              </div>
+            </div>
+            <div class="" style="padding-top: 10px;">
+              <%=t 'exercise_time'%>
+            </div>
+          </div>
+          <div>
+            <span class="tileContent">&nbsp;<%=@day_exercise_time%></span><span class="tileUnit">min</span>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="dashboardT">
+      <div class="tileTitle">
+        <div style="height: 40px">
+          <div class="historyItem bgc3 titleIcon">
+            <div class="inner weight"></div>
+          </div>
+        </div>
+        <div class="" style="padding-top: 10px;">
+          <%=t 'sleep_amount_today'%>
+        </div>
+      </div>
+      <div class="tileContent">
+        6.8 <%=t 'hours'%>
+      </div>
+    </div>
+    
     <% if @steps_walked > 0 %>
     <div class="dashboardT">
       <div class="tileTitle">
@@ -84,89 +191,8 @@
       <div class="tileContent">
         2.876 km
       </div>
-
-
-    </div>
-    <div class="dashboardT">
-      <div class="tileTitle">
-        <div style="height: 40px">
-          <div class="historyItem bgc2 titleIcon">
-            <div class="inner exercise"></div>
-          </div>
-        </div>
-        <div class="" style="padding-top: 10px;">
-          <%=t 'exercise_calories'%>
-        </div>
-      </div>
-      <div class="tileContent">
-        -<%=@calories_burned%> kcal
-      </div>
     </div>
 
-    <div class="dashboardT">
-      <div class="tileTitle">
-        <div style="height: 40px">
-          <div class="historyItem bgc2 titleIcon">
-            <div class="inner exercise"></div>
-          </div>
-        </div>
-        <div class="" style="padding-top: 10px;">
-          <%=t 'exercise_time'%>
-        </div>
-      </div>
-      <div class="tileContent">
-        58 <%=t 'min'%>
-      </div>
-    </div>
-
-    <div class="dashboardT">
-      <div class="tileTitle">
-        <div style="height: 40px">
-          <div class="historyItem bgc3 titleIcon">
-            <div class="inner blood_sugar"></div>
-          </div>
-        </div>
-        <div class="" style="padding-top: 10px;">
-          <%=t 'blood_glucose_today'%>
-        </div>
-      </div>
-      <div class="tileContent">
-        3.2/4.2/5.5
-      </div>
-
-    </div>
-
-    <div class="dashboardT">
-      <div class="tileTitle">
-        <div style="height: 40px">
-          <div class="historyItem bgc3 titleIcon">
-            <div class="inner weight"></div>
-          </div>
-        </div>
-        <div class="" style="padding-top: 10px;">
-          <%=t 'sleep_amount_today'%>
-        </div>
-      </div>
-      <div class="tileContent">
-        6.8 <%=t 'hours'%>
-      </div>
-    </div>
-
-    <div class="dashboardT">
-      <div class="tileTitle">
-        <div style="height: 40px">
-          <div class="historyItem bgc3 titleIcon">
-            <div class="inner weight"></div>
-          </div>
-        </div>
-        <div class="" style="padding-top: 10px;">
-          <%=t 'body_weight_loss'%>
-        </div>
-      </div>
-      <div class="tileContent">
-        +1.5 kg
-      </div>
-    </div>
 
     <div class="dashboardT">
       <div class="tileTitle">
