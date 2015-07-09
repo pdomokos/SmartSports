@@ -47,7 +47,7 @@
       <%end%>
     </div>
 
-    <% if @bw_today>0 %>
+    <% if @show_bw %>
         <div class="dashboardT">
           <div class="tileTitle">
             <div style="height: 40px">
@@ -60,11 +60,17 @@
             </div>
           </div>
           <div>
+            <% if @bw_today >0 %>
             <span class="tileContent">&nbsp;<%=@bw_today%></span><span class="tileUnit">kg</span>
+            <% else %>
+                <span class="tileContent">&nbsp;<%=@bw_last%></span><span class="tileUnit">kg</span>
+            <% end %>
           </div>
           <div>
               <% if @show_bw_diff %>
                   <span class="tileUnit"><%= @bw_diff %> kg (<i class="fa fa-arrow-<%=@bw_arrow%>"></i><%= @bw_diff_percent%>%)</span>
+            <% else %>
+                <span class="tileUnit"><%= @bw_last_time %></span>
               <% end %>
           </div>
         </div>
@@ -143,6 +149,7 @@
         </div>
     <% end %>
 
+    <% if @show_sleep %>
     <div class="dashboardT">
       <div class="tileTitle">
         <div style="height: 40px">
@@ -154,12 +161,13 @@
           <%=t 'sleep_amount_today'%>
         </div>
       </div>
-      <div class="tileContent">
-        6.8 <%=t 'hours'%>
+      <div>
+        <span class="tileContent"><%=@sleep_amount%></span>
       </div>
     </div>
-    
-    <% if @steps_walked > 0 %>
+    <% end %>
+
+    <% if @show_walk_today %>
     <div class="dashboardT">
       <div class="tileTitle">
         <div style="height: 40px">
@@ -168,15 +176,16 @@
           </div>
         </div>
         <div class="" style="padding-top: 10px;">
-          <%=t 'steps_walked'%>
+          <%=t 'walking_today'%>
         </div>
       </div>
-      <div class="tileContent">
-        <%=@steps_walked%>
+      <div>
+        <span class="tileContent"><%=@walk_today_value%></span><span class="tileUnit"><%=@walk_today_unit%></span>
       </div>
     </div>
     <% end %>
 
+    <% if @show_cycle_today %>
     <div class="dashboardT">
       <div class="tileTitle">
         <div style="height: 40px">
@@ -188,11 +197,11 @@
           <%=t 'cycling_today'%>
         </div>
       </div>
-      <div class="tileContent">
-        2.876 km
+      <div>
+        <span class="tileContent"><%=@cycle_today_value%></span><span class="tileUnit"><%=@cycle_today_unit%></span>
       </div>
     </div>
-
+    <% end %>
 
     <div class="dashboardT">
       <div class="tileTitle">

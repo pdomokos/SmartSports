@@ -138,8 +138,8 @@ en:
   add_bg: "Click"
   no_bg_today_html: "No blood glucose for today. %{href} to add measurement."
 
-  calories_taken: "Calories Taken"
-  steps_walked: "Steps walked"
+  calories_taken: "Calories taken"
+  walking_today: "Walking today"
   cycling_today: "Cycling today"
   exercise_calories: "Exercise calories"
   exercise_time: "Exercise time"

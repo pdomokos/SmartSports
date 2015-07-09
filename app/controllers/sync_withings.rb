@@ -55,8 +55,8 @@ module SyncWithings
     dateFormat_ymd = "%Y-%m-%d"
     # today_ymd = DateTime.now().strftime(dateFormat_ymd)
     data = withings_user.getconn().get_request("/v2/measure",
-                                                     {:startdate => Time.zone.parse("2015-06-14 00:00:00").to_i,
-                                                      :enddate => Time.zone.parse("2015-06-15 00:00:00").to_i,
+                                                     {:startdate => Time.zone.now.midnight.to_i,
+                                                      :enddate => (Time.zone.now.midnight+1.day).to_i,
                                                       :action => "getintradayactivity"})
     render json: data
   end

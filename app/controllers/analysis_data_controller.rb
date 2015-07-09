@@ -108,7 +108,7 @@ class AnalysisDataController < ApplicationController
     # tracker data
     tracker_data = user.tracker_data.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t).where.not(group: 'transport')
     tracker_filtered = tracker_data.select{|d|
-      d['activity']!='transport' && (d['activity']!='walking'||(d['end_time']-d['start_time']>240.0))
+      !d.activity.nil? && d.activity!='transport' && (d.activity!='walking'||(d.end_time-d.start_time>240.0))
     }.collect {|d|
       title = 'Exercise'
       etype = 'exercise'
@@ -118,7 +118,7 @@ class AnalysisDataController < ApplicationController
       end
       {
           id: d.id,
-          tooltip: d.activity.capitalize,
+          tooltip: d.activity.try(:capitalize),
           title: title,
           source: d.source.capitalize,
           depth: 0,

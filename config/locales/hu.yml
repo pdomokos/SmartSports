@@ -118,7 +118,7 @@ hu:
   no_bg_today_html: "Ma nincs bevitt adat. %{href}"
 
   calories_taken: "Bevitt kalória"
-  steps_walked: "Lépésszám"
+  walking_today: "Gyaloglás"
   cycling_today: "Kerékpározás"
   exercise_calories: "Elhasznált kalória"
   exercise_time: "Edzés időtartama"

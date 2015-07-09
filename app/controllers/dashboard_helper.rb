@@ -53,6 +53,7 @@ module DashboardHelper
       end
     end
 
+    @day_exercise_time = 0
     if day_act.length>0
       @day_exercise_time = day_act.sum("duration").round
     end
@@ -78,7 +79,9 @@ module DashboardHelper
 
     @show_weight_diff = false
     @bw_today = 0
+    @show_bw = false
     if bw
+      @show_bw = true
       @bw_today = bw.weight.round(1)
       if last2_bw.length==2
         @show_bw_diff = true
@@ -90,11 +93,85 @@ module DashboardHelper
         @bw_diff_percent = (@bw_diff/last2_bw.first.weight.to_f*100.0).round(1)
         @bw_diff = @bw_diff.round(1)
       end
+    else
+      if last2_bw.length >0
+        @show_bw = true
+        @bw_last = last2_bw.last.weight.round(1)
+        @bw_last_time = last2_bw.last.date.strftime("%F %H:%M")
+      end
     end
+
+    @show_sleep = false
+    sleep_today = current_user.lifestyles.where("end_time between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day).where(group: 'sleep')
+    if sleep_today.length >0
+      @show_sleep = true
+      @sleep_amount = get_duration_amount(sleep_today)
+    else
+      sleep_today = current_user.tracker_data.where("(end_time between ? and ?)",DateTime.now.midnight, DateTime.now.midnight+1.day).where(group: 'sleep')
+      if sleep_today.length >0
+        @show_sleep = true
+        @sleep_amount = get_duration_amount(sleep_today)
+      end
+    end
+
+    @show_cycle_today = false
+    cycle_today = current_user.tracker_data.where("end_time between ? and ?",DateTime.now.midnight, DateTime.now.midnight+1.day)
+                      .where(group: 'cycling').where(source: 'moves')
+    if cycle_today.length >0
+      @show_cycle_today = true
+      @cycle_today_value = (cycle_today.sum("distance")/1000.0).round(1)
+      @cycle_today_unit = "km"
+    else
+      cycle_today = current_user.activities.where("end_time between ? and ?",DateTime.now.midnight, DateTime.now.midnight+1.day).where(activity_type_id: 6)
+      if cycle_today.length >0
+        @show_cycle_today = true
+        @cycle_today_value = get_duration_amount(cycle_today)
+        @cycle_today_unit = ""
+      end
+    end
+
+    @show_walk_today = false
+    walks_today = current_user.summaries.where("date between ? and ?",DateTime.now.midnight, DateTime.now.midnight+1.day).where(group: 'walking')
+    if walks_today.length>0
+      walks_for_source = walks_today.select{|it| it.source =='withings'}
+      if walks_for_source.length>0
+        @show_walk_today = true
+        @walk_today_value = walks_today.sum("steps").round
+        @walk_today_unit = "steps"
+      end
+
+      if !@show_walk_today
+        walks_for_source = walks_today.select{|it| it.source =='moves'}
+        if walks_for_source.length>0
+          @show_walk_today = true
+          @walk_today_value = walks_today.sum("steps").round
+          @walk_today_unit = "steps"
+        end
+      end
+    end
+    if !@show_walk_today
+      walks_today = current_user.activities.where("end_time between ? and ?",DateTime.now.midnight, DateTime.now.midnight+1.day).where(activity_type_id: 60)
+      if walks_today.length >0
+        @show_walk_today = true
+        @walk_today_value = get_duration_amount(walks_today)
+        @walk_today_unit = ""
+      end
+    end
+
+    current_user.summaries.create({source: 'withings', group: 'walking', date: Time.now, steps: 9874})
+    #walks_today = current_user.tracker_data.where("(end_time between ? and ?)",DateTime.now.midnight, DateTime.now.midnight+1.day).where(group: 'walking')
+
 
     @steps_walked = Activity.where("user_id = :user_id AND start_time >= :start_date", {user_id: current_user.id, start_date: (DateTime.now-1.week)})
                         .sum("steps")
 
   end
 
+  private
+  def get_duration_amount(arr)
+    sec = arr.collect{ |it| it.end_time-it.start_time}.sum.to_i
+    hours = sec/3600
+    sleep_min = (sec%3600)/60
+    return sprintf("%02d:%02d", hours, sleep_min)
+  end
 end
