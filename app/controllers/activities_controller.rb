@@ -53,9 +53,16 @@ class ActivitiesController < ApplicationController
 
     @activities = @activities.order(:start_time)
 
+    for a in @activities
+      if a.activity_type
+        a["activity"] = a.activity_type.name
+      end
+    end
+
     respond_to do |format|
       format.html
       format.json { render :json => {:activities => @activities}}
+      format.csv { send_data @activities.to_csv}
       format.js
     end
   end

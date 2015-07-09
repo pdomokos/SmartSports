@@ -1,3 +1,5 @@
+require 'csv'
+
 class DateTimeValidator < ActiveModel::Validator
   def validate(record)
     if record.end_time < record.start_time
@@ -42,4 +44,16 @@ class Activity < ActiveRecord::Base
   def interval
 
   end
+
+  def self.to_csv(options={})
+    CSV.generate(options) do |csv|
+      csv << ['ID', 'date', 'name', 'intensity', 'duration']
+      all.each do |activity|
+        if activity.activity_type && activity.intensity && activity.duration
+          csv << [activity.id, activity.start_time.strftime("%Y-%m-%d %H:%M"), activity.activity_type.name, activity.intensity, activity.duration]
+        end
+      end
+    end
+  end
+
 end

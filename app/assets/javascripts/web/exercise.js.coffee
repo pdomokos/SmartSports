@@ -5,12 +5,55 @@
   $("#exercise-link").css
     background: "rgba(238, 152, 67, 0.3)"
 
+  $(document).on("click", "#exercise-show-table", (evt) ->
+    console.log "datatable clicked"
+    current_user = $("#current-user-id")[0].value
+    url = '/users/' + current_user + '/activities.json'
+    $.ajax url,
+      type: 'GET',
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "datatable activity AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        tblData = $.map(data.activities,(item,i) ->
+          return([get_exercise_table_row(item)])
+        ).filter( (v) ->
+          return(v!=null)
+        )
+        $("#exercise-data-container").html("<table id=\"exercise-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
+        $("#exercise-data").dataTable({
+          "data": tblData,
+          "columns": [
+            {"title": "id"},
+            {"title": "date"},
+            {"title": "name"},
+            {"title": "intensity"},
+            {"title": "duration"}
+          ],
+          "order": [[1, "desc"]]
+        })
+        location.href = "#openModalEx"
+  )
+  $(document).on("click", "#download-exercise-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    url = '/users/' + current_user + '/activities.csv?order=desc'
+    location.href = url
+  )
+  $(document).on("click", "#close-exercise-data", (evt) ->
+    $("#exercise-data-container").html("")
+    location.href = "#close"
+  )
+
   init_exercise()
 
   document.body.style.cursor = 'wait'
   loadExerciseHistory()
 
   load_activity_types()
+
+@get_exercise_table_row = (item ) ->
+  if item.activity==null || !item.intensity || !item.duration
+    return null
+  return ([item.id, moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.activity, item.intensity, item.duration])
 
 init_exercise = () ->
   intensities = $("#intensity_values").val().split(" ")
