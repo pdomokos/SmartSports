@@ -158,7 +158,7 @@ module DashboardHelper
       end
     end
 
-    current_user.summaries.create({source: 'withings', group: 'walking', date: Time.now, steps: 9874})
+    #current_user.summaries.create({source: 'withings', group: 'walking', date: Time.now, steps: 9874})
     #walks_today = current_user.tracker_data.where("(end_time between ? and ?)",DateTime.now.midnight, DateTime.now.midnight+1.day).where(group: 'walking')
 
 
