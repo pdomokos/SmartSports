@@ -153,6 +153,7 @@ en:
   food: "Food"
   food_placeholer: "Type at least three letters..."
   quick_calories: "Quick calories"
+  quick_calories_prefix:  "Quick calories"
   quick_calories_placeholder: "Type calories here..."
   quick_carbs_placeholder: "Type carbs here..."
   drink: "Drink"

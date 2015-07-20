@@ -19,7 +19,10 @@ module DietsCommon
     end
 
     if @diet.save
-      send_success_json(@diet.id, { diet_name: @diet.diet_name})
+      if not @diet.diet_name && @diet_diet_type=='Calory'
+        diet_name = I18n.t :quick_calories_prefix
+      end
+      send_success_json(@diet.id, { diet_name: diet_name})
     else
       send_error_json(nil,  @diet.errors.full_messages.to_sentence, 400)
     end

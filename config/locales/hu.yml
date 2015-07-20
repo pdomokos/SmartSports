@@ -132,6 +132,7 @@ hu:
   food:             "Étel"
   food_placeholer: "Írjon legalább 3 betűt..."
   quick_calories:  "Gyors kalória megadás"
+  quick_calories_prefix:  "Gyors kalória"
   quick_calories_placeholder: "Írja be a kalóriát..."
   quick_carbs_placeholder: "Írja be a szénhidrátot..."
   drink:            "Ital"

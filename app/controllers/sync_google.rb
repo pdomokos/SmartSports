@@ -118,8 +118,10 @@ private
      query = Summary.where("user_id= #{user_id} and source = '#{source}'")
      if  query.size() > 0
        last_sync = query.where("sync_final = 'f'").order(date: :desc).limit(1)[0]
-       last_sync_date = last_sync.date
-       last_sync_date = last_sync_date.strftime('%s%9N')
+       if last_sync
+         last_sync_date = last_sync.date
+         last_sync_date = last_sync_date.strftime('%s%9N')
+       end
      end
      return last_sync_date
    end

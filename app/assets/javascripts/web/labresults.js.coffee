@@ -55,7 +55,6 @@
 @init_labresult = () ->
   console.log "init labres"
 
-  $('#hba1c').focus()
 
   doctorList = $("#doctorList").val().split(";")
   controlList = [{ label: doctorList[0], value: doctorList[0]},
@@ -130,11 +129,15 @@
   $("form.resource-create-form.lab_results-form").on("ajax:success", (e, data, status, xhr) ->
     load_labresult()
     console.log data
+    $("#control").val(null)
     $("#hba1c").val(null)
     $("#ldl_chol").val(null)
     $("#egfr_epi").val(null)
     $("#ketone").val(null)
-    popup_success(capitalize(data['category'])+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
+    category = data['category']
+    if category == 'controll'
+      category = 'Kontroll'
+    popup_success(capitalize(category)+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
