@@ -30,34 +30,61 @@ class ProfileController < ApplicationController
   end
 
   def create
+    profile_params['dateofbirth'] = profile_params['dateofbirth'].to_s.concat("-01-01").to_date
     @profile = Profile.new(profile_params)
+    if !profile_params['sex']
+      @profile.sex = "female"
+    end
+    if !profile_params['smoke']
+      @profile.smoke = true
+    end
+    if !profile_params['insulin']
+      @profile.insulin = true
+    end
     lang = params[:profilelang]
 
     if lang
       I18n.locale=lang
       puts lang
     end
+    if profile_params['default_lang']
+      I18n.locale = profile_params['default_lang']
+    end
     respond_to do |format|
       if @profile.save
-        format.json { render json: {:ok => true} }
+        format.json { render json: {:ok => true, locale: I18n.locale} }
       else
         puts @profile.errors.full_messages.to_sentence
         key = @profile.errors.values[0]
         message = (I18n.translate(key))
-        format.json { render json: { ok: false, msg: message}, status: 401 }
+        format.json { render json: { ok: false, msg: message, locale: I18n.locale}, status: 401 }
       end
     end
   end
 
   def update
     @profile = Profile.find(params["id"])
+    lang = params[:profilelang]
+    if lang
+      I18n.locale=lang
+    end
     respond_to do |format|
       par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :dateofbirth, :smoke, :insulin, :default_lang)
+      if par['dateofbirth'] &&  par['dateofbirth'].to_i != 0
+        par['dateofbirth'] = par['dateofbirth'].to_s.concat("-01-01").to_date
+      end
       puts par
+      if par['default_lang']
+        I18n.locale = par['default_lang']
+      end
       if @profile.update(par)
-        format.json { render json: { :status => "OK", :msg => "Updated successfully" } }
+        format.json { render json: { :status => "OK", :default_lang_changed => lang!=par['default_lang'], :locale => par['default_lang'], :msg => "Updated successfully" } }
       else
-        format.json { render json: { :status => "NOK", :msg => "Update errror" } }
+        puts lang
+        puts @profile.errors.values[0]
+        key = @profile.errors.values[0]
+        message = (I18n.translate(key))
+        format.json { render json: { :status => "NOK", :locale => I18n.locale, :msg => message } }
       end
     end
   end
@@ -67,7 +94,7 @@ class ProfileController < ApplicationController
     if p
       p.default_lang = I18n.locale
       p.save!
-      render :json => {:msg => "Profile update successful"}
+      render :json => { :status => "OK", locale: I18n.locale, :msg => "Profile update successful"}
       return
     end
     render :json => {:msg => "Profile update error"}

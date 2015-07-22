@@ -10,6 +10,8 @@ hu:
   menu_analytics:  "Elemzés"
   menu_profile: "Profil"
 
+  title_profile: "SZEMÉLYES PROFIL"
+
   settings_active_since: "Csatlakozás dátuma"
   settings_not_connected: "Nincs csatlakozva"
   settings_last_sync: "Utolsó szinkronizáció"
@@ -56,14 +58,16 @@ hu:
   save: "Mentés"
   fill_personal_info: "Kérem adja meg az alábbi adatokat, melyek segítségével személyreszabott szolgáltatásokat tudunk nyújtani Önnek. Lehetősége van kihagyni ezt és azonnal elkezdheti használni a SmartDiab rendszert."
   height: "Magasság"
-  date_of_birth: "Születési dátum"
-  sex: "Neme"
+  date_of_birth: "Születési év"
+  sex: "Nem"
   male: "Férfi"
   female: "Nő"
-  smoke: "Ön dohányzik?"
-  insulin: "Használ inzulint a cukorbetegség kezelésére?"
+  smoke_question: "Dohányzik?"
+  insulin_question: "Használ inzulint a cukorbetegség kezelésére?"
   update: "Módosít"
   default_lang: "Alapértelmezett nyelv"
+  answer_yes: "igen"
+  answer_no: "nem"
 
 # erorrs
   back_home:      "Vissza"
@@ -76,6 +80,7 @@ hu:
   error_profile_height_interval: "A magasságnak 100 és 250cm között kell lennie!"
   error_registration_password: "A jelszónak legalább 4 karakternek kell lennie!"
   error_registration_password_confirmation: "Jelszó megerősítése mező kitöltése kötelező!"
+  error_registration_password_confirmation2: "A megadott jelszavak nem egyeznek!"
   error_registration_email_used: "A megadott e-mail cím már használatban van!"
   error_registration_email_format: "A megadott e-mail cím formátuma nem megfelelő!"
   error_login_password: "Helytelen jelszó"

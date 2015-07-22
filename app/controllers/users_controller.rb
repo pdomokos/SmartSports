@@ -54,16 +54,16 @@ class UsersController < ApplicationController
         end
         if @user
           save_click_record(:success, nil, "login", request.remote_ip)
-          format.json { render json: {:ok => true, :msg => 'login_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
+          format.json { render json: {:ok => true, status: 'OK', :msg => 'login_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
         else
-          format.json { render json: {:ok => false, :msg => 'login_err'} }
+          format.json { render json: {:ok => false, status: 'NOK', :msg => 'login_err'} }
         end
 
       else
         key = @user.errors.values[0]
         message = (I18n.translate(key))
         puts @user.errors.full_messages
-        format.json { render json: { ok: false, msg: message}, status: 401 }
+        format.json { render json: { ok: false, status: 'NOK', msg: message}, status: 401 }
       end
     end
   end
@@ -89,12 +89,21 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    lang = params[:usermodlang]
+    if lang
+      I18n.locale=lang
+      puts lang
+    end
      respond_to do |format|
       par = params.require(:user).permit( :password, :password_confirmation, :name)
       if @user.update(par)
-        format.json { render json: { ok: true, msg: "Updated successfully" } }
+        puts "update succ"
+        format.json { render json: { ok: true, status: 'OK', msg: "Updated successfully" } }
       else
-        format.json { render json: { ok: true, msg: "Update errror" } }
+        puts "update err"
+        key = @user.errors.values[0]
+        message = (I18n.translate(key))
+        format.json { render json: { ok: false, status: 'NOK', msg: message } }
       end
     end
   end
@@ -105,7 +114,7 @@ class UsersController < ApplicationController
     if !current_user.admin || current_user.id==@user.id
       respond_to do |format|
         format.html { redirect_to errors_unauthorized_path }
-        format.json { render json: { :ok => false, :msg => 'error_unauthorized' }, status: 403  }
+        format.json { render json: { :ok => false, :status => 'NOK', :msg => 'error_unauthorized' }, status: 403  }
       end
       return
     end
@@ -113,7 +122,7 @@ class UsersController < ApplicationController
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { render json: { :ok => true }}
+      format.json { render json: { :ok => true, :status => 'OK' }}
     end
   end
 

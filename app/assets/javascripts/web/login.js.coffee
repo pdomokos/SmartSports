@@ -18,7 +18,7 @@
     console.log "success "+form_id
 
     #    redir to main page
-    document.location = "/"
+    document.location = "/"+data.locale+"/pages/dashboard"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
 #    popup_error(popup_messages.failed_to_add_data)
@@ -29,7 +29,7 @@
     console.log "success "+form_id
 
     #    redir to main page
-    document.location = "/"
+    document.location = "/"+data.locale+"/pages/dashboard"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
     popup_error(data.responseJSON["msg"])

@@ -1,6 +1,6 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
 <div class="sectionTitle c0">
-  Profile
+  <%= t :title_profile %>
 </div>
 
 <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
@@ -8,6 +8,7 @@
       <table style="width: 100%;color: #3d3d3d;">
         <tbody>
         <%= form_tag("/users/#{current_user.id}", remote: true, id: "update-user-form", method: "PUT", class: "resource-update-form user-form") do %>
+            <input id="usermodlang" name="usermodlang" value="<%=I18n.locale%>" type="hidden" />
             <tr>
               <td style="width: 180px;height: 50px;">
                 <%= t :email %>
@@ -72,6 +73,23 @@
         <table style="width: 100%;color: #3d3d3d;">
           <tbody>
           <%= form_tag("/users/#{current_user.id}/profile/#{@profile.id}", remote: true, id: "update-profile-form", method: "PUT", class: "resource-update-form profile-form") do %>
+              <input id="profilelang" name="profilelang" value="<%=I18n.locale%>" type="hidden" />
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :default_lang %>
+                </td>
+                <td>
+                  <% if I18n.locale.to_s == "hu" %>
+                      <input type="radio"  name="profile[default_lang]" value="hu" <%= @profile.default_lang && @profile.default_lang == "hu" ? "checked" : "" %>/><span>Magyar</span>
+                      <input type="radio"  name="profile[default_lang]" value="en" <%= @profile.default_lang && @profile.default_lang == "en" ? "checked" : "" %>/><span>English</span>
+                  <%else%>
+                      <input type="radio"  name="profile[default_lang]" value="en" <%= @profile.default_lang && @profile.default_lang == "en" ? "checked" : "" %>/><span>English</span>
+                      <input type="radio"  name="profile[default_lang]" value="hu" <%= @profile.default_lang && @profile.default_lang == "hu" ? "checked" : "" %>/><span>Magyar</span>
+                  <%end%>
+                </td>
+                <td>
+                </td>
+              </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
                   <%= t :firstname %>
@@ -149,7 +167,8 @@
                   <%= t :date_of_birth %>
                 </td>
                 <td>
-                  <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= @profile.try(:dateofbirth).try(:strftime, "%F") %>"/>
+                  <!--<input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<!%= @profile.try(:dateofbirth).try(:strftime, "%F") %>"/>-->
+                  <%=select("profile", "dateofbirth", options_for_select((1900..2015).step(1), (@profile.dateofbirth && (@profile.dateofbirth.year >= 1900 && @profile.dateofbirth.year <= 2015)) ? @profile.dateofbirth.year : 0), :include_blank => true)%>
                 </td>
                 <td>
                   <button id="update-profile-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">

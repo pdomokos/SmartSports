@@ -31,6 +31,8 @@ en:
   menu_analytics:  "Analytics"
   menu_profile: "My profile"
 
+  title_profile: "MY PROFILE"
+
   settings_active_since: "Active since"
   settings_not_connected: "Not connected"
   settings_last_sync: "Last synchronization"
@@ -77,7 +79,7 @@ en:
   save: "Save"
   fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to SmartDiab."
   height: "Height"
-  date_of_birth: "Date of birth"
+  date_of_birth: "Year of birth"
   sex: "Sex"
   male: "Male"
   female: "Female"
@@ -85,6 +87,8 @@ en:
   insulin_question: "Do you use insulin for diabetes treatment?"
   update: "Update"
   default_lang: "Default language"
+  answer_yes: "yes"
+  answer_no: "no"
 
 # erorrs
   back_home:      "Back"
@@ -97,6 +101,7 @@ en:
   error_profile_height_interval: "Height must be between 100-250cm!"
   error_registration_password: "Password must be at least 4 characters!"
   error_registration_password_confirmation: "Please fill password confirmation field!"
+  error_registration_password_confirmation2: "Passwords are different!"
   error_registration_email_used: "Email address is already used!"
   error_registration_email_format: "Invalid e-mail format!"
   error_login_password: "Invalid password"

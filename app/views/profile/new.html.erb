@@ -26,6 +26,7 @@
 <div id="registerDiv" class="registerDiv">
   <div>
     <%= form_tag("/users/#{current_user.id}/profile", :method => :post, :remote => true, :id=> 'profileForm') do %>
+        <input id="profilelang" name="profilelang" value="<%=I18n.locale%>" type="hidden" />
         <input type="hidden" id="user_id" name="profile[user_id]" value="<%= @current_user.id %>">
         <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" placeholder="<%=t 'firstname' %>"/><br>
         <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" placeholder="<%=t 'lastname' %>"/><br>
@@ -35,22 +36,39 @@
         <input id="height_field" name="profile[height]" type="text" class="loginField" placeholder="<%=t 'height' %>"/>
         <div class="profileFormFieldUnit">cm</div><br>
 
-        <fieldset class="loginField">
-            <div class="loginRow"><input type="radio"  name="profile[default_lang]" value="en"/><span>en</span>
-            <input type="radio"  name="profile[default_lang]" value="hu"/><span>hu</span></div>
-            <div class="loginRow"><input type="radio"  name="profile[sex]" value="male"/><span><%=t 'male' %></span>
-            <input type="radio"  name="profile[sex]" value="female"/><span><%=t 'female' %></span></div>
-            <div class="loginRow"><%=check_box("profile", "smoke")%><span><%=t :smoke_question%></span></div>
-            <div class="loginRow"><%=check_box("profile", "insulin")%><span><%=t :insulin_question%></span></div>
+        <fieldset class="profileField">
+          <label><%=t :default_lang%>:</label><br/>
+          <div class="loginRow">
+            <input type="radio"  name="profile[default_lang]" value="en"/><span>English</span>
+            <input type="radio"  name="profile[default_lang]" value="hu"/><span>Magyar</span>
+          </div>
+          <label><%=t :sex%>:</label><br/>
+          <div class="loginRow">
+            <input type="radio"  name="profile[sex]" value="male"/><span><%=t :male %></span>
+            <input type="radio"  name="profile[sex]" value="female"/><span><%=t :female %></span>
+          </div>
+          <label><%=t :smoke_question%>:</label><br/>
+          <div class="loginRow">
+            <input type="radio"  name="profile[smoke]" value="1"/><span><%=t :answer_yes %></span>
+            <input type="radio"  name="profile[smoke]" value="0"/><span><%=t :answer_no %></span>
+          </div>
+          <label><%=t :insulin_question%>:</label><br/>
+          <div class="loginRow">
+            <input type="radio"  name="profile[insulin]" value="1"/><span><%=t :answer_yes %></span>
+            <input type="radio"  name="profile[insulin]" value="0"/><span><%=t :answer_no %></span>
+          </div>
+
         </fieldset>
 
-        <label for="profile_birth_datepicker" style="color: #A5A5A5;"><%=t :date_of_birth%></label>
-        <input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<%= DateTime.new(1980,1,1).strftime("%F") %>"/>
-        <br/>
+        <label for="profile_dateofbirth" style="color: #A5A5A5;"><%=t :date_of_birth%>:</label>
+        <%=select("profile", "dateofbirth", options_for_select((1900..2015).step(1)), :include_blank => true)%>
+        <!--<input id='profile_birth_datepicker' type='text' class="loginField" name="profile[dateofbirth]" value="<!%= DateTime.new(1980,1,1).strftime("%F") %>"/>-->
+        <br/><br/>
 
         <input type="submit" class="loginButton animButton" value="<%=t 'save' %>"/>
     <% end %>
     <%= form_tag("/users/#{current_user.id}/profile", :method => :post, :remote => true, :id=> 'emptyProfileForm') do %>
+        <input id="profilelang" name="profilelang" value="<%=I18n.locale%>" type="hidden" />
         <input type="hidden" id="user_id" name="profile[user_id]" value="<%= @current_user.id %>">
         <input type="submit" class="skipButton animButton" value="<%=t 'skip' %>"/>
     <%end%>

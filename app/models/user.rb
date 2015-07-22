@@ -15,12 +15,12 @@ class User < ActiveRecord::Base
   has_one :profile
   authenticates_with_sorcery!
   validates :password, length: { minimum: 4, message: "error_registration_password"}, allow_nil: true
-  validates :password, confirmation: true
+  validates :password, confirmation: {message: "error_registration_password_confirmation2"}
   validates :password_confirmation, presence: { message: "error_registration_password_confirmation"}, if: :password
   validates :email, uniqueness: { message: "error_registration_email_used"}
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create, message: "error_registration_email_format"}
 
-  has_attached_file :avatar, :styles => { :medium => "150x200>", :thumb => "75x100>" },
+  has_attached_file :avatar, :styles => { :medium => "150x150#", :thumb => "75x75#" },
                     :default_url => ":style/unknown.png",
                     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
                     :path => APP_CONFIG['PAPERCLIP_PATH']
