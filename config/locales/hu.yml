@@ -183,6 +183,12 @@ hu:
 
   waist_placeholder: "Haskörfogat, pl: 94"
 
+  blood_sugar_time: "Időpont"
+  before_meal: "Evés előtt"
+  after_meal: "Evés után"
+  indep_meal: "Evéstől függetlenül"
+  bgTimeList: "Evéstől függetlenül,Evés előtt,Evés után"
+
 # medication
   medication:           "Gyógykezelés"
   drugs:                "Gyógyszer"

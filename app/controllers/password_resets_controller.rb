@@ -41,13 +41,22 @@ class PasswordResetsController < ApplicationController
       return
     end
 
+    lang = params[:resetpwlang]
+    if lang
+      I18n.locale=lang
+      puts lang
+    end
     # the next line makes the password confirmation validation work
     @user.password_confirmation = params[:user][:password_confirmation]
     # the next line clears the temporary token and updates the password
     if @user.change_password!(params[:user][:password])
-      redirect_to(root_path, :notice => 'Password was successfully updated.')
+      # redirect_to(root_path, :notice => 'Password was successfully updated.')
+      render json: {:ok => true, :locale => I18n.locale, :msg => 'Password was successfully updated.'}
     else
-      render :action => "edit"
+      # render :action => "edit"
+      key = @user.errors.values[0]
+      message = (I18n.translate(key))
+      render json: {:ok => false, :locale => I18n.locale, :msg => message}
     end
   end
 

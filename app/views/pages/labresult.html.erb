@@ -10,7 +10,7 @@
         <div style="padding: 10px;">
           <div class="dataFormContainer">
             <div class="dataFormTitle">
-              <%= image_tag "test_tube40.png" %><br/>
+              <%= image_tag "doctor_40.png" %><br/>
               <%=t 'lab_results' %>
             </div>
             <%= form_tag("/users/#{current_user.id}/lab_results", remote: true, id: "control-create-form", class: "resource-create-form lab_results-form") do %>
@@ -18,10 +18,14 @@
                   <input type="hidden" name="labresult[source]" value="<%= @default_source %>"/>
                   <input type="hidden" name="labresult[category]" value="controll"/>
                   <input id="control" type="search" name="labresult[controll_type]" class="dataFormField" placeholder="<%=t 'select' %>">
+                  <div class="dataFormFieldUnitNarrow"></div>
+
                   <input id='controll_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= Date.current.strftime("%F") %>"/>
+                  <div class="dataFormFieldUnitNarrow"></div>
+
+                  <div style="margin-left: 20px; display: inline-block;"><label for="next_controll_datepicker"><%=t 'remainder'%>:</label></div>
                   <input id='next_controll_datepicker' type='text' class="dataFormField" name="labresult[remainder_date]" value="<%= Date.current.strftime("%F") %>"/>
-                  <div class="dataFormFieldUnit"><%=t 'remainder_2' %></div>
-                  <br>
+                  <div class="dataFormFieldUnitNarrow"></div>
 
                 </div>
                 <button id="addLabResultButton" class="dataFormField"><%= t 'button_add' %></button>
@@ -40,7 +44,7 @@
 
                         <input id="hba1c" type="text" name="labresult[hba1c]" class="dataFormField" placeholder="HbA1c"/>
 
-                        <div class="dataFormFieldUnit">%</div>
+                        <div class="dataFormFieldUnitNarrow">%</div>
                         <br>
 
                         <input id='hba1c_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= Date.current.strftime("%F") %>"/>
@@ -63,7 +67,7 @@
 
                         <input id="ldl_chol" type="text" name="labresult[ldl_chol]" class="dataFormField" placeholder="LDL-chol"/>
 
-                        <div class="dataFormFieldUnit">mmol/L</div>
+                        <div class="dataFormFieldUnitNarrow">mmol/L</div>
                         <br>
 
                         <input id='ldl_chol_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
@@ -109,7 +113,7 @@
 
                       <input id="ketone" type="search" name="labresult[ketone]" class="dataFormField" placeholder="Ketone">
 
-                      <div class="dataFormFieldUnit"></div>
+                      <div class="dataFormFieldUnitNarrow"></div>
                         <br>
 
                         <input id='ketone_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>

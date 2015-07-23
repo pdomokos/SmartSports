@@ -68,6 +68,9 @@ module MeasurementsCommon
       if params['measurement']['waist']
         update_hash[:waist] = params['measurement']['waist'].to_f
       end
+      if params['measurement']['blood_sugar_time']
+        update_hash[:blood_sugar_time] = params['measurement']['blood_sugar_time'].to_i
+      end
     end
 
     if @measurement.update_attributes(update_hash)
@@ -128,7 +131,7 @@ module MeasurementsCommon
   end
 
   def measurement_params
-    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite, :stress_amount)
+    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite, :stress_amount, :blood_sugar_time)
   end
 
   def create_success_message()

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150705111232) do
+ActiveRecord::Schema.define(version: 20150723080100) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -193,8 +193,9 @@ ActiveRecord::Schema.define(version: 20150705111232) do
     t.float    "weight"
     t.float    "waist"
     t.string   "meas_type"
-    t.boolean  "favourite",     default: false
+    t.boolean  "favourite",        default: false
     t.float    "stress_amount"
+    t.integer  "blood_sugar_time"
   end
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"

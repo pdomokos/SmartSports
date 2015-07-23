@@ -90,5 +90,21 @@
     document.location = "/"+data.locale+"/pages/signin"
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log data.responseJSON
-    popup_error(popup_messages.password_reset_failed)
+    popup_error(xhr.responseJSON["msg"])
+#    popup_error(popup_messages.password_reset_failed)
+  )
+
+@resetpw_page_loaded = () ->
+  console.log "resetpw page loaded"
+  popup_messages = JSON.parse($("#popup-messages").val())
+
+  $("#pwResetPageForm").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
+    popup_success(popup_messages.passwd_reset_success)
+    document.location = "/"+data.locale+"/pages/signin"
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log data.responseJSON
+    popup_error(xhr.responseJSON["msg"])
+#    popup_error(popup_messages.password_reset_failed)
   )

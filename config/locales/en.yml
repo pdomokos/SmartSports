@@ -204,6 +204,12 @@ en:
 
   waist_placeholder: "Waist circumfence, eg: 94"
 
+  blood_sugar_time: "Time of measure"
+  before_meal: "Before meal"
+  after_meal: "After meal"
+  indep_meal: "Independent to meal"
+  bgTimeList: "Independent to meal,Before meal,After meal"
+
 # medication
   medication:           "Medication"
   drugs:                "Drugs"
