@@ -8,7 +8,7 @@
 
 <div id="loginDiv" class="loginDiv">
     <div>
-        <%= form_tag password_reset_path(@token), :method => :put, :id=> 'pwResetPageForm'do %>
+        <%= form_tag password_reset_path(@token), :method => :put do %>
             <input id="resetpwlang" name="resetpwlang" value="<%=I18n.locale%>" type="hidden" />
             <input id="password_field" name="user[password]" type="password" class="loginField animField"/><br>
             <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField"/><br>
@@ -21,6 +21,8 @@
     </div>
 </div>
 
+
+<%= flash[:notice] %>
 
 <script>
     resetpw_page_loaded()

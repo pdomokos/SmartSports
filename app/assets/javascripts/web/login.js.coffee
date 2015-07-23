@@ -65,7 +65,6 @@
   $("#loginForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
-
 #    redir to main page
     if data.profile
       document.location = "/"+data.locale+"/pages/dashboard"
@@ -83,15 +82,17 @@
   popup_messages = JSON.parse($("#popup-messages").val())
   $("#forgotten_email_field").focus()
 
-  $("#pwResetForm").on("ajax:success", (e, data, status, xhr) ->
+  $("#pwResetForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
-    popup_success(popup_messages.passwd_reset_success)
-    document.location = "/"+data.locale+"/pages/signin"
-  ).on("ajax:error", (e, xhr, status, error) ->
+    if data.ok
+      popup_success(popup_messages.passwd_reset_success)
+      document.location = "/"+data.locale+"/pages/signin"
+    else
+      popup_error(popup_messages.password_reset_failed)
+  ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
-    popup_error(xhr.responseJSON["msg"])
-#    popup_error(popup_messages.password_reset_failed)
+    popup_error(popup_messages.password_reset_failed)
   )
 
 @resetpw_page_loaded = () ->
@@ -101,10 +102,13 @@
   $("#pwResetPageForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
-    popup_success(popup_messages.passwd_reset_success)
-    document.location = "/"+data.locale+"/pages/signin"
+    if data.ok
+       popup_success(popup_messages.passwd_reset_success)
+       document.location = "/"+data.locale+"/pages/signin"
+    else
+      popup_error(data.responseJSON["msg"])
   ).on("ajax:error", (e, xhr, status, error) ->
-    console.log data.responseJSON
+    console.log xhr.responseJSON
     popup_error(xhr.responseJSON["msg"])
-#    popup_error(popup_messages.password_reset_failed)
+    #popup_error(popup_messages.password_reset_failed)
   )
