@@ -15,19 +15,18 @@ Rails.application.routes.draw do
         resources :family_histories
         resources :lab_results
         resources :sensor_measurements
+        resources :users
+        resources :info
       end
       resources :medication_types
       resources :food_types
       resources :activity_types
       resources :illness_types
       get 'profile' => "api#profile"
+      post 'password_resets' => 'password_resets#create'
     end
   end
 
-  get 'password_resets/create'
-  get 'password_resets/edit'
-  get 'password_resets/update'
-  resources :password_resets
   resources :notifications
 
   resources :medication_types
@@ -54,6 +53,14 @@ Rails.application.routes.draw do
     post 'upload'
     post 'uploadAv'
   end
+
+  scope ':locale', locale: /#{I18n.available_locales.join("|")}/ do
+    get 'password_resets/create'
+    get 'password_resets/edit'
+    get 'password_resets/update'
+    resources :password_resets
+  end
+   put '/password_resets/:id/edit' => 'password_resets#update'
 
   scope ':locale', locale: /#{I18n.available_locales.join("|")}/ do
     get 'pages/mobilepage'

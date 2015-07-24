@@ -50,6 +50,8 @@ hu:
   last_name: "Vezetéknév"
   password: "Jelszó"
   password_confirm: "Jelszó megerősítése"
+  reset_password: "Új jelszó megadása"
+  reset_password_button: "Kész"
 
 #profile
   firstname: "Vezetéknév"

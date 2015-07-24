@@ -97,18 +97,18 @@
 
 @resetpw_page_loaded = () ->
   console.log "resetpw page loaded"
-  popup_messages = JSON.parse($("#popup-messages").val())
 
-  $("#pwResetPageForm").on("ajax:success", (e, data, status, xhr) ->
+  $("#pwChangeForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
+    console.log data.locale
     if data.ok
-       popup_success(popup_messages.passwd_reset_success)
+       popup_success(xhr.responseJSON["msg"])
        document.location = "/"+data.locale+"/pages/signin"
     else
-      popup_error(data.responseJSON["msg"])
-  ).on("ajax:error", (e, xhr, status, error) ->
-    console.log xhr.responseJSON
+      console.log xhr.responseJSON
+      popup_error(xhr.responseJSON["msg"])
+  ).on("ajax:error", (e, data, status, xhr) ->
     popup_error(xhr.responseJSON["msg"])
     #popup_error(popup_messages.password_reset_failed)
   )

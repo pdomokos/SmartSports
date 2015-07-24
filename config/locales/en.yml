@@ -71,6 +71,8 @@ en:
   last_name: "Last name"
   password: "Password"
   password_confirm: "Confirm password"
+  reset_password: "Reset password"
+  reset_password_button: "Reset Password"
 
 #profile
   firstname: "First name"

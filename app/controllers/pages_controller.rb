@@ -144,12 +144,7 @@ class PagesController < ApplicationController
     end
   end
 
-  def analytics2
-
-  end
-
   def settings
-
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if @movesconn
       @active_since_moves = @movesconn.created_at
@@ -157,8 +152,8 @@ class PagesController < ApplicationController
     end
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
     if @withingsconn
-        @active_since_withings = @withingsconn.created_at
-        @last_sync_date_withings = get_last_synced_date(current_user.id, "withings")
+      @active_since_withings = @withingsconn.created_at
+      @last_sync_date_withings = get_last_synced_date(current_user.id, "withings")
     end
     @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
     if @fitbitconn
@@ -187,6 +182,10 @@ class PagesController < ApplicationController
       @clickrecords = ClickRecord.where(msg: 'login_succ').order(created_at: :desc).group('user_id')
     end
     save_click_record(:success, nil, nil)
+  end
+
+  def analytics2
+
   end
 
   def error

@@ -2,17 +2,17 @@
     <center>
         <%= image_tag "logo-login.png", id:"loginLogo", alt:"Login" %>
         <br/>
-        <span style="color:white">Reset password</span>
+        <span style="color:white"><%=t 'reset_password' %></span>
     </center>
 </div>
 
 <div id="loginDiv" class="loginDiv">
     <div>
-        <%= form_tag password_reset_path(@token), :method => :put do %>
+        <%= form_tag("/password_resets/"+@token+"/edit" , :method => :put, :remote => true, :id => 'pwChangeForm') do %>
             <input id="resetpwlang" name="resetpwlang" value="<%=I18n.locale%>" type="hidden" />
             <input id="password_field" name="user[password]" type="password" class="loginField animField"/><br>
             <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField"/><br>
-            <input type="submit" class="loginButton animButton" value="Reset Password"/>
+            <input type="submit" class="loginButton animButton" value="<%=t 'reset_password_button' %>"/>
         <% end %>
 
         <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
@@ -21,9 +21,6 @@
     </div>
 </div>
 
-
-<%= flash[:notice] %>
-
-<script>
-    resetpw_page_loaded()
+<script type="text/javascript">
+    resetpw_page_loaded();
 </script>
