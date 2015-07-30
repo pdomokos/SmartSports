@@ -37,3 +37,29 @@
 .timePointsInner {
   fill: white;
 }
+
+.grayline {
+  stroke: #bfbfbf;
+}
+.bg1Point {
+  fill: #f8756d;
+}
+.bg2Point {
+  fill: #7cae00
+}
+.bg3Point {
+  fill: #c77cff
+}
+.bg4Point {
+  fill: #00bfc4
+}
+
+.selA {
+  fill: $exercise_color;
+  opacity: 0.15;
+}
+
+.selB {
+  fill: $diet_color;
+  opacity: 0.15;
+}

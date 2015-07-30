@@ -15,6 +15,8 @@
   #  @dateToShow = "2015-05-29"
   d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
 
+  d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
+
   d3.json("/users/"+uid+"/summaries.json", act_data_received)
 
   console.log "getting health data for user:"+uid
@@ -36,6 +38,14 @@
       d3.json("/users/"+uid+"/analysis_data.json?date="+self.dateToShow, timeline_data_received)
     todayButton: true
   })
+
+bg_data_received = (jsondata) ->
+  console.log "bgdata"
+  console.log jsondata
+  bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
+  bg_trend_chart.draw()
+  bg_trend_chart.add_highlight("2015-07-12", "2015-07-19", "selA")
+  bg_trend_chart.add_highlight("2015-07-19", "2015-07-26", "selB")
 
 timeline_data_received = (jsondata) ->
   console.log "daily activities"

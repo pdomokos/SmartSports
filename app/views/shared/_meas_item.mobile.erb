@@ -17,7 +17,7 @@
         <% if meas_item.meas_type=='blood_pressure' %>
             <strong><%=(t :blood_pressure)%>: </strong><%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %>
         <% elsif  meas_item.meas_type=='blood_sugar' %>
-            <strong><%=(t :blood_glucose)%>: </strong><%= meas_item.blood_sugar %> mmol/L
+            <strong><%=(t :blood_glucose)%>: </strong><%= meas_item.blood_sugar.round(2) %> mmol/L
         <% elsif  meas_item.meas_type=='weight' %>
             <strong><%=(t :body_weight)%>: </strong><%= meas_item.weight %>kg
         <% elsif  meas_item.meas_type=='waist' %>

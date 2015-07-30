@@ -58,9 +58,8 @@ module DashboardHelper
       @day_exercise_time = day_act.sum("duration").round
     end
 
-    bg = Measurement.where(user_id: current_user.id)
-             .where("date between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day)
-             .where(meas_type: 'blood_sugar')
+    # bg = Measurement.where(user_id:current_user.id)
+    bg = Measurement.where(user_id: 21).where("date between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day).where(meas_type: 'blood_sugar')
     @show_day_bg = bg.length>0
     @bg_status = ""
     if @show_day_bg

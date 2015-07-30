@@ -19,6 +19,7 @@ class MeasurementsController < ApplicationController
 
   def index
     user_id = params[:user_id]
+    meas_type = params[:meas_type]
     summary = (params[:summary] and params[:summary] == "true")
     start = params[:start]
     user = User.find(user_id)
@@ -42,7 +43,10 @@ class MeasurementsController < ApplicationController
       @measurements = @measurements.where("date >= '#{start}'")
     end
     if source
-      @measurements = @measurements.where(source: source)
+      @measurements = @measurements.where(:source => [source, 'demo'])
+    end
+    if meas_type
+      @measurements = @measurements.where(meas_type: meas_type)
     end
     if order
       @measurements = @measurements.order(created_at: :desc)
