@@ -1,10 +1,8 @@
 module Api::V1
   class UsersController < ApiController
     rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:update, :destroy]
     respond_to :json
 
-    include UsersCommon
 
     # POST /users
     # POST /users.json

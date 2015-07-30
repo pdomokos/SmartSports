@@ -7,11 +7,25 @@ module Api::V1
     include SaveClickRecord
 
     def profile
-      render json: { :id => current_resource_owner.id,
-                     :member_since => current_resource_owner.created_at,
-                     :full_name => current_resource_owner.name,
-                     :email => current_resource_owner.email
+      res = { :id => current_resource_owner.id,
+              :member_since => current_resource_owner.created_at,
+              :full_name => current_resource_owner.name,
+              :email => current_resource_owner.email
       }
+      if current_resource_owner.profile
+        prf =current_resource_owner.profile
+        res[:profile] = true
+        res[:weight] = prf.weight
+        res[:height] = prf.height
+        res[:sex] = prf.sex
+        res[:smoke] = prf.smoke
+        res[:insulin] = prf.insulin
+        res[:default_lang] = prf.default_lang
+      else
+        res[:profile] = false
+      end
+      res[:connections] = u.connections.collect{|it| it.name}
+      render json: res
     end
 
     def current_resource_owner
