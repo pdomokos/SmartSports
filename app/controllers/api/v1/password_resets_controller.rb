@@ -1,7 +1,6 @@
 module Api::V1
   class PasswordResetsController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    respond_to :json
+    before_action :doorkeeper_authorize!, except: 'create'
 
     include PasswordResetsCommon
 

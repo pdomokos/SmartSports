@@ -1,9 +1,6 @@
 module Api::V1
   class ActivitiesController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!
     before_action :set_activity, only: [ :update, :destroy]
-    respond_to :json
 
     include ActivitiesCommon
 

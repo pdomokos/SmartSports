@@ -1,9 +1,6 @@
 module Api::V1
   class LifestylesController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:index, :create]
     before_action :set_lifestyle, only: [ :update, :destroy]
-    respond_to :json
 
     include LifestylesCommon
 

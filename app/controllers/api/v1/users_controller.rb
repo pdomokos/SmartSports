@@ -1,8 +1,6 @@
 module Api::V1
   class UsersController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    respond_to :json
-
+    before_action :doorkeeper_authorize!, except: 'create'
 
     # POST /users
     # POST /users.json
@@ -19,27 +17,28 @@ module Api::V1
       @user.name = @user.username
       respond_to do |format|
         if @user.save
+          @user.profile = Profile.create()
+          @user.save!
           UserMailer.delay.user_created_email(@user)
-
           lang = params[:reglang]
           if lang
             I18n.locale=lang
             puts lang
           end
-          if @user
-            save_click_record(:success, nil, "login", request.remote_ip)
-            format.json { render json: {:ok => true, status: 'OK', :msg => 'reg_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
-          else
-            format.json { render json: {:ok => false, status: 'NOK', :msg => 'reg_err'} }
-          end
-
+          save_click_record(:success, nil, "login", request.remote_ip)
+          format.json { render json: {:ok => true, :msg => 'reg_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
         else
-          key = @user.errors.values[0]
-          message = (I18n.translate(key))
-          puts @user.errors.full_messages
-          format.json { render json: {ok: false, status: 'NOK', msg: message}, status: 401 }
+          keys = @user.errors.full_messages().collect{|it| it.split()[-1]}
+          # message = (I18n.translate(key))
+          format.json { render json: {ok: false, msg: keys}, status: 401 }
         end
       end
+    end
+
+    private
+
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar)
     end
 
   end

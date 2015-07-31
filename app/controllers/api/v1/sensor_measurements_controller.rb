@@ -4,11 +4,7 @@ require 'csv'
 
 module Api::V1
   class SensorMeasurementsController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:index, :create]
-
-    respond_to :json
-
+    
     def create
       user_id = params[:user_id]
       user = User.find(user_id)

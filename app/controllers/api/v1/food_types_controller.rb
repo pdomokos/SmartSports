@@ -1,7 +1,5 @@
 module Api::V1
   class FoodTypesController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:index]
     respond_to :json
 
     def index

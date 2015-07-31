@@ -1,8 +1,5 @@
 module Api::V1
   class MedicationsController < ApiController
-    rescue_from Exception, :with => :general_error_handler
-    before_action :doorkeeper_authorize!, only: [:index, :create]
-    respond_to :json
 
     include MedicationsCommon
 

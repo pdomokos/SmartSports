@@ -21,7 +21,9 @@ Rails.application.routes.draw do
       resources :food_types
       resources :activity_types
       resources :illness_types
-      get 'profile' => "api#profile"
+      get 'profile' => 'profile#show'
+      put 'profile' => 'profile#update'
+      post 'profile_image' => 'profile#profile_image'
       post 'reset_password' => 'password_resets#create'
     end
   end

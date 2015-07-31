@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :click_records
   has_many :tracker_data
   has_many :summaries
-  has_one :profile
+  has_one :profile, :dependent => :destroy
   authenticates_with_sorcery!
   validates :password, length: { minimum: 4, message: "error_registration_password"}, allow_nil: true
   validates :password, confirmation: {message: "error_registration_password_confirmation2"}

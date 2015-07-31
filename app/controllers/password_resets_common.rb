@@ -6,9 +6,10 @@ module PasswordResetsCommon
       if lang
         I18n.locale=lang
       end
-      logger.info "delivering password reset instructions to "+params[:email]
+
       begin
         if @user
+          logger.info "delivering password reset instructions to "+params[:email]
           @user.deliver_reset_password_instructions!
           render json: {:ok => true, :locale => I18n.locale}
         else

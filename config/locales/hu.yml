@@ -88,6 +88,8 @@ hu:
   error_login_password: "Helytelen jelszó"
   error_login_username: "Helytelen felasználónév vagy jelszó"
 
+  reg_succ: "Sikeres regisztráció"
+
   done: "Kész"
   failed: "Hiba"
 #popup messages

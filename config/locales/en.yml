@@ -109,6 +109,8 @@ en:
   error_login_password: "Invalid password"
   error_login_username: "Invalid username or password"
 
+  reg_succ: "Registration successful"
+
   done: "Done"
   failed: "Failed"
 #popup messages
