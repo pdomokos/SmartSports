@@ -30,7 +30,7 @@ module Api::V1
         else
           keys = @user.errors.full_messages().collect{|it| it.split()[-1]}
           # message = (I18n.translate(key))
-          format.json { render json: {ok: false, msg: keys}, status: 401 }
+          format.json { render json: {ok: false, msg: keys} }
         end
       end
     end

@@ -6,8 +6,17 @@ module ResponseHelper
     render json: resp
   end
 
-  def send_error_json(id, msg, status)
-    save_click_record( :failure, id, msg )
+  def send_error_json(id, msg, status=200)
+    click_msg = ""
+    if msg.class==Array
+      if msg.length >0
+        click_msg = msg[0]
+      end
+    else
+      click_msg = msg
+    end
+
+    save_click_record( :failure, id, click_msg )
     render json: { msg:  msg, ok: false }, :status => status
   end
 

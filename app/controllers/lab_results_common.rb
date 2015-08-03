@@ -12,7 +12,16 @@ module LabResultsCommon
     if labresult.save
       send_success_json(labresult.id, {category: labresult.category})
     else
-      send_error_json(nil, labresult.errors.full_messages.to_sentence, 401)
+      h = labresult.errors.to_hash()
+      print h
+      msgs = []
+      for k in h.keys()
+        for err in h[k]
+          msgs << "#{k}_#{err}"
+        end
+      end
+      keys = labresult.errors.full_messages().collect{|it| it}
+      send_error_json(nil, msgs)
     end
   end
 

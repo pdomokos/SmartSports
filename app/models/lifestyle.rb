@@ -1,9 +1,9 @@
 class LifeStyleValidator < ActiveModel::Validator
   def validate(record)
     if (record.group == 'illness' && record.illness_type_id == nil)
-      record.errors[:illness_type_id] << 'No value'
+      record.errors[:illness_type_id] << 'no_value'
     elsif (record.group == 'pain' && record.pain_type_name == nil || record.pain_type_name == "")
-      record.errors[:pain_type_name] << 'No value'
+      record.errors[:pain_type_name] << 'no_value'
     end
   end
 end
@@ -17,7 +17,6 @@ class Lifestyle < ActiveRecord::Base
   validates :start_time, presence: true
   validates :amount, :numericality => true, :allow_nil => true
   validates_with LifeStyleValidator
-
 
   @@sleepList = ["Very bad", "Fairly bad", "Fairly good", "Very good"]
   @@stressList = ["Below average", "Average", "Medium", "High"]
