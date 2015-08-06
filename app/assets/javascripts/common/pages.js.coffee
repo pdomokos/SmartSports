@@ -40,13 +40,13 @@
     console.log "langswitcher clicked"
     lang = this.textContent
     console.log location.href
-    if location.pathname.startsWith("/en") ||location.pathname.startsWith("/hu")
-      location.pathname = "/"+lang+location.pathname.substr(3)
     $.ajax '/'+lang+'/profile/set_default_lang',
       type: 'POST',
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "set default lang AJAX Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
+        if location.pathname.startsWith("/en") ||location.pathname.startsWith("/hu")
+          location.pathname = "/"+lang+location.pathname.substr(3)
         console.log "set default lang  Successful AJAX call"
         console.log textStatus
 

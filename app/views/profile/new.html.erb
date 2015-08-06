@@ -28,9 +28,13 @@
     <%= form_tag("/users/#{current_user.id}/profile", :method => :post, :remote => true, :id=> 'profileForm') do %>
         <input id="profilelang" name="profilelang" value="<%=I18n.locale%>" type="hidden" />
         <input type="hidden" id="user_id" name="profile[user_id]" value="<%= @current_user.id %>">
-        <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" placeholder="<%=t 'firstname' %>"/><br>
-        <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" placeholder="<%=t 'lastname' %>"/><br>
-
+        <% if I18n.locale.to_s == "hu" %>
+            <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" placeholder="<%=t 'lastname' %>"/><br>
+            <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" placeholder="<%=t 'firstname' %>"/><br>
+        <% else %>
+            <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" placeholder="<%=t 'firstname' %>"/><br>
+            <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" placeholder="<%=t 'lastname' %>"/><br>
+        <% end %>
         <input id="weight_field" name="profile[weight]" type="text" class="loginField" placeholder="<%=t 'body_weight' %>"/>
         <div class="profileFormFieldUnit">kg</div><br>
         <input id="height_field" name="profile[height]" type="text" class="loginField" placeholder="<%=t 'height' %>"/>

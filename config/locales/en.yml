@@ -91,6 +91,8 @@ en:
   default_lang: "Default language"
   answer_yes: "yes"
   answer_no: "no"
+  upload_photo: "Upload photo"
+  recommended_size: "Recommended size 160x160 px"
 
 # erorrs
   back_home:      "Back"
@@ -120,7 +122,7 @@ en:
     sign_up_failed: "Sign up failed. "
     login_failed: "Login failed"
     passwd_reset_success: "Password reset success, email was sent to you"
-    password_reset_failed: "Password reset failed"
+    password_reset_failed: "Please enter your e-mail address again, we don’t recognize this one."
     logout_failed: "Logout failed"
     saved_successfully: " saved successfully"
     failed_to_add: "Failed to add "

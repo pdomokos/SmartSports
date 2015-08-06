@@ -54,8 +54,8 @@ hu:
   reset_password_button: "Kész"
 
 #profile
-  firstname: "Vezetéknév"
-  lastname: "Keresztnév"
+  firstname: "Keresztnév"
+  lastname: "Vezetéknév"
   skip: "Lépés kihagyása, tovább a SmartDiabra"
   save: "Mentés"
   fill_personal_info: "Kérem adja meg az alábbi adatokat, melyek segítségével személyreszabott szolgáltatásokat tudunk nyújtani Önnek. Lehetősége van kihagyni ezt és azonnal elkezdheti használni a SmartDiab rendszert."
@@ -65,11 +65,13 @@ hu:
   male: "Férfi"
   female: "Nő"
   smoke_question: "Dohányzik?"
-  insulin_question: "Használ inzulint a cukorbetegség kezelésére?"
+  insulin_question: "Használ inzulint cukorbetegség kezelésére?"
   update: "Módosít"
   default_lang: "Alapértelmezett nyelv"
   answer_yes: "igen"
   answer_no: "nem"
+  upload_photo: "Kép feltöltés"
+  recommended_size: "Ajánlott méret 160x160 pixel"
 
 # erorrs
   back_home:      "Vissza"
@@ -99,7 +101,7 @@ hu:
     sign_up_failed: "Hiba történt regisztráció közben. "
     login_failed: "Sikertelen belépés"
     passwd_reset_success: "A jelszó visszaállítás sikeres, nézze meg a bejövő leveleit."
-    password_reset_failed: "Sikertelen jelszóvisszaállítás"
+    password_reset_failed: "Kérem adja meg újra az e-mail címét, ezt nem találjuk az adatbázisunkban."
     logout_failed: "Sikertelen kilépés"
     saved_successfully: " sikeresen rögzítve"
     failed_to_add: "Nem sikerült rögzíteni az adatot: "

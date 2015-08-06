@@ -47,7 +47,8 @@
       <%= form_tag( "/users/#{current_user.id}/uploadAv", :multipart => true, :'data-ajax' => false, :method => "POST") do %>
           <tr>
             <td style="width: 180px;height: 50px;">
-              <%= t :upload_photo %>
+              <%= t :upload_photo %> <br> <div style="font-size: 11px;"><%= t :recommended_size %></div>
+
             </td>
             <td>
               <input type="file" name="avatar" data-clear-btn="true" accept="image/*" id="takePictureField">
@@ -79,6 +80,7 @@
                   <%= t :default_lang %>
                 </td>
                 <td>
+                  <!--TODO ez valamiert veletlenszeru lesz ha nyomkodon a nyelv valaszto gombot es ez befolyasolja a hibauzenet nyelvet-->
                   <% if I18n.locale.to_s == "hu" %>
                       <input type="radio"  name="profile[default_lang]" value="hu" <%= @profile.default_lang && @profile.default_lang == "hu" ? "checked" : "" %>/><span>Magyar</span>
                       <input type="radio"  name="profile[default_lang]" value="en" <%= @profile.default_lang && @profile.default_lang == "en" ? "checked" : "" %>/><span>English</span>
@@ -90,26 +92,49 @@
                 <td>
                 </td>
               </tr>
-              <tr>
-                <td style="width: 180px;height: 50px;">
-                  <%= t :firstname %>
-                </td>
-                <td>
-                  <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" value="<%= @profile.firstname %>"/>
-                </td>
-                <td>
-                </td>
-              </tr>
-              <tr>
-                <td style="width: 180px;height: 50px;">
-                  <%= t :lastname %>
-                </td>
-                <td>
-                  <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" value="<%= @profile.lastname %>"/>
-                </td>
-                <td>
-                </td>
-              </tr>
+              <% if I18n.locale.to_s == "hu" %>
+                  <tr>
+                    <td style="width: 180px;height: 50px;">
+                      <%= t :lastname %>
+                    </td>
+                    <td>
+                      <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" value="<%= @profile.lastname %>"/>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 180px;height: 50px;">
+                      <%= t :firstname %>
+                    </td>
+                    <td>
+                      <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" value="<%= @profile.firstname %>"/>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+              <%else%>
+                  <tr>
+                    <td style="width: 180px;height: 50px;">
+                      <%= t :firstname %>
+                    </td>
+                    <td>
+                      <input id="firstname_field" name="profile[firstname]" type="text" class="loginField" value="<%= @profile.firstname %>"/>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 180px;height: 50px;">
+                      <%= t :lastname %>
+                    </td>
+                    <td>
+                      <input id="lastname_field" name="profile[lastname]" type="text" class="loginField" value="<%= @profile.lastname %>"/>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+              <%end%>
               <tr>
                 <td style="width: 180px;height: 50px;">
                   <%= t :sex %>
@@ -127,7 +152,7 @@
                   <%= t :height %>
                 </td>
                 <td>
-                  <input id="height_field" name="profile[height]" type="text" class="loginField" value="<%= @profile.height %>"/>
+                  <input id="height_field" name="profile[height]" type="text" class="loginField" value="<%= @profile.height %>"/> (cm)
                 </td>
                 <td>
                 </td>
@@ -137,14 +162,14 @@
                   <%= t :body_weight %>
                 </td>
                 <td>
-                  <input id="weight_field" name="profile[weight]" type="text" class="loginField" value="<%= @profile.weight %>"/>
+                  <input id="weight_field" name="profile[weight]" type="text" class="loginField" value="<%= @profile.weight %>"/> (kg)
                 </td>
                 <td>
                 </td>
               </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
-                  <%= t :smoke %>
+                  <%= t :smoke_question %>
                 </td>
                 <td>
                   <%=check_box("profile", "smoke")%>
@@ -154,7 +179,7 @@
               </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
-                  <%= t :insulin %>
+                  <%= t :insulin_question %>
                 </td>
                 <td>
                   <%=check_box("profile", "insulin")%>
