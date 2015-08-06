@@ -179,9 +179,41 @@ class PagesController < ApplicationController
     if current_user.admin
       @users = User.all
       @profiles = Profile.all
+      @visits = get_visits("all")
       @clickrecords = ClickRecord.where(msg: 'login_succ').order(created_at: :desc).group('user_id')
     end
     save_click_record(:success, nil, nil)
+  end
+
+  def get_visits(uid)
+    # uid = params[:uid]
+    if uid
+      startTime=DateTime.now-1.week
+      if uid == "all"
+        crs = ClickRecord.where("created_at >= :start_date", {start_date: startTime})
+      else
+        crs = ClickRecord.where("user_id = :user_id AND created_at >= :start_date", {user_id: uid, start_date: startTime})
+      end
+    end
+    visits = Array.new(168)
+    first = startTime
+    (0..167).each do |i|
+      visits[i] = [i+1, first,0]
+      first = first+1.hour
+    end
+
+    arr = crs.group_by{ |u|
+      u.created_at.beginning_of_hour
+    }
+
+    arr = arr.collect{ |it| [(it[0].strftime("%s").to_i-startTime.strftime("%s").to_i)/60/60, it[0],it[1].length]}
+    puts arr
+
+
+    arr.each{ |it| visits[it[0]-2][2] = it[2]}
+
+    @visits = visits.to_json
+
   end
 
   def analytics2
