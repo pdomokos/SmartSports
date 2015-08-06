@@ -6,19 +6,36 @@
   </div>
 
   <div class="columns">
-
     <div   class="boxed-group connection-block">
       <h3 class="noClickSelect">
         <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-        <div class="training-type left">Daily timeline</div>
-        <div class="selected-meas legend-container right"></div>
+        <div class="training-type left">Blood glucose</div>
+        <div class="selected-meas legend-container right">
+          <i id="add-analysis" class="fa fa-plus-circle fa-2x add-analysis"></i>
+        </div>
       </h3>
 
-      <div id="timeline" class="boxed-group-inner chart bloodpressure-chart">
+      <div id="bg-container" class="boxed-group-inner chart bloodglucose-chart">
+        <svg class="bg-chart-svg">
+        </svg>
       </div>
     </div>
   </div>
 
+  <div class="columns">
+    <div id="stat-1-container" class="boxed-group connection-block">
+
+      <h3 class="noClickSelect">
+        <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+        <div class="training-type left">Stat</div>
+        <div class="selected-meas legend-container right"></div>
+      </h3>
+
+      <div class="boxed-group-inner chart stat-chart">
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

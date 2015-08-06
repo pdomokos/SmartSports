@@ -41,7 +41,7 @@ class BGChart
 
     if @preproc_cb != null
       @preproc_cb(@data)
-    console.log "draw bg data - "+@chart_element
+    #console.log "draw bg data - "+@chart_element
     #window.series = @series
 
     svg = d3.select($("#"+@chart_element+"-container svg."+@chart_element+"-chart-svg")[0])

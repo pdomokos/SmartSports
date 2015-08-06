@@ -63,3 +63,46 @@
   fill: $diet_color;
   opacity: 0.15;
 }
+
+.add-analysis {
+  color: #db4437;
+  cursor: pointer;
+}
+
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  fill: steelblue;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #000;
+}
+
+.box .axis {
+  font: 12px sans-serif;
+}
+
+.box .axis path,
+.box .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.box .x.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
