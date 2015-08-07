@@ -1,0 +1,2 @@
+$("#recentVisitsTable").html("");
+$("#recentVisitsTable").html("<%= escape_javascript(render :partial=> 'shared/visit_item', :collection=> @notifications ) %>");

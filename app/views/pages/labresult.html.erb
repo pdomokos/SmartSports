@@ -13,20 +13,19 @@
               <%= image_tag "doctor_40.png" %><br/>
               <%=t 'lab_results' %>
             </div>
-            <%= form_tag("/users/#{current_user.id}/lab_results", remote: true, id: "control-create-form", class: "resource-create-form lab_results-form") do %>
+
+            <%= form_tag("/users/#{current_user.id}/notifications",  id: "control-create-form",  html: {:'data-type' => 'json'}, remote: true, class: "resource-create-form lab_results-form") do %>
                 <div class="dataForm">
-                  <input type="hidden" name="labresult[source]" value="<%= @default_source %>"/>
-                  <input type="hidden" name="labresult[category]" value="controll"/>
-                  <input id="control" type="search" name="labresult[controll_type]" class="dataFormField" placeholder="<%=t 'select' %>">
+                  <input id="control" type="hidden" name="notification[notification_type]" />
+                  <input id="control_txt" type="search" class="dataFormField" placeholder="<%=t 'select' %>">
                   <div class="dataFormFieldUnitNarrow"></div>
 
-                  <input id='controll_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= Date.current.strftime("%F") %>"/>
+                  <input id='controll_datepicker' type='text' class="dataFormField" name="notification[date]" value="<%= Date.current.strftime("%F") %>"/>
                   <div class="dataFormFieldUnitNarrow"></div>
 
-                  <div style="margin-left: 20px; display: inline-block;"><label for="next_controll_datepicker"><%=t 'remainder'%>:</label></div>
-                  <input id='next_controll_datepicker' type='text' class="dataFormField" name="labresult[remainder_date]" value="<%= Date.current.strftime("%F") %>"/>
+                  <div style="margin-left: 20px; display: inline-block;"><label for="next_controll_datepicker"><%=t 'set_reminder'%>:</label></div>
+                  <input id='next_controll_datepicker' type='text' class="dataFormField" name="notification[remind_at]" value="<%= DateTime.current.strftime("%F %R") %>"/>
                   <div class="dataFormFieldUnitNarrow"></div>
-
                 </div>
                 <button id="addLabResultButton" class="dataFormField"><%= t 'button_add' %></button>
             <% end %>
@@ -37,6 +36,7 @@
                     <%= image_tag "test_tube40.png" %><br/>
                     HbA1c
                 </div>
+
                 <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "hba1c-create-form", class: "resource-create-form lab_results-form") do %>
                     <div class="dataForm">
                         <input type="hidden" name="labresult[source]" value="<%= @default_source %>" />
@@ -129,10 +129,19 @@
     </div>
 
     <div class="sectionTitle bl7 c7" style="margin-top: 40px;">
-      <span class="hisTitle"><%=t 'history_link'%></span>
+      <span class="hisTitle"><%=t 'doctors_visit_next' %></span>
     </div>
 
     <table class="historyTable"  cellpadding="0" cellspacing="0">
+        <tbody id="recentVisitsTable">
+        </tbody>
+    </table>
+
+  <div class="sectionTitle bl7 c7" style="margin-top: 40px;">
+    <span class="hisTitle"><%=t 'history_link' %></span>
+  </div>
+
+  <table class="historyTable"  cellpadding="0" cellspacing="0">
         <tbody id="recentResourcesTable">
         </tbody>
     </table>

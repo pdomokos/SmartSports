@@ -1,5 +1,5 @@
 @labresults_loaded = () ->
-
+  console.log "labresults loaded"
   uid = $("#current-user-id")[0].value
 
   $("div.app2Menu a.menulink").removeClass("selected")
@@ -36,37 +36,43 @@
   })
   $('#controll_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    todayButton: true
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-    todayButton: true
   })
+#  $('#controll_datepicker').val(moment().format('YYYY-MM-DD'))
+
   $('#next_controll_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false
-    onSelectDate: (ct, input) ->
+    format: 'Y-m-d H:i',
+    timepicker: true,
+    todayButton: true,
+    onSelectTime: (ct, input) ->
       input.datetimepicker('hide')
-    todayButton: true
   })
+#  $('#next_controll_datepicker').val( moment().format(moment_fmt))
 
   init_labresult()
   load_labresult()
+  load_visits()
 
 @init_labresult = () ->
   console.log "init labres"
 
 
   doctorList = $("#doctorList").val().split(";")
-  controlList = [{ label: doctorList[0], value: doctorList[0]},
-    { label: doctorList[1], value: doctorList[1]}
+  controlList = [{ label: doctorList[0], value: doctorList[0], intValue: 1},
+    { label: doctorList[1], value: doctorList[1], intValue: 2}
   ]
 
   controlSelected = null
-  $("#control").autocomplete({
+  $("#control_txt").autocomplete({
     minLength: 0,
     source: controlList,
     change: (event, ui) ->
-      controlSelected = ui['item']
+      console.log ui.item
+      controlSelected = ui.item
+      $("#control").val(ui.item.intValue)
   }).focus ->
     $(this).autocomplete("search")
 
@@ -90,7 +96,7 @@
   popup_messages = JSON.parse($("#popup-messages").val())
   $("#control-create-form button").click ->
     if(!controlSelected)
-      val = $("#control").val()
+      val = $("#control_txt").val()
       if !val
         val = "empty item"
       popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
@@ -127,16 +133,20 @@
     return true
 
   $("form.resource-create-form.lab_results-form").on("ajax:success", (e, data, status, xhr) ->
-    load_labresult()
+    category = data['category']
+    console.log "labresult form ajax success with data:"
     console.log data
-    $("#control").val(null)
+    if category
+      load_labresult()
+
+    $("#control_txt").val(null)
     $("#hba1c").val(null)
     $("#ldl_chol").val(null)
     $("#egfr_epi").val(null)
     $("#ketone").val(null)
-    category = data['category']
-    if category == 'controll'
-      category = 'Kontroll'
+
+    if !category
+      category = 'control'
     popup_success(capitalize(category)+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
@@ -151,13 +161,27 @@
     popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
   )
 
-
 @load_labresult = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lab_results"
   lang = $("#data-lang-labresult")[0].value
   url = '/users/' + current_user + '/lab_results.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
+  console.log url
+  $.ajax url,
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent lab_results AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load recent lab_results  Successful AJAX call"
+      console.log textStatus
+
+@load_visits = () ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load recent lab_results"
+  lang = $("#data-lang-labresult")[0].value
+  url = '/users/' + current_user + '/notifications.js?upcoming=true&order=asc&limit=10&lang='+lang
   console.log url
   $.ajax url,
     type: 'GET',

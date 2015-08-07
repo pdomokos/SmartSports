@@ -247,12 +247,19 @@ hu:
 
 # lab results
   lab_results:        "Kontroll"
+  doctors_visit:      "Kontroll"
+  doctors_visit_next: "Következő Kontroll"
   practitioner:       "háziorvos"
   specialist:         "szakorvos"
-  remainder:          "Emlékeztető a következő orvosi kontrollra"
-  remainder_2:        "Emlékeztető"
+  set_reminder:       "Emlékeztető a következő orvosi kontrollra"
+  reminder:           "Emlékeztető"
   select:             "Kérem válasszon..."
   doctorList:         "háziorvos;szakorvos"
+
+  doctors_visit_general: "Háziorvos"
+  doctors_visit_specialist: "Szakorvos"
+
+  category_unknown:   "Ismeretlen kategória"
 
 # analytics
   analytics:          "Elemzés"

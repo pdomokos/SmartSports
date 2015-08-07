@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         resources :lifestyles
         resources :family_histories
         resources :lab_results
+        resources :notifications
         resources :sensor_measurements
         resources :users
       end

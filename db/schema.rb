@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723080100) do
+ActiveRecord::Schema.define(version: 20150806073511) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -154,8 +154,6 @@ ActiveRecord::Schema.define(version: 20150723080100) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "controll_type"
-    t.datetime "remainder_date"
   end
 
   create_table "lifestyles", force: true do |t|
@@ -222,11 +220,12 @@ ActiveRecord::Schema.define(version: 20150723080100) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "detail"
-    t.string   "notification_type"
+    t.integer  "notification_type", limit: 255
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "notification_data"
+    t.datetime "remind_at"
   end
 
   add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"

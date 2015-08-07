@@ -59,8 +59,9 @@ module Api::V1
     end
 
     def profile_image
-      current_resource_owner.avatar = params[:avatar]
-      if current_resource_owner.save
+      @user = User.find_by_id(current_resource_owner.id)
+      @user.avatar = params[:avatar]
+      if @user.save
         render json: { :ok => true, :msg => "save_success" }
       else
         render json: { :ok => false, :msg => "not_implemented" }

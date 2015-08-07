@@ -9,8 +9,6 @@
           <%= image_tag "kidney40.png" %>
       <% elsif  labresult_item.category=='ketone' %>
           <%= image_tag "ketone40.png" %>
-      <% elsif  labresult_item.category=='controll' %>
-          <%= image_tag "doctor_40.png" %>
       <% end %>
     </td>
 
@@ -23,8 +21,6 @@
           <span class="itemTitle">eGFR-EPI: </span><span><%= labresult_item.egfr_epi %> ml/min/1.73m2</span>
       <% elsif  labresult_item.category=='ketone' %>
           <span class="itemTitle">Ketone: </span><span><%= labresult_item.ketone %> </span>
-      <% elsif  labresult_item.category=='controll' %>
-          <span class="itemTitle"><%=(t 'lab_results') %>: </span><span><%= labresult_item.controll_type %> </span>
       <% else %>
           <span class="itemTitle">Unknown labresult</span>
       <% end %>

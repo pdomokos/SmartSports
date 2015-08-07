@@ -268,13 +268,18 @@ en:
 
 # lab results
   lab_results:        "Doctor's visit"
+  doctors_visit:      "Visit"
+  doctors_visit_next: "Scheduled visits"
   practitioner:       "general practitioner"
   specialist:         "specialist"
-  remainder:          "Set Reminder for next visit"
-  remainder_2:        "Reminder"
+  set_reminder:       "Set reminder for next visit"
+  reminder:           "Reminder"
   select:             "Select..."
   doctorList:         "general partitioner;specialist"
 
+  doctors_visit_general: "General Practitioner"
+  doctors_visit_specialist: "Specialist"
+  category_unknown:   "Unknown Category"
 # analytics
   analytics:          "Analytics"
 
