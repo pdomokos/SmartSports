@@ -118,8 +118,8 @@ fieldset#type {
 .face {
 	position: absolute;
 	-webkit-backface-visibility: hidden;
-	width: 20px;
-	height: 20px;
+	width: 18px;
+	height: 18px;
 	background: #eee;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -489,7 +489,8 @@ html.ie8 #ie8_percents, #ie8_percents.ff3 {
 /* 11 buckets purple to red */
 
 .rbow2 .q1-11 {
-	background: #5E4FA2;
+//	background: #5E4FA2;
+    background: #F6F5EA;
 	/*
 	border-left-color: #5b40b3;
 	border-top-color: #5b40b3;
@@ -499,43 +500,53 @@ html.ie8 #ie8_percents, #ie8_percents.ff3 {
 }
 
 .rbow2 .q2-11 {
-	background: #3288BD;
+//	background: #3288BD;
+    background: #F2DDD3;
 }
 
 .rbow2 .q3-11 {
-	background: #66C2A5;
+//	background: #66C2A5;
+    background: #EFC6BD;
 }
 
 .rbow2 .q4-11 {
-	background: #ABDDA4;
+//	background: #ABDDA4;
+    background: #ECAEA7;
 }
 
 .rbow2 .q5-11 {
-	background: #E6F598;
+//	background: #E6F598;
+    background: #E99791;
 }
 
 .rbow2 .q6-11 {
-	background: #FFFFBF;
+//	background: #FFFFBF;
+    background: #E67F7B;
 }
 
 .rbow2 .q7-11 {
-	background: #FEE08B;
+//	background: #FEE08B;
+    background: #E26864;
 }
 
 .rbow2 .q8-11 {
-	background: #FDAE61;
+//	background: #FDAE61;
+    background: #DF504E;
 }
 
 .rbow2 .q9-11 {
-	background: #F46D43;
+//	background: #F46D43;
+    background: #DC3938;
 }
 
 .rbow2 .q10-11 {
-	background: #D53E4F;
+//	background: #D53E4F;
+    background: #D92122;
 }
 
 .rbow2 .q11-11 {
-	background: #9E0142;
+//	background: #9E0142;
+    background: #D60A0C;
 }
 
 

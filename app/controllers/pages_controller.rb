@@ -180,7 +180,7 @@ class PagesController < ApplicationController
       @users = User.all
       @profiles = Profile.all
       @visits = get_visits("all")
-      @clickrecords = ClickRecord.where(msg: 'login_succ').order(created_at: :desc).group('user_id')
+      @clickrecords = ClickRecord.where(msg: 'login', success: true).group('user_id').order('count_id desc').count('id')
     end
     save_click_record(:success, nil, nil)
   end
@@ -188,7 +188,7 @@ class PagesController < ApplicationController
   def get_visits(uid)
     # uid = params[:uid]
     if uid
-      startTime=DateTime.now-1.week
+      startTime=(DateTime.now+1.day).beginning_of_day-1.week
       if uid == "all"
         crs = ClickRecord.where("created_at >= :start_date", {start_date: startTime})
       else

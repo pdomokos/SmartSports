@@ -30,19 +30,20 @@
         <th>E-mail</th>
         <th>Firstname</th>
         <th>LastName</th>
+        <th>Login number</th>
         <th>Last login</th>
       </tr>
       <tbody>
-        <% for u in @users %>
-          <% p = @profiles.where(user_id: u.id)[0] %>
-          <% c = @clickrecords.where(user_id: u.id)[0] %>
+        <% for k in @clickrecords.keys %>
           <tr>
             <td>
-              <%= u.id %>
+              <%= k %>
             </td>
+            <% u = @users.where(id: k)[0] %>
             <td>
-              <%= u.email %>
+              <%= u.try(:email) %>
             </td>
+            <% p = @profiles.where(user_id: k)[0] %>
             <td>
               <%= p.try(:firstname) %>
             </td>
@@ -50,8 +51,14 @@
               <%= p.try(:lastname) %>
             </td>
             <td>
-              <% if c %>
-                  <%=c.created_at %>
+              <% if k %>
+                  <%=@clickrecords[k] %>
+              <%end%>
+            </td>
+            <td>
+              <%last = ClickRecord.where(msg: 'login', success: true).where(user_id: k).order('created_at desc').limit(1) %>
+              <% if last %>
+                  <%=last[0].created_at.strftime("%F %R:%S") %>
               <%end%>
             </td>
             <td style="width: 180px;">
@@ -91,7 +98,9 @@
 
       var date = new Date(data[0][1])
 
-      for (i = 0; i < date.getDay(); i++) {
+      console.log('sfsafsdfasf');
+      console.log(date.getDay());
+      for (i = 0; i < date.getDay()-1; i++) {
           var t = days.shift();
           days.push(t);
       }
