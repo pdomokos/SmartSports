@@ -65,12 +65,13 @@
     #(width-margin.left-margin.right)/boxDataArr.length
 
     svg = d3.select("#stat-1-container > div")
-    .append("svg")
+      .append("svg")
         .attr("class", "box")
         .attr("width", width )
         .attr("height", height )
-        .append("g")
-          .attr("transform", "translate(" + 0 + "," + 0 + ")")
+    dwg = svg
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     x = d3.scale.ordinal()
         .domain( boxDataArr.map( (d) -> console.log(d); return d[0]  ) )
@@ -88,13 +89,38 @@
       .scale(y)
       .orient("left")
 
-    svg.selectAll(".box")
+    dwg.selectAll(".box")
       .data(boxDataArr)
       .enter()
         .append("g")
-        .attr("transform", (d) -> return "translate(" +  x(d[0])  + "," + margin.top + ")"  )
+        .attr("transform", (d) -> return "translate(" +  x(d[0])  + "," + 0 + ")"  )
         .call(chart.width(x.rangeBand()))
-  )
+
+    # draw y axis
+    dwg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .style("font-size", "16px")
+        .text("BG (mmol/L)");
+
+    # draw x axis
+    dwg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + (height  + margin.top + 10) + ")")
+      .call(xAxis)
+      .append("text")
+        .attr("x", (width / 2) )
+        .attr("y",  10 )
+        .attr("dy", ".71em")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Quarter");
+)
 
   d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
 
