@@ -1,7 +1,11 @@
 <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
-  <div id="container">
-
-    <div id="legend" class="rbow2">
+  <div id="traffic-container">
+    <div id="traffic-all">
+      <%= form_tag( pages_traffic_path(), id: "user_traffic_all", remote: true, method: "get", class: "traffic-form") do %>
+          <input type="image" class="sumicon" src="<%= image_url "sum.png" %>" alt="All traffic" width="32" height="32">
+      <%end%>
+    </div>
+    <div id="traffic-legend" class="rbow2">
       <ul>
         <li class="q1-11"></li>
         <li class="q2-11"></li>
@@ -19,178 +23,72 @@
 
       <p class="less">less traffic</p>
     </div>
-
-    <div id="vis"></div>
+    <div id="traffic-uinfo">
+        <p class="email">All traffic of site</p>
+    </div>
+    <div id="traffic-vis"></div>
 
   </div>
   <div style="padding: 10px;">
-    <table style="width: 100%;color: #3d3d3d;">
+    <table id="traffic-table" style="width: 100%;color: #3d3d3d;">
       <tr>
         <th>id</th>
         <th>E-mail</th>
         <th>Firstname</th>
         <th>LastName</th>
-        <th>Login number</th>
+        <th>All clicks</th>
         <th>Last login</th>
       </tr>
       <tbody>
         <% for k in @clickrecords.keys %>
-          <tr>
-            <td>
-              <%= k %>
-            </td>
-            <% u = @users.where(id: k)[0] %>
-            <td>
-              <%= u.try(:email) %>
-            </td>
-            <% p = @profiles.where(user_id: k)[0] %>
-            <td>
-              <%= p.try(:firstname) %>
-            </td>
-            <td>
-              <%= p.try(:lastname) %>
-            </td>
-            <td>
-              <% if k %>
-                  <%=@clickrecords[k] %>
-              <%end%>
-            </td>
-            <td>
-              <%last = ClickRecord.where(msg: 'login', success: true).where(user_id: k).order('created_at desc').limit(1) %>
-              <% if last %>
-                  <%=last[0].created_at.strftime("%F %R:%S") %>
-              <%end%>
-            </td>
-            <td style="width: 180px;">
-              <button id="edit-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
-                <%= t :edit %>
-              </button>
-            </td>
-            <td style="width: 180px;">
-              <button id="delete-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
-                <%= t :delete %>
-              </button>
-            </td>
-          </tr>
+          <% u = @users.where(id: k)[0] %>
+          <% if u  %>
+              <tr>
+                <td>
+                  <%= k %>
+                </td>
+                <td>
+                  <%= u.try(:email) %> <%= u.id.to_s %>
+                </td>
+                <% p = @profiles.where(user_id: k)[0] %>
+                <td>
+                  <%= p.try(:firstname) %>
+                </td>
+                <td>
+                  <%= p.try(:lastname) %>
+                </td>
+                <td>
+                  <% if k %>
+                      <%=@clickrecords[k] %>
+                  <%end%>
+                </td>
+                <td>
+                  <%last = ClickRecord.where(msg: 'login', success: true).where(user_id: k).order('created_at desc').limit(1) %>
+                  <% if last %>
+                      <%=last[0].created_at.strftime("%F %R:%S") %>
+                  <%end%>
+                </td>
+                <td style="width: 130px;">
+                  <%= form_tag( pages_traffic_path(:usid => u.id.to_s), id: "user_traffic_"+u.id.to_s, remote: true, method: "get", class: "traffic-form") do %>
+                   <button id="user-traffic-button" style="width: 120px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                       <%= t :traffic %>
+                   </button>
+                  <%end%>
+                </td>
+                <td style="width: 130px;">
+                  <button id="edit-user-button" style="width: 120px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                    <%= t :edit %>
+                  </button>
+                </td>
+                <td style="width: 130px;">
+                  <button id="delete-user-button" style="width: 120px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                    <%= t :delete %>
+                  </button>
+                </td>
+              </tr>
+          <%end%>
       <%end%>
       </tbody>
     </table>
   </div>
-  <script>
-      var data,
-              buckets = 11,
-              colorScheme = 'rbow2',
-              days = [
-                  { name: 'Monday', abbr: 'Mo' },
-                  { name: 'Tuesday', abbr: 'Tu' },
-                  { name: 'Wednesday', abbr: 'We' },
-                  { name: 'Thursday', abbr: 'Th' },
-                  { name: 'Friday', abbr: 'Fr' },
-                  { name: 'Saturday', abbr: 'Sa' },
-                  { name: 'Sunday', abbr: 'Su' }
-              ],
-              hours = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
-
-      d3.select('#vis').classed(colorScheme, true);
-
-
-      data = <%=@visits.html_safe%>;
-
-      var date = new Date(data[0][1])
-
-      console.log('sfsafsdfasf');
-      console.log(date.getDay());
-      for (i = 0; i < date.getDay()-1; i++) {
-          var t = days.shift();
-          days.push(t);
-      }
-
-      for (i = 0; i < date.getHours(); i++) {
-          var t = hours.shift();
-          hours.push(t);
-      }
-
-      createTiles();
-      reColorTiles();
-
-      function getCalcs() {
-          var min = 0,
-                  max = 0;
-          for (var d = 0; d < data.length; d++) {
-              var tot = data[d][2];
-              if (tot > max) {
-                  max = tot;
-              }
-          }
-
-          if (max > 100) {
-              max = 100;
-          }
-//          var v = 10/max;
-//          max = max * v;
-
-          return {'min': min, 'max': max};
-      }
-      ;
-
-      function reColorTiles() {
-
-          var calcs = getCalcs(),
-                  range = [];
-
-          console.log(calcs.max);
-          console.log(calcs.min);
-
-          for (var i = 1; i <= buckets; i++) {
-              range.push(i);
-          }
-
-          var bucket = d3.scale.quantize().domain([0, calcs.max > 0 ? calcs.max : 10]).range(range),
-                  side = d3.select('#tiles').attr('class');
-
-//          if (side === 'front') {
-//              side = 'back';
-//          } else {
-//              side = 'front';
-//          }
-          console.log(side);
-          var j = 0;
-          for (var d = 0; d < 7; d++) {
-              for (var h = 0; h < 24; h++) {
-                  var sel = '#d' + d + 'h' + h + ' .tile .' + side,
-                          val = data[j][2];
-//                      console.log(val)
-                  j = j + 1;
-                  // erase all previous bucket designations on this cell
-                  for (var i = 1; i <= buckets; i++) {
-                      var cls = 'q' + i + '-' + buckets;
-                      d3.select(sel).classed(cls, false);
-                  }
-
-                  // set new bucket designation for this cell
-                  var cls = 'q' + (val > 0 ? bucket(val) : 1) + '-' + buckets;
-                  d3.select(sel).classed(cls, true);
-              }
-          }
-      }
-
-      function createTiles() {
-          var html = '<table id="tiles" class="front">';
-          html += '<tr><th><div>&nbsp;</div></th>';
-          for (var h = 0; h < hours.length; h++) {
-              html += '<th class="h' + h + '">' + hours[h] + '</th>';
-          }
-          html += '</tr>';
-          for (var d = 0; d < days.length; d++) {
-              html += '<tr class="d' + d + '">';
-              html += '<th>' + days[d].abbr + '</th>';
-              for (var h = 0; h < hours.length; h++) {
-                  html += '<td id="d' + d + 'h' + h + '" class="d' + d + ' h' + h + '"><div class="tile"><div class="face front"></div><div class="face back"></div></div></td>';
-              }
-              html += '</tr>';
-          }
-          html += '</table>';
-          d3.select('#vis').html(html);
-      }
-  </script>
 </div>

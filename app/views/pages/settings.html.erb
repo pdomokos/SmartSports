@@ -19,6 +19,9 @@
 <% if current_user.admin %>
     <div id="sectionAdmin" class="menu-section hiddenSection">
       <%= render "admin" %>
+      <script type="text/javascript">
+          admin_loaded();
+      </script>
     </div>
 <% end %>
 

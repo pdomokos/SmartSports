@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     get 'pages/labresult'
     get 'pages/explore'
     get 'pages/settings'
+    get 'pages/traffic'
 
     get 'pages/signin'
     get 'pages/signup'

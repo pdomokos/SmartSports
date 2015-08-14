@@ -29,6 +29,11 @@ hu:
   duration:       "időtartam"
   minute_abbr:    "perc"
 
+  traffic: "Látogatások"
+  all_traffic: "Összes látogatás"
+  edit:     "Módosít"
+  delete:   "Töröl"
+
 #login
   sign_in: "Jelentkezzen be a SmartDiab fiókjába"
   login_button: "Belépés"

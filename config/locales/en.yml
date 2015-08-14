@@ -50,6 +50,11 @@ en:
   duration:       "duration"
   minute_abbr:    "min"
 
+  traffic: "Traffic"
+  all_trafic: "All traffic"
+  edit:     "Edit"
+  delete:   "Delete"
+
 #login
   sign_in: "Sign in to SmartDiab"
   login_button: "Login"

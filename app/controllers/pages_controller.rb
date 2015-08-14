@@ -179,21 +179,22 @@ class PagesController < ApplicationController
     if current_user.admin
       @users = User.all
       @profiles = Profile.all
-      @visits = get_visits("all")
-      @clickrecords = ClickRecord.where(msg: 'login', success: true).group('user_id').order('count_id desc').count('id')
+      # startTime=(DateTime.now+1.day).beginning_of_day-1.week
+      # @clickrecords = ClickRecord.where("created_at >= :start_date", {start_date: startTime}).group('user_id').order('count_id desc').count('id')
+      @clickrecords = ClickRecord.all.group('user_id').order('count_id desc').count('id')
     end
     save_click_record(:success, nil, nil)
   end
 
-  def get_visits(uid)
-    # uid = params[:uid]
+  def traffic()
+    uid = params[:usid]
+    startTime=(DateTime.now+1.day).beginning_of_day-1.week
+    email = nil
     if uid
-      startTime=(DateTime.now+1.day).beginning_of_day-1.week
-      if uid == "all"
-        crs = ClickRecord.where("created_at >= :start_date", {start_date: startTime})
-      else
-        crs = ClickRecord.where("user_id = :user_id AND created_at >= :start_date", {user_id: uid, start_date: startTime})
-      end
+      crs = ClickRecord.where("created_at >= :start_date AND user_id = :uid", {start_date: startTime, uid: uid})
+      email = User.where(id: uid)[0].email
+    else
+      crs = ClickRecord.where("created_at >= :start_date", {start_date: startTime})
     end
     visits = Array.new(168)
     first = startTime
@@ -201,19 +202,15 @@ class PagesController < ApplicationController
       visits[i] = [i+1, first,0]
       first = first+1.hour
     end
-
     arr = crs.group_by{ |u|
       u.created_at.beginning_of_hour
     }
-
     arr = arr.collect{ |it| [(it[0].strftime("%s").to_i-startTime.strftime("%s").to_i)/60/60, it[0],it[1].length]}
-    puts arr
-
-
-    arr.each{ |it| visits[it[0]-2][2] = it[2]}
-
+    arr.each{ |it|
+      visits[it[0]-2][2] = it[2]
+    }
     @visits = visits.to_json
-
+    render json: {  data: visits.to_json , email: email, :status => "OK"}
   end
 
   def analytics2
