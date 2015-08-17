@@ -264,6 +264,8 @@ function addPoints(canvas, history) {
             whiskers = boxWhiskers,
             quartiles = boxQuartiles,
             showLabels = true, // whether or not to show text labels
+            showWhiskerLabels = false,
+            leftLabel = false,
             numBars = 4,
             curBar = 1,
             tickFormat = null;
@@ -453,10 +455,10 @@ function addPoints(canvas, history) {
                     boxTick.enter().append("text")
                         .attr("class", "box")
                         .attr("dy", ".3em")
-                        .attr("dx", function(d, i) { return i & 1 ? 6 : -6 })
-                        .attr("x", function(d, i) { return i & 1 ?  + width : 0 })
+                        .attr("dx", function(d, i) { return leftLabel ? 6 : -6 })
+                        .attr("x", function(d, i) { return leftLabel ?  + width : 0 })
                         .attr("y", x0)
-                        .attr("text-anchor", function(d, i) { return i & 1 ? "start" : "end"; })
+                        .attr("text-anchor", function(d, i) { return leftLabel ? "start" : "end"; })
                         .text(format)
                         .transition()
                         .duration(duration)
@@ -473,7 +475,7 @@ function addPoints(canvas, history) {
                 // to join box ticks pre-transition with whisker ticks post-.
                 var whiskerTick = g.selectAll("text.whisker")
                     .data(whiskerData || []);
-                if(showLabels == true) {
+                if(showWhiskerLabels == true) {
                     whiskerTick.enter().append("text")
                         .attr("class", "whisker")
                         .attr("dy", ".3em")
@@ -501,6 +503,12 @@ function addPoints(canvas, history) {
             });
             d3.timer.flush();
         }
+
+        box.leftLabel = function(x) {
+            if (!arguments.length) return leftLabel;
+            leftLabel = x;
+            return box;
+        };
 
         box.width = function(x) {
             if (!arguments.length) return width;
