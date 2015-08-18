@@ -16,6 +16,14 @@
     '64': 'Pre Snack'
   }
 
+  @color_map = {}
+  @color_map[48] = "bg1Point"
+  @color_map[58] = "bg2Point"
+  @color_map[60] = "bg3Point"
+  @color_map[62] = "bg4Point"
+
+  @base_r = 4
+
   if $("#selected-user-id").length >0
     suid = $("#selected-user-id")[0].value
     if suid && suid != ''
@@ -34,8 +42,8 @@
 
     data = self.bg_trend_chart.data
 
-    rangeA = ["2015-07-12", "2015-07-19"]
-    rangeB = ["2015-07-19", "2015-07-26"]
+    rangeA = ["2015-07-05", "2015-07-19"]
+    rangeB = ["2015-07-19", "2015-08-01"]
     self.bg_trend_chart.add_highlight(rangeA[0], rangeA[1], "selA")
     self.bg_trend_chart.add_highlight(rangeB[0], rangeB[1], "selB")
 
@@ -52,6 +60,7 @@ draw_parallelplot = (data, rangeA, rangeB) ->
 
   parDataA = {}
   parDataB = {}
+  dotData = []
   data.forEach( (d)->
     selData = null
     dd = new Date(d.date)
@@ -64,17 +73,19 @@ draw_parallelplot = (data, rangeA, rangeB) ->
       dd = new Date(d.date)
       t = fmt(dd)
       dd.setYear(2015)
-      dd.setMonth(1)
-      dd.setDate(1)
+      dd.setMonth(0)
+      dd.setDate(0)
       item = {date: fmt_hms(dd), blood_sugar: d.blood_sugar, group: d.blood_sugar_time}
       if(!selData[t])
         selData[t] = [item]
       else
         selData[t].push(item)
+      dotData.push(item)
   )
 
   window.parDataA  = parDataA
   window.parDataB  = parDataB
+  window.dotData = dotData
 
   width = $("#stat-1-container").parent().width()/2
   height = width*2.0/7.0
@@ -92,25 +103,84 @@ draw_parallelplot = (data, rangeA, rangeB) ->
   for k in Object.keys(parDataA)
     for currd in parDataA[k]
       arr.push(currd.date)
-  console.log(arr)
+  for k in Object.keys(parDataB)
+    for currd in parDataB[k]
+      arr.push(currd.date)
+
   time_extent = d3.extent(arr, (d) -> new Date(d) )
-  console.log time_extent
-  time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
+  d1 = time_extent[0]
+  d2 = time_extent[1]
+  d1.setHours(0)
+  d1.setMinutes(0)
+  d2.setHours(23)
+  d2.setMinutes(59)
+  time_extent[0] = d1
+  time_extent[1] = d2
+
+  time_scale = d3.time.scale().domain(time_extent).range([0, width-self.margin.left-self.margin.right])
 
   bg_extent = d3.extent(data, (d) -> d.blood_sugar)
-  scale_left = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bg_extent)
-  console.log bg_extent
+  scale_left = d3.scale.linear().range([height - self.margin.bottom- self.margin.top, 0]).domain(bg_extent)
 
   bgline = d3.svg.line()
     .x( (d) -> return(time_scale(new Date(d.date))))
     .y( (d) -> return(scale_left(d.blood_sugar)))
 
   for k in Object.keys(parDataA)
-    console.log parDataA[k]
     dwg.append("path")
       .datum(parDataA[k])
-      .attr("class", "grayline")
+      .attr("class", "pplineA")
       .attr("d", bgline)
+
+  for k in Object.keys(parDataB)
+    dwg.append("path")
+      .datum(parDataB[k])
+      .attr("class", "pplineB")
+      .attr("d", bgline)
+
+  console.log(dotData)
+  dwg.selectAll("circle.bg")
+      .data(dotData)
+      .enter()
+      .append("circle")
+        .attr("cx", (d) -> time_scale(new Date(d.date)))
+        .attr("cy", (d) -> scale_left(d.blood_sugar))
+        .attr("r", self.base_r)
+        .attr("class", (d) -> self.color_map[d.group])
+
+  xAxis = d3.svg.axis()
+    .scale(time_scale)
+    .orient("bottom")
+    .tickFormat(d3.time.format("%H:%m"))
+
+  yAxis = d3.svg.axis()
+    .scale(scale_left)
+    .orient("left")
+
+  # draw y axis
+  dwg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .style("font-size", "16px")
+    .text("BG (mmol/L)");
+
+  # draw x axis
+  dwg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + ( height-self.margin.bottom) + ")")
+    .call(xAxis)
+      .append("text")
+      .attr("x", (width / 2) )
+      .attr("y",  -20 )
+      .attr("dy", ".71em")
+      .style("text-anchor", "middle")
+      .style("font-size", "16px")
+      .text("Time of Day");
 
 draw_boxplot = (data, rangeA, rangeB) ->
   self = this
@@ -155,7 +225,7 @@ draw_boxplot = (data, rangeA, rangeB) ->
 
 
   width = $("#stat-1-container").parent().width()/2
-  height = width*2.0/7.0
+  height = width*3.0/7.0
 
   chart = d3.box()
     .whiskers(iqr(1.5))
@@ -241,7 +311,7 @@ draw_boxplot = (data, rangeA, rangeB) ->
     .attr("transform", "translate(0," + ( height-self.margin.bottom) + ")")
     .call(xAxis)
     .append("text")
-    .attr("x", (width / 3) )
+    .attr("x", (width / 2) )
     .attr("y",  -20 )
     .attr("dy", ".71em")
     .style("text-anchor", "middle")

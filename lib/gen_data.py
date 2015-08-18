@@ -32,22 +32,22 @@ def gen_bg(days):
         pb = prebreakfast[i]
         if i>days/2:
             pb = prebreakfast2[i]
-        res = Meas(bgtime.strftime("%Y-%m-%d %H:%m:%S"), Pre_breakfast_blood_glucose_measurement, pb)
+        res = Meas(bgtime.strftime("%Y-%m-%d %H:%M:%S"), Pre_breakfast_blood_glucose_measurement, pb)
         yield res
 
         bgtime = datetime(curr.year, curr.month, curr.day)+timedelta(hours=12, seconds=timediff[idx])
         idx += 1
-        res = Meas(bgtime.strftime("%Y-%m-%d %H:%m:%S"), Pre_lunch_blood_glucose_measurement, prelunch[i])
+        res = Meas(bgtime.strftime("%Y-%m-%d %H:%M:%S"), Pre_lunch_blood_glucose_measurement, prelunch[i])
         yield res
         
         bgtime = datetime(curr.year, curr.month, curr.day)+timedelta(hours=18, seconds=timediff[idx])
         idx += 1
-        res = Meas(bgtime.strftime("%Y-%m-%d %H:%m:%S"), Pre_supper_blood_glucose_measurement, presupp[i])
+        res = Meas(bgtime.strftime("%Y-%m-%d %H:%M:%S"), Pre_supper_blood_glucose_measurement, presupp[i])
         yield res
 
         bgtime = datetime(curr.year, curr.month, curr.day)+timedelta(hours=21, seconds=timediff[idx])
         idx += 1
-        res = Meas(bgtime.strftime("%Y-%m-%d %H:%m:%S"), Unspecified_blood_glucose_measurement1, presleep[i])
+        res = Meas(bgtime.strftime("%Y-%m-%d %H:%M:%S"), Unspecified_blood_glucose_measurement1, presleep[i])
         yield res
         
         curr = curr+timedelta(days=1)
@@ -101,5 +101,5 @@ if __name__ == "__main__":
             #print "user_id="+str(profile['id'])+' token='+token
             resource_path = "/api/v1/users/"+str(profile['id'])+"/measurements"
             #print resource_path
-            for res in gen_bg(30):
+            for res in gen_bg(50):
                 post_resource(urlbase, resource_path, headers, res)

@@ -90,7 +90,7 @@ class BGChart
 
 
     canvas = svg.append("g")
-    .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
+      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
 
     #dd = self.series.filter( (d) -> d[k]!=null)
     if @data.length > 0
