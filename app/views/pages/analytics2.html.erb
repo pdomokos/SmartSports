@@ -38,6 +38,46 @@
   </div>
 </div>
 
+
+<div id="openModalStat" class="modalDialog">
+  <div class="healthStyle">
+    <div class="table-toolbar">
+      <span id="close-create-stat" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
+    </div>
+    <br/>
+    <br/>
+    <div id="stat-data-container">
+        <h3>Blood glucose data selection</h3>
+        <p>Blood glucose data available from <span id="bg_from"></span> to <span id="bg_to"></span></p>
+        <table>
+          <tbody>
+          <form>
+            <tr>
+              <td style="width: 180px;height: 50px;">Group A note</td>
+              <td><input type="text" class="dataFormField" id="note_a" placeholder="Describe Group A"></td>
+            </tr>
+            <tr>
+              <td style="width: 180px;height: 50px;">Group B note</td>
+              <td><input type="text" class="dataFormField" id="note_b" placeholder="Describe Group A"></td>
+            </tr>
+            <tr>
+              <td style="width: 180px;height: 50px;">Group A interval</td>
+              <td><input type="text" class="dataFormField" id="start_a" placeholder="Start date A"><input type="text" class="dataFormField" id="end_a" placeholder="End date A"></td>
+            </tr>
+            <tr>
+              <td style="width: 180px;height: 50px;">Group B interval</td>
+              <td><input type="text" class="dataFormField" id="start_b" placeholder="Start date B"><input type="text" class="dataFormField" id="end_b" placeholder="End date B"></td>
+            </tr>
+          </form>
+          </tbody>
+        </table>
+        <p>Group A contains <span id="num_a"></span>, Group B contains <span id="num_b"></span> data points.</p>
+        <button id="analysis-params" class ="dataFormField statButton">Run Stat</button>
+    </div>
+  </div>
+</div>
+
+
 <script>
     pages_menu();
     analytics2_loaded();

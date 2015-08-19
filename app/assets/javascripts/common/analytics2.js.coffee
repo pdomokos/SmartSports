@@ -1,7 +1,8 @@
 @analytics2_loaded = () ->
   self = this
   uid = $("#current-user-id")[0].value
-
+  console.log("analysis2 loaded")
+  console.log($("#start_a"))
   @margin = {top: 30, right: 40, bottom: 55, left: 40}
 
   @lbMap = {
@@ -24,6 +25,36 @@
 
   @base_r = 4
 
+  $('#start_a').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#end_a').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#start_b').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#end_b').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('.xdsoft_datetimepicker').css('zIndex', 999999);
+
   if $("#selected-user-id").length >0
     suid = $("#selected-user-id")[0].value
     if suid && suid != ''
@@ -35,7 +66,15 @@
 
   d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
 
+  $(document).on("click", "#close-create-stat", (evt) ->
+    location.href = "#close"
+  )
+
   $(document).on("click", "#add-analysis", (evt) ->
+    location.href = "#openModalStat"
+  )
+
+  $(document).on("click", "#analysis-params", (evt) ->
     console.log("add analysis clicked")
     if !self.bg_trend_chart
       return
