@@ -5,6 +5,10 @@
   console.log($("#start_a"))
   @margin = {top: 30, right: 40, bottom: 55, left: 40}
 
+  @currdata = null
+  @currextent = null
+  @statnum = 1
+
   @lbMap = {
     '48': 'Unspecified',
     '57': 'Unspecified2',
@@ -25,11 +29,33 @@
 
   @base_r = 4
 
+  @calc_n_ab = () ->
+    self = this
+    start_a = moment($("#start_a").val()).toDate()
+    end_a = moment($("#end_a").val()).toDate()
+    start_b = moment($("#start_b").val()).toDate()
+    end_b = moment($("#end_b").val()).toDate()
+    a = 0
+    b = 0
+    for dd in self.currdata
+      currdate = new Date(dd.date)
+      if currdate >=start_a && currdate <end_a
+        a = a + 1
+      if currdate >=start_b && currdate <end_b
+        b = b + 1
+    return [a, b]
+
+  @update_elements = () ->
+    arr = self.calc_n_ab()
+    $("#num_a").html(arr[0])
+    $("#num_b").html(arr[1])
+
   $('#start_a').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
+      self.update_elements()
     todayButton: true
   })
   $('#end_a').datetimepicker({
@@ -37,6 +63,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
+      self.update_elements()
     todayButton: true
   })
   $('#start_b').datetimepicker({
@@ -44,6 +71,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
+      self.update_elements()
     todayButton: true
   })
   $('#end_b').datetimepicker({
@@ -51,6 +79,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
+      self.update_elements()
     todayButton: true
   })
   $('.xdsoft_datetimepicker').css('zIndex', 999999);
@@ -66,12 +95,29 @@
 
   d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
 
-  $(document).on("click", "#close-create-stat", (evt) ->
+  $(document).on("click", "#closeModalStat", (evt) ->
     location.href = "#close"
   )
 
   $(document).on("click", "#add-analysis", (evt) ->
-    location.href = "#openModalStat"
+    if self.currdata
+      a = new Date(self.currextent[0])
+      b = new Date(self.currextent[1])
+
+      diff = moment(a).diff(moment(b))
+      mid = moment(moment(a)-diff/2).format("YYYY-MM-DD")
+
+      $("#bg_from").html(fmt(a))
+      $("#bg_to").html(fmt(b))
+
+      $("#start_a").datetimepicker({value: moment(a).format("YYYY-MM-DD")})
+      $("#end_a").datetimepicker({value: mid})
+      $("#start_b").datetimepicker({value: mid})
+      $("#end_b").datetimepicker({value: moment(b).format("YYYY-MM-DD")})
+
+      self.update_elements()
+
+      location.href = "#openModalStat"
   )
 
   $(document).on("click", "#analysis-params", (evt) ->
@@ -81,20 +127,32 @@
 
     data = self.bg_trend_chart.data
 
-    rangeA = ["2015-07-05", "2015-07-19"]
-    rangeB = ["2015-07-19", "2015-08-01"]
+    rangeA = [$("#start_a").val(), $("#end_a").val()]
+    rangeB = [$("#start_b").val(), $("#end_b").val()]
     self.bg_trend_chart.add_highlight(rangeA[0], rangeA[1], "selA")
     self.bg_trend_chart.add_highlight(rangeB[0], rangeB[1], "selB")
 
-    draw_boxplot(data, rangeA, rangeB)
-    draw_parallelplot(data, rangeA, rangeB)
+    location.href = "#close"
+
+    eid = "stat-"+self.statnum+"-container"
+    self.statnum = self.statnum+1
+    h = $("#stat-template").clone()
+    window.h = h
+    h.attr('id', eid)
+    h.prependTo("#allstats")
+
+    $("#"+eid+" div.title").html($("#title").val())
+    draw_boxplot(eid, data, rangeA, rangeB)
+    draw_parallelplot(eid, data, rangeA, rangeB)
   )
 
 bg_data_received = (jsondata) ->
+  @currdata = jsondata
+  @currextent = d3.extent(jsondata, (d) -> d.date)
   @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
   @bg_trend_chart.draw()
 
-draw_parallelplot = (data, rangeA, rangeB) ->
+draw_parallelplot = (eid, data, rangeA, rangeB) ->
   self = this
 
   parDataA = {}
@@ -122,14 +180,10 @@ draw_parallelplot = (data, rangeA, rangeB) ->
       dotData.push(item)
   )
 
-  window.parDataA  = parDataA
-  window.parDataB  = parDataB
-  window.dotData = dotData
-
-  width = $("#stat-1-container").parent().width()/2
+  width = $("#"+eid).parent().width()/2
   height = width*2.0/7.0
 
-  svg = d3.select("#stat-1-container > div")
+  svg = d3.select("#"+eid+" > div")
     .append("svg")
     .attr("class", "box")
     .attr("width", width )
@@ -177,7 +231,6 @@ draw_parallelplot = (data, rangeA, rangeB) ->
       .attr("class", "pplineB")
       .attr("d", bgline)
 
-  console.log(dotData)
   dwg.selectAll("circle.bg")
       .data(dotData)
       .enter()
@@ -221,7 +274,7 @@ draw_parallelplot = (data, rangeA, rangeB) ->
       .style("font-size", "16px")
       .text("Time of Day");
 
-draw_boxplot = (data, rangeA, rangeB) ->
+draw_boxplot = (eid, data, rangeA, rangeB) ->
   self = this
   minv = Infinity
   maxv = -Infinity
@@ -263,7 +316,7 @@ draw_boxplot = (data, rangeA, rangeB) ->
   #    window.boxDataArrB = boxDataArrB
 
 
-  width = $("#stat-1-container").parent().width()/2
+  width = $("#"+eid).parent().width()/2
   height = width*3.0/7.0
 
   chart = d3.box()
@@ -287,7 +340,7 @@ draw_boxplot = (data, rangeA, rangeB) ->
   bpHeight = 420
   #(width-margin.left-margin.right)/boxDataArr.length
 
-  svg = d3.select("#stat-1-container > div")
+  svg = d3.select("#"+eid+" > div")
     .append("svg")
     .attr("class", "box")
     .attr("width", width )

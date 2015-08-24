@@ -22,27 +22,30 @@
     </div>
   </div>
 
-  <div class="columns">
-    <div id="stat-1-container" class="boxed-group connection-block">
+  <div id="allstats" class="columns">
 
-      <h3 class="noClickSelect">
-        <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-        <div class="training-type left">Stat</div>
-        <div class="selected-meas legend-container right"></div>
-      </h3>
-
-      <div class="boxed-group-inner chart stat-chart">
-
-      </div>
-    </div>
   </div>
 </div>
+<div class="hidden">
+<div id="stat-template" class="boxed-group connection-block">
 
+  <h3 class="noClickSelect">
+    <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+    <div class="training-type left">Stat</div>
+    <div class="title left"></div>
+    <div class="selected-meas legend-container right"></div>
+  </h3>
+
+  <div class="boxed-group-inner chart stat-chart">
+
+  </div>
+</div>
+</div>
 
 <div id="openModalStat" class="modalDialog">
   <div class="healthStyle">
     <div class="table-toolbar">
-      <span id="close-create-stat" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
+      <span id="closeModalStat" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
     </div>
     <br/>
     <br/>
@@ -53,12 +56,16 @@
           <tbody>
           <form>
             <tr>
+              <td style="width: 180px;height: 50px;">Title</td>
+              <td><input type="text" class="dataFormField" id="title" placeholder="Title of analysis" value="Undefined"></td>
+            </tr>
+            <tr>
               <td style="width: 180px;height: 50px;">Group A note</td>
-              <td><input type="text" class="dataFormField" id="note_a" placeholder="Describe Group A"></td>
+              <td><input type="text" class="dataFormField" id="note_a" placeholder="Describe Group A" value="Group A"></td>
             </tr>
             <tr>
               <td style="width: 180px;height: 50px;">Group B note</td>
-              <td><input type="text" class="dataFormField" id="note_b" placeholder="Describe Group A"></td>
+              <td><input type="text" class="dataFormField" id="note_b" placeholder="Describe Group B" value="Group B"></td>
             </tr>
             <tr>
               <td style="width: 180px;height: 50px;">Group A interval</td>
