@@ -6,8 +6,12 @@ module Api::V1
 
     def index
       lim = 10
+      days = 50
       if params[:limit]
         lim = params[:limit].to_i
+      end
+      if params[:days]
+        days = params[:days].to_i
       end
       user_id = params[:user_id]
 
@@ -17,7 +21,13 @@ module Api::V1
       end
 
       user = User.find(user_id)
-      measurements = user.measurements.where(source: @default_source).order(created_at: :desc).limit(lim)
+      from_date=Date.current-days.days
+      puts from_date
+      # src = @default_source
+      src = 'demo'
+      measurements = user.measurements.where("source = :src AND date >= :from_date",{src: src, from_date: from_date}).order(created_at: :desc).limit(lim)
+      #measurements = user.measurements.where(source: @default_source).order(created_at: :desc).limit(lim)
+      #puts measurements
       render json: measurements
     end
   end
