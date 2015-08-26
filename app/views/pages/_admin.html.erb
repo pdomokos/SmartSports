@@ -64,7 +64,7 @@
                 </td>
                 <td>
                   <%last = ClickRecord.where(msg: 'login', success: true).where(user_id: k).order('created_at desc').limit(1) %>
-                  <% if last %>
+                  <% if last && last.size > 0 %>
                       <%=last[0].created_at.strftime("%F %R:%S") %>
                   <%end%>
                 </td>

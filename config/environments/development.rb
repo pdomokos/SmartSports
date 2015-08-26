@@ -57,6 +57,8 @@ Rails.application.configure do
       :port => 3000
   }
 
+  DB_CONFIG={}
+
   # config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   # config.action_mailer.logger = nil

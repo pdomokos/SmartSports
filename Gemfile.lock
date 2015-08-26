@@ -113,6 +113,7 @@ GEM
     multi_json (1.11.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    mysql2 (0.3.20)
     netrc (0.10.3)
     oauth (0.4.7)
     oauth2 (1.0.0)
@@ -246,6 +247,7 @@ DEPENDENCIES
   mocha
   momentjs-rails (>= 2.8.1)
   moves
+  mysql2
   omniauth-fitbit
   omniauth-google-oauth2
   omniauth-moves
