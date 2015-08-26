@@ -70,6 +70,10 @@ gem 'paperclip', '~> 4.2'
 
 gem 'time_zone_ext'
 
+group :production do
+  gem 'mysql2'
+end
+
 group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mocha'

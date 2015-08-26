@@ -5,7 +5,6 @@ class ExtendActivitiesModel < ActiveRecord::Migration
       t.float :soft_duration
       t.float :moderate_duration
       t.float :hard_duration
-      t.float :elevation
       t.boolean :sync_final
       t.rename :last_update, :synced_at
     end
