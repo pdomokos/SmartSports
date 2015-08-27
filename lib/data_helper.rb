@@ -40,19 +40,71 @@ module DataHelper
 
   def export_food_types
     arr = FoodType.all
-    File.open("/data/tmp/food_types.json", 'w') do |f|
+    File.open("/data/tmp1/food_types.json", 'w') do |f|
       JSON.dump(arr.as_json, f)
     end
   end
 
+  def export_activity_types
+    arr = ActivityType.all
+    File.open("/data/tmp1/activity_types.json", 'w') do |f|
+      JSON.dump(arr.as_json, f)
+    end
+  end
+  def export_medication_types
+    arr = MedicationType.all
+    File.open("/data/tmp1/medication_types.json", 'w') do |f|
+      JSON.dump(arr.as_json, f)
+    end
+  end
+  def export_illness_types
+    arr = IllnessType.all
+    i = 1
+    for a in arr do
+      a.id = i
+      i = i+1
+    end
+    File.open("/data/tmp1/illness_types.json", 'w') do |f|
+      JSON.dump(arr.as_json, f)
+    end
+  end
+
+
   def import_food_types
-    File.open('/Users/bdomokos/Downloads/tmp/food_types.json', 'r') do |f|
+    File.open('/home/deploy/food_types.json', 'r') do |f|
       arr = JSON.parse(f.read())
       arr.each do |d|
         at = FoodType.create(d)
       end
     end
   end
+  def import_activity_types
+    File.open('/home/deploy/activity_types.json', 'r') do |f|
+      arr = JSON.parse(f.read())
+      arr.each do |d|
+        at = ActivityType.create(d)
+      end
+    end
+  end
+
+  def import_medication_types
+    File.open('/home/deploy/medication_types.json', 'r') do |f|
+      arr = JSON.parse(f.read())
+      arr.each do |d|
+        at = MedicationType.create(d)
+      end
+    end
+  end
+
+  def import_illness_types
+    File.open('/home/deploy/illness_types.json', 'r') do |f|
+      arr = JSON.parse(f.read())
+      arr.each do |d|
+        at = IllnessType.create(d)
+      end
+    end
+  end
+
 
   def export_tracker_data
     from_uid = 1
@@ -62,14 +114,19 @@ module DataHelper
     end
   end
 
+  # =================
+
   def export_diets
     from_uid = 1
+    to_uid =
     u = User.find_by_id(from_uid)
     arr = u.diets.select { |it| it.type=='Smoke' || it.food_type }
     File.open("/data/tmp/diets_uid_1.json", 'w') do |f|
       JSON.dump(arr.as_json, f)
     end
   end
+
+  # =================
 
   def export_exercise
     from_uid = 1
@@ -80,26 +137,15 @@ module DataHelper
     end
   end
 
-  def export_activity_types
-    arr = ActivityType.all
-    File.open("/data/tmp/activity_types.json", 'w') do |f|
-      JSON.dump(arr.as_json, f)
-    end
-  end
-  def import_activity_types
-    File.open('/Users/bdomokos/Downloads/tmp/activity_types.json', 'r') do |f|
-      arr = JSON.parse(f.read())
-      arr.each do |d|
-        at = ActivityType.create(d)
-      end
-    end
-  end
+  # =================
 
-  def export_health
-    from_uid = 1
+  def export_health(from_uid, to_uid)
     u = User.find_by_id(from_uid)
     arr = u.measurements.all
-    File.open("/data/tmp/measurements_uid_#{from_id}.json", 'w') do |f|
+    for a in arr do
+      a.id = to_uid
+    end
+    File.open("/data/tmp/measurements_uid_#{from_uid}_#{to_uid}.json", 'w') do |f|
       JSON.dump(arr.as_json, f)
     end
   end

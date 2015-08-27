@@ -52,8 +52,8 @@ def gen_bg(days):
         
         curr = curr+timedelta(days=1)
         
-def post_resource(urlbase, resource_path, headers, res):
-    conn = httplib.HTTPConnection(urlbase, 3000)
+def post_resource(urlbase, port, resource_path, headers, res):
+    conn = httplib.HTTPSConnection(urlbase, port)
     body = {'measurement[source]': 'demo', 
             'measurement[meas_type]': 'blood_sugar', 
             'measurement[date]': res.datetime, 
@@ -76,7 +76,8 @@ if __name__ == "__main__":
     with open(os.environ['HOME']+'/smartdiab.json', 'r') as f:
         params = json.load(f)
 
-    urlbase = 'localhost'
+    urlbase = 'app.smartdiab.com'
+    port = '443'
     token_path = '/oauth/token'
     profile_path = '/api/v1/profile'
     req_params = {'grant_type': 'password',
@@ -85,7 +86,7 @@ if __name__ == "__main__":
                   'client_id': params['smartdiab_appid']
                   }
 
-    conn = httplib.HTTPConnection(urlbase, 3000)
+    conn = httplib.HTTPSConnection(urlbase, port)
     conn.request("POST", token_path, urllib.urlencode(req_params))
     resp = conn.getresponse()
     if resp.status==httplib.OK:
@@ -93,7 +94,7 @@ if __name__ == "__main__":
         token = resp_json['access_token']
         conn.close()
         headers = {"Authorization": "Bearer "+token}
-        conn = httplib.HTTPConnection(urlbase, 3000)
+        conn = httplib.HTTPSConnection(urlbase, port)
         conn.request("GET", profile_path, "", headers)
         prf_resp = conn.getresponse()
         if prf_resp.status == httplib.OK:
@@ -102,4 +103,4 @@ if __name__ == "__main__":
             resource_path = "/api/v1/users/"+str(profile['id'])+"/measurements"
             #print resource_path
             for res in gen_bg(50):
-                post_resource(urlbase, resource_path, headers, res)
+                post_resource(urlbase, port, resource_path, headers, res)
