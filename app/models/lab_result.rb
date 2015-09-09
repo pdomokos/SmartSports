@@ -1,18 +1,22 @@
 class LabValidator < ActiveModel::Validator
 
   def validate(record)
-    if record.category == 'hba1c' && (record.hba1c == nil)
-      record.errors[:hba1c] << 'no_value'
-    elsif record.category == 'ldl_chol' && (record.ldl_chol == nil)
-      record.errors[:ldl_chol] << 'no_value'
-    elsif record.category == 'egfr_epi' && (record.egfr_epi == nil)
-      record.errors[:egfr_epi] << 'no_value'
-    elsif record.category == 'ketone' && (record.ketone == nil || record.ketone == "")
-      record.errors[:ketone] << 'no_value'
-    end
 
-    if record.category != 'hba1c' && record.category != 'ldl_chol' &&record.category != 'egfr_epi' &&record.category != 'ketone'
+    if record.hba1c == nil && record.ldl_chol == nil && record.egfr_epi == nil && record.ketone == nil
       record.errors[:category] << 'unknown'
+    else
+      if record.hba1c
+        record.category = 'hba1c'
+      end
+      if record.ldl_chol
+        record.category = 'ldl_chol'
+      end
+      if record.egfr_epi
+        record.category = 'egfr_epi'
+      end
+      if record.ketone
+        record.category = 'ketone'
+      end
     end
 
     if record.invalid_date

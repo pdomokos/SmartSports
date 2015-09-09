@@ -22,7 +22,7 @@ module Api::V1
       end
 
       if current_resource_owner.profile && current_resource_owner.profile.firstname && current_resource_owner.profile.lastname
-        res[:full_name] = current_resource_owner.profile.firstname +" "+ current_resource_owner.profile.lastname
+        res[:full_name] = "#{current_resource_owner.profile.firstname} #{current_resource_owner.profile.lastname}"
         res[:first_name] = current_resource_owner.profile.firstname
         res[:last_name] = current_resource_owner.profile.lastname
       else
