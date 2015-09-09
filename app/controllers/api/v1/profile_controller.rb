@@ -20,6 +20,16 @@ module Api::V1
       else
         res[:profile] = false
       end
+
+      if current_resource_owner.profile && current_resource_owner.profile.firstname && current_resource_owner.profile.lastname
+        res[:full_name] = current_resource_owner.profile.firstname +" "+ current_resource_owner.profile.lastname
+        res[:first_name] = current_resource_owner.profile.firstname
+        res[:last_name] = current_resource_owner.profile.lastname
+      else
+        res[:full_name] = current_resource_owner.name
+        res[:first_name] = ""
+        res[:last_name] = ""
+      end
       if current_resource_owner.avatar
         res[:avatar_url] = current_resource_owner.avatar.url
       end

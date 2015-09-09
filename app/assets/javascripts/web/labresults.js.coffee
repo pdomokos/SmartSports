@@ -132,6 +132,19 @@
       return false
     return true
 
+  $("form.resource-create-form.notifications-form").on("ajax:success", (e, data, status, xhr) ->
+    console.log "notification created, ret = "
+    console.log data
+    if data.ok
+      load_visits()
+      popup_success("Notification "+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
+    else
+      popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+  )
+
   $("form.resource-create-form.lab_results-form").on("ajax:success", (e, data, status, xhr) ->
     category = data['category']
     console.log "labresult form ajax success with data:"
@@ -161,6 +174,13 @@
     popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
   )
 
+  $("#recentVisitsTable").on("ajax:success", (e, data, status, xhr) ->
+    form_item = e.currentTarget
+    load_visits()
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
+  )
 @load_labresult = () ->
   self = this
   current_user = $("#current-user-id")[0].value

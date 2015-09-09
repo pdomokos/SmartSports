@@ -9,7 +9,9 @@ class LabValidator < ActiveModel::Validator
       record.errors[:egfr_epi] << 'no_value'
     elsif record.category == 'ketone' && (record.ketone == nil || record.ketone == "")
       record.errors[:ketone] << 'no_value'
-    else
+    end
+
+    if record.category != 'hba1c' && record.category != 'ldl_chol' &&record.category != 'egfr_epi' &&record.category != 'ketone'
       record.errors[:category] << 'unknown'
     end
 

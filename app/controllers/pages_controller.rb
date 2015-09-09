@@ -144,6 +144,13 @@ class PagesController < ApplicationController
     end
   end
 
+  def statistics
+    save_click_record(:success, nil, nil)
+    if params[:user_id] && current_user.admin?
+      @selected_user = User.find_by_id(params[:user_id])
+    end
+  end
+
   def settings
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if @movesconn
@@ -213,9 +220,7 @@ class PagesController < ApplicationController
     render json: {  data: visits.to_json , email: email, :status => "OK"}
   end
 
-  def analytics2
 
-  end
 
   def error
     # to display some error in case of app failure

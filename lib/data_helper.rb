@@ -3,7 +3,7 @@ module DataHelper
   def dup_data( from_uid = 1 , to_uid = 15)
     u = User.find_by_id(from_uid)
     u.diets.each do |it|
-      if it.type=='Smoke' || it.food_type
+      if it.diet_type=='Smoke' || it.food_type
         d = it.dup
         d.user_id = to_uid
         d.save!
@@ -106,14 +106,32 @@ module DataHelper
   end
 
 
-  def export_tracker_data
+  def export_conn_data
     from_uid = 1
-    arr = TrackerData.all
+    u = User.find_by_id(from_uid)
+    arr = u.tracker_data.all
     File.open("/data/tmp/tracker_data_uid_#{from_uid}.json", 'w') do |f|
       JSON.dump(arr.as_json, f)
     end
   end
 
+  def export_tracker_data
+    from_uid = 1
+    u = User.find_by_id(from_uid)
+    arr = u.tracker_data.all
+    File.open("/data/tmp/tracker_data_uid_#{from_uid}.json", 'w') do |f|
+      JSON.dump(arr.as_json, f)
+    end
+  end
+
+  def export_summary_data
+    from_uid = 1
+    u = User.find_by_id(from_uid)
+    arr = u.summaries.all
+    File.open("/data/tmp/summaries_uid_#{from_uid}.json", 'w') do |f|
+      JSON.dump(arr.as_json, f)
+    end
+  end
   # =================
 
   def export_diets
@@ -128,11 +146,13 @@ module DataHelper
 
   # =================
 
-  def export_exercise
-    from_uid = 1
+  def export_exercise(from_uid, to_uid)
     u = User.find_by_id(from_uid)
     arr = u.activities.select { |it| it.activity_type }
-    File.open("/data/tmp/activities_uid_1.json", 'w') do |f|
+    for a in arr do
+      a.user_id = to_uid
+    end
+    File.open("/data/tmp/activities_uid_#{from_uid}.json", 'w') do |f|
       JSON.dump(arr.as_json, f)
     end
   end
@@ -143,7 +163,7 @@ module DataHelper
     u = User.find_by_id(from_uid)
     arr = u.measurements.all
     for a in arr do
-      a.id = to_uid
+      a.user_id = to_uid
     end
     File.open("/data/tmp/measurements_uid_#{from_uid}_#{to_uid}.json", 'w') do |f|
       JSON.dump(arr.as_json, f)
@@ -168,13 +188,13 @@ module DataHelper
     end
   end
 
-  def import_data(model, uid)
+  def import_data(fname, model, uid)
     u = User.find_by_id(uid)
     arr = nil
-    path = File.join('/Users/bdomokos/Downloads/tmp/', "#{model}_uid_#{uid}.json")
-    File.open(path, 'r') do |f|
+    File.open(fname, 'r') do |f|
       arr = JSON.parse(f.read())
       arr.each do |d|
+        d.delete('id')
         u.try(model.to_sym).create(d)
       end
     end

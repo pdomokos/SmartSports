@@ -14,7 +14,7 @@
               <%=t 'lab_results' %>
             </div>
 
-            <%= form_tag("/users/#{current_user.id}/notifications",  id: "control-create-form",  html: {:'data-type' => 'json'}, remote: true, class: "resource-create-form lab_results-form") do %>
+            <%= form_tag("/users/#{current_user.id}/notifications",  id: "control-create-form",  html: {:'data-type' => 'json'}, remote: true, class: "resource-create-form notifications-form") do %>
                 <div class="dataForm">
                   <input id="control" type="hidden" name="notification[notification_type]" />
                   <input id="control_txt" type="search" class="dataFormField" placeholder="<%=t 'select' %>">
