@@ -1,0 +1,191 @@
+// Place all the styles related to the CustomForms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.add-custom-form {
+  color: #db4437;
+  //background: #F2F3F8;
+  cursor: pointer;
+}
+
+.customStyle:after {
+  float: none !important;
+  margin-left: 0px !important;
+}
+
+
+.img-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+}
+.img-list>li {
+  float: left;
+  width: 88px;
+}
+.img-list>li>span {
+  border: 4px solid transparent;
+  border-radius: 40px;
+  cursor: pointer;
+  display: block;
+  height: 80px;
+  margin: 0 4px;
+  background-color: gray;
+  //transition: border-color 150ms ease-in-out;
+}
+.img-a1 {
+  background: image-url("custom/img_myForms.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+.img-a2 {
+  background: image-url("custom/img_bloodSugar.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+.img-a3 {
+  background: image-url("custom/img_bloodSugar.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+.img-b1 {
+  background: image-url("custom/img_bloodSugar.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+.cf:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+
+.customStyle .dataFormField {
+  border: solid 1px grey !important;
+  width: 260px;
+};
+.customStyle button {
+  background: #8980CA !important;
+  margin-top: 10px;
+};
+.customStyle div.dialogFormContainer {
+  width: 450px;
+  height: 260px;
+}
+.customStyle div.dataFormSeparator {
+  height: 365px !important;
+}
+.customStyle .dataForm {
+  height: 0;
+}
+.customStyle .dataFormTitle {
+  text-align: left;
+  text-transform: uppercase;
+  height: 50px;
+}
+.customStyle .dataFormRemark {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #777;
+  font-size: 10px;
+  font-size: 1rem;
+  line-height: 140%;
+  margin: 10px 0 15px 20px;
+  width: 300px;
+}
+
+.customStyle .titleSub {
+  font-family: "Gotham SSm 4r","Gotham SSm A","Gotham SSm B",Arial,sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 0 0 10px 20px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.modalDialog > div.customStyle {
+  width: 350px;
+}
+
+#iconselect {
+  color: #999;
+  width: 230px;
+}
+
+@media(min-width: 10025px) {
+  .add-custom-form {
+    width: 278px;
+    margin: 0;
+  }
+
+  .form_warning {
+    color: #999;
+    font-family: 'Gotham SSm 5r', 'Gotham SSm A', 'Gotham SSm B', Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 11px;
+    font-size: 1.1rem;
+    line-height: 14px;
+    padding-right: 24px;
+    position: relative;
+    text-transform: uppercase;
+    top: -28px;
+    margin: 0 auto;
+    width: 278px;
+  }
+
+  .form_title{
+    color: #000;
+    font-family: 'Gotham SSm 7r', 'Gotham SSm A', 'Gotham SSm B', Arial, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 18px;
+    font-size: 1.8rem;
+    margin: 0 auto 18px;
+    width: 278px;
+  }
+
+  .form_div {
+
+  }
+
+  .form_input-tight {
+    padding-bottom: 15px;
+  }
+
+  .form_disclaimer {
+      font-family: Arial, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      color: #777;
+      font-size: 10px;
+      font-size: 1rem;
+      line-height: 140%;
+      margin: 10px 0 15px;
+  }
+
+  .input-wrap {
+    position: relative;
+    background: #FFF;
+  }
+}
+//.label {
+//  color: #333;
+//  display: block;
+//  font-family: 'Gotham SSm 5r', 'Gotham SSm A', 'Gotham SSm B', Arial, sans-serif;
+//  font-weight: 500;
+//  font-style: normal;
+//  font-size: 12px;
+//  font-size: 1.2rem;
+//  line-height: 21px;
+//}
+//
+//.btn {
+//  cursor: pointer;
+//  display: block;
+//  font-family: 'Gotham SSm 7r', 'Gotham SSm A', 'Gotham SSm B', Arial, sans-serif;
+//  font-weight: 700;
+//  font-style: normal;
+//  -webkit-font-smoothing: antialiased;
+//  text-align: center;
+//  text-decoration: none;
+//  text-transform: uppercase;
+//}

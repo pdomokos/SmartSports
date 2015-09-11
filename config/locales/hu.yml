@@ -9,6 +9,8 @@ hu:
   menu_labresults: "Kontroll"
   menu_analytics:  "Elemzés"
   menu_profile: "Profil"
+  menu_custom: "Saját"
+  menu_custom_full: "Saját Kérdőívek"
 
   title_profile: "SZEMÉLYES PROFIL"
 

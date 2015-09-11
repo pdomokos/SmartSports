@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     resources :lab_results
     resources :sensor_measurements
     resources :profile
+    resources :custom_forms
     get 'analysis_data' => 'analysis_data#index'
     post 'upload'
     post 'uploadAv'
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
     get 'pages/labresult'
     get 'pages/explore'
     get 'pages/settings'
+    get 'pages/customforms'
     get 'pages/traffic'
 
     get 'pages/signin'

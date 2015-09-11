@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150806073511) do
+ActiveRecord::Schema.define(version: 20150910124340) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.float    "intensity"
     t.boolean  "favourite",        default: false
     t.integer  "activity_type_id"
+    t.boolean  "is_template",      default: false
   end
 
   add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
@@ -71,6 +72,20 @@ ActiveRecord::Schema.define(version: 20150806073511) do
 
   add_index "connections", ["name", "user_id"], name: "index_connection_on_name_and_user_id", unique: true
 
+  create_table "custom_form_elements", force: true do |t|
+    t.integer "formId"
+    t.integer "orderIndex"
+    t.string  "propertyCode"
+    t.integer "templateId"
+  end
+
+  create_table "custom_forms", force: true do |t|
+    t.integer "user_id"
+    t.integer "order_index"
+    t.string  "form_name"
+    t.string  "image_name"
+  end
+
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -103,6 +118,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.float    "prot"
     t.string   "category"
     t.integer  "food_type_id"
+    t.boolean  "is_template",  default: false
   end
 
   create_table "family_histories", force: true do |t|
@@ -154,6 +170,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_template", default: false
   end
 
   create_table "lifestyles", force: true do |t|
@@ -170,6 +187,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.integer  "illness_type_id"
     t.string   "pain_type_name"
     t.integer  "period_volume"
+    t.boolean  "is_template",     default: false
   end
 
   add_index "lifestyles", ["user_id", "created_at"], name: "index_lifestyles_on_user_id_and_created_at"
@@ -194,6 +212,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.boolean  "favourite",        default: false
     t.float    "stress_amount"
     t.integer  "blood_sugar_time"
+    t.boolean  "is_template",      default: false
   end
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"
@@ -214,6 +233,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.datetime "updated_at"
     t.integer  "medication_type_id"
     t.boolean  "favourite",          default: false
+    t.boolean  "is_template",        default: false
   end
 
   create_table "notifications", force: true do |t|
@@ -226,6 +246,7 @@ ActiveRecord::Schema.define(version: 20150806073511) do
     t.datetime "updated_at"
     t.string   "notification_data"
     t.datetime "remind_at"
+    t.boolean  "is_template",                   default: false
   end
 
   add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"

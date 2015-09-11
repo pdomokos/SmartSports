@@ -151,6 +151,10 @@ class PagesController < ApplicationController
     end
   end
 
+  def customforms
+
+  end
+
   def settings
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if @movesconn

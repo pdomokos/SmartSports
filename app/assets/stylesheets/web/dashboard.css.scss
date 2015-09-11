@@ -274,6 +274,18 @@ button.dataFormField {
   color: #f46d43 !important;
 }
 
+.customColor {
+  color: white !important;
+}
+.customTitleColor {
+  color: white !important;
+  background-color: #c3d4e2 !important;
+  //width: 18%;
+}
+
+.custom-block {
+
+}
 .forgottenDiv {
     padding: 20px;
     position: absolute;
@@ -438,6 +450,11 @@ button.deleteForm {
   background: image-url("analytics60.png") no-repeat 5px 5px;
   background-size: 40px 40px;
 }
+
+.app2Menu .customIcon {
+  background: image-url("custom/img_myForms.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
 // -----------------------------------------
 
 
@@ -505,6 +522,11 @@ button.deleteForm {
   background-size: 40px 40px;
 }
 
+.customBodyLogo {
+  background: image-url("custom/img_myForms.png") 10px 10px no-repeat;
+  background-size: 40px 40px;
+}
+
 .sectionTitle {
     margin-top: 40px;
     /*background-color: rgba(0, 0, 0, 0.1);*/
@@ -527,6 +549,16 @@ div.dataFormContainer {
     color: #7A7A6F;
     /*border: solid 1px #8980CA;*/
     /*box-shadow: 0px 0px 15px 5px rgba(50, 50, 50, 0.2);*/
+}
+div.dialogFormContainer {
+  width: 240px;
+  height: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /*margin : 10 px;*/
+  color: #7A7A6F;
+  /*border: solid 1px #8980CA;*/
+  /*box-shadow: 0px 0px 15px 5px rgba(50, 50, 50, 0.2);*/
 }
 
 .dataFormSeparator {
