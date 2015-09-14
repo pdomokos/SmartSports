@@ -152,7 +152,7 @@ class PagesController < ApplicationController
   end
 
   def customforms
-
+    @icons = CustomForm.images
   end
 
   def settings

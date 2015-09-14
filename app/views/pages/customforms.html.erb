@@ -8,21 +8,7 @@
   <div class="contentBg customStyle">
 
 
-    <ul class="img-list cf">
-      <li>
-        <span class="img-a1"></span>
-      </li>
-      <li>
-        <span class="img-a2"></span>
-      </li>
-      <li>
-        <span class="img-a3"></span>
-      </li>
-      <li>
-        <span class="img-b1"></span>
-      </li>
 
-    </ul>
   </div>
 </div>
 
@@ -38,47 +24,42 @@
         <!--<div class="form_warning">Info</div>-->
         <!--<h3 class="form_title"></h3>-->
         <div class="dialogFormContainer">
-          <form>
-              <div class="dataForm">
+          <style>
+              <% for i in @icons %>
+              .iconselect_<%= i %> {
+                  background: url("/assets/custom/<%= i %>_gray.png"), url("/assets/downarrow.png");
+                  background-repeat: no-repeat, no-repeat;
+                  background-size: 30px, 30px, 30px, 30px;
+                  background-position: left, right;
+                  padding-left: 34px;
+              }
+              <% end %>
+          </style>
+          <%= form_tag( "/users/#{current_user.id}/custom_forms", remote: true, id: "custom-create-form") do %>
+              <div id="dataform" class="dataForm">
                 <p class="dataFormRemark">You can create your own forms with your frequently recorded data and default values.</p>
                 <p class="titleSub">Form Data</p>
-                <input type="text" class="dataFormField"  placeholder="Form name, e.g. Morning Form">
+                <input type="text" name="custom_form[form_name]" class="dataFormField" placeholder="Form name, e.g. Morning Form">
 
-                    <br/>
-                    <div class="left">
-                      <span class="img-a1">xxx</span>
-                    </div>
-                    <select id="iconselect" class="dataFormField left">
-                      <option value="" disabled selected>Select icon for custom form</option>
-                    </select>
+                <br/>
 
-            <!--<div class="form_input-tight">-->
-                <!--<label class="label">-->
-                  <!--<span>abc</span>-->
-                  <!--<div class="input-wrap">-->
-                    <!--<input>-->
-                  <!--</div>-->
-                <!--</label>-->
-            <!--</div>-->
+                <input id="iconselect" class="dataFormField left iconselect_img_myForms" placeholder="Select icon for the new form">
+                <input id="formicon" name="custom_form[image_name]" type="hidden" value="img_myForms">
+                <button id="add-custom-button" class="dataFormField" >Add Form</button>
+            </div>
+            <div id="iconform" class=hidden>
+              <ul class="img-list cf">
+                <% for i in @icons %>
+                <li>
+                  <span class="iconsel" id="<%= i %>" style="background: no-repeat left url('/assets/custom/<%= i %>_gray.png');background-size: 30px 30px;"></span>
+                </li>
+                    <% end %>
+              </ul>
+              <br/>
+              <span id="backToForm" class="backbtn">Back</span>
+            </div>
+          <% end %>
 
-            <!--<table>-->
-                <!--<tbody>-->
-
-                  <!--<tr>-->
-                    <!--<td style="width: 180px;height: 50px;">Custom Form Name</td>-->
-                    <!--<td><input type="text" class="dataFormField" id="title" placeholder="Form name, e.g. Morning Form" value=""></td>-->
-                  <!--</tr>-->
-                  <!--<tr>-->
-                    <!--<td style="width: 180px;height: 50px;">Form Image</td>-->
-                    <!--<td><input type="text" class="dataFormField" id="note_a" placeholder="Select icon" value=""></td>-->
-                  <!--</tr>-->
-
-
-                <!--</tbody>-->
-              <!--</table>-->
-                </div>
-          </form>
-          <button id="add-custom-button" class="dataFormField" >Add Form</button>
         </div>
     </div>
   </div>

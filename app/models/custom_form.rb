@@ -2,7 +2,7 @@ class CustomForm < ActiveRecord::Base
   belongs_to :user
   has_many :custom_form_elements
 
-  def images
+  def self.images
     ret = %w(img_add
       img_addForm
       img_bp

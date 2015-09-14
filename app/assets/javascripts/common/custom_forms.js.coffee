@@ -15,3 +15,31 @@
   $(document).on("click", "#closeModalAddCustomForm", (evt) ->
     location.href = "#close"
   )
+
+  $("#iconselect").on("click",  (evt) ->
+    console.log "iconselect clicked"
+    $("#dataform").addClass("hidden")
+    $("#iconform").removeClass("hidden")
+  )
+
+  $("#backToForm").on("click",  (evt) ->
+    $("#dataform").removeClass("hidden")
+    $("#iconform").addClass("hidden")
+  )
+
+  $("span.iconsel").on("click", (evt)->
+    iconid = evt.target.id
+    console.log iconid
+
+    for cl in $("#iconselect")[0].classList
+      $("#iconselect").removeClass(cl)
+
+    $("#iconselect").addClass('dataFormField')
+    $("#iconselect").addClass('left')
+    $("#iconselect").addClass('iconselect_'+iconid)
+    $("#formicon").val(iconid)
+
+    $("#dataform").removeClass("hidden")
+    $("#iconform").addClass("hidden")
+
+  )

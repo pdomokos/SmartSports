@@ -18,37 +18,35 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 300px;
+  width: 310px;
 }
 .img-list>li {
   float: left;
-  width: 88px;
+  width: 38px;
 }
 .img-list>li>span {
-  border: 4px solid transparent;
-  border-radius: 40px;
+  box-sizing: border-box;
+  border: 0px solid transparent;
+  //border-radius: 40px;
   cursor: pointer;
   display: block;
-  height: 80px;
-  margin: 0 4px;
-  background-color: gray;
+  height: 30px;
+  width: 38px;
+  margin: 4px 4px;
+  //background-color: gray;
   //transition: border-color 150ms ease-in-out;
 }
-.img-a1 {
-  background: image-url("custom/img_myForms.png") no-repeat 5px 5px;
-  background-size: 40px 40px;
+
+.img-list>li:hover {
+  background-color: #005599;
 }
-.img-a2 {
-  background: image-url("custom/img_bloodSugar.png") no-repeat 5px 5px;
-  background-size: 40px 40px;
+
+#iconform {
+  width: 250px;
 }
-.img-a3 {
-  background: image-url("custom/img_bloodSugar.png") no-repeat 5px 5px;
-  background-size: 40px 40px;
-}
-.img-b1 {
-  background: image-url("custom/img_bloodSugar.png") no-repeat 5px 5px;
-  background-size: 40px 40px;
+
+.backbtn {
+  color: #8980CA;
 }
 .cf:after {
   clear: both;
@@ -106,8 +104,14 @@
 }
 
 #iconselect {
-  color: #999;
-  width: 230px;
+  //color: #999;
+  //width: 230px;
+
+  //background: image-url("custom/img_bloodSugar_gray.png"), image-url("downarrow.png");
+  //background-repeat: no-repeat, no-repeat;
+  //background-size: 30px, 30px, 30px, 30px;
+  //background-position: left, right;
+  padding-left: 34px;
 }
 
 @media(min-width: 10025px) {
