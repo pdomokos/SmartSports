@@ -16,7 +16,9 @@ Rails.application.routes.draw do
         resources :lab_results
         resources :notifications
         resources :sensor_measurements
-        resources :users
+        resources :custom_forms do
+          resources :custom_form_elements
+        end
       end
       resources :medication_types
       resources :food_types
@@ -51,7 +53,9 @@ Rails.application.routes.draw do
     resources :lab_results
     resources :sensor_measurements
     resources :profile
-    resources :custom_forms
+    resources :custom_forms do
+      resources :custom_form_elements
+    end
     get 'analysis_data' => 'analysis_data#index'
     post 'upload'
     post 'uploadAv'

@@ -2,6 +2,8 @@ class CustomForm < ActiveRecord::Base
   belongs_to :user
   has_many :custom_form_elements
 
+  validates :form_name, presence: true
+
   def self.images
     ret = %w(img_add
       img_addForm

@@ -103,6 +103,15 @@
   width: 350px;
 }
 
+.customStyle .formFail {
+  border-color: red !important;
+}
+.formFailSign {
+  color: red;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
 #iconselect {
   //color: #999;
   //width: 230px;
@@ -171,6 +180,8 @@
     background: #FFF;
   }
 }
+
+
 //.label {
 //  color: #333;
 //  display: block;

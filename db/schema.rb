@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910124340) do
+ActiveRecord::Schema.define(version: 20150915092908) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(version: 20150910124340) do
   add_index "connections", ["name", "user_id"], name: "index_connection_on_name_and_user_id", unique: true
 
   create_table "custom_form_elements", force: true do |t|
-    t.integer "formId"
-    t.integer "orderIndex"
-    t.string  "propertyCode"
-    t.integer "templateId"
+    t.integer "custom_form_id"
+    t.integer "order_index"
+    t.string  "property_code"
+    t.integer "template_id"
   end
 
   create_table "custom_forms", force: true do |t|
