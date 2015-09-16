@@ -1,0 +1,17 @@
+<div class="dataForm">
+  <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+  <input type="hidden" name="lifestyle[group]" value="stress"/>
+
+  <label for="stress_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
+  <div class="dataScale">
+    <div id="stress_scale" class="dataFormField"></div>
+  </div>
+
+  <div id="stress_percent" class="dataFormFieldUnitHalf"><%=t 'stress_amount_average'%></div>
+  <input id="stress_amount" type="hidden" name="lifestyle[amount]"/>
+
+
+  <input id='stress_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'day'%></div>
+
+</div>

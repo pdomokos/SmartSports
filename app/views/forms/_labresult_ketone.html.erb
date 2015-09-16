@@ -1,0 +1,12 @@
+<div class="dataForm">
+  <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
+  <input type="hidden" name="labresult[category]" value="ketone" />
+
+  <input id="ketone" type="search" name="labresult[ketone]" class="dataFormField" placeholder="Ketone">
+
+  <div class="dataFormFieldUnitNarrow"></div>
+  <br>
+
+  <input id='ketone_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <br>
+</div>

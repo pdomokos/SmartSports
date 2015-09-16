@@ -12,180 +12,73 @@
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
             <%=t 'wellbeing'%>
         </div>
-        <div class="contentBg wellbeingStyle">
+        <div class="contentBg">
             <div style="padding: 10px;">
-                <div class="dataFormContainer">
+                <div class="dataFormContainer wellbeingStyle">
                     <div class="dataFormTitle">
                         <%= image_tag "sleep40.png" %><br/>
                       <%=t 'sleep'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", id: "sleep-create-form", remote: true, class: "resource-create-form lifestyle-form") do %>
-                        <div class="dataForm">
-                            <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-                            <input type="hidden" name="lifestyle[group]" value="sleep"/>
-
-                            <label for="sleep_scale" style="margin-left: 20px;"><%=t 'quality'%></label>
-                            <br/>
-                            <div class="dataScale">
-                                <div id="sleep_scale" class="dataFormField"></div>
-                            </div>
-                            <div id="sleep_percent" class="dataFormFieldUnitHalf"><%=t 'sleep_fairly_good'%></div>
-
-                            <input id='sleep_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                            <div class="dataFormFieldUnit"><%=t 'start'%></div>
-
-                            <input id='sleep_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                            <div class="dataFormFieldUnit"><%=t 'end'%></div>
-
-                            <input id="sleep_amount" type="hidden" name="lifestyle[amount]" />
-
-                        </div>
+                        <%= render "forms/wellbeing_sleep" %>
                         <button id="addWellbeingButton" class="dataFormField"><%=t 'button_add'%></button>
                     <% end %>
                 </div>
-                <div class="dataFormSeparator"></div>
+                <div class="dataFormSeparator wellbeingStyle"></div>
 
-                <div class="dataFormContainer">
+                <div class="dataFormContainer wellbeingStyle">
                     <div class="dataFormTitle">
                         <%= image_tag "stress40.png" %><br/>
                         <%=t 'stress'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "stress-create-form", class: "resource-create-form lifestyle-form") do %>
-                        <div class="dataForm">
-                            <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-                            <input type="hidden" name="lifestyle[group]" value="stress"/>
-
-                            <label for="stress_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
-                            <div class="dataScale">
-                                <div id="stress_scale" class="dataFormField"></div>
-                            </div>
-
-                            <div id="stress_percent" class="dataFormFieldUnitHalf"><%=t 'stress_amount_average'%></div>
-                            <input id="stress_amount" type="hidden" name="lifestyle[amount]"/>
-
-
-                            <input id='stress_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                            <div class="dataFormFieldUnit"><%=t 'day'%></div>
-
-                        </div>
-
-                        <button class="dataFormField"><%=t 'button_add'%></button>
+                      <%= render "forms/wellbeing_stress" %>
+                      <button class="dataFormField"><%=t 'button_add'%></button>
 
                     <% end %>
                 </div>
-                <div class="dataFormSeparator"></div>
+                <div class="dataFormSeparator wellbeingStyle"></div>
 
-                  <div class="dataFormContainer">
+                  <div class="dataFormContainer wellbeingStyle">
                     <div class="dataFormTitle">
                       <%= image_tag "illness40.png" %><br/>
                       <%=t 'illness'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "illness-create-form", class: "resource-create-form lifestyle-form") do %>
-                        <div class="dataForm">
-                          <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-                          <input type="hidden" name="lifestyle[group]" value="illness"/>
-
-                          <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="<%=t 'illness_placeholder'%>">
-                          <input id="illnessname" name="lifestyle[illness_type_id]" type="hidden">
-
-                          <label for="illness_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
-                          <div class="dataScale">
-                            <div id="illness_scale" class="dataFormField"></div>
-                          </div>
-
-                          <div id="illness_percent" class="dataFormFieldUnitHalf"><%=t 'illness_amount_mild'%></div>
-                          <input id="illness_amount" type="hidden" name="lifestyle[amount]"/>
-
-
-                          <input id='illness_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                          <div class="dataFormFieldUnit"><%=t 'start'%></div>
-
-                          <input id='illness_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                          <div class="dataFormFieldUnit"><%=t 'end'%></div>
-                        </div>
-
+                        <%= render "forms/wellbeing_illness" %>
                         <button class="dataFormField"><%=t 'button_add'%></button>
-
                     <% end %>
                   </div>
-                  <div class="dataFormSeparator"></div>
+                  <div class="dataFormSeparator wellbeingStyle"></div>
 
-                  <div class="dataFormContainer">
+                  <div class="dataFormContainer wellbeingStyle">
                     <div class="dataFormTitle">
                       <%= image_tag "pain40.png" %><br/>
                       <%=t 'pain'%>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "pain-create-form", class: "resource-create-form lifestyle-form") do %>
-                        <div class="dataForm">
-                          <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-                          <input type="hidden" name="lifestyle[group]" value="pain"/>
-
-                          <input id="pain_name" type="search" name="lifestyle[pain_type_name]" class="dataFormField" placeholder="<%=t 'pain_placeholder'%>">
-
-                          <label for="pain_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
-                          <div class="dataScale">
-                            <div id="pain_scale" class="dataFormField"></div>
-                          </div>
-
-                          <div id="pain_percent" class="dataFormFieldUnitHalf"><%=t 'pain_amount_mild'%></div>
-                          <input id="pain_amount" type="hidden" name="lifestyle[amount]"/>
-
-
-                          <input id='pain_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                          <div class="dataFormFieldUnit"><%=t 'start'%></div>
-
-                          <input id='pain_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                          <div class="dataFormFieldUnit"><%=t 'end'%></div>
-                        </div>
-
+                        <%= render "forms/wellbeing_pain" %>
                         <button class="dataFormField"><%=t 'button_add'%></button>
 
                     <% end %>
                   </div>
-                  <div class="dataFormSeparator"></div>
+                  <div class="dataFormSeparator wellbeingStyle"></div>
 
                   <% if current_user.profile.nil? || current_user.profile.sex=='female' %>
-                      <div class="dataFormContainer">
+                      <div class="dataFormContainer wellbeingStyle">
                         <div class="dataFormTitle">
                           <%= image_tag "period40.png" %><br/>
                           <%=t 'periods'%>
                         </div>
                         <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "period-create-form", class: "resource-create-form lifestyle-form") do %>
-                            <div class="dataForm">
-                              <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-                              <input type="hidden" name="lifestyle[group]" value="period"/>
-
-                              <input id='periods_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                              <div class="dataFormFieldUnit"><%=t 'start'%></div>
-
-                              <input id='periods_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
-                              <div class="dataFormFieldUnit"><%=t 'end'%></div>
-
-                              <label for="periods_scale" style="margin-right: 50px; margin-left: 20px;"><%=t 'pain'%></label>
-                              <div class="dataScale">
-                                <div id="periods_scale" class="dataFormField"></div>
-                              </div>
-                              <div id="periods_percent" class="dataFormFieldUnitHalf"><%=t 'period_amount_mild_pain'%></div>
-
-                              <input id="periods_amount" type="hidden" name="lifestyle[amount]"/>
-                              <br/>
-
-                              <label for="periods_volume_scale" style="margin-right: 20px; margin-left: 20px;"><%=t 'amount'%></label>
-                              <div class="dataScale">
-                                <div id="periods_volume_scale" class="dataFormField"></div>
-                              </div>
-
-                              <div id="periods_volume_percent" class="dataFormFieldUnitHalf"><%=t 'period_volume_moderate'%></div>
-                              <input id="periods_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
-                            </div>
-
+                            <%= render "forms/wellbeing_period" %>
                             <button class="dataFormField"><%=t 'button_add'%></button>
 
                         <% end %>
                       </div>
-                      <div class="dataFormSeparator"></div>
+                      <div class="dataFormSeparator wellbeingStyle"></div>
                     <% end %>
-                <div style="clear: both"></div>
+                <div class="clearBoth"></div>
             </div>
         </div>
 

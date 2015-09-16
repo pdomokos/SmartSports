@@ -5,61 +5,18 @@
   $("#diet-link").css
     background: "rgba(87, 200, 138, 0.3)"
 
-  $('#diet_food_datepicker').datetimepicker(timepicker_defaults)
-  $('#diet_calories_datepicker').datetimepicker(timepicker_defaults)
-  $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
-  $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
   popup_messages = JSON.parse($("#popup-messages").val())
-
+  initDiet()
   load_diets()
+
   document.body.style.cursor = 'wait'
   load_food_types()
-
-  $("#diet_drink_amount").val(2)
-  $("#diet_amount").val(2)
-
-  $("#diet_scale").slider({
-    min: 0.25,
-    max: 5.0,
-    step: 0.25,
-    value: 2
-  }).slider({
-    slide: (event, ui) ->
-      $("#diet_unit").html(" "+ui.value*100+"g")
-    change: (event, ui) ->
-      $("#diet_amount").val(ui.value)
-  })
-
-  $("#diet_drink_scale").slider({
-    min: 0.25,
-    max: 5,
-    step: 0.25,
-    value: 2
-  }).slider({
-    slide: (event, ui) ->
-      $("#diet_drink_unit").html(ui.value+" dl")
-    change: (event, ui) ->
-      $("#diet_drink_amount").val(ui.value)
-  })
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     console.log data
-    $("#"+form_id+" input.dataFormField").val("")
-    $("#diet_scale").slider({ value: 2 })
-    fval = $("#diet_scale").slider("value")
-    $("#diet_unit").html(fval*100+"g")
-    $("#diet_drink_scale").slider({ value: 2 })
-    dval = $("#diet_drink_scale").slider("value")
-    $("#diet_drink_unit").html(dval+" dl")
-    $('#diet_food_datepicker').val(moment().format(moment_fmt))
-    $('#diet_calories_datepicker').val(moment().format(moment_fmt))
-    $('#diet_drink_datepicker').val(moment().format(moment_fmt))
-    $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
-    $('#diet_type_id').val(null)
-    $('#diet_drink_type_id').val(null)
-    $('#diet_smoke_type').val(null)
+    resetDiet(form_id)
     loadDietHistory()
     popup_success(data['diet_name']+popup_messages.saved_successfully, $("#addFoodButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
@@ -87,6 +44,55 @@
     load_favs()
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
+
+@resetDiet = (form_id) ->
+  $("#"+form_id+" input.dataFormField").val("")
+  $("#diet_scale").slider({ value: 2 })
+  fval = $("#diet_scale").slider("value")
+  $("#diet_unit").html(fval*100+"g")
+  $("#diet_drink_scale").slider({ value: 2 })
+  dval = $("#diet_drink_scale").slider("value")
+  $("#diet_drink_unit").html(dval+" dl")
+  $('#'+form_id+' .diet_food_datepicker').val(moment().format(moment_fmt))
+  $('#diet_calories_datepicker').val(moment().format(moment_fmt))
+  $('#diet_drink_datepicker').val(moment().format(moment_fmt))
+  $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
+  $('#diet_type_id').val(null)
+  $('#diet_drink_type_id').val(null)
+  $('#diet_smoke_type').val(null)
+
+@initDiet = () ->
+  console.log "initdiet called"
+  $('.diet_food_datepicker').datetimepicker(timepicker_defaults)
+  $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
+  $("#diet_drink_amount").val(2)
+  $('#diet_calories_datepicker').datetimepicker(timepicker_defaults)
+  $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
+  $("#diet_amount").val(2)
+
+  $("#diet_scale").slider({
+    min: 0.25,
+    max: 5.0,
+    step: 0.25,
+    value: 2
+  }).slider({
+    slide: (event, ui) ->
+      $("#diet_unit").html(" "+ui.value*100+"g")
+    change: (event, ui) ->
+      $("#diet_amount").val(ui.value)
+  })
+
+  $("#diet_drink_scale").slider({
+    min: 0.25,
+    max: 5,
+    step: 0.25,
+    value: 2
+  }).slider({
+    slide: (event, ui) ->
+      $("#diet_drink_unit").html(ui.value+" dl")
+    change: (event, ui) ->
+      $("#diet_drink_amount").val(ui.value)
+  })
 
 @loadDietHistory = () ->
   load_diets()

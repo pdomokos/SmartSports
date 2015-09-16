@@ -1,0 +1,13 @@
+<div class="dataForm">
+  <input type="hidden" name="labresult[source]" value="<%= @default_source %>" />
+  <input type="hidden" name="labresult[category]" value="hba1c" />
+
+  <input id="hba1c" type="text" name="labresult[hba1c]" class="dataFormField" placeholder="HbA1c"/>
+
+  <div class="dataFormFieldUnitNarrow">%</div>
+  <br>
+
+  <input id='hba1c_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= Date.current.strftime("%F") %>"/>
+  <br>
+
+</div>

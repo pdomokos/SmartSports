@@ -1,14 +1,121 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
-<div class="custom-block mainContent">
+<div class="sectionTitle customBodyLogo customTitleColor">
+  <div class="left"><%=t 'menu_custom_full' %></div>
+  <div class="right"><i id="add-custom-form" class="fa fa-plus-circle fa-2x add-custom-form"></i></div>
+</div>
 
-  <div class="sectionTitle customBodyLogo customTitleColor">
-    <div class="left"><%=t 'menu_custom_full' %></div>
-    <div class="right"><i id="add-custom-form" class="fa fa-plus-circle fa-2x add-custom-form"></i></div>
+<div class="diet-block mainContent">
+
+    <div class="sectionTitle dietBodyLogo dietColor">
+        <%=t 'menu_diet' %>
+    </div>
+
+    <div class="contentBg ">
+      <div style="padding: 10px;">
+        <div class="dataFormContainer dietStyle">
+          <div class="dataFormTitle">
+            <%= image_tag "food40.png" %><br/>
+            <%=t 'food' %>
+          </div>
+          <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
+              <%= render 'forms/diet_food' %>
+              <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+          <% end %>
+        </div>
+        <div class="dataFormSeparator dietStyle"></div>
+
+        <div class="dataFormContainer healthStyle">
+          <div class="dataFormTitle">
+            <%= image_tag "bloodpressure40.png" %><br/>
+            <%=t 'blood_pressure'%>
+          </div>
+          <%= form_tag( "/users/#{current_user.id}/measurements", id: "bp-create-form", remote: true, class: "resource-create-form health-form") do %>
+              <%= render "forms/health_blood_pressure" %>
+              <button id="addMeasurementButton" class="dataFormField"><%=t 'button_add'%></button>
+          <% end %>
+        </div>
+
+        <div class="dataFormSeparator healthStyle"></div>
+
+        <div class="dataFormContainer wellbeingStyle">
+          <div class="dataFormTitle">
+            <%= image_tag "sleep40.png" %><br/>
+            <%=t 'sleep'%>
+          </div>
+          <%= form_tag( "/users/#{current_user.id}/lifestyles", id: "sleep-create-form", remote: true, class: "resource-create-form lifestyle-form") do %>
+              <%= render "forms/wellbeing_sleep" %>
+              <button id="addWellbeingButton" class="dataFormField"><%=t 'button_add'%></button>
+          <% end %>
+        </div>
+        <div class="dataFormSeparator wellbeingStyle"></div>
+
+        <div class="clearBoth"></div>
+
+      </div>
+
+    </div>
+
+  <!-- xxxx -->
+
+  <div class="sectionTitle dietBodyLogo dietColor">
+    <%=t 'menu_diet' %>
   </div>
-  <div class="contentBg customStyle">
+
+  <div class="contentBg">
+    <div style="padding: 10px;">
+      <div class="dataFormContainer dietStyle">
+        <div class="dataFormTitle">
+          <%= image_tag "food40.png" %><br/>
+          <%=t 'food' %>
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
+            <%= render 'forms/diet_food' %>
+            <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator dietStyle"></div>
+
+      <div class="dataFormContainer exerciseStyle">
+        <div class="dataFormTitle">
+          <%= image_tag "bicycle40.png" %><br/>
+          <%=t 'exercise' %>
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
+            <%= render "forms/activity_exercise" %>
+            <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator exerciseStyle"></div>
 
 
+      <div class="dataFormContainer medicationStyle">
+        <div class="dataFormTitle">
+          <%= image_tag "oral40.png" %><br/>
+          <%=t 'drugs' %>
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
+            <%= render "forms/medication_drugs" %>
+            <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator medicationStyle"></div>
+
+      <div class="dataFormContainer labresultStyle">
+        <div class="dataFormTitle">
+          <%= image_tag "kidney40.png" %><br/>
+          <%=t 'drugs' %>
+        </div>
+        <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
+            <%= render "forms/labresult_egfrepi" %>
+            <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+        <% end %>
+      </div>
+      <div class="dataFormSeparator labresultStyle"></div>
+
+      <div class="clearBoth"></div>
+    </div>
   </div>
+
 </div>
 
 <div id="openModalAddCustomForm" class="modalDialog">

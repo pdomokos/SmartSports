@@ -6,124 +6,70 @@
     <div class="sectionTitle bl7 c7">
         <%=t 'lab_results'%>
     </div>
-    <div class="contentBg labresultStyle">
+    <div class="contentBg">
         <div style="padding: 10px;">
-          <div class="dataFormContainer">
+          <div class="dataFormContainer labresultStyle">
             <div class="dataFormTitle">
               <%= image_tag "doctor_40.png" %><br/>
               <%=t 'lab_results' %>
             </div>
-
             <%= form_tag("/users/#{current_user.id}/notifications",  id: "control-create-form",  html: {:'data-type' => 'json'}, remote: true, class: "resource-create-form notifications-form") do %>
-                <div class="dataForm">
-                  <input id="control" type="hidden" name="notification[notification_type]" />
-                  <input id="control_txt" type="search" class="dataFormField" placeholder="<%=t 'select' %>">
-                  <div class="dataFormFieldUnitNarrow"></div>
-
-                  <input id='controll_datepicker' type='text' class="dataFormField" name="notification[date]" value="<%= Date.current.strftime("%F") %>"/>
-                  <div class="dataFormFieldUnitNarrow"></div>
-
-                  <div style="margin-left: 20px; display: inline-block;"><label for="next_controll_datepicker"><%=t 'set_reminder'%>:</label></div>
-                  <input id='next_controll_datepicker' type='text' class="dataFormField" name="notification[remind_at]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                  <div class="dataFormFieldUnitNarrow"></div>
-                </div>
+                <%= render "forms/notification_visit" %>
                 <button id="addLabResultButton" class="dataFormField"><%= t 'button_add' %></button>
             <% end %>
-          </div>
-          <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer">
+            </div>
+            <div class="dataFormSeparator labresultStyle"></div>
+
+            <div class="dataFormContainer labresultStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "test_tube40.png" %><br/>
                     HbA1c
                 </div>
-
                 <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "hba1c-create-form", class: "resource-create-form lab_results-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>" />
-                        <input type="hidden" name="labresult[category]" value="hba1c" />
-
-                        <input id="hba1c" type="text" name="labresult[hba1c]" class="dataFormField" placeholder="HbA1c"/>
-
-                        <div class="dataFormFieldUnitNarrow">%</div>
-                        <br>
-
-                        <input id='hba1c_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= Date.current.strftime("%F") %>"/>
-                        <br>
-
-                    </div>
+                    <%= render "forms/labresult_hba1c" %>
                     <button id="addLabResultButton" class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
+            <div class="dataFormSeparator labresultStyle"></div>
+
+            <div class="dataFormContainer labresultStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "water40.png" %><br/>
                     LDL-chol
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "ldlchol-create-form", class: "resource-create-form lab_results-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="labresult[category]" value="ldl_chol" />
-
-                        <input id="ldl_chol" type="text" name="labresult[ldl_chol]" class="dataFormField" placeholder="LDL-chol"/>
-
-                        <div class="dataFormFieldUnitNarrow">mmol/L</div>
-                        <br>
-
-                        <input id='ldl_chol_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
-                        <br>
-                    </div>
+                    <%= render "forms/labresult_ldlchol" %>
                     <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
+            <div class="dataFormSeparator labresultStyle"></div>
+
+            <div class="dataFormContainer labresultStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "kidney40.png" %><br/>
                     eGFR-EPI
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "egfrepi-create-form", class: "resource-create-form lab_results-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="labresult[category]" value="egfr_epi" />
-
-                        <input id="egfr_epi" type="text" name="labresult[egfr_epi]" class="dataFormField" placeholder="eGFR-EPI"/>
-
-                        <div class="dataFormFieldUnit egfr">ml/min/1.73m<sup>2</sup></div>
-                        <br>
-
-                        <input id='egfr_epi_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
-                        <br>
-                    </div>
-
-                    <button class="dataFormField"><%=t 'button_add'%></button>
+                  <%= render "forms/labresult_egfrepi" %>
+                  <button class="dataFormField"><%=t 'button_add'%></button>
 
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
+            <div class="dataFormSeparator labresultStyle"></div>
+
+            <div class="dataFormContainer labresultStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "ketone40.png" %><br/>
                     Ketone
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/lab_results", remote: true, id: "ketone-create-form", class: "resource-create-form lab_results-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="labresult[category]" value="ketone" />
-
-                      <input id="ketone" type="search" name="labresult[ketone]" class="dataFormField" placeholder="Ketone">
-
-                      <div class="dataFormFieldUnitNarrow"></div>
-                        <br>
-
-                        <input id='ketone_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
-                        <br>
-                    </div>
+                    <%= render "forms/labresult_ketone" %>
                     <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
+            <div class="dataFormSeparator labresultStyle"></div>
 
-            <div style="clear: both"></div>
+            <div class="clearBoth"></div>
         </div>
 
     </div>

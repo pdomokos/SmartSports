@@ -1,0 +1,18 @@
+<div class="dataForm">
+  <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+  <input type="hidden" name="diet[diet_type]" value="Food">
+
+  <input id="foodname" type="search" name="food_name" class="dataFormField" placeholder="<%=t 'food_placeholer' %>" disabled>
+  <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
+  <input id="diet_name" name="diet[name]" type="hidden">
+
+  <div class="dataScale">
+    <div id="diet_scale"  name="diet_scale" class="dataFormField"></div>
+  </div>
+
+  <input id="diet_amount" name="diet[amount]" type="hidden">
+  <div id="diet_unit" class="dataFormFieldUnit">200g</div>
+
+  <input type='text' class="dataFormField diet_food_datepicker" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <br/>
+</div>

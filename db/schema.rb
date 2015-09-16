@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915092908) do
+ActiveRecord::Schema.define(version: 20150916070558) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.float    "intensity"
     t.boolean  "favourite",        default: false
     t.integer  "activity_type_id"
-    t.boolean  "is_template",      default: false
   end
 
   add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
@@ -76,7 +75,7 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.integer "custom_form_id"
     t.integer "order_index"
     t.string  "property_code"
-    t.integer "template_id"
+    t.text    "defaults"
   end
 
   create_table "custom_forms", force: true do |t|
@@ -118,7 +117,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.float    "prot"
     t.string   "category"
     t.integer  "food_type_id"
-    t.boolean  "is_template",  default: false
   end
 
   create_table "family_histories", force: true do |t|
@@ -170,7 +168,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_template", default: false
   end
 
   create_table "lifestyles", force: true do |t|
@@ -187,7 +184,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.integer  "illness_type_id"
     t.string   "pain_type_name"
     t.integer  "period_volume"
-    t.boolean  "is_template",     default: false
   end
 
   add_index "lifestyles", ["user_id", "created_at"], name: "index_lifestyles_on_user_id_and_created_at"
@@ -212,7 +208,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.boolean  "favourite",        default: false
     t.float    "stress_amount"
     t.integer  "blood_sugar_time"
-    t.boolean  "is_template",      default: false
   end
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"
@@ -233,7 +228,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.datetime "updated_at"
     t.integer  "medication_type_id"
     t.boolean  "favourite",          default: false
-    t.boolean  "is_template",        default: false
   end
 
   create_table "notifications", force: true do |t|
@@ -246,7 +240,6 @@ ActiveRecord::Schema.define(version: 20150915092908) do
     t.datetime "updated_at"
     t.string   "notification_data"
     t.datetime "remind_at"
-    t.boolean  "is_template",                   default: false
   end
 
   add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"

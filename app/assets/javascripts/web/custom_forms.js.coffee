@@ -5,6 +5,8 @@
 @custom_loaded = () ->
   console.log "custom loaded"
 
+  initDiet()
+
   $(document).on("click", "#add-custom-form", (evt) ->
     console.log "add custom clicked"
     $("#dataform").removeClass("hidden")

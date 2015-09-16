@@ -20,7 +20,7 @@ module Api::V1
     private
 
     def custom_form_element_params
-      params.require(:custom_form_element).permit(:property_code, :template_id)
+      params.require(:custom_form_element).permit(:property_code, :defaults)
     end
 
   end

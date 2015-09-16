@@ -1,0 +1,21 @@
+<div class="dataForm">
+  <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
+  <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
+
+  <input id="bp_sys" type="text" name="measurement[systolicbp]" class="dataFormField" placeholder="<%=t 'bp_systolic_placeholer' %>"/>
+
+  <div class="dataFormFieldUnit">mmHg</div>
+  <br>
+  <input id="bp_dia" type="text" name="measurement[diastolicbp]" class="dataFormField" placeholder="<%=t 'bp_diastolic_placeholer' %>"/>
+
+  <div class="dataFormFieldUnit">mmHg</div>
+  <br>
+  <input id="bp_hr" type="text" name="measurement[pulse]" class="dataFormField" placeholder="<%=t 'bp_pulse_placeholer' %>"/>
+
+  <div class="dataFormFieldUnit">1/min</div>
+  <br>
+
+  <input id='bloodpressure_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <br>
+
+</div>

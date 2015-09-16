@@ -6,123 +6,58 @@
     <div class="sectionTitle bl3 c3">
         <%=t 'health'%>
     </div>
-    <div class="contentBg healthStyle">
+    <div class="contentBg">
         <div style="padding: 10px;">
-            <div class="dataFormContainer">
+            <div class="dataFormContainer healthStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "bloodpressure40.png" %><br/>
                     <%=t 'blood_pressure'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "bp-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
-                        <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
-
-                        <input id="bp_sys" type="text" name="measurement[systolicbp]" class="dataFormField" placeholder="<%=t 'bp_systolic_placeholer' %>"/>
-
-                        <div class="dataFormFieldUnit">mmHg</div>
-                        <br>
-                        <input id="bp_dia" type="text" name="measurement[diastolicbp]" class="dataFormField" placeholder="<%=t 'bp_diastolic_placeholer' %>"/>
-
-                        <div class="dataFormFieldUnit">mmHg</div>
-                        <br>
-                        <input id="bp_hr" type="text" name="measurement[pulse]" class="dataFormField" placeholder="<%=t 'bp_pulse_placeholer' %>"/>
-
-                        <div class="dataFormFieldUnit">1/min</div>
-                        <br>
-
-                        <input id='bloodpressure_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
-
-                    </div>
+                    <%= render "forms/health_blood_pressure" %>
                     <button id="addMeasurementButton" class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
+            <div class="dataFormSeparator healthStyle"></div>
+
+            <div class="dataFormContainer healthStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "bloodglucose.png" %><br/>
                   <%=t 'blood_glucose'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "bg-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
-                        <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField" placeholder="<%=t 'glucose_placeholder' %>"/>
-
-                        <div class="dataFormFieldUnit">mmol/L</div>
-                        <br>
-                        <label for="bg_stress_scale" style="margin-left: 20px;"><%=t 'stress_level'%></label>
-                        <div class="dataScale">
-                          <div id="bg_stress_scale" class="dataFormField"></div>
-                        </div>
-
-                        <div id="bg_stress_percent" class="dataFormFieldUnitHalf"><%=t 'stress_amount_average'%></div>
-                        <input id="bg_stress_amount" type="hidden" name="measurement[stress_amount]"/>
-
-                        <br>
-                        <label for="bg_time_scale" style="margin-left: 20px;"><%=t 'blood_sugar_time'%></label>
-                        <div class="dataScale">
-                          <div id="bg_time_scale" class="dataFormField"></div>
-                        </div>
-                        <div id="bg_time_unit" class="dataFormFieldUnitHalf"><%=t 'indep_meal'%></div>
-                        <input id="bg_time_val" type="hidden" name="measurement[blood_sugar_time]"/>
-
-                        <input id='bloodsugar_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
-                    </div>
+                    <%= render "forms/health_blood_glucose" %>
                     <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
+            <div class="dataFormSeparator healthStyle"></div>
+
+            <div class="dataFormContainer healthStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "weight40.png" %><br/>
                     <%=t 'body_weight'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "weight-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="measurement[meas_type]" value="weight" />
-
-                        <input id="weight" type="text" name="measurement[weight]" class="dataFormField"  placeholder="<%=t 'weight_placeholder' %>"/>
-
-                        <div class="dataFormFieldUnit">kg</div>
-                        <br>
-
-                        <input id='weight_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
-                    </div>
-
-                    <button class="dataFormField"><%=t 'button_add'%></button>
+                  <%= render "forms/health_weight" %>
+                  <button class="dataFormField"><%=t 'button_add'%></button>
 
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
-            <div class="dataFormContainer contentBg">
+            <div class="dataFormSeparator healthStyle"></div>
+
+            <div class="dataFormContainer healthStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "abdominal40.png" %><br/>
                   <%=t 'waist_circumfence'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/measurements", id: "waist-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="measurement[meas_type]" value="waist" />
-
-                        <input id="waist" type="text" name="measurement[waist]" class="dataFormField" placeholder="<%=t 'waist_placeholder' %>"/>
-
-                        <div class="dataFormFieldUnit">cm</div>
-                        <br>
-
-                        <input id='waist_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br>
-                    </div>
+                    <%= render "forms/health_waist" %>
                     <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <!--<div class="dataFormSeparator"></div>-->
+            <div class="dataFormSeparator healthStyle"></div>
 
-            <div style="clear: both"></div>
+            <div class="clearBoth"></div>
         </div>
 
     </div>

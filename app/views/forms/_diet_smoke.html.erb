@@ -1,0 +1,10 @@
+<div class="dataForm">
+  <input type="hidden" name="diet[source]" value="<%= @default_source %>">
+  <input type="hidden" name="diet[diet_type]" value="Smoke">
+
+  <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="<%=t 'smoking_placeholder' %>">
+
+  <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <br/>
+
+</div>

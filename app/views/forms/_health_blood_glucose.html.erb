@@ -1,0 +1,27 @@
+<div class="dataForm">
+  <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+  <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
+  <input id="glucose" type="text" name="measurement[blood_sugar]" class="dataFormField" placeholder="<%=t 'glucose_placeholder' %>"/>
+
+  <div class="dataFormFieldUnit">mmol/L</div>
+  <br/>
+  <span style="margin-left: 20px; float: left;"><%=t 'stress_level'%></span>
+  <br/>
+  <div class="dataScale">
+    <div id="bg_stress_scale" class="dataFormField"></div>
+  </div>
+
+  <div id="bg_stress_percent" class="dataFormFieldUnitHalf"><%=t 'stress_amount_average'%></div>
+  <input id="bg_stress_amount" type="hidden" name="measurement[stress_amount]"/>
+
+  <br>
+  <span style="margin-left: 20px;float: left;"><%=t 'blood_sugar_time'%></span>
+  <div class="dataScale">
+    <div id="bg_time_scale" class="dataFormField"></div>
+  </div>
+  <div id="bg_time_unit" class="dataFormFieldUnitHalf"><%=t 'indep_meal'%></div>
+  <input id="bg_time_val" type="hidden" name="measurement[blood_sugar_time]"/>
+
+  <input id='bloodsugar_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <br>
+</div>

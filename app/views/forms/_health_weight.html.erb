@@ -1,0 +1,12 @@
+<div class="dataForm">
+  <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
+  <input type="hidden" name="measurement[meas_type]" value="weight" />
+
+  <input id="weight" type="text" name="measurement[weight]" class="dataFormField"  placeholder="<%=t 'weight_placeholder' %>"/>
+
+  <div class="dataFormFieldUnit">kg</div>
+  <br>
+
+  <input id='weight_datepicker' type='text' class="dataFormField" name="measurement[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <br>
+</div>

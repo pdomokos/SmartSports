@@ -4,118 +4,59 @@
     <div class="sectionTitle dietBodyLogo dietColor">
       <%=t 'menu_diet' %>
     </div>
-    <div class="contentBg dietStyle">
+    <div class="contentBg">
         <div style="padding: 10px;">
-            <div class="dataFormContainer">
+            <div class="dataFormContainer dietStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "food40.png" %><br/>
                   <%=t 'food' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="diet[diet_type]" value="Food">
-
-                        <input id="foodname" type="search" name="food_name" class="dataFormField" placeholder="<%=t 'food_placeholer' %>" disabled>
-                        <input id="diet_type_id" name="diet[food_type_id]" type="hidden">
-                        <input id="diet_name" name="diet[name]" type="hidden">
-
-                        <div class="dataScale">
-                          <div id="diet_scale"  name="diet_scale" class="dataFormField"></div>
-                        </div>
-
-                        <input id="diet_amount" name="diet[amount]" type="hidden">
-                        <div id="diet_unit" class="dataFormFieldUnit">200g</div>
-
-                        <input id='diet_food_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br/>
-
-                    </div>
+                  <%= render "forms/diet_food" %>
                   <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-          <div class="dataFormSeparator"></div>
+          <div class="dataFormSeparator dietStyle"></div>
 
-            <div class="dataFormContainer">
+            <div class="dataFormContainer dietStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "drink40.png" %><br/>
                   <%=t 'drink' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "drink-create-form", class: "resource-create-form diet-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-                        <input type="hidden" name="diet[diet_type]" value="Drink">
-
-                        <input id="drinkname" type="search" name="drink_name" class="dataFormField" placeholder="<%=t 'drink_placeholder' %>" disabled>
-                        <input id="diet_drink_name" name="diet[name]" type="hidden">
-                        <input id="diet_drink_type_id" name="diet[food_type_id]" type="hidden">
-
-                        <div class="dataScale">
-                          <div id="diet_drink_scale" name="diet_drink_scale" class="dataFormField"></div>
-                        </div>
-
-                        <input id="diet_drink_amount" name="diet[amount]" type="hidden">
-                        <div id="diet_drink_unit" class="dataFormFieldUnit">2dl</div>
-
-                        <input id='diet_drink_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                        <br/>
-
-                    </div>
+                  <%= render "forms/diet_drink" %>
                   <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
+            <div class="dataFormSeparator dietStyle"></div>
 
-            <div class="dataFormContainer">
+            <div class="dataFormContainer dietStyle">
             <div class="dataFormTitle">
               <%= image_tag "food40.png" %><br/>
               <%=t 'quick_calories' %>
             </div>
             <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "calories-create-form", class: "resource-create-form diet-form") do %>
-                <div class="dataForm">
-                  <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-                  <input type="hidden" name="diet[diet_type]" value="Calory">
-
-                  <input id="diet_calories" type="text" name="diet[calories]" class="dataFormField" placeholder="<%=t 'quick_calories_placeholder' %>"/>
-                  <div class="dataFormFieldUnit">kCal</div>
-                  <br>
-                  <input id="diet_carbs" type="text" name="diet[carbs]" class="dataFormField" placeholder="<%=t 'quick_carbs_placeholder' %>"/>
-                  <div class="dataFormFieldUnit">g</div>
-                  <br>
-
-                  <input id='diet_calories_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                  <br/>
-
-                </div>
+                <%= render "forms/diet_quick_calories" %>
                 <button id="addCaloriesButton" class="dataFormField"><%=t 'button_add'%></button>
             <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
+            <div class="dataFormSeparator dietStyle"></div>
 
               <% if current_user.profile.nil? || current_user.profile.smoke %>
-                <div class="dataFormContainer">
+                <div class="dataFormContainer dietStyle">
                     <div class="dataFormTitle">
                         <%= image_tag "smoke40.png" %><br/>
                       <%=t 'smoking' %>
                     </div>
                     <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "smoke-create-form", class: "resource-create-form diet-form") do %>
-                        <div class="dataForm">
-                            <input type="hidden" name="diet[source]" value="<%= @default_source %>">
-                            <input type="hidden" name="diet[diet_type]" value="Smoke">
-
-                            <input id="diet_smoke_type" type="search" name="diet[name]" class="dataFormField" placeholder="<%=t 'smoking_placeholder' %>">
-
-                            <input id='diet_smoking_datepicker' type='text' class="dataFormField" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
-                            <br/>
-
-                        </div>
+                        <%= render "forms/diet_smoke" %>
                         <button class="dataFormField"><%=t 'button_add'%></button>
                     <% end %>
                 </div>
-                <div class="dataFormSeparator"></div>
+                <div class="dataFormSeparator dietStyle"></div>
               <% end %>
 
-            <div style="clear: both"></div>
+            <div class="clearBoth"></div>
         </div>
 
     </div>

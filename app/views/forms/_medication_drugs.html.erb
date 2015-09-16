@@ -1,0 +1,15 @@
+<div class="dataForm">
+  <input type="hidden" name="medication[source]" value="<%= @default_source %>">
+
+  <input id="oral_medication_name" type="search" name="med_name" class="dataFormField" placeholder="<%=t 'drug_placeholder'%>"/>
+  <input id="medname" name="medication[medication_type_id]" type="hidden">
+
+  <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField" placeholder="<%=t 'amount_taken'%>"/>
+
+  <div class="dataFormFieldUnit"><%=t 'piece'%></div>
+  <br>
+
+  <input id="medications_datepicker" type="text"  name="medication[date]" class="dataFormField" value='<%= DateTime.current.strftime("%F %R") %>'>
+  <br>
+
+</div>

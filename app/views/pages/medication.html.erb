@@ -4,62 +4,35 @@
     <div class="sectionTitle medicationBodyLogo medicationColor">
         <%=t 'medication' %>
     </div>
-    <div class="contentBg medicationStyle">
+    <div class="contentBg">
         <div style="padding: 10px;">
-            <div class="dataFormContainer">
+            <div class="dataFormContainer medicationStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "oral40.png" %><br/>
                     <%=t 'drugs'%>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "oral-med-create-form", class: "resource-create-form medication-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="medication[source]" value="<%= @default_source %>">
-
-                        <input id="oral_medication_name" type="search" name="med_name" class="dataFormField" placeholder="<%=t 'drug_placeholder'%>"/>
-                        <input id="medname" name="medication[medication_type_id]" type="hidden">
-
-                        <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField" placeholder="<%=t 'amount_taken'%>"/>
-
-                        <div class="dataFormFieldUnit"><%=t 'piece'%></div>
-                        <br>
-
-                        <input id="medications_datepicker" type="text"  name="medication[date]" class="dataFormField" value='<%= DateTime.current.strftime("%F %R") %>'>
-                        <br>
-
-                    </div>
+                    <%= render "forms/medication_drugs" %>
                     <button id="addMedicationButton" class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
+            <div class="dataFormSeparator medicationStyle"></div>
 
           <% if current_user.profile.nil? || current_user.profile.insulin %>
-            <div class="dataFormContainer">
+            <div class="dataFormContainer medicationStyle">
                 <div class="dataFormTitle">
                     <%= image_tag "insulin40.png" %><br/>
                     <%=t 'insulin' %>
                 </div>
                 <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "insulin-create-form", class: "resource-create-form medication-form") do %>
-                    <div class="dataForm">
-                        <input type="hidden" name="medication[source]" value="<%= @default_source %>">
-
-                        <input id="insulin_name" name="ins_name" type="search" class="dataFormField" placeholder="<%=t 'insulin_placeholder'%>" disabled>
-                        <input id="insname" name="medication[medication_type_id]" type="hidden">
-
-                        <input id="medication_insulin_dosage" type="text" name="medication[amount]" class="dataFormField" placeholder="<%=t 'insulin_dosage'%>"/>
-                        <div class="dataFormFieldUnit "><%=t 'unit'%></div>
-                        <br>
-
-                        <input id="medications_insulin_datepicker" class="dataFormField" type="text"  name="medication[date]" value='<%= DateTime.current.strftime("%F %R") %>'>
-                        <br>
-
-                    </div>
+                    <%= render "forms/medication_insulin" %>
                     <button class="dataFormField"><%=t 'button_add'%></button>
                 <% end %>
             </div>
-            <div class="dataFormSeparator"></div>
+            <div class="dataFormSeparator medicationStyle"></div>
           <% end %>
 
-          <div style="clear: both"></div>
+          <div class="clearBoth"></div>
 
         </div>
 

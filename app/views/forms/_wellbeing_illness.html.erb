@@ -1,0 +1,22 @@
+<div class="dataForm">
+  <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+  <input type="hidden" name="lifestyle[group]" value="illness"/>
+
+  <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="<%=t 'illness_placeholder'%>">
+  <input id="illnessname" name="lifestyle[illness_type_id]" type="hidden">
+
+  <label for="illness_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
+  <div class="dataScale">
+    <div id="illness_scale" class="dataFormField"></div>
+  </div>
+
+  <div id="illness_percent" class="dataFormFieldUnitHalf"><%=t 'illness_amount_mild'%></div>
+  <input id="illness_amount" type="hidden" name="lifestyle[amount]"/>
+
+
+  <input id='illness_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'start'%></div>
+
+  <input id='illness_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'end'%></div>
+</div>
