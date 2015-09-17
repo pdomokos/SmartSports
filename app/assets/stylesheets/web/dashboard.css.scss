@@ -1089,3 +1089,12 @@ body.wait button {
 .clearBoth {
   clear: both;
 }
+
+.tableControl {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.headerButton {
+  font-size: inherit;
+}

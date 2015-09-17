@@ -153,6 +153,8 @@ class PagesController < ApplicationController
 
   def customforms
     @icons = CustomForm.images
+    @custom_forms = current_user.custom_forms.order(order_index: :desc)
+    @formlist = CustomForm.formlist
   end
 
   def settings

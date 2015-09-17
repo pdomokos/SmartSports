@@ -113,15 +113,14 @@
 }
 
 #iconselect {
-  //color: #999;
-  //width: 230px;
-
-  //background: image-url("custom/img_bloodSugar_gray.png"), image-url("downarrow.png");
-  //background-repeat: no-repeat, no-repeat;
-  //background-size: 30px, 30px, 30px, 30px;
-  //background-position: left, right;
   padding-left: 34px;
 }
+
+i.delete-form, i.add-form-element {
+  cursor: pointer;
+}
+
+//--------------------------------
 
 @media(min-width: 10025px) {
   .add-custom-form {
@@ -204,3 +203,8 @@
 //  text-decoration: none;
 //  text-transform: uppercase;
 //}
+
+
+ul.ui-autocomplete {
+  z-index: 99999;
+}

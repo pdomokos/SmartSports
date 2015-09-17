@@ -5,6 +5,8 @@
 </div>
 
 <div class="diet-block mainContent">
+    <input id="formlist" type="hidden" value="<%= @formlist.as_json %>">
+    <%= render partial: 'custom_form',  collection: @custom_forms %>
 
     <div class="sectionTitle dietBodyLogo dietColor">
         <%=t 'menu_diet' %>
@@ -167,6 +169,41 @@
           <% end %>
 
         </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="openModalAddCustomFormElement" class="modalDialog">
+  <div class="customStyle">
+    <div class="table-toolbar">
+      <div class="dataFormTitle left">Add Form Element</div>
+      <span id="closeModalAddCustomForm" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
+    </div>
+    <br/>
+    <br/>
+    <div id="customDataContainer">
+
+      <div class="dialogFormContainer">
+
+        <%= form_tag( "/users/#{current_user.id}/custom_forms", remote: true, id: "custom-create-form") do %>
+            <div id="dataform" class="dataForm">
+              <p class="dataFormRemark">Add elements to your forms.</p>
+              <p class="titleSub">Element</p>
+              <input type="search" id="input-element_type" class="dataFormField" placeholder="Select element type">
+
+              <% for f in @formlist %>
+                <div class="hidden">
+                  <%= render 'forms/'+f %>
+                </div>
+              <% end %>
+
+              <button id="add-custom-button" class="dataFormField" >Add Element</button>
+            </div>
+
+        <% end %>
+
+      </div>
     </div>
   </div>
 </div>

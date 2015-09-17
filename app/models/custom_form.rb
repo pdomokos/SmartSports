@@ -4,6 +4,33 @@ class CustomForm < ActiveRecord::Base
 
   validates :form_name, presence: true
 
+  def self.formlist
+    ret = %w(
+      activity_exercise
+      activity_regular
+      diet_drink
+      diet_food
+      diet_quick_calories
+      diet_smoke
+      health_blood_glucose
+      health_blood_pressure
+      health_waist
+      health_weight
+      labresult_egfrepi
+      labresult_hba1c
+      labresult_ketone
+      labresult_ldlchol
+      medication_drugs
+      medication_insulin
+      notification_visit
+      wellbeing_illness
+      wellbeing_pain
+      wellbeing_period
+      wellbeing_sleep
+      wellbeing_stress
+    )
+    return ret
+  end
   def self.images
     ret = %w(img_add
       img_addForm

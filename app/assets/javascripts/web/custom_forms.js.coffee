@@ -7,6 +7,38 @@
 
   initDiet()
 
+  formList = ["activity_exercise",
+              "activity_regular",
+              "diet_drink",
+              "diet_food",
+              "diet_quick_calories",
+              "diet_smoke",
+              "health_blood_glucose",
+              "health_blood_pressure",
+              "health_waist",
+              "health_weight",
+              "labresult_egfrepi",
+              "labresult_hba1c",
+              "labresult_ketone",
+              "labresult_ldlchol",
+              "medication_drugs",
+              "medication_insulin",
+              "notification_visit",
+              "wellbeing_illness",
+              "wellbeing_pain",
+              "wellbeing_period",
+              "wellbeing_sleep",
+              "wellbeing_stress"]
+
+  $("#input-element_type").autocomplete({
+    minLength: 0,
+    source: formList,
+    change: (event, ui) ->
+      formSelected = ui
+      console.log formSelected
+  }).focus ->
+    $(this).autocomplete("search")
+
   $(document).on("click", "#add-custom-form", (evt) ->
     console.log "add custom clicked"
     $("#dataform").removeClass("hidden")
@@ -23,6 +55,13 @@
     $("#formicon").val("img_myForms")
 
     location.href = "#openModalAddCustomForm"
+  )
+
+  $(document).on("click", ".add-form-element", (evt) ->
+    console.log "addfe called"
+    formid = evt.target.getAttribute('data-formid')
+    console.log formid
+    location.href = "#openModalAddCustomFormElement"
   )
 
   $(document).on("click", "#closeModalAddCustomForm", (evt) ->
@@ -54,17 +93,24 @@
 
     $("#dataform").removeClass("hidden")
     $("#iconform").addClass("hidden")
-
   )
 
   $("form#custom-create-form").on("ajax:success", (e, data, status, xhr) ->
     console.log data
     if data['ok'] == true
-      location.href = "#close"
+      location.href = "customforms"
     else
       $("#input-form_name").addClass("formFail")
       $("i.formFailSign").removeClass("hidden")
   ).on("ajax:error", (e, xhr, status, error) ->
     $("#input-form_name").addClass("formFail")
     $("i.formFailSign").removeClass("hidden")
+  )
+
+  $(".delete-form-form").on("ajax:success", (e, data, status, xhr) ->
+    console.log e.target
+    location.href = 'customforms'
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log "delete failed"
+    console.log e.target
   )
