@@ -62,11 +62,11 @@ class PagesController < ApplicationController
   end
 
   def health
-      @activity = Summary.new
-      @measurement = Measurement.new
-      @measurements = current_user.measurements.where(:source => [@default_source, 'demo']).order(created_at: :desc).limit(4)
-      @values = JSON.dump(I18n.t :popupmessages)
-      save_click_record(:success, nil, nil)
+    @activity = Summary.new
+    @measurement = Measurement.new
+    @measurements = current_user.measurements.where(:source => [@default_source, 'demo']).order(created_at: :desc).limit(4)
+    @values = JSON.dump(I18n.t :popupmessages)
+    save_click_record(:success, nil, nil)
   end
 
   def exercise
@@ -155,6 +155,7 @@ class PagesController < ApplicationController
     @icons = CustomForm.images
     @custom_forms = current_user.custom_forms.order(order_index: :desc)
     @formlist = CustomForm.formlist
+    @hidden_forms = true
   end
 
   def settings

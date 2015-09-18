@@ -47,6 +47,8 @@ class ApplicationController < ActionController::Base
         'waist' => 'abdominal40',
         'blood_pressure' => 'bloodpressure40'
     }
+
+    @hidden_forms = false
   end
 
   def get_last_synced_date(user_id, source)

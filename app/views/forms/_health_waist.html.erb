@@ -1,4 +1,4 @@
-<div class="dataForm">
+<div class="dataForm health_waist <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
   <input type="hidden" name="measurement[meas_type]" value="waist" />
 

@@ -33,9 +33,11 @@
   $("#input-element_type").autocomplete({
     minLength: 0,
     source: formList,
-    change: (event, ui) ->
-      formSelected = ui
+    select: (event, ui) ->
+      formSelected = ui['item']['label']
       console.log formSelected
+      $("#add-form-element>div>div.dataForm").addClass("hidden")
+      $("#add-form-element ."+formSelected).removeClass("hidden")
   }).focus ->
     $(this).autocomplete("search")
 

@@ -1,4 +1,4 @@
-<div class="dataForm">
+<div class="dataForm notification_visit <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input id="control" type="hidden" name="notification[notification_type]" />
   <input id="control_txt" type="search" class="dataFormField" placeholder="<%=t 'select' %>">
   <div class="dataFormFieldUnitNarrow"></div>

@@ -1,4 +1,4 @@
-<div class="dataForm">
+<div class="dataForm diet_smoke <% if local_assigns.fetch(:locals, {})[:defaultHidden]%>hidden<% end %>">
   <input type="hidden" name="diet[source]" value="<%= @default_source %>">
   <input type="hidden" name="diet[diet_type]" value="Smoke">
 

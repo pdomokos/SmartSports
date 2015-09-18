@@ -1,4 +1,4 @@
-<div class="dataForm">
+<div class="dataForm activity_exercise <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="activity[source]" value="<%= @default_source %>">
   <input type="hidden" name="activity[group]" value="sport">
 

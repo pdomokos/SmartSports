@@ -186,22 +186,25 @@
 
       <div class="dialogFormContainer">
 
-        <%= form_tag( "/users/#{current_user.id}/custom_forms", remote: true, id: "custom-create-form") do %>
+        <%= form_tag( "/users/#{current_user.id}/custom_forms", remote: true, id: "add-form-element") do %>
             <div id="dataform" class="dataForm">
               <p class="dataFormRemark">Add elements to your forms.</p>
               <p class="titleSub">Element</p>
               <input type="search" id="input-element_type" class="dataFormField" placeholder="Select element type">
 
               <% for f in @formlist %>
-                <div class="hidden">
-                  <%= render 'forms/'+f %>
-                </div>
+
+                  <%= render 'forms/'+f, locals: {:defaultHidden => true} %>
+
               <% end %>
 
               <button id="add-custom-button" class="dataFormField" >Add Element</button>
+              <div class="clearBoth"></div>
+
             </div>
 
         <% end %>
+
 
       </div>
     </div>
