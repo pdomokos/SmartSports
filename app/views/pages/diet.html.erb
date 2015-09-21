@@ -6,17 +6,12 @@
     </div>
     <div class="contentBg">
         <div style="padding: 10px;">
-            <div class="dataFormContainer dietStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "food40.png" %><br/>
-                  <%=t 'food' %>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
-                  <%= render "forms/diet_food" %>
-                  <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-          <div class="dataFormSeparator dietStyle"></div>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'diet_food',
+                                               :style => 'dietStyle',
+                                               :title => 'food',
+                                               :img => 'food40.png'
+                                    }%>
 
             <div class="dataFormContainer dietStyle">
                 <div class="dataFormTitle">

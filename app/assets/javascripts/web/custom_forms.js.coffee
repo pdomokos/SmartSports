@@ -36,8 +36,8 @@
     select: (event, ui) ->
       formSelected = ui['item']['label']
       console.log formSelected
-      $("#add-form-element>div>div.dataForm").addClass("hidden")
-      $("#add-form-element ."+formSelected).removeClass("hidden")
+      $("#add-form-element>div.dataForm>div").addClass("hidden")
+      $(".dataFormContainer."+formSelected+"_elem").removeClass("hidden")
   }).focus ->
     $(this).autocomplete("search")
 

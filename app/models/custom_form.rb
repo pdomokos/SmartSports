@@ -4,7 +4,7 @@ class CustomForm < ActiveRecord::Base
 
   validates :form_name, presence: true
 
-  def self.formlist
+  def self.form_list
     ret = %w(
       activity_exercise
       activity_regular
@@ -31,7 +31,83 @@ class CustomForm < ActiveRecord::Base
     )
     return ret
   end
-  def self.images
+  def self.form_params
+    im = %w(
+      bicycle40
+      regular40
+      drink40
+      food40
+      food40
+      smoke40
+      bloodglucose
+      bloodpressure40
+      abdominal40
+      weight40
+      kidney40
+      test_tube40
+      ketone40
+      water40
+      oral40
+      insulin40
+      doctor_40
+      illness40
+      pain40
+      period40
+      sleep40
+      stress40
+    )
+    st = %w(
+      exerciseStyle
+      exerciseStyle
+      dietStyle
+      dietStyle
+      dietStyle
+      dietStyle
+      healthStyle
+      healthStyle
+      healthStyle
+      healthStyle
+      labresultStyle
+      labresultStyle
+      labresultStyle
+      labresultStyle
+      medicationStyle
+      medicationStyle
+      labresultStyle
+      wellbeingStyle
+      wellbeingStyle
+      wellbeingStyle
+      wellbeingStyle
+      wellbeingStyle
+    )
+    titles = %w(
+      exercise
+      regular_activity
+      drink
+      food
+      quick_calories
+      smoking
+      blood_glucose
+      blood_pressure
+      waist_circumfence
+      body_weight
+      labresult_egfrepi
+      labresult_hba1c
+      labresult_ketone
+      labresult_ldlchol
+      drugs
+      insulin
+      lab_results
+      illness
+      pain
+      period
+      sleep
+      stress
+    )
+    ret = Hash[self.form_list.zip(im.zip(st, titles))]
+    return ret
+  end
+  def self.icons
     ret = %w(img_add
       img_addForm
       img_bp

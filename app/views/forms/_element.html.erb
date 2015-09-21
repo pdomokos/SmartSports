@@ -1,0 +1,22 @@
+<%
+   defaultHidden = local_assigns.fetch(:locals, {})[:defaultHidden]
+   showButton = local_assigns.fetch(:locals, {})[:showButton]
+   elementName = local_assigns.fetch(:locals, {})[:elementName]
+   style = local_assigns.fetch(:locals, {})[:style]
+   title = local_assigns.fetch(:locals, {})[:title]
+   img = local_assigns.fetch(:locals, {})[:img]
+%>
+<div class="dataFormContainer <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>">
+  <div class="dataFormTitle">
+    <%= image_tag img %><br/>
+    <%=t title %>
+  </div>
+  <div class="clearBoth"></div>
+  <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
+      <%= render "forms/#{elementName}" %>
+      <% if showButton %>
+      <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+      <% end %>
+  <% end %>
+</div>
+<div class="dataFormSeparator <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>"></div>

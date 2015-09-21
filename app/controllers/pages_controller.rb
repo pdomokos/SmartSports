@@ -152,9 +152,10 @@ class PagesController < ApplicationController
   end
 
   def customforms
-    @icons = CustomForm.images
+    @icons = CustomForm.icons
     @custom_forms = current_user.custom_forms.order(order_index: :desc)
-    @formlist = CustomForm.formlist
+    @form_list = CustomForm.form_list
+    @form_params = CustomForm.form_params
     @hidden_forms = true
   end
 

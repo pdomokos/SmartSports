@@ -9,27 +9,26 @@
     <i class="fa fa-plus-circle add-form-element" data-formid="<%=custom_form.id %>"></i>
   </div>
   <div class="left" style="padding-left: 10px;">
+
     <%= form_tag("/users/#{current_user.id}/custom_forms/#{custom_form.id}", remote: true, method: "delete", class: "delete-form-form") do %>
         <button class="tableControl healthColor headerButton">
             <i class="fa fa-trash-o delete-form" data-formid="<%=custom_form.id %>"></i>
         </button>
     <% end %>
+
   </div>
 </div>
 
 <div class="contentBg ">
   <div style="padding: 10px;">
-    <div class="dataFormContainer dietStyle">
-      <div class="dataFormTitle">
-        <%= image_tag "food40.png" %><br/>
-        <%=t 'food' %>
-      </div>
-      <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "food-create-form", class: "resource-create-form diet-form") do %>
-          <%= render 'forms/diet_food' %>
-          <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
-      <% end %>
-    </div>
-    <div class="dataFormSeparator dietStyle"></div>
+
+    <%= render "forms/element", locals: {:showButton => false,
+                                         :elementName => 'diet_food',
+                                         :style => 'dietStyle',
+                                         :title => 'food',
+                                         :img => 'food40.png'
+                              }%>
+
     <div class="clearBoth"></div>
   </div>
 </div>

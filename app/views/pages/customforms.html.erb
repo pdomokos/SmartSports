@@ -14,6 +14,7 @@
 
     <div class="contentBg ">
       <div style="padding: 10px;">
+
         <div class="dataFormContainer dietStyle">
           <div class="dataFormTitle">
             <%= image_tag "food40.png" %><br/>
@@ -177,11 +178,10 @@
 <div id="openModalAddCustomFormElement" class="modalDialog">
   <div class="customStyle">
     <div class="table-toolbar">
-      <div class="dataFormTitle left">Add Form Element</div>
+      <div class="modalTitle left">Add Form Element</div>
       <span id="closeModalAddCustomForm" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
     </div>
-    <br/>
-    <br/>
+    <div class="clearBoth"></div>
     <div id="customDataContainer">
 
       <div class="dialogFormContainer">
@@ -192,19 +192,28 @@
               <p class="titleSub">Element</p>
               <input type="search" id="input-element_type" class="dataFormField" placeholder="Select element type">
 
-              <% for f in @formlist %>
+              <% for f in @form_list %>
 
-                  <%= render 'forms/'+f, locals: {:defaultHidden => true} %>
+
+
+                  <%= render "forms/element", locals: {:showButton => true,
+                                                       :elementName => f,
+                                                       :style => "#{@form_params[f][1]}",
+                                                       :title => "#{@form_params[f][2]}",
+                                                       :img => "#{@form_params[f][0]}.png",
+                                                       :defaultHidden => true
+                                            }%>
 
               <% end %>
 
-              <button id="add-custom-button" class="dataFormField" >Add Element</button>
-              <div class="clearBoth"></div>
+
+
 
             </div>
 
         <% end %>
 
+        <div class="clearBoth"></div>
 
       </div>
     </div>
