@@ -13,6 +13,14 @@ class CustomFormElementsController < ApplicationController
     @elements = custom_form.custom_form_elements
   end
 
+  def create
+    user_id = params[:user_id].to_i
+    user = User.find(user_id)
+    form_id = params[:custom_form_id]
+    custom_form = user.custom_forms.where(id: form_id)
+
+  end
+
   private
 
   def check_owner()

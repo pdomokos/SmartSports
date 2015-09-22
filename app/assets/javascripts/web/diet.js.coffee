@@ -6,17 +6,14 @@
     background: "rgba(87, 200, 138, 0.3)"
 
   popup_messages = JSON.parse($("#popup-messages").val())
+
   initDiet()
   load_diets()
 
-  document.body.style.cursor = 'wait'
-  load_food_types()
-
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
-    form_id = e.currentTarget.id
-    console.log "success "+form_id
+    console.log "success diet-form"
     console.log data
-    resetDiet(form_id)
+    resetDiet()
     loadDietHistory()
     popup_success(data['diet_name']+popup_messages.saved_successfully, $("#addFoodButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
@@ -45,15 +42,15 @@
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
 
-@resetDiet = (form_id) ->
-  $("#"+form_id+" input.dataFormField").val("")
+@resetDiet = () ->
+  $("div.diet > input.dataFormField").val("")
   $("#diet_scale").slider({ value: 2 })
   fval = $("#diet_scale").slider("value")
   $("#diet_unit").html(fval*100+"g")
   $("#diet_drink_scale").slider({ value: 2 })
   dval = $("#diet_drink_scale").slider("value")
   $("#diet_drink_unit").html(dval+" dl")
-  $('#'+form_id+' .diet_food_datepicker').val(moment().format(moment_fmt))
+  $('div.diet > .diet_food_datepicker').val(moment().format(moment_fmt))
   $('#diet_calories_datepicker').val(moment().format(moment_fmt))
   $('#diet_drink_datepicker').val(moment().format(moment_fmt))
   $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
@@ -64,35 +61,39 @@
 @initDiet = () ->
   console.log "initdiet called"
   $('.diet_food_datepicker').datetimepicker(timepicker_defaults)
-  $('#diet_drink_datepicker').datetimepicker(timepicker_defaults)
-  $("#diet_drink_amount").val(2)
+  $(".diet_food_amount").val(2)
+  $('.diet_drink_datepicker').datetimepicker(timepicker_defaults)
+  $(".diet_drink_amount").val(2)
   $('#diet_calories_datepicker').datetimepicker(timepicker_defaults)
   $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
-  $("#diet_amount").val(2)
 
-  $("#diet_scale").slider({
+
+  $(".diet_food_scale").slider({
     min: 0.25,
     max: 5.0,
     step: 0.25,
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#diet_unit").html(" "+ui.value*100+"g")
+      $(".diet_food_unit").html(" "+ui.value*100+"g")
     change: (event, ui) ->
-      $("#diet_amount").val(ui.value)
+      $(".diet_food_amount").val(ui.value)
   })
 
-  $("#diet_drink_scale").slider({
+  $(".diet_drink_scale").slider({
     min: 0.25,
     max: 5,
     step: 0.25,
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $("#diet_drink_unit").html(ui.value+" dl")
+      $(".diet_drink_unit").html(ui.value+" dl")
     change: (event, ui) ->
-      $("#diet_drink_amount").val(ui.value)
+      $(".diet_drink_amount").val(ui.value)
   })
+
+  document.body.style.cursor = 'wait'
+  load_food_types()
 
 @loadDietHistory = () ->
   load_diets()
@@ -147,7 +148,7 @@
       ).map( window.food_map_fn )
 
       foodSelected = null
-      $("#foodname").autocomplete({
+      $(".diet_foodname").autocomplete({
         minLength: 3,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
@@ -159,16 +160,16 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("#diet_type_id").val(ui.item.id)
+          $(".diet_type_id").val(ui.item.id)
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
-          $("#foodname").removeAttr("disabled")
+          $(".diet_foodname").removeAttr("disabled")
         change: (event, ui) ->
           foodSelected = ui['item']
       })
-      $("#food-create-form button").click ->
+      $(".diet_food-create-form button").click ->
         if(!foodSelected)
-          val = $("#foodname").val()
+          val = $(".diet_foodname").val()
           if !val
             val = "empty item"
           popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))

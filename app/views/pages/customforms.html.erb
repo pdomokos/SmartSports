@@ -124,7 +124,7 @@
 <div id="openModalAddCustomForm" class="modalDialog">
   <div class="customStyle">
     <div class="table-toolbar">
-      <div class="dataFormTitle left">Add Custom Form</div>
+      <div class="modalTitle left">Add Custom Form</div>
       <span id="closeModalAddCustomForm" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
     </div>
     <br/>
@@ -186,7 +186,7 @@
 
       <div class="dialogFormContainer">
 
-        <%= form_tag( "/users/#{current_user.id}/custom_forms", remote: true, id: "add-form-element") do %>
+
             <div id="dataform" class="dataForm">
               <p class="dataFormRemark">Add elements to your forms.</p>
               <p class="titleSub">Element</p>
@@ -201,7 +201,8 @@
                                                        :style => "#{@form_params[f][1]}",
                                                        :title => "#{@form_params[f][2]}",
                                                        :img => "#{@form_params[f][0]}.png",
-                                                       :defaultHidden => true
+                                                       :defaultHidden => true,
+                                                       :resourceName => 'custom_forms'
                                             }%>
 
               <% end %>
@@ -211,7 +212,7 @@
 
             </div>
 
-        <% end %>
+
 
         <div class="clearBoth"></div>
 
