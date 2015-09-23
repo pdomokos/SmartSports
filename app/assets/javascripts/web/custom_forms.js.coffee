@@ -118,3 +118,7 @@
     console.log "delete failed"
     console.log e.target
   )
+
+  $("#openModalAddCustomFormElement form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
+    location.href = "customforms"
+  )

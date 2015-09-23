@@ -22,13 +22,14 @@
 <div class="contentBg ">
   <div style="padding: 10px;">
 
-    <%= render "forms/element", locals: {:showButton => false,
-                                         :elementName => 'diet_food',
-                                         :style => 'dietStyle',
-                                         :title => 'food',
-                                         :img => 'food40.png'
+    <% for cfe in custom_form.custom_form_elements %>
+        <%= render "forms/element", locals: {:showButton => false,
+                                         :elementName => cfe.property_code,
+            :style => "#{@form_params[cfe.property_code][1]}",
+            :title => "#{@form_params[cfe.property_code][2]}",
+            :img => "#{@form_params[cfe.property_code][0]}.png"
                               }%>
-
+    <% end %>
     <div class="clearBoth"></div>
   </div>
 </div>

@@ -42,6 +42,9 @@
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
 
+  $(".diet_food-create-form button").click ->
+    validate_diet_food("#diet_forms .diet_food_elem")
+
 @resetDiet = () ->
   $("div.diet > input.dataFormField").val("")
   $("#diet_scale").slider({ value: 2 })
@@ -148,7 +151,7 @@
       ).map( window.food_map_fn )
 
       foodSelected = null
-      $(".diet_foodname").autocomplete({
+      $(".diet_food_name").autocomplete({
         minLength: 3,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
@@ -163,20 +166,11 @@
           $(".diet_type_id").val(ui.item.id)
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
-          $(".diet_foodname").removeAttr("disabled")
+          $(".diet_food_name").removeAttr("disabled")
         change: (event, ui) ->
           foodSelected = ui['item']
       })
-      $(".diet_food-create-form button").click ->
-        if(!foodSelected)
-          val = $(".diet_foodname").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
-          foodSelected = null
-          return false
-        foodSelected = null
-        return true
+
 
       drinkSelected = null
       $("#drinkname").autocomplete({
@@ -241,26 +235,39 @@
         smokeSelected = null
         return true
 
-      diet_load_fn =  (e) ->
-        console.log "loading diet"
-        data = JSON.parse(e.currentTarget.querySelector("input").value)
-        console.log data
-        if data.diet_type=="Food"
-          foodSelected = data.food_name
-          $("#foodname").val(data.food_name)
-          $("#diet_type_id").val(data.food_type_id)
-          $("#diet_amount").val(data.amount)
-          $("#diet_unit").html(data.amount*100+"g")
-          $("#diet_scale").slider({value: data.amount})
-        else if data.diet_type=="Drink"
-          $("#drinkname").val(data.food_name)
-          drinkSelected = data.food_name
-          $("#diet_drink_type_id").val(data.food_type_id)
-          $("#diet_drink_amount").val(data.amount)
-          $("#diet_drink_unit").html(data.amount+" dl")
-          $("#diet_drink_scale").slider({value: data.amount})
-        else if data.diet_type=="Smoke"
-          $("#diet_smoke_type").val(data.name)
-          smokeSelected = data.name
 
-      $("#recentResourcesTable").on("click", "td.dietItem", diet_load_fn)
+      $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
+        data = JSON.parse(e.currentTarget.querySelector("input").value)
+        if data.diet_type=='Food'
+          load_diet_food("#diet_forms .diet_food_elem", data)
+      )
+@validate_diet_food = (sel) ->
+  val = $(sel+" .diet_food_name").val()
+  if !val
+    val = "empty item"
+    popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+    return false
+  return true
+
+@load_diet_food =  (sel, data) ->
+  console.log "loading diet food"
+  console.log data
+  console.log sel+" .food_name"
+  foodSelected = data.food_name
+  $(sel+" .diet_food_name").val(data.food_name)
+  $(sel+" .diet_type_id").val(data.food_type_id)
+  $(sel+" .diet_food_amount").val(data.amount)
+  $(sel+" .diet_food_unit").html(data.amount*100+"g")
+  $(sel+" .diet_food_scale").slider({value: data.amount})
+
+@load_diet_drink =  (sel, data) ->
+  $("#drinkname").val(data.food_name)
+  drinkSelected = data.food_name
+  $("#diet_drink_type_id").val(data.food_type_id)
+  $("#diet_drink_amount").val(data.amount)
+  $("#diet_drink_unit").html(data.amount+" dl")
+  $("#diet_drink_scale").slider({value: data.amount})
+
+@load_diet_smoke = (sel, data) ->
+  $("#diet_smoke_type").val(data.name)
+  smokeSelected = data.name

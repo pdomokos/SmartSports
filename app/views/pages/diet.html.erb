@@ -4,8 +4,8 @@
     <div class="sectionTitle dietBodyLogo dietColor">
       <%=t 'menu_diet' %>
     </div>
-    <div class="contentBg">
-        <div style="padding: 10px;">
+    <div class="contentBg" id="diet_forms">
+        <div class="p10">
           <%= render "forms/element", locals: {:showButton => true,
                                                :elementName => 'diet_food',
                                                :style => 'dietStyle',
