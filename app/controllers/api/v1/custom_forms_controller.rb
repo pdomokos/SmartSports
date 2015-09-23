@@ -13,8 +13,7 @@ module Api::V1
       end
 
       user = User.find(user_id)
-      custom_forms = user.custom_forms
-      render json: custom_forms
+      @custom_forms = user.custom_forms
     end
 
     def create
