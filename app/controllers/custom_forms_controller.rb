@@ -3,10 +3,10 @@ class CustomFormsController < ApplicationController
   def index
     @user_id = params[:user_id].to_i
     user = User.find(@user_id)
-    if !check_owner()
-      send_error_json(@user_id, "Unauthorized", 403)
-      return
-    end
+    #if !check_owner()
+    #  send_error_json(@user_id, "Unauthorized", 403)
+    #  return
+    #end
     @custom_forms = user.custom_forms.order(order_index: :desc)
   end
 
@@ -14,6 +14,9 @@ class CustomFormsController < ApplicationController
     user_id = params[:user_id]
     user = User.find(user_id)
     n = user.custom_forms.collect{|it| it.order_index }.max
+    if n.nil?
+      n = 0
+    end
     @custom_form = user.custom_forms.build(custom_form_params)
     @custom_form.order_index = n+1
 
