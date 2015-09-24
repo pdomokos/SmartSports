@@ -1,6 +1,6 @@
 class CustomForm < ActiveRecord::Base
   belongs_to :user
-  has_many :custom_form_elements
+  has_many :custom_form_elements, :dependent => :delete_all
 
   validates :form_name, presence: true
 
