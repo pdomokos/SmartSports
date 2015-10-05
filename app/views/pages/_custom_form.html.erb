@@ -23,12 +23,15 @@
   <div style="padding: 10px;">
 
     <% for cfe in custom_form.custom_form_elements %>
-        <%= render "forms/element", locals: {:showButton => false,
-                                         :elementName => cfe.property_code,
+        <%= render "forms/element", locals: {
+            :showButton => false,
+            :elementName => cfe.property_code,
             :style => "#{@form_params[cfe.property_code][1]}",
             :title => "#{@form_params[cfe.property_code][2]}",
-            :img => "#{@form_params[cfe.property_code][0]}.png"
-                              }%>
+            :img => "#{@form_params[cfe.property_code][0]}.png",
+            :elementId => "#{cfe.property_code}__#{cfe.id}"
+        }%>
+        <script>load_diet_food('#<%= "#{cfe.property_code}__#{cfe.id}".html_safe %>', '<%= cfe.defaults.html_safe %>')</script>
     <% end %>
     <div class="clearBoth"></div>
   </div>

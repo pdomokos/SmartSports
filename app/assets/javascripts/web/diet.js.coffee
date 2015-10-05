@@ -252,7 +252,7 @@
 @load_diet_food =  (sel, data) ->
   console.log "loading diet food"
   console.log data
-  console.log sel+" .food_name"
+  console.log sel+" .diet_food_name"
   foodSelected = data.food_name
   $(sel+" .diet_food_name").val(data.food_name)
   $(sel+" .diet_type_id").val(data.food_type_id)

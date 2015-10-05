@@ -6,6 +6,7 @@
    title = local_assigns.fetch(:locals, {})[:title]
    img = local_assigns.fetch(:locals, {})[:img]
    resourceName = local_assigns.fetch(:locals, {})[:resourceName]
+   elementId = local_assigns.fetch(:locals, {})[:elementId]
 %>
 <div class="dataFormContainer <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>">
   <div class="dataFormTitle">
@@ -13,7 +14,7 @@
     <%=t title %>
   </div>
   <div class="clearBoth"></div>
-  <%= form_tag( "/users/#{current_user.id}/#{resourceName}", remote: true, class: "resource-create-form diet-form "+elementName+"-create-form") do %>
+  <%= form_tag( "/users/#{current_user.id}/#{resourceName}", remote: true, class: "resource-create-form diet-form "+elementName+"-create-form", id: elementId) do %>
       <%= token_tag %>
       <%= render "forms/#{elementName}" %>
       <input type="hidden" name="elementName" value="<%= elementName %>">
