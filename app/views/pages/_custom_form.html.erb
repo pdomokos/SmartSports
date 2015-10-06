@@ -31,7 +31,17 @@
             :img => "#{@form_params[cfe.property_code][0]}.png",
             :elementId => "#{cfe.property_code}__#{cfe.id}"
         }%>
-        <script>load_diet_food('#<%= "#{cfe.property_code}__#{cfe.id}".html_safe %>', '<%= cfe.defaults.html_safe %>')</script>
+        <script>
+          var initfn_<%=cfe.property_code%>__<%=cfe.id%> = function ()
+          {
+              var fname = "load_<%= cfe.property_code.html_safe%>"
+              var fn = window[fname];
+              if (typeof fn == 'function')
+                  fn('#<%= "#{cfe.property_code}__#{cfe.id}".html_safe %>', JSON.parse('<%= cfe.defaults.html_safe %>'));
+              else
+                  console.log("function " + fname + " missing")
+          }
+        </script>
     <% end %>
     <div class="clearBoth"></div>
   </div>

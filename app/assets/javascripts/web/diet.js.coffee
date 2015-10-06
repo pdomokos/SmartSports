@@ -250,24 +250,30 @@
   return true
 
 @load_diet_food =  (sel, data) ->
-  console.log "loading diet food"
+  console.log "loading diet food: "+sel
+  diet = data['diet']
   console.log data
-  console.log sel+" .diet_food_name"
-  foodSelected = data.food_name
-  $(sel+" .diet_food_name").val(data.food_name)
-  $(sel+" .diet_type_id").val(data.food_type_id)
-  $(sel+" .diet_food_amount").val(data.amount)
-  $(sel+" .diet_food_unit").html(data.amount*100+"g")
-  $(sel+" .diet_food_scale").slider({value: data.amount})
+  $(sel+" input[name='food_name']").val(data.food_name)
+  $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
+  $(sel+" .diet_food_unit").html(diet.amount*100+"g")
+  console.log sel+" .diet_food_scale"
+  console.log diet.amount
+  $(sel+" .diet_food_scale").slider({value: diet.amount})
+  $(sel+" input[name='diet[date]'").val(diet.date)
 
 @load_diet_drink =  (sel, data) ->
-  $("#drinkname").val(data.food_name)
-  drinkSelected = data.food_name
-  $("#diet_drink_type_id").val(data.food_type_id)
-  $("#diet_drink_amount").val(data.amount)
-  $("#diet_drink_unit").html(data.amount+" dl")
-  $("#diet_drink_scale").slider({value: data.amount})
+  console.log "loading diet drink: "+sel
+  diet = data['diet']
+  console.log data
+  $(sel+" input[name='drink_name']").val(data.drink_name)
+  $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
+  $(sel+" .diet_drink_unit").html(diet.amount+" dl")
+  $(sel+" .diet_drink_scale").slider({value: diet.amount})
+  $(sel+" input[name='diet[date]'").val(diet.date)
 
 @load_diet_smoke = (sel, data) ->
-  $("#diet_smoke_type").val(data.name)
-  smokeSelected = data.name
+  console.log "loading diet smoke: "+sel
+  diet = data['diet']
+  console.log data
+  $(sel+" input[name='diet[name]']").val(diet.name)
+  $(sel+" input[name='diet[date]']").val(diet.date)

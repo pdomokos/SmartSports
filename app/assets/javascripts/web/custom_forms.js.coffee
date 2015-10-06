@@ -6,6 +6,8 @@
   console.log "custom loaded"
 
   initDiet()
+  if typeof window.init_custom_forms =='function'
+    init_custom_forms()
 
   formList = ["activity_exercise",
               "activity_regular",
