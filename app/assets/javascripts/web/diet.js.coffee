@@ -238,8 +238,15 @@
 
       $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
         data = JSON.parse(e.currentTarget.querySelector("input").value)
-        if data.diet_type=='Food'
-          load_diet_food("#diet_forms .diet_food_elem", data)
+        diet = data['diet']
+        if diet.diet_type=='Food'
+          load_diet_food("#diet_forms .diet_food", data)
+        else if diet.diet_type=='Drink'
+          load_diet_drink("#diet_forms .diet_drink", data)
+        else if diet.diet_type=='Smoke'
+          load_diet_smoke("#diet_forms .diet_smoke", data)
+        else if diet.diet_type=='Calory'
+          load_diet_quick("#diet_forms .diet_quick_calories", data)
       )
 @validate_diet_food = (sel) ->
   val = $(sel+" .diet_food_name").val()
@@ -253,27 +260,35 @@
   console.log "loading diet food: "+sel
   diet = data['diet']
   console.log data
-  $(sel+" input[name='food_name']").val(data.food_name)
+  $(sel+" input[name='diet_name']").val(data.diet_name)
   $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
   $(sel+" .diet_food_unit").html(diet.amount*100+"g")
   console.log sel+" .diet_food_scale"
   console.log diet.amount
   $(sel+" .diet_food_scale").slider({value: diet.amount})
-  $(sel+" input[name='diet[date]'").val(diet.date)
+  $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
 
 @load_diet_drink =  (sel, data) ->
   console.log "loading diet drink: "+sel
   diet = data['diet']
   console.log data
-  $(sel+" input[name='drink_name']").val(data.drink_name)
+  $(sel+" input[name='diet_name']").val(data.diet_name)
   $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
   $(sel+" .diet_drink_unit").html(diet.amount+" dl")
   $(sel+" .diet_drink_scale").slider({value: diet.amount})
-  $(sel+" input[name='diet[date]'").val(diet.date)
+  $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
 
 @load_diet_smoke = (sel, data) ->
   console.log "loading diet smoke: "+sel
   diet = data['diet']
   console.log data
   $(sel+" input[name='diet[name]']").val(diet.name)
-  $(sel+" input[name='diet[date]']").val(diet.date)
+  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
+
+@load_diet_quick_calories = (sel, data) ->
+  console.log "loading diet quick: "+sel
+  diet = data['diet']
+  console.log data
+  $(sel+" input[name='diet[calories]']").val(diet.calories)
+  $(sel+" input[name='diet[carbs]']").val(diet.carbs)
+  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))

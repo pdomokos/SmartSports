@@ -124,3 +124,11 @@
   $("#openModalAddCustomFormElement form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
     location.href = "customforms"
   )
+
+@fixdate = (strdate) ->
+  curr = moment()
+  m = moment(strdate, "YYYY-MM-DD HH:mm")
+  m.date(curr.date())
+  m.month(curr.month())
+  m.year(curr.year())
+  return m.format(moment_fmt)
