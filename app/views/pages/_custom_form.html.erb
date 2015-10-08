@@ -20,16 +20,18 @@
 </div>
 
 <div class="contentBg ">
-  <div style="padding: 10px;">
+  <div class="p10 cform-<%=custom_form.id%>">
 
     <% for cfe in custom_form.custom_form_elements %>
         <%= render "forms/element", locals: {
             :showButton => false,
             :elementName => cfe.property_code,
+            :resourceName => cfe.property_code.split('_')[0]+'s',
             :style => "#{@form_params[cfe.property_code][1]}",
             :title => "#{@form_params[cfe.property_code][2]}",
             :img => "#{@form_params[cfe.property_code][0]}.png",
-            :elementId => "#{cfe.property_code}__#{cfe.id}"
+            :elementId => "#{cfe.property_code}__#{cfe.id}",
+            :eid => "#{cfe.id}"
         }%>
         <script>
           var initfn_<%=cfe.property_code%>__<%=cfe.id%> = function ()
@@ -43,6 +45,7 @@
           }
         </script>
     <% end %>
+    <button class="dataFormField healthColor addCustomButton" data-cform="<%= custom_form.id%>" data-elements="<%= custom_form.custom_form_elements.collect{|c| c.id}.join(',')%>"><%=t 'button_add'%></button>
     <div class="clearBoth"></div>
   </div>
 </div>

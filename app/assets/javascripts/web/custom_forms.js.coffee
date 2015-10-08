@@ -125,6 +125,33 @@
     location.href = "customforms"
   )
 
+  succ_fn = (d, st, jq) ->
+    console.log "AJAX successful cfe: "
+    console.log d
+    console.log st
+    console.log jq
+    console.log "^^^^^^^^^^^^^^^^^^^^^"
+  err_fn =  (d, st, jq) ->
+    console.log "AJAX error, cfe"
+
+  $("button.addCustomButton").on("click", (e) ->
+    btn = e.target
+    console.log btn.dataset.cform
+    form_ids =btn.dataset.elements.split(',')
+    console.log form_ids
+    reqs = []
+    for i in form_ids
+      f = $("form.cfe-"+i)
+      reqs.push($.ajax({
+        url: f[0].action,
+        type: 'POST',
+        data: f.serialize()
+      }).done(succ_fn).fail(err_fn))
+    $.when.apply(undefined, reqs).then( () ->
+      console.log "ALL COMPLETE"
+    )
+  )
+
 @fixdate = (strdate) ->
   curr = moment()
   m = moment(strdate, "YYYY-MM-DD HH:mm")
