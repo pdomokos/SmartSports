@@ -62,9 +62,7 @@
   )
 
   $(document).on("click", ".add-form-element", (evt) ->
-    console.log "addfe called"
     formid = evt.target.getAttribute('data-formid')
-    console.log formid
     userid = $("#current-user-id").val()
     $("#openModalAddCustomFormElement div.dataFormContainer>form").attr("action", "/users/"+userid+"/custom_forms/"+formid+"/custom_form_elements")
     location.href = "#openModalAddCustomFormElement"

@@ -49,7 +49,6 @@
   document.body.style.cursor = 'wait'
   loadExerciseHistory()
 
-  load_activity_types()
 
 @get_exercise_table_row = (item ) ->
   if item.activity==null || !item.intensity || !item.duration
@@ -148,6 +147,8 @@ init_exercise = () ->
     load_exercise(true)
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
+
+  load_activity_types()
 
 @loadExerciseHistory = () ->
   load_exercise()
@@ -284,3 +285,8 @@ init_exercise = () ->
             $("#activity_other_percent").html(intensities[2])
           $("#activity_other_scale").slider({value: data.intensity})
       $("#recentResourcesTable").on("click", "td.activityItem", load_fn)
+
+@load_activity_exercise = () ->
+  console.log "load activity exercise"
+@load_activity_regular= () ->
+  console.log "load active regular"

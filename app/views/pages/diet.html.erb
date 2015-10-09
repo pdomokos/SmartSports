@@ -15,43 +15,35 @@
                                                :elementId => 'dietform_1'
                                     }%>
 
-            <div class="dataFormContainer dietStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "drink40.png" %><br/>
-                  <%=t 'drink' %>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "drink-create-form", class: "resource-create-form diet-form") do %>
-                  <%= render "forms/diet_drink" %>
-                  <button class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator dietStyle"></div>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'diet_drink',
+                                               :style => 'dietStyle',
+                                               :title => 'drink',
+                                               :img => 'drink40.png',
+                                               :resourceName => 'diets',
+                                               :elementId => 'dietform_2'
+                                    }%>
 
-            <div class="dataFormContainer dietStyle">
-            <div class="dataFormTitle">
-              <%= image_tag "food40.png" %><br/>
-              <%=t 'quick_calories' %>
-            </div>
-            <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "calories-create-form", class: "resource-create-form diet-form") do %>
-                <%= render "forms/diet_quick_calories" %>
-                <button id="addCaloriesButton" class="dataFormField"><%=t 'button_add'%></button>
-            <% end %>
-            </div>
-            <div class="dataFormSeparator dietStyle"></div>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'diet_quick_calories',
+                                               :style => 'dietStyle',
+                                               :title => 'quick_calories',
+                                               :img => 'food40.png',
+                                               :resourceName => 'diets',
+                                               :elementId => 'dietform_3'
+                                    }%>
 
-              <% if current_user.profile.nil? || current_user.profile.smoke %>
-                <div class="dataFormContainer dietStyle">
-                    <div class="dataFormTitle">
-                        <%= image_tag "smoke40.png" %><br/>
-                      <%=t 'smoking' %>
-                    </div>
-                    <%= form_tag( "/users/#{current_user.id}/diets", remote: true, id: "smoke-create-form", class: "resource-create-form diet-form") do %>
-                        <%= render "forms/diet_smoke" %>
-                        <button class="dataFormField"><%=t 'button_add'%></button>
-                    <% end %>
-                </div>
-                <div class="dataFormSeparator dietStyle"></div>
-              <% end %>
+
+          <% if current_user.profile.nil? || current_user.profile.smoke %>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'diet_smoke',
+                                               :style => 'dietStyle',
+                                               :title => 'diet_smoke',
+                                               :img => 'smoke40.png',
+                                               :resourceName => 'diets',
+                                               :elementId => 'dietform_4'
+                                    }%>
+          <% end %>
 
             <div class="clearBoth"></div>
         </div>

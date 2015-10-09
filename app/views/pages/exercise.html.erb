@@ -6,31 +6,25 @@
     <%=t 'activity' %>
   </div>
   <div class="contentBg">
-    <div style="padding: 10px;">
-      <div class="dataFormContainer exerciseStyle">
-        <div class="dataFormTitle">
-          <%= image_tag "bicycle40.png" %><br/>
-          <%=t 'exercise' %>
-        </div>
-        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "exercise-create-form", class: "resource-create-form exercise-form") do %>
-            <%= render "forms/activity_exercise" %>
-            <button id="addActivityButton" class="dataFormField"><%=t 'button_add'%></button>
-        <% end %>
-      </div>
-      <div class="dataFormSeparator exerciseStyle"></div>
+    <div class="p10">
+      <%= render "forms/element", locals: {:showButton => true,
+                                           :elementName => 'activity_exercise',
+                                           :style => 'exerciseStyle',
+                                           :title => 'exercise',
+                                           :img => 'bicycle40.png',
+                                           :resourceName => 'activities',
+                                           :elementId => 'exercise-create-form'
+                                }%>
 
-      <div class="dataFormContainer exerciseStyle">
-        <div class="dataFormTitle">
-          <%= image_tag "regular40.png" %><br/>
-          <%=t 'regular_activity'%>
-        </div>
-        <%= form_tag("/users/#{current_user.id}/activities", remote: true, id: "regular-activity-create-form", class: "resource-create-form exercise-form") do %>
-            <%= render "forms/activity_regular" %>
-            <button class="dataFormField"><%=t 'button_add'%></button>
-        <% end %>
-      </div>
+      <%= render "forms/element", locals: {:showButton => true,
+                                           :elementName => 'activity_regular',
+                                           :style => 'exerciseStyle',
+                                           :title => 'regular_activity',
+                                           :img => 'regular40.png',
+                                           :resourceName => 'activities',
+                                           :elementId => 'regular-activity-create-form'
+                                }%>
 
-      <div class="dataFormSeparator exerciseStyle"></div>
       <div class="clearBoth"></div>
     </div>
   </div>

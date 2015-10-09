@@ -19,7 +19,7 @@
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)
-    $('#diet_smoke_type').val(null)
+    $('.diet_smoke_type').val(null)
     console.log xhr.responseText
     color = $("#addFoodButton").css("background")
     popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
@@ -47,28 +47,30 @@
 
 @resetDiet = () ->
   $("div.diet > input.dataFormField").val("")
-  $("#diet_scale").slider({ value: 2 })
-  fval = $("#diet_scale").slider("value")
-  $("#diet_unit").html(fval*100+"g")
-  $("#diet_drink_scale").slider({ value: 2 })
-  dval = $("#diet_drink_scale").slider("value")
-  $("#diet_drink_unit").html(dval+" dl")
-  $('div.diet > .diet_food_datepicker').val(moment().format(moment_fmt))
-  $('#diet_calories_datepicker').val(moment().format(moment_fmt))
-  $('#diet_drink_datepicker').val(moment().format(moment_fmt))
-  $('#diet_smoking_datepicker').val(moment().format(moment_fmt))
-  $('#diet_type_id').val(null)
-  $('#diet_drink_type_id').val(null)
-  $('#diet_smoke_type').val(null)
+  $(".diet_food_scale").slider({ value: 2 })
+  fval = $(".diet_food_scale").slider("value")
+  $(".diet_food_unit").html(fval*100+"g")
+  $(".diet_drink_scale").slider({ value: 2 })
+  dval = $(".diet_drink_scale").slider("value")
+  $(".diet_drink_unit").html(dval+" dl")
+
+  $(".diet_food_datepicker").val(moment().format(moment_fmt))
+  $(".diet_calories_datepicker").val(moment().format(moment_fmt))
+  $(".diet_drink_datepicker").val(moment().format(moment_fmt))
+  $(".diet_smoking_datepicker").val(moment().format(moment_fmt))
+
+  $("#diet_type_id").val(null)
+  $("#diet_drink_type_id").val(null)
+  $(".diet_smoke_type").val(null)
 
 @initDiet = () ->
   console.log "initdiet called"
-  $('.diet_food_datepicker').datetimepicker(timepicker_defaults)
+  $(".diet_food_datepicker").datetimepicker(timepicker_defaults)
   $(".diet_food_amount").val(2)
-  $('.diet_drink_datepicker').datetimepicker(timepicker_defaults)
+  $(".diet_drink_datepicker").datetimepicker(timepicker_defaults)
   $(".diet_drink_amount").val(2)
-  $('#diet_calories_datepicker').datetimepicker(timepicker_defaults)
-  $('#diet_smoking_datepicker').datetimepicker(timepicker_defaults)
+  $(".diet_calories_datepicker").datetimepicker(timepicker_defaults)
+  $(".diet_smoking_datepicker").datetimepicker(timepicker_defaults)
 
 
   $(".diet_food_scale").slider({
@@ -169,11 +171,12 @@
           $(".diet_food_name").removeAttr("disabled")
         change: (event, ui) ->
           foodSelected = ui['item']
-      })
+      }).focus ->
+        $(this).autocomplete("search")
 
 
       drinkSelected = null
-      $("#drinkname").autocomplete({
+      $(".diet_drink_name").autocomplete({
         minLength: 0,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
@@ -185,9 +188,9 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("#diet_drink_type_id").val(ui.item.id)
+          $(".diet_drink_type_id").val(ui.item.id)
         create: (event, ui) ->
-          $("#drinkname").removeAttr("disabled")
+          $(".diet_drink_name").removeAttr("disabled")
         change: (event, ui) ->
           drinkSelected = ui['item']
       }).focus ->
@@ -215,7 +218,7 @@
         {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
 
       smokeSelected = null
-      $("#diet_smoke_type").autocomplete({
+      $(".diet_smoke_type").autocomplete({
         minLength: 0,
         source: smokeList,
         change: (event, ui) ->
@@ -226,7 +229,7 @@
 
       $("#smoke-create-form button").click ->
         if(!smokeSelected)
-          val = $("#diet_smoke_type").val()
+          val = $(".diet_smoke_type").val()
           if !val
             val = "empty item"
           popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
@@ -246,7 +249,7 @@
         else if diet.diet_type=='Smoke'
           load_diet_smoke("#diet_forms .diet_smoke", data)
         else if diet.diet_type=='Calory'
-          load_diet_quick("#diet_forms .diet_quick_calories", data)
+          load_diet_quick_calories("#diet_forms .diet_quick_calories", data)
       )
 @validate_diet_food = (sel) ->
   val = $(sel+" .diet_food_name").val()
@@ -263,8 +266,6 @@
   $(sel+" input[name='diet_name']").val(data.diet_name)
   $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
   $(sel+" .diet_food_unit").html(diet.amount*100+"g")
-  console.log sel+" .diet_food_scale"
-  console.log diet.amount
   $(sel+" .diet_food_scale").slider({value: diet.amount})
   $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
 

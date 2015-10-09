@@ -19,8 +19,12 @@ module DietsCommon
     end
 
     if @diet.save
-      if not @diet.diet_name && @diet_diet_type=='Calory'
+      if @diet.diet_type=='Calory'
         diet_name = I18n.t :quick_calories_prefix
+      elsif @diet.diet_name && @diet.diet_name != ""
+        diet_name = @diet.diet_name
+      else
+        diet_name = @diet.food_type.name
       end
       send_success_json(@diet.id, { diet_name: diet_name})
     else
