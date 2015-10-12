@@ -6,6 +6,8 @@
   console.log "custom loaded"
 
   initDiet()
+  initExercise()
+
   if typeof window.init_custom_forms =='function'
     init_custom_forms()
 

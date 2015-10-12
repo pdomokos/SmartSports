@@ -5,6 +5,12 @@
   $("#exercise-link").css
     background: "rgba(238, 152, 67, 0.3)"
 
+  popup_messages = JSON.parse($("#popup-messages").val())
+
+  initExercise()
+  document.body.style.cursor = 'wait'
+  loadExerciseHistory()
+
   $(document).on("click", "#exercise-show-table", (evt) ->
     console.log "datatable clicked"
     current_user = $("#current-user-id")[0].value
@@ -44,61 +50,47 @@
     location.href = "#close"
   )
 
-  init_exercise()
-
-  document.body.style.cursor = 'wait'
-  loadExerciseHistory()
-
-
 @get_exercise_table_row = (item ) ->
   if item.activity==null || !item.intensity || !item.duration
     return null
   return ([item.id, moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.activity, item.intensity, item.duration])
 
-init_exercise = () ->
-  intensities = $("#intensity_values").val().split(" ")
+@initExercise = () ->
   console.log "init exercise"
-  console.log intensities
-  $("#activity_scale").slider({
-    min: 1,
-    max: 3,
-    value: 2
-  }).slider({
-    slide: (event, ui) ->
-      if ui.value == 1
-        $("#activity_percent").html(intensities[0])
-      else if ui.value == 2
-        $("#activity_percent").html(intensities[1])
-      else if ui.value == 3
-        $("#activity_percent").html(intensities[2])
-    change: (event, ui) ->
-      $("#activity_intensity").val(ui.value)
-  })
-
-  $("#activity_other_scale").slider({
-    min: 1,
-    max: 3,
-    value: 2
-  }).slider({
-    slide: (event, ui) ->
-      if ui.value == 1
-        $("#activity_other_percent").html(intensities[0])
-      else if ui.value == 2
-        $("#activity_other_percent").html(intensities[1])
-      else if ui.value == 3
-        $("#activity_other_percent").html(intensities[2])
-    change: (event, ui) ->
-      $("#activity_other_intensity").val(ui.value)
-  })
-
-  $('#activity_start_datepicker').datetimepicker(timepicker_defaults)
-  $('#activity_end_datepicker').datetimepicker(timepicker_defaults)
-
-  $('#activity_other_start_datepicker').datetimepicker(timepicker_defaults)
-  $('#activity_other_end_datepicker').datetimepicker(timepicker_defaults)
-#  $('#running_datepicker').datetimepicker(timepicker_defaults)
-
   popup_messages = JSON.parse($("#popup-messages").val())
+  @intensities = $("#intensity_values").val().split(" ")
+
+  $(".activity_exercise_scale").slider({
+    min: 0,
+    max: 2,
+    value: 1
+  }).slider({
+    slide: (event, ui) ->
+      $(".activity_exercise_percent").html(intensities[ui.value])
+    change: (event, ui) ->
+      $(".activity_exercise_intensity").val(ui.value)
+  })
+
+  $(".activity_regular_scale").slider({
+    min: 0,
+    max: 2,
+    value: 1
+  }).slider({
+    slide: (event, ui) ->
+      console.log event.target
+      event.target.parentElement.parentElement.querySelector("div.activity_regular_percent").innerHTML = intensities[ui.value]
+#      $(".activity_regular_percent").html(intensities[ui.value])
+    change: (event, ui) ->
+      event.target.parentElement.parentElement.querySelector("input.activity_regular_intensity").val = ui.value
+#      $(".activity_regular_intensity").val(ui.value)
+  })
+
+  $('.activity_exercise_start_datepicker').datetimepicker(timepicker_defaults)
+  $('.activity_exercise_end_datepicker').datetimepicker(timepicker_defaults)
+
+  $('.activity_regular_start_datepicker').datetimepicker(timepicker_defaults)
+  $('.activity_regular_end_datepicker').datetimepicker(timepicker_defaults)
+
   $("#exercise-create-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
@@ -179,7 +171,7 @@ init_exercise = () ->
 @load_activity_types = () ->
   self = this
   current_user = $("#current-user-id")[0].value
-  intensities = $("#intensity_values").val().split(" ")
+#  intensities = $("#intensity_values").val().split(" ")
   console.log "calling load activity types"
   $.ajax '/activity_types.json',
     type: 'GET',
@@ -204,7 +196,7 @@ init_exercise = () ->
         })
       popup_messages = JSON.parse($("#popup-messages").val())
       activitySelected = null
-      $("#activityname").autocomplete({
+      $(".activity_exercise_name").autocomplete({
         minLength: 0
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
@@ -216,14 +208,14 @@ init_exercise = () ->
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("#activity_type_id").val(ui.item.id)
-          $("#activity_scale" ).slider({
-            value: "2"
+          $(".activity_exercise_type_id").val(ui.item.id)
+          $(".activity_exercise_scale" ).slider({
+            value: "1"
           })
-          $("#activity_percent").text(intensities[1])
+          $(".activity_exercise_percent").text(intensities[1])
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
-          $("#activityname").removeAttr("disabled")
+          $("input[name=activity_name]").removeAttr("disabled")
         change: (event, ui) ->
           activitySelected = ui['item']
           console.log "activity change"
@@ -232,7 +224,7 @@ init_exercise = () ->
         $(this).autocomplete("search")
 
       otherActivitySelected = null
-      $("#otheractivityname").autocomplete({
+      $(".activity_regular_name").autocomplete({
         minLength: 0
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
@@ -244,13 +236,13 @@ init_exercise = () ->
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("#activity_other_type_id").val(ui.item.id)
-          $("#activity_other_scale" ).slider({
-            value: "2"
+          $(".activity_regular_type_id").val(ui.item.id)
+          $(".activity_regular_scale" ).slider({
+            value: "1"
           })
-          $("#activity_other_percent").text(intensities[1])
+          $(".activity_regular_percent").text(intensities[1])
         create: (event, ui) ->
-          $("#otheractivityname").removeAttr("disabled")
+          $(".activity_regular_name").removeAttr("disabled")
         change: (event, ui) ->
           otherActivitySelected = ui['item']
       }).focus ->
@@ -261,32 +253,35 @@ init_exercise = () ->
         data = JSON.parse(e.currentTarget.querySelector("input").value)
         console.log data
         if data.activity_category=="sport"
-          activitySelected = data.activity_name
-          $("#activityname").val(data.activity_name)
-          $("#activity_type_id").val(data.activity_type_id)
-          $("#activity_intensity").val(data.intensity)
-          if data.intensity == 1
-            $("#activity_percent").html(intensities[0])
-          else if data.intensity == 2
-            $("#activity_percent").html(intensities[1])
-          else if data.intensity == 3
-            $("#activity_percent").html(intensities[2])
-          $("#activity_scale").slider({value: data.intensity})
+          load_activity_exercise(".activity_exercise_elem", data)
         else if data.activity_category!="sport"
           otherActivitySelected = data.activity_name
-          $("#otheractivityname").val(data.activity_name)
-          $("#activity_other_type_id").val(data.activity_type_id)
-          $("#activity_other_intensity").val(data.intensity)
-          if data.intensity == 1
-            $("#activity_other_percent").html(intensities[0])
-          else if data.intensity == 2
-            $("#activity_other_percent").html(intensities[1])
-          else if data.intensity == 3
-            $("#activity_other_percent").html(intensities[2])
-          $("#activity_other_scale").slider({value: data.intensity})
+          load_activity_regular(".activity_regular_elem", data)
       $("#recentResourcesTable").on("click", "td.activityItem", load_fn)
 
-@load_activity_exercise = () ->
+@load_activity_exercise = (sel, data) ->
   console.log "load activity exercise"
-@load_activity_regular= () ->
+  console.log data
+  activitySelected = data.activity_name
+  activity = data['activity']
+  console.log intensities
+  console.log activity.intensity
+  $(sel+" .activity_exercise_name").val(data.activity_name)
+  $(sel+" .activity_exercise_type_id").val(activity.activity_type_id)
+  $(sel+" .activity_exercise_intensity").val(activity.intensity)
+  $(sel+" .activity_exercise_percent").html(intensities[activity.intensity])
+  $(sel+" .activity_exercise_scale").slider({value: activity.intensity})
+  $(sel+" input[name='activity[start_time]']").val(fixdate(activity.start_time))
+  $(sel+" input[name='activity[end_time]']").val(fixdate(activity.end_time))
+
+@load_activity_regular= (sel, data) ->
   console.log "load active regular"
+  console.log data
+  activity = data['activity']
+  $(sel+" .activity_regular_name").val(data.activity_name)
+  $(sel+" .activity_regular_type_id").val(activity.activity_type_id)
+  $(sel+" .activity_regular_intensity").val(activity.intensity)
+  $(sel+" .activity_regular_percent").html(intensities[activity.intensity])
+  $(sel+" .activity_regular_scale").slider({value: activity.intensity})
+  $(sel+" input[name='activity[start_time]']").val(fixdate(activity.start_time))
+  $(sel+" input[name='activity[end_time]']").val(fixdate(activity.end_time))

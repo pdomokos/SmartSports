@@ -9,8 +9,8 @@
   <div class="dataScale">
     <div class="dataFormField activity_exercise_scale"></div>
   </div>
-  <div id="activity_percent" class="dataFormFieldUnit"><%=t :activity_intensity_moderate%></div>
-  <input id="activity_intensity" type="hidden" name="activity[intensity]"/>
+  <div class="dataFormFieldUnit activity_exercise_percent"><%=t :activity_intensity_moderate%></div>
+  <input class="activity_exercise_intensity" type="hidden" name="activity[intensity]"/>
 
   <input type="text" class="dataFormField activity_exercise_start_datepicker" name="activity[start_time]" value="<%= (DateTime.current-30.minutes).strftime("%F %R") %>"/>
   <div class="dataFormFieldUnit activity_exercise_unit"><%=t :start%></div>

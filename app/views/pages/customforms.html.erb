@@ -10,6 +10,8 @@
     <%= render partial: 'custom_form',  collection: @custom_forms %>
 </div>
 
+<input id="intensity_values" value="<%=t :intensities%>" type="hidden" />
+
 <script>
 window.init_custom_forms = function() {
 <% for f in @custom_forms %>
