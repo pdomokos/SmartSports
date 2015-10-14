@@ -80,9 +80,11 @@
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $(".diet_food_unit").html(" "+ui.value*100+"g")
+      event.target.parentElement.parentElement.querySelector("div.diet_food_unit").innerHTML = " "+ui.value*100+"g"
+#      $(".diet_food_unit").html(" "+ui.value*100+"g")
     change: (event, ui) ->
-      $(".diet_food_amount").val(ui.value)
+      event.target.parentElement.parentElement.querySelector("input.diet_food_amount").value = ui.value
+#      $(".diet_food_amount").val(ui.value)
   })
 
   $(".diet_drink_scale").slider({
@@ -92,9 +94,11 @@
     value: 2
   }).slider({
     slide: (event, ui) ->
-      $(".diet_drink_unit").html(ui.value+" dl")
+      event.target.parentElement.parentElement.querySelector("div.diet_drink_unit").innerHTML = " "+ui.value+"dl"
+#      $(".diet_drink_unit").html(ui.value+" dl")
     change: (event, ui) ->
-      $(".diet_drink_amount").val(ui.value)
+      event.target.parentElement.parentElement.querySelector("input.diet_drink_amount").value = ui.value
+#      $(".diet_drink_amount").val(ui.value)
   })
 
   document.body.style.cursor = 'wait'
@@ -238,7 +242,6 @@
         smokeSelected = null
         return true
 
-
       $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
         data = JSON.parse(e.currentTarget.querySelector("input").value)
         diet = data['diet']
@@ -260,9 +263,7 @@
   return true
 
 @load_diet_food =  (sel, data) ->
-  console.log "loading diet food: "+sel
   diet = data['diet']
-  console.log data
   $(sel+" input[name='diet_name']").val(data.diet_name)
   $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
   $(sel+" .diet_food_unit").html(diet.amount*100+"g")
@@ -270,9 +271,7 @@
   $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
 
 @load_diet_drink =  (sel, data) ->
-  console.log "loading diet drink: "+sel
   diet = data['diet']
-  console.log data
   $(sel+" input[name='diet_name']").val(data.diet_name)
   $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
   $(sel+" .diet_drink_unit").html(diet.amount+" dl")
@@ -280,16 +279,12 @@
   $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
 
 @load_diet_smoke = (sel, data) ->
-  console.log "loading diet smoke: "+sel
   diet = data['diet']
-  console.log data
   $(sel+" input[name='diet[name]']").val(diet.name)
   $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
 
 @load_diet_quick_calories = (sel, data) ->
-  console.log "loading diet quick: "+sel
   diet = data['diet']
-  console.log data
   $(sel+" input[name='diet[calories]']").val(diet.calories)
   $(sel+" input[name='diet[carbs]']").val(diet.carbs)
   $(sel+" input[name='diet[date]']").val(fixdate(diet.date))

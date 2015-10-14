@@ -66,9 +66,11 @@
     value: 1
   }).slider({
     slide: (event, ui) ->
-      $(".activity_exercise_percent").html(intensities[ui.value])
+      event.target.parentElement.parentElement.querySelector("div.activity_exercise_percent").innerHTML = intensities[ui.value]
+#      $(".activity_exercise_percent").html(intensities[ui.value])
     change: (event, ui) ->
-      $(".activity_exercise_intensity").val(ui.value)
+      event.target.parentElement.parentElement.querySelector("input.activity_exercise_intensity").value = ui.value
+#      $(".activity_exercise_intensity").val(ui.value)
   })
 
   $(".activity_regular_scale").slider({
@@ -79,10 +81,8 @@
     slide: (event, ui) ->
       console.log event.target
       event.target.parentElement.parentElement.querySelector("div.activity_regular_percent").innerHTML = intensities[ui.value]
-#      $(".activity_regular_percent").html(intensities[ui.value])
     change: (event, ui) ->
-      event.target.parentElement.parentElement.querySelector("input.activity_regular_intensity").val = ui.value
-#      $(".activity_regular_intensity").val(ui.value)
+      event.target.parentElement.parentElement.querySelector("input.activity_regular_intensity").value = ui.value
   })
 
   $('.activity_exercise_start_datepicker').datetimepicker(timepicker_defaults)
@@ -197,7 +197,7 @@
       popup_messages = JSON.parse($("#popup-messages").val())
       activitySelected = null
       $(".activity_exercise_name").autocomplete({
-        minLength: 0
+        minLength: 0,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
@@ -215,7 +215,7 @@
           $(".activity_exercise_percent").text(intensities[1])
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
-          $("input[name=activity_name]").removeAttr("disabled")
+          $(".activity_exercise_name").removeAttr("disabled")
         change: (event, ui) ->
           activitySelected = ui['item']
           console.log "activity change"
@@ -225,7 +225,7 @@
 
       otherActivitySelected = null
       $(".activity_regular_name").autocomplete({
-        minLength: 0
+        minLength: 0,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
           result = []
@@ -260,12 +260,7 @@
       $("#recentResourcesTable").on("click", "td.activityItem", load_fn)
 
 @load_activity_exercise = (sel, data) ->
-  console.log "load activity exercise"
-  console.log data
-  activitySelected = data.activity_name
   activity = data['activity']
-  console.log intensities
-  console.log activity.intensity
   $(sel+" .activity_exercise_name").val(data.activity_name)
   $(sel+" .activity_exercise_type_id").val(activity.activity_type_id)
   $(sel+" .activity_exercise_intensity").val(activity.intensity)
@@ -275,8 +270,6 @@
   $(sel+" input[name='activity[end_time]']").val(fixdate(activity.end_time))
 
 @load_activity_regular= (sel, data) ->
-  console.log "load active regular"
-  console.log data
   activity = data['activity']
   $(sel+" .activity_regular_name").val(data.activity_name)
   $(sel+" .activity_regular_type_id").val(activity.activity_type_id)

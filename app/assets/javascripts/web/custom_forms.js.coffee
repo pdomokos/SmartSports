@@ -40,8 +40,9 @@
     select: (event, ui) ->
       formSelected = ui['item']['label']
       console.log formSelected
-      $("#add-form-element>div.dataForm>div").addClass("hidden")
-      $(".dataFormContainer."+formSelected+"_elem").removeClass("hidden")
+      $("#openModalAddCustomFormElement .dataFormContainer").addClass("hidden")
+      $("#openModalAddCustomFormElement .dataFormSeparator").addClass("hidden")
+      $("#openModalAddCustomFormElement ."+formSelected+"_elem").removeClass("hidden")
   }).focus ->
     $(this).autocomplete("search")
 
@@ -126,13 +127,17 @@
   )
 
   succ_fn = (d, st, jq) ->
-    console.log "AJAX successful cfe: "
+    console.log "AJAX done: "
     console.log d
     console.log st
     console.log jq
     console.log "^^^^^^^^^^^^^^^^^^^^^"
   err_fn =  (d, st, jq) ->
-    console.log "AJAX error, cfe"
+    console.log "AJAX fail"
+    console.log d
+    console.log st
+    console.log jq
+    console.log "^^^^^^^^^^^^^^^^^^^^^"
 
   $("button.addCustomButton").on("click", (e) ->
     btn = e.target
@@ -147,8 +152,11 @@
         type: 'POST',
         data: f.serialize()
       }).done(succ_fn).fail(err_fn))
-    $.when.apply(undefined, reqs).then( () ->
+    $.when.apply(undefined, reqs).done( () ->
       console.log "ALL COMPLETE"
+      location.href = "customforms"
+    ).fail( () ->
+      console.log "SOME FAILED"
     )
   )
 
