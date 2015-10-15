@@ -20,8 +20,6 @@ module CustomFormElementsCommon
     form_id = params[:custom_form_id]
     custom_form = user.custom_forms.where(id: form_id)[0]
     elem = params['elementName']
-    resourceName = elem.split('_')[0]
-    puts params[resourceName].to_json
     custom_form_element = custom_form.custom_form_elements.new
     custom_form_element.property_code = elem
     par = params.clone

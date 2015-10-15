@@ -7,55 +7,38 @@
         <%=t 'health'%>
     </div>
     <div class="contentBg">
-        <div style="padding: 10px;">
-            <div class="dataFormContainer healthStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "bloodpressure40.png" %><br/>
-                    <%=t 'blood_pressure'%>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/measurements", id: "bp-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <%= render "forms/health_blood_pressure" %>
-                    <button id="addMeasurementButton" class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator healthStyle"></div>
+        <div class="p10">
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'measurement_blood_pressure',
+                                               :style => 'healthStyle',
+                                               :title => 'blood_pressure',
+                                               :img => 'bloodpressure40.png',
+                                               :elementId => 'health_1'
+                                    }%>
 
-            <div class="dataFormContainer healthStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "bloodglucose.png" %><br/>
-                  <%=t 'blood_glucose'%>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/measurements", id: "bg-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <%= render "forms/health_blood_glucose" %>
-                    <button class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator healthStyle"></div>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'measurement_blood_glucose',
+                                               :style => 'healthStyle',
+                                               :title => 'blood_glucose',
+                                               :img => 'bloodglucose.png',
+                                               :elementId => 'health_2'
+                                    }%>
 
-            <div class="dataFormContainer healthStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "weight40.png" %><br/>
-                    <%=t 'body_weight'%>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/measurements", id: "weight-create-form", remote: true, class: "resource-create-form health-form") do %>
-                  <%= render "forms/health_weight" %>
-                  <button class="dataFormField"><%=t 'button_add'%></button>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'measurement_weight',
+                                               :style => 'healthStyle',
+                                               :title => 'weight',
+                                               :img => 'weight40.png',
+                                               :elementId => 'health_3'
+                                    }%>
 
-                <% end %>
-            </div>
-            <div class="dataFormSeparator healthStyle"></div>
-
-            <div class="dataFormContainer healthStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "abdominal40.png" %><br/>
-                  <%=t 'waist_circumfence'%>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/measurements", id: "waist-create-form", remote: true, class: "resource-create-form health-form") do %>
-                    <%= render "forms/health_waist" %>
-                    <button class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator healthStyle"></div>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'measurement_waist',
+                                               :style => 'healthStyle',
+                                               :title => 'waist',
+                                               :img => 'abdominal40.png',
+                                               :elementId => 'health_4'
+                                    }%>
 
             <div class="clearBoth"></div>
         </div>

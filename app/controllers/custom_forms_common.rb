@@ -80,8 +80,9 @@ module CustomFormsCommon
       return
     end
     cf = user.custom_forms.where(id: params[:id].to_i).first
-    if !cf
+    if cf.empty?
       send_error_json(params[:id].to_i, "custom_form_not_found", 400)
+      return
     end
     if cf.destroy
       send_success_json(params[:id].to_i, {})

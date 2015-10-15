@@ -1,65 +1,87 @@
 @health_loaded = () ->
   uid = $("#current-user-id")[0].value
-  popup_messages = JSON.parse($("#popup-messages").val())
+  @popup_messages = JSON.parse($("#popup-messages").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#health-link").css
     background: "rgba(137, 130, 200, 0.3)"
 
-  $('#bloodpressure_datepicker').datetimepicker(timepicker_defaults)
-  $('#bloodsugar_datepicker').datetimepicker(timepicker_defaults)
-  $('#weight_datepicker').datetimepicker(timepicker_defaults)
-  $('#waist_datepicker').datetimepicker(timepicker_defaults)
+  initMeas()
+  loadHealthHistory()
 
-  stressList = $("#stressList").val().split(",")
-  $("#bg_stress_scale").slider({
-    min: 0,
-    max: 3,
-    value: 1
-  }).slider({
-    slide: (event, ui) ->
-        $("#bg_stress_percent").html(stressList[ui.value])
-    change: (event, ui) ->
-      $("#bg_stress_amount").val(ui.value)
-  })
-  $("#bg_stress_amount").val(1)
+  $("form.resource-create-form.measurement-form button").on('click', (evt) ->
+    return validateMeasForm(evt.target.parentNode.parentNode.querySelector("form").id)
+  )
 
-  bgTimeList = $("#bgTimeList").val().split(",")
-  $("#bg_time_scale").slider({
-    min: 0,
-    max: 2,
-    value: 0
-  }).slider({
-    slide: (event, ui) ->
-      $("#bg_time_unit").html(bgTimeList[ui.value])
-    change: (event, ui) ->
-      $("#bg_time_val").val(ui.value)
-  })
-  $("#bg_time_val").val(0)
+  $("form.resource-create-form.measurement-form").on("ajax:success", (e, data, status, xhr) ->
+    form_id = e.currentTarget.id
+    console.log "success "+form_id
 
-  $("#bp-create-form button").click ->
-    if( (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
-        (!isempty("#bp_sys") && isempty("#bp_dia")) ||
-        (isempty("#bp_sys") && !isempty("#bp_dia")) ||
-        (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr")))
-      popup_error(popup_messages.invalid_health_hr, $("#addMeasurementButton").css("background"))
-      return false
+    $("#"+form_id+" input.dataFormField").val("")
+    $('.defaultDatePicker').val(moment().format(moment_fmt))
 
-  $("#bg-create-form button").click ->
-    if isempty("#glucose") || notpositive("#glucose")
-      popup_error(popup_messages.invalid_health_bg, $("#addMeasurementButton").css("background"))
-      return false
-  $("#weight-create-form button").click ->
-    if isempty("#weight")|| notpositive("#weight")
-      popup_error(popup_messages.invalid_health_wd, $("#addMeasurementButton").css("background"))
-      return false
-  $("#waist-create-form button").click ->
-    if isempty("#waist")|| notpositive("#waist")
-      popup_error(popup_messages.invalid_health_cd, $("#addMeasurementButton").css("background"))
-      return false
+    loadHealthHistory()
+    popup_success(popup_messages.save_success, $("#addMeasurementButton").css("background"))
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    console.log error
+    popup_error(popup_messages.failed_to_add_data, $("#addMeasurementButton").css("background"))
+  )
+
+  $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->
+    form_item = e.target
+    console.log "delete success "+form_item.id
+    loadHealthHistory()
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log xhr.responseText
+    alert("Failed to delete measurement.")
+  )
+
+  $('.hisTitle').click ->
+    loadHealthHistory()
+
+  $(".favTitle").click ->
+    loadHealthHistory(true)
+
+  $("#recentMeasTable").on("click", "td.measItem", (e) ->
+    console.log "loading measurement "+e.target
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    console.log data
+    if(data.meas_type=="blood_pressure")
+      load_measurement_blood_pressure(".measurement_blood_pressure_elem", data)
+    else if(data.meas_type=="blood_sugar")
+      load_measurement_blood_glucose(".measurement_blood_glucose_elem", data)
+    else if(data.meas_type=="weight")
+      load_measurement_weight(".measurement_weight_elem", data)
+    else if(data.meas_type=="waist")
+      load_measurement_waist(".measurement_waist_elem", data)
+  )
 
   $(document).on("click", "#health-show-table", (evt) ->
     console.log "datatable clicked"
+    get_table_row = (item ) ->
+      if item.meas_type==null
+        return null
+      value = ""
+      if item.meas_type == 'blood_pressure'
+        if item.systolicbp
+          value = item.systolicbp.toString()
+        if value != ""
+          value = value+"/"
+        if item.diastolicbp
+          value = value+item.diastolicbp.toString()
+        if value != ""
+          value = value+" "
+        if item.pulse
+          value= value+item.pulse.toString()
+      else if item.meas_type == 'blood_sugar'
+        value = item.blood_sugar
+      else if item.meas_type == 'weight'
+        value = item.weight
+      else if item.meas_type == 'waist'
+        value = item.waist
+      return ([item.id, moment(item.date).format("YYYY-MM-DD HH:MM"), item.meas_type, value])
+
     current_user = $("#current-user-id")[0].value
     url = '/users/' + current_user + '/measurements.json'
     $.ajax url,
@@ -95,116 +117,79 @@
     $("#health-data-container").html("")
     location.href = "#close"
   )
-  init_meas()
-  loadHealthHistory()
 
-@get_table_row = (item ) ->
-  if item.meas_type==null
-    return null
-  value = ""
-  if item.meas_type == 'blood_pressure'
-    if item.systolicbp
-      value = item.systolicbp.toString()
-    if value != ""
-      value = value+"/"
-    if item.diastolicbp
-      value = value+item.diastolicbp.toString()
-    if value != ""
-      value = value+" "
-    if item.pulse
-      value= value+item.pulse.toString()
-  else if item.meas_type == 'blood_sugar'
-    value = item.blood_sugar
-  else if item.meas_type == 'weight'
-    value = item.weight
-  else if item.meas_type == 'waist'
-    value = item.waist
-  return ([item.id, moment(item.date).format("YYYY-MM-DD HH:MM"), item.meas_type, value])
+@validateMeasForm = (formId) ->
+  formNode = document.getElementById(formId)
+  formType = formNode.querySelector("input[name='measurement[meas_type]']").value
+  console.log "validate meas form: "+formId+", meas_type="+formType
+  fn = {
+    blood_pressure: ((node) ->
+      if (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
+      (!isempty("#bp_sys") && isempty("#bp_dia")) ||
+      (isempty("#bp_sys") && !isempty("#bp_dia")) ||
+      (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr"))
+        popup_error(popup_messages.invalid_health_hr, $("#addMeasurementButton").css("background"))
+        return false
+    ),
+    blood_sugar: ((node) ->
+      if isempty("#glucose") || notpositive("#glucose")
+        popup_error(popup_messages.invalid_health_bg, $("#addMeasurementButton").css("background"))
+        return false
+    ),
+    weight: ((node) ->
+      if isempty("#weight") || notpositive("#weight")
+        popup_error(popup_messages.invalid_health_wd, $("#addMeasurementButton").css("background"))
+        return false
+    ),
+    waist: ((node) ->
+      if isempty("#waist") || notpositive("#waist")
+        popup_error(popup_messages.invalid_health_cd, $("#addMeasurementButton").css("background"))
+        return false
+    )
+  }
+  if fn[formType]
+    return fn[formType](formNode)
+  else
+    console.log "WARN: missing validation function for "+formType
+    retrn true
 
-@init_meas = () ->
+@resetMeasForm = () ->
+  console.log "reset meas form"
+
+@initMeas = () ->
   console.log "init meas"
-  popup_messages = JSON.parse($("#popup-messages").val())
-  $('#bp_sys').focus()
 
-  $("form.resource-create-form.health-form").on("ajax:success", (e, data, status, xhr) ->
-    form_id = e.currentTarget.id
-    console.log "success "+form_id
+  $('.defaultDatePicker').datetimepicker(timepicker_defaults)
 
-    $("#"+form_id+" input.dataFormField").val("")
+  stressList = $("#stressList").val().split(",")
+  $(".bg_stress_scale").slider({
+    min: 0,
+    max: 3,
+    value: 1
+  }).slider({
+    slide: (event, ui) ->
+      $(".bg_stress_percent").html(stressList[ui.value])
+    change: (event, ui) ->
+      $(".bg_stress_amount").val(ui.value)
+  })
+  $(".bg_stress_amount").val(1)
 
-    $('#bloodpressure_datepicker').val(moment().format(moment_fmt))
-    $('#bloodsugar_datepicker').val(moment().format(moment_fmt))
-    $('#weight_datepicker').val(moment().format(moment_fmt))
-    $('#waist_datepicker').val(moment().format(moment_fmt))
+  bgTimeList = $("#bgTimeList").val().split(",")
+  $(".bg_time_scale").slider({
+    min: 0,
+    max: 2,
+    value: 0
+  }).slider({
+    slide: (event, ui) ->
+      $(".bg_time_unit").html(bgTimeList[ui.value])
+    change: (event, ui) ->
+      $(".bg_time_val").val(ui.value)
+  })
+#  $(".bg_time_val").val(0)
 
-    loadHealthHistory()
-    popup_success(popup_messages.save_success, $("#addMeasurementButton").css("background"))
-  ).on("ajax:error", (e, xhr, status, error) ->
-    console.log xhr.responseText
-    console.log error
-    popup_error(popup_messages.failed_to_add_data, $("#addMeasurementButton").css("background"))
-  )
+  $('.bp_sys').focus()
 
-  $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->
-    form_item = e.currentTarget
-    console.log "delete success "+form_item
-
-    loadHealthHistory()
-  ).on("ajax:error", (e, xhr, status, error) ->
-    console.log xhr.responseText
-    alert("Failed to delete measurement.")
-  )
-
-  $('.hisTitle').click ->
-    loadHealthHistory()
-
-  $(".favTitle").click ->
-    load_meas(true)
-    $(".hisTitle").removeClass("selected")
-    $(".favTitle").addClass("selected")
-
-  $("#recentMeasTable").on("click", "td.measItem", (e) ->
-    console.log "loading measurement"
-    data = JSON.parse(e.currentTarget.querySelector("input").value)
-    console.log data
-    if(data.meas_type=="blood_pressure")
-      $("#bp_sys").val(data.systolicbp)
-      $("#bp_dia").val(data.diastolicbp)
-      $("#bp_hr").val(data.pulse)
-    else if(data.meas_type=="blood_sugar")
-      stressList = $("#stressList").val().split(",")
-      bgTimeList = $("#bgTimeList").val().split(",")
-      $("#glucose").val(data.blood_sugar)
-      $("#bg_stress_scale").val(data.stress_amount)
-      $("#bg_time_scale").val(data.blood_sugar_time)
-      if data.stress_amount == 0
-        $("#bg_stress_percent").html(stressList[0])
-      else if data.stress_amount == 1
-        $("#bg_stress_percent").html(stressList[1])
-      else if data.stress_amount == 2
-        $("#bg_stress_percent").html(stressList[2])
-      else if data.stress_amount == 3
-        $("#bg_stress_percent").html(stressList[3])
-      $("#bg_stress_scale").slider({value: data.stress_amount})
-      if data.blood_sugar_time == 0
-        $("#bg_time_unit").html(bgTimeList[0])
-      else if data.blood_sugar_time == 1
-        $("#bg_time_unit").html(bgTimeList[1])
-      else if data.blood_sugar_time == 2
-        $("#bg_time_unit").html(bgTimeList[2])
-      $("#bg_time_scale").slider({value: data.blood_sugar_time})
-    else if(data.meas_type=="weight")
-      $("#weight").val(data.weight)
-    else if(data.meas_type=="waist")
-      $("#waist").val(data.waist)
-  )
-
-@loadHealthHistory = () ->
-  load_meas()
-  $(".hisTitle").addClass("selected")
-  $(".favTitle").removeClass("selected")
-
-@load_meas = (fav=false) ->
+@loadHealthHistory = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent meas"
@@ -224,3 +209,44 @@
         $(".deleteMeas").removeClass("hidden")
       console.log "load recent measurements  Successful AJAX call"
       console.log textStatus
+
+  if fav
+    $(".hisTitle").removeClass("selected")
+    $(".favTitle").addClass("selected")
+  else
+    $(".hisTitle").addClass("selected")
+    $(".favTitle").removeClass("selected")
+
+
+@load_measurement_blood_pressure = (sel, data) ->
+  console.log "load_meas_bp"
+  $(sel+" input[name='measurement[systolicbp]']").val(data.systolicbp)
+  $(sel+" input[name='measurement[diastolicbp]']").val(data.diastolicbp)
+  $(sel+" input[name='measurement[pulse]']").val(data.pulse)
+  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+
+@load_measurement_blood_glucose = (sel, data) ->
+  console.log "load_meas_bg"
+  stressList = $("#stressList").val().split(",")
+  bgTimeList = $("#bgTimeList").val().split(",")
+  $(sel+" .bg_stress_scale").val(data.stress_amount)
+  $(sel+" .bg_time_scale").val(data.blood_sugar_time)
+
+  $(sel+" .bg_stress_percent").html(stressList[data.stress_amount])
+  $(sel+" .bg_stress_scale").slider({value: data.stress_amount})
+
+  $(sel+" .bg_time_unit").html(bgTimeList[data.blood_sugar_time])
+  $(sel+" .bg_time_scale").slider({value: data.blood_sugar_time})
+
+  $(sel+" input[name='measurement[blood_sugar]']").val(data.blood_sugar)
+  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+
+@load_measurement_weight = (sel, data) ->
+  console.log "load_meas_weight"
+  $(sel+" input[name='measurement[weight]']").val(data.weight)
+  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+
+@load_measurement_waist= (sel, data) ->
+  console.log "load_meas_waist"
+  $(sel+" input[name='measurement[waist]']").val(data.waist)
+  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))

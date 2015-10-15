@@ -26,7 +26,6 @@
         <%= render "forms/element", locals: {
             :showButton => false,
             :elementName => cfe.property_code,
-            :resourceName => cfe.property_code.split('_')[0].pluralize,
             :style => "#{@form_params[cfe.property_code][1]}",
             :title => "#{@form_params[cfe.property_code][2]}",
             :img => "#{@form_params[cfe.property_code][0]}.png",

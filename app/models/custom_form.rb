@@ -12,10 +12,10 @@ class CustomForm < ActiveRecord::Base
       diet_food
       diet_quick_calories
       diet_smoke
-      health_blood_glucose
-      health_blood_pressure
-      health_waist
-      health_weight
+      measurement_blood_glucose
+      measurement_blood_pressure
+      measurement_waist
+      measurement_weight
       labresult_egfrepi
       labresult_hba1c
       labresult_ketone
