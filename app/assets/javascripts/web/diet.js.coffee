@@ -81,10 +81,8 @@
   }).slider({
     slide: (event, ui) ->
       event.target.parentElement.parentElement.querySelector("div.diet_food_unit").innerHTML = " "+ui.value*100+"g"
-#      $(".diet_food_unit").html(" "+ui.value*100+"g")
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector("input.diet_food_amount").value = ui.value
-#      $(".diet_food_amount").val(ui.value)
   })
 
   $(".diet_drink_scale").slider({
@@ -95,10 +93,8 @@
   }).slider({
     slide: (event, ui) ->
       event.target.parentElement.parentElement.querySelector("div.diet_drink_unit").innerHTML = " "+ui.value+"dl"
-#      $(".diet_drink_unit").html(ui.value+" dl")
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector("input.diet_drink_amount").value = ui.value
-#      $(".diet_drink_amount").val(ui.value)
   })
 
   document.body.style.cursor = 'wait'

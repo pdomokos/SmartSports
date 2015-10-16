@@ -10,8 +10,8 @@
 
     <td class="historyTitle padded measItem">
       <input id="measurement_data_<%=meas_item.id%>" type="hidden" value="<%=
-          m = meas_item.as_json
-          JSON.dump(m)
+         m = meas_item.as_json
+         JSON.dump({'measurement' => m})
       %>">
       <% if meas_item.meas_type=='blood_pressure' %>
           <strong><%=(t :blood_pressure)%>: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>

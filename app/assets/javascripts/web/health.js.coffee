@@ -47,14 +47,17 @@
     console.log "loading measurement "+e.target
     data = JSON.parse(e.currentTarget.querySelector("input").value)
     console.log data
-    if(data.meas_type=="blood_pressure")
+    meas = data['measurement']
+    if(meas.meas_type=="blood_pressure")
       load_measurement_blood_pressure(".measurement_blood_pressure_elem", data)
-    else if(data.meas_type=="blood_sugar")
+    else if(meas.meas_type=="blood_sugar")
       load_measurement_blood_glucose(".measurement_blood_glucose_elem", data)
-    else if(data.meas_type=="weight")
+    else if(meas.meas_type=="weight")
       load_measurement_weight(".measurement_weight_elem", data)
-    else if(data.meas_type=="waist")
+    else if(meas.meas_type=="waist")
       load_measurement_waist(".measurement_waist_elem", data)
+    else
+      console.log("WARN: no measurement type "+meas.meas_type)
   )
 
   $(document).on("click", "#health-show-table", (evt) ->
@@ -168,9 +171,9 @@
     value: 1
   }).slider({
     slide: (event, ui) ->
-      $(".bg_stress_percent").html(stressList[ui.value])
+      event.target.parentElement.parentElement.querySelector(".bg_stress_percent").innerHTML = stressList[ui.value]
     change: (event, ui) ->
-      $(".bg_stress_amount").val(ui.value)
+      event.target.parentElement.parentElement.querySelector(".bg_stress_amount").value = ui.value
   })
   $(".bg_stress_amount").val(1)
 
@@ -181,11 +184,10 @@
     value: 0
   }).slider({
     slide: (event, ui) ->
-      $(".bg_time_unit").html(bgTimeList[ui.value])
+      event.target.parentElement.parentElement.querySelector(".bg_time_unit").innerHTML = bgTimeList[ui.value]
     change: (event, ui) ->
-      $(".bg_time_val").val(ui.value)
+      event.target.parentElement.parentElement.querySelector(".bg_time_val").value = ui.value
   })
-#  $(".bg_time_val").val(0)
 
   $('.bp_sys').focus()
 
@@ -220,33 +222,38 @@
 
 @load_measurement_blood_pressure = (sel, data) ->
   console.log "load_meas_bp"
-  $(sel+" input[name='measurement[systolicbp]']").val(data.systolicbp)
-  $(sel+" input[name='measurement[diastolicbp]']").val(data.diastolicbp)
-  $(sel+" input[name='measurement[pulse]']").val(data.pulse)
-  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+  meas = data['measurement']
+  $(sel+" input[name='measurement[systolicbp]']").val(meas.systolicbp)
+  $(sel+" input[name='measurement[diastolicbp]']").val(meas.diastolicbp)
+  $(sel+" input[name='measurement[pulse]']").val(meas.pulse)
+  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
 
 @load_measurement_blood_glucose = (sel, data) ->
   console.log "load_meas_bg"
+  console.log data
+  meas = data['measurement']
   stressList = $("#stressList").val().split(",")
   bgTimeList = $("#bgTimeList").val().split(",")
-  $(sel+" .bg_stress_scale").val(data.stress_amount)
-  $(sel+" .bg_time_scale").val(data.blood_sugar_time)
+  $(sel+" .bg_stress_scale").val(meas.stress_amount)
+  $(sel+" .bg_time_scale").val(meas.blood_sugar_time)
 
-  $(sel+" .bg_stress_percent").html(stressList[data.stress_amount])
-  $(sel+" .bg_stress_scale").slider({value: data.stress_amount})
+  $(sel+" .bg_stress_percent").html(stressList[meas.stress_amount])
+  $(sel+" .bg_stress_scale").slider({value: meas.stress_amount})
 
-  $(sel+" .bg_time_unit").html(bgTimeList[data.blood_sugar_time])
-  $(sel+" .bg_time_scale").slider({value: data.blood_sugar_time})
+  $(sel+" .bg_time_unit").html(bgTimeList[meas.blood_sugar_time])
+  $(sel+" .bg_time_scale").slider({value: meas.blood_sugar_time})
 
-  $(sel+" input[name='measurement[blood_sugar]']").val(data.blood_sugar)
-  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+  $(sel+" input[name='measurement[blood_sugar]']").val(parseFloat(meas.blood_sugar).toFixed(2))
+  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
 
 @load_measurement_weight = (sel, data) ->
   console.log "load_meas_weight"
-  $(sel+" input[name='measurement[weight]']").val(data.weight)
-  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+  meas = data['measurement']
+  $(sel+" input[name='measurement[weight]']").val(meas.weight)
+  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
 
 @load_measurement_waist= (sel, data) ->
   console.log "load_meas_waist"
-  $(sel+" input[name='measurement[waist]']").val(data.waist)
-  $(sel+" input[name='measurement[date]'").val(fixdate(data.date))
+  meas = data['measurement']
+  $(sel+" input[name='measurement[waist]']").val(meas.waist)
+  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))

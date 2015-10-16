@@ -7,6 +7,7 @@
 
   initDiet()
   initExercise()
+  initMeas()
 
   if typeof window.init_custom_forms =='function'
     init_custom_forms()

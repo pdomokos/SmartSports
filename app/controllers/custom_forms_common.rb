@@ -79,8 +79,8 @@ module CustomFormsCommon
       send_error_json(@user_id, "Unauthorized", 403)
       return
     end
-    cf = user.custom_forms.where(id: params[:id].to_i).first
-    if cf.empty?
+    cf = user.custom_forms.where(id: params[:id].to_i).try(:first)
+    if cf.nil?
       send_error_json(params[:id].to_i, "custom_form_not_found", 400)
       return
     end
