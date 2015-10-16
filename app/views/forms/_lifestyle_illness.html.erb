@@ -5,18 +5,18 @@
   <input id="illness_name" type="search" name="illness_name" class="dataFormField" placeholder="<%=t 'illness_placeholder'%>">
   <input id="illnessname" name="lifestyle[illness_type_id]" type="hidden">
 
-  <label for="illness_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
+  <label style="margin-left: 20px;"><%=t 'intensity'%></label>
   <div class="dataScale">
-    <div id="illness_scale" class="dataFormField"></div>
+    <div class="dataFormField illness_scale"></div>
   </div>
 
-  <div id="illness_percent" class="dataFormFieldUnitHalf"><%=t 'illness_amount_mild'%></div>
-  <input id="illness_amount" type="hidden" name="lifestyle[amount]"/>
+  <div class="dataFormFieldUnitHalf illness_percent"><%=t 'illness_amount_mild'%></div>
+  <input class="illness_amount" type="hidden" name="lifestyle[amount]"/>
 
 
-  <input id='illness_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField illness_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
-  <input id='illness_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField illness_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'end'%></div>
 </div>

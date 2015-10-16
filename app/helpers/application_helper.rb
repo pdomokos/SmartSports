@@ -67,4 +67,29 @@ module ApplicationHelper
     end
     return "walking40.png"
   end
+
+  def get_lifestyle_elem(elem_str, lifestyle_item)
+    if lifestyle_item.amount
+      elem_str.split(",")[lifestyle_item.amount]
+    else
+      ""
+    end
+  end
+
+  def get_lifestyle_time(lifestyle_time)
+    if lifestyle_time
+      lifestyle_time.strftime("%F %H:%M")
+    else
+      ""
+    end
+  end
+
+  def get_lifestyle_date(lifestyle_date)
+    if lifestyle_date
+      lifestyle_date.strftime("%F")
+    else
+      ""
+    end
+  end
+
 end

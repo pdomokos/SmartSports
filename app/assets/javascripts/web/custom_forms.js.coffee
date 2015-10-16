@@ -8,6 +8,7 @@
   initDiet()
   initExercise()
   initMeas()
+  initLifestyle()
 
   if typeof window.init_custom_forms =='function'
     init_custom_forms()
@@ -29,11 +30,11 @@
               "medication_drugs",
               "medication_insulin",
               "notification_visit",
-              "wellbeing_illness",
-              "wellbeing_pain",
-              "wellbeing_period",
-              "wellbeing_sleep",
-              "wellbeing_stress"]
+              "lifestyle_illness",
+              "lifestyle_pain",
+              "lifestyle_period",
+              "lifestyle_sleep",
+              "lifestyle_stress"]
 
   $("#input-element_type").autocomplete({
     minLength: 0,

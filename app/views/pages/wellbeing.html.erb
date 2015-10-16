@@ -13,71 +13,50 @@
             <%=t 'wellbeing'%>
         </div>
         <div class="contentBg">
-            <div style="padding: 10px;">
-                <div class="dataFormContainer wellbeingStyle">
-                    <div class="dataFormTitle">
-                        <%= image_tag "sleep40.png" %><br/>
-                      <%=t 'sleep'%>
-                    </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", id: "sleep-create-form", remote: true, class: "resource-create-form lifestyle-form") do %>
-                        <%= render "forms/wellbeing_sleep" %>
-                        <button id="addWellbeingButton" class="dataFormField"><%=t 'button_add'%></button>
-                    <% end %>
-                </div>
-                <div class="dataFormSeparator wellbeingStyle"></div>
+            <div class="p10">
+              <%= render "forms/element", locals: {:showButton => true,
+                                                   :elementName => 'lifestyle_sleep',
+                                                   :style => 'wellbeingStyle',
+                                                   :title => 'sleep',
+                                                   :img => 'sleep40.png',
+                                                   :elementId => 'wellbeing_1'
+                                        }%>
 
-                <div class="dataFormContainer wellbeingStyle">
-                    <div class="dataFormTitle">
-                        <%= image_tag "stress40.png" %><br/>
-                        <%=t 'stress'%>
-                    </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "stress-create-form", class: "resource-create-form lifestyle-form") do %>
-                      <%= render "forms/wellbeing_stress" %>
-                      <button class="dataFormField"><%=t 'button_add'%></button>
+              <%= render "forms/element", locals: {:showButton => true,
+                                                   :elementName => 'lifestyle_stress',
+                                                   :style => 'wellbeingStyle',
+                                                   :title => 'stress',
+                                                   :img => 'stress40.png',
+                                                   :elementId => 'wellbeing_2'
+                                        }%>
 
-                    <% end %>
-                </div>
-                <div class="dataFormSeparator wellbeingStyle"></div>
+              <%= render "forms/element", locals: {:showButton => true,
+                                                   :elementName => 'lifestyle_illness',
+                                                   :style => 'wellbeingStyle',
+                                                   :title => 'illness',
+                                                   :img => 'illness40.png',
+                                                   :elementId => 'wellbeing_3'
+                                        }%>
 
-                  <div class="dataFormContainer wellbeingStyle">
-                    <div class="dataFormTitle">
-                      <%= image_tag "illness40.png" %><br/>
-                      <%=t 'illness'%>
-                    </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "illness-create-form", class: "resource-create-form lifestyle-form") do %>
-                        <%= render "forms/wellbeing_illness" %>
-                        <button class="dataFormField"><%=t 'button_add'%></button>
-                    <% end %>
-                  </div>
-                  <div class="dataFormSeparator wellbeingStyle"></div>
+              <%= render "forms/element", locals: {:showButton => true,
+                                                   :elementName => 'lifestyle_pain',
+                                                   :style => 'wellbeingStyle',
+                                                   :title => 'pain',
+                                                   :img => 'pain40.png',
+                                                   :elementId => 'wellbeing_4'
+                                        }%>
 
-                  <div class="dataFormContainer wellbeingStyle">
-                    <div class="dataFormTitle">
-                      <%= image_tag "pain40.png" %><br/>
-                      <%=t 'pain'%>
-                    </div>
-                    <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "pain-create-form", class: "resource-create-form lifestyle-form") do %>
-                        <%= render "forms/wellbeing_pain" %>
-                        <button class="dataFormField"><%=t 'button_add'%></button>
 
-                    <% end %>
-                  </div>
-                  <div class="dataFormSeparator wellbeingStyle"></div>
+              <% if current_user.profile.nil? || current_user.profile.sex=='female' %>
+                  <%= render "forms/element", locals: {:showButton => true,
+                                                       :elementName => 'lifestyle_period',
+                                                       :style => 'wellbeingStyle',
+                                                       :title => 'period',
+                                                       :img => 'period40.png',
+                                                       :elementId => 'wellbeing_5'
+                                            }%>
+              <% end %>
 
-                  <% if current_user.profile.nil? || current_user.profile.sex=='female' %>
-                      <div class="dataFormContainer wellbeingStyle">
-                        <div class="dataFormTitle">
-                          <%= image_tag "period40.png" %><br/>
-                          <%=t 'periods'%>
-                        </div>
-                        <%= form_tag( "/users/#{current_user.id}/lifestyles", remote: true, id: "period-create-form", class: "resource-create-form lifestyle-form") do %>
-                            <%= render "forms/wellbeing_period" %>
-                            <button class="dataFormField"><%=t 'button_add'%></button>
-
-                        <% end %>
-                      </div>
-                      <div class="dataFormSeparator wellbeingStyle"></div>
-                    <% end %>
                 <div class="clearBoth"></div>
             </div>
         </div>

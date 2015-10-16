@@ -9,7 +9,10 @@
       <td class="lifestyle_item">
 
         <% if lifestyle_item.group=='sleep' %>
-            <strong><%=(t :sleep)%></strong> <%=(t :sleepList).split(",")[lifestyle_item.amount]%><br/>
+            <strong><%=(t :sleep)%></strong> <%= if lifestyle_item.amount
+                                                   (t :sleepList).split(",")[lifestyle_item.amount]
+                                                 else ""
+                                                 end%><br/>
             <%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F %H:%M") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F %H:%M") if lifestyle_item.end_time %>
         <% elsif  lifestyle_item.group=='stress' %>
             <strong><%=(t :stress)%></strong> <%=(t :stressList).split(",")[lifestyle_item.amount]%><br/>

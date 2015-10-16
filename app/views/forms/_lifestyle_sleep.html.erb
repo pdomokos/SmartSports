@@ -1,0 +1,20 @@
+<div class="dataForm wellbeing_sleep <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
+  <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+  <input type="hidden" name="lifestyle[group]" value="sleep"/>
+
+  <label style="margin-left: 20px;"><%=t 'quality'%></label>
+  <br/>
+  <div class="dataScale">
+    <div class="dataFormField sleep_scale"></div>
+  </div>
+  <div class="dataFormFieldUnitHalf sleep_percent"><%=t 'sleep_fairly_good'%></div>
+
+  <input type='text' class="dataFormField sleep_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'start'%></div>
+
+  <input type='text' class="dataFormField sleep_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'end'%></div>
+
+  <input class="sleep_amount" type="hidden" name="lifestyle[amount]" />
+
+</div>

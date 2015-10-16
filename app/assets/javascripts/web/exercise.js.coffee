@@ -7,8 +7,8 @@
 
   popup_messages = JSON.parse($("#popup-messages").val())
 
-  initExercise()
   document.body.style.cursor = 'wait'
+  initExercise()
   loadExerciseHistory()
 
   $(document).on("click", "#exercise-show-table", (evt) ->

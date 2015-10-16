@@ -13,9 +13,9 @@
   <input id="pain_amount" type="hidden" name="lifestyle[amount]"/>
 
 
-  <input id='pain_start_datepicker' type='text' class="dataFormField" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <input type='text' class="dataFormField pain_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
-  <input id='pain_end_datepicker' type='text' class="dataFormField" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <input type='text' class="dataFormField pain_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnit"><%=t 'end'%></div>
 </div>

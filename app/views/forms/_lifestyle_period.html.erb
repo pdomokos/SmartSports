@@ -1,0 +1,27 @@
+<div class="dataForm wellbeing_period <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
+  <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
+  <input type="hidden" name="lifestyle[group]" value="period"/>
+
+  <input type='text' class="dataFormField period_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'start'%></div>
+
+  <input type='text' class="dataFormField period_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <div class="dataFormFieldUnit"><%=t 'end'%></div>
+
+  <label style="margin-right: 50px; margin-left: 20px;"><%=t 'pain'%></label>
+  <div class="dataScale">
+    <div class="dataFormField period_scale"></div>
+  </div>
+  <div class="dataFormFieldUnitHalf period_percent"><%=t 'period_amount_mild_pain'%></div>
+
+  <input class="period_amount" type="hidden" name="lifestyle[amount]"/>
+  <br/>
+
+  <label  style="margin-right: 20px; margin-left: 20px;"><%=t 'amount'%></label>
+  <div class="dataScale">
+    <div class="dataFormField period_volume_scale"></div>
+  </div>
+
+  <div class="dataFormFieldUnitHalf period_volume_percent"><%=t 'period_volume_moderate'%></div>
+  <input class="period_volume_amount" type="hidden" name="lifestyle[period_volume]"/>
+</div>

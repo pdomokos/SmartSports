@@ -8,23 +8,23 @@
 
 
     <% if lifestyle_item.group=='sleep' %>
-        <span class="itemTitle"><%=(t :sleep)%></span> <span><%=(t :sleepList).split(",")[lifestyle_item.amount]%></span><br/>
-        <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F %H:%M") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F %H:%M") if lifestyle_item.end_time %> </span>
+        <span class="itemTitle"><%=(t :sleep)%></span> <span><%= get_lifestyle_elem((t :sleepList), lifestyle_item)%></span><br/>
+        <span><%=(t :start)%>: <%= get_lifestyle_time(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_time(lifestyle_item.end_time) %> </span>
     <% elsif  lifestyle_item.group=='stress' %>
-        <span class="itemTitle"><%=(t :stress)%></span> <span><%=(t :stressList).split(",")[lifestyle_item.amount]%></span><br/>
-        <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F") if lifestyle_item.end_time %> </span>
+        <span class="itemTitle"><%=(t :stress)%></span> <span><%= get_lifestyle_elem((t :stressList), lifestyle_item)%></span><br/>
+        <span><%=(t :start)%>: <%= get_lifestyle_date(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_date(lifestyle_item.end_time) %> </span>
   <% elsif  lifestyle_item.group=='illness' %>
-        <span class="itemTitle"><%=(t :illness)%></span> <span><%=(t :illnessList).split(",")[lifestyle_item.amount]%> <%=lifestyle_item.illness_type.name%></span><br/>
-        <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F") if lifestyle_item.end_time %> </span>
+        <span class="itemTitle"><%=(t :illness)%></span> <span><%= get_lifestyle_elem((t :illnessList), lifestyle_item)%> <%=lifestyle_item.illness_type.name%></span><br/>
+        <span><%=(t :start)%>: <%= get_lifestyle_date(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_date(lifestyle_item.end_time) %> </span>
   <% elsif  lifestyle_item.group=='pain' %>
-        <span class="itemTitle"><%=(t :pain)%></span> <span><%=(t :painList).split(",")[lifestyle_item.amount]%> <%=lifestyle_item.pain_type_name%></span><br/>
-        <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F %H:%M") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F %H:%M") if lifestyle_item.end_time %> </span>
+        <span class="itemTitle"><%=(t :pain)%></span> <span><%= get_lifestyle_elem((t :painList), lifestyle_item)%> <%=lifestyle_item.pain_type_name%></span><br/>
+        <span><%=(t :start)%>: <%= get_lifestyle_time(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_time(lifestyle_item.end_time) %> </span>
     <% elsif  lifestyle_item.group=='period' %>
-        <span class="itemTitle"><%=(t :periods)%></span> <span><%=(t :periodVolumeList).split(",")[lifestyle_item.period_volume]%>, <%=(t :periodPainList).split(",")[lifestyle_item.amount]%></span><br/>
-        <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F") if lifestyle_item.end_time %> </span>
+        <span class="itemTitle"><%=(t :periods)%></span> <span><%= get_lifestyle_elem((t :periodVolumeList), lifestyle_item)%>, <%=get_lifestyle_elem((t :periodPainList), lifestyle_item)%></span><br/>
+        <span><%=(t :start)%>: <%= get_lifestyle_date(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_date(lifestyle_item.end_time) %> </span>
   <% else %>
         <strong><%=(t :unknown)%></strong>
-        <span><%=(t :start)%>: <%= lifestyle_item.start_time.strftime("%F %H:%M") if lifestyle_item.start_time %> <%=(t :end)%>: <%= lifestyle_item.end_time.strftime("%F %H:%M") if lifestyle_item.end_time %> </span>
+        <span><%=(t :start)%>: <%= get_lifestyle_time(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_time(lifestyle_item.end_time) %> </span>
     <% end %>
   </td>
 
