@@ -2,14 +2,6 @@
   uid = $("#current-user-id")[0].value
   @popup_messages = JSON.parse($("#popup-messages").val())
 
-  @sleepList = $("#sleepList").val().split(",")
-  @stressList = $("#stressList").val().split(",")
-  @illnessList = $("#illnessList").val().split(",")
-  @painList = $("#painList").val().split(",")
-  @periodPainList = $("#periodPainList").val().split(",")
-  @periodVolumeList = $("#periodVolumeList").val().split(",")
-  @painTypeList = $("#painTypeList").val().split(",")
-
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#wellbeing-link").css
     background: "rgba(232, 115, 180, 0.3)"
@@ -43,6 +35,13 @@
     return validateLifestyleForm(evt.target.parentNode.parentNode.querySelector("form").id)
   )
 
+  $("#recentResourcesTable").on("click", "td.lifestyleItem", (e) ->
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    fn = window["load_lifestyle_"+data.lifestyle.group];
+    if typeof fn == 'function'
+      fn('#lifestyle_forms .lifestyle_'+data.lifestyle.group+"-create-form", data)
+  )
+
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.currentTarget
     console.log "delete success "+form_item
@@ -57,8 +56,17 @@
     loadLifestyles()
 
 @initLifestyle = () ->
-  console.log("running initLifestyle")
+  self = this
 
+  @sleepList = $("#sleepList").val().split(",")
+  @stressList = $("#stressList").val().split(",")
+  @illnessList = $("#illnessList").val().split(",")
+  @painList = $("#painList").val().split(",")
+  @periodPainList = $("#periodPainList").val().split(",")
+  @periodVolumeList = $("#periodVolumeList").val().split(",")
+  @painTypeList = $("#painTypeList").val().split(",")
+
+  console.log("running initLifestyle")
   $('.sleep_start_datepicker').datetimepicker(timepicker_defaults)
   $('.sleep_end_datepicker').datetimepicker(timepicker_defaults)
   $(".sleep_scale").slider({
@@ -68,10 +76,8 @@
   }).slider({
     slide: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".sleep_percent").innerHTML = sleepList[ui.value]
-#      $("#sleep_percent").html(sleepList[ui.value])
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".sleep_amount").value = ui.value
-#      $("#sleep_amount").val(ui.value)
   })
   $(".sleep_amount").val(2)
 
@@ -83,10 +89,8 @@
   }).slider({
     slide: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".stress_percent").innerHTML = stressList[ui.value]
-#      $("#stress_percent").html(stressList[ui.value])
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".stress_amount").value = ui.value
-#      $("#stress_amount").val(ui.value)
   })
   $(".stress_amount").val(1)
 
@@ -105,10 +109,8 @@
   }).slider({
   slide: (event, ui) ->
     event.target.parentElement.parentElement.querySelector(".illness_percent").innerHTML = illnessList[ui.value]
-#    $(".illness_percent").html(illnessList[ui.value])
   change: (event, ui) ->
     event.target.parentElement.parentElement.querySelector(".illness_amount").value = ui.value
-#    $(".illness_amount").val(ui.value)
 })
   $(".illness_amount").val(1)
 
@@ -135,7 +137,9 @@
     minLength: 0,
     source: painTypeList,
     change: (event, ui) ->
-      painSelected = ui['item']
+#      painSelected = ui['item']
+      console.log ui
+      $("input[name='lifestyle[pain_type_name]']").val(ui['item'].value)
   }).focus ->
     $(this).autocomplete("search")
 
@@ -146,10 +150,8 @@
   }).slider({
   slide: (event, ui) ->
     event.target.parentElement.parentElement.querySelector(".pain_percent").innerHTML = painList[ui.value]
-#    $(".pain_percent").html(painList[ui.value])
   change: (event, ui) ->
     event.target.parentElement.parentElement.querySelector(".pain_amount").value = ui.value
-#    $(".pain_amount").val(ui.value)
 })
   $(".pain_amount").val(1)
 
@@ -179,10 +181,8 @@
   }).slider({
     slide: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".period_percent").innerHTML = periodPainList[ui.value]
-#      $(".period_percent").html(periodPainList[ui.value])
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".period_amount").value = ui.value
-#      $(".period_amount").val(ui.value)
   })
   $(".period_amount").val(1)
 
@@ -193,10 +193,8 @@
   }).slider({
     slide: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".period_volume_percent").innerHTML = periodVolumeList[ui.value]
-#      $(".period_volume_percent").html(periodVolumeList[ui.value])
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".period_volume_amount").value = ui.value
-#      $(".period_volume_amount").val(ui.value)
   })
   $(".period_volume_amount").val(1)
   loadIllnessTypes()
@@ -231,7 +229,7 @@
 
       illnessSelected = null
       popup_messages = JSON.parse($("#popup-messages").val())
-      $("input[name=illness_name]").autocomplete({
+      $("input[name='illness_name']").autocomplete({
         minLength: 3,
         source: (request, response) ->
           matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
@@ -243,10 +241,46 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("input[name=illness_name]").val(ui.item.id)
+          $("input[name='lifestyle[illness_type_id]']").val(ui.item.id)
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
-          $("input[name=illness_name]").removeAttr("disabled")
+          $("input[name='illness_name']").removeAttr("disabled")
         change: (event, ui) ->
           illnessSelected = ui['item']
       })
+
+@load_lifestyle_sleep = (sel, data) ->
+  console.log "load sleep "+sel
+  console.log data
+  lifestyle = data['lifestyle']
+  $(sel+" .sleep_scale").slider({value: lifestyle.amount})
+  $(sel+" .sleep_percent").html(sleepList[lifestyle.amount])
+  $(sel+" input[name='lifestyle[start_time]']").val(fixdate(lifestyle.start_time))
+  $(sel+" input[name='lifestyle[end_time]']").val(fixdate(lifestyle.end_time))
+
+@load_lifestyle_stress = (sel, data) ->
+  console.log "load stress"+sel
+  console.log data
+  lifestyle = data['lifestyle']
+  $(sel+" .stress_scale").slider({value: lifestyle.amount})
+  $(sel+" .stress_percent").html(stressList[lifestyle.amount])
+  $(sel+" input[name='lifestyle[start_time]']").val(fixdate(lifestyle.start_time))
+
+@load_lifestyle_illness = (sel, data) ->
+  console.log "load illness"+sel
+  console.log data
+  lifestyle = data['lifestyle']
+  $(sel+" .illness_name").val(data.illness_name)
+  $(sel+" .illness_type_id").val(lifestyle.illness_type_id)
+  $(sel+" .illness_scale").slider({value: lifestyle.amount})
+  $(sel+" .illness_percent").html(illnessList[lifestyle.amount])
+  $(sel+" input[name='lifestyle[start_time]']").val(new moment().format(moment_datefmt))
+  $(sel+" input[name='lifestyle[end_time]']").val(new moment().format(moment_datefmt))
+
+@load_lifestyle_pain = (sel, data) ->
+  console.log "load pain"+sel
+  console.log data
+
+@load_lifestyle_period = (sel, data) ->
+  console.log "load period"+sel
+  console.log data

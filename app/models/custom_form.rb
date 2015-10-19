@@ -23,11 +23,11 @@ class CustomForm < ActiveRecord::Base
       medication_drugs
       medication_insulin
       notification_visit
-      wellbeing_illness
-      wellbeing_pain
-      wellbeing_period
-      wellbeing_sleep
-      wellbeing_stress
+      lifestyle_illness
+      lifestyle_pain
+      lifestyle_period
+      lifestyle_sleep
+      lifestyle_stress
     )
     return ret
   end

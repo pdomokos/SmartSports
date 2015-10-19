@@ -1,15 +1,15 @@
 <div class="dataForm medication_drugs <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-  <input id="oral_medication_name" type="search" name="med_name" class="dataFormField" placeholder="<%=t 'drug_placeholder'%>"/>
-  <input id="medname" name="medication[medication_type_id]" type="hidden">
+  <input type="search" name="medication_name" class="dataFormField oral_medication_name" placeholder="<%=t 'drug_placeholder'%>"/>
+  <input class="oral_medication_id" name="medication[medication_type_id]" type="hidden">
 
-  <input id="medication_amount" type="text" name="medication[amount]" class="dataFormField" placeholder="<%=t 'amount_taken'%>"/>
+  <input type="text" name="medication[amount]" class="dataFormField" placeholder="<%=t 'amount_taken'%>"/>
 
   <div class="dataFormFieldUnit"><%=t 'piece'%></div>
   <br>
 
-  <input id="medications_datepicker" type="text"  name="medication[date]" class="dataFormField" value='<%= DateTime.current.strftime("%F %R") %>'>
+  <input type="text"  name="medication[date]" class="dataFormField medication_drugs_datepicker" value='<%= DateTime.current.strftime("%F %R") %>'>
   <br>
 
 </div>

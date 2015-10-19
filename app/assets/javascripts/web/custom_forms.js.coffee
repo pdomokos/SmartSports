@@ -8,6 +8,7 @@
   initDiet()
   initExercise()
   initMeas()
+  initMedications()
   initLifestyle()
 
   if typeof window.init_custom_forms =='function'

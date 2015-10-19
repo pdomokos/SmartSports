@@ -4,33 +4,22 @@
     <div class="sectionTitle medicationBodyLogo medicationColor">
         <%=t 'medication' %>
     </div>
-    <div class="contentBg">
-        <div style="padding: 10px;">
-            <div class="dataFormContainer medicationStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "oral40.png" %><br/>
-                    <%=t 'drugs'%>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "oral-med-create-form", class: "resource-create-form medication-form") do %>
-                    <%= render "forms/medication_drugs" %>
-                    <button id="addMedicationButton" class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator medicationStyle"></div>
-
-          <% if current_user.profile.nil? || current_user.profile.insulin %>
-            <div class="dataFormContainer medicationStyle">
-                <div class="dataFormTitle">
-                    <%= image_tag "insulin40.png" %><br/>
-                    <%=t 'insulin' %>
-                </div>
-                <%= form_tag( "/users/#{current_user.id}/medications", remote: true, id: "insulin-create-form", class: "resource-create-form medication-form") do %>
-                    <%= render "forms/medication_insulin" %>
-                    <button class="dataFormField"><%=t 'button_add'%></button>
-                <% end %>
-            </div>
-            <div class="dataFormSeparator medicationStyle"></div>
-          <% end %>
+    <div id=medicationForms" class="contentBg">
+        <div class="p10">
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'medication_drugs',
+                                               :style => 'medicationStyle',
+                                               :title => 'drugs',
+                                               :img => 'oral40.png',
+                                               :elementId => 'drugs_form'
+                                    }%>
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'medication_insulin',
+                                               :style => 'medicationStyle',
+                                               :title => 'insulin',
+                                               :img => 'insulin40.png',
+                                               :elementId => 'insulin_form'
+                                    }%>
 
           <div class="clearBoth"></div>
 

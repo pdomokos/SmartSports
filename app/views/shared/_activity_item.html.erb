@@ -10,7 +10,7 @@
   </td>
   <td class="historyTitle padded activityItem">
     <input id="activity_data_<%=activity_item.id%>" type="hidden" value="<%=
-        d = activity_item.as_json
+        d = {'activity' => activity_item.as_json }
         if activity_item.activity_type
           d.merge!({'activity_name' => activity_item.activity_type.name})
           d.merge!({'activity_category' => activity_item.activity_type.category})

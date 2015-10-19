@@ -3,16 +3,17 @@ module MedicationsCommon
   # POST /users/[user_id]/medications
   # POST /users/[user_id]/medications.json
   def create
-    user_id = params[:user_id]
+    @user_id = params[:user_id]
+
     par = medication_params
-    par.merge!(:user_id => user_id)
+    par.merge!(:user_id => @user_id)
     print par
     medication = Medication.new(par)
 
     if medication.save
       send_success_json(medication.id, {medication_name: medication.medication_type.name})
     else
-      send_error_json(medication.id, medication.errors.full_messages.to_sentence, 401)
+      send_error_json(medication.id, medication.errors.full_messages.to_sentence, 400)
     end
 
   end
@@ -21,6 +22,7 @@ module MedicationsCommon
   # PATCH/PUT /medications/1.json
   def update
     @medication = Medication.find_by_id(params[:id])
+    @user_id = @medication.user_id
 
     if @medication.nil?
       send_error_json(nil, "Param 'medication' missing", 400)
@@ -63,6 +65,7 @@ module MedicationsCommon
   # DELETE /users/:user_id/medications/:id.json
   def destroy
     @medication = Medication.find(params[:id])
+    @user_id = @medication.user_id
     if @medication.nil?
       send_error_json(nil, "Delete error", 400)
       return
@@ -102,10 +105,10 @@ module MedicationsCommon
       puts "current_resource_owner NOT defined"
     end
 
-    if self.try(:current_user).try(:id) == @medication.user_id
+    if self.try(:current_user).try(:id) == @user_id
       return true
     end
-    if self.try(:current_resource_owner).try(:id) == @medication.user_id
+    if self.try(:current_resource_owner).try(:id) == @user_id
       return true
     end
     return false

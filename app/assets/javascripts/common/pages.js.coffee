@@ -122,6 +122,7 @@ define_globals = () ->
       input.datetimepicker('hide')
   }
   window.moment_fmt = 'YYYY-MM-DD HH:mm'
+  window.moment_datefmt = 'YYYY-MM-DD'
   window.default_source = "smartdiab"
   window.fmt = d3.time.format("%Y-%m-%d")
   window.fmt_day = d3.time.format("%Y-%m-%d %a")

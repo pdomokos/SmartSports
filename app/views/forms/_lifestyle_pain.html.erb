@@ -4,13 +4,13 @@
 
   <input id="pain_name" type="search" name="lifestyle[pain_type_name]" class="dataFormField" placeholder="<%=t 'pain_placeholder'%>">
 
-  <label for="pain_scale" style="margin-left: 20px;"><%=t 'intensity'%></label>
+  <label style="margin-left: 20px;"><%=t 'intensity'%></label>
   <div class="dataScale">
-    <div id="pain_scale" class="dataFormField"></div>
+    <div class="dataFormField pain_scale"></div>
   </div>
 
-  <div id="pain_percent" class="dataFormFieldUnitHalf"><%=t 'pain_amount_mild'%></div>
-  <input id="pain_amount" type="hidden" name="lifestyle[amount]"/>
+  <div class="dataFormFieldUnitHalf pain_percent"><%=t 'pain_amount_mild'%></div>
+  <input class="pain_amount" type="hidden" name="lifestyle[amount]"/>
 
 
   <input type='text' class="dataFormField pain_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>

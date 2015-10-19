@@ -6,44 +6,41 @@
 <input id="periodVolumeList" type="hidden" value="<%=t :periodVolumeList %>">
 <input id="painTypeList" type="hidden" value="<%=t :painTypeList %>">
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
+<input id="intensity_values" value="<%=t :intensities%>" type="hidden" />
 
 <div class="wellbeing-block mainContent" id="wellbeing-container">
         <input id="data-lang-wellbeing" value="<%=I18n.locale%>" type="hidden" />
         <div class="sectionTitle wellbeingBodyLogo wellbeingColor">
-            <%=t 'wellbeing'%>
+            <%=t 'lifestyle'%>
         </div>
-        <div class="contentBg">
+        <div id="lifestyle_forms" class="contentBg">
             <div class="p10">
               <%= render "forms/element", locals: {:showButton => true,
                                                    :elementName => 'lifestyle_sleep',
                                                    :style => 'wellbeingStyle',
                                                    :title => 'sleep',
                                                    :img => 'sleep40.png',
-                                                   :elementId => 'wellbeing_1'
                                         }%>
 
               <%= render "forms/element", locals: {:showButton => true,
                                                    :elementName => 'lifestyle_stress',
                                                    :style => 'wellbeingStyle',
                                                    :title => 'stress',
-                                                   :img => 'stress40.png',
-                                                   :elementId => 'wellbeing_2'
+                                                   :img => 'stress40.png'
                                         }%>
 
               <%= render "forms/element", locals: {:showButton => true,
                                                    :elementName => 'lifestyle_illness',
                                                    :style => 'wellbeingStyle',
                                                    :title => 'illness',
-                                                   :img => 'illness40.png',
-                                                   :elementId => 'wellbeing_3'
+                                                   :img => 'illness40.png'
                                         }%>
 
               <%= render "forms/element", locals: {:showButton => true,
                                                    :elementName => 'lifestyle_pain',
                                                    :style => 'wellbeingStyle',
                                                    :title => 'pain',
-                                                   :img => 'pain40.png',
-                                                   :elementId => 'wellbeing_4'
+                                                   :img => 'pain40.png'
                                         }%>
 
 

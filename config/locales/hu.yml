@@ -216,6 +216,7 @@ hu:
   unknown_med:          "Ismeretlen gyógyszer"
 
 # wellbeing
+  lifestyle:          "Közérzet"
   wellbeing:          "Közérzet"
   sleep:              "Alvás"
   stress:             "Stressz"

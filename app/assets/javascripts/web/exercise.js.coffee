@@ -11,6 +11,14 @@
   initExercise()
   loadExerciseHistory()
 
+  $("#recentResourcesTable").on("click", "td.activityItem", (e) ->
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    if data.activity_category=="sport"
+      load_activity_exercise(".activity_exercise_elem", data)
+    else
+      load_activity_regular(".activity_regular_elem", data)
+  )
+
   $(document).on("click", "#exercise-show-table", (evt) ->
     console.log "datatable clicked"
     current_user = $("#current-user-id")[0].value
@@ -247,17 +255,6 @@
           otherActivitySelected = ui['item']
       }).focus ->
         $(this).autocomplete("search")
-
-      load_fn =  (e) ->
-        console.log "loading activity"
-        data = JSON.parse(e.currentTarget.querySelector("input").value)
-        console.log data
-        if data.activity_category=="sport"
-          load_activity_exercise(".activity_exercise_elem", data)
-        else if data.activity_category!="sport"
-          otherActivitySelected = data.activity_name
-          load_activity_regular(".activity_regular_elem", data)
-      $("#recentResourcesTable").on("click", "td.activityItem", load_fn)
 
 @load_activity_exercise = (sel, data) ->
   activity = data['activity']

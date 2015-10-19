@@ -237,6 +237,7 @@ en:
   unknown_med:          "Unknown medication"
 
 # wellbeing
+  lifestyle:                "Lifestyle"
   wellbeing:                "Well-Being"
   sleep:                    "Sleep"
   stress:                   "Stress"

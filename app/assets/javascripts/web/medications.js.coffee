@@ -4,13 +4,12 @@
   $("#medication-link").css
     background: "rgba(112, 197, 203, 0.3)"
 
-  $('#medications_datepicker').datetimepicker(timepicker_defaults)
-  $('#medications_insulin_datepicker').datetimepicker(timepicker_defaults)
-  popup_messages = JSON.parse($("#popup-messages").val())
+  @popup_messages = JSON.parse($("#popup-messages").val())
 
+  initMedications()
   document.body.style.cursor = 'wait'
-  load_medication_types()
   loadMedicationHistory()
+
 
   $("form.resource-create-form.medication-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -39,6 +38,20 @@
     popup_error(popup_messages.failed_to_delete_data, $("#addMedicationButton").css("background"))
   )
 
+  $("#recentResourcesTable").on("click", "td.medicationItem", (e) ->
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    if(data.medication_type=="insulin")
+      load_medication_insulin("#insulin_form", data)
+    if(data.medication_type=="oral")
+      load_medication_drugs("#drugs_form", data)
+  )
+
+  $("#drugs_form button").click ->
+    validate_medication_drugs("#drugs_form")
+
+  $("#insulin_form button").click ->
+    validate_medication_insulin("#insulin_form")
+
   $('.hisTitle').click ->
     loadMedicationHistory()
 
@@ -47,6 +60,11 @@
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
 
+@initMedications = () ->
+  $('.medication_drugs_datepicker').datetimepicker(timepicker_defaults)
+  $('.medication_insulin_datepicker').datetimepicker(timepicker_defaults)
+
+  loadMedicationTypes()
 
 @loadMedicationHistory = () ->
   load_medications()
@@ -75,7 +93,7 @@
       console.log textStatus
 
 
-@load_medication_types = () ->
+@loadMedicationTypes = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load medication types"
@@ -100,8 +118,8 @@
         label: d['name'],
         id: d['id']
         })
-      oralMedSelected = null
-      $("#oral_medication_name").autocomplete({
+
+      $(".oral_medication_name").autocomplete({
         minLength: 3,
         source: (request, response) ->
           matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
@@ -113,32 +131,17 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("#medname").val(ui.item.id)
+          $(".oral_medication_id").val(ui.item.id)
         create: (event, ui) ->
           console.log "med create called"
-          $("#oral_medication_name").removeAttr("disabled")
+          $(".oral_medication_name").removeAttr("disabled")
           document.body.style.cursor = 'auto'
         change: (event, ui) ->
           console.log "med change"
           console.log ui['item']
-          oralMedSelected = ui['item']
       })
-      $("#oral-med-create-form button").click ->
-        if(!oralMedSelected)
-          val = $("#oral_medication_name").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
-          oralMedSelected = null
-          return false
-        if( isempty("#medication_amount") || notpositive("#medication_amount"))
-          popup_error(popup_messages.invalid_med_amount, $("#addMedicationButton").css("background"))
-          return false
-        oralMedSelected = null
-        return true
 
-      insulinSelected = null
-      $("#insulin_name").autocomplete({
+      $(".medication_insulin_name").autocomplete({
         minLength: 0,
         source: (request, response) ->
           matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
@@ -151,42 +154,47 @@
           response(result)
         select: (event, ui) ->
           console.log ui
-          $("#insname").val(ui.item.id)
+          $(".medication_insulin_id").val(ui.item.id)
         create: (event, ui) ->
           console.log "insulin create called"
-          $("#insulin_name").removeAttr("disabled")
+          $(".medication_insulin_name").removeAttr("disabled")
         change: (event, ui) ->
           insulinSelected = ui['item']
       }).focus ->
         console.log "insulin focus called"
         $(this).autocomplete("search")
 
-      $("#insulin-create-form button").click ->
-        if(!insulinSelected)
-          val = $("#insulin_name").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
-          insulinSelected = null
-          return false
-        if ( isempty("#medication_insulin_dosage") || notpositive("#medication_insulin_dosage"))
-          popup_error(popup_messages.invalid_dosage, $("#addMedicationButton").css("background"))
-          return false
-        insulinSelected = null
-        return true
+validate_medication_common = (sel) ->
+  if !$(sel+" input[name='medication[medication_type_id]']").val()
+    popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
+    return false
+  if( !$(sel+" input[name='medication[amount]'").val() || notpositive(sel+" input[name='medication[amount]'"))
+    popup_error(popup_messages.invalid_med_amount, $("#addMedicationButton").css("background"))
+    return false
+  return true
 
-      fn_load_med = (e) ->
-        console.log "loading medication"
-        data = JSON.parse(e.currentTarget.querySelector("input").value)
-        console.log data
-        if data.medication_type=="oral"
-          $("#oral_medication_name").val(data.medication_name)
-          oralMedSelected = data.medication_name
-          $("#medname").val(data.medication_type_id)
-          $("#medication_amount").val(data.amount)
-        else if data.medication_type=="insulin"
-          $("#insulin_name").val(data.medication_name)
-          insulinSelected = data.medication_name
-          $("#insname").val(data.medication_type_id)
-          $("#medication_insulin_dosage").val(data.amount)
-      $("#recentResourcesTable").on("click", "td.medicationItem", fn_load_med)
+@validate_medication_drugs = (sel) ->
+  console.log "validating drugs "+sel
+  validate_medication_common(sel)
+
+@validate_medication_insulin = (sel) ->
+  console.log "validating insulin "+sel
+  validate_medication_common(sel)
+
+@load_medication_drugs = (sel, data) ->
+  console.log "loading medication "+sel
+  console.log data
+
+  medication = data['medication']
+  $(sel+" input[name='medication_name']").val(data.medication_name)
+  $(sel+" input[name='medication[medication_type_id]']").val(medication.medication_type_id)
+  $(sel+" input[name='medication[amount]'").val(medication.amount)
+  $(sel+" input[name='medication[date]']").val(fixdate(medication.date))
+
+@load_medication_insulin = (sel, data) ->
+  console.log "loading insulin"
+  medication = data['medication']
+  $(sel+" input[name='medication_name']").val(data.medication_name)
+  $(sel+" input[name='medication[medication_type_id]']").val(medication.medication_type_id)
+  $(sel+" input[name='medication[amount]'").val(medication.amount)
+  $(sel+" input[name='medication[date]']").val(fixdate(medication.date))
