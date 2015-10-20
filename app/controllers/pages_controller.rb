@@ -111,7 +111,7 @@ class PagesController < ApplicationController
     save_click_record(:success, nil, nil)
   end
 
-  def wellbeing
+  def lifestyle
     @lifestyles = current_user.lifestyles.order(created_at: :desc).limit(4)
     @sleepList = Lifestyle.sleepList.join(";")
     @stressList = Lifestyle.stressList.join(";")

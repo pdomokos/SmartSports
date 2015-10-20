@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     get 'pages/exercise'
     get 'pages/health'
     get 'pages/medication'
-    get 'pages/wellbeing'
+    get 'pages/lifestyle'
     get 'pages/genetics'
     get 'pages/analytics'
     get 'pages/statistics'

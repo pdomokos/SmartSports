@@ -17,28 +17,43 @@
 
     <div class="topBanner">
       <div class="left">
-        <%= image_tag "logo-login.png", alt: "Login", style: "margin-top: 10px; width: 40px; float: left;", id: "headerLoginLogo", class: "loginLogo" %>
-        <span class="logoTitle">SmartDiab</span>
-      </div>
-      <div class="right">
-        <%= image_tag current_user.avatar.url(:medium), style: "width: 40px; height: 40px; float: left;border-radius: 30px" %>
-
-        <div style="float: right;width: 30px;text-align: center;">
-          <%= form_tag logout_path, :method => :post, :id => 'logoutForm', :remote => true do %>
-              <input type="image" src="<%= image_url "menu/logout.png" %>"  style="width: 20px;padding-top: 15px;">
+          <%= link_to url_for( :action => 'dashboard', :locale => I18n.locale ) do %>
+            <%= image_tag("logo-login.png", alt: "Dashboard", style: "margin-top: 10px; width: 40px; float: left;", id: "headerLoginLogo", class: "loginLogo") %>
+            <span class="logoTitle">SmartDiab</span>
           <% end %>
-        </div>
-        <div id="langswitcher" class="langSwitcherTop" ><%= @lang_label %></div>
-        <div style="float: right;width: 30px;text-align: center;"><%= image_tag "menu/settings.png", style: "width: 20px;padding-top: 15px", id:"settings-link"%>
-          <input id="settings-url" value=<%= url_for( :action => 'settings', :locale => I18n.locale ) %> type="hidden" >
-        </div>
+          </div>
+          <div class="right">
 
-        <div style="float: right;height: 50px;line-height: 50px;color: #3d3d3d;font-size: 13px;padding-left: 5px"><%= @display_name %></div>
-      </div>
+            <div class="headerItemRight">
+              <%= form_tag logout_path, :method => :post, :id => 'logoutForm', :remote => true do %>
+                  <input type="image" src="<%= image_url "menu/logout.png" %>"  style="width: 20px;padding-top: 15px;">
+              <% end %>
+            </div>
+
+            <div id="langswitcher" class="langSwitcherTop" ><%= @lang_label %></div>
+
+            <%= link_to url_for( :action => 'settings', :locale => I18n.locale ) do %>
+                <i class="fa fa-gear fa-lg headerItemIcon headerItemIconMod"></i>
+            <% end %>
+
+            <%= link_to url_for( :action => 'analytics', :locale => I18n.locale ) do %>
+                <i class="fa fa-line-chart fa-lg headerItemIcon headerItemIconMod"></i>
+            <% end %>
+
+            <%= link_to url_for( :action => 'settings', :locale => I18n.locale ) do %>
+                <i class="fa fa-stethoscope fa-lg headerItemIcon headerItemIconMod"></i>
+            <% end %>
+
+            <%= link_to url_for( :action => 'settings', :locale => I18n.locale ) do %>
+                <%= image_tag current_user.avatar.url(:medium), class: "headerItemAvatar" %>
+                <div class="headerItemName"><%= @display_name %></div>
+            <% end %>
+
+        </div>
     </div>
 
 
-    <div  style="margin-left: 220px; margin-top: 60px;margin-right: 80px;">
+    <div style="margin-left: 220px; margin-top: 60px;margin-right: 80px;">
         <div style="margin-left: 40px;margin-top: 80px;">
             <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
             <%= yield %>

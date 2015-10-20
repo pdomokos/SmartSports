@@ -2,98 +2,14 @@
   console.log "labresults loaded"
   uid = $("#current-user-id")[0].value
 
+  initLabresult()
+  loadLabresult()
+  loadVisits()
+
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#labresults-link").css
     background: "rgba(237, 170, 171, 0.3)"
 
-  $('#hba1c_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-    todayButton: true
-  })
-  $('#ldl_chol_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-    todayButton: true
-  })
-  $('#egfr_epi_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-    todayButton: true
-  })
-  $('#ketone_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-    todayButton: true
-  })
-  $('#controll_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false,
-    todayButton: true
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-  })
-#  $('#controll_datepicker').val(moment().format('YYYY-MM-DD'))
-
-  $('#next_controll_datepicker').datetimepicker({
-    format: 'Y-m-d H:i',
-    timepicker: true,
-    todayButton: true,
-    onSelectTime: (ct, input) ->
-      input.datetimepicker('hide')
-  })
-#  $('#next_controll_datepicker').val( moment().format(moment_fmt))
-
-  init_labresult()
-  load_labresult()
-  load_visits()
-
-@init_labresult = () ->
-  console.log "init labres"
-
-
-  doctorList = $("#doctorList").val().split(";")
-  controlList = [{ label: doctorList[0], value: doctorList[0], intValue: 1},
-    { label: doctorList[1], value: doctorList[1], intValue: 2}
-  ]
-
-  controlSelected = null
-  $("#control_txt").autocomplete({
-    minLength: 0,
-    source: controlList,
-    change: (event, ui) ->
-      console.log ui.item
-      controlSelected = ui.item
-      $("#control").val(ui.item.intValue)
-  }).focus ->
-    $(this).autocomplete("search")
-
-  ketoneList = [ { label: "Negative", value: "Negative" },
-    { label: "+", value: "+" },
-    { label: "++", value: "++" },
-    { label: "+++", value: "+++" },
-    { label: "++++", value: "++++" },
-    { label: "+++++", value: "+++++" }
-  ]
-
-  ketoneSelected = null
-  $("#ketone").autocomplete({
-    minLength: 0,
-    source: ketoneList,
-    change: (event, ui) ->
-      ketoneSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
-
-  popup_messages = JSON.parse($("#popup-messages").val())
   $("#control-create-form button").click ->
     if(!controlSelected)
       val = $("#control_txt").val()
@@ -150,7 +66,7 @@
     console.log "labresult form ajax success with data:"
     console.log data
     if category
-      load_labresult()
+      loadLabresult()
 
     $("#control_txt").val(null)
     $("#hba1c").val(null)
@@ -168,7 +84,7 @@
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.currentTarget
-    load_labresult()
+    loadLabresult()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
@@ -181,7 +97,91 @@
     console.log xhr.responseText
     popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
   )
-@load_labresult = () ->
+
+@initLabresult = () ->
+  console.log "init labres"
+
+  doctorList = $("#doctorList").val().split(";")
+  controlList = [{ label: doctorList[0], value: doctorList[0], intValue: 1},
+    { label: doctorList[1], value: doctorList[1], intValue: 2}
+  ]
+
+  controlSelected = null
+  $("#control_txt").autocomplete({
+    minLength: 0,
+    source: controlList,
+    change: (event, ui) ->
+      console.log ui.item
+      controlSelected = ui.item
+      $("#control").val(ui.item.intValue)
+  }).focus ->
+    $(this).autocomplete("search")
+
+  ketoneList = [ { label: "Negative", value: "Negative" },
+    { label: "+", value: "+" },
+    { label: "++", value: "++" },
+    { label: "+++", value: "+++" },
+    { label: "++++", value: "++++" },
+    { label: "+++++", value: "+++++" }
+  ]
+
+  ketoneSelected = null
+  $("#ketone").autocomplete({
+    minLength: 0,
+    source: ketoneList,
+    change: (event, ui) ->
+      ketoneSelected = ui['item']
+  }).focus ->
+    $(this).autocomplete("search")
+
+
+  $('#hba1c_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#ldl_chol_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#egfr_epi_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+  $('#ketone_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+    todayButton: true
+  })
+
+  $('#controll_datepicker').datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false,
+    todayButton: true
+    onSelectDate: (ct, input) ->
+      input.datetimepicker('hide')
+  })
+  $('#next_controll_datepicker').datetimepicker({
+    format: 'Y-m-d H:i',
+    timepicker: true,
+    todayButton: true,
+    onSelectTime: (ct, input) ->
+      input.datetimepicker('hide')
+  })
+
+  @popup_messages = JSON.parse($("#popup-messages").val())
+
+@loadLabresult = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lab_results"
@@ -196,7 +196,7 @@
       console.log "load recent lab_results  Successful AJAX call"
       console.log textStatus
 
-@load_visits = () ->
+@loadVisits = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lab_results"

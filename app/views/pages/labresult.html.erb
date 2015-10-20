@@ -7,18 +7,14 @@
         <%=t 'lab_results'%>
     </div>
     <div class="contentBg">
-        <div style="padding: 10px;">
-          <div class="dataFormContainer labresultStyle">
-            <div class="dataFormTitle">
-              <%= image_tag "doctor_40.png" %><br/>
-              <%=t 'lab_results' %>
-            </div>
-            <%= form_tag("/users/#{current_user.id}/notifications",  id: "control-create-form",  html: {:'data-type' => 'json'}, remote: true, class: "resource-create-form notifications-form") do %>
-                <%= render "forms/notification_visit" %>
-                <button id="addLabResultButton" class="dataFormField"><%= t 'button_add' %></button>
-            <% end %>
-            </div>
-            <div class="dataFormSeparator labresultStyle"></div>
+        <div class="p10">
+          <%= render "forms/element", locals: {:showButton => true,
+                                               :elementName => 'notification_visit',
+                                               :style => 'labresultStyle',
+                                               :title => 'lab_results',
+                                               :img => 'doctor40.png',
+                                               :elementId => 'notification_visit_form'
+                                    }%>
 
             <div class="dataFormContainer labresultStyle">
                 <div class="dataFormTitle">
