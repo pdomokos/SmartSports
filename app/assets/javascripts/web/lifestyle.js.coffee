@@ -10,6 +10,7 @@
   loadLifestyles()
 
   $("form.resource-create-form.lifestyle-form").on("ajax:success", (e, data, status, xhr) ->
+    self = this
     form_id = e.currentTarget.id
     loadLifestyles()
     $('#illness_name').val(null)
@@ -22,6 +23,8 @@
     else
       if data['group'] =='pain'
         msg = data['pain_name']
+
+    resetLifesyleForms()
     popup_success(popup_messages.save_success, $("#addWellbeingButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     alert("Failed to create object.")
@@ -81,7 +84,6 @@
   })
   $(".sleep_amount").val(2)
 
-
   $(".stress_scale").slider({
     min: 0,
     max: 3,
@@ -108,10 +110,10 @@
     value: 1
   }).slider({
   slide: (event, ui) ->
-    event.target.parentElement.parentElement.querySelector(".illness_percent").innerHTML = illnessList[ui.value]
-  change: (event, ui) ->
-    event.target.parentElement.parentElement.querySelector(".illness_amount").value = ui.value
-})
+      event.target.parentElement.parentElement.querySelector(".illness_percent").innerHTML = illnessList[ui.value]
+    change: (event, ui) ->
+      event.target.parentElement.parentElement.querySelector(".illness_amount").value = ui.value
+  })
   $(".illness_amount").val(1)
 
   $('.illness_start_datepicker').datetimepicker({
@@ -130,14 +132,12 @@
     todayButton: true
   })
 
-
   $('.pain_start_datepicker').datetimepicker(timepicker_defaults)
   $('.pain_end_datepicker').datetimepicker(timepicker_defaults)
   $("input[name='lifestyle[pain_type_name]']").autocomplete({
     minLength: 0,
     source: painTypeList,
     change: (event, ui) ->
-#      painSelected = ui['item']
       console.log ui
       $("input[name='lifestyle[pain_type_name]']").val(ui['item'].value)
   }).focus ->
@@ -148,11 +148,11 @@
     max: 4,
     value: 1
   }).slider({
-  slide: (event, ui) ->
-    event.target.parentElement.parentElement.querySelector(".pain_percent").innerHTML = painList[ui.value]
-  change: (event, ui) ->
-    event.target.parentElement.parentElement.querySelector(".pain_amount").value = ui.value
-})
+    slide: (event, ui) ->
+      event.target.parentElement.parentElement.querySelector(".pain_percent").innerHTML = painList[ui.value]
+    change: (event, ui) ->
+      event.target.parentElement.parentElement.querySelector(".pain_amount").value = ui.value
+  })
   $(".pain_amount").val(1)
 
 
@@ -199,8 +199,32 @@
   $(".period_volume_amount").val(1)
   loadIllnessTypes()
 
-@validateLifestyleForm = (id) ->
-  console.log "validate lifestyle: "+id
+@resetLifesyleForms = () ->
+  $(".sleep_scale").slider({value: 2})
+  $(".sleep_percent").html(sleepList[2])
+  $(".stress_scale").slider({value: 1})
+  $(".stress_percent").html(stressList[1])
+  $(".illness_scale").slider({value: 1})
+  $(".illness_percent").html(illnessList[1])
+  $(".pain_scale").slider({value: 1})
+  $(".pain_percent").html(illnessList[1])
+  $(".default_datetime_picker").val(new moment().format(moment_fmt))
+  $(".default_date_picker").val(new moment().format(moment_datefmt))
+  $("input[name='illness_name']").val("")
+  $("input[name='lifestyle[illness_type_id]']").val("")
+  $("input[name='lifestyle[pain_type_name]']").val("")
+
+@validateLifestyleForm = (formId) ->
+  console.log "validate lifestyle: "+formId
+  formNode = document.getElementById(formId)
+  group = formNode.querySelector("input[name='lifestyle[group]']").value
+  console.log "group = "+group
+  if group=='illness' && isempty("#"+formId+" input[name='illness_name']")
+    popup_error(popup_messages.illness_name_missing, $("#addMeasurementButton").css("background"))
+    return false
+  if group=='pain' && isempty("#"+formId+" input[name='lifestyle[pain_type_name]']")
+    popup_error(popup_messages.pain_name_missing, $("#addMeasurementButton").css("background"))
+    return false
 
 @loadLifestyles = () ->
   self = this
@@ -259,12 +283,13 @@
   $(sel+" input[name='lifestyle[end_time]']").val(fixdate(lifestyle.end_time))
 
 @load_lifestyle_stress = (sel, data) ->
-  console.log "load stress"+sel
-  console.log data
-  lifestyle = data['lifestyle']
-  $(sel+" .stress_scale").slider({value: lifestyle.amount})
-  $(sel+" .stress_percent").html(stressList[lifestyle.amount])
-  $(sel+" input[name='lifestyle[start_time]']").val(fixdate(lifestyle.start_time))
+  console.log "load stress"+sel+", ignored"
+# doesn't make sense to load this from history
+#  console.log data
+#  lifestyle = data['lifestyle']
+#  $(sel+" .stress_scale").slider({value: lifestyle.amount})
+#  $(sel+" .stress_percent").html(stressList[lifestyle.amount])
+#  $(sel+" input[name='lifestyle[start_time]']").val(fixdate(lifestyle.start_time))
 
 @load_lifestyle_illness = (sel, data) ->
   console.log "load illness"+sel
@@ -280,7 +305,14 @@
 @load_lifestyle_pain = (sel, data) ->
   console.log "load pain"+sel
   console.log data
+  lifestyle = data['lifestyle']
+  $(sel+" .pain_type_name").val(lifestyle.pain_type_name)
+  $(sel+" .pain_scale").slider({value: lifestyle.amount})
+  $(sel+" .pain_percent").html(illnessList[lifestyle.amount])
+  $(sel+" input[name='lifestyle[start_time]']").val(new moment().format(moment_fmt))
+  $(sel+" input[name='lifestyle[end_time]']").val(new moment().format(moment_fmt))
+
 
 @load_lifestyle_period = (sel, data) ->
-  console.log "load period"+sel
-  console.log data
+  console.log "load period"+sel+", ignored"
+

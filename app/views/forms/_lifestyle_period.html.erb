@@ -2,10 +2,10 @@
   <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
   <input type="hidden" name="lifestyle[group]" value="period"/>
 
-  <input type='text' class="dataFormField period_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField period_start_datepicker default_date_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
-  <input type='text' class="dataFormField period_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField period_end_datepicker default_date_picker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'end'%></div>
 
   <label style="margin-right: 50px; margin-left: 20px;"><%=t 'pain'%></label>

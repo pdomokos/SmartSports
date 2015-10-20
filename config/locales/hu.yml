@@ -124,6 +124,8 @@ hu:
     failed_to_create_EGFR: "Nem sikerült rögzíteni az adatot."
     invalid_med_amount: "Kérem adjon meg érvényes mennyiséget"
     invalid_dosage: "Kérem adjon meg érvényes inzulin dózist"
+    illness_name_missing: "A betegség neve hiányzik"
+    pain_name_missing: "A fájdalom megnevezése hiányzik"
 
 # dashboard
   today:  "Mai nap"

@@ -14,9 +14,9 @@
   <input class="illness_amount" type="hidden" name="lifestyle[amount]"/>
 
 
-  <input type='text' class="dataFormField illness_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField illness_start_datepicker default_date_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
-  <input type='text' class="dataFormField illness_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField illness_end_datepicker default_date_picker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'end'%></div>
 </div>

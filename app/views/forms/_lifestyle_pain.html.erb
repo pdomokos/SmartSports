@@ -2,7 +2,7 @@
   <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
   <input type="hidden" name="lifestyle[group]" value="pain"/>
 
-  <input id="pain_name" type="search" name="lifestyle[pain_type_name]" class="dataFormField" placeholder="<%=t 'pain_placeholder'%>">
+  <input type="search" name="lifestyle[pain_type_name]" class="dataFormField pain_type_name" placeholder="<%=t 'pain_placeholder'%>">
 
   <label style="margin-left: 20px;"><%=t 'intensity'%></label>
   <div class="dataScale">
@@ -13,9 +13,9 @@
   <input class="pain_amount" type="hidden" name="lifestyle[amount]"/>
 
 
-  <input type='text' class="dataFormField pain_start_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <input type='text' class="dataFormField pain_start_datepicker default_datetime_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>
 
-  <input type='text' class="dataFormField pain_end_datepicker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+  <input type='text' class="dataFormField pain_end_datepicker default_datetime_picker" name="lifestyle[end_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnit"><%=t 'end'%></div>
 </div>

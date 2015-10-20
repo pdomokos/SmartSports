@@ -145,6 +145,8 @@ en:
     failed_to_create_EGFR: "Failed to create EGFR-EPI"
     invalid_med_amount: "Enter a valid medication amount"
     invalid_dosage: "Enter valid dosage for insulin"
+    illness_name_missing: "Illness name is missing"
+    pain_name_missing: "Pain name is missing"
 
 # dashboard
   today: "Today"

@@ -10,7 +10,7 @@
   <div class="dataFormFieldUnitHalf stress_percent"><%=t 'stress_amount_average'%></div>
   <input class="stress_amount" type="hidden" name="lifestyle[amount]"/>
 
-  <input type='text' class="dataFormField stress_datepicker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="dataFormField stress_datepicker default_date_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'day'%></div>
 
 </div>
