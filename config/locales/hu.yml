@@ -10,6 +10,7 @@ hu:
   menu_analytics:  "Elemzés"
   menu_profile: "Profil"
   menu_custom: "Saját"
+  menu_users: "Betegek"
   menu_custom_full: "Saját Kérdőívek"
 
   title_profile: "SZEMÉLYES PROFIL"
@@ -126,7 +127,7 @@ hu:
     invalid_dosage: "Kérem adjon meg érvényes inzulin dózist"
     illness_name_missing: "A betegség neve hiányzik"
     pain_name_missing: "A fájdalom megnevezése hiányzik"
-
+    failed_custom_form: "A saját form mentése sikertelen"
 # dashboard
   today:  "Mai nap"
   lastweek: "Elmúlt hét"
@@ -272,6 +273,7 @@ hu:
   category_unknown:   "Ismeretlen kategória"
 
 # analytics
-  analytics:          "Elemzés"
+  analytics:          "Megjelenítés"
+  statistics:         "Elemzés"
 
   intensities: "Alacsony Közepes Magas"

@@ -14,6 +14,8 @@
   if typeof window.init_custom_forms =='function'
     init_custom_forms()
 
+  @popup_messages = JSON.parse($("#popup-messages").val())
+
   formList = ["activity_exercise",
               "activity_regular",
               "diet_drink",
@@ -157,9 +159,11 @@
       }).done(succ_fn).fail(err_fn))
     $.when.apply(undefined, reqs).done( () ->
       console.log "ALL COMPLETE"
-      location.href = "customforms"
+#      location.href = "customforms"
+      popup_success(popup_messages.save_success, $("#addWellbeingButton").css("background"))
     ).fail( () ->
       console.log "SOME FAILED"
+      popup_error(popup_messages.failed_custom_form, $("#addMeasurementButton").css("background"))
     )
   )
 

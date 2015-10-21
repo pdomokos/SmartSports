@@ -265,12 +265,15 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $("input[name='lifestyle[illness_type_id]']").val(ui.item.id)
+          event.target.parentElement.parentElement.querySelector("input[name='lifestyle[illness_type_id]']").value = ui.item.id
         create: (event, ui) ->
           document.body.style.cursor = 'auto'
-          $("input[name='illness_name']").removeAttr("disabled")
+          event.target.parentElement.parentElement.querySelector("input[name='illness_name']").removeAttribute("disabled")
         change: (event, ui) ->
-          illnessSelected = ui['item']
+          if ui.item
+            event.target.parentElement.parentElement.querySelector("input[name='lifestyle[illness_type_id]']").value = ui.item.id
+          else
+            event.target.parentElement.parentElement.querySelector("input[name='lifestyle[illness_type_id]']").value = ""
       })
 
 @load_lifestyle_sleep = (sel, data) ->

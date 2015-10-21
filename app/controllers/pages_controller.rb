@@ -160,6 +160,19 @@ class PagesController < ApplicationController
     @hidden_forms = true
   end
 
+  def admin
+    if !current_user.admin
+      redirect_to :controller => 'pages', :action => 'error', :locale => I18n.locale
+      return
+    end
+
+    @users = User.all
+    @profiles = Profile.all
+    # startTime=(DateTime.now+1.day).beginning_of_day-1.week
+    # @clickrecords = ClickRecord.where("created_at >= :start_date", {start_date: startTime}).group('user_id').order('count_id desc').count('id')
+    @clickrecords = ClickRecord.all.group('user_id').order('count_id desc').count('id')
+  end
+
   def settings
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if @movesconn
@@ -192,13 +205,7 @@ class PagesController < ApplicationController
     end
     @profile = @user.profile
     @values = JSON.dump(I18n.t :popupmessages)
-    if current_user.admin
-      @users = User.all
-      @profiles = Profile.all
-      # startTime=(DateTime.now+1.day).beginning_of_day-1.week
-      # @clickrecords = ClickRecord.where("created_at >= :start_date", {start_date: startTime}).group('user_id').order('count_id desc').count('id')
-      @clickrecords = ClickRecord.all.group('user_id').order('count_id desc').count('id')
-    end
+
     save_click_record(:success, nil, nil)
   end
 

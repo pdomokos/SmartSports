@@ -1,0 +1,11 @@
+<% if current_user.admin %>
+      <%= render "admin" %>
+<% end %>
+
+<% content_for :menu do %>
+    <%= render "adminmenu" %>
+<% end %>
+
+<script type="text/javascript">
+    admin_loaded();
+</script>

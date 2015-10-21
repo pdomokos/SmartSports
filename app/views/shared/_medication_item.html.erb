@@ -11,8 +11,10 @@
   <td class="historyTitle padded medicationItem">
     <input id="medication_data_<%=medication_item.id%>" type="hidden" value="<%=
         m = {'medication' => medication_item.as_json}
+        if medication_item.medication_type
         m.merge!({'medication_name' => medication_item.medication_type.name})
         m.merge!({'medication_type' => medication_item.medication_type.group})
+        end
         JSON.dump(m)
     %>">
     <% if  medication_item.medication_type and medication_item.medication_type.group %>

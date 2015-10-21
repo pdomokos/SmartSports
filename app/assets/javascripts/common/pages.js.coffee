@@ -31,10 +31,19 @@
 #        $( "#menuPanel" ).panel( "open" );
 #  )
 
+@setTooltips = () ->
+  $(".topBannerControl").tooltip({
+      show: {
+        delay: 500
+      }
+    }
+  )
+
 @pages_menu = () ->
   self = this
   console.log "pages menu"
   define_globals()
+  setTooltips()
 
   $("#langswitcher").click ->
     console.log "langswitcher clicked"

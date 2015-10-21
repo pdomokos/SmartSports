@@ -10,17 +10,12 @@
   document.body.style.cursor = 'wait'
   loadMedicationHistory()
 
-
   $("form.resource-create-form.medication-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     $("#"+form_id+" input.dataFormField").val("")
 
-    $('#medname').val(null)
-    $('#insname').val(null)
-    $('#medications_datepicker').val(moment().format(moment_fmt))
-    $('#medications_insulin_datepicker').val(moment().format(moment_fmt))
-
     loadMedicationHistory()
+    resetMedications()
     popup_success(data['medication_name']+popup_messages.saved_successfully, $("#addMedicationButton").css("background"))
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
@@ -65,6 +60,10 @@
   $('.medication_insulin_datepicker').datetimepicker(timepicker_defaults)
 
   loadMedicationTypes()
+
+@resetMedications = () ->
+  $('.medication_drugs_datepicker').val(moment().format(moment_fmt))
+  $('.medication_insulin_datepicker').val(moment().format(moment_fmt))
 
 @loadMedicationHistory = () ->
   load_medications()

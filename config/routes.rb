@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     get 'pages/analytics'
     get 'pages/statistics'
     get 'pages/profile'
+    get 'pages/admin'
     get 'pages/labresult'
     get 'pages/explore'
     get 'pages/settings'

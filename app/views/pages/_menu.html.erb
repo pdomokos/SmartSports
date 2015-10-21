@@ -1,5 +1,10 @@
 <div class="app2Menu">
   <div class="inner ">
+    <div class="menuitem c0  b0">
+      <a id="dashboard-link" class="menulink" href="<%= url_for( :action => 'dashboard', :locale => I18n.locale ) %>">
+        <%=t 'menu_dashboard' %>
+      </a>
+    </div>
     <div class="menuitem c1 b1">
       <a id="diet-link" class="menulink" href="<%= url_for( :action => 'diet', :locale => I18n.locale ) %>">
         <%=t 'menu_diet' %>
