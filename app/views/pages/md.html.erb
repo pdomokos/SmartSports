@@ -1,0 +1,15 @@
+<div id="sectionPatients" class="menu-section">
+  <%= render "patients" %>
+</div>
+
+<div id="sectionForms" class="menu-section hiddenSection">
+  <%= render "cf" %>
+</div>
+
+<% content_for :menu do %>
+    <%= render "mdmenu" %>
+<% end %>
+
+<script type="text/javascript">
+    mdLoaded();
+</script>

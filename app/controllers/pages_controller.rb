@@ -160,6 +160,15 @@ class PagesController < ApplicationController
     @hidden_forms = true
   end
 
+  def md
+    @values = JSON.dump(I18n.t :popupmessages)
+    @icons = CustomForm.icons
+    @custom_forms = current_user.custom_forms.order(order_index: :desc)
+    @form_list = CustomForm.form_list
+    @form_params = CustomForm.form_params
+    @hidden_forms = true
+  end
+
   def admin
     if !current_user.admin
       redirect_to :controller => 'pages', :action => 'error', :locale => I18n.locale

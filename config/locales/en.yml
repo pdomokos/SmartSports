@@ -31,7 +31,10 @@ en:
   menu_analytics:  "Analytics"
   menu_profile: "My profile"
   menu_custom: "Custom"
-  menu_users: "Patients"
+  menu_users: "Users"
+  menu_forms: "Forms"
+  menu_patients: "Patient"
+  menu_patient_groups: "Patient Groups"
   menu_custom_full: "Custom Forms"
 
   title_profile: "MY PROFILE"
@@ -181,6 +184,7 @@ en:
   drink_placeholder: "Start typing or select..."
   smoking: "Smoking"
   smoking_placeholder: "Select..."
+  patient_name_placeholder: "Patient Name"
 
   calories:        "calories"
   carbs:           "carbs"

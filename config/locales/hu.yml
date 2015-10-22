@@ -10,7 +10,10 @@ hu:
   menu_analytics:  "Elemzés"
   menu_profile: "Profil"
   menu_custom: "Saját"
-  menu_users: "Betegek"
+  menu_users: "Felhasználók"
+  menu_forms: "Kérdőívek"
+  menu_patients: "Betegek"
+  menu_patient_groups: "Beteg Csoportok"
   menu_custom_full: "Saját Kérdőívek"
 
   title_profile: "SZEMÉLYES PROFIL"
@@ -160,6 +163,7 @@ hu:
   drink_placeholder: "Írjon vagy válasszon..."
   smoking:            "Dohányzás"
   smoking_placeholder: "Válasszon..."
+  patient_name_placeholder: "Beteg neve"
 
   calories:        "kalória"
   carbs:           "szénhidrát"

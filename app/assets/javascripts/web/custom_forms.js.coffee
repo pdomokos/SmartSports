@@ -16,7 +16,10 @@
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 
-  formList = ["activity_exercise",
+  initCustomForms()
+
+@initCustomForms = () ->
+  @formList = ["activity_exercise",
               "activity_regular",
               "diet_drink",
               "diet_food",

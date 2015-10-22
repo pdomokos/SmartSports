@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create, message: "error_registration_email_format"}
 
   has_attached_file :avatar, :styles => { :medium => "150x150#", :thumb => "75x75#" },
-                    :default_url => ":style/unknown.png",
+                    :default_url => "/assets/unknown.jpeg",
                     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
                     :path => APP_CONFIG['PAPERCLIP_PATH']
 

@@ -1,0 +1,13 @@
+<div class="sectionTitle c0">
+  <div class="left">
+    <%=t 'menu_patients' %>
+    <div id="patientHeader" class="hidden right patientHeader">
+      <%= image_tag "unknown.jpeg", id: "headerItemAvatar", class: "patientItemAvatar" %>
+      <span id="patientName" class="right patientItemName"></span>
+    </div>
+  </div>
+  <div class="titleInput right">
+    <input type="search" name="patient_name" class="dataFormField patientName" placeholder="<%=t :patient_name_placeholder%>" disabled>
+    <input class="patientId" name="patientId" type="hidden">
+  </div>
+</div>

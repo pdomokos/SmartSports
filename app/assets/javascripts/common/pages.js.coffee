@@ -122,7 +122,7 @@
   }, 2000)
   $('.animField').animate({borderColor: buttonBackgrounds[self.colorIndex]}, 2000)
 
-define_globals = () ->
+@define_globals = () ->
   window.timepicker_defaults = {
     format: 'Y-m-d H:i',
     step: 5,
@@ -247,7 +247,10 @@ define_globals = () ->
     return result
 
   window.remove_accents = (astr) ->
-    astr.trim().toLowerCase().replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/[őöó]/g, 'o').replace(/[üúű]/g, 'u')
+    if astr
+      return astr.trim().toLowerCase().replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/[őöó]/g, 'o').replace(/[üúű]/g, 'u')
+    else
+      return ""
 
   window.food_map_fn = (d) ->
     {
