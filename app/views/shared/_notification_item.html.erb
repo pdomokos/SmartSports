@@ -1,0 +1,50 @@
+<tr class="bg">
+
+  <td class="headerIcon">
+    <div style="height: 100%;"><i class="fa fa-user-md fa-2x patientColor"></i></div>
+  </td>
+
+  <td class="historyTitle labresultItem">
+    <span class="itemTitle"><%=(t :doctors_visit) %>: </span><span class="itemTitle"><%= notification_item.title %></span>
+    <span>
+      <%= if notification_item.detail
+            notification_item.detail
+          else
+            ""
+          end
+          %>
+    </span>
+    <% if notification_item.location_url %>
+        <span class="itemTitle">Location: </span>
+        <span><a href="<%= notification_item.location_url.html_safe %>" target="_blank"><%= notification_item.location %></a></span>
+    <% else if notification_item.location %>
+        <span class="itemTitle">Location: </span>
+        <span><%= notification_item.location %></span>
+    <% end %>
+    <% end %>
+    <br/>
+    <span class="itemTitle"><%=(t :time) %>: </span><span><%= if notification_item.date
+                                     notification_item.date.strftime("%F %R")
+                                    else
+                                        ""
+                                    end
+    %> </span>
+    <span class="dayTag">Mon</span>
+    <span class="dayTag">Tue</span>
+    <span class="dayTag">Thu</span>
+    <span class="dayTag">Wed</span>
+    <span class="dayTag">Fri</span>
+    <span class="dayTag">Sat</span>
+    <span class="dayTag">Sun</span>
+  </td>
+
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{notification_item.user_id}/notifications/#{notification_item.id}",
+                  id: "delete_visit_#{notification_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
+        <button class="tableControl left">
+          <i class="fa fa-trash-o fa-2x"></i>
+        </button>
+    <% end %>
+  </td>
+
+</tr>

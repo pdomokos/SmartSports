@@ -17,9 +17,9 @@ class NotificationsController < ApplicationController
       @notifications = @notifications.where('date > ?', Time.zone.now)
     end
     if params[:order] && params[:order]=='asc'
-      @notifications = @notifications.order(date: :asc)
+      @notifications = @notifications.order(created_at: :asc)
     else
-      @notifications = @notifications.order(date: :desc)
+      @notifications = @notifications.order(created_at: :desc)
     end
   end
 

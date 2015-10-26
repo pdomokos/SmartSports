@@ -7,6 +7,7 @@
   float: right;
   line-height: 100%;
   margin-top: 10px;
+  margin-left: 20px;
 }
 
 .patientItemAvatar {
@@ -30,4 +31,73 @@
   //height: 20px;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+
+.mdProfile {
+  background: image-url("patient_c40.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+  color: #4FBDF2 !important;
+}
+
+.mdBodyLogo {
+  background: image-url("patient_c40.png") no-repeat 10px 10px ;
+  background-size: 40px 40px;
+  color: #4FBDF2 !important;
+}
+
+.mdNotifBodyLogo {
+  color: #4FBDF2 !important;
+  margin-top: 40px;
+}
+
+.sectionTitleIcon {
+  margin-top: 10px;
+  /*background-color: rgba(0, 0, 0, 0.1);*/
+  height: 60px;
+  padding-left: 16px;
+  line-height: 60px;
+  font-variant: small-caps;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 30px;
+}
+
+.headerIcon {
+  padding-left: 20px;
+  width:40px;
+}
+
+.patientColor {
+  color: #4FBDF2 !important;
+}
+
+
+.dayTag {
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-left: 3px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  //line-height: 1;
+  border-radius: 2px;
+  //box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+
+  //font-variant: normal !important;
+  color: gray;
+  background-color: #fff;
+
+}
+.dayTag.selected {
+  color: #fff;
+  background-color: #4575b4;
+}
+.notificationTable button.tableControl {
+  margin-top: 10px;
+}
+
+.modalDialog > div.customStyle.notificationStyle {
+  width: 350px;
+  height: 500px;
 }

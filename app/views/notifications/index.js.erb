@@ -1,2 +1,2 @@
-$("#recentVisitsTable").html("");
-$("#recentVisitsTable").html("<%= escape_javascript(render :partial=> 'shared/visit_item', :collection=> @notifications ) %>");
+$("table.notificationTable tbody.recentResourcesTable").html("");
+$("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_item', :collection=> @notifications ) %>");

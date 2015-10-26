@@ -61,6 +61,8 @@ en:
   edit:     "Edit"
   delete:   "Delete"
 
+  notifications: "Notifications"
+
 #login
   sign_in: "Sign in to SmartDiab"
   login_button: "Login"
@@ -300,3 +302,5 @@ en:
   statistics:         "Analytics"
 
   intensities: "Low Moderate High"
+
+  time: "Time"
