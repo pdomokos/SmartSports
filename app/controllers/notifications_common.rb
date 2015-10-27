@@ -4,7 +4,7 @@ module NotificationsCommon
     @user = User.find(user_id)
     par = notification_params
     if par[:notification_type]
-      par[:notification_type] = par[:notification_type].to_i
+      par[:notification_type] = par[:notification_type].to_sym
     end
     @notification = @user.notifications.new(par)
 
@@ -62,7 +62,7 @@ module NotificationsCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def notification_params
-    params.require(:notification).permit( :title, :detail, :notification_type, :notification_data, :date, :remind_at, :form_id, :location, :location_url, :created_by)
+    params.require(:notification).permit( :title, :detail, :notification_type, :notification_data, :date, :remind_at, :location, :location_url, :created_by, :custom_form_id)
   end
 
   def check_owner()

@@ -39,7 +39,7 @@
     todayButton: true
   })
 
-bg_data_received = (jsondata) ->
+@bg_data_received = (jsondata) ->
   console.log "bgdata"
   console.log jsondata
   bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
@@ -47,7 +47,7 @@ bg_data_received = (jsondata) ->
   bg_trend_chart.add_highlight("2015-07-12", "2015-07-19", "selA")
   bg_trend_chart.add_highlight("2015-07-19", "2015-07-26", "selB")
 
-timeline_data_received = (jsondata) ->
+@timeline_data_received = (jsondata) ->
   console.log "daily activities"
   console.log jsondata
 
@@ -61,7 +61,7 @@ timeline_data_received = (jsondata) ->
   timeline = new TimeLine("#timeline", events , @dateToShow);
   timeline.draw()
 
-act_data_received = (jsondata) ->
+@act_data_received = (jsondata) ->
   draw_trends(jsondata)
   @explore_data = jsondata
   #@draw_pie(get_yesterday_ymd())

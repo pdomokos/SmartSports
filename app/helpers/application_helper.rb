@@ -92,4 +92,15 @@ module ApplicationHelper
     end
   end
 
+  def get_notification_icon(notif)
+    if notif.notification_type== 'doctor'
+      return 'fa-user-md'
+    elsif notif.notification_type== 'medication'
+      return 'fa-medkit'
+    elsif notif.notification_type== 'reminder'
+      return 'fa-check-square-o'
+    else
+      return 'fa-list'
+    end
+  end
 end

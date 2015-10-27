@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   resources :activity_types
   resources :illness_types
   resources :click_records
+  resources :custom_forms do
+    resources :custom_form_elements
+  end
   resources :users do
     resources :summaries
     resources :activities

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026143617) do
+ActiveRecord::Schema.define(version: 20151027101401) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20151026143617) do
     t.integer "order_index"
     t.string  "form_name"
     t.string  "image_name"
+    t.string  "form_tag"
   end
 
   create_table "delayed_jobs", force: true do |t|
@@ -241,9 +242,9 @@ ActiveRecord::Schema.define(version: 20151026143617) do
     t.string   "notification_data"
     t.datetime "remind_at"
     t.integer  "created_by"
-    t.integer  "form_id"
     t.text     "location"
     t.text     "location_url"
+    t.integer  "custom_form_id"
   end
 
   add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"

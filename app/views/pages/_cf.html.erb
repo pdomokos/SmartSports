@@ -58,11 +58,14 @@
             <div id="dataform" class="dataForm">
               <p class="dataFormRemark">You can create your own forms with your frequently recorded data and default values.</p>
               <p class="titleSub">Form Data</p>
-              <input type="text" name="custom_form[form_name]" id="input-form_name" class="dataFormField" placeholder="Form name, e.g. Morning Form">
-              <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
-              <br/>
-
               <input id="iconselect" class="dataFormField left iconselect_img_myForms" placeholder="Select icon for the new form">
+              <br/>
+              <input type="text" name="custom_form[form_name]" id="input-form_name" class="dataFormField" placeholder="Form name, e.g. Morning Form">
+              <input type="text" name="custom_form[form_tag]" id="input-form_name" class="dataFormField" placeholder="Form tag, e.g. diabetes_morning_form_1">
+              <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
+
+
+
               <input id="formicon" name="custom_form[image_name]" type="hidden" value="img_myForms">
               <button id="add-custom-button" class="dataFormField" >Add Form</button>
             </div>

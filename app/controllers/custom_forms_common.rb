@@ -1,13 +1,13 @@
 module CustomFormsCommon
 
   def index
-    @user_id = params[:user_id].to_i
-    user = User.find(@user_id)
-    #if !check_owner()
-    #  send_error_json(@user_id, "Unauthorized", 403)
-    #  return
-    #end
-    @custom_forms = user.custom_forms.order(order_index: :desc)
+    if params[:user_id]
+      @user_id = params[:user_id].to_i
+      user = User.find(@user_id)
+      @custom_forms = user.custom_forms.order(order_index: :desc)
+    else
+      @custom_forms = CustomForm.all.order(id: :desc)
+    end
   end
 
   def create
@@ -94,7 +94,7 @@ module CustomFormsCommon
   private
 
   def custom_form_params
-    params.require(:custom_form).permit(:form_name, :image_name)
+    params.require(:custom_form).permit(:form_name, :form_tag, :image_name)
   end
 
   def check_owner()

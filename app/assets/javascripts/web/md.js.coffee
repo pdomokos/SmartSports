@@ -1,5 +1,8 @@
 @mdLoaded = () ->
   console.log "md loaded"
+  document.body.style.cursor = 'wait'
+
+  @dateToShow = moment().format("YYYY-MM-DD")
 
   define_globals()
 
@@ -10,6 +13,19 @@
   initLifestyle()
 
   initCustomForms()
+
+  notifTypeList = [ { label: "doctor", value: "doctor" },
+    { label: "medication", value: "medication" },
+    { label: "reminder", value: "reminder" },
+    { label: "motivation", value: "motivation" }
+  ]
+
+  $("#notifType").autocomplete({
+    minLength: 0,
+    source: notifTypeList
+  }).focus ->
+    $(this).autocomplete("search")
+  $("#notifType").val("reminder")
 
   $("#patients-link").click (event) ->
     event.preventDefault()
@@ -25,6 +41,7 @@
     $("#sectionForms").removeClass("hiddenSection")
 
   loadPatients()
+  loadForms()
 
   $("#notifDate").datetimepicker(timepicker_defaults)
 
@@ -51,9 +68,10 @@
   )
 
   $(document).on("click", "span.dayTag", (evt) ->
-    console.log evt.target.classList
-    evt.target.classList.toggle("selected")
+    evt.currentTarget.classList.toggle("selected")
   )
+
+
 
 @resetMdUI = () ->
   $(".menuitem a.menulink").removeClass("menulink-selected")
@@ -76,7 +94,6 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load patients  Successful AJAX call"
 #      console.log data
-
       $(".patientName").autocomplete({
         minLength: 0,
         source: (request, response) ->
@@ -96,13 +113,17 @@
           $("input[name=patientId]").val(ui.item.obj.id)
           $("#headerItemAvatar").attr( "src", ui.item.obj.avatar_url )
           $("#patientHeader").removeClass("hidden")
-          $("#patientNotifications").removeClass("hidden")
+          $(".patientData").removeClass("hidden")
           loadNotifications(ui.item.obj.id)
           $("#patientHeader").tooltip({
             items: "img",
             content: '<img src="'+ui.item.obj.avatar_url+'" />'
           })
-          console.log '<img src="'+ui.item.obj.avatar_url+'" />'
+          uid = ui.item.obj.id
+          d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
+          d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
+          d3.json("/users/"+uid+"/summaries.json", act_data_received)
+
         create: (event, ui) ->
 #          document.body.style.cursor = 'auto'
           $(".patientName").removeAttr("disabled")
@@ -110,3 +131,37 @@
           console.log "change"
       }).focus ->
         $(this).autocomplete("search")
+
+@loadForms = () ->
+  $.ajax '/custom_forms.json',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load forms AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load forms  Successful AJAX call"
+      document.body.style.cursor = 'auto'
+#      console.log data
+      $("input[name=form_name]").autocomplete({
+        minLength: 0,
+        source: (request, response) ->
+          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
+          result = []
+          cnt = 0
+          for element in data
+            if matcher.test(remove_accents(element.form_tag))
+              result.push({label: element.form_tag, value: element.form_tag, id: element.id})
+              cnt += 1
+          response(result)
+        select: (event, ui) ->
+          $("input[name='notification[custom_form_id]']").val(ui.item.id)
+          console.log ui.item
+        create: (event, ui) ->
+#          document.body.style.cursor = 'auto'
+          $("input[name=form_name]").removeAttr("disabled")
+        change: (event, ui) ->
+          console.log "change"
+      }).focus ->
+        $(this).autocomplete("search")
+      if data.length>0
+        $("input[name='form_name']").val(data[0].form_tag)
+        $("input[name='notification[custom_form_id]']").val(data[0].id)

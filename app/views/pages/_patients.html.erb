@@ -12,7 +12,8 @@
   </div>
 </div>
 
-<div id="patientNotifications" class="sectionTitleIcon mdNotifBodyLogo hidden">
+<div class="hidden patientData">
+<div id="patientNotifications" class="sectionTitleIcon mdNotifBodyLogo">
   <i class="fa fa-envelope"></i>
   <span class="hisTitle"><%=t 'notifications'%></span></span>
   <i id="addNotification" class="fa fa-plus-circle add-analysis"></i>
@@ -25,6 +26,54 @@
   <tbody class="recentResourcesTable">
   </tbody>
 </table>
+<br/>
+<br/>
+
+<div class="columns">
+  <div   class="boxed-group connection-block">
+    <h3 class="noClickSelect">
+      <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+      <div class="training-type left">Daily timeline</div>
+      <div class="selected-meas legend-container right">
+        <input id='timeline_datepicker' type='text' class="dataFormField" value="<%= DateTime.current.strftime("%F") %>"/>
+      </div>
+    </h3>
+
+    <div id="timeline" class="boxed-group-inner chart bloodpressure-chart">
+    </div>
+  </div>
+</div>
+
+<div class="columns">
+  <div   class="boxed-group connection-block">
+    <h3 class="noClickSelect">
+      <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+      <div class="training-type left">Blood glucose</div>
+
+    </h3>
+
+    <div id="bg-container" class="boxed-group-inner chart bloodglucose-chart">
+      <svg class="bg-chart-svg">
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="columns">
+  <div id="heart-trend-container" class="boxed-group connection-block">
+
+    <h3 class="noClickSelect">
+      <img src="<%= asset_path( "withings-logo.png")%>" width="24px" height="24px" class="left">
+      <div class="training-type left">Heart trend</div>
+      <div class="selected-meas legend-container right"></div>
+    </h3>
+
+    <div class="boxed-group-inner chart bloodpressure-chart">
+      <svg class="heart-trend-chart-svg">
+      </svg>
+    </div>
+  </div>
+</div>
 
 <div id="openModalAddNotification" class="modalDialog">
   <div class="customStyle notificationStyle">
@@ -42,13 +91,14 @@
             <div id="dataform" class="dataForm">
               <p class="dataFormRemark">Add notifications for your patients.</p>
               <p class="titleSub">Notification  Data</p>
-              <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="Notification title, e.g. Reminder">
+              <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="Notification title, e.g. Morning medications">
               <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
               <br/>
+              <input type="search" name="notification[notification_type]" id="notifType" class="dataFormField" placeholder="Notification type, e.g. Reminder">
               <textarea name="notification[detail]" class="dataFormField" placeholder="Notification detail, e.g. name of MD"></textarea>
-              <input type="hidden" name="notification[created_by]">
+              <input type="hidden" name="notification[created_by]" value="<%= current_user.id %>">
               <input type="search" name="form_name" class="dataFormField" placeholder="Form name">
-              <input type="hidden" name="diet[form_id]" >
+              <input type="hidden" name="notification[custom_form_id]" >
               <input type="text" name="notification[location]" class="dataFormField" placeholder="Location">
               <input type="text" name="notification[location_url]" class="dataFormField" placeholder="Location URL">
               <input type="search" name="notification[date]" class="dataFormField" id="notifDate" placeholder="Notification date">
@@ -60,4 +110,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
