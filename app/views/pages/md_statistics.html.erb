@@ -1,3 +1,7 @@
+<%= render "patient_select" %>
+
+<div id="sectionPatients" class="menu-section patientData hidden">
+
 <div class="analytics-block mainContent" id="analytics-container">
   <div class="sectionTitle analiticsBodyLogo analyticsColor">
     <%=t 'statistics' %>
@@ -83,15 +87,15 @@
     </div>
   </div>
 </div>
-
+</div>
 
 <script>
     pages_menu();
-    analytics2_loaded();
+    loadStatistics();
 </script>
 <% content_for :menu do %>
-    <%= render "menu" %>
+    <%= render "mdmenu" %>
 <% end %>
 <% content_for :title_text do %>
-    <%=t 'analytics' %> | SmartDiab
+    <%=t 'statistics' %> | SmartDiab
 <% end %>

@@ -1,25 +1,15 @@
-@mdLoaded = () ->
-  console.log "md loaded"
-  document.body.style.cursor = 'wait'
+@mdPatientsLoaded = () ->
+  resetMdUI()
+  $("#patients-link").addClass("menulink-selected")
 
   @dateToShow = moment().format("YYYY-MM-DD")
-
   define_globals()
-
-  initDiet()
-  initExercise()
-  initMeas()
-  initMedications()
-  initLifestyle()
-
-  initCustomForms()
 
   notifTypeList = [ { label: "doctor", value: "doctor" },
     { label: "medication", value: "medication" },
     { label: "reminder", value: "reminder" },
     { label: "motivation", value: "motivation" }
   ]
-
   $("#notifType").autocomplete({
     minLength: 0,
     source: notifTypeList
@@ -30,18 +20,8 @@
   $("#patients-link").click (event) ->
     event.preventDefault()
     resetMdUI()
-
     $("#patients-link").addClass("menulink-selected")
     $("#sectionPatients").removeClass("hiddenSection")
-
-  $("#forms-link").click (event) ->
-    event.preventDefault()
-    resetMdUI()
-    $("#form-link").addClass("menulink-selected")
-    $("#sectionForms").removeClass("hiddenSection")
-
-  loadPatients()
-  loadForms()
 
   $("#notifDate").datetimepicker(timepicker_defaults)
 
@@ -71,20 +51,8 @@
     evt.currentTarget.classList.toggle("selected")
   )
 
-
-
-@resetMdUI = () ->
-  $(".menuitem a.menulink").removeClass("menulink-selected")
-  $(".menu-section").addClass("hiddenSection")
-
-@loadNotifications = (userId) ->
-  console.log "calling load notifications for: "+userId
-  $.ajax '/users/' + userId + '/notifications.js?order=desc&limit=10',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load recent notifications Successful AJAX call"
+  loadPatients()
+  loadForms()
 
 @loadPatients = () ->
   $.ajax '/users.json',
@@ -93,7 +61,7 @@
       console.log "load patients AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load patients  Successful AJAX call"
-#      console.log data
+      #      console.log data
       $(".patientName").autocomplete({
         minLength: 0,
         source: (request, response) ->
@@ -122,7 +90,8 @@
           uid = ui.item.obj.id
           d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
           d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
-          d3.json("/users/"+uid+"/summaries.json", act_data_received)
+          meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
+          d3.json(meas_summary_url, draw_health_trend)
 
         create: (event, ui) ->
 #          document.body.style.cursor = 'auto'
@@ -140,7 +109,7 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load forms  Successful AJAX call"
       document.body.style.cursor = 'auto'
-#      console.log data
+      #      console.log data
       $("input[name=form_name]").autocomplete({
         minLength: 0,
         source: (request, response) ->
@@ -165,3 +134,13 @@
       if data.length>0
         $("input[name='form_name']").val(data[0].form_tag)
         $("input[name='notification[custom_form_id]']").val(data[0].id)
+
+@loadNotifications = (userId) ->
+  console.log "calling load notifications for: "+userId
+  $.ajax '/users/' + userId + '/notifications.js?order=desc&limit=10',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent diets AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load recent notifications Successful AJAX call"
+

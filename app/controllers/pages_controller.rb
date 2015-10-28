@@ -144,7 +144,7 @@ class PagesController < ApplicationController
     end
   end
 
-  def statistics
+  def md_statistics
     save_click_record(:success, nil, nil)
     if params[:user_id] && current_user.admin?
       @selected_user = User.find_by_id(params[:user_id])
@@ -160,7 +160,10 @@ class PagesController < ApplicationController
     @hidden_forms = true
   end
 
-  def md
+  def md_patients
+    @values = JSON.dump(I18n.t :popupmessages)
+  end
+  def md_customforms
     @values = JSON.dump(I18n.t :popupmessages)
     @icons = CustomForm.icons
     @custom_forms = current_user.custom_forms.order(order_index: :desc)

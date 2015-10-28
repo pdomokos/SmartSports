@@ -167,7 +167,7 @@ get_weekly_data = (day_ymd, act) ->
   pie_data.push(["other", (total-minutes)])
   return pie_data
 
-draw_health_trend = (data) ->
+@draw_health_trend = (data) ->
   heart_trend_chart = new TrendChart("heart-trend", data,
     ["systolicbp", "pulse", "diastolicbp"],
     ["SYS", "HR", "DIA"],
@@ -180,7 +180,7 @@ draw_health_trend = (data) ->
   heart_trend_chart.draw()
 
 
-draw_blood_sugar = (data) ->
+@draw_blood_sugar = (data) ->
 
   blood_chart = new TrendChart("bloodsugar", data,
     ["blood_sugar", "waist"],

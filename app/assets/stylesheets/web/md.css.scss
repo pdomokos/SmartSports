@@ -106,3 +106,13 @@
   font-variant: normal;
   line-height: 20px;
 }
+
+.boxed-group > h3 div.patientTitle {
+  line-height: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div.patientData div.boxed-group-inner {
+  background-color: transparent;
+}

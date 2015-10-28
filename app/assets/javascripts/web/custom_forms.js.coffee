@@ -18,6 +18,30 @@
 
   initCustomForms()
 
+  $("form#custom-create-form").on("ajax:success", (e, data, status, xhr) ->
+    console.log data
+    if data['ok'] == true
+      location.href = "customforms"
+    else
+      $("#input-form_name").addClass("formFail")
+      $("i.formFailSign").removeClass("hidden")
+  ).on("ajax:error", (e, xhr, status, error) ->
+    $("#input-form_name").addClass("formFail")
+    $("i.formFailSign").removeClass("hidden")
+  )
+
+  $(".delete-form-form").on("ajax:success", (e, data, status, xhr) ->
+    console.log e.target
+    location.href = 'customforms'
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log "delete failed"
+    console.log e.target
+  )
+
+  $("#openModalAddCustomFormElement form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
+    location.href = "customforms"
+  )
+
 @initCustomForms = () ->
   @formList = ["activity_exercise",
               "activity_regular",
@@ -108,30 +132,6 @@
 
     $("#dataform").removeClass("hidden")
     $("#iconform").addClass("hidden")
-  )
-
-  $("form#custom-create-form").on("ajax:success", (e, data, status, xhr) ->
-    console.log data
-    if data['ok'] == true
-      location.href = "customforms"
-    else
-      $("#input-form_name").addClass("formFail")
-      $("i.formFailSign").removeClass("hidden")
-  ).on("ajax:error", (e, xhr, status, error) ->
-    $("#input-form_name").addClass("formFail")
-    $("i.formFailSign").removeClass("hidden")
-  )
-
-  $(".delete-form-form").on("ajax:success", (e, data, status, xhr) ->
-    console.log e.target
-    location.href = 'customforms'
-  ).on("ajax:error", (e, xhr, status, error) ->
-    console.log "delete failed"
-    console.log e.target
-  )
-
-  $("#openModalAddCustomFormElement form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
-    location.href = "customforms"
   )
 
   succ_fn = (d, st, jq) ->

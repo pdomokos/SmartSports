@@ -8,6 +8,7 @@ hu:
   menu_genetics:  "Genetika"
   menu_labresults: "Kontroll"
   menu_analytics:  "Elemzés"
+  menu_statistics: "Statisztika"
   menu_profile: "Profil"
   menu_custom: "Saját"
   menu_users: "Felhasználók"
@@ -279,7 +280,7 @@ hu:
 
 # analytics
   analytics:          "Megjelenítés"
-  statistics:         "Elemzés"
+  statistics:         "Statisztika"
 
   intensities: "Alacsony Közepes Magas"
 

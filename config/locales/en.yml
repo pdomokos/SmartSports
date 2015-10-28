@@ -29,6 +29,7 @@ en:
   menu_genetics:  "Genetics"
   menu_labresults: "Doctor's visit"
   menu_analytics:  "Analytics"
+  menu_statistics:  "Statistics"
   menu_profile: "My profile"
   menu_custom: "Custom"
   menu_users: "Users"
@@ -299,7 +300,7 @@ en:
   category_unknown:   "Unknown Category"
 # analytics
   analytics:          "Explore"
-  statistics:         "Analytics"
+  statistics:         "Statistics"
 
   intensities: "Low Moderate High"
 
