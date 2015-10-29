@@ -105,7 +105,11 @@ Rails.application.configure do
   #   raise "Configuration file "+db_config_fname+" does not exist."
   # end
   # DB_CONFIG = YAML.load_file(db_config_fname)[::Rails.env]
-  DB_CONFIG = {}
+  db_config_fname = '/data/.db.conf'
+  if not File.exists?(db_config_fname)
+    raise "Configuration file "+db_config_fname+" does not exist."
+  end
+  DB_CONFIG = YAML.load_file(db_config_fname)[::Rails.env]
 
   config.action_mailer.default_url_options = {
       :host => 'staging.smartdiab.com'

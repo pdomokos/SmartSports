@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20151027101401) do
   create_table "connections", force: true do |t|
     t.string   "name"
     t.string   "type"
-    t.string   "data"
+    t.text     "data",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -235,13 +235,14 @@ ActiveRecord::Schema.define(version: 20151027101401) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "detail"
-    t.integer  "notification_type", limit: 255
+    t.integer  "notification_type"
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "notification_data"
     t.datetime "remind_at"
     t.integer  "created_by"
+    t.integer  "form_id"
     t.text     "location"
     t.text     "location_url"
     t.integer  "custom_form_id"
@@ -320,10 +321,10 @@ ActiveRecord::Schema.define(version: 20151027101401) do
   create_table "sensor_measurements", force: true do |t|
     t.integer  "user_id"
     t.string   "group"
-    t.text     "rr_data"
-    t.text     "hr_data"
+    t.text     "rr_data",    limit: 2097152
+    t.text     "hr_data",    limit: 2097152
     t.datetime "start_time"
-    t.text     "cr_data"
+    t.text     "cr_data",    limit: 2097152
     t.integer  "duration"
     t.string   "sensors"
     t.boolean  "favourite"
@@ -333,8 +334,8 @@ ActiveRecord::Schema.define(version: 20151027101401) do
 
   create_table "sensor_segments", force: true do |t|
     t.datetime "start_time"
-    t.text     "data_a"
-    t.text     "data_b"
+    t.text     "data_a",          limit: 2097152
+    t.text     "data_b",          limit: 2097152
     t.integer  "sensor_datum_id"
     t.datetime "created_at"
     t.datetime "updated_at"

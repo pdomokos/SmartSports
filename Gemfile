@@ -72,8 +72,8 @@ gem 'time_zone_ext'
 
 gem 'yaml_db'
 
-group :production do
-  gem 'mysql2'
+group :production, :staging do
+  gem 'mysql2', '~> 0.3.18'
 end
 
 group :test do
