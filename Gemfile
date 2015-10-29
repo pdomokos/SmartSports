@@ -70,6 +70,8 @@ gem 'paperclip', '~> 4.2'
 
 gem 'time_zone_ext'
 
+gem 'yaml_db'
+
 group :production do
   gem 'mysql2'
 end

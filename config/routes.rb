@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     get 'pages/medication'
     get 'pages/lifestyle'
     get 'pages/genetics'
+    get 'pages/customforms'
     get 'pages/analytics'
     get 'pages/profile'
     get 'pages/admin'
