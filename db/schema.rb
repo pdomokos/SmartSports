@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027101401) do
+ActiveRecord::Schema.define(version: 20151029101041) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20151027101401) do
   create_table "connections", force: true do |t|
     t.string   "name"
     t.string   "type"
-    t.text     "data",       limit: 255
+    t.text     "data",       limit: 1024
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -235,14 +235,13 @@ ActiveRecord::Schema.define(version: 20151027101401) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "detail"
-    t.integer  "notification_type"
+    t.integer  "notification_type", limit: 2
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "notification_data"
     t.datetime "remind_at"
     t.integer  "created_by"
-    t.integer  "form_id"
     t.text     "location"
     t.text     "location_url"
     t.integer  "custom_form_id"

@@ -49,7 +49,14 @@ def gen_bp(days):
         curr = curr+timedelta(days=1)
 
 def gen_bg(days):
-    Meas = namedtuple('meas', ['datetime', 'code', 'value'])
+    class Meas( namedtuple('meas', ['datetime', 'code', 'value'])):
+        def toDict(self):
+            return {'measurement[source]': 'demo',
+                'measurement[meas_type]': 'blood_sugar',
+                'measurement[date]': res.datetime,
+                'measurement[blood_sugar]': res.value,
+                'measurement[blood_sugar_time]': res.code}
+
 
     Unspecified_blood_glucose_measurement1    = 48
     Unspecified_blood_glucose_measurement2    = 57
@@ -94,9 +101,18 @@ def gen_bg(days):
         yield res
         
         curr = curr+timedelta(days=1)
-        
-def post_resource(urlbase, port, resource_path, headers, res):
-    conn = httplib.HTTPConnection(urlbase, port)
+
+def connFactory(urlbase, port):
+    def fac():
+        if port==443:
+            conn = httplib.HTTPSConnection(urlbase, port)
+        else:
+            conn = httplib.HTTPConnection(urlbase, port)
+        return conn
+    return fac
+
+def post_resource(fact, resource_path, headers, res):
+    conn = fact()
     body = res.toDict()
             
     conn.request("POST", resource_path, urllib.urlencode(body), headers)
@@ -127,8 +143,9 @@ if __name__ == "__main__":
     with open(os.environ['HOME']+'/smartdiab.json', 'r') as f:
         params = json.load(f)
 
-    urlbase = 'localhost'
-    port = '3000'
+    urlbase = params['urlbase']
+    port = params['port']
+    fact = connFactory(urlbase, port)
     token_path = '/oauth/token'
     profile_path = '/api/v1/profile'
     req_params = {'grant_type': 'password',
@@ -137,7 +154,7 @@ if __name__ == "__main__":
                   'client_id': params['smartdiab_appid']
                   }
 
-    conn = httplib.HTTPConnection(urlbase, port)
+    conn = fact()
     conn.request("POST", token_path, urllib.urlencode(req_params))
     resp = conn.getresponse()
     if resp.status==httplib.OK:
@@ -145,7 +162,7 @@ if __name__ == "__main__":
         token = resp_json['access_token']
         conn.close()
         headers = {"Authorization": "Bearer "+token}
-        conn = httplib.HTTPConnection(urlbase, port)
+        conn = fact()
         conn.request("GET", profile_path, "", headers)
         prf_resp = conn.getresponse()
         if prf_resp.status == httplib.OK:
@@ -154,4 +171,4 @@ if __name__ == "__main__":
             resource_path = "/api/v1/users/"+str(profile['id'])+"/measurements"
             #print resource_path
             for res in gen_fn(days):
-                post_resource(urlbase, port, resource_path, headers, res)
+                post_resource(fact, resource_path, headers, res)

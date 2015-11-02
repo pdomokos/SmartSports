@@ -166,6 +166,12 @@ hu:
   smoking:            "Dohányzás"
   smoking_placeholder: "Válasszon..."
   patient_name_placeholder: "Beteg neve"
+  select_patient_placeholder: "Válasszon beteget"
+  select_attribute_placeholder: "Válasszon paramétert"
+  select_a_start_placeholder: "A kezdete"
+  select_a_end_placeholder: "A kezdete"
+  select_b_start_placeholder: "B kezdete"
+  select_b_end_placeholder: "B kezdete"
 
   calories:        "kalória"
   carbs:           "szénhidrát"

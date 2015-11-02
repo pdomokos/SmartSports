@@ -75,6 +75,8 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
+          console.log "select patient"
+
           $(".patientId").val(ui.item.id)
           console.log ui.item
           $("#patientName").html( ui.item.label.trim() )
@@ -87,6 +89,7 @@
             items: "img",
             content: '<img src="'+ui.item.obj.avatar_url+'" />'
           })
+
           uid = ui.item.obj.id
           d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
           d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
@@ -98,6 +101,7 @@
           $(".patientName").removeAttr("disabled")
         change: (event, ui) ->
           console.log "change"
+
       }).focus ->
         $(this).autocomplete("search")
 

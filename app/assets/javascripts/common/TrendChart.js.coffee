@@ -62,7 +62,7 @@ class TrendChart
 
   draw: (date) ->
     self = this
-
+    $("svg."+self.chart_element+"-chart-svg").html("")
     @series = @get_series()
 
     if @preproc_cb != null

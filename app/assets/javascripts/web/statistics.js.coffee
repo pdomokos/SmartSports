@@ -1,8 +1,64 @@
 @analytics2_loaded = () ->
   self = this
   uid = $("#current-user-id")[0].value
-  console.log("analysis2 loaded")
-  console.log($("#start_a"))
+
+  initStatistics()
+
+  d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
+
+  $(document).on("click", "#closeModalStat", (evt) ->
+    location.href = "#close"
+  )
+
+  $(document).on("click", "#add-analysis", (evt) ->
+    if self.currdata
+      a = new Date(self.currextent[0])
+      b = new Date(self.currextent[1])
+
+      diff = moment(a).diff(moment(b))
+      mid = moment(moment(a)-diff/2).format("YYYY-MM-DD")
+
+      $("#bg_from").html(fmt(a))
+      $("#bg_to").html(fmt(b))
+
+      $("#start_a").datetimepicker({value: moment(a).format("YYYY-MM-DD")})
+      $("#end_a").datetimepicker({value: mid})
+      $("#start_b").datetimepicker({value: mid})
+      $("#end_b").datetimepicker({value: moment(b).format("YYYY-MM-DD")})
+
+      self.update_elements()
+
+      location.href = "#openModalStat"
+  )
+
+  $(document).on("click", "#analysis-params", (evt) ->
+    console.log("add analysis clicked")
+    if !self.bg_trend_chart
+      return
+
+    data = self.bg_trend_chart.data
+
+    rangeA = [$("#start_a").val(), $("#end_a").val()]
+    rangeB = [$("#start_b").val(), $("#end_b").val()]
+    self.bg_trend_chart.add_highlight(rangeA[0], rangeA[1], "selA")
+    self.bg_trend_chart.add_highlight(rangeB[0], rangeB[1], "selB")
+
+    location.href = "#close"
+
+    eid = "stat-"+self.statnum+"-container"
+    self.statnum = self.statnum+1
+    h = $("#stat-template").clone()
+    window.h = h
+    h.attr('id', eid)
+    h.prependTo("#allstats")
+
+    $("#"+eid+" div.title").html($("#title").val())
+    draw_boxplot(eid, data, rangeA, rangeB)
+    draw_parallelplot(eid, data, rangeA, rangeB)
+  )
+
+@initStatistics = () ->
+  console.log("statistics init")
   @margin = {top: 30, right: 40, bottom: 55, left: 40}
 
   @currdata = null
@@ -84,75 +140,15 @@
   })
   $('.xdsoft_datetimepicker').css('zIndex', 999999);
 
-  if $("#selected-user-id").length >0
-    suid = $("#selected-user-id")[0].value
-    if suid && suid != ''
-      uid = suid
-
-  $("div.appMenu button").removeClass("selected")
-  $("#analytics-link").css
-    background: "rgba(240, 108, 66, 0.3)"
-
-  d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
-
-  $(document).on("click", "#closeModalStat", (evt) ->
-    location.href = "#close"
-  )
-
-  $(document).on("click", "#add-analysis", (evt) ->
-    if self.currdata
-      a = new Date(self.currextent[0])
-      b = new Date(self.currextent[1])
-
-      diff = moment(a).diff(moment(b))
-      mid = moment(moment(a)-diff/2).format("YYYY-MM-DD")
-
-      $("#bg_from").html(fmt(a))
-      $("#bg_to").html(fmt(b))
-
-      $("#start_a").datetimepicker({value: moment(a).format("YYYY-MM-DD")})
-      $("#end_a").datetimepicker({value: mid})
-      $("#start_b").datetimepicker({value: mid})
-      $("#end_b").datetimepicker({value: moment(b).format("YYYY-MM-DD")})
-
-      self.update_elements()
-
-      location.href = "#openModalStat"
-  )
-
-  $(document).on("click", "#analysis-params", (evt) ->
-    console.log("add analysis clicked")
-    if !self.bg_trend_chart
-      return
-
-    data = self.bg_trend_chart.data
-
-    rangeA = [$("#start_a").val(), $("#end_a").val()]
-    rangeB = [$("#start_b").val(), $("#end_b").val()]
-    self.bg_trend_chart.add_highlight(rangeA[0], rangeA[1], "selA")
-    self.bg_trend_chart.add_highlight(rangeB[0], rangeB[1], "selB")
-
-    location.href = "#close"
-
-    eid = "stat-"+self.statnum+"-container"
-    self.statnum = self.statnum+1
-    h = $("#stat-template").clone()
-    window.h = h
-    h.attr('id', eid)
-    h.prependTo("#allstats")
-
-    $("#"+eid+" div.title").html($("#title").val())
-    draw_boxplot(eid, data, rangeA, rangeB)
-    draw_parallelplot(eid, data, rangeA, rangeB)
-  )
-
-bg_data_received = (jsondata) ->
+@stat_bg_data_received = (jsondata) ->
+  console.log "stat bg_data_received, size="+jsondata.length
   @currdata = jsondata
-  @currextent = d3.extent(jsondata, (d) -> d.date)
-  @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
-  @bg_trend_chart.draw()
+  if jsondata && jsondata.length>0
+    @currextent = d3.extent(jsondata, (d) -> d.date)
+    @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
+    @bg_trend_chart.draw()
 
-draw_parallelplot = (eid, data, rangeA, rangeB) ->
+@draw_parallelplot = (eid, data, rangeA, rangeB) ->
   self = this
 
   parDataA = {}
@@ -274,7 +270,7 @@ draw_parallelplot = (eid, data, rangeA, rangeB) ->
       .style("font-size", "16px")
       .text("Time of Day");
 
-draw_boxplot = (eid, data, rangeA, rangeB) ->
+@draw_boxplot = (eid, data, rangeA, rangeB) ->
   self = this
   minv = Infinity
   maxv = -Infinity

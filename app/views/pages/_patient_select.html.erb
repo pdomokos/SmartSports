@@ -1,13 +1,38 @@
-<div class="sectionTitle mdBodyLogo">
-  <div class="left">
-    <%=t 'menu_patients' %>
-    <div id="patientHeader" class="hidden right patientHeader">
-      <%= image_tag "unknown.jpeg", id: "headerItemAvatar", class: "patientItemAvatar" %>
-      <span id="patientName" class="right patientItemName"></span>
-    </div>
-  </div>
+<section class="patientSelect">
+  <ul class="patientControl">
+    <li class="patientSelect">
+        <i class="fa fa-user fa-fw patientColor"></i>
+        <input type="search" name="patient_name" class="patientName" placeholder="<%=t :select_patient_placeholder%>" disabled>
+        <input class="patientId" name="patientId" type="hidden">
+    </li>
+
+    <li class="patientSelectDone">
+      <i class="fa fa-chevron-right fa-fw patientColor"></i>
+    </li>
+    <li class="attrSelect grayed">
+          <i class="fa fa-database fa-fw patientColor"></i>
+          <input type="search" name="attributeName" class="attrSelect" placeholder="<%=t :select_attribute_placeholder%>" disabled>
+    </li>
+
+    <li class="attrSelectDone grayed">
+      <i class="fa fa-chevron-right fa-fw patientColor"></i>
+    </li>
+    <li class="beginSelectA grayed">
+      <i class="fa fa-clock-o fa-fw patientColor"></i>
+      <input type="search" name="startA" class="startASelect" placeholder="<%=t :select_a_start_placeholder%>" disabled>
+      <input type="search" name="endA" class="endASelect" placeholder="<%=t :select_a_end_placeholder%>" disabled>
+    </li>
+
+    <li class="beginSelectADone grayed">
+      <i class="fa fa-chevron-right fa-fw patientColor"></i>
+    </li>
+    <li class="endSelectB grayed">
+      <i class="fa fa-clock-o fa-fw patientColor"></i>
+      <input type="search" name="startB" class="startBSelect" placeholder="<%=t :select_b_start_placeholder%>" disabled>
+      <input type="search" name="endB" class="endBSelect" placeholder="<%=t :select_b_end_placeholder%>" disabled>
+    </li>
+  </ul>
+
   <div class="titleInput right">
-    <input type="search" name="patient_name" class="dataFormField patientName" placeholder="<%=t :patient_name_placeholder%>" disabled>
-    <input class="patientId" name="patientId" type="hidden">
   </div>
-</div>
+</section>

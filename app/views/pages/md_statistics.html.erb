@@ -2,91 +2,87 @@
 
 <div id="sectionPatients" class="menu-section patientData hidden">
 
-<div class="analytics-block mainContent" id="analytics-container">
-  <div class="sectionTitle analiticsBodyLogo analyticsColor">
-    <%=t 'statistics' %>
-  </div>
-  <div class="contentBg ">
-  </div>
+    <div class="analytics-block mainContent" id="analytics-container">
 
-  <div class="columns">
-    <div   class="boxed-group connection-block">
-      <h3 class="noClickSelect">
-        <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-        <div class="training-type left">Blood glucose</div>
-        <div class="selected-meas legend-container right">
-          <i id="add-analysis" class="fa fa-plus-circle fa-2x add-analysis"></i>
+        <div class="columns">
+            <div   class="boxed-group connection-block">
+              <h3 class="noClickSelect">
+                <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+                <div class="training-type left">Blood glucose</div>
+                <div class="selected-meas legend-container right">
+                  <i id="add-analysis" class="fa fa-plus-circle fa-2x add-analysis"></i>
+                </div>
+              </h3>
+
+              <div id="bg-container" class="boxed-group-inner chart bloodglucose-chart">
+                <svg class="bg-chart-svg">
+                </svg>
+              </div>
+            </div>
         </div>
-      </h3>
 
-      <div id="bg-container" class="boxed-group-inner chart bloodglucose-chart">
-        <svg class="bg-chart-svg">
-        </svg>
+        <div id="allstats" class="columns">
+
+        </div>
+    </div>
+
+    <div class="hidden">
+        <div id="stat-template" class="boxed-group connection-block">
+
+          <h3 class="noClickSelect">
+            <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
+            <div class="training-type left">Stat</div>
+            <div class="title left"></div>
+            <div class="selected-meas legend-container right"></div>
+          </h3>
+
+          <div class="boxed-group-inner chart stat-chart">
+
+          </div>
+        </div>
+    </div>
+
+    <div id="openModalStat" class="modalDialog">
+      <div class="healthStyle">
+        <div class="table-toolbar">
+          <span id="closeModalStat" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
+        </div>
+        <br/>
+        <br/>
+        <div id="stat-data-container">
+            <h3>Blood glucose data selection</h3>
+            <p>Blood glucose data available from <span id="bg_from"></span> to <span id="bg_to"></span></p>
+            <table>
+              <tbody>
+              <form>
+                <tr>
+                  <td style="width: 180px;height: 50px;">Title</td>
+                  <td><input type="text" class="dataFormField" id="title" placeholder="Title of analysis" value="Undefined"></td>
+                </tr>
+                <tr>
+                  <td style="width: 180px;height: 50px;">Group A note</td>
+                  <td><input type="text" class="dataFormField" id="note_a" placeholder="Describe Group A" value="Group A"></td>
+                </tr>
+                <tr>
+                  <td style="width: 180px;height: 50px;">Group B note</td>
+                  <td><input type="text" class="dataFormField" id="note_b" placeholder="Describe Group B" value="Group B"></td>
+                </tr>
+                <tr>
+                  <td style="width: 180px;height: 50px;">Group A interval</td>
+                  <td><input type="text" class="dataFormField" id="start_a" placeholder="Start date A"><input type="text" class="dataFormField" id="end_a" placeholder="End date A"></td>
+                </tr>
+                <tr>
+                  <td style="width: 180px;height: 50px;">Group B interval</td>
+                  <td><input type="text" class="dataFormField" id="start_b" placeholder="Start date B"><input type="text" class="dataFormField" id="end_b" placeholder="End date B"></td>
+                </tr>
+              </form>
+              </tbody>
+            </table>
+            <p>Group A contains <span id="num_a"></span>, Group B contains <span id="num_b"></span> data points.</p>
+            <button id="analysis-params" class ="dataFormField statButton">Run Stat</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div id="allstats" class="columns">
-
-  </div>
-</div>
-<div class="hidden">
-<div id="stat-template" class="boxed-group connection-block">
-
-  <h3 class="noClickSelect">
-    <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-    <div class="training-type left">Stat</div>
-    <div class="title left"></div>
-    <div class="selected-meas legend-container right"></div>
-  </h3>
-
-  <div class="boxed-group-inner chart stat-chart">
-
-  </div>
-</div>
-</div>
-
-<div id="openModalStat" class="modalDialog">
-  <div class="healthStyle">
-    <div class="table-toolbar">
-      <span id="closeModalStat" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
-    </div>
-    <br/>
-    <br/>
-    <div id="stat-data-container">
-        <h3>Blood glucose data selection</h3>
-        <p>Blood glucose data available from <span id="bg_from"></span> to <span id="bg_to"></span></p>
-        <table>
-          <tbody>
-          <form>
-            <tr>
-              <td style="width: 180px;height: 50px;">Title</td>
-              <td><input type="text" class="dataFormField" id="title" placeholder="Title of analysis" value="Undefined"></td>
-            </tr>
-            <tr>
-              <td style="width: 180px;height: 50px;">Group A note</td>
-              <td><input type="text" class="dataFormField" id="note_a" placeholder="Describe Group A" value="Group A"></td>
-            </tr>
-            <tr>
-              <td style="width: 180px;height: 50px;">Group B note</td>
-              <td><input type="text" class="dataFormField" id="note_b" placeholder="Describe Group B" value="Group B"></td>
-            </tr>
-            <tr>
-              <td style="width: 180px;height: 50px;">Group A interval</td>
-              <td><input type="text" class="dataFormField" id="start_a" placeholder="Start date A"><input type="text" class="dataFormField" id="end_a" placeholder="End date A"></td>
-            </tr>
-            <tr>
-              <td style="width: 180px;height: 50px;">Group B interval</td>
-              <td><input type="text" class="dataFormField" id="start_b" placeholder="Start date B"><input type="text" class="dataFormField" id="end_b" placeholder="End date B"></td>
-            </tr>
-          </form>
-          </tbody>
-        </table>
-        <p>Group A contains <span id="num_a"></span>, Group B contains <span id="num_b"></span> data points.</p>
-        <button id="analysis-params" class ="dataFormField statButton">Run Stat</button>
-    </div>
-  </div>
-</div>
 </div>
 
 <script>

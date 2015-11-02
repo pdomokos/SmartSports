@@ -40,12 +40,13 @@
   })
 
 @bg_data_received = (jsondata) ->
-  console.log "bgdata"
+  console.log "bg_data_received"
   console.log jsondata
   bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
   bg_trend_chart.draw()
-  bg_trend_chart.add_highlight("2015-07-12", "2015-07-19", "selA")
-  bg_trend_chart.add_highlight("2015-07-19", "2015-07-26", "selB")
+  if jsondata && jsondata.size>0
+    bg_trend_chart.add_highlight("2015-07-12", "2015-07-19", "selA")
+    bg_trend_chart.add_highlight("2015-07-19", "2015-07-26", "selB")
 
 @timeline_data_received = (jsondata) ->
   console.log "daily activities"

@@ -188,6 +188,12 @@ en:
   smoking: "Smoking"
   smoking_placeholder: "Select..."
   patient_name_placeholder: "Patient Name"
+  select_patient_placeholder: "Select Patient"
+  select_attribute_placeholder: "Select Measure"
+  select_a_start_placeholder: "A starts at"
+  select_a_end_placeholder: "A ends at"
+  select_b_start_placeholder: "B starts at"
+  select_b_end_placeholder: "B ends at"
 
   calories:        "calories"
   carbs:           "carbs"
