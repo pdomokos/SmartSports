@@ -56,14 +56,19 @@
 
 @initStatUI = () ->
   measList = [
-    { label: "blood_glucose", value: "blood_glucose" },
-    { label: "blood_pressure", value: "blood_pressure" }
+    { label: "blood_glucose", value: "blood_sugar" },
+    { label: "systolic", value: "systolic" },
+    { label: "diastolic", value: "diastolic" },
+    { label: "pulse", value: "pulse" }
   ]
   $('input[name=attributeName]').autocomplete({
     minLength: 0,
     source: measList,
     change: (event, ui) ->
       measSelected = ui['item']
+    select: (event, ui) ->
+
+      measureSelected(ui['item'].value)
   }).focus ->
     $(this).autocomplete("search")
 
@@ -121,12 +126,8 @@
               cnt += 1
           response(result)
         select: (event, ui) ->
-          $(".patientId").val(ui.item.id)
+          patientSelected(ui.item.obj.id)
 
-          $(".patientSelectDone").removeClass("grayed")
-          $(".attrSelect").removeClass("grayed")
-          $(".attrSelect").removeClass("grayed")
-          $(".attrSelect").removeAttr("disabled")
 #          $("#patientName").html( ui.item.label.trim() )
 
 #          $("input[name=patientId]").val(ui.item.obj.id)
@@ -137,7 +138,7 @@
 #            items: "img",
 #            content: '<img src="'+ui.item.obj.avatar_url+'" />'
 #          })
-          initStatistics()
+#          initStatistics()
 #          uid = ui.item.obj.id
 #          console.log "loadBgData for "+uid
 #          loadBgData(uid)
@@ -151,12 +152,65 @@
       }).focus ->
         $(this).autocomplete("search")
 
+@patientSelected = (uid) ->
+  console.log "patientSelected "+uid
+  $(".patientId").val(uid)
+  $(".patientSelectDone").removeClass("grayed")
+  $(".attrSelect").removeClass("grayed")
+  $(".attrSelect").removeClass("grayed")
+  $(".attrSelect").removeAttr("disabled")
 
-@loadBgData = (uid) ->
-  d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", stat_bg_data_received)
+@measureSelected = (measure) ->
+  console.log measure
+  uid = $(".patientId").val()
+  $(".measureName").val(measure)
+  initStatistics()
+  meas = "blood_pressure"
+  if measure == "blood_sugar"
+    meas = "blood_sugar"
+  loadBgData(uid, meas)
 
-  $(document).on("click", "#closeModalStat", (evt) ->
-    location.href = "#close"
-  )
+@loadBgData = (uid, measure) ->
+  d3.json("/users/"+uid+"/measurements.json?meas_type="+measure, stat_bg_data_received)
 
-
+@getMeasGroup = (d) ->
+  ret = "unspecified"
+  if moment(d).hour() >= 5 && moment(d).hour() <= 10
+    ret = "breakfast"
+  else if moment(d).hour() >= 10 && moment(d).hour() <= 14
+    ret = "lunch"
+  else if moment(d).hour() >= 18 && moment(d).hour() <= 22
+    ret = "dinner"
+  return ret
+@getBgGroup = (d) ->
+  return d.blood_sugar_time
+@mapDia = (d) ->
+  return( {date: d.date, value: d.diastolicbp, group: getMeasGroup(d.date)})
+@mapSys = (d) ->
+  return( {date: d.date, value: d.systolicbp, group: getMeasGroup(d.date)})
+@mapPulse = (d) ->
+  return( {date: d.date, value: d.pulse, group: getMeasGroup(d.date)})
+@mapBG = (d) ->
+  return( {date: d.date, value: d.blood_sugar, group: getMeasGroup(d.date)})
+@stat_bg_data_received = (jsondata) ->
+  console.log "stat bg_data_received, size="+jsondata.length
+  console.log jsondata[0]
+  @currdata = jsondata
+  if jsondata && jsondata.length>0
+    $("section.sectionPatients").removeClass("hidden")
+    meas = $(".measureName").val()
+    $(".bg-chart-svg").html("")
+    if meas=="blood_sugar"
+#      @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
+#      @bg_trend_chart.draw()
+      bg_trend_chart = new LineChart("bg", jsondata.map(  mapBG ), "BG (mmol/L)");
+      bg_trend_chart.draw()
+    else if meas=="systolic"
+      bp_trend_chart = new LineChart("bg", jsondata.map(  mapSys ), "SYS (mmHg)");
+      bp_trend_chart.draw()
+    else if meas=="diastolic"
+      bp_trend_chart = new LineChart("bg", jsondata.map(  mapDia ), "DIA (mmHg)");
+      bp_trend_chart.draw()
+    else if meas=="pulse"
+      bp_trend_chart = new LineChart("bg", jsondata.map(  mapPulse ), "Pulse (1/min)");
+      bp_trend_chart.draw()

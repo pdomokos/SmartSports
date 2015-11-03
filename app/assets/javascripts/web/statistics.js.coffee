@@ -140,13 +140,13 @@
   })
   $('.xdsoft_datetimepicker').css('zIndex', 999999);
 
-@stat_bg_data_received = (jsondata) ->
-  console.log "stat bg_data_received, size="+jsondata.length
-  @currdata = jsondata
-  if jsondata && jsondata.length>0
-    @currextent = d3.extent(jsondata, (d) -> d.date)
-    @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
-    @bg_trend_chart.draw()
+#@stat_bg_data_received = (jsondata) ->
+#  console.log "stat bg_data_received, size="+jsondata.length
+#  @currdata = jsondata
+#  if jsondata && jsondata.length>0
+#    @currextent = d3.extent(jsondata, (d) -> d.date)
+#    @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
+#    @bg_trend_chart.draw()
 
 @draw_parallelplot = (eid, data, rangeA, rangeB) ->
   self = this

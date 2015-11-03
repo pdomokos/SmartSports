@@ -12,7 +12,7 @@ class HealthChart
 
   draw: (date) ->
     self = this
-    date_ymd = fmt(date)
+#    date_ymd = fmt(date)
 
     @margin = {top: 20, right: 30, bottom: 20, left: 40}
     @aspect = 4.0/7
