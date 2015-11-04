@@ -150,7 +150,7 @@
 
 @draw_parallelplot = (eid, data, rangeA, rangeB) ->
   self = this
-
+  colorMap = getColorMap(data)
   parDataA = {}
   parDataB = {}
   dotData = []
@@ -168,7 +168,7 @@
       dd.setYear(2015)
       dd.setMonth(0)
       dd.setDate(0)
-      item = {date: fmt_hms(dd), blood_sugar: d.blood_sugar, group: d.blood_sugar_time}
+      item = {date: fmt_hms(dd), value: d.value, group: d.group}
       if(!selData[t])
         selData[t] = [item]
       else
@@ -208,12 +208,12 @@
 
   time_scale = d3.time.scale().domain(time_extent).range([0, width-self.margin.left-self.margin.right])
 
-  bg_extent = d3.extent(data, (d) -> d.blood_sugar)
+  bg_extent = d3.extent(data, (d) -> d.value)
   scale_left = d3.scale.linear().range([height - self.margin.bottom- self.margin.top, 0]).domain(bg_extent)
 
   bgline = d3.svg.line()
     .x( (d) -> return(time_scale(new Date(d.date))))
-    .y( (d) -> return(scale_left(d.blood_sugar)))
+    .y( (d) -> return(scale_left(d.value)))
 
   for k in Object.keys(parDataA)
     dwg.append("path")
@@ -232,9 +232,9 @@
       .enter()
       .append("circle")
         .attr("cx", (d) -> time_scale(new Date(d.date)))
-        .attr("cy", (d) -> scale_left(d.blood_sugar))
+        .attr("cy", (d) -> scale_left(d.value))
         .attr("r", self.base_r)
-        .attr("class", (d) -> self.color_map[d.group])
+        .attr("class", (d) -> colorMap[d.group])
 
   xAxis = d3.svg.axis()
     .scale(time_scale)
@@ -276,7 +276,7 @@
   maxv = -Infinity
   boxDataA = {}
   boxDataB = {}
-  console.log data[0]
+#  console.log data[0]
   data.forEach( (d)->
     if d.blood_sugar > maxv
       maxv = d.blood_sugar

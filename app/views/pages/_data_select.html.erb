@@ -1,4 +1,4 @@
-<section class="patientSelect">
+<section class="dataSelect">
   <ul class="patientControl">
     <li class="patientSelect">
         <i class="fa fa-user fa-fw patientColor"></i>
@@ -18,19 +18,23 @@
     <li class="attrSelectDone grayed">
       <i class="fa fa-chevron-right fa-fw patientColor"></i>
     </li>
-    <li class="beginSelectA grayed">
+    <li class="aSelect grayed">
       <i class="fa fa-clock-o fa-fw patientColor"></i>
       <input type="search" name="startA" class="startASelect" placeholder="<%=t :select_a_start_placeholder%>" disabled>
       <input type="search" name="endA" class="endASelect" placeholder="<%=t :select_a_end_placeholder%>" disabled>
     </li>
 
-    <li class="beginSelectADone grayed">
+    <li class="aSelectDone grayed">
       <i class="fa fa-chevron-right fa-fw patientColor"></i>
     </li>
-    <li class="endSelectB grayed">
+    <li class="bSelect grayed">
       <i class="fa fa-clock-o fa-fw patientColor"></i>
       <input type="search" name="startB" class="startBSelect" placeholder="<%=t :select_b_start_placeholder%>" disabled>
       <input type="search" name="endB" class="endBSelect" placeholder="<%=t :select_b_end_placeholder%>" disabled>
+    </li>
+
+    <li class="showChart grayed" disabled>
+      <i class="fa fa-check fa-2x patientColor showAnalysis"></i>
     </li>
   </ul>
 

@@ -3,18 +3,11 @@ function LineChart(chartElement, data, title) {
     this.chartData = data;
     this.yTitle = title;
     this.margin = {top: 40, right: 40, bottom: 40, left: 40 };
-    this.width = $("#"+chartElement+"-container").parent().width()-this.margin.left-this.margin.right;
+    this.width = $("#"+chartElement+"-container").parent().width();
     this.aspect = 2.0/7;
     this.height = this.aspect*this.width-this.margin.top-this.margin.bottom;
-
-    this.colorMap = {};
-    var labels = new Set(this.chartData.map( function(d) {return (d.group)}));
-    var colors = ['bg1Point','bg2Point','bg3Point','bg4Point'];
-    var self = this;
-    var i = 0;
-    labels.forEach(function(elem) {
-        self.colorMap[elem] = colors[i++];
-    });
+    this.highlights = []
+    this.colorMap = getColorMap(data);
 }
 
 LineChart.prototype.baseR = 4;
@@ -127,18 +120,23 @@ LineChart.prototype.draw = function() {
         .call(this.zoom.event)
 }
 
+LineChart.prototype.clearHighlights = function() {
+    $("#" +this.chartElement + "-container svg rect.selA").remove()
+    $("#" +this.chartElement + "-container svg rect.selB").remove()
+    this.highlights = []
+}
+
 LineChart.prototype.addHighlight = function(from, to, style) {
     var canvas = d3.select($("#" +this.chartElement + "-container svg." +this.chartElement + "-chart-svg g:last-child")[0]);
-
-    var w = self.timeScale(new Date(to)) - this.timeScale(new Date(from));
+    this.highlights.push({from: from, to: to, style: style})
+    var w = this.timeScale(new Date(to)) - this.timeScale(new Date(from));
     var extent = this.getValueExtent();
-    var h = Math.abs(this.scaleLeft(extent[1]) - this.scaleLeft(extent[0]));
     maxval = Math.max(extent[0], extent[1]);
     canvas.insert("svg:rect", ":first-child")
         .attr("class", style)
-        .attr("x", (this.time_scale(new Date(from))))
+        .attr("x", (this.timeScale(new Date(from))))
         .attr("width", w)
-        .attr("y", this.scale_left(maxval) - this.margin.top)
+        .attr("y", this.scaleLeft(maxval) - this.margin.top)
         .attr("height", this.height - this.margin.bottom);
 }
 
@@ -189,6 +187,13 @@ LineChart.prototype.doZoom = function() {
             var dt = self.timeScale(new Date(d.date));
             return (dt >= 0 && dt < self.width && d.value > 0);
         });
+        if(self.highlights.length>0) {
+            self.highlights.forEach(function(h) {
+                self.svg.selectAll("rect."+ h.style)
+                    .attr("x", function(d) { return self.timeScale(new Date(h.from))})
+                    .attr("width", function(d) { return self.timeScale(new Date(h.to)) - self.timeScale(new Date(h.from)) });
+            })
+        }
         if(visibleData.length>0) {
             self.valueExtent = d3.extent(visibleData, function (d) {
                 return d.value

@@ -7,52 +7,8 @@
   initStatUI()
   loadStatisticsPatients()
 
-  $(document).on("click", "#add-analysis", (evt) ->
-    if self.currdata
-      a = new Date(self.currextent[0])
-      b = new Date(self.currextent[1])
 
-      diff = moment(a).diff(moment(b))
-      mid = moment(moment(a)-diff/2).format("YYYY-MM-DD")
-
-      $("#bg_from").html(fmt(a))
-      $("#bg_to").html(fmt(b))
-
-      $("#start_a").datetimepicker({value: moment(a).format("YYYY-MM-DD")})
-      $("#end_a").datetimepicker({value: mid})
-      $("#start_b").datetimepicker({value: mid})
-      $("#end_b").datetimepicker({value: moment(b).format("YYYY-MM-DD")})
-
-      self.update_elements()
-
-      location.href = "#openModalStat"
-  )
-
-  $(document).on("click", "#analysis-params", (evt) ->
-    console.log("add analysis clicked")
-    if !self.bg_trend_chart
-      return
-
-    data = self.bg_trend_chart.data
-
-    rangeA = [$("#start_a").val(), $("#end_a").val()]
-    rangeB = [$("#start_b").val(), $("#end_b").val()]
-    self.bg_trend_chart.add_highlight(rangeA[0], rangeA[1], "selA")
-    self.bg_trend_chart.add_highlight(rangeB[0], rangeB[1], "selB")
-
-    location.href = "#close"
-
-    eid = "stat-"+self.statnum+"-container"
-    self.statnum = self.statnum+1
-    h = $("#stat-template").clone()
-    window.h = h
-    h.attr('id', eid)
-    h.prependTo("#allstats")
-
-    $("#"+eid+" div.title").html($("#title").val())
-    draw_boxplot(eid, data, rangeA, rangeB)
-    draw_parallelplot(eid, data, rangeA, rangeB)
-  )
+  $(document).on("click", "i.showAnalysis", showAnalysis)
 
 @initStatUI = () ->
   measList = [
@@ -156,7 +112,7 @@
   console.log "patientSelected "+uid
   $(".patientId").val(uid)
   $(".patientSelectDone").removeClass("grayed")
-  $(".attrSelect").removeClass("grayed")
+
   $(".attrSelect").removeClass("grayed")
   $(".attrSelect").removeAttr("disabled")
 
@@ -192,25 +148,94 @@
   return( {date: d.date, value: d.pulse, group: getMeasGroup(d.date)})
 @mapBG = (d) ->
   return( {date: d.date, value: d.blood_sugar, group: getMeasGroup(d.date)})
-@stat_bg_data_received = (jsondata) ->
-  console.log "stat bg_data_received, size="+jsondata.length
-  console.log jsondata[0]
-  @currdata = jsondata
-  if jsondata && jsondata.length>0
+
+@sortData = (data) ->
+  data.sort( (a, b) ->
+    if a.date<b.date
+      return -1
+    if a.date>b.date
+      return 1
+    return 0
+  )
+@getSummary = (data) ->
+  return {length: data.length, from: data[0].date, to: data[data.length-1].date, mean: calcMean(data)}
+
+@showSummary = (meas, summary) ->
+  from = moment(summary.from).format(moment_fmt)
+  to = moment(summary.to).format(moment_fmt)
+  $(".allDataChart").html("<i class='fa fa-bar-chart fa-2x'></i><span class='bold'>"+meas+" </span><span>Interval: "+from+" to "+to+" Data points: "+summary.length+" Mean: "+summary.mean.toFixed(2)+"</span>")
+
+@stat_bg_data_received = (jsonData) ->
+  console.log "stat bg_data_received, size="+jsonData.length
+  console.log jsonData[0]
+  @currdata = jsonData
+  if jsonData && jsonData.length>0
     $("section.sectionPatients").removeClass("hidden")
     meas = $(".measureName").val()
     $(".bg-chart-svg").html("")
+
+    sortData(jsonData)
+
     if meas=="blood_sugar"
-#      @bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
-#      @bg_trend_chart.draw()
-      bg_trend_chart = new LineChart("bg", jsondata.map(  mapBG ), "BG (mmol/L)");
-      bg_trend_chart.draw()
+      chartData = jsonData.map(  mapBG )
+      yaxisTitle = "BG (mmol/L)"
+      measName = "Blood glucose"
     else if meas=="systolic"
-      bp_trend_chart = new LineChart("bg", jsondata.map(  mapSys ), "SYS (mmHg)");
-      bp_trend_chart.draw()
+      chartData = jsonData.map(  mapSys )
+      yaxisTitle = "SYS (mmHg)"
+      measName = "Systolic blood pressure"
     else if meas=="diastolic"
-      bp_trend_chart = new LineChart("bg", jsondata.map(  mapDia ), "DIA (mmHg)");
-      bp_trend_chart.draw()
+      chartData = jsonData.map(  mapDia )
+      yaxisTitle = "DIA (mmHg)"
+      measName = "Diastolic blood pressure"
     else if meas=="pulse"
-      bp_trend_chart = new LineChart("bg", jsondata.map(  mapPulse ), "Pulse (1/min)");
-      bp_trend_chart.draw()
+      chartData = jsonData.map(  mapPulse )
+      yaxisTitle = "Pulse (1/min)"
+      measName = "Pulse"
+
+    summary = getSummary(chartData)
+    showSummary( measName, summary )
+    @lineChart = new LineChart("bg", chartData, yaxisTitle)
+    @lineChart.draw()
+
+    diff = moment(summary.to).diff(summary.from, 'days')
+    middle = moment(new Date(summary.from)).add(diff/2, 'days')
+
+    @lineChart.addHighlight(summary.from, middle, 'selA')
+    @lineChart.addHighlight(middle, summary.to, 'selB')
+
+    $(".dataSelect input.startASelect").val(moment(summary.from).format(moment_datefmt))
+    $(".dataSelect input.endASelect").val(moment(middle).format(moment_datefmt))
+    $(".dataSelect input.startBSelect").val(moment(middle).format(moment_datefmt))
+    $(".dataSelect input.endBSelect").val(moment(summary.to).format(moment_datefmt))
+    $(".dataSelect input.startASelect").removeAttr("disabled")
+    $(".dataSelect input.endASelect").removeAttr("disabled")
+    $(".dataSelect input.startBSelect").removeAttr("disabled")
+    $(".dataSelect input.endBSelect").removeAttr("disabled")
+    $(".dataSelect i.showChart").removeAttr("disabled")
+
+    $(".dataSelect li.attrSelectDone").removeClass("grayed")
+    $(".dataSelect li.aSelect").removeClass("grayed")
+    $(".dataSelect li.sSelectDone").removeClass("grayed")
+    $(".dataSelect li.bSelect").removeClass("grayed")
+    $(".dataSelect li.showChart").removeClass("grayed")
+
+@showAnalysis = (evt) =>
+  console.log("add analysis clicked")
+  if !@lineChart
+    return
+
+  rangeA = [$("input.startASelect").val(), $("input.endASelect").val()]
+  rangeB = [$("input.startBSelect").val(), $("input.endBSelect").val()]
+  console.log rangeA
+  console.log rangeB
+
+  eid = "stat-"+@statnum+"-container"
+  @statnum = @statnum+1
+  h = $("#stat-template").clone()
+  h.attr('id', eid)
+  h.prependTo("#allstats")
+
+  $("#"+eid+" div.title").html($("#title").val())
+#  draw_boxplot(eid, @lineChart.chartData, rangeA, rangeB)
+  draw_parallelplot(eid, @lineChart.chartData, rangeA, rangeB)

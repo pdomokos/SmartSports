@@ -118,9 +118,6 @@
 //  background-color: transparent;
 //}
 
-.patientSelect:after {
-  //clear: both;
-}
 
 .patientControl li {
   display: inline;
@@ -130,6 +127,9 @@
 }
 .patientControl li i {
   padding-top: 10px;
+}
+.patientControl li i.fa-2x {
+  padding-top: 5px;
 }
 .patientControl {
   padding: 0px;
@@ -159,4 +159,38 @@
 
 .patientControl li.grayed i {
   color: lightgray !important;
+}
+
+
+.patientData i {
+  color: #4FBDF2;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.chartHeader {
+  height: 42px;
+  background-color: #f5f5f5;
+  margin: 0;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid #d8d8d8;
+  border-bottom: 0;
+  padding: 9px 10px 10px;
+  font-size: 14px;
+  line-height: 17px;
+  display: block;
+  //vertical-align: middle;
+}
+
+.chartHeader span {
+  vertical-align: middle;
+}
+.chartHeader i {
+  vertical-align: middle;
+  padding-right: 5px;
+}
+i.showAnalysis {
+  cursor: pointer;
 }
