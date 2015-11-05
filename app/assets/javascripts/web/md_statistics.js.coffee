@@ -7,8 +7,37 @@
   initStatUI()
   loadStatisticsPatients()
 
+  $("section.dataSelect").on("click", "i.showAnalysis", showAnalysis)
 
-  $(document).on("click", "i.showAnalysis", showAnalysis)
+  self = this
+  @zooming = false
+  $("svg.bg-chart-svg").on("click", (evt) ->
+    console.log "svg clicked "+self.zooming
+    if self.zooming
+      return
+    self.zooming = !self.zooming
+    document.body.style.cursor = 'move'
+    if self.lineChart
+      self.lineChart.startZoom()
+    isClickout = (elem) ->
+      curr = elem
+      found = false
+      while(curr && !found)
+        if curr.id == 'overviewChart'
+          found = true
+        curr = curr.parentElement
+      return !found
+    $("html").on("click.zooming", (evt) ->
+      window.tmptarget = evt.target
+      if isClickout(evt.target)
+        $("html").unbind("click.zooming")
+        self.zooming = false
+        if self.lineChart
+          self.lineChart.endZoom()
+        document.body.style.cursor = 'auto'
+    )
+  )
+
 
 @initStatUI = () ->
   measList = [
@@ -139,7 +168,18 @@
     ret = "dinner"
   return ret
 @getBgGroup = (d) ->
-  return d.blood_sugar_time
+  lbMap = {
+    '48': 'Unspecified',
+    '57': 'Unspecified2',
+    '58': 'Pre Breakfast',
+    '59': 'Post Breakfast',
+    '60': 'Pre Lunch',
+    '61': 'Post Lunch',
+    '62': 'Pre Supper',
+    '63': 'Post Supper',
+    '64': 'Pre Snack'
+  }
+  return lbMap[d]
 @mapDia = (d) ->
   return( {date: d.date, value: d.diastolicbp, group: getMeasGroup(d.date)})
 @mapSys = (d) ->
@@ -147,7 +187,7 @@
 @mapPulse = (d) ->
   return( {date: d.date, value: d.pulse, group: getMeasGroup(d.date)})
 @mapBG = (d) ->
-  return( {date: d.date, value: d.blood_sugar, group: getMeasGroup(d.date)})
+  return( {date: d.date, value: d.blood_sugar, group: getBgGroup(d.blood_sugar_time)})
 
 @sortData = (data) ->
   data.sort( (a, b) ->
@@ -177,19 +217,19 @@
     sortData(jsonData)
 
     if meas=="blood_sugar"
-      chartData = jsonData.map(  mapBG )
+      chartData = jsonData.map(  mapBG ).filter( (d) -> d.value>0 )
       yaxisTitle = "BG (mmol/L)"
       measName = "Blood glucose"
     else if meas=="systolic"
-      chartData = jsonData.map(  mapSys )
+      chartData = jsonData.map(  mapSys ).filter( (d) -> d.value>0 )
       yaxisTitle = "SYS (mmHg)"
       measName = "Systolic blood pressure"
     else if meas=="diastolic"
-      chartData = jsonData.map(  mapDia )
+      chartData = jsonData.map(  mapDia ).filter( (d) -> d.value>0 )
       yaxisTitle = "DIA (mmHg)"
       measName = "Diastolic blood pressure"
     else if meas=="pulse"
-      chartData = jsonData.map(  mapPulse )
+      chartData = jsonData.map(  mapPulse ).filter( (d) -> d.value>0 )
       yaxisTitle = "Pulse (1/min)"
       measName = "Pulse"
 
@@ -237,5 +277,14 @@
   h.prependTo("#allstats")
 
   $("#"+eid+" div.title").html($("#title").val())
-#  draw_boxplot(eid, @lineChart.chartData, rangeA, rangeB)
-  draw_parallelplot(eid, @lineChart.chartData, rangeA, rangeB)
+
+  axisLabels = {
+    blood_sugar: "BG (mmol/L)",
+    systolic: "SYS (mmHg)",
+    dioastolic: "DIA (mmHg)",
+    pulse: "Pulse (mmHg)",
+  }
+  pp = new ParallelPlot(eid, @lineChart.chartData, axisLabels[$("section.dataSelect input[name=attributeName]").val()])
+  pp.draw(rangeA, rangeB)
+
+  draw_boxplot(eid, @lineChart.chartData, rangeA, rangeB)

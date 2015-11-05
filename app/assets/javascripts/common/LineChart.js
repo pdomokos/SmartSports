@@ -23,9 +23,6 @@ LineChart.prototype.draw = function() {
         this.preproc_cb(this.chartData);
     }
 
-    this.zoom = d3.behavior.zoom()
-        .on('zoom', self.doZoom());
-
     this.svg = d3.select($("#"+this.chartElement+"-container svg."+this.chartElement+"-chart-svg")[0]);
     this.svg
         .attr("width", self.width)
@@ -113,13 +110,18 @@ LineChart.prototype.draw = function() {
                     self.cb_click(d, this);
             });
     }
-
+}
+LineChart.prototype.startZoom = function() {
+    this.zoom = d3.behavior.zoom()
+        .on('zoom', this.doZoom());
     this.zoom.x(this.timeScale);
     this.svg
         .call(this.zoom)
         .call(this.zoom.event)
 }
-
+LineChart.prototype.endZoom = function() {
+    this.svg.on(".zoom", null);
+}
 LineChart.prototype.clearHighlights = function() {
     $("#" +this.chartElement + "-container svg rect.selA").remove()
     $("#" +this.chartElement + "-container svg rect.selB").remove()

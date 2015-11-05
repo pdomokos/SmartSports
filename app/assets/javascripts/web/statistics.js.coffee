@@ -276,13 +276,16 @@
   maxv = -Infinity
   boxDataA = {}
   boxDataB = {}
+
+  colorMap = getColorMap(data);
+
 #  console.log data[0]
   data.forEach( (d)->
-    if d.blood_sugar > maxv
-      maxv = d.blood_sugar
-    if d.blood_sugar < minv
-      minv = d.blood_sugar
-    t = d.blood_sugar_time
+    if d.value > maxv
+      maxv = d.value
+    if d.value < minv
+      minv = d.value
+    t = d.group
     selData = null
 
     dd = new Date(d.date)
@@ -292,9 +295,9 @@
       selData = boxDataB
     if( selData )
       if(!selData[t])
-        selData[t] = [d.blood_sugar]
+        selData[t] = [d.value]
       else
-        selData[t].push(d.blood_sugar)
+        selData[t].push(d.value)
   )
   boxDataArrA = []
   boxDataArrB = []
@@ -308,8 +311,8 @@
     tmp.push(boxDataB[d])
     boxDataArrB.push(tmp)
   )
-  #    window.boxDataArrA = boxDataArrA
-  #    window.boxDataArrB = boxDataArrB
+  window.boxDataArrA = boxDataArrA
+  window.boxDataArrB = boxDataArrB
 
 
   width = $("#"+eid).parent().width()/2
@@ -346,7 +349,7 @@
     .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
 
   x = d3.scale.ordinal()
-    .domain(  boxDataArrA.concat(boxDataArrB).map( (d) -> return self.lbMap[d[0]]  )  )
+    .domain(  boxDataArrA.concat(boxDataArrB).map( (d) -> return d[0]  )  )
     .rangeRoundBands([0 , width], 0.7, 0.3)
 
   xAxis = d3.svg.axis()
@@ -361,16 +364,16 @@
     .scale(y)
     .orient("left")
 
-
   barwidth = x.rangeBand()/3.0
   console.log "barwidht = "+barwidth
   window.barwidht = barwidth
+
   dwg.selectAll("g.boxA")
     .data(boxDataArrA)
     .enter()
     .append("g")
     .attr("class","boxA")
-    .attr("transform", (d) -> return "translate(" +  x(self.lbMap[d[0]])  + "," + 0 + ")"  )
+    .attr("transform", (d) -> return "translate(" +  x(d[0])  + "," + 0 + ")"  )
     .call(chart.width(barwidth))
 
   dwg.selectAll("g.boxB")
@@ -378,7 +381,7 @@
     .enter()
     .append("g")
     .attr("class","boxB")
-    .attr("transform", (d) -> return "translate(" +  (x(self.lbMap[d[0]])+30)  + "," + 0 + ")"  )
+    .attr("transform", (d) -> return "translate(" +  (x(d[0])+30)  + "," + 0 + ")"  )
     .call(chartRL.width(barwidth))
 
   # draw y axis
