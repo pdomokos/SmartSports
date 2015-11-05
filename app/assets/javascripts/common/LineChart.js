@@ -46,7 +46,7 @@ LineChart.prototype.draw = function() {
     this.scaleLeft = this.getScaleLeft();
 
     this.line = d3.svg.line()
-        .x( function(d)  { return(self.timeScale(new Date(d.date)))})
+        .x( function(d)  { return(self.timeScale(moment(d.date).toDate()))})
         .y( function(d) { return(self.scaleLeft(d.value))});
 
     this.timeAxis = d3.svg.axis()
@@ -93,7 +93,7 @@ LineChart.prototype.draw = function() {
             .data(this.chartData)
             .enter()
             .append("circle")
-            .attr("cx", function(d) { return self.timeScale(new Date(d.date))} )
+            .attr("cx", function(d) { return self.timeScale(moment(d.date).toDate())} )
             .attr("cy", function(d) { return self.scaleLeft(d.value)})
             .attr("r", this.baseR)
             .attr("class", function(d) { return self.colorMap[d.group]})
@@ -131,12 +131,12 @@ LineChart.prototype.clearHighlights = function() {
 LineChart.prototype.addHighlight = function(from, to, style) {
     var canvas = d3.select($("#" +this.chartElement + "-container svg." +this.chartElement + "-chart-svg g:last-child")[0]);
     this.highlights.push({from: from, to: to, style: style})
-    var w = this.timeScale(new Date(to)) - this.timeScale(new Date(from));
+    var w = this.timeScale(moment(to).toDate()) - this.timeScale(moment(from).toDate());
     var extent = this.getValueExtent();
     maxval = Math.max(extent[0], extent[1]);
     canvas.insert("svg:rect", ":first-child")
         .attr("class", style)
-        .attr("x", (this.timeScale(new Date(from))))
+        .attr("x", (this.timeScale(moment(from).toDate())))
         .attr("width", w)
         .attr("y", this.scaleLeft(maxval) - this.margin.top)
         .attr("height", this.height - this.margin.bottom);
@@ -151,7 +151,7 @@ LineChart.prototype.getScaleLeft = function() {
 }
 
 LineChart.prototype.getTimeExtent = function () {
-    return d3.extent(this.chartData, function(d) { return new Date(d.date) });
+    return d3.extent(this.chartData, function(d) { return moment(d.date).toDate() });
 }
 
 LineChart.prototype.calcTimeExtent = function (extent) {
@@ -159,8 +159,10 @@ LineChart.prototype.calcTimeExtent = function (extent) {
     var m0 = moment(extent[0]);
     var m1 = moment(extent[1]);
     if( m1.diff(m0, 'days') > 60) {
-        ret = [new Date(m1.subtract(60, 'days').format(moment_fmt)), extent[1]];
+        ret = [m1.subtract(60, 'days').toDate(), extent[1]];
     }
+    console.log("calcTimeExtent: ")
+    console.log(ret)
     return ret;
 }
 
@@ -186,14 +188,14 @@ LineChart.prototype.doZoom = function() {
     return function() {
         //console.log(self.chartData);
         var visibleData = self.chartData.filter( function(d) {
-            var dt = self.timeScale(new Date(d.date));
+            var dt = self.timeScale(moment(d.date).toDate());
             return (dt >= 0 && dt < self.width && d.value > 0);
         });
         if(self.highlights.length>0) {
             self.highlights.forEach(function(h) {
                 self.svg.selectAll("rect."+ h.style)
-                    .attr("x", function(d) { return self.timeScale(new Date(h.from))})
-                    .attr("width", function(d) { return self.timeScale(new Date(h.to)) - self.timeScale(new Date(h.from)) });
+                    .attr("x", function(d) { return self.timeScale(moment(h.from).toDate())})
+                    .attr("width", function(d) { return self.timeScale(moment(h.to).toDate()) - self.timeScale(moment(h.from).toDate()) });
             })
         }
         if(visibleData.length>0) {
@@ -204,7 +206,7 @@ LineChart.prototype.doZoom = function() {
 
             self.svg.selectAll("circle")
                 .attr("cx", function (d) {
-                    return self.timeScale(new Date(d.date))
+                    return self.timeScale(moment(d.date).toDate())
                 })
                 .attr("cy", function (d) {
                     return self.scaleLeft(d.value)

@@ -30,7 +30,7 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
 
     this.chartData.forEach( function(d) {
         selData = null;
-        dd = new Date(d.date);
+        dd = moment(d.date).toDate();
 
         if((dd >= a0) && (dd < a1)) {
             selData = parDataA;
@@ -40,7 +40,7 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
         }
 
         if (selData) {
-            dd = new Date(d.date);
+            dd = moment(d.date).toDate();
             t = fmt(dd);
             dd.setYear(2015);
             dd.setMonth(0);
@@ -79,8 +79,8 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
     }
     addKeys(arr, parDataA);
     addKeys(arr, parDataB);
-
-    time_extent = d3.extent(arr, function(d) {return new Date(d)} );
+    console.log(arr);
+    time_extent = d3.extent(arr, function(d) {return moment(d).toDate()} );
     console.log(time_extent);
     d1 = time_extent[0];
     d2 = time_extent[1];
@@ -97,7 +97,7 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
     scale_left = d3.scale.linear().range([height - this.margin.bottom- this.margin.top, 0]).domain(bg_extent);
 
     bgline = d3.svg.line()
-        .x( function(d) { return(time_scale(new Date(d.date)))})
+        .x( function(d) { return(time_scale(moment(d.date).toDate()))})
         .y( function(d) { return(scale_left(d.value))})
 
     Object.keys(parDataA).forEach( function(k) {
@@ -118,7 +118,7 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
         .data(dotData)
         .enter()
         .append("circle")
-        .attr("cx", function(d) {return time_scale(new Date(d.date))})
+        .attr("cx", function(d) {return time_scale(moment(d.date).toDate())})
         .attr("cy", function(d) { return scale_left(d.value)})
         .attr("r", this.baseR)
         .attr("class", function(d) { return colorMap[d.group]});
