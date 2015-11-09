@@ -1,0 +1,11 @@
+
+<%= render "forms/element", locals: {
+    :showButton => false,
+    :elementName => cfall.property_code,
+    :style => "#{@form_params[cfall.property_code][1]}",
+    :title => "#{@form_params[cfall.property_code][2]}",
+    :img => "#{@form_params[cfall.property_code][0]}.png",
+    :defaultHidden => false
+    }
+%>
+

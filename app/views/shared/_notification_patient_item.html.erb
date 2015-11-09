@@ -1,0 +1,49 @@
+<tr class="bg notification_<%= notification_patient_item.id %> notificationItem">
+
+  <td class="headerIcon">
+    <div style="height: 100%;"><i class="fa <%= get_notification_icon(notification_patient_item) %> fa-2x patientColor"></i></div>
+  </td>
+
+  <td class="historyTitle labresultItem">
+    <span class="itemTitle"><%= notification_patient_item.title %></span>
+    <span>
+      <%= if notification_patient_item.detail
+            notification_patient_item.detail
+          else
+            ""
+          end
+      %>
+    </span>
+    <% if notification_patient_item.location && notification_patient_item.location!="" %>
+        <span class="itemTitle">Location: </span>
+        <span><%= notification_patient_item.location %></span>
+    <% end %>
+    <% if notification_patient_item.location_url && notification_patient_item.location_url!="" %>
+
+        <span><a href="<%= notification_patient_item.location_url.html_safe %>" target="_blank"><i class="fa fa-map-marker patientColor"></i></a></span>
+    <% end %>
+
+    <br/>
+    <span class="itemTitle"><%=(t :time) %>: </span><span><%= if notification_patient_item.date
+                                                                notification_patient_item.date.strftime("%F %R")
+                                                              else
+                                                                ""
+                                                              end
+  %> </span>
+
+    <% if notification_patient_item.custom_form %>
+        <span class="itemTitle">Form: </span><span><%= notification_patient_item.custom_form.form_tag %></span>
+        <input type="hidden" class="customFormId" name="customFormId" value="<%= notification_patient_item.custom_form.id%>">
+    <% end %>
+  </td>
+
+  <td class="iconColumn">
+    <%= form_tag( "/users/#{notification_patient_item.user_id}/notifications/#{notification_patient_item.id}",
+                  id: "delete_visit_#{notification_patient_item.id}", remote: true, method: "patch", class: "notification-dismiss-form") do %>
+        <button class="tableControl left">
+          <i class="fa fa-close fa-2x patientColor"></i>
+        </button>
+    <% end %>
+  </td>
+
+</tr>

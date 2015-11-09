@@ -7,6 +7,11 @@ class NotificationsController < ApplicationController
   # GET /notifications.json
   def index
     user_id = params[:user_id]
+    @patient = false
+    if params[:patient] && params[:patient]=='true'
+      @patient = true
+    end
+    print "PATIENT: #{@patient}"
     @user = User.find(user_id)
     @notifications = @user.notifications
     lang = params[:lang]

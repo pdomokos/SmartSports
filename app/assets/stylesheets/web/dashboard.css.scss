@@ -1090,3 +1090,25 @@ body.wait button {
 .headerButton {
   font-size: inherit;
 }
+
+
+.notifTile {
+  width: 538px;
+  //height: 300px;
+  padding: 20px;
+  margin: 2px;
+  background: RGBA(255, 255, 255, 0.36);
+  float: left;
+}
+.formTile {
+  max-width: 900px;
+  //height: 300px;
+  padding: 20px;
+  margin: 2px;
+  background: white;
+  float: left;
+}
+
+.notifTile .historyTitle {
+  font-size: 16px !important;
+}

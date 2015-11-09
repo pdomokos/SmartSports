@@ -1,2 +1,6 @@
 $("table.notificationTable tbody.recentResourcesTable").html("");
+<% if @patient %>
+$("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_patient_item', :collection=> @notifications ) %>");
+<% else %>
 $("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_item', :collection=> @notifications ) %>");
+<% end %>
