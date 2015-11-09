@@ -49,6 +49,21 @@
 
   $(document).on("click", "span.dayTag", (evt) ->
     evt.currentTarget.classList.toggle("selected")
+    notifid = $(this).closest('tr').attr('id')
+    e = document.getElementById(notifid)
+    dayTags = e.getElementsByClassName("dayTag")
+    notifs = []
+    for j in dayTags
+      notifs.push({id: j.id, selected: j.classList.contains("selected")})
+    nid = notifid[13..]
+    $.ajax '/notifications/'+nid,
+      type: 'PUT',
+      data: {'notification[notification_data]': JSON.stringify(notifs)}
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "Dayselect clicked AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        console.log "Dayselect clicked Successful AJAX call"
   )
 
   loadPatients()
@@ -148,3 +163,17 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load recent notifications Successful AJAX call"
 
+  $.ajax '/users/' + userId + '/notifications.json',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load recent diets AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load recent notifications Successful AJAX call"
+      for notif in data
+        e = document.getElementById("notification_"+notif.id)
+        dayTags = e.getElementsByClassName("dayTag")
+        for d in dayTags
+          for a in [0..6]
+            nod = JSON.parse(notif.notification_data)[a]
+            if nod.selected
+              $("#notification_"+notif.id+" #"+nod.id).addClass("selected")

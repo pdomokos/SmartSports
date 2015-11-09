@@ -1,4 +1,4 @@
-<tr class="bg notification_<%= notification_item.id %>">
+<tr id="notification_<%= notification_item.id %>" class="bg notification_<%= notification_item.id %>">
 
   <td class="headerIcon">
     <div style="height: 100%;"><i class="fa <%= get_notification_icon(notification_item) %> fa-2x patientColor"></i></div>
@@ -30,13 +30,14 @@
                                         ""
                                     end
     %> </span>
-    <span class="dayTag">Mon</span>
-    <span class="dayTag">Tue</span>
-    <span class="dayTag">Wed</span>
-    <span class="dayTag">Thu</span>
-    <span class="dayTag">Fri</span>
-    <span class="dayTag">Sat</span>
-    <span class="dayTag">Sun</span>
+
+    <span id="mon" class="dayTag">Mon</span>
+    <span id="tue" class="dayTag">Tue</span>
+    <span id="wed" class="dayTag">Wed</span>
+    <span id="thu" class="dayTag">Thu</span>
+    <span id="fri" class="dayTag">Fri</span>
+    <span id="sat" class="dayTag">Sat</span>
+    <span id="sun" class="dayTag">Sun</span>
 
     <% if notification_item.custom_form %>
         <span class="itemTitle">Form: </span><span><%= notification_item.custom_form.form_tag %></span>
