@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'JSON'
+require 'json'
 
 class NotificationsHelperTest < ActionView::TestCase
   setup do

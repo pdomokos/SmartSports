@@ -1,4 +1,4 @@
-require 'JSON'
+require 'json'
 module NotificationsHelper
   def recurringOnDay(data, day)
     if !data
