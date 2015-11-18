@@ -72,6 +72,8 @@ gem 'time_zone_ext'
 
 gem 'yaml_db'
 
+gem 'ice_cube'
+
 group :production, :staging do
   gem 'mysql2', '~> 0.3.18'
 end

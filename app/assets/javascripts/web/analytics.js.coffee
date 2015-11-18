@@ -40,8 +40,7 @@
   })
 
 @bg_data_received = (jsondata) ->
-  console.log "bg_data_received"
-  console.log jsondata
+  console.log "bg_data_received "+jsondata.length
   bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
   bg_trend_chart.draw()
   if jsondata && jsondata.size>0

@@ -30,14 +30,14 @@
                                         ""
                                     end
     %> </span>
-
-    <span id="mon" class="dayTag">Mon</span>
-    <span id="tue" class="dayTag">Tue</span>
-    <span id="wed" class="dayTag">Wed</span>
-    <span id="thu" class="dayTag">Thu</span>
-    <span id="fri" class="dayTag">Fri</span>
-    <span id="sat" class="dayTag">Sat</span>
-    <span id="sun" class="dayTag">Sun</span>
+    <% notifdata = notification_item.notification_data %>
+    <span id="mon" class="dayTag <% if recurringOnDay(notifdata, 'mon')%>selected<%end%>">Mon</span>
+    <span id="tue" class="dayTag <% if recurringOnDay(notifdata, 'tue')%>selected<%end%>">Tue</span>
+    <span id="wed" class="dayTag <% if recurringOnDay(notifdata, 'wed')%>selected<%end%>">Wed</span>
+    <span id="thu" class="dayTag <% if recurringOnDay(notifdata, 'thu')%>selected<%end%>">Thu</span>
+    <span id="fri" class="dayTag <% if recurringOnDay(notifdata, 'fri')%>selected<%end%>">Fri</span>
+    <span id="sat" class="dayTag <% if recurringOnDay(notifdata, 'sat')%>selected<%end%>">Sat</span>
+    <span id="sun" class="dayTag <% if recurringOnDay(notifdata, 'sun')%>selected<%end%>">Sun</span>
 
     <% if notification_item.custom_form %>
         <span class="itemTitle">Form: </span><span><%= notification_item.custom_form.form_tag %></span>

@@ -40,7 +40,7 @@ module CustomFormsCommon
       # To update custom form order
 
       o = params[:custom_form_element_order]
-      if !o
+      if o.nil?
         send_error_json(user.id, "order missing", 400)
         return
       end
@@ -61,8 +61,8 @@ module CustomFormsCommon
       send_success_json(cf.id, {:msg => "order updated"})
     else
       # PUT request, update params
-      update_hash = {:form_name => params['custom_form']['form_name'], :image_name => params['custom_form']['image_name']}
-      if cf.update_attributes(update_hash)
+      # update_hash = {:form_name => params['custom_form']['form_name'], :image_name => params['custom_form']['image_name']}
+      if cf.update_attributes(custom_form_params)
         send_success_json(cf.id)
       else
         send_error_json(cf.id, cf.errors.full_messages.to_sentence, 400)
@@ -94,7 +94,7 @@ module CustomFormsCommon
   private
 
   def custom_form_params
-    params.require(:custom_form).permit(:form_name, :form_tag, :image_name)
+    params.require(:custom_form).permit(:form_name, :form_tag, :image_name, :order_index)
   end
 
   def check_owner()

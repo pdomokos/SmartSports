@@ -43,4 +43,6 @@ Rails.application.configure do
   if not File.exists?(DATA_DIR)
     raise "Data dir '#{DATA_DIR}' missing"
   end
+
+  DB_CONFIG={}
 end

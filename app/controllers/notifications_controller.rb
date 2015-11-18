@@ -1,19 +1,21 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
+  before_action :check_auth, only: [:index, :show, :edit, :create, :update, :destroy]
 
   include NotificationsCommon
 
   # GET /notifications
   # GET /notifications.json
   def index
-    user_id = params[:user_id]
     @patient = false
     if params[:patient] && params[:patient]=='true'
       @patient = true
     end
     print "PATIENT: #{@patient}"
-    @user = User.find(user_id)
+
+    @user = User.find(params[:user_id])
     @notifications = @user.notifications
+
     lang = params[:lang]
     if lang
       I18n.locale=lang
@@ -36,7 +38,6 @@ class NotificationsController < ApplicationController
 
   # GET /notifications/new
   def new
-    user_id = params[:user_id]
     @user = User.find(user_id)
     @notification = @user.notifications.create
   end

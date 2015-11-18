@@ -156,24 +156,12 @@
 
 @loadNotifications = (userId) ->
   console.log "calling load notifications for: "+userId
+
   $.ajax '/users/' + userId + '/notifications.js?order=desc&limit=10',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent diets AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load recent notifications Successful AJAX call"
+    success: (jqXHR, textStatus, errorThrown) ->
+      console.log "render notifications done"
 
-  $.ajax '/users/' + userId + '/notifications.json',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load recent notifications Successful AJAX call"
-      for notif in data
-        e = document.getElementById("notification_"+notif.id)
-        dayTags = e.getElementsByClassName("dayTag")
-        for d in dayTags
-          for a in [0..6]
-            nod = JSON.parse(notif.notification_data)[a]
-            if nod.selected
-              $("#notification_"+notif.id+" #"+nod.id).addClass("selected")
+

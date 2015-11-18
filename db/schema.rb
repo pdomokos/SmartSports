@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029101041) do
+ActiveRecord::Schema.define(version: 20151118074352) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -245,6 +245,9 @@ ActiveRecord::Schema.define(version: 20151029101041) do
     t.text     "location"
     t.text     "location_url"
     t.integer  "custom_form_id"
+    t.datetime "dismissed_on"
+    t.boolean  "dismissed"
+    t.boolean  "recurring"
   end
 
   add_index "notifications", ["user_id", "date"], name: "index_notifications_on_user_id_and_date"
@@ -405,6 +408,7 @@ ActiveRecord::Schema.define(version: 20151029101041) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "doctor"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
