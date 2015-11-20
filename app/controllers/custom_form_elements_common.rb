@@ -19,17 +19,16 @@ module CustomFormElementsCommon
     user = User.find(user_id)
     form_id = params[:custom_form_id]
     custom_form = user.custom_forms.where(id: form_id)[0]
-    elem = params['elementName']
-    custom_form_element = custom_form.custom_form_elements.new
-    custom_form_element.property_code = elem
-    par = params.clone
-    %w(utf8 authenticity_token controller action).each{|k| par.delete(k)}
-    custom_form_element.defaults = par.to_json
+    elem = CustomFormElement.new(custom_form_element_params)
+    elem.custom_form_id=form_id
+    # par = params.clone
+    # %w(utf8 authenticity_token controller action).each{|k| par.delete(k)}
+    # custom_form_element.defaults = par.to_json
 
-    if custom_form_element.save
-      send_success_json(custom_form_element.id, {custom_form_id: custom_form.id, property_code: elem})
+    if elem.save
+      send_success_json(elem.id, {custom_form_id: custom_form.id, property_code: elem.property_code})
     else
-      send_error_json(nil, custom_form_element.errors.full_messages.to_sentence, 400)
+      send_error_json(nil, elem.errors.full_messages.to_sentence, 400)
     end
   end
 
@@ -49,8 +48,8 @@ module CustomFormElementsCommon
       return
     end
 
-    update_hash = {:property_code => params['custom_form_element']['property_code'], :defaults => params['custom_form_element']['defaults']}
-    if cfe.update_attributes(update_hash)
+    # update_hash = {:property_code => params['custom_form_element']['property_code'], :defaults => params['custom_form_element']['defaults']}
+    if cfe.update_attributes(custom_form_element_params)
       send_success_json(cfe.id)
     else
       send_error_json(cfe.id, cfe.errors.full_messages.to_sentence, 400)
@@ -84,7 +83,7 @@ module CustomFormElementsCommon
   private
 
   def custom_form_element_params
-    params.require(:custom_form_element).permit(:property_code, :defaults)
+    params.require(:custom_form_element).permit(:property_code, :defaults, :order_index)
   end
 
   def check_owner()
