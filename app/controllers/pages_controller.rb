@@ -27,7 +27,7 @@ class PagesController < ApplicationController
 
   def signin
     # browser_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-    # puts "browser locale: #{browser_locale}"
+    # logger.debug "browser locale: #{browser_locale}"
     # I18n.locale = browser_locale || I18n.default_locale
     @user = User.new
     @values = JSON.dump(I18n.t :popupmessages)

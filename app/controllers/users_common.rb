@@ -3,18 +3,11 @@ module UsersCommon
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    lang = params[:usermodlang]
-    if lang
-      I18n.locale=lang
-      puts lang
-    end
     respond_to do |format|
       par = params.require(:user).permit(:password, :password_confirmation, :name)
       if @user.update(par)
-        puts "update succ"
         format.json { render json: {ok: true, status: 'OK', msg: "Updated successfully"} }
       else
-        puts "update err"
         key = @user.errors.values[0]
         message = (I18n.translate(key))
         format.json { render json: {ok: false, status: 'NOK', msg: message} }

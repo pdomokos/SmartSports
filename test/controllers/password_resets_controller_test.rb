@@ -3,8 +3,8 @@ require 'test_helper'
 class PasswordResetsControllerTest < ActionController::TestCase
 
   test "should get create" do
-    get :create, email: 'balint@abc.de'
-    assert_redirected_to root_path
+    post :create, email: 'balint@abc.de', locale: "en"
+    assert_response :success
   end
 
   # TODO fix these

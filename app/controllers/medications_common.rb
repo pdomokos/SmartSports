@@ -91,26 +91,4 @@ module MedicationsCommon
     params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date, :favourite)
   end
 
-
-  def check_owner()
-    puts "try"
-    if self.try(:current_user)
-      puts "current_user defined"
-    else
-      puts "current_user NOT defined"
-    end
-    if self.try(:current_resource_owner)
-      puts "current_resource_owner defined"
-    else
-      puts "current_resource_owner NOT defined"
-    end
-
-    if self.try(:current_user).try(:id) == @user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @user_id
-      return true
-    end
-    return false
-  end
 end

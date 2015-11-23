@@ -16,10 +16,6 @@ class NotificationsController < ApplicationController
     @user = User.find(params[:user_id])
     @notifications = @user.notifications
 
-    lang = params[:lang]
-    if lang
-      I18n.locale=lang
-    end
     if params[:upcoming] && params[:upcoming]=='true'
       @notifications = @notifications.where('date > ?', Time.zone.now)
     end

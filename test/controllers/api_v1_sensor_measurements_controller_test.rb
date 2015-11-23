@@ -22,7 +22,6 @@ module Api::V1
                       sensors: "A B C"
                   }, format: :json
       json_result = JSON.parse(response.body)
-      puts json_result
       assert_response :success
       # assert_not_nil assigns(:activities)
     end

@@ -17,7 +17,6 @@ class ApplicationController < ActionController::Base
       browser_lang = request.env['HTTP_ACCEPT_LANGUAGE']
       if !browser_lang.nil?
         browser_locale = browser_lang.scan(/^[a-z]{2}/).first
-        puts "browser locale: #{browser_locale}"
         I18n.locale = browser_locale || I18n.default_locale
       end
     end
@@ -26,8 +25,6 @@ class ApplicationController < ActionController::Base
     if I18n.locale.to_s=='hu'
       @lang_label = 'en'
     end
-
-    puts "set locale: #{I18n.locale}"
   end
 
   # def default_url_options(options={})
@@ -39,6 +36,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_variables
+    lang = params[:lang]
+    if lang
+      I18n.locale=lang
+    end
+
     @default_source = "smartdiab"
 
     @meas_map = {
@@ -59,4 +61,40 @@ class ApplicationController < ActionController::Base
     end
     return last_sync_date
   end
+
+#
+  def check_auth()
+    if !owner?() && !doctor?()
+      send_error_json(params[:id], "Unauthorized", 403)
+      return false
+    end
+    return true
+  end
+
+  def check_doctor()
+    if self.try(:current_user).try(:doctor?)
+      return true
+    end
+    return false
+  end
+  alias_method :doctor?, :check_doctor
+
+  def check_admin()
+    if self.try(:current_user).try(:admin?)
+      return true
+    end
+    return false
+  end
+  alias_method :admin?, :check_admin
+
+  def check_owner()
+    user_id = params[:user_id].to_i
+    if self.try(:current_user).try(:id) == user_id
+      return true
+    end
+    return false
+  end
+  alias_method :owner?, :check_owner
+
 end
+

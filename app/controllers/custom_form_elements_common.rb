@@ -86,14 +86,4 @@ module CustomFormElementsCommon
     params.require(:custom_form_element).permit(:property_code, :defaults, :order_index)
   end
 
-  def check_owner()
-    if self.try(:current_user).try(:id) == @user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @user_id
-      return true
-    end
-    return false
-  end
-
 end

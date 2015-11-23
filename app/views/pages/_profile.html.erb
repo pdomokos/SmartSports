@@ -8,7 +8,7 @@
       <table style="width: 100%;color: #3d3d3d;">
         <tbody>
         <%= form_tag("/users/#{current_user.id}", remote: true, id: "update-user-form", method: "PUT", class: "resource-update-form user-form") do %>
-            <input id="usermodlang" name="usermodlang" value="<%=I18n.locale%>" type="hidden" />
+            <input name="lang" value="<%=I18n.locale%>" type="hidden" />
             <tr>
               <td style="width: 180px;height: 50px;">
                 <%= t :email %>
@@ -74,7 +74,7 @@
         <table style="width: 100%;color: #3d3d3d;">
           <tbody>
           <%= form_tag("/users/#{current_user.id}/profile/#{@profile.id}", remote: true, id: "update-profile-form", method: "PUT", class: "resource-update-form profile-form") do %>
-              <input id="profilelang" name="profilelang" value="<%=I18n.locale%>" type="hidden" />
+              <input name="lang" value="<%=I18n.locale%>" type="hidden" />
               <tr>
                 <td style="width: 180px;height: 50px;">
                   <%= t :default_lang %>

@@ -64,7 +64,6 @@ class Lifestyle < ActiveRecord::Base
 
   def subtitle
     result = "Unknown"
-    puts "#{self.id} : #{self.group}"
     case self.group
       when "sleep"
         result = @@sleepList[self.amount] if self.amount

@@ -104,28 +104,6 @@ module MeasurementsCommon
 
   private
 
-  def check_owner()
-    puts "try"
-    if self.try(:current_user)
-      puts "current_user defined"
-    else
-      puts "current_user NOT defined"
-    end
-    if self.try(:current_resource_owner)
-      puts "current_resource_owner defined"
-    else
-      puts "current_resource_owner NOT defined"
-    end
-
-    if self.try(:current_user).try(:id) == @measurement.user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @measurement.user_id
-      return true
-    end
-    return false
-  end
-
   def set_measurement
     @measurement = Measurement.find(params[:id])
   end

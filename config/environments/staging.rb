@@ -86,7 +86,7 @@ Rails.application.configure do
     raise "Smartdiab app configuration file "+app_config_fname+" does not exist."
   end
   APP_CONFIG = YAML.load_file(app_config_fname)[::Rails.env]
-  APP_CONFIG['PAPERoCLIP_PATH'] = ":rails_root/system/:class/:attachment/:id/:style/:basename.:extension"
+  APP_CONFIG['PAPERCLIP_PATH'] = ":rails_root/system/:class/:attachment/:id/:style/:basename.:extension"
 
   connection_config_fname = '/data/.smartdiab_connection_config'
   if not File.exists?(connection_config_fname)

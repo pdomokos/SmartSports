@@ -222,7 +222,6 @@ module SyncWithings
     )
     new_sleep.save!
 
-    puts "startdate=#{rec['startdate']} enddate=#{rec['enddate']}}"
     tracker_data = TrackerDatum.new( user_id: current_user.id, source: 'withings',
                                      start_time: Time.zone.strptime(rec['startdate'], '%s'),
                                      end_time: Time.zone.strptime(rec['enddate'], '%s'),

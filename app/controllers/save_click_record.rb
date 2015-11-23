@@ -29,7 +29,7 @@ module SaveClickRecord
       clickrecord  = ClickRecord.create(user_id: user.id, operation_time: DateTime.now, operation: method, url: request.fullpath.encode('utf-8'), success: success, row_id: row_id, msg: msg, data: data, source: source)
       clickrecord.save!
     else
-      puts "Click record failed: user not defined. email=#{params[:email]}"
+      logger.error "Click record failed: user not defined. email=#{params[:email]}"
     end
 
   end

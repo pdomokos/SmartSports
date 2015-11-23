@@ -18,10 +18,7 @@ class ActivitiesController < ApplicationController
       @is_mobile = true
     end
     favourites = params[:favourites]
-    lang = params[:lang]
-    if lang
-      I18n.locale=lang
-    end
+
     @activities = Activity.where("user_id = #{user_id}")
     if source
       @activities = @activities.where("source = '#{source}'")

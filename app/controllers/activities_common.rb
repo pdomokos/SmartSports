@@ -5,6 +5,7 @@ module ActivitiesCommon
   def create
     user_id = params[:user_id]
     user = User.find(user_id)
+
     @activity = user.activities.build(activity_params)
     if not @activity.start_time
       @activity.start_time = DateTime.now
@@ -88,6 +89,7 @@ module ActivitiesCommon
       send_error_json(currid, "Unauthorized", 403)
       return
     end
+
     if @activity.destroy
       send_success_json(currid, {})
     else
@@ -96,16 +98,6 @@ module ActivitiesCommon
   end
 
   private
-
-  def check_owner()
-    if self.try(:current_user).try(:id) == @activity.user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @activity.user_id
-      return true
-    end
-    return false
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_activity

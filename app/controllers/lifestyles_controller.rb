@@ -11,11 +11,7 @@ class LifestylesController < ApplicationController
     source = params[:source]
     order = params[:order]
     limit = params[:limit]
-    lang = params[:lang]
 
-    if lang
-      I18n.locale=lang
-    end
     @is_mobile = false
     mobile = params[:mobile]
     if mobile and mobile=="true"

@@ -92,26 +92,4 @@ module LabResultsCommon
     params.require(:labresult).permit(:user_id, :source, :category, :hba1c, :ldl_chol, :egfr_epi, :ketone, :date, :controll_type, :remainder_date)
   end
 
-  def check_owner()
-    puts "try"
-    if self.try(:current_user)
-      puts "current_user defined"
-    else
-      puts "current_user NOT defined"
-    end
-    if self.try(:current_resource_owner)
-      puts "current_resource_owner defined"
-    else
-      puts "current_resource_owner NOT defined"
-    end
-
-    if self.try(:current_user).try(:id) == @labresult.user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @labresult.user_id
-      return true
-    end
-    return false
-  end
-
 end

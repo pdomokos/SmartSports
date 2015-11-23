@@ -54,7 +54,6 @@ module Api::V1
           par.delete(:full_name)
         end
 
-        puts par
         if par['default_lang']
           I18n.locale = par['default_lang']
         end

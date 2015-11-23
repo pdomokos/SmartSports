@@ -48,37 +48,9 @@ module NotificationsCommon
     @notification = Notification.find(params[:id])
   end
 
-  def check_auth
-    if !check_owner() && !check_doctor()
-      send_error_json(params[:id], "Unauthorized", 403)
-      return false
-    end
-    return true
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def notification_params
     params.require(:notification).permit( :title, :detail, :notification_type, :notification_data, :date, :remind_at, :location, :location_url, :created_by, :custom_form_id)
   end
 
-  def check_doctor()
-    if self.try(:current_user).try(:doctor?)
-      return true
-    end
-    if self.try(:current_resource_owner).try(:doctor?)
-      return true
-    end
-    return false
-  end
-
-  def check_owner()
-    user_id = params[:user_id].to_i
-    if self.try(:current_user).try(:id) == user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == user_id
-      return true
-    end
-    return false
-  end
 end

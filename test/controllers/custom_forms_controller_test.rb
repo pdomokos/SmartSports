@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'JSON'
+
 class CustomFormsControllerTest < ActionController::TestCase
   setup do
     @user = users(:one)
@@ -46,11 +47,12 @@ class CustomFormsControllerTest < ActionController::TestCase
   test "should update custom_form_element_order" do
     login_user(user = @user, route = login_url)
     cf = custom_forms(:one)
-
     patch :update, user_id: 1, id: cf.id, custom_form_element_order: ""
+
+    resp =  JSON.parse(response.body)
     assert_response :success
-    resp =  JSON.parse(@response.body)
-    assert resp['ok']
+    assert_equal true, resp['ok']
+    
   end
 
   test "should get destroy" do

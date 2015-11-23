@@ -14,11 +14,6 @@ class PasswordResetsController < ApplicationController
       return
     end
 
-    lang = params[:resetpwlang]
-    if lang
-      I18n.locale=lang
-      puts lang
-    end
     # the next line makes the password confirmation validation work
     @user.password_confirmation = params[:user][:password_confirmation]
     # the next line clears the temporary token and updates the password

@@ -97,15 +97,4 @@ module CustomFormsCommon
     params.require(:custom_form).permit(:form_name, :form_tag, :image_name, :order_index)
   end
 
-  def check_owner()
-    if self.try(:current_user).try(:id) == @user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @user_id
-      return true
-    end
-    return false
-  end
-
-
 end

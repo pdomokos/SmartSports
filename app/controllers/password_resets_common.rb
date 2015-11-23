@@ -2,11 +2,6 @@ module PasswordResetsCommon
 
   def create
       @user = User.find_by_email(params[:email])
-      lang = params[:resetpwlang]
-      if lang
-        I18n.locale=lang
-      end
-
       begin
         if @user
           logger.info "delivering password reset instructions to "+params[:email]

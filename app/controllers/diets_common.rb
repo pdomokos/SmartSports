@@ -5,7 +5,6 @@ module DietsCommon
   def create
     user_id = params[:user_id]
     user = User.find(user_id)
-    puts diet_params
     @diet = user.diets.build(diet_params)
     if not @diet.date
       @diet.date = DateTime.now
@@ -117,25 +116,4 @@ module DietsCommon
     params.require(:diet).permit(:favourite, :amount, :date)
   end
 
-  def check_owner()
-    puts "try"
-    if self.try(:current_user)
-      puts "current_user defined"
-    else
-      puts "current_user NOT defined"
-    end
-    if self.try(:current_resource_owner)
-      puts "current_resource_owner defined"
-    else
-      puts "current_resource_owner NOT defined"
-    end
-
-    if self.try(:current_user).try(:id) == @diet.user_id
-      return true
-    end
-    if self.try(:current_resource_owner).try(:id) == @diet.user_id
-      return true
-    end
-    return false
-  end
 end

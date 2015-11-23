@@ -4,19 +4,11 @@ class SessionsController < ApplicationController
 
   def create
     @user = login(params[:email], params[:password])
-    lang = params[:signinlang]
 
-    if lang
-      I18n.locale=lang
-      puts '1111'
-      puts lang
-    end
     if @user
         save_click_record(:success, nil, "login", request.remote_ip)
         if @user.has_profile && @user.profile.default_lang
           I18n.locale = @user.profile.default_lang
-          puts '2222'
-          puts I18n.locale
         end
         render json: { :ok => true, :msg => 'login_succ', :locale => I18n.locale, :profile => @user.has_profile}
     else
@@ -26,7 +18,7 @@ class SessionsController < ApplicationController
         message = (I18n.t :error_login_password)
       else
         message = (I18n.t :error_login_username)
-        puts "Login failed from #{request.remote_ip}"
+        logger.debug "Login failed from #{request.remote_ip}"
       end
 
       render json: { :ok => false, :msg => message}, status: 403

@@ -50,12 +50,25 @@ class UsersControllerTest < ActionController::TestCase
   test "should update user" do
     patch :update, id: @user.id, user: {
         name: "newname",
-        password: "pwx",
-        password_confirmation: "pwx"
+        password: "pwx1",
+        password_confirmation: "pwx1"
       }, format: :json
     json_result = JSON.parse(response.body)
     assert_equal json_result["ok"], true
   end
+
+  test "should update user if pw len >= 4" do
+    patch :update, id: @user.id, user: {
+                     name: "newname",
+                     password: "pwx",
+                     password_confirmation: "pwx"
+                 }, format: :json
+    json_result = JSON.parse(response.body)
+    # logger.debug JSON.pretty_generate(json_result)
+    assert_equal json_result["ok"], false
+    assert_equal json_result["msg"][0], "Password must be at least 4 characters!"
+  end
+
 
   test "should destroy user" do
     user2 = users(:two)
