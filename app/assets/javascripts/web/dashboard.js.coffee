@@ -1,4 +1,3 @@
-
 @dashboard_loaded = () ->
   console.log("dashboard loaded")
   $("div.app2Menu a.menulink").removeClass("selected")
@@ -15,7 +14,7 @@
   $.ajax url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
+      console.log "load recent notifications AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load recent notifications Successful AJAX call"
 

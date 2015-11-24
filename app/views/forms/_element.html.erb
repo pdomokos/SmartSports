@@ -1,4 +1,5 @@
 <%
+
    defaultHidden = local_assigns.fetch(:locals, {})[:defaultHidden]
    showButton = local_assigns.fetch(:locals, {})[:showButton]
    elementName = local_assigns.fetch(:locals, {})[:elementName]
@@ -7,12 +8,17 @@
    img = local_assigns.fetch(:locals, {})[:img]
    elementId = local_assigns.fetch(:locals, {})[:elementId]
    eid = local_assigns.fetch(:locals, {})[:eid]
+   separator = local_assigns.fetch(:locals, {})[:separator]
+   initFn = local_assigns.fetch(:locals, {})[:initFn]
    cfe = ""
    if eid!=nil
      cfe = "cfe-#{eid}"
    end
-%>
-<div class="dataFormContainer <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>">
+   if separator==nil
+     separator = true
+   end
+     %>
+<div class="dataFormContainer formElement <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>">
   <div class="dataFormTitle">
     <%= image_tag img %><br/>
     <%=t title %>
@@ -27,4 +33,14 @@
       <% end %>
   <% end %>
 </div>
+<% if separator %>
 <div class="dataFormSeparator <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>"></div>
+<% end %>
+<% if initFn!=nil %>
+    <script>
+    var fn = window[<%= initFn %>]
+    if(typeof fn === 'function') {
+        fn();
+    }
+    </script>
+<% end %>

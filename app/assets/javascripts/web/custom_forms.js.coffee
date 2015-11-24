@@ -6,7 +6,7 @@
   console.log "custom loaded"
 
   initDiet()
-  initExercise()
+  initActivity()
   initMeas()
   initMedications()
   initLifestyle()
@@ -72,9 +72,27 @@
     select: (event, ui) ->
       formSelected = ui['item']['label']
       console.log formSelected
-      $("#openModalAddCustomFormElement .dataFormContainer").addClass("hidden")
-      $("#openModalAddCustomFormElement .dataFormSeparator").addClass("hidden")
-      $("#openModalAddCustomFormElement ."+formSelected+"_elem").removeClass("hidden")
+      $("#openModalAddCustomFormElement .dataForm .dataFormContainer").remove()
+
+      url = '/form_element.js'
+      console.log "calling load form for: "+url
+      $.ajax({
+        method: "GET",
+        data: {form_name: formSelected},
+        url: url,
+        dataType: "script"
+      })
+        .done( (data, textStatus, jqXHR) ->
+          console.log "load form_element Successful AJAX call"
+        ).fail((data, textStatus, jqXHR) ->
+          console.log "load form_element fail AJAX call: "
+          console.log data
+          console.log jqXHR
+        )
+
+#      $("#openModalAddCustomFormElement .dataFormSeparator").addClass("hidden")
+#      $("#openModalAddCustomFormElement ."+formSelected+"_elem").removeClass("hidden")
+
   }).focus ->
     $(this).autocomplete("search")
 

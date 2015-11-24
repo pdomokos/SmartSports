@@ -10,7 +10,7 @@
   define_globals()
 
   initDiet()
-  initExercise()
+  initActivity()
   initMeas()
   initMedications()
   initLifestyle()

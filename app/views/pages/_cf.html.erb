@@ -97,25 +97,15 @@
     <div class="clearBoth"></div>
     <div id="customDataContainer">
 
-      <div class="dialogFormContainer">
+      <div class="addElementContainer">
 
 
-        <div id="dataform" class="dataForm">
+        <div class="dataForm">
           <p class="dataFormRemark">Add elements to your forms.</p>
           <p class="titleSub">Element</p>
           <input type="search" id="input-element_type" class="dataFormField" placeholder="Select element type">
 
-          <% for f in @form_list %>
 
-              <%= render "forms/element", locals: {:showButton => true,
-                                                   :elementName => f,
-                                                   :style => "#{@form_params[f][1]}",
-                                                   :title => "#{@form_params[f][2]}",
-                                                   :img => "#{@form_params[f][0]}.png",
-                                                   :defaultHidden => true
-                                        }%>
-
-          <% end %>
 
         </div>
 

@@ -31,6 +31,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'form_element' => "form_element#show"
+
   resources :notifications
 
   resources :medication_types

@@ -8,7 +8,7 @@
   popup_messages = JSON.parse($("#popup-messages").val())
 
   document.body.style.cursor = 'wait'
-  initExercise()
+  initActivity()
   loadExerciseHistory()
 
   $("#recentResourcesTable").on("click", "td.activityItem", (e) ->
@@ -63,7 +63,7 @@
     return null
   return ([item.id, moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.activity, item.intensity, item.duration])
 
-@initExercise = () ->
+@initActivity = () ->
   console.log "init exercise"
   popup_messages = JSON.parse($("#popup-messages").val())
   @intensities = $("#intensity_values").val().split(" ")
