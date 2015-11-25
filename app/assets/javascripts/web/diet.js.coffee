@@ -7,8 +7,48 @@
 
   popup_messages = JSON.parse($("#popup-messages").val())
 
-  initDiet()
-  load_diets()
+  document.body.style.cursor = 'wait'
+  loadFoodTypes( () ->
+    console.log("foodtypes loaded")
+    document.body.style.cursor = 'auto'
+    initDiet()
+    loadDiets()
+  )
+
+  $("#smoke-create-form button").click ->
+    if(!smokeSelected)
+      val = $(".diet_smoke_type").val()
+      if !val
+        val = "empty item"
+      popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+      smokeSelected = null
+      return false
+    smokeSelected = null
+    return true
+
+  $("#drink-create-form button").click ->
+    if(!drinkSelected)
+      val = $("#dinkname").val()
+      if !val
+        val = "empty item"
+      popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+      drinkSelected = null
+      return false
+    drinkSelected = null
+    return true
+
+  $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    diet = data['diet']
+    if diet.diet_type=='Food'
+      load_diet_food("#diet_forms .diet_food", data)
+    else if diet.diet_type=='Drink'
+      load_diet_drink("#diet_forms .diet_drink", data)
+    else if diet.diet_type=='Smoke'
+      load_diet_smoke("#diet_forms .diet_smoke", data)
+    else if diet.diet_type=='Calory'
+      load_diet_quick_calories("#diet_forms .diet_quick_calories", data)
+  )
 
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     console.log "success diet-form"
@@ -64,6 +104,7 @@
   $(".diet_smoke_type").val(null)
 
 @initDiet = () ->
+  self = this
   console.log "initdiet called"
   $(".diet_food_datepicker").datetimepicker(timepicker_defaults)
   $(".diet_food_amount").val(2)
@@ -71,7 +112,6 @@
   $(".diet_drink_amount").val(2)
   $(".diet_calories_datepicker").datetimepicker(timepicker_defaults)
   $(".diet_smoking_datepicker").datetimepicker(timepicker_defaults)
-
 
   $(".diet_food_scale").slider({
     min: 0.25,
@@ -97,15 +137,74 @@
       event.target.parentElement.parentElement.querySelector("input.diet_drink_amount").value = ui.value
   })
 
-  document.body.style.cursor = 'wait'
-  load_food_types()
+  foodSelected = null
+  $(".diet_food_name").autocomplete({
+    minLength: 3,
+    source: (request, response) ->
+      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
+      result = []
+      cnt = 0
+      for element in window.sd_foods
+        if matcher.test(remove_accents(element.label))
+          result.push(element)
+          cnt += 1
+      response(result)
+    select: (event, ui) ->
+      $(".diet_type_id").val(ui.item.id)
+    create: (event, ui) ->
+      $(".diet_food_name").removeAttr("disabled")
+    change: (event, ui) ->
+      foodSelected = ui['item']
+  }).focus ->
+    $(this).autocomplete("search")
+
+  drinkSelected = null
+  $(".diet_drink_name").autocomplete({
+    minLength: 0,
+    source: (request, response) ->
+      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
+      result = []
+      cnt = 0
+      for element in window.sd_drinks
+        if matcher.test(remove_accents(element.label))
+          result.push(element)
+          cnt += 1
+      response(result)
+    select: (event, ui) ->
+      $(".diet_drink_type_id").val(ui.item.id)
+    create: (event, ui) ->
+      $(".diet_drink_name").removeAttr("disabled")
+    change: (event, ui) ->
+      drinkSelected = ui['item']
+  }).focus ->
+    $(this).autocomplete("search")
+
+  smokeList = [
+    {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },
+    {label: "1 Szivar"                ,value: "1 Szivar"               },
+    {label: "1 Szivarka"              ,value: "1 Szivarka"             },
+    {label: "1 Pipa"                  ,value: "1 Pipa"                 },
+    {label: "1 Elektromos cigaretta"  ,value: "1 Elektromos cigaretta" },
+    {label: "1 Nikotinos orrspray"    ,value: "1 Nikotinos orrspray"   },
+    {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
+    {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
+
+  smokeSelected = null
+  $(".diet_smoke_type").autocomplete({
+    minLength: 0,
+    source: smokeList,
+    change: (event, ui) ->
+      console.log "change "+ui['item']
+      smokeSelected = ui['item']
+  }).focus ->
+    $(this).autocomplete("search")
 
 @loadDietHistory = () ->
-  load_diets()
+  loadDiets()
   $(".hisTitle").addClass("selected")
   $(".favTitle").removeClass("selected")
 
-@load_diets = () ->
+@loadDiets = () ->
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent diets"
@@ -132,124 +231,37 @@
       console.log textStatus
 
 
-@load_food_types = () ->
+@loadFoodTypes = (cb) ->
   self = this
   current_user = $("#current-user-id")[0].value
   popup_messages = JSON.parse($("#popup-messages").val())
-  console.log "calling load recent foods"
-  $.ajax '/food_types.json',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent food_types AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load food_types  Successful AJAX call"
 
-      foods = data.filter( (d) ->
-        d['category'] != 'Ital'
-      ).map( window.food_map_fn )
+  if !window.sd_foods
+    console.log "loading food types"
+    ret = $.ajax '/food_types.json',
+      type: 'GET',
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "load recent food_types AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        console.log "load food_types  Successful AJAX call"
 
-      drinks = data.filter( (d) ->
-        d['category'] == 'Ital'
-      ).map( window.food_map_fn )
+        window.sd_foods = data.filter( (d) ->
+          d['category'] != 'Ital'
+        ).map( window.food_map_fn )
 
-      foodSelected = null
-      $(".diet_food_name").autocomplete({
-        minLength: 3,
-        source: (request, response) ->
-          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-          result = []
-          cnt = 0
-          for element in foods
-            if matcher.test(remove_accents(element.label))
-              result.push(element)
-              cnt += 1
-          response(result)
-        select: (event, ui) ->
-          $(".diet_type_id").val(ui.item.id)
-        create: (event, ui) ->
-          document.body.style.cursor = 'auto'
-          $(".diet_food_name").removeAttr("disabled")
-        change: (event, ui) ->
-          foodSelected = ui['item']
-      }).focus ->
-        $(this).autocomplete("search")
+        window.sd_drinks = data.filter( (d) ->
+          d['category'] == 'Ital'
+        ).map( window.food_map_fn )
+        cb()
+  else
+    console.log "food types already loaded"
+    ret = new Promise( (resolve, reject) ->
+      console.log("food promise fn called")
+      cb()
+      resolve("food cbs called")
+    )
+  return ret
 
-
-      drinkSelected = null
-      $(".diet_drink_name").autocomplete({
-        minLength: 0,
-        source: (request, response) ->
-          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-          result = []
-          cnt = 0
-          for element in drinks
-            if matcher.test(remove_accents(element.label))
-              result.push(element)
-              cnt += 1
-          response(result)
-        select: (event, ui) ->
-          $(".diet_drink_type_id").val(ui.item.id)
-        create: (event, ui) ->
-          $(".diet_drink_name").removeAttr("disabled")
-        change: (event, ui) ->
-          drinkSelected = ui['item']
-      }).focus ->
-        $(this).autocomplete("search")
-
-      $("#drink-create-form button").click ->
-        if(!drinkSelected)
-          val = $("#dinkname").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
-          drinkSelected = null
-          return false
-        drinkSelected = null
-        return true
-
-      smokeList = [
-        {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },
-        {label: "1 Szivar"                ,value: "1 Szivar"               },
-        {label: "1 Szivarka"              ,value: "1 Szivarka"             },
-        {label: "1 Pipa"                  ,value: "1 Pipa"                 },
-        {label: "1 Elektromos cigaretta"  ,value: "1 Elektromos cigaretta" },
-        {label: "1 Nikotinos orrspray"    ,value: "1 Nikotinos orrspray"   },
-        {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
-        {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
-
-      smokeSelected = null
-      $(".diet_smoke_type").autocomplete({
-        minLength: 0,
-        source: smokeList,
-        change: (event, ui) ->
-          console.log "change "+ui['item']
-          smokeSelected = ui['item']
-      }).focus ->
-        $(this).autocomplete("search")
-
-      $("#smoke-create-form button").click ->
-        if(!smokeSelected)
-          val = $(".diet_smoke_type").val()
-          if !val
-            val = "empty item"
-          popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
-          smokeSelected = null
-          return false
-        smokeSelected = null
-        return true
-
-      $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
-        data = JSON.parse(e.currentTarget.querySelector("input").value)
-        diet = data['diet']
-        if diet.diet_type=='Food'
-          load_diet_food("#diet_forms .diet_food", data)
-        else if diet.diet_type=='Drink'
-          load_diet_drink("#diet_forms .diet_drink", data)
-        else if diet.diet_type=='Smoke'
-          load_diet_smoke("#diet_forms .diet_smoke", data)
-        else if diet.diet_type=='Calory'
-          load_diet_quick_calories("#diet_forms .diet_quick_calories", data)
-      )
 @validate_diet_food = (sel) ->
   val = $(sel+" .diet_food_name").val()
   if !val
@@ -260,19 +272,21 @@
 
 @load_diet_food =  (sel, data) ->
   diet = data['diet']
-  $(sel+" input[name='diet_name']").val(data.diet_name)
-  $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
+  console.log "load diet food to:"+sel+" diet: "+diet.name
+  console.log diet
+  $(sel+" input[name='diet[name]']").val(diet.name)
+  $(sel+" input[name='diet[food_type_id]']").val(diet.food_type_id)
   $(sel+" .diet_food_unit").html(diet.amount*100+"g")
   $(sel+" .diet_food_scale").slider({value: diet.amount})
-  $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
+  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
 
 @load_diet_drink =  (sel, data) ->
   diet = data['diet']
-  $(sel+" input[name='diet_name']").val(data.diet_name)
-  $(sel+" input[name='diet[food_type_id]'").val(diet.food_type_id)
+  $(sel+" input[name='diet[name]']").val(diet.name)
+  $(sel+" input[name='diet[food_type_id]']").val(diet.food_type_id)
   $(sel+" .diet_drink_unit").html(diet.amount+" dl")
   $(sel+" .diet_drink_scale").slider({value: diet.amount})
-  $(sel+" input[name='diet[date]'").val(fixdate(diet.date))
+  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
 
 @load_diet_smoke = (sel, data) ->
   diet = data['diet']

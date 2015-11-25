@@ -17,14 +17,16 @@ module DietsCommon
       @diet.prot = @diet.amount*ft.prot
     end
 
+    if @diet.diet_type=='Calory'
+      diet_name = I18n.t :quick_calories_prefix
+    elsif @diet.diet_name && @diet.diet_name != ""
+      diet_name = @diet.diet_name
+    else
+      diet_name = @diet.food_type.name
+    end
+
+    @diet.name = diet_name
     if @diet.save
-      if @diet.diet_type=='Calory'
-        diet_name = I18n.t :quick_calories_prefix
-      elsif @diet.diet_name && @diet.diet_name != ""
-        diet_name = @diet.diet_name
-      else
-        diet_name = @diet.food_type.name
-      end
       send_success_json(@diet.id, { diet_name: diet_name})
     else
       send_error_json(nil,  @diet.errors.full_messages.to_sentence, 400)
@@ -60,6 +62,7 @@ module DietsCommon
           amount = update_hash[:amount].to_f
         end
         update_hash[:food_type_id] = ft.id
+        update_hash[:name] = ft.name
         update_hash[:calories] = amount*ft.kcal
         update_hash[:carbs] = amount*ft.carb
         update_hash[:fat] = amount*ft.fat
@@ -94,7 +97,6 @@ module DietsCommon
     end
 
     if @diet.destroy
-
       send_success_json(@diet.id, { diet_name: @diet.diet_name})
     else
       send_error_json(@diet.id,  "Delete error", 400)

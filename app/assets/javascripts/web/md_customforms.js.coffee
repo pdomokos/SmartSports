@@ -9,13 +9,13 @@
 
   define_globals()
 
-  initDiet()
-  initActivity()
-  initMeas()
-  initMedications()
-  initLifestyle()
+#  initDiet()
+#  initActivity()
+#  initMeas()
+#  initMedications()
+#  initLifestyle()
 
-  initCustomForms()
+#  initCustomForms()
 
   $("form#custom-create-form").on("ajax:success", (e, data, status, xhr) ->
     console.log data

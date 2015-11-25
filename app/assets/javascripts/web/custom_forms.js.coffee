@@ -3,16 +3,29 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @custom_loaded = () ->
-  console.log "custom loaded"
+  console.log "custom_loaded called, start initializing"
 
-  initDiet()
-  initActivity()
-  initMeas()
-  initMedications()
-  initLifestyle()
+  document.body.style.cursor = 'wait'
+  p1 = loadFoodTypes( () ->
+    console.log("foodtypes loaded")
+    initDiet()
+  )
+  p2 = loadActivityTypes( () ->
+    console.log("activitytypes loaded")
+    initActivity()
+  )
+  Promise.all([p1, p2]).then( (results) ->
+    console.log "All promises fullfilled"
+#    console.log results
 
-  if typeof window.init_custom_forms =='function'
-    init_custom_forms()
+    initMeas()
+    if typeof window.load_custom_form_element_defaults =='function'
+      load_custom_form_element_defaults()
+    document.body.style.cursor = 'auto'
+  )
+
+# initMedications()
+# initLifestyle()
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 
@@ -38,11 +51,61 @@
     console.log e.target
   )
 
-  $("#openModalAddCustomFormElement form.resource-create-form").on("ajax:success", (e, data, status, xhr) ->
-    location.href = "customforms"
+  $(document).on("click", ".addCustomFormElementButton", (evt) ->
+    evt.preventDefault()
+    console.log "add cfe clicked, "
+    console.log evt.target
+    addForm = evt.target.closest("form")
+    params = decodeURIComponent($("#"+addForm.id).serialize())
+    formid = $("#openModalAddCustomFormElement input[name=customFormId]").val()
+    url = "/custom_forms/"+formid+"/custom_form_elements"
+    reqParams = generateDefaults(params)
+    console.log "push "+url
+    console.log "data="
+    console.log reqParams
+    $.ajax({
+      method: "POST",
+      data: reqParams,
+      url: url
+    })
+    .done( (data, textStatus, jqXHR) ->
+      console.log "create form element Successful AJAX call"
+      location.href = "customforms"
+    ).fail((data, textStatus, jqXHR) ->
+      console.log "create form element fail AJAX call: "
+      console.log data
+      console.log jqXHR
+    )
   )
 
+@generateDefaults = (formParams) ->
+  console.log "generateDefaults"
+  console.log formParams
+  params = formParams.replace(/authenticity_token.*?&/, '')
+  params = params.replace(/utf8.*?&/, '')
+  jparams = JSON.parse('{"' + decodeURI(params).replace(/"/g, '\\"').replace(/&/g, '","').replace(/\=/g,'":"') + '"}')
+  console.log jparams
+  key = jparams['elementName'].split('_')[0]
+  values = {}
+  Object.keys(jparams).forEach( (k) ->
+      if k.startsWith(key+"[")
+        arr = k.split(/[\[\]]/)
+        values[arr[1]] = jparams[k]
+  )
+
+  propKey = "custom_form_element[property_code]"
+  defaultsKey = "custom_form_element[defaults]"
+  resourceKey = key
+  resource = {}
+  resource[key] = values
+
+  ret = {}
+  ret[propKey] =  jparams['elementName']
+  ret[defaultsKey] = JSON.stringify(resource)
+  return ret
+
 @initCustomForms = () ->
+  console.log "init custom form editor"
   @formList = ["activity_exercise",
               "activity_regular",
               "diet_drink",
@@ -117,7 +180,9 @@
   $(document).on("click", ".add-form-element", (evt) ->
     formid = evt.target.getAttribute('data-formid')
     userid = $("#current-user-id").val()
-    $("#openModalAddCustomFormElement div.dataFormContainer>form").attr("action", "/users/"+userid+"/custom_forms/"+formid+"/custom_form_elements")
+    console.log("setting "+"/users/"+userid+"/custom_forms/"+formid+"/custom_form_elements")
+    $("#openModalAddCustomFormElement input[name=customFormId]").val(formid)
+#    $("#openModalAddCustomFormElement div.dataFormContainer>form").attr("action", "/users/"+userid+"/custom_forms/"+formid+"/custom_form_elements")
     location.href = "#openModalAddCustomFormElement"
   )
 

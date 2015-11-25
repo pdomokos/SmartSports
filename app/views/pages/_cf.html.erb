@@ -22,7 +22,7 @@
 <input id="painTypeList" type="hidden" value="<%=t :painTypeList %>">
 
 <script>
-    window.init_custom_forms = function() {
+    window.load_custom_form_element_defaults = function() {
         <% for f in @custom_forms %>
         <%for cfe in f.custom_form_elements %>
         initfn_<%=cfe.property_code%>__<%=cfe.id%>();
@@ -99,17 +99,13 @@
 
       <div class="addElementContainer">
 
-
         <div class="dataForm">
           <p class="dataFormRemark">Add elements to your forms.</p>
           <p class="titleSub">Element</p>
           <input type="search" id="input-element_type" class="dataFormField" placeholder="Select element type">
-
-
+          <input type="hidden" name="customFormId">
 
         </div>
-
-
 
         <div class="clearBoth"></div>
 

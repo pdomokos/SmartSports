@@ -1,12 +1,14 @@
 $("<%= @targetElementSelector %>").append('<%= escape_javascript(
 render "forms/element", locals: {
-            :showButton => false,
+            :showButton => true,
             :elementName => @formName,
             :style => "#{@form_params[@formName][1]}",
             :title => "#{@form_params[@formName][2]}",
             :img => "#{@form_params[@formName][0]}.png",
             :elementId => "#{@formName}__elem",
             :separator => false,
-            :initFn => "init"+@formName.split("_")[0].capitalize
+            :initFn => "init"+@formName.split("_")[0].capitalize,
+            :initSelector => "#openModalAddCustomFormElement",
+            :buttonClass => "addCustomFormElementButton"
         }
 ) %>');

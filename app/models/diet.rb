@@ -21,6 +21,9 @@ class Diet < ActiveRecord::Base
   end
 
   def diet_name
+    if self.name!=nil
+      return self.name
+    end
     name = nil
     if self.diet_type=="Smoke" or self.diet_type=="Calory"
       name = self.name

@@ -15,10 +15,10 @@ module CustomFormElementsCommon
   end
 
   def create
-    user_id = params[:user_id].to_i
-    user = User.find(user_id)
+    # user_id = params[:user_id].to_i
+    # user = User.find(user_id)
     form_id = params[:custom_form_id]
-    custom_form = user.custom_forms.where(id: form_id)[0]
+    custom_form = CustomForm.where(id: form_id)[0]
     elem = CustomFormElement.new(custom_form_element_params)
     elem.custom_form_id=form_id
     # par = params.clone

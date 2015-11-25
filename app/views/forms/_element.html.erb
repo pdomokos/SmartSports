@@ -1,7 +1,7 @@
 <%
-
    defaultHidden = local_assigns.fetch(:locals, {})[:defaultHidden]
    showButton = local_assigns.fetch(:locals, {})[:showButton]
+   buttonClass = local_assigns.fetch(:locals, {})[:buttonClass]
    elementName = local_assigns.fetch(:locals, {})[:elementName]
    style = local_assigns.fetch(:locals, {})[:style]
    title = local_assigns.fetch(:locals, {})[:title]
@@ -10,6 +10,8 @@
    eid = local_assigns.fetch(:locals, {})[:eid]
    separator = local_assigns.fetch(:locals, {})[:separator]
    initFn = local_assigns.fetch(:locals, {})[:initFn]
+   initSelector = local_assigns.fetch(:locals, {})[:initSelector]
+   customFormId = local_assigns.fetch(:locals, {})[:customFormId]
    cfe = ""
    if eid!=nil
      cfe = "cfe-#{eid}"
@@ -17,7 +19,10 @@
    if separator==nil
      separator = true
    end
-     %>
+   if buttonClass == nil
+     buttonClass = ""
+   end
+%>
 <div class="dataFormContainer formElement <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>">
   <div class="dataFormTitle">
     <%= image_tag img %><br/>
@@ -28,8 +33,11 @@
       <%= token_tag %>
       <%= render "forms/#{elementName}" %>
       <input type="hidden" name="elementName" value="<%= elementName %>">
+      <%if customFormId %>
+        <input type="hidden" name="customFormId" value="<%= customFormId %>">
+      <%end%>
       <% if showButton %>
-      <button id="addFoodButton" class="dataFormField"><%=t 'button_add'%></button>
+      <button id="addFoodButton" class="dataFormField <%= buttonClass %>"><%=t 'button_add'%></button>
       <% end %>
   <% end %>
 </div>
@@ -38,9 +46,10 @@
 <% end %>
 <% if initFn!=nil %>
     <script>
-    var fn = window[<%= initFn %>]
+      console.log("calling init: <%= initFn %>, with selector: <%= initSelector %>")
+    var fn = window['<%= initFn %>'];
     if(typeof fn === 'function') {
-        fn();
+        fn("<%= initSelector%>");
     }
     </script>
 <% end %>
