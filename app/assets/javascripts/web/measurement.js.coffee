@@ -60,7 +60,8 @@
       console.log("WARN: no measurement type "+meas.meas_type)
   )
 
-  $(document).on("click", "#health-show-table", (evt) ->
+  $(document).unbind("click.showHealth")
+  $(document).on("click.showHealth", "#health-show-table", (evt) ->
     console.log "datatable clicked"
     get_table_row = (item ) ->
       if item.meas_type==null
@@ -111,12 +112,16 @@
         })
         location.href = "#openModal"
   )
-  $(document).on("click", "#download-health-data", (evt) ->
+
+  $(document).unbind("click.downloadHealth")
+  $(document).on("click.downloadHealth", "#download-health-data", (evt) ->
     current_user = $("#current-user-id")[0].value
     url = '/users/' + current_user + '/measurements.csv?order=desc'
     location.href = url
   )
-  $(document).on("click", "#close-health-data", (evt) ->
+
+  $(document).unbind("click.closeHealth")
+  $(document).on("click.closeHealth", "#close-health-data", (evt) ->
     $("#health-data-container").html("")
     location.href = "#close"
   )

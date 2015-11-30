@@ -6,11 +6,13 @@
 
   d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
 
-  $(document).on("click", "#closeModalStat", (evt) ->
+  $(document).unbind("click.closeStat")
+  $(document).on("click.closeStat", "#closeModalStat", (evt) ->
     location.href = "#close"
   )
 
-  $(document).on("click", "#add-analysis", (evt) ->
+  $(document).unbind("click.addAnalysis")
+  $(document).on("click.addAnalysis", "#add-analysis", (evt) ->
     if self.currdata
       a = new Date(self.currextent[0])
       b = new Date(self.currextent[1])
@@ -31,7 +33,8 @@
       location.href = "#openModalStat"
   )
 
-  $(document).on("click", "#analysis-params", (evt) ->
+  $(document).unbind("click.analysisParams")
+  $(document).on("click.analysisParams", "#analysis-params", (evt) ->
     console.log("add analysis clicked")
     if !self.bg_trend_chart
       return

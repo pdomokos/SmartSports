@@ -1,6 +1,11 @@
 class MedicationsController < ApplicationController
   include MedicationsCommon
 
+  def show
+    user = User.find(params[:user_id])
+    @medication = user.medications.where(id: params[:id]).first
+  end
+
   def index
     user_id = params[:user_id]
 

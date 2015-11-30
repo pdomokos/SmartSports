@@ -14,7 +14,15 @@
     console.log("activitytypes loaded")
     initActivity()
   )
-  Promise.all([p1, p2]).then( (results) ->
+  p3 = loadMedicationTypes( () ->
+    console.log("medication types loaded")
+    initMedication()
+  )
+  p4 = loadIllnessTypes( () ->
+    console.log("illness types loaded")
+    initLifestyle()
+  )
+  Promise.all([p1, p2, p3, p4]).then( (results) ->
     console.log "All promises fullfilled"
 #    console.log results
 
@@ -24,7 +32,7 @@
     document.body.style.cursor = 'auto'
   )
 
-# initMedications()
+
 # initLifestyle()
 
   @popup_messages = JSON.parse($("#popup-messages").val())
@@ -51,7 +59,8 @@
     console.log e.target
   )
 
-  $(document).on("click", ".addCustomFormElementButton", (evt) ->
+  $(document).unbind("click.addCFB")
+  $(document).on("click.addCFB", ".addCustomFormElementButton", (evt) ->
     evt.preventDefault()
     console.log "add cfe clicked, "
     console.log evt.target
@@ -83,7 +92,7 @@
   console.log formParams
   params = formParams.replace(/authenticity_token.*?&/, '')
   params = params.replace(/utf8.*?&/, '')
-  jparams = JSON.parse('{"' + decodeURI(params).replace(/"/g, '\\"').replace(/&/g, '","').replace(/\=/g,'":"') + '"}')
+  jparams = JSON.parse('{"' + decodeURI(params).replace(/"/g, '\\"').replace(/\+/g, ' ').replace(/&/g, '","').replace(/\=/g,'":"') + '"}')
   console.log jparams
   key = jparams['elementName'].split('_')[0]
   values = {}
@@ -159,7 +168,8 @@
   }).focus ->
     $(this).autocomplete("search")
 
-  $(document).on("click", "#add-custom-form", (evt) ->
+  $(document).unbind("click.addForm")
+  $(document).on("clickaddForm", "#add-custom-form", (evt) ->
     console.log "add custom clicked"
     $("#dataform").removeClass("hidden")
     $("#iconform").addClass("hidden")
@@ -177,7 +187,8 @@
     location.href = "#openModalAddCustomForm"
   )
 
-  $(document).on("click", ".add-form-element", (evt) ->
+  $(document).unbind("click.addFormElement")
+  $(document).on("click.addFormElement", ".add-form-element", (evt) ->
     formid = evt.target.getAttribute('data-formid')
     userid = $("#current-user-id").val()
     console.log("setting "+"/users/"+userid+"/custom_forms/"+formid+"/custom_form_elements")
@@ -186,7 +197,8 @@
     location.href = "#openModalAddCustomFormElement"
   )
 
-  $(document).on("click", "#closeModalAddCustomForm", (evt) ->
+  $(document).on("click.closeAddForm")
+  $(document).on("click.closeAddForm", "#closeModalAddCustomForm", (evt) ->
     location.href = "#close"
   )
 

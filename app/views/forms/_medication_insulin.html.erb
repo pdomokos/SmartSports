@@ -1,7 +1,7 @@
 <div class="dataForm medication_insulin <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="medication[source]" value="<%= @default_source %>">
 
-  <input name="medication_name" type="search" class="dataFormField medication_insulin_name" placeholder="<%=t 'insulin_placeholder'%>" disabled>
+  <input name="medication[name]" type="search" class="dataFormField medication_insulin_name" placeholder="<%=t 'insulin_placeholder'%>" disabled>
   <input class="medication_insulin_id" name="medication[medication_type_id]" type="hidden">
 
   <input type="text" name="medication[amount]" class="dataFormField" placeholder="<%=t 'insulin_dosage'%>"/>

@@ -71,7 +71,8 @@
       load_activity_regular(".activity_regular_elem", data)
   )
 
-  $(document).on("click", "#exercise-show-table", (evt) ->
+  $(document).unbind("click.exerciseShow")
+  $(document).on("click.exerciseShow", "#exercise-show-table", (evt) ->
     console.log "datatable clicked"
     current_user = $("#current-user-id")[0].value
     url = '/users/' + current_user + '/activities.json'
@@ -100,12 +101,16 @@
         })
         location.href = "#openModalEx"
   )
-  $(document).on("click", "#download-exercise-data", (evt) ->
+
+  $(document).unbind("click.downloadExercise")
+  $(document).on("click.downloadExercise", "#download-exercise-data", (evt) ->
     current_user = $("#current-user-id")[0].value
     url = '/users/' + current_user + '/activities.csv?order=desc'
     location.href = url
   )
-  $(document).on("click", "#close-exercise-data", (evt) ->
+
+  $(document).unbind("click.closeExercise")
+  $(document).on("click.closeExercise", "#close-exercise-data", (evt) ->
     $("#exercise-data-container").html("")
     location.href = "#close"
   )

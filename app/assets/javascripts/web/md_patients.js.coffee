@@ -25,14 +25,17 @@
 
   $("#notifDate").datetimepicker(timepicker_defaults)
 
-  $(document).on("click", "#addNotification", (evt) ->
+  $(document).unbind("click.addNotif")
+  $(document).on("click.addNotif", "#addNotification", (evt) ->
     $("#notifDate").val(moment().format(moment_fmt))
     userid = $("input[name=patientId").val()
     $("#notificationCreateForm").attr("action", "/users/"+userid+"/notifications")
     location.href = "#openModalAddNotification"
     $("#notifTitle").focus()
   )
-  $(document).on("click", "#closeModalAddNotification", (evt) ->
+
+  $(document).unbind("click.closeNotif")
+  $(document).on("click.closeNotif", "#closeModalAddNotification", (evt) ->
     location.href = "#close"
   )
 
@@ -47,7 +50,8 @@
     loadNotifications(userid)
   )
 
-  $(document).on("click", "span.dayTag", (evt) ->
+  $(document).unbind("click.tagDays")
+  $(document).on("click.tagDays", "span.dayTag", (evt) ->
     evt.currentTarget.classList.toggle("selected")
     notifid = $(this).closest('tr').attr('id')
     e = document.getElementById(notifid)

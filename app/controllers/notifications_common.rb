@@ -1,6 +1,6 @@
 module NotificationsCommon
   def create
-    @user = User.find(user_id)
+    @user = User.find(params[:user_id])
     par = notification_params
     if par[:notification_type]
       par[:notification_type] = par[:notification_type].to_sym

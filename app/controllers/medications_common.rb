@@ -7,7 +7,7 @@ module MedicationsCommon
 
     par = medication_params
     par.merge!(:user_id => @user_id)
-    print par
+
     medication = Medication.new(par)
 
     if medication.save
