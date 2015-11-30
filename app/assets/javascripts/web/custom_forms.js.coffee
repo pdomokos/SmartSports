@@ -5,40 +5,14 @@
 @custom_loaded = () ->
   console.log "custom_loaded called, start initializing"
 
-  document.body.style.cursor = 'wait'
-  p1 = loadFoodTypes( () ->
-    console.log("foodtypes loaded")
-    initDiet()
-  )
-  p2 = loadActivityTypes( () ->
-    console.log("activitytypes loaded")
-    initActivity()
-  )
-  p3 = loadMedicationTypes( () ->
-    console.log("medication types loaded")
-    initMedication()
-  )
-  p4 = loadIllnessTypes( () ->
-    console.log("illness types loaded")
-    initLifestyle()
-  )
-  Promise.all([p1, p2, p3, p4]).then( (results) ->
-    console.log "All promises fullfilled"
-#    console.log results
-
-    initMeas()
-    if typeof window.load_custom_form_element_defaults =='function'
-      load_custom_form_element_defaults()
-    document.body.style.cursor = 'auto'
-  )
-
-
-# initLifestyle()
+  customPreload()
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 
   initCustomForms()
+  registerCustomFormHandlers()
 
+@registerCustomFormHandlers = () ->
   $("form#custom-create-form").on("ajax:success", (e, data, status, xhr) ->
     console.log data
     if data['ok'] == true
@@ -85,6 +59,32 @@
       console.log data
       console.log jqXHR
     )
+  )
+
+@customPreload = () ->
+  document.body.style.cursor = 'wait'
+  p1 = loadFoodTypes( () ->
+    console.log("foodtypes loaded")
+    initDiet()
+  )
+  p2 = loadActivityTypes( () ->
+    console.log("activitytypes loaded")
+    initActivity()
+  )
+  p3 = loadMedicationTypes( () ->
+    console.log("medication types loaded")
+    initMedication()
+  )
+  p4 = loadIllnessTypes( () ->
+    console.log("illness types loaded")
+    initLifestyle()
+  )
+  Promise.all([p1, p2, p3, p4]).then( (results) ->
+    console.log "All promises fullfilled"
+    initMeas()
+    if typeof window.load_custom_form_element_defaults =='function'
+      load_custom_form_element_defaults()
+    document.body.style.cursor = 'auto'
   )
 
 @generateDefaults = (formParams) ->
@@ -169,7 +169,7 @@
     $(this).autocomplete("search")
 
   $(document).unbind("click.addForm")
-  $(document).on("clickaddForm", "#add-custom-form", (evt) ->
+  $(document).on("click.addForm", ".add-custom-form", (evt) ->
     console.log "add custom clicked"
     $("#dataform").removeClass("hidden")
     $("#iconform").addClass("hidden")
