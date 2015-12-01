@@ -10,6 +10,30 @@
         <tbody>
 
             <input name="lang" value="<%=I18n.locale%>" type="hidden" />
+
+
+            <tr>
+              <td style="width: 180px;height: 50px;">
+                ID
+              </td>
+              <td>
+                <%= @user.id %>
+              </td>
+              <td>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="width: 180px;height: 50px;">
+                <%= t :name %>
+              </td>
+              <td>
+                <%= @user.get_name %>
+              </td>
+              <td>
+              </td>
+            </tr>
+
             <tr>
               <td style="width: 180px;height: 50px;">
                 <%= t :email %>
@@ -18,9 +42,9 @@
                 <%= @user.email %>
               </td>
               <td>
-
               </td>
             </tr>
+
             <tr>
               <td style="width: 180px;height: 50px;">
                 <%= t :password %>

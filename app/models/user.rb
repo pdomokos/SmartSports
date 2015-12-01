@@ -28,6 +28,16 @@ class User < ActiveRecord::Base
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
+  def get_name
+    if !self.profile.nil? && (!self.profile.firstname.nil?||!self.profile.lastname.nil?)&&(self.profile.firstname!=""||self.profile.lastname!="")
+      name = ""
+      name += self.profile.firstname+" " if self.profile.firstname
+      name += self.profile.lastname if self.profile.lastname
+    else
+      name = self.name
+    end
+    return name
+  end
   def is_friend?(fid)
     f = Friendship.where("authorized = 't' and (( user1_id = #{self.id} and user2_id = #{fid} ) or ( user1_id = #{fid} and user2_id = #{self.id} ))")
     return (f.size == 1)

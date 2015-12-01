@@ -48,6 +48,14 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if !current_user.admin? && !current_user.doctor? && current_user.id != @user.id
+      respond_to do |format|
+        format.html { redirect_to errors_unauthorized_path }
+        format.json { render json: { :status => 'NOK', :msg => 'error_unauthorized' }, status: 403  }
+      end
+      return
+    end
+
   end
 
   # GET /users/new

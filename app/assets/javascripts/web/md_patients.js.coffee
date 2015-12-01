@@ -101,9 +101,10 @@
           console.log "select patient"
 
           $(".patientId").val(ui.item.id)
-          console.log ui.item
+
           $("#patientName").html( ui.item.label.trim() )
           $("input[name=patientId]").val(ui.item.obj.id)
+
           pic = ui.item.obj.avatar_url
           if pic == "unknown.jpeg"
             pic = "/assets/unknown.jpeg"
@@ -114,7 +115,7 @@
           loadNotifications(ui.item.obj.id)
           $("#headerItemAvatar").tooltip({
             items: "img",
-            content: '<img src="'+ui.item.obj.avatar_url+'" />'
+            content: '<img src="'+pic+'" />'
           })
 
           uid = ui.item.obj.id
