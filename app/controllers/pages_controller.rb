@@ -18,11 +18,10 @@ class PagesController < ApplicationController
 
   # login/register, resetpw
   def reset_password
-    @values = JSON.dump(I18n.t :popupmessages)
+
   end
 
   def signup
-    @values = JSON.dump(I18n.t :popupmessages)
   end
 
   def signin
@@ -30,7 +29,6 @@ class PagesController < ApplicationController
     # logger.debug "browser locale: #{browser_locale}"
     # I18n.locale = browser_locale || I18n.default_locale
     @user = User.new
-    @values = JSON.dump(I18n.t :popupmessages)
 
     @lang_label = 'hu'
     if I18n.locale.to_s=='hu'
@@ -51,13 +49,18 @@ class PagesController < ApplicationController
     @diseaseList = JSON.dump(FamilyHistory.diseaseList)
   end
 
+  def main
+    if current_user.doctor?
+      redirect_to pages_md_patients_path(locale: I18n.default_locale)
+    else
+      redirect_to pages_dashboard_path(locale: I18n.default_locale)
+    end
+  end
+
   def dashboard
     @measurements = current_user.measurements.where(source: @default_source).order(date: :desc).limit(4)
-
     get_todays_summary()
-
     # u.summaries.where(group: 'walking').where("date between ? and ?", DateTime.now.at_beginning_of_month, DateTime.now)
-
     save_click_record(:success, nil, nil)
   end
 
@@ -65,7 +68,6 @@ class PagesController < ApplicationController
     @activity = Summary.new
     @measurement = Measurement.new
     @measurements = current_user.measurements.where(:source => [@default_source, 'demo']).order(created_at: :desc).limit(4)
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
@@ -74,7 +76,6 @@ class PagesController < ApplicationController
     @conn = current_user.connections
     @activities = current_user.activities.where(source: @default_source).order(created_at: :desc).limit(4)
     @intensity_values = Activity.intensity_values
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
     # respond_to do |format|
     #   format.html
@@ -93,13 +94,11 @@ class PagesController < ApplicationController
       user = current_user
     end
     @sensor_measurements = user.sensor_measurements.order(start_time: :desc)
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
   def diet
     @diets = current_user.diets.where(source: @default_source).order(created_at: :desc).limit(4)
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
@@ -107,7 +106,6 @@ class PagesController < ApplicationController
     @insulin_types = MedicationType.where(:group => "insulin")
     @oral_medication_types = MedicationType.where(:group => "oral")
     @medications = current_user.medications.order(created_at: :desc).limit(4)
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
@@ -120,7 +118,6 @@ class PagesController < ApplicationController
     @periodPainList = Lifestyle.periodPainList.join(";")
     @periodVolumeList = Lifestyle.periodVolumeList.join(";")
     @painTypeList = Lifestyle.painTypeList.join(";")
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
@@ -128,12 +125,10 @@ class PagesController < ApplicationController
     @relativeList = JSON.dump(FamilyHistory.relativeList)
     @diseaseList = JSON.dump(FamilyHistory.diseaseList)
     @family_histories = current_user.family_histories.order(created_at: :desc).limit(4)
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
   def labresult
-    @values = JSON.dump(I18n.t :popupmessages)
     save_click_record(:success, nil, nil)
   end
 
@@ -152,7 +147,6 @@ class PagesController < ApplicationController
   end
 
   def customforms
-    @values = JSON.dump(I18n.t :popupmessages)
     @icons = CustomForm.icons
     @custom_forms = current_user.custom_forms.order(order_index: :desc)
     @form_list = CustomForm.form_list
@@ -161,10 +155,9 @@ class PagesController < ApplicationController
   end
 
   def md_patients
-    @values = JSON.dump(I18n.t :popupmessages)
   end
+
   def md_customforms
-    @values = JSON.dump(I18n.t :popupmessages)
     @icons = CustomForm.icons
     @custom_forms = current_user.custom_forms.order(order_index: :desc)
     @form_list = CustomForm.form_list
@@ -216,7 +209,6 @@ class PagesController < ApplicationController
       @user.profile = Profile.create()
     end
     @profile = @user.profile
-    @values = JSON.dump(I18n.t :popupmessages)
 
     save_click_record(:success, nil, nil)
   end
@@ -438,6 +430,7 @@ private
         end
       end
     end
+    @values = JSON.dump(I18n.t :popupmessages)
   end
 
 end

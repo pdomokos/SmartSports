@@ -75,6 +75,7 @@ Rails.application.routes.draw do
     resources :password_resets
 
     get 'pages/mobilepage'
+    get 'pages/main'
     get 'pages/dashboard'
     get 'pages/diet'
     get 'pages/exercise'
@@ -193,7 +194,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  root :to => "pages#dashboard"
+  root :to => "pages#main"
   #handles invalid locale
   #get '/*locale/*path', to: redirect("/#{I18n.default_locale}/%{path}")
   # handles /pages/... without locale

@@ -17,7 +17,7 @@
 
     <div class="topBanner">
       <div class="left">
-          <%= link_to url_for( :action => 'dashboard', :locale => I18n.locale ) do %>
+          <%= link_to root_path do %>
             <%= image_tag("logo-login.png", alt: "Dashboard", style: "margin-top: 10px; width: 40px; float: left;", id: "headerLoginLogo", class: "loginLogo") %>
             <span class="logoTitle">SmartDiab</span>
           <% end %>
@@ -46,17 +46,24 @@
             <% end %>
             </div>
 
+            <% if current_user.doctor? %>
             <div class="imgContainer headerItemIcon topBannerControl" title="Doctor">
             <%= link_to url_for( :action => 'md_patients', :locale => I18n.locale ) do %>
                 <i class="fa fa-stethoscope fa-lg headerItemIconMod"></i>
             <% end %>
             </div>
+            <% end %>
 
             <div class="topBannerRight topBannerControl" title="Patient Settings">
             <%= link_to url_for( :action => 'settings', :locale => I18n.locale ), :class => "titleIcon" do %>
                 <%= image_tag current_user.avatar.url(:medium), class: "headerItemAvatar" %>
-                <span class="headerItemName"><%= @display_name %></span>
             <% end %>
+            </div>
+
+            <div class="topBannerRight topBannerControl" title="Dashboard">
+              <%= link_to url_for( :action => 'dashboard', :locale => I18n.locale ), :class => "titleIcon" do %>
+                  <span class="headerItemName"><%= @display_name %></span>
+              <%end %>
             </div>
 
         </div>
