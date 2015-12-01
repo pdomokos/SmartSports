@@ -5,9 +5,10 @@
 
 <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
     <div style="padding: 10px;">
+      <%= form_tag("/users/#{current_user.id}", remote: true, id: "update-user-form", method: "PUT", class: "resource-update-form user-form") do %>
       <table style="width: 100%;color: #3d3d3d;">
         <tbody>
-        <%= form_tag("/users/#{current_user.id}", remote: true, id: "update-user-form", method: "PUT", class: "resource-update-form user-form") do %>
+
             <input name="lang" value="<%=I18n.locale%>" type="hidden" />
             <tr>
               <td style="width: 180px;height: 50px;">
@@ -29,22 +30,23 @@
                 <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField" placeholder="<%= t 'password_confirm' %>"/>
               </td>
               <td>
-                <button id="update-user-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                <button id="update-user-button" class="settingsButton">
                   <%= t :update %>
                 </button>
               </td>
             </tr>
-        <% end %>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+      <% end %>
    </div>
 </div>
 
 <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
   <div style="padding: 10px;">
+    <%= form_tag( "/users/#{current_user.id}/uploadAv", :multipart => true, :'data-ajax' => false, :method => "POST") do %>
     <table style="width: 100%;color: #3d3d3d;">
       <tbody>
-      <%= form_tag( "/users/#{current_user.id}/uploadAv", :multipart => true, :'data-ajax' => false, :method => "POST") do %>
+
           <tr>
             <td style="width: 180px;height: 50px;">
               <%= t :upload_photo %> <br> <div style="font-size: 11px;"><%= t :recommended_size %></div>
@@ -57,23 +59,23 @@
               <%= image_tag current_user.avatar.url(:medium) %>
             </td>
             <td>
-              <button id="upload-image-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+              <button id="upload-image-button" class="settingsButton">
                 <%= t :update %>
               </button>
             </td>
           </tr>
-      <% end %>
       </tbody>
     </table>
+    <% end %>
   </div>
 </div>
 
 <%if @profile %>
     <div class="contentBg" style="margin-top: 20px;border-radius: 20px;">
       <div style="padding: 10px;">
+        <%= form_tag("/users/#{current_user.id}/profile/#{@profile.id}", remote: true, id: "update-profile-form", method: "PUT", class: "resource-update-form profile-form") do %>
         <table style="width: 100%;color: #3d3d3d;">
           <tbody>
-          <%= form_tag("/users/#{current_user.id}/profile/#{@profile.id}", remote: true, id: "update-profile-form", method: "PUT", class: "resource-update-form profile-form") do %>
               <input name="lang" value="<%=I18n.locale%>" type="hidden" />
               <tr>
                 <td style="width: 180px;height: 50px;">
@@ -196,14 +198,14 @@
                   <%=select("profile", "dateofbirth", options_for_select((1900..2015).step(1), (@profile.dateofbirth && (@profile.dateofbirth.year >= 1900 && @profile.dateofbirth.year <= 2015)) ? @profile.dateofbirth.year : 0), :include_blank => true)%>
                 </td>
                 <td>
-                  <button id="update-profile-button" style="width: 180px;height: 40px; background: #4FBDF2;color: #ffffff;font-size: 15px;border: none;float: right">
+                  <button id="update-profile-button" class="settingsButton">
                     <%= t :update %>
                   </button>
                 </td>
               </tr>
-          <% end %>
           </tbody>
         </table>
+        <% end %>
       </div>
     </div>
 <%end%>
