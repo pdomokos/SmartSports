@@ -9,7 +9,7 @@
   $(document).on("click.patientNotif", "#notificationContainer .notificationItem", @loadForm  )
 
 @loadPatientNotifications = (userId) ->
-  url = '/users/' + userId + '/notifications.js?order=desc&limit=5&patient=true'
+  url = '/users/' + userId + '/notifications.js?order=desc&limit=5&patient=true&active=true'
   console.log "calling load notifications for: "+userId+" "+url
   $.ajax url,
     type: 'GET',

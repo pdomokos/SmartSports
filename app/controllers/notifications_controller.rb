@@ -3,6 +3,7 @@ class NotificationsController < ApplicationController
   before_action :check_auth, only: [:index, :show, :edit, :create, :update, :destroy]
 
   include NotificationsCommon
+  include NotificationsHelper
 
   # GET /notifications
   # GET /notifications.json
@@ -15,15 +16,16 @@ class NotificationsController < ApplicationController
 
     @user = User.find(params[:user_id])
     @notifications = @user.notifications
-
-    if params[:upcoming] && params[:upcoming]=='true'
-      @notifications = @notifications.where('date > ?', Time.zone.now)
-    end
     if params[:order] && params[:order]=='asc'
       @notifications = @notifications.order(created_at: :asc)
     else
       @notifications = @notifications.order(created_at: :desc)
     end
+
+    if params[:active]
+      @notifications = active_notifications(@notifications)
+    end
+
   end
 
   # GET /notifications/1
@@ -42,7 +44,29 @@ class NotificationsController < ApplicationController
   def edit
   end
 
-  # POST /notifications
-  # POST /notifications.json
+  private
+
+  def active_notifications(arr)
+    today = Time.zone.now.strftime("%F")
+    day = Time.zone.now.strftime("%a").downcase
+    result = arr.select do |notif|
+      ret = false
+      if notif.date.nil?||notif.date==""
+        if notif.date.strftime("%F")==today
+          if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
+            ret = true
+          end
+        end
+      else
+        if recurringOnDay(notif.notification_data, day)
+          if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
+            ret = true
+          end
+        end
+      end
+      ret
+    end
+    return result
+  end
 
 end
