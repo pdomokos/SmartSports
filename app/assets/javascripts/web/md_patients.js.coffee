@@ -70,6 +70,10 @@
         console.log "Dayselect clicked Successful AJAX call"
   )
 
+  $(document).unbind("click.userDetails")
+  $(document).on("click.userDetails", "#headerItemAvatar", () ->
+    $(".patientData .patientDetails").toggleClass("hidden")
+  )
   loadPatients()
   loadForms()
 
@@ -100,11 +104,15 @@
           console.log ui.item
           $("#patientName").html( ui.item.label.trim() )
           $("input[name=patientId]").val(ui.item.obj.id)
-          $("#headerItemAvatar").attr( "src", ui.item.obj.avatar_url )
+          pic = ui.item.obj.avatar_url
+          if pic == "unknown.jpeg"
+            pic = "/assets/unknown.jpeg"
+          $("#headerItemAvatar").attr( "src", pic )
           $("#patientHeader").removeClass("hidden")
           $(".patientData").removeClass("hidden")
+          $(".patientData .patientDetails pre").html(JSON.stringify(ui.item.obj, null, '\t'))
           loadNotifications(ui.item.obj.id)
-          $("#patientHeader").tooltip({
+          $("#headerItemAvatar").tooltip({
             items: "img",
             content: '<img src="'+ui.item.obj.avatar_url+'" />'
           })
