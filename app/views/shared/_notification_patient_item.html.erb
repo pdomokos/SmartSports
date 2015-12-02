@@ -4,7 +4,7 @@
     <div style="height: 100%;"><i class="fa <%= get_notification_icon(notification_patient_item) %> fa-2x patientColor"></i></div>
   </td>
 
-  <td class="historyTitle labresultItem">
+  <td class="historyTitle labresultItem showNotifClickArea">
     <span class="itemTitle"><%= notification_patient_item.title %></span>
     <span>
       <%= if notification_patient_item.detail
@@ -39,8 +39,9 @@
 
   <td class="iconColumn">
     <%= form_tag( "/users/#{notification_patient_item.user_id}/notifications/#{notification_patient_item.id}",
-                  id: "delete_visit_#{notification_patient_item.id}", remote: true, method: "patch", class: "notification-dismiss-form") do %>
-        <button class="tableControl left">
+                  id: "dismiss_notif_#{notification_patient_item.id}", remote: true, method: "patch", class: "notification-dismiss-form") do %>
+        <input type="hidden" name="dismiss" value="true" />
+        <button class="tableControl left dismissNotif">
           <i class="fa fa-close fa-2x patientColor"></i>
         </button>
     <% end %>

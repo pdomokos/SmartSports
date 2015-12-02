@@ -21,6 +21,15 @@ module NotificationsCommon
   # PATCH/PUT /notifications/1
   # PATCH/PUT /notifications/1.json
   def update
+    if params[:dismiss]
+      @notification.dismissed_on = Time.zone.now
+      if @notification.save
+        send_success_json(@notification.id, {:msg => "dismissed"})
+      else
+        send_error_json(@notification.id, "dismiss_error", 400)
+      end
+      return
+    end
     respond_to do |format|
       if @notification.update(notification_params)
         format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }

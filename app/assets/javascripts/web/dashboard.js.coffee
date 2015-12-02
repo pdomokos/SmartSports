@@ -6,7 +6,17 @@
   loadPatientNotifications(uid)
 
   $(document).unbind("click.patientNotif")
-  $(document).on("click.patientNotif", "#notificationContainer .notificationItem", @loadForm  )
+  $(document).on("click.patientNotif", "#notificationContainer .showNotifClickArea", @loadForm  )
+
+  $(document).unbind("ajax:success.deleteNotif")
+  $(document).on("ajax:success.deleteNotif", "#notificationContainer", (e, data, status, xhr) ->
+    console.log "notification dismissed"
+    console.log data
+    loadPatientNotifications(uid)
+  ).on("ajax:error", (e, xhr, status, error) ->
+    console.log "notification dismiss failed"
+    console.log e
+  )
 
 @loadPatientNotifications = (userId) ->
   url = '/users/' + userId + '/notifications.js?order=desc&limit=5&patient=true&active=true'

@@ -1,9 +1,12 @@
 $("table.notificationTable tbody.recentResourcesTable").html("");
 <% if @patient %>
-$("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_patient_item', :collection=> @notifications ) %>");
-<% if @notifications.size > 0 %>
-$("#notificationContainer").removeClass("hidden");
-<%end %>
+    $("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_patient_item', :collection=> @notifications ) %>");
+    <% if @notifications.size > 0 %>
+        $("#notificationContainer").removeClass("hidden");
+    <%end %>
+    <% if @notifications.size == 0 %>
+        $("#notificationContainer").addClass("hidden");
+    <%end %>
 <% else %>
 $("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_item', :collection=> @notifications ) %>");
 <% end %>
