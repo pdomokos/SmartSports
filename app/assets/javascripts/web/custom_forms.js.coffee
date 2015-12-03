@@ -282,3 +282,16 @@
   m.month(curr.month())
   m.year(curr.year())
   return m.format(moment_fmt)
+
+
+@getStored = (key) ->
+  if typeof(Storage) != "undefined"
+    return localStorage.getItem(key)
+  else
+    return window[key]
+
+@setStored = (key, value) ->
+  if typeof(Storage) != "undefined"
+   localStorage.setItem(key, value)
+  else
+    window[key] = value

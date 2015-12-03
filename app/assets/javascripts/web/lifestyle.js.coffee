@@ -86,7 +86,7 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_illnesses
+      for element in getStored("sd_illnesses")
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -273,7 +273,7 @@
   self = this
   current_user = $("#current-user-id")[0].value
   console.log "calling load illness types"
-  if !window.sd_illnesses
+  if !getStored("sd_illnesses")
     ret = $.ajax '/illness_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
@@ -281,7 +281,7 @@
       success: (data, textStatus, jqXHR) ->
         console.log "load illness_types  Successful AJAX call"
 
-        window.sd_illnesses = data.map( window.illness_map_fn )
+        setStored("sd_illnesses", data.map( window.illness_map_fn ))
         cb()
   else
     ret = new Promise( (resolve, reject) ->

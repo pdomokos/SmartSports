@@ -74,7 +74,7 @@
       matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_pills
+      for element in getStored("sd_pills")
         if matcher.test(element.label)
           result.push(element)
           cnt += 1
@@ -93,7 +93,7 @@
       matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_insulin
+      for element in getStored("sd_insulin")
         if matcher.test(element.label)
           result.push(element)
           cnt += 1
@@ -144,7 +144,7 @@
   self = this
   current_user = $("#current-user-id")[0].value
 
-  if !window.sd_pills
+  if !getStored("sd_pills")
     console.log "calling load medication types"
     ret = $.ajax '/medication_types.json',
       type: 'GET',
@@ -153,20 +153,20 @@
       success: (data, textStatus, jqXHR) ->
         console.log "load medication_types  Successful AJAX call"
         popup_messages = JSON.parse($("#popup-messages").val())
-        window.sd_pills = data.filter( (d) ->
+        setStored("sd_pills", data.filter( (d) ->
           d['group'] == 'oral'
         ).map( (d) ->
           {
             label: d['name'],
             id: d['id']
-        })
-        window.sd_insulin = data.filter( (d) ->
+        }))
+        setStored("sd_insulin", data.filter( (d) ->
           d['group'] == 'insulin'
         ).map( (d) ->
           {
           label: d['name'],
           id: d['id']
-          })
+          }))
         cb()
   else
     console.log "medication types already loaded"

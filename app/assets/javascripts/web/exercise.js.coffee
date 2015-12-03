@@ -169,7 +169,7 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_activities
+      for element in getStored("sd_activities")
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -245,7 +245,7 @@
   self = this
   @intensities = $("#intensity_values").val().split(" ")
   console.log "calling load activity types"
-  if !window.sd_activities
+  if !getStored("sd_activities")
     ret = $.ajax '/activity_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
@@ -253,20 +253,20 @@
       success: (data, textStatus, jqXHR) ->
         console.log "load activity_types  Successful AJAX call"
 
-        window.sd_activities = data.filter( (d) ->
+        setStored("sd_activities", data.filter( (d) ->
           d['category'] == 'sport'
         ).map( (d) ->
           {
           label: d['name'],
           id: d['id']
-          })
-        window.sd_other_activities = data.filter( (d) ->
+          }))
+        setStored("sd_other_activities", data.filter( (d) ->
           d['category'] == 'custom'
         ).map( (d) ->
           {
           label: d['name'],
           id: d['id']
-          })
+          }))
         cb()
   else
     ret = new Promise( (resolve, reject) ->

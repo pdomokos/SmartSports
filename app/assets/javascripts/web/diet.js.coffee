@@ -144,7 +144,7 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_foods
+      for element in getStored('sd_foods')
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -165,7 +165,7 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_drinks
+      for element in getStored('sd_drinks')
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -236,7 +236,7 @@
   current_user = $("#current-user-id")[0].value
   popup_messages = JSON.parse($("#popup-messages").val())
 
-  if !window.sd_foods
+  if !getStored('sd_foods')
     console.log "loading food types"
     ret = $.ajax '/food_types.json',
       type: 'GET',
@@ -245,13 +245,13 @@
       success: (data, textStatus, jqXHR) ->
         console.log "load food_types  Successful AJAX call"
 
-        window.sd_foods = data.filter( (d) ->
+        setStored('sd_foods', data.filter( (d) ->
           d['category'] != 'Ital'
-        ).map( window.food_map_fn )
+        ).map( window.food_map_fn ))
 
-        window.sd_drinks = data.filter( (d) ->
+        setStored('sd_drinks', data.filter( (d) ->
           d['category'] == 'Ital'
-        ).map( window.food_map_fn )
+        ).map( window.food_map_fn ))
         cb()
   else
     console.log "food types already loaded"

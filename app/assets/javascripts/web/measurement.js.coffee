@@ -248,7 +248,11 @@
   $(sel+" .bg_time_unit").html(bgTimeList[meas.blood_sugar_time])
   $(sel+" .bg_time_scale").slider({value: meas.blood_sugar_time})
 
-  $(sel+" input[name='measurement[blood_sugar]']").val(parseFloat(meas.blood_sugar).toFixed(2))
+  if meas.blood_sugar
+    $(sel+" input[name='measurement[blood_sugar]']").val(parseFloat(meas.blood_sugar).toFixed(2))
+  else
+    $(sel+" input[name='measurement[blood_sugar]']").val("")
+    
   $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
 
 @load_measurement_weight = (sel, data) ->
