@@ -286,12 +286,12 @@
 
 @getStored = (key) ->
   if typeof(Storage) != "undefined"
-    return localStorage.getItem(key)
+    return JSON.parse(localStorage.getItem(key))
   else
     return window[key]
 
 @setStored = (key, value) ->
   if typeof(Storage) != "undefined"
-   localStorage.setItem(key, value)
+   localStorage.setItem(key, JSON.stringify(value))
   else
     window[key] = value

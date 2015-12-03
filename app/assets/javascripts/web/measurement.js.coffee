@@ -252,7 +252,7 @@
     $(sel+" input[name='measurement[blood_sugar]']").val(parseFloat(meas.blood_sugar).toFixed(2))
   else
     $(sel+" input[name='measurement[blood_sugar]']").val("")
-    
+
   $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
 
 @load_measurement_weight = (sel, data) ->
