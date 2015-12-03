@@ -62,6 +62,12 @@ class NotificationsController < ApplicationController
           if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
             ret = true
           end
+        else
+          if notif.date.strftime("%F") == today
+            if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
+              ret = true
+            end
+          end
         end
       end
       ret

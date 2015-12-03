@@ -1,25 +1,14 @@
-<input id="popup-messages" value="<%=@values%>" type="hidden" />
+<%= render partial: 'static_data' %>
+
 <div class="sectionTitle customBodyLogo customTitleColor">
   <div class="left"><%=t 'menu_custom_full' %></div>
   <div class="right"><i id="add-custom-form" class="fa fa-plus-circle fa-2x add-custom-form"></i></div>
 </div>
 
-
 <div class="diet-block mainContent">
   <input id="formlist" type="hidden" value="<%= @formlist.as_json %>">
   <%= render partial: 'custom_form',  collection: @custom_forms %>
 </div>
-
-<input id="intensity_values" value="<%=t :intensities%>" type="hidden" />
-<input id="stressList" type="hidden" value="<%=t :stressList %>">
-<input id="bgTimeList" type="hidden" value="<%=t :bgTimeList %>">
-
-<input id="sleepList" type="hidden" value="<%=t :sleepList%>">
-<input id="illnessList" type="hidden" value="<%=t :illnessList %>">
-<input id="painList" type="hidden" value="<%=t :painList %>">
-<input id="periodPainList" type="hidden" value="<%=t :periodPainList %>">
-<input id="periodVolumeList" type="hidden" value="<%=t :periodVolumeList %>">
-<input id="painTypeList" type="hidden" value="<%=t :painTypeList %>">
 
 <script>
     window.load_custom_form_element_defaults = function() {

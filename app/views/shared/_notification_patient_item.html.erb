@@ -35,6 +35,7 @@
         <span class="itemTitle">Form: </span><span><%= notification_patient_item.custom_form.form_tag %></span>
         <input type="hidden" class="customFormId" name="customFormId" value="<%= notification_patient_item.custom_form.id%>">
     <% end %>
+    <input type="hidden" class="notificationId" name="notificationId" value="<%= notification_patient_item.id%>">
   </td>
 
   <td class="iconColumn">

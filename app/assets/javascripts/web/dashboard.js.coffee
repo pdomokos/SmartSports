@@ -1,5 +1,6 @@
 @dashboard_loaded = () ->
   console.log("dashboard loaded")
+
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#dashboard-link").addClass("selected")
   uid = $("#current-user-id")[0].value
@@ -12,6 +13,8 @@
   $(document).on("ajax:success.deleteNotif", "#notificationContainer", (e, data, status, xhr) ->
     console.log "notification dismissed"
     console.log data
+    $("#currentForm").addClass("hidden")
+    $("#currentForm").html("")
     loadPatientNotifications(uid)
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log "notification dismiss failed"
@@ -29,18 +32,30 @@
       console.log "load recent notifications Successful AJAX call"
 
 @loadForm = (evt) ->
+  @popup_messages = JSON.parse($("#popup-messages").val())
   cf = evt.currentTarget.querySelector("input.customFormId")
   cfId = null
   if cf
     cfId = cf.value
+  notif = evt.currentTarget.querySelector("input.notificationId")
+  notifId = null
+  if notif
+    notifId = notif.value
   console.log "loadform called: id="+cfId
   if cfId
     $.ajax "/custom_forms/"+cfId+".js?target=currentForm",
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load recent diets AJAX Error: #{textStatus}"
+        console.log "load custom form AJAX Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
-        console.log "load recent notifications Successful AJAX call"
+        console.log "load custom form Successful AJAX call"
+
+        registerAddCustomForm( () ->
+          console.log "dismiss: "+notifId
+          $("#dismiss_notif_"+notifId).submit()
+        )
+        customPreload()
   else
     $("#currentForm").addClass("hidden")
     $("#currentForm").html("")
+

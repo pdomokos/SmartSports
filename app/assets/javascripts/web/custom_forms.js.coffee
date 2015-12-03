@@ -5,9 +5,8 @@
 @custom_loaded = () ->
   console.log "custom_loaded called, start initializing"
 
-  customPreload()
-
   @popup_messages = JSON.parse($("#popup-messages").val())
+  customPreload()
 
   initCustomForms()
   registerCustomFormHandlers()
@@ -229,6 +228,10 @@
     $("#iconform").addClass("hidden")
   )
 
+  registerAddCustomForm()
+
+@registerAddCustomForm = (cb_succ, cb_err) ->
+  self = this
   succ_fn = (d, st, jq) ->
     console.log "AJAX done: "
     console.log d
@@ -242,8 +245,10 @@
     console.log jq
     console.log "^^^^^^^^^^^^^^^^^^^^^"
 
-  $("button.addCustomButton").on("click", (e) ->
+  $(document).unbind("click.addCustomFormButton")
+  $(document).on("click.addCustomFormButton", "button.addCustomButton", (e) ->
     btn = e.target
+    popup_messages = JSON.parse($("#popup-messages").val())
     console.log btn.dataset.cform
     form_ids =btn.dataset.elements.split(',')
     console.log form_ids
@@ -257,11 +262,16 @@
       }).done(succ_fn).fail(err_fn))
     $.when.apply(undefined, reqs).done( () ->
       console.log "ALL COMPLETE"
-#      location.href = "customforms"
+      #      location.href = "customforms"
       popup_success(popup_messages.save_success, $("#addWellbeingButton").css("background"))
+      console.log cb_succ
+      if cb_succ
+        cb_succ()
     ).fail( () ->
       console.log "SOME FAILED"
       popup_error(popup_messages.failed_custom_form, $("#addMeasurementButton").css("background"))
+      if cb_err!= undefined
+        cb_err()
     )
   )
 

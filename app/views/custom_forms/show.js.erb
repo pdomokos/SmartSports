@@ -1,3 +1,8 @@
-$("#<%= @targetElementId %>").html("<%= escape_javascript(render partial: 'cfall', collection: @customForm.custom_form_elements) %>")
-$("#<%= @targetElementId %>").append("<button class='dataFormField healthColor addCustomButton'>Add</button>")
+$("#<%= @targetElementId %>").html("<%= escape_javascript(render partial: 'pages/custom_form', object: @customForm) %>")
 $("#<%= @targetElementId %>").removeClass("hidden")
+
+window.load_custom_form_element_defaults = function() {
+    <%for cfe in @customForm.custom_form_elements %>
+    initfn_<%=cfe.property_code%>__<%=cfe.id%>();
+    <% end %>
+};
