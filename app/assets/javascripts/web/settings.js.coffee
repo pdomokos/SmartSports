@@ -1,4 +1,5 @@
 @settings_loaded = () ->
+  console.log("settings_loaded()")
   reset_ui()
   define_globals()
   $("#settings-button").addClass("selected")
@@ -195,7 +196,8 @@
     minDate: new Date(1900, 1 - 1, 1)
   })
 
-  $("form.resource-update-form.user-form").on("ajax:success", (e, data, status, xhr) ->
+  $(document).unbind("ajax:success.updateuser")
+  $(document).on("ajax:success.updateuser", "form.resource-update-form.user-form", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     $("#"+form_id+" input.dataFormField").val("")
     console.log status
@@ -209,7 +211,8 @@
     popup_error(JSON.parse(xhr.responseText).msg)
   )
 
-  $("form.resource-update-form.profile-form").on("ajax:success", (e, data, status, xhr) ->
+  $(document).unbind("ajax:success.updateprofile")
+  $(document).on("ajax:success.updateprofile", "form.resource-update-form.profile-form", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     $("#"+form_id+" input.dataFormField").val("")
     if JSON.parse(xhr.responseText).status == "NOK"
