@@ -286,7 +286,10 @@
 
 @getStored = (key) ->
   if typeof(Storage) != "undefined"
-    return JSON.parse(localStorage.getItem(key))
+    try
+      return JSON.parse(localStorage.getItem(key))
+    catch
+      return undefined
   else
     return window[key]
 
