@@ -285,8 +285,10 @@
   $(sel+" input[name='activity[intensity]']").val(activity.intensity)
   $(sel+" .activity_exercise_percent").html(@intensities[activity.intensity])
   $(sel+" .activity_exercise_scale").slider({value: activity.intensity})
-  $(sel+" input[name='activity[start_time]']").val(fixdate(activity.start_time))
-  $(sel+" input[name='activity[end_time]']").val(fixdate(activity.end_time))
+  diff = moment(activity.end_time).diff(moment(activity.start_time))
+  curr = moment()
+  $(sel+" input[name='activity[start_time]']").val(moment(curr.diff(diff)).format(moment_fmt))
+  $(sel+" input[name='activity[end_time]']").val(curr.format(moment_fmt))
 
 @load_activity_regular= (sel, data) ->
   activity = data['activity']
@@ -295,5 +297,7 @@
   $(sel+" input[name='activity[intensity]']").val(activity.intensity)
   $(sel+" .activity_regular_percent").html(@intensities[activity.intensity])
   $(sel+" .activity_regular_scale").slider({value: activity.intensity})
-  $(sel+" input[name='activity[start_time]']").val(fixdate(activity.start_time))
-  $(sel+" input[name='activity[end_time]']").val(fixdate(activity.end_time))
+  diff = moment(activity.end_time).diff(moment(activity.start_time))
+  curr = moment()
+  $(sel+" input[name='activity[start_time]']").val(moment(curr.diff(diff)).format(moment_fmt))
+  $(sel+" input[name='activity[end_time]']").val(curr.format(moment_fmt))

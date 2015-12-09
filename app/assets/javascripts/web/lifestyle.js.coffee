@@ -297,11 +297,12 @@
   lifestyle = data['lifestyle']
   $(sel+" .sleep_scale").slider({value: lifestyle.amount})
   $(sel+" .sleep_percent").html(sleepList[lifestyle.amount])
-  $(sel+" input[name='lifestyle[start_time]']").val(fixdate(lifestyle.start_time))
-  $(sel+" input[name='lifestyle[end_time]']").val(fixdate(lifestyle.end_time))
+  $(sel+" input[name='lifestyle[start_time]']").val(new moment().format(moment_fmt))
+  $(sel+" input[name='lifestyle[end_time]']").val(new moment().format(moment_fmt))
 
 @load_lifestyle_stress = (sel, data) ->
   console.log "load stress"+sel+", ignored"
+  $(sel+" input[name='lifestyle[start_time]']").val(new moment().format(moment_datefmt))
 # doesn't make sense to load this from history
 #  console.log data
 #  lifestyle = data['lifestyle']

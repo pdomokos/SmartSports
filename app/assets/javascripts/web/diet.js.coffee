@@ -278,7 +278,7 @@
   $(sel+" input[name='diet[food_type_id]']").val(diet.food_type_id)
   $(sel+" .diet_food_unit").html(diet.amount*100+"g")
   $(sel+" .diet_food_scale").slider({value: diet.amount})
-  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
+  $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 
 @load_diet_drink =  (sel, data) ->
   diet = data['diet']
@@ -286,15 +286,15 @@
   $(sel+" input[name='diet[food_type_id]']").val(diet.food_type_id)
   $(sel+" .diet_drink_unit").html(diet.amount+" dl")
   $(sel+" .diet_drink_scale").slider({value: diet.amount})
-  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
+  $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 
 @load_diet_smoke = (sel, data) ->
   diet = data['diet']
   $(sel+" input[name='diet[name]']").val(diet.name)
-  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
+  $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 
 @load_diet_quick_calories = (sel, data) ->
   diet = data['diet']
   $(sel+" input[name='diet[calories]']").val(diet.calories)
   $(sel+" input[name='diet[carbs]']").val(diet.carbs)
-  $(sel+" input[name='diet[date]']").val(fixdate(diet.date))
+  $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))

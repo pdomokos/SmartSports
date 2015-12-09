@@ -231,7 +231,7 @@
   $(sel+" input[name='measurement[systolicbp]']").val(meas.systolicbp)
   $(sel+" input[name='measurement[diastolicbp]']").val(meas.diastolicbp)
   $(sel+" input[name='measurement[pulse]']").val(meas.pulse)
-  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
+  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
 
 @load_measurement_blood_glucose = (sel, data) ->
   console.log "load_meas_bg"
@@ -253,16 +253,16 @@
   else
     $(sel+" input[name='measurement[blood_sugar]']").val("")
 
-  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
+  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
 
 @load_measurement_weight = (sel, data) ->
   console.log "load_meas_weight"
   meas = data['measurement']
   $(sel+" input[name='measurement[weight]']").val(meas.weight)
-  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
+  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
 
 @load_measurement_waist= (sel, data) ->
   console.log "load_meas_waist"
   meas = data['measurement']
   $(sel+" input[name='measurement[waist]']").val(meas.waist)
-  $(sel+" input[name='measurement[date]'").val(fixdate(meas.date))
+  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))

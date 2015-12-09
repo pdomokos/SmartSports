@@ -202,7 +202,7 @@ validate_medication_common = (sel) ->
   $(sel+" input[name='medication[name]']").val(medication.name)
   $(sel+" input[name='medication[medication_type_id]']").val(medication.medication_type_id)
   $(sel+" input[name='medication[amount]'").val(medication.amount)
-  $(sel+" input[name='medication[date]']").val(fixdate(medication.date))
+  $(sel+" input[name='medication[date]']").val(moment().format(moment_fmt))
 
 @load_medication_insulin = (sel, data) ->
   console.log "loading insulin"
@@ -210,4 +210,4 @@ validate_medication_common = (sel) ->
   $(sel+" input[name='medication[name]']").val(medication.name)
   $(sel+" input[name='medication[medication_type_id]']").val(medication.medication_type_id)
   $(sel+" input[name='medication[amount]'").val(medication.amount)
-  $(sel+" input[name='medication[date]']").val(fixdate(medication.date))
+  $(sel+" input[name='medication[date]']").val(moment().format(moment_fmt))
