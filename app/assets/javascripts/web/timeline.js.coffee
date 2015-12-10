@@ -1,13 +1,21 @@
 @initTimelineDatepicker = (uid) ->
   $('#timeline_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
     onSelectDate: (ct, input) ->
+      console.log("timeline date selected")
       input.datetimepicker('hide')
-      self.dateToShow = moment(ct).format("YYYY-MM-DD")
-      d3.json("/users/"+uid+"/analysis_data.json?date="+self.dateToShow, timeline_data_received)
+      dateToShow = moment(ct).format("YYYY-MM-DD")
+      setTimelineTitle(dateToShow)
+      d3.json("/users/"+uid+"/analysis_data.json?date="+dateToShow+"&weekly=true", timeline_data_received)
     todayButton: true
   })
+
+@setTimelineTitle = (date) ->
+  a = moment(date).startOf('week').format(moment_fmt)
+  b = moment(date).endOf('week').format(moment_fmt)
+  $("div.timeline-title").html("Weekly timeline ("+a+" - "+b+")")
+
 
 @timeline_data_received = (jsondata) ->
   console.log "drawing timeline"

@@ -35,13 +35,16 @@
 
 
     <div class="columns">
-      <div class="boxed-group connection-block">
+      <div class="boxed-group connection-block patientStyle">
         <h3 class="noClickSelect">
           <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-          <div class="training-type left">Daily timeline</div>
+          <div class="training-type left patientTitle">Weekly timeline</div>
+          <span class="left md-show-table"><i class="fa fa-table page-control fa-2x"></i></span>
+
           <div class="selected-meas legend-container right">
             <input id='timeline_datepicker' type='text' class="dataFormField" value="<%= DateTime.current.strftime("%F") %>"/>
           </div>
+
         </h3>
 
         <div id="timeline" class="boxed-group-inner chart bloodpressure-chart">

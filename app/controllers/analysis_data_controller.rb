@@ -1,19 +1,58 @@
+require 'csv'
 class AnalysisDataController < ApplicationController
   respond_to :json
 
   def index
     user_id = params[:user_id]
-
-    result = []
     user = User.find(user_id)
-    activities = user.activities
 
     f=nil
     t=nil
     if params[:date]
       date = params[:date]
-      f = Time.zone.parse(date+' 00:00:00')
-      t = Time.zone.parse(date+' 23:59:59')
+      if params[:weekly]
+        f = Time.zone.parse(date).at_beginning_of_week
+        t = Time.zone.parse(date).at_end_of_week
+      else
+        f = Time.zone.parse(date).at_beginning_of_day
+        t = Time.zone.parse(date).at_end_of_day
+        end
+    end
+
+    result = nil
+    if params[:tabular]
+      result = get_tabular_data(user, f, t)
+    else
+      result = get_timeline_data(user, f, t)
+    end
+
+    respond_to do |format|
+      format.csv {
+        d = result.collect do |it|
+          if it.member?(:start) && it[:start]
+            start = it[:start].strftime("%F %R")
+          else
+            start = nil
+          end
+          if it.member?(:end) && it[:end]
+            e = it[:end].strftime("%F %R")
+          else
+            e = nil
+          end
+          [start, e, it[:evt_type], it[:group], it[:value1], it[:value2] ].to_csv(row_sep:nil)
+        end.join("\n")
+        send_data d
+      }
+      format.json { render json: result}
+    end
+  end
+
+  def get_timeline_data(user, f, t)
+    result = []
+
+    activities = user.activities
+
+    if f
       activities = activities.where("start_time between ? and ?", f, t)
     end
 
@@ -48,14 +87,14 @@ class AnalysisDataController < ApplicationController
     meas_arr = []
     meas_arr.concat(measurements.collect do |measurement|
                       ret = {
-                        id: measurement.id,
-                        tooltip: measurement.get_title,
-                        title: 'Health',
-                        depth: 0,
-                        dates: [measurement.date],
-                        evt_type: 'measurement',
-                        meas_type: measurement.meas_type,
-                        source: 'SmartDiab'
+                          id: measurement.id,
+                          tooltip: measurement.get_title,
+                          title: 'Health',
+                          depth: 0,
+                          dates: [measurement.date],
+                          evt_type: 'measurement',
+                          meas_type: measurement.meas_type,
+                          source: 'SmartDiab'
                       }
 
                       if measurement.meas_type=='blood_pressure'
@@ -65,8 +104,8 @@ class AnalysisDataController < ApplicationController
                       end
 
                       ret
-                      end
-                    )
+                    end
+    )
     result.concat(meas_arr)
 
     lifestyles = user.lifestyles.where(group: 'sleep')
@@ -95,7 +134,7 @@ class AnalysisDataController < ApplicationController
                       group: med.try(:medication_type).try(:group),
                       source: 'SmartDiab'
                   }})
-    
+
     sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
     for sens in sensors do
       if sens.version && sens.version =='2.0'
@@ -124,11 +163,112 @@ class AnalysisDataController < ApplicationController
           depth: 0,
           evt_type: etype,
           dates: [d.start_time, d.end_time]
-        }
+      }
     }
     result.concat(tracker_filtered)
 
-    render json: result
+    return result
+  end
+
+  def get_tabular_data(user, f, t)
+    result = []
+
+    activities = user.activities
+
+    if f
+      activities = activities.where("start_time between ? and ?", f, t)
+    end
+
+    result.concat(activities.collect{|act| {
+                      start: act.start_time,
+                      end: act.end_time,
+                      evt_type: 'activity',
+                      group: act.group=='sport'?'exercise':'regular',
+                      value1: act.activity_type_id,
+                      value2: nil
+                  }})
+
+    diets = user.diets
+    if f
+      diets = diets.where("date between ? and ?", f, t)
+    end
+    result.concat(diets.collect{|diet| {
+                      start: diet.date,
+                      end: nil,
+                      evt_type: 'diet',
+                      group: diet.diet_type.downcase,
+                      value1: diet.calories,
+                      value2: diet.carbs
+                  }})
+
+    measurements = user.measurements
+    if f
+      measurements = measurements.where("date between ? and ?", f, t)
+    end
+    meas_arr = []
+    meas_arr.concat(measurements.collect do |measurement|
+                      grp = measurement.meas_type
+                      ret = []
+                      if grp=='blood_pressure'
+                        if measurement.systolicbp
+                          item = {
+                              start: measurement.date,
+                              end: nil,
+                              evt_type: 'measurement',
+                              group: 'systolic',
+                              value1: measurement.systolicbp,
+                              value2: nil
+                          }
+                          ret.append(item)
+                        end
+                        if measurement.diastolicbp
+                          item = {
+                              start: measurement.date,
+                              end: nil,
+                              evt_type: 'measurement',
+                              group: 'diastolic',
+                              value1: measurement.diastolicbp,
+                              value2: nil
+                          }
+                          ret.append(item)
+                        end
+                        if measurement.pulse
+                          item = {
+                              start: measurement.date,
+                              end: nil,
+                              evt_type: 'measurement',
+                              group: 'pulse',
+                              value1: measurement.pulse,
+                              value2: nil
+                          }
+                          ret.append(item)
+                        end
+                      else
+                        ret = {
+                            start: measurement.date,
+                            end: nil,
+                            evt_type: 'measurement',
+                            group: grp,
+                            value1: nil,
+                            value2: nil
+                        }
+
+                        if measurement.meas_type=='blood_sugar'
+                          ret[:value1] = measurement.blood_sugar.try(:round, 2)
+                        elsif measurement.meas_type=='weight'
+                          ret[:value1] = measurement.weight
+                        elsif measurement.meas_type=='waist'
+                          ret[:value1] = measurement.waist
+                        end
+
+                      end
+
+                      ret
+                    end
+    )
+    result.concat(meas_arr.flatten)
+
+    return result
   end
 
   def proc_20_sensor(sens, result)

@@ -29,7 +29,9 @@ class TimeLine
         .attr("y", self.height/2)
       return
 
-    time_extent = [new Date(moment(self.day+" 00:00:00")).getTime(), new Date(moment(self.day+" 23:59:59")).getTime()]
+
+#    time_extent = [new Date(moment(self.day+" 00:00:00")).getTime(), new Date(moment(self.day+" 23:59:59")).getTime()]
+    time_extent = [new Date(moment(self.day).startOf('week')).getTime(), new Date(moment(self.day).endOf('week')).getTime()]
     @time_scale = d3.time.scale().domain(time_extent).range([0, self.width-self.margin.left-self.margin.right])
 
     y_extent = [0, 10]
@@ -64,17 +66,6 @@ class TimeLine
       .append("g")
       .attr("transform", "translate("+self.margin.left+","+(self.margin.top)+")")
       .attr("clip-path", "url(#chart-clip)")
-
-#    y_axis = d3.svg.axis().scale(y_scale).orient("left")
-#    @svg.append("g")
-#      .attr("class", "y axis")
-#      .attr("transform", "translate("+self.margin.left+","+self.margin.top+")")
-#      .attr("stroke-width", "0")
-#      .call(y_axis)
-#      .append("text")
-#      .text(yAxisText)
-
-    #==========
 
     console.log "ALL DATA="
     console.log @data

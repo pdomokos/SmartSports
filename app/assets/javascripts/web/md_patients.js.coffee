@@ -125,8 +125,13 @@
           })
 
           uid = ui.item.obj.id
+
+          registerShowPatientData(uid)
           initTimelineDatepicker(uid)
-          d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
+          dateToShow = moment().format(moment_fmt)
+          d3.json("/users/"+uid+"/analysis_data.json?date="+dateToShow+"&weekly=true", timeline_data_received)
+          setTimelineTitle(dateToShow)
+
           d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
           meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
           d3.json(meas_summary_url, draw_health_trend)
@@ -185,4 +190,53 @@
     success: (jqXHR, textStatus, errorThrown) ->
       console.log "render notifications done"
 
+@registerShowPatientData = (uid) ->
+  $(document).unbind("click.showPatientData")
+  $(document).on("click.showPatientData", ".md-show-table", (evt) ->
+    console.log "datatable clicked"
+    get_table_row = (item ) ->
+      if item.end
+        e = moment(item.end).format(moment_fmt)
+      else
+        e = ""
+      return ([moment(item.start).format(moment_fmt), e, item.evt_type, item.group, item.value1, item.value2 ])
 
+    url = '/users/' + uid + '/analysis_data.json?tabular=true'
+    $.ajax url,
+      type: 'GET',
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "datatable measurements AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        tblData = $.map(data, (item) ->
+          return([get_table_row(item)])
+        ).filter( (v) ->
+          return(v!=null)
+        )
+        $("#patient-data-container").html("<table id=\"patient-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
+        $("#patient-data").dataTable({
+          "data": tblData,
+          "columns": [
+            {"title": "start"},
+            {"title": "end"},
+            {"title": "type"},
+            {"title": "group"}
+            {"title": "value1"}
+            {"title": "value2"}
+          ],
+          "order": [[1, "desc"]],
+          "lengthMenu": [5]
+        })
+        location.href = "#openModal"
+  )
+
+  $(document).unbind("click.downloadPatient")
+  $(document).on("click.downloadPatient", "#download-patient-data", (evt) ->
+    url = '/users/' + uid + '/analysis_data.csv?tabular=true'
+    location.href = url
+  )
+
+  $(document).unbind("click.closePatient")
+  $(document).on("click.closePatient", "#close-patient-data", (evt) ->
+    $("#health-data-container").html("")
+    location.href = "#close"
+  )
