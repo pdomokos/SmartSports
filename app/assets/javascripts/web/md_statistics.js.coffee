@@ -1,5 +1,9 @@
 @loadStatistics = () ->
   resetMdUI()
+
+  registerLogoutHandler()
+  registerLangHandler()
+
   console.log "md_statistics"
   $("#statistics-link").addClass("menulink-selected")
   define_globals()

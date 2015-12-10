@@ -50,10 +50,15 @@ class PagesController < ApplicationController
   end
 
   def main
+    loc = I18n.default_locale
+    lang = current_user.try(:profile).try(:default_lang)
+    if lang
+      loc = lang.to_sym
+    end
     if current_user.doctor?
-      redirect_to pages_md_patients_path(locale: I18n.default_locale)
+      redirect_to pages_md_patients_path(locale: loc)
     else
-      redirect_to pages_dashboard_path(locale: I18n.default_locale)
+      redirect_to pages_dashboard_path(locale: loc)
     end
   end
 

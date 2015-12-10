@@ -45,20 +45,6 @@
   define_globals()
   setTooltips()
 
-  $("#langswitcher").click ->
-    console.log "langswitcher clicked"
-    lang = this.textContent
-    console.log location.href
-    $.ajax '/'+lang+'/profile/set_default_lang',
-      type: 'POST',
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log "set default lang AJAX Error: #{textStatus}"
-      success: (data, textStatus, jqXHR) ->
-        if location.pathname.startsWith("/en") ||location.pathname.startsWith("/hu")
-          location.pathname = "/"+lang+location.pathname.substr(3)
-        console.log "set default lang  Successful AJAX call"
-        console.log textStatus
-
   setInterval( () ->
     self.rotateLogo()
     self.changeColor()
@@ -74,7 +60,29 @@
     console.log "clicked"
     window.location = $("#settings-url")[0].value
 
-  $("#logoutForm").on("ajax:success", (e, data, status, xhr) ->
+  registerLangHandler()
+  registerLogoutHandler()
+
+@registerLangHandler = () ->
+  $(document).unbind("click.lang")
+  $(document).on( "click.lang", "#langswitcher", (evt) ->
+    console.log "langswitcher clicked"
+    lang = this.textContent
+    console.log location.href
+    $.ajax '/'+lang+'/profile/set_default_lang',
+      type: 'POST',
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "set default lang AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        if location.pathname.startsWith("/en") ||location.pathname.startsWith("/hu")
+          location.pathname = "/"+lang+location.pathname.substr(3)
+        console.log "set default lang  Successful AJAX call"
+        console.log textStatus
+  )
+
+@registerLogoutHandler = () ->
+  $(document).unbind("ajax:success.logout")
+  $(document).on("ajax:success.logout", "#logoutForm", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
 

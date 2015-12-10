@@ -1,4 +1,10 @@
 @mdPatientsLoaded = () ->
+  console.log "mdPatientsLoaded called"
+
+  registerLogoutHandler()
+  registerLangHandler()
+
+
   resetMdUI()
   $("#patients-link").addClass("menulink-selected")
 
@@ -119,6 +125,7 @@
           })
 
           uid = ui.item.obj.id
+          initTimelineDatepicker(uid)
           d3.json("/users/"+uid+"/analysis_data.json?date="+@dateToShow, timeline_data_received)
           d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
           meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
@@ -134,7 +141,8 @@
         $(this).autocomplete("search")
 
 @loadForms = () ->
-  $.ajax '/custom_forms.json',
+  uid = $("#current-user-id").val()
+  $.ajax '/users/'+uid+'/custom_forms.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load forms AJAX Error: #{textStatus}"

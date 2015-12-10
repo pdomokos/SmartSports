@@ -1,6 +1,9 @@
 @mdCustomformsLoaded = () ->
   console.log "md loaded"
 
+  registerLogoutHandler()
+  registerLangHandler()
+
   resetMdUI()
   $("#forms-link").addClass("menulink-selected")
 

@@ -29,15 +29,7 @@
   actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
   #d3.json(actions_lastweek_url, draw_blood_sugar)
 
-  $('#timeline_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-      self.dateToShow = moment(ct).format("YYYY-MM-DD")
-      d3.json("/users/"+uid+"/analysis_data.json?date="+self.dateToShow, timeline_data_received)
-    todayButton: true
-  })
+  initTimelineDatepicker(uid)
 
 @bg_data_received = (jsondata) ->
   console.log "bg_data_received "+jsondata.length
@@ -46,20 +38,6 @@
   if jsondata && jsondata.size>0
     bg_trend_chart.add_highlight("2015-07-12", "2015-07-19", "selA")
     bg_trend_chart.add_highlight("2015-07-19", "2015-07-26", "selB")
-
-@timeline_data_received = (jsondata) ->
-  console.log "daily activities"
-  console.log jsondata
-
-  events = $.map(jsondata, (evt, index)->
-    console.log evt
-    if evt.dates
-      evt.dates =[new Date(evt.dates[0]), new Date(evt.dates[1])]
-    return evt
-  )
-  $("#timeline").html("")
-  timeline = new TimeLine("#timeline", events , @dateToShow);
-  timeline.draw()
 
 @act_data_received = (jsondata) ->
   draw_trends(jsondata)

@@ -62,12 +62,13 @@
   popup_messages = JSON.parse($("#popup-messages").val())
   $('#username_field').focus()
 
-  $("#loginForm").on("ajax:success", (e, data, status, xhr) ->
+  $(document).unbind("ajax:success.login")
+  $(document).on("ajax:success.login", "#loginForm", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
 #    redir to main page
     if data.profile
-      document.location = "/"+data.locale+"/pages/dashboard"
+      document.location = "/"
     else
       document.location = "/"+data.locale+"/profile/new"
   ).on("ajax:error", (e, xhr, status, error) ->
