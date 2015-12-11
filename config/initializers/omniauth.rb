@@ -1,3 +1,11 @@
+require 'omniauth-moves'
+
+class OmniAuth::Strategies::Moves
+      def query_string
+        ''
+      end
+    end
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   if defined? CONNECTION_CONFIG
     provider :moves, CONNECTION_CONFIG['MOVES_KEY'], CONNECTION_CONFIG['MOVES_SECRET']
@@ -19,3 +27,4 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     }
   end
 end
+OmniAuth.config.logger = Rails.logger

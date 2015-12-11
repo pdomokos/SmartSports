@@ -126,11 +126,12 @@ Rails.application.routes.draw do
   get 'sync/sync_misfit'
   get 'sync/test_misfit'
 
-  get '/auth/moves/callback' => 'pages#movescb'
-  get '/auth/withings/callback' => 'pages#withingscb'
-  get '/auth/fitbit/callback' => 'pages#fitbitcb'
-  get '/auth/shine/callback' => 'pages#misfitcb'
-  get '/auth/google_oauth2/callback' => 'pages#googlecb'
+  get '/auth/moves/callback' => 'connections#movescb'
+  get '/auth/withings/callback' => 'connections#withingscb'
+  get '/auth/fitbit/callback' => 'connections#fitbitcb'
+  get '/auth/shine/callback' => 'connections#misfitcb'
+  get '/auth/google_oauth2/callback' => 'connections#googlecb'
+  get '/auth/failure' => 'connections#failed'
 
   # get 'pages/reset_password'
   # get 'pages/signin'

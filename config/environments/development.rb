@@ -82,4 +82,10 @@ Rails.application.configure do
   if not File.exists?(DATA_DIR)
     raise "Data dir '#{DATA_DIR}' missing"
   end
+
+  if config.action_controller.default_url_options.nil?
+    config.action_controller.default_url_options = { host: '127.0.0.1' }
+  else
+    config.action_controller.default_url_options[:host]= '127.0.0.1'
+  end
 end

@@ -2,8 +2,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :require_login
-  before_filter :set_default_variables
+  before_action :require_login
+  before_action :set_default_variables
 
   include SaveClickRecord
   include ResponseHelper
@@ -26,10 +26,6 @@ class ApplicationController < ActionController::Base
       @lang_label = 'en'
     end
   end
-
-  # def default_url_options(options={})
-  #   { :locale => I18n.locale }
-  # end
 
   def not_authenticated
      redirect_to "/#{I18n.locale}/pages/signin", alert: "Please login first"
