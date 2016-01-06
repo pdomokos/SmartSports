@@ -183,38 +183,52 @@ class PagesController < ApplicationController
     @clickrecords = ClickRecord.all.group('user_id').order('count_id desc').count('id')
   end
 
-  def settings
+  def moves
     @movesconn = Connection.where(user_id: current_user.id, name: 'moves').first
     if @movesconn
       @active_since_moves = @movesconn.created_at
       @last_sync_date_moves = get_last_synced_date(current_user.id, "moves")
     end
+  end
+
+  def withings
     @withingsconn = Connection.where(user_id: current_user.id, name: 'withings').first
     if @withingsconn
       @active_since_withings = @withingsconn.created_at
       @last_sync_date_withings = get_last_synced_date(current_user.id, "withings")
     end
+  end
+
+  def fitbit
     @fitbitconn = Connection.where(user_id: current_user.id, name: 'fitbit').first
     if @fitbitconn
       @active_since_fitbit = @fitbitconn.created_at
       @last_sync_date_fitbit = get_last_synced_date(current_user.id, "fitbit")
     end
+  end
+
+  def googlefit
     @googleconn = Connection.where(user_id: current_user.id, name: 'google').first
     if @googleconn
       @active_since_google = @googleconn.created_at
       @last_sync_date_google = get_last_synced_date(current_user.id, "google")
     end
+  end
+
+  def misfit
     @misfitconn = Connection.where(user_id: current_user.id, name: 'misfit').first
     if @misfitconn
       @active_since_misfit = @misfitconn.created_at
       @last_sync_date_misfit = get_last_synced_date(current_user.id, "misfit")
     end
+  end
+
+  def profile
     @user = current_user
     if @user.profile.nil?
       @user.profile = Profile.create()
     end
     @profile = @user.profile
-
     save_click_record(:success, nil, nil)
   end
 

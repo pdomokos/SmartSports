@@ -55,7 +55,7 @@
             <% end %>
 
             <div class="topBannerRight topBannerControl" title="Patient Settings">
-            <%= link_to url_for( :action => 'settings', :locale => I18n.locale ), :class => "titleIcon" do %>
+            <%= link_to url_for( :action => 'profile', :locale => I18n.locale ), :class => "titleIcon" do %>
                 <%= image_tag current_user.avatar.url(:medium), class: "headerItemAvatar" %>
             <% end %>
             </div>

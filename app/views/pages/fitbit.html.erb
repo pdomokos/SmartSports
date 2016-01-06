@@ -1,0 +1,11 @@
+<div id="sectionFitbit" class="menu-section">
+  <%= render "fitbit" %>
+</div>
+
+<% content_for :menu do %>
+    <%= render "settingsmenu" %>
+<% end %>
+<script type="text/javascript">
+    fitbit_loaded();
+</script>
+
