@@ -6,8 +6,9 @@ class SyncController < ApplicationController
     if not group.nil?
       query = query.where(group: group)
     end
-    if  query.size() > 0
-      last_sync = query.where("sync_final = 't'").order(date: :desc).limit(1)[0]
+    query = query.where("sync_final = 't'").order(date: :desc).limit(1)
+    if query.size() > 0
+      last_sync = query[0]
       last_sync_date = last_sync.date
     end
     return last_sync_date
@@ -20,8 +21,9 @@ class SyncController < ApplicationController
     if not group.nil?
       query = query.where(group: group)
     end
-    if  query.size() > 0
-      last_sync = query.where("sync_final = 't'").order(start_time: :desc).limit(1)[0]
+    query = query.where("sync_final = 't'").order(start_time: :desc).limit(1)
+    if query.size() > 0
+      last_sync = query[0]
       last_sync_date = last_sync.start_time
       last_sync_date = last_sync_date.strftime(dateFormat)
     end
