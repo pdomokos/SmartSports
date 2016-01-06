@@ -136,6 +136,8 @@
           meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
           d3.json(meas_summary_url, draw_health_trend)
 
+          d3.json("/users/"+uid+"/summaries.json", patient_act_data_received)
+
         create: (event, ui) ->
 #          document.body.style.cursor = 'auto'
           $(".patientName").removeAttr("disabled")
@@ -144,6 +146,9 @@
 
       }).focus ->
         $(this).autocomplete("search")
+
+@patient_act_data_received = (jsondata) ->
+  draw_trends(jsondata)
 
 @loadForms = () ->
   uid = $("#current-user-id").val()

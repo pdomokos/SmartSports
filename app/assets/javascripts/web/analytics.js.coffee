@@ -44,7 +44,7 @@
   @explore_data = jsondata
   #@draw_pie(get_yesterday_ymd())
 
-draw_trends = (jsondata) ->
+@draw_trends = (jsondata) ->
   act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
     ["steps", "running_duration", "cycling_duration"],
     ["Steps"," Running", "Cycling", ],
