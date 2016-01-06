@@ -56,9 +56,9 @@
     self.rotateLogo()
     self.changeColor()
 
-  $('#settings-link').click () ->
+  $('#profile-link').click () ->
     console.log "clicked"
-    window.location = $("#settings-url")[0].value
+    window.location = $("#profile-url")[0].value
 
   registerLangHandler()
   registerLogoutHandler()

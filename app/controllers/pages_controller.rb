@@ -271,7 +271,7 @@ class PagesController < ApplicationController
     if moves_conn
       moves_conn.destroy!
     end
-    redirect_to pages_settings_path
+    redirect_to :controller => 'pages', :action => 'moves', :locale => I18n.locale
   end
 
   def wdestroy
@@ -279,7 +279,7 @@ class PagesController < ApplicationController
     if withings_conn
       withings_conn.destroy!
     end
-    redirect_to pages_settings_path
+    redirect_to :controller => 'pages', :action => 'withings', :locale => I18n.locale
   end
 
   def fdestroy
@@ -287,7 +287,7 @@ class PagesController < ApplicationController
     if fitbit_conn
       fitbit_conn.destroy!
     end
-    redirect_to pages_settings_path
+    redirect_to :controller => 'pages', :action => 'fitbit', :locale => I18n.locale
   end
 
   def gfdestroy
@@ -295,7 +295,7 @@ class PagesController < ApplicationController
     if fit_conn
       fit_conn.destroy!
     end
-    redirect_to pages_settings_path
+    redirect_to :controller => 'pages', :action => 'googlefit', :locale => I18n.locale
   end
 
   def friendship

@@ -20,7 +20,7 @@ module SyncMisfit
     if misfit_conn
       misfit_conn.destroy!
     end
-    redirect_to pages_settings_path
+    redirect_to :controller => 'pages', :action => 'misfit', :locale => I18n.locale
   end
 
   def sync_misfit

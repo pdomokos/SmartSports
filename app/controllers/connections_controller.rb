@@ -15,7 +15,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'misfit', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redir_to_settings
+    redirect_to :controller => 'pages', :action => 'misfit', :locale => I18n.locale
   end
 
   def movescb
@@ -28,7 +28,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'moves', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redir_to_settings
+    redirect_to :controller => 'pages', :action => 'moves', :locale => I18n.locale
   end
 
   def withingscb
@@ -40,7 +40,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'withings', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redir_to_settings
+    redirect_to :controller => 'pages', :action => 'withings', :locale => I18n.locale
   end
 
   def fitbitcb
@@ -51,7 +51,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'fitbit', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redir_to_settings
+    redirect_to :controller => 'pages', :action => 'fitbit', :locale => I18n.locale
   end
 
   def googlecb
@@ -62,10 +62,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'google', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redir_to_settings
+    redirect_to :controller => 'pages', :action => 'googlefit', :locale => I18n.locale
   end
 
-  def redir_to_settings
-    redirect_to :controller => 'pages', :action => 'settings', :locale => I18n.locale
-  end
 end

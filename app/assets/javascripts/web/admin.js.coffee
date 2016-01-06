@@ -20,7 +20,6 @@
       console.log "nok"
     else
       console.log "ok"
-      reset_settings_ui()
       $("#admin-link").addClass("menulink-selected")
       $("#sectionAdmin").removeClass("hiddenSection")
       drawTraffic(data)

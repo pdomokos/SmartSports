@@ -2,7 +2,7 @@
   console.log("profile_loaded()")
   reset_ui()
   define_globals()
-  $("#settings-button").addClass("selected")
+  $("#myprofile-link").addClass("menulink-selected")
 
   popup_messages = JSON.parse($("#popup-messages").val())
 
@@ -50,11 +50,6 @@
     popup_error(JSON.parse(xhr.responseText).msg)
   )
 
-@reset_settings_ui = () ->
-  $(".menuitem a.menulink").removeClass("menulink-selected")
-  $(".menu-section").addClass("hiddenSection")
-
-
 @moves_loaded = () ->
   console.log("moves_loaded()")
   $("#signin-moves-button").click (event) ->
@@ -64,6 +59,8 @@
   $("#disconnect-moves-button").click (event) ->
     event.preventDefault()
     window.location = '/pages/mdestroy'
+
+  $("#moves-link").addClass("menulink-selected")
 
   $("#sync-moves-button").click (event) ->
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
@@ -94,6 +91,8 @@
   $("#disconnect-withings-button").click (event) ->
     event.preventDefault()
     window.location = '/pages/wdestroy'
+
+  $("#withings-link").addClass("menulink-selected")
 
   $("#sync-withings-button").click (event) ->
     $("#withings-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
@@ -126,6 +125,8 @@
     event.preventDefault()
     window.location = '/pages/fdestroy'
 
+  $("#fitbit-link").addClass("menulink-selected")
+
   $("#sync-fitbit-button").click (event) ->
     $("#fitbit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
@@ -157,6 +158,8 @@
     event.preventDefault()
     window.location = '/sync/misfit_destroy'
 
+  $("#misfit-link").addClass("menulink-selected")
+
   $("#sync-misfit-button").click (event) ->
     $("#misfit-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")
     failure_message = "Sync failed <i class='fa fa-warning' style='color: red'></i>"
@@ -187,6 +190,8 @@
   $("#disconnect-google-button").click (event) ->
     event.preventDefault()
     window.location = '/pages/gfdestroy'
+
+  $("#googlefit-link").addClass("menulink-selected")
 
   $("#sync-google-button").click (event) ->
     $("#google-sync-status").html("Syncing... <i class='fa fa-spinner fa-spin'></i>")

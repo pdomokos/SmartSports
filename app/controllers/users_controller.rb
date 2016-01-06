@@ -81,7 +81,7 @@ class UsersController < ApplicationController
     user = User.find(params[:user_id])
     user.avatar = params[:avatar]
     if user.save
-      redirect_to pages_settings_path({:locale => I18n.locale})
+      redirect_to pages_profile_path({:locale => I18n.locale})
     end
   end
 
