@@ -99,8 +99,9 @@
 }
 
 .modalDialog > div.customStyle.notificationStyle {
-  width: 350px;
-  height: 540px;
+  //width: 650px;
+  //height: 540px;
+  display: inline-block;
 }
 
 .sectionTitle #patientName {

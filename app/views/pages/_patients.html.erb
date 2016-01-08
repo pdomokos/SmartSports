@@ -108,28 +108,42 @@
         <div id="notificationContainer">
           <!--<div class="form_warning">Info</div>-->
           <!--<h3 class="form_title"></h3>-->
-          <div class="dialogFormContainer">
+
             <%= form_tag( "/users/_/notifications", remote: true, id: "notificationCreateForm") do %>
+              <div class="dialogFormContainer">
                 <div id="dataform" class="dataForm">
+                  <br/>
+                  <br/>
                   <p class="dataFormRemark">Add notifications for your patients.</p>
-                  <p class="titleSub">Notification  Data</p>
-                  <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="Notification title, e.g. Morning medications">
+                  <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="Notification title">
                   <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
                   <br/>
-                  <input type="search" name="notification[notification_type]" id="notifType" class="dataFormField" placeholder="Notification type, e.g. Reminder">
-                  <textarea name="notification[detail]" class="dataFormField" placeholder="Notification detail, e.g. name of MD"></textarea>
+                  <textarea name="notification[detail]" class="dataFormField"
+                            placeholder="Notification detail&#13;&#10;E.g. take your morning medication"></textarea>
+                  <br/>
+                  <label class="dataFormRemark" for="fillForm">Fill Form</label>
+                  <input type="checkbox" id="fillForm">
+                  <br/>
                   <input type="hidden" name="notification[created_by]" value="<%= current_user.id %>">
-                  <input type="search" name="form_name" class="dataFormField" placeholder="Form name">
-                  <input type="hidden" name="notification[custom_form_id]" >
-                  <input type="text" name="notification[location]" class="dataFormField" placeholder="Location">
-                  <input type="text" name="notification[location_url]" class="dataFormField" placeholder="Location URL">
-                  <input type="search" name="notification[date]" class="dataFormField" id="notifDate" placeholder="Notification date">
+                  <div id="formDetails" class="hidden">
+                    <input type="search" id="input-element_type" class="dataFormField" placeholder="Form to fill">
 
-                  <button id="add-custom-button" class="dataFormField" >Add Notification</button>
+                  </div>
+
+                  <!--<input type="text" name="notification[location]" class="dataFormField" placeholder="Location">-->
+                  <!--<input type="text" name="notification[location_url]" class="dataFormField" placeholder="Location URL">-->
+
+                  <button class="dataFormField add-notification-button" >Add Notification</button>
+
                 </div>
-            <% end %>
-            <div class="clearBoth"></div>
-          </div>
+
+              </div>
+              <div class="dialogFormContainer formContents hidden">
+
+              </div>
+
+              <div class="clearBoth"></div>
+          <% end %>
         </div>
       </div>
     </div>

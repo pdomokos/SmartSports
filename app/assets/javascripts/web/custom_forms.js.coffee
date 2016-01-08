@@ -80,7 +80,7 @@
   )
   Promise.all([p1, p2, p3, p4]).then( (results) ->
     console.log "All promises fullfilled"
-    initMeas()
+    initMeasurement()
     if typeof window.load_custom_form_element_defaults =='function'
       load_custom_form_element_defaults()
     document.body.style.cursor = 'auto'
@@ -112,30 +112,29 @@
   ret[defaultsKey] = JSON.stringify(resource)
   return ret
 
-@initCustomForms = () ->
-  console.log "init custom form editor"
+@initFormElements = (targetSelector, formButton) ->
   @formList = ["activity_exercise",
-              "activity_regular",
-              "diet_drink",
-              "diet_food",
-              "diet_quick_calories",
-              "diet_smoke",
-              "measurement_blood_glucose",
-              "measurement_blood_pressure",
-              "measurement_waist",
-              "measurement_weight",
-              "labresult_egfrepi",
-              "labresult_hba1c",
-              "labresult_ketone",
-              "labresult_ldlchol",
-              "medication_drugs",
-              "medication_insulin",
-              "notification_visit",
-              "lifestyle_illness",
-              "lifestyle_pain",
-              "lifestyle_period",
-              "lifestyle_sleep",
-              "lifestyle_stress"]
+               "activity_regular",
+               "diet_drink",
+               "diet_food",
+               "diet_quick_calories",
+               "diet_smoke",
+               "measurement_blood_glucose",
+               "measurement_blood_pressure",
+               "measurement_waist",
+               "measurement_weight",
+               "labresult_egfrepi",
+               "labresult_hba1c",
+               "labresult_ketone",
+               "labresult_ldlchol",
+               "medication_drugs",
+               "medication_insulin",
+               "notification_visit",
+               "lifestyle_illness",
+               "lifestyle_pain",
+               "lifestyle_period",
+               "lifestyle_sleep",
+               "lifestyle_stress"]
 
   $("#input-element_type").autocomplete({
     minLength: 0,
@@ -143,30 +142,36 @@
     select: (event, ui) ->
       formSelected = ui['item']['label']
       console.log formSelected
-      $("#openModalAddCustomFormElement .dataForm .dataFormContainer").remove()
+      $(targetSelector).empty()
 
-      url = '/form_element.js'
-      console.log "calling load form for: "+url
-      $.ajax({
-        method: "GET",
-        data: {form_name: formSelected},
-        url: url,
-        dataType: "script"
-      })
-        .done( (data, textStatus, jqXHR) ->
-          console.log "load form_element Successful AJAX call"
-        ).fail((data, textStatus, jqXHR) ->
-          console.log "load form_element fail AJAX call: "
-          console.log data
-          console.log jqXHR
-        )
-
-#      $("#openModalAddCustomFormElement .dataFormSeparator").addClass("hidden")
-#      $("#openModalAddCustomFormElement ."+formSelected+"_elem").removeClass("hidden")
-
+      getFormElement(formSelected, targetSelector, formButton)
   }).focus ->
     $(this).autocomplete("search")
 
+@getFormElement = (formName, targetSelector, formButton) ->
+  url = '/form_element.js'
+  console.log "calling load form for: "+url
+  console.log formName+" sel: "+targetSelector+" button:"+formButton
+  $(targetSelector).removeClass("hidden")
+  req = $.ajax({
+    method: "GET",
+    data: {form_name: formName, target_element_selector: targetSelector, form_button: formButton},
+    url: url,
+    dataType: "script"
+  })
+  req.done( (data, textStatus, jqXHR) ->
+    console.log "load form_element Successful AJAX call"
+  )
+  req.fail((data, textStatus, err) ->
+    console.log "load form_element fail AJAX call: "
+    console.log data
+    console.log textStatus
+    console.log err
+
+  )
+@initCustomForms = () ->
+  console.log "init custom form editor"
+  initFormElements("#openModalAddCustomFormElement div.formContents")
   $(document).unbind("click.addForm")
   $(document).on("click.addForm", ".add-custom-form", (evt) ->
     console.log "add custom clicked"

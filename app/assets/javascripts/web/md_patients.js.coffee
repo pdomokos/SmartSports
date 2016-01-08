@@ -1,27 +1,18 @@
 @mdPatientsLoaded = () ->
   console.log "mdPatientsLoaded called"
 
+  define_globals()
+  @popup_messages = JSON.parse($("#popup-messages").val())
+  customPreload()
+
   registerLogoutHandler()
   registerLangHandler()
-
 
   resetMdUI()
   $("#patients-link").addClass("menulink-selected")
 
   @dateToShow = moment().format("YYYY-MM-DD")
-  define_globals()
 
-  notifTypeList = [ { label: "doctor", value: "doctor" },
-    { label: "medication", value: "medication" },
-    { label: "reminder", value: "reminder" },
-    { label: "motivation", value: "motivation" }
-  ]
-  $("#notifType").autocomplete({
-    minLength: 0,
-    source: notifTypeList
-  }).focus ->
-    $(this).autocomplete("search")
-  $("#notifType").val("reminder")
 
   $("#patients-link").click (event) ->
     event.preventDefault()
@@ -30,6 +21,22 @@
     $("#sectionPatients").removeClass("hiddenSection")
 
   $("#notifDate").datetimepicker(timepicker_defaults)
+
+  $(document).unbind("click.fillForm")
+  $(document).on("click.fillForm", "#fillForm", (evt) ->
+
+    if $("#fillForm").prop("checked")
+      console.log "ch"
+      $("#formDetails").removeClass("hidden")
+    else
+      console.log "no ch"
+      $("#formDetails").addClass("hidden")
+      $("#openModalAddNotification .formContents").addClass("hidden")
+      $("#input-element_type").val("")
+      $("#openModalAddNotification div.formContents").empty()
+
+  )
+
 
   $(document).unbind("click.addNotif")
   $(document).on("click.addNotif", "#addNotification", (evt) ->
@@ -40,6 +47,10 @@
     $("#notifTitle").focus()
   )
 
+  $("#openModalAddNotification").on("click", ".add-notification-button", (evt) ->
+    evt.preventDefault()
+    console.log("add notif clicked")
+  )
   $(document).unbind("click.closeNotif")
   $(document).on("click.closeNotif", "#closeModalAddNotification", (evt) ->
     location.href = "#close"
@@ -81,7 +92,6 @@
     $(".patientData .patientDetails").toggleClass("hidden")
   )
   loadPatients()
-  loadForms()
 
 @loadPatients = () ->
   $.ajax '/users.json',
@@ -126,6 +136,8 @@
 
           uid = ui.item.obj.id
 
+          initFormElements("#openModalAddNotification div.formContents", false)
+
           registerShowPatientData(uid)
           initTimelineDatepicker(uid)
           dateToShow = moment().format(moment_fmt)
@@ -149,41 +161,6 @@
 
 @patient_act_data_received = (jsondata) ->
   draw_trends(jsondata)
-
-@loadForms = () ->
-  uid = $("#current-user-id").val()
-  $.ajax '/users/'+uid+'/custom_forms.json',
-    type: 'GET',
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load forms AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load forms  Successful AJAX call"
-      document.body.style.cursor = 'auto'
-      #      console.log data
-      $("input[name=form_name]").autocomplete({
-        minLength: 0,
-        source: (request, response) ->
-          matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-          result = []
-          cnt = 0
-          for element in data
-            if matcher.test(remove_accents(element.form_tag))
-              result.push({label: element.form_tag, value: element.form_tag, id: element.id})
-              cnt += 1
-          response(result)
-        select: (event, ui) ->
-          $("input[name='notification[custom_form_id]']").val(ui.item.id)
-          console.log ui.item
-        create: (event, ui) ->
-#          document.body.style.cursor = 'auto'
-          $("input[name=form_name]").removeAttr("disabled")
-        change: (event, ui) ->
-          console.log "change"
-      }).focus ->
-        $(this).autocomplete("search")
-      if data.length>0
-        $("input[name='form_name']").val(data[0].form_tag)
-        $("input[name='notification[custom_form_id]']").val(data[0].id)
 
 @loadNotifications = (userId) ->
   console.log "calling load notifications for: "+userId

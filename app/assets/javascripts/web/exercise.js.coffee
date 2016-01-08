@@ -128,8 +128,6 @@
   else
     selector = selector+" "
 
-  popup_messages = JSON.parse($("#popup-messages").val())
-
   $(selector+".activity_exercise_scale").slider({
     min: 0,
     max: 2,

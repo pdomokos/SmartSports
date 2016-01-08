@@ -111,10 +111,13 @@
 }
 
 .modalDialog > div.customStyle {
-  width: 350px;
+  //width: 350px;
   //height: 400px;
 }
 
+#notificationContainer {
+  padding-right: 30px;
+}
 .customStyle .formFail {
   border-color: red !important;
 }

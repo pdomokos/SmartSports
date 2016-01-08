@@ -46,10 +46,13 @@
 <% end %>
 <% if initFn!=nil %>
     <script>
-      console.log("calling init: <%= initFn %>, with selector: <%= initSelector %>")
+
     var fn = window['<%= initFn %>'];
     if(typeof fn === 'function') {
+        console.log("calling init: <%= initFn %>, with selector: <%= initSelector %>");
         fn("<%= initSelector%>");
+    } else {
+        console.log("<%= initFn %> missing (selector: <%= initSelector %>)");
     }
     </script>
 <% end %>

@@ -6,7 +6,7 @@
   $("#health-link").css
     background: "rgba(137, 130, 200, 0.3)"
 
-  initMeas()
+  initMeasurement()
   loadHealthHistory()
 
   $("form.resource-create-form.measurement-form button").on('click', (evt) ->
@@ -164,7 +164,7 @@
 @resetMeasForm = () ->
   console.log "reset meas form"
 
-@initMeas = () ->
+@initMeasurement = () ->
   console.log "init meas"
 
   $('.defaultDatePicker').datetimepicker(timepicker_defaults)
