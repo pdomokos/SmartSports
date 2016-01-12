@@ -86,19 +86,21 @@
     document.body.style.cursor = 'auto'
   )
 
-@generateDefaults = (formParams) ->
-  console.log "generateDefaults"
-  console.log formParams
+@paramsToHash = (formParams) ->
   params = formParams.replace(/authenticity_token.*?&/, '')
   params = params.replace(/utf8.*?&/, '')
   jparams = JSON.parse('{"' + decodeURI(params).replace(/"/g, '\\"').replace(/\+/g, ' ').replace(/&/g, '","').replace(/\=/g,'":"') + '"}')
-  console.log jparams
+  return(jparams)
+
+@generateDefaults = (formParams) ->
+  jparams = paramsToHash(formParams)
+
   key = jparams['elementName'].split('_')[0]
   values = {}
   Object.keys(jparams).forEach( (k) ->
-      if k.startsWith(key+"[")
-        arr = k.split(/[\[\]]/)
-        values[arr[1]] = jparams[k]
+    if k.startsWith(key+"[")
+      arr = k.split(/[\[\]]/)
+      values[arr[1]] = jparams[k]
   )
 
   propKey = "custom_form_element[property_code]"
@@ -136,7 +138,7 @@
                "lifestyle_sleep",
                "lifestyle_stress"]
 
-  $("#input-element_type").autocomplete({
+  $("#elementName").autocomplete({
     minLength: 0,
     source: formList,
     select: (event, ui) ->
@@ -268,7 +270,7 @@
     $.when.apply(undefined, reqs).done( () ->
       console.log "ALL COMPLETE"
       #      location.href = "customforms"
-      popup_success(popup_messages.save_success, $("#addWellbeingButton").css("background"))
+      popup_success(popup_messages.save_success, $("#addMeasurementButton").css("background"))
       console.log cb_succ
       if cb_succ
         cb_succ()

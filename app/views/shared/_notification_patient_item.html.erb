@@ -31,11 +31,14 @@
                                                               end
   %> </span>
 
-    <% if notification_patient_item.custom_form %>
-        <span class="itemTitle">Form: </span><span><%= notification_patient_item.custom_form.form_tag %></span>
-        <input type="hidden" class="customFormId" name="customFormId" value="<%= notification_patient_item.custom_form.id%>">
+    <% if notification_patient_item.form_name %>
+        <span class="itemTitle">Form: </span><span><%= notification_patient_item.form_name %></span>
+        <input type="hidden" class="formName" name="formName" value="<%= notification_patient_item.form_name %>">
     <% end %>
     <input type="hidden" class="notificationId" name="notificationId" value="<%= notification_patient_item.id%>">
+    <% if notification_patient_item.default_data %>
+        <input type="hidden" class="defaultData" value="<%= notification_patient_item.default_data %>">
+    <% end %>
   </td>
 
   <td class="iconColumn">

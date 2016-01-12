@@ -661,7 +661,9 @@ div.dialogFormContainer {
 .historyTable tr {
   vertical-align: top;
 }
-
+.historyTable td {
+  vertical-align: middle;
+}
 .historyTable button{
   margin-top: 20px;
 }
@@ -682,8 +684,6 @@ div.dialogFormContainer {
 .padded {
     padding: 10px;
 }
-
-
 
 //
 
@@ -1112,6 +1112,7 @@ body.wait button {
 
 .notifTile .historyTitle {
   font-size: 16px !important;
+  padding: 10px;
 }
 
 .dismissNotif {

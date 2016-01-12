@@ -52,13 +52,9 @@ class NotificationsController < ApplicationController
     result = arr.select do |notif|
       ret = false
       if notif.date.nil?||notif.date==""
-        if notif.date.strftime("%F")==today
-          if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
-            ret = true
-          end
-        end
+        logger.warn("notification #{notif.id} has no date assigned")
       else
-        if recurringOnDay(notif.notification_data, day)
+        if recurringOnDay(notif.recurrence_data, day)
           if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
             ret = true
           end

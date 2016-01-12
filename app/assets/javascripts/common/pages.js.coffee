@@ -88,7 +88,9 @@
 
     #    redir to main page
     document.location = "/"
-  ).on("ajax:error", (e, xhr, status, error) ->
+  ).on("ajax:error", "#logoutForm", (e, xhr, status, error) ->
+    form_id = e.currentTarget.id
+    console.log "fail "+form_id
     console.log e
     console.log xhr
     console.log error

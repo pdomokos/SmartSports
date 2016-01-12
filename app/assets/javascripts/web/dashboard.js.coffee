@@ -7,7 +7,13 @@
   loadPatientNotifications(uid)
 
   $(document).unbind("click.patientNotif")
-  $(document).on("click.patientNotif", "#notificationContainer .showNotifClickArea", @loadForm  )
+  $(document).on("click.patientNotif", "#notificationContainer .showNotifClickArea", (evt) ->
+    if "hidden" in $("#currentForm")[0].classList
+      loadForm(evt)
+    else
+      $("#currentForm").addClass("hidden")
+      $("#currentForm").html("")
+  )
 
   $(document).unbind("ajax:success.deleteNotif")
   $(document).on("ajax:success.deleteNotif", "#notificationContainer", (e, data, status, xhr) ->
@@ -16,9 +22,29 @@
     $("#currentForm").addClass("hidden")
     $("#currentForm").html("")
     loadPatientNotifications(uid)
-  ).on("ajax:error", (e, xhr, status, error) ->
-    console.log "notification dismiss failed"
-    console.log e
+  )
+
+  $(document).unbind("ajax:success.notifform")
+  $(document)
+  .on("ajax:success.notifform", "#currentForm .resource-create-form", (e, data, status, xhr) ->
+    console.log("form created succ")
+    $("#currentForm").addClass("hidden")
+    $("#currentForm").html("")
+    notifId = $("#currentForm")[0].dataset.notifid
+    $.ajax "/notifications/"+notifId,
+      type: 'PUT',
+      data: {dismiss: true}
+      success: (data, textStatus, jqXHR) ->
+        console.log "dismissed notif "+notifId
+        loadPatientNotifications(uid)
+        popup_messages = JSON.parse($("#popup-messages").val())
+        popup_success(popup_messages.save_success)
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "failed to dismis notif "+notifId
+  )
+  .on("ajax:error.notifform", "#currentForm .resource-create-form", (e, xhr, status, error) ->
+    popup_messages = JSON.parse($("#popup-messages").val())
+    popup_error(popup_messages.failed_to_add_data)
   )
 
 @loadPatientNotifications = (userId) ->
@@ -33,29 +59,43 @@
 
 @loadForm = (evt) ->
   @popup_messages = JSON.parse($("#popup-messages").val())
-  cf = evt.currentTarget.querySelector("input.customFormId")
-  cfId = null
-  if cf
-    cfId = cf.value
+  formNameInput = evt.currentTarget.querySelector("input.formName")
+  formName = null
+  if formNameInput
+    formName = formNameInput.value
   notif = evt.currentTarget.querySelector("input.notificationId")
   notifId = null
   if notif
     notifId = notif.value
-  console.log "loadform called: id="+cfId
-  if cfId
-    $.ajax "/custom_forms/"+cfId+".js?target=currentForm",
+  console.log "loadform called: id="+formName
+  if formName
+    $.ajax({
+      url: "/form_element.js",
       type: 'GET',
+      data: {form_name: formName, target_element_selector: "#currentForm"},
+      dataType: "script",
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "load custom form AJAX Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
         console.log "load custom form Successful AJAX call"
-
-        registerAddCustomForm( () ->
-          console.log "dismiss: "+notifId
-          $("#dismiss_notif_"+notifId).submit()
-        )
+        $("#currentForm").attr("data-notifid", notifId)
+        $("#currentForm").removeClass("hidden")
         customPreload()
+        if $(".notification_"+notifId+" .defaultData")
+          fillElementDefaults(JSON.parse($(".notification_"+notifId+" .defaultData").val()))
+#        registerAddCustomForm( () ->
+#          console.log "dismiss: "+notifId
+#          $("#dismiss_notif_"+notifId).submit()
+#        )
+
+    })
   else
     $("#currentForm").addClass("hidden")
     $("#currentForm").html("")
 
+@fillElementDefaults = (data) ->
+  console.log(data)
+  mainKey = Object.keys(data)[0]
+  for k in Object.keys(data[mainKey])
+    console.log(k+"->"+data[mainKey][k])
+    $("#currentForm input[name='"+mainKey+"["+k+"]"+"']").val(data[mainKey][k])

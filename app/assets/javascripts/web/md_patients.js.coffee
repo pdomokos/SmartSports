@@ -13,7 +13,6 @@
 
   @dateToShow = moment().format("YYYY-MM-DD")
 
-
   $("#patients-link").click (event) ->
     event.preventDefault()
     resetMdUI()
@@ -32,11 +31,9 @@
       console.log "no ch"
       $("#formDetails").addClass("hidden")
       $("#openModalAddNotification .formContents").addClass("hidden")
-      $("#input-element_type").val("")
+      $("#elementName").val("")
       $("#openModalAddNotification div.formContents").empty()
-
   )
-
 
   $(document).unbind("click.addNotif")
   $(document).on("click.addNotif", "#addNotification", (evt) ->
@@ -44,23 +41,68 @@
     userid = $("input[name=patientId").val()
     $("#notificationCreateForm").attr("action", "/users/"+userid+"/notifications")
     location.href = "#openModalAddNotification"
+    resetNotifForm()
     $("#notifTitle").focus()
   )
 
   $("#openModalAddNotification").on("click", ".add-notification-button", (evt) ->
     evt.preventDefault()
     console.log("add notif clicked")
+
+    window.tgt = evt.target
+    addForm = evt.target.closest("form")
+    action = addForm.getAttribute("action")
+    params = decodeURIComponent($("#"+addForm.id).serialize())
+
+    data = paramsToHash(params)
+    fname = data['elementName']
+    delete data['elementName']
+    data["notification[form_name]"] = fname
+    k = fname.split("_")[0]
+    console.log("k = "+k)
+    defaultForm = $(".formContents form")
+    defaultParams = decodeURIComponent(defaultForm.serialize())
+    defaultValues = generateDefaults(defaultParams)['custom_form_element[defaults]']
+    defaultHashVal = paramsToHash(defaultParams)
+    console.log defaultHashVal
+
+    timeKey = k+"[date]"
+    console.log "checking "+timeKey
+    if defaultHashVal.hasOwnProperty(timeKey)
+      data["notification[date]"] = defaultHashVal[k+"[date]"]
+
+    timeKey = k+"[start_time]"
+    window.timeKey = timeKey
+    window.defaultHashVal = defaultHashVal
+    console.log "checking "+timeKey
+    if defaultHashVal.hasOwnProperty(timeKey)
+      console.log "defaulhash starttime:"
+      console.log defaultHashVal[timeKey]
+      data["notification[date]"] = defaultHashVal[timeKey]
+
+    data["notification[default_data]"] = defaultValues
+    console.log("creating notification:")
+    console.log(data)
+    $.ajax action,
+      type: 'POST',
+      data: data
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "Addnotif AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        console.log "Addnotif Successful AJAX call"
+        location.href = "#close"
+        console.log(data)
+        userid = $("input.patientId").val()
+        loadNotifications(userid)
   )
+
   $(document).unbind("click.closeNotif")
   $(document).on("click.closeNotif", "#closeModalAddNotification", (evt) ->
+
     location.href = "#close"
   )
 
-  $("form#notificationCreateForm").on("ajax:success", (e, data, status, xhr) ->
-    location.href = "#close"
-    userid = $("input[name=patientId").val()
-    loadNotifications(userid)
-  )
   $("table.notificationTable tbody.recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
     console.log "delete success"
     userid = $("input[name=patientId").val()
@@ -79,7 +121,7 @@
     nid = notifid[13..]
     $.ajax '/notifications/'+nid,
       type: 'PUT',
-      data: {'notification[notification_data]': JSON.stringify(notifs)}
+      data: {'notification[recurrence_data]': JSON.stringify(notifs)}
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "Dayselect clicked AJAX Error: #{textStatus}"
@@ -92,6 +134,17 @@
     $(".patientData .patientDetails").toggleClass("hidden")
   )
   loadPatients()
+
+@resetNotifForm = () ->
+  $("#notifTitle").val("")
+  $("#notificationContainer textarea").val("")
+  $("#fillForm").prop("checked", false)
+  $("#elementName").val("")
+  $("#formDetails").addClass("hidden")
+
+  $(".formContents").addClass("hidden")
+  $(".formContents").html("")
+
 
 @loadPatients = () ->
   $.ajax '/users.json',
@@ -164,7 +217,6 @@
 
 @loadNotifications = (userId) ->
   console.log "calling load notifications for: "+userId
-
   $.ajax '/users/' + userId + '/notifications.js?order=desc&limit=10',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
