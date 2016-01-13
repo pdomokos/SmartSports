@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if !current_user.admin
+    if !current_user.admin && !current_user.doctor
       respond_to do |format|
         format.html { redirect_to errors_unauthorized_path }
         format.json { render json: { :status => 'NOK', :msg => 'error_unauthorized' }, status: 403  }
