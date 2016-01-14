@@ -1,4 +1,5 @@
 @labresults_loaded = () ->
+  self = this
   console.log "labresults loaded"
   uid = $("#current-user-id")[0].value
 
@@ -22,14 +23,14 @@
     return true
 
   $("#ketone-create-form button").click ->
-    if(!ketoneSelected)
+    if(!self.ketoneSelected)
       val = $("#ketone").val()
       if !val
         val = "empty item"
       popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
-      ketoneSelected = null
+      self.ketoneSelected = null
       return false
-    ketoneSelected = null
+    self.ketoneSelected = null
     return true
 
   $("#hba1c-create-form button").click ->
@@ -125,12 +126,13 @@
     { label: "+++++", value: "+++++" }
   ]
 
-  ketoneSelected = null
+  @ketoneSelected = null
+  self = this
   $("#ketone").autocomplete({
     minLength: 0,
     source: ketoneList,
     change: (event, ui) ->
-      ketoneSelected = ui['item']
+      self.ketoneSelected = ui['item']
   }).focus ->
     $(this).autocomplete("search")
 
@@ -164,20 +166,7 @@
     todayButton: true
   })
 
-  $('#controll_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false,
-    todayButton: true
-    onSelectDate: (ct, input) ->
-      input.datetimepicker('hide')
-  })
-  $('#next_controll_datepicker').datetimepicker({
-    format: 'Y-m-d H:i',
-    timepicker: true,
-    todayButton: true,
-    onSelectTime: (ct, input) ->
-      input.datetimepicker('hide')
-  })
+  $('#controll_datepicker').datetimepicker(timepicker_defaults)
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 

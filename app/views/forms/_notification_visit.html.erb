@@ -1,12 +1,11 @@
 <div class="dataForm notification_visit <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
-  <input id="control" type="hidden" name="notification[notification_type]" />
-  <input id="control_txt" type="search" class="dataFormField" placeholder="<%=t 'select' %>">
+
+  <input id="control_txt" type="search" class="dataFormField" name="notification[title]" placeholder="<%=t 'select' %>">
+  <div class="dataFormFieldUnitNarrow"></div>
+  <textarea class="dataFormField" name="notification[detail]" placeholder="Részletek"></textarea>
+
+  <input id='controll_datepicker' type='text' class="dataFormField" name="notification[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnitNarrow"></div>
 
-  <input id='controll_datepicker' type='text' class="dataFormField" name="notification[date]" value="<%= Date.current.strftime("%F") %>"/>
-  <div class="dataFormFieldUnitNarrow"></div>
-
-  <div style="margin-left: 20px; display: inline-block;"><label for="next_controll_datepicker"><%=t 'set_reminder'%>:</label></div>
-  <input id='next_controll_datepicker' type='text' class="dataFormField" name="notification[remind_at]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnitNarrow"></div>
 </div>

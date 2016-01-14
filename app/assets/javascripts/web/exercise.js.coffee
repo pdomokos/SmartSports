@@ -194,7 +194,7 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in window.sd_other_activities
+      for element in getStored("sd_other_activities")
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
