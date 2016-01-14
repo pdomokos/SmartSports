@@ -314,11 +314,8 @@
     tmp.push(boxDataB[d])
     boxDataArrB.push(tmp)
   )
-  window.boxDataArrA = boxDataArrA
-  window.boxDataArrB = boxDataArrB
 
-
-  width = $("#"+eid).parent().width()/2
+  width = $("div."+eid).parent().parent().parent().width()/2
   height = width*3.0/7.0
 
   chart = d3.box()
@@ -342,7 +339,7 @@
   bpHeight = 420
   #(width-margin.left-margin.right)/boxDataArr.length
 
-  svg = d3.select("#"+eid+" > div")
+  svg = d3.select("div."+eid)
     .append("svg")
     .attr("class", "box")
     .attr("width", width )

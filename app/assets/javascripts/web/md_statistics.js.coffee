@@ -44,6 +44,7 @@
 
 
 @initStatUI = () ->
+  self = this
   measList = [
     { label: "blood_glucose", value: "blood_sugar" },
     { label: "systolic", value: "systolic" },
@@ -66,7 +67,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-      self.update_elements()
+      self.updateHighlight()
     todayButton: true
   })
   $('input[name=endA]').datetimepicker({
@@ -74,7 +75,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-      self.update_elements()
+      self.updateHighlight()
     todayButton: true
   })
   $('input[name=startB]').datetimepicker({
@@ -82,7 +83,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-      self.update_elements()
+      self.updateHighlight()
     todayButton: true
   })
   $('input[name=endB]').datetimepicker({
@@ -90,7 +91,7 @@
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-      self.update_elements()
+      self.updateHighlight()
     todayButton: true
   })
 
@@ -151,16 +152,19 @@
 
 @measureSelected = (measure) ->
   console.log measure
+  $("div.stat-container").addClass("hidden")
+  $("div.stat-chart").html("")
   uid = $(".patientId").val()
   $(".measureName").val(measure)
   initStatistics()
   meas = "blood_pressure"
   if measure == "blood_sugar"
     meas = "blood_sugar"
+
   loadBgData(uid, meas)
 
 @loadBgData = (uid, measure) ->
-  d3.json("/users/"+uid+"/measurements.json?meas_type="+measure, stat_bg_data_received)
+  d3.json("/users/"+uid+"/measurements.json?meas_type="+measure, statBgDdataReceived)
 
 @getMeasGroup = (d) ->
   ret = "unspecified"
@@ -171,6 +175,7 @@
   else if moment(d).hour() >= 18 && moment(d).hour() <= 22
     ret = "dinner"
   return ret
+
 @getBgGroup = (d) ->
   lbMap = {
     '48': 'Unspecified',
@@ -209,14 +214,34 @@
   to = moment(summary.to).format(moment_fmt)
   $(".allDataChart").html("<i class='fa fa-bar-chart fa-2x'></i><span class='bold'>"+meas+" </span><span>Interval: "+from+" to "+to+" Data points: "+summary.length+" Mean: "+summary.mean.toFixed(2)+"</span>")
 
-@stat_bg_data_received = (jsonData) ->
+@updateHighlight = () ->
+  self = this
+  console.log "updatehighlight"
+  if self.lineChart && self.lineChart.chartData && self.lineChart.chartData.length > 0
+    console.log "updating"
+    self.lineChart.clearHighlights()
+    self.lineChart.addHighlight($('input[name=startA]').val(), $('input[name=endA]').val(), 'selA')
+    self.lineChart.addHighlight($('input[name=startB]').val(), $('input[name=endB]').val(), 'selB')
+
+@getExtentsMiddle = (ext) ->
+  f = moment(ext[0])
+  t = moment(ext[1]).add(1, 'days')
+  d = t.diff(f, 'days')
+  m = moment(f).add(d/2, 'days')
+  return [[f.format(moment_datefmt), m.format(moment_datefmt)], [m.format(moment_datefmt), t.format(moment_datefmt)]]
+
+@getSel = (name) ->
+  ".dataSelect input[name='"+name+"']"
+
+@statBgDdataReceived = (jsonData) ->
   console.log "stat bg_data_received, size="+jsonData.length
   console.log jsonData[0]
   @currdata = jsonData
   if jsonData && jsonData.length>0
     $("section.sectionPatients").removeClass("hidden")
     meas = $(".measureName").val()
-    $(".bg-chart-svg").html("")
+
+    $("#bg-container svg.bg-chart-svg").html("")
 
     sortData(jsonData)
 
@@ -237,26 +262,25 @@
       yaxisTitle = "Pulse (1/min)"
       measName = "Pulse"
 
+    window.chartData = chartData
     summary = getSummary(chartData)
     showSummary( measName, summary )
     @lineChart = new LineChart("bg", chartData, yaxisTitle)
     @lineChart.draw()
 
-    diff = moment(summary.to).diff(summary.from, 'days')
-    middle = moment(new Date(summary.from)).add(diff/2, 'days')
+    highlight_extents = getExtentsMiddle(@lineChart.getTimeExtent())
 
-    @lineChart.addHighlight(summary.from, middle, 'selA')
-    @lineChart.addHighlight(middle, summary.to, 'selB')
 
-    $(".dataSelect input.startASelect").val(moment(summary.from).format(moment_datefmt))
-    $(".dataSelect input.endASelect").val(moment(middle).format(moment_datefmt))
-    $(".dataSelect input.startBSelect").val(moment(middle).format(moment_datefmt))
-    $(".dataSelect input.endBSelect").val(moment(summary.to).format(moment_datefmt))
-    $(".dataSelect input.startASelect").removeAttr("disabled")
-    $(".dataSelect input.endASelect").removeAttr("disabled")
-    $(".dataSelect input.startBSelect").removeAttr("disabled")
-    $(".dataSelect input.endBSelect").removeAttr("disabled")
+    $(getSel("startA")).val(highlight_extents[0][0])
+    $(getSel("endA")).val(highlight_extents[0][1])
+    $(getSel("startB")).val(highlight_extents[1][0])
+    $(getSel("endB")).val(highlight_extents[1][1])
+    $(getSel("startA")).removeAttr("disabled")
+    $(getSel("endA")).removeAttr("disabled")
+    $(getSel("startB")).removeAttr("disabled")
+    $(getSel("endB")).removeAttr("disabled")
     $(".dataSelect i.showChart").removeAttr("disabled")
+    updateHighlight()
 
     $(".dataSelect li.attrSelectDone").removeClass("grayed")
     $(".dataSelect li.aSelect").removeClass("grayed")
@@ -269,26 +293,28 @@
   if !@lineChart
     return
 
-  rangeA = [$("input.startASelect").val(), $("input.endASelect").val()]
-  rangeB = [$("input.startBSelect").val(), $("input.endBSelect").val()]
+  rangeA = [$(getSel("startA")).val(), $(getSel("endA")).val()]
+  rangeB = [$(getSel("startB")).val(), $(getSel("endB")).val()]
   console.log rangeA
   console.log rangeB
 
-  eid = "stat-"+@statnum+"-container"
-  @statnum = @statnum+1
-  h = $("#stat-template").clone()
-  h.attr('id', eid)
-  h.prependTo("#allstats")
+  eid = "stat-chart"
+  $(".statHeader div.title").html("Statistics")
 
-  $("#"+eid+" div.title").html($("#title").val())
+  $("div."+eid).html("")
 
   axisLabels = {
     blood_sugar: "BG (mmol/L)",
     systolic: "SYS (mmHg)",
     dioastolic: "DIA (mmHg)",
-    pulse: "Pulse (mmHg)",
+    pulse: "Pulse (1/min)",
   }
   pp = new ParallelPlot(eid, @lineChart.chartData, axisLabels[$("section.dataSelect input[name=attributeName]").val()])
   pp.draw(rangeA, rangeB)
 
+  console.log("Ranges:")
+  console.log rangeA
+  console.log rangeB
   draw_boxplot(eid, @lineChart.chartData, rangeA, rangeB)
+
+  $("div.stat-container").removeClass("hidden")

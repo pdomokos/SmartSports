@@ -34,10 +34,12 @@
 @bg_data_received = (jsondata) ->
   console.log "bg_data_received "+jsondata.length
   bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
+  bg_extent = bg_trend_chart.get_time_extent()
+  higlight_extents = getExtentsMiddle(bg_extent)
   bg_trend_chart.draw()
   if jsondata && jsondata.size>0
-    bg_trend_chart.add_highlight("2015-07-12", "2015-07-19", "selA")
-    bg_trend_chart.add_highlight("2015-07-19", "2015-07-26", "selB")
+    bg_trend_chart.add_highlight(higlight_extents[0], higlight_extents[1], "selA")
+    bg_trend_chart.add_highlight(higlight_extents[1], higlight_extents[2], "selB")
 
 @act_data_received = (jsondata) ->
   draw_trends(jsondata)

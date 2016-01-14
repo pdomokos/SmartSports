@@ -57,10 +57,10 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
         }
     });
 
-    width = $("#"+this.chartElement).parent().width()/2;
-    height = width*2.0/7.0;
+    width = $("div."+this.chartElement).parent().parent().parent().width()/2;
+    height = width*3.0/7.0;
 
-    svg = d3.select("#"+this.chartElement+" > div")
+    svg = d3.select("div."+this.chartElement)
         .append("svg")
         .attr("class", "box")
         .attr("width", width )
@@ -79,9 +79,9 @@ ParallelPlot.prototype.draw = function(rangeA, rangeB) {
     }
     addKeys(arr, parDataA);
     addKeys(arr, parDataB);
-    console.log(arr);
+    //console.log(arr);
     time_extent = d3.extent(arr, function(d) {return moment(d).toDate()} );
-    console.log(time_extent);
+    //console.log(time_extent);
     d1 = time_extent[0];
     d2 = time_extent[1];
     d1.setHours(0);

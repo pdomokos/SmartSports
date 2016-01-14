@@ -158,9 +158,9 @@ LineChart.prototype.calcTimeExtent = function (extent) {
     var ret = extent;
     var m0 = moment(extent[0]);
     var m1 = moment(extent[1]);
-    if( m1.diff(m0, 'days') > 60) {
-        ret = [m1.subtract(60, 'days').toDate(), extent[1]];
-    }
+    //if( m1.diff(m0, 'days') > 60) {
+    //    ret = [m1.subtract(60, 'days').toDate(), extent[1]];
+    //}
     console.log("calcTimeExtent: ")
     console.log(ret)
     return ret;

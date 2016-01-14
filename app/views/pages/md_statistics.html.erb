@@ -17,24 +17,21 @@
             </div>
         </div>
 
-        <div id="allstats" class="columns">
+      <div class="columns stat-container hidden">
+        <div class="boxed-group connection-block">
 
-        </div>
-    </div>
-
-    <div class="hidden">
-        <div id="stat-template" class="boxed-group connection-block">
-
-          <div class="noClickSelect">
+          <h3 class="noClickSelect statHeader">
             <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
             <div class="training-type left"></div>
             <div class="title left"></div>
             <div class="selected-meas legend-container right"></div>
-          </div>
+          </h3>
 
           <div class="boxed-group-inner chart stat-chart">
           </div>
         </div>
+      </div>
+
     </div>
 
 </section>
