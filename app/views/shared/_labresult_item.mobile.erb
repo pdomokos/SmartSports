@@ -35,7 +35,7 @@
     </tr>
     <tr>
       <td class="deleteLabresult">
-        <%= form_tag( "/users/#{current_user.id}/lab_results/#{labresult_item.id}", id: "deleteLabresult", remote: true, method: "delete", class: "resource-delete-form") do %>
+        <%= form_tag( "/users/#{current_user.id}/labresults/#{labresult_item.id}", id: "deleteLabresult", remote: true, method: "delete", class: "resource-delete-form") do %>
             <button class="tableControl">
               <i class="fa fa-trash-o fa-2x"></i>
             </button>

@@ -2,11 +2,11 @@
   <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
   <input type="hidden" name="labresult[category]" value="ldl_chol" />
 
-  <input id="ldl_chol" type="text" name="labresult[ldl_chol]" class="dataFormField" placeholder="LDL-chol"/>
+  <input type="text" class="ldl_chol dataFormField" name="labresult[ldl_chol]" placeholder="LDL-chol"/>
 
   <div class="dataFormFieldUnitNarrow">mmol/L</div>
   <br>
 
-  <input id='ldl_chol_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="ldl_chol_datepicker dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
   <br>
 </div>

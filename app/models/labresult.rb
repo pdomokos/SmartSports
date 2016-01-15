@@ -30,7 +30,7 @@ class LabValidator < ActiveModel::Validator
   end
 end
 
-class LabResult < ActiveRecord::Base
+class Labresult < ActiveRecord::Base
   belongs_to :user
   validates :user_id, :presence => true, :allow_nil => true
   validates :hba1c, :numericality => {message: 'should_be_number'}, :allow_nil => true

@@ -1,13 +1,13 @@
-module LabResultsCommon
+module LabresultsCommon
 
-  # POST /users/[user_id]/lab_results
-  # POST /users/[user_id]/lab_results.json
+  # POST /users/[user_id]/labresults
+  # POST /users/[user_id]/labresults.json
   def create
     user_id = params[:user_id]
     par = labresult_params
     par.merge!(:user_id => user_id)
     print par
-    labresult = LabResult.new(par)
+    labresult = Labresult.new(par)
 
     if labresult.save
       send_success_json(labresult.id, {category: labresult.category})
@@ -25,10 +25,10 @@ module LabResultsCommon
     end
   end
 
-  # PATCH/PUT /lab_results/1
-  # PATCH/PUT /lab_results/1.json
+  # PATCH/PUT /labresults/1
+  # PATCH/PUT /labresults/1.json
   def update
-    @labresult = LabResult.find_by_id(params[:id])
+    @labresult = Labresult.find_by_id(params[:id])
 
     if @labresult.nil?
       send_error_json(nil, "Param 'labresult' missing", 400)
@@ -64,10 +64,10 @@ module LabResultsCommon
 
   end
 
-  # DELETE /users/:user_id/lab_results/:id
-  # DELETE /users/:user_id/lab_results/:id.json
+  # DELETE /users/:user_id/labresults/:id
+  # DELETE /users/:user_id/labresults/:id.json
   def destroy
-    @labresult = LabResult.find(params[:id])
+    @labresult = Labresult.find(params[:id])
     if @labresult.nil?
       send_error_json(nil, "Delete error", 400)
       return

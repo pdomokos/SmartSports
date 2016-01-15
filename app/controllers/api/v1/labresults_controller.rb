@@ -1,7 +1,7 @@
 module Api::V1
-  class LabResultsController < ApiController
+  class LabresultsController < ApiController
 
-    include LabResultsCommon
+    include LabresultsCommon
 
     def index
       lim = 10
@@ -16,7 +16,7 @@ module Api::V1
       end
 
       user = User.find(user_id)
-      hist = user.lab_results.order(created_at: :desc).limit(lim)
+      hist = user.labresults.order(created_at: :desc).limit(lim)
       render json: hist
     end
 

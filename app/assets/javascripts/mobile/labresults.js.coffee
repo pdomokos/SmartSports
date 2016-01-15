@@ -106,7 +106,7 @@
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent labresults"
   lang = $("#data-lang-labresult")[0].value
-  url = '/users/' + current_user + '/lab_results.js?source='+window.default_source+'&order=desc&limit=10&mobile=true'
+  url = '/users/' + current_user + '/labresults.js?source='+window.default_source+'&order=desc&limit=10&mobile=true'
   if lang
     url = url+"&lang="+lang
   $.ajax url,

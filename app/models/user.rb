@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :family_histories
   has_many :notifications
   has_many :sensor_measurements
-  has_many :lab_results
+  has_many :labresults
   has_many :click_records
   has_many :tracker_data
   has_many :summaries

@@ -22,29 +22,26 @@
     controlSelected = null
     return true
 
-  $("#ketone-create-form button").click ->
-    if(!self.ketoneSelected)
-      val = $("#ketone").val()
-      if !val
-        val = "empty item"
+  $("#ketone-create-form button").click = (evt) ->
+    btnItem = evt.target
+    valueItem = btnItem.parentNode.querySelector("input[name='labresult[ketone]']")
+    if(!valueItem.value)
       popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
-      self.ketoneSelected = null
       return false
-    self.ketoneSelected = null
     return true
 
   $("#hba1c-create-form button").click ->
-    if( isempty("#hba1c") || notpositive("#hba1c"))
+    if( isempty(".hba1c") || notpositive(".hba1c"))
       popup_error(popup_messages.failed_to_create_HBA1C, $("#addLabResultButton").css("background"))
       return false
     return true
   $("#ldlchol-create-form button").click ->
-    if( isempty("#ldl_chol") || notpositive("#ldl_chol"))
-      popup_error(popup_messages.failed_to_create_LDL, $("#addLabResultButton").css("background"))
+    if( isempty(".ldl_chol") || notpositive(".ldl_chol"))
+      popup_error(opup_messages.failed_to_create_LDL, $("#addLabResultButton").css("background"))
       return false
     return true
   $("#egfrepi-create-form button").click ->
-    if( isempty("#egfr_epi") || notpositive("#egfr_epi"))
+    if( isempty(".egfr_epi") || notpositive(".egfr_epi"))
       popup_error(popup_messages.failed_to_create_EGFR, $("#addLabResultButton").css("background"))
       return false
     return true
@@ -70,10 +67,10 @@
       loadLabresult()
 
     $("#control_txt").val(null)
-    $("#hba1c").val(null)
-    $("#ldl_chol").val(null)
-    $("#egfr_epi").val(null)
-    $("#ketone").val(null)
+    $(".hba1c").val(null)
+    $(".ldl_chol").val(null)
+    $(".egfr_epi").val(null)
+    $(".ketone").val(null)
 
     if !category
       category = 'control'
@@ -101,6 +98,7 @@
 
 @initLabresult = () ->
   console.log "init labres"
+  self = this
 
   doctorList = $("#doctorList").val().split(";")
   controlList = [{ label: doctorList[0], value: doctorList[0], intValue: 1},
@@ -119,46 +117,67 @@
     $(this).autocomplete("search")
 
   ketoneList = [ { label: "Negative", value: "Negative" },
-    { label: "+", value: "+" },
-    { label: "++", value: "++" },
-    { label: "+++", value: "+++" },
-    { label: "++++", value: "++++" },
-    { label: "+++++", value: "+++++" }
+    { label: "+", value: "1" },
+    { label: "++", value: "2" },
+    { label: "+++", value: "3" },
+    { label: "++++", value: "4" },
+    { label: "+++++", value: "5" }
   ]
+  @ketoneHash = {
+    "Negative": "Negative",
+    "1": "+",
+    "2": "++",
+    "3": "+++",
+    "4": "++++",
+    "5": "+++++"
+  }
 
-  @ketoneSelected = null
-  self = this
-  $("#ketone").autocomplete({
+  setKetone = (event, ui) ->
+    labelItem = event.target
+    labelItem.value = ui['item']['label']
+    valueItem = labelItem.parentNode.querySelector("input[name='labresult[ketone]']")
+    valueItem.value = ui['item']['value']
+
+  $(".ketone").autocomplete({
     minLength: 0,
     source: ketoneList,
     change: (event, ui) ->
-      self.ketoneSelected = ui['item']
+      console.log "change: "
+      console.log ui['item']
+      console.log event.target
+      setKetone(event, ui)
+    select: (event, ui) ->
+      console.log "select: "
+      console.log ui['item']
+      console.log event.target
+      setKetone(event, ui)
+      return false
   }).focus ->
     $(this).autocomplete("search")
 
 
-  $('#hba1c_datepicker').datetimepicker({
+  $('.hba1c_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
-  $('#ldl_chol_datepicker').datetimepicker({
+  $('.ldl_chol_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
-  $('#egfr_epi_datepicker').datetimepicker({
+  $('.egfr_epi_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
-  $('#ketone_datepicker').datetimepicker({
+  $('.ketone_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false
     onSelectDate: (ct, input) ->
@@ -166,7 +185,7 @@
     todayButton: true
   })
 
-  $('#controll_datepicker').datetimepicker(timepicker_defaults)
+  $('.controll_datepicker').datetimepicker(timepicker_defaults)
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 
@@ -175,7 +194,7 @@
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lab_results"
   lang = $("#data-lang-labresult")[0].value
-  url = '/users/' + current_user + '/lab_results.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
+  url = '/users/' + current_user + '/labresults.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
   console.log url
   $.ajax url,
     type: 'GET',
@@ -199,3 +218,13 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load recent lab_results  Successful AJAX call"
       console.log textStatus
+
+@load_labresult_ketone = (sel, data) ->
+  console.log("load ketone: "+sel+" data:")
+  labres = data['labresult']
+  console.log(labres)
+  console.log(labres.ketone)
+
+  $(sel+" input[name='labresult[ketone]']").val(labres['ketone'])
+  $(sel+" .ketone").val(@ketoneHash[labres['ketone']])
+  $(sel+" input[name='labresult[date]']").val(labres['date'])

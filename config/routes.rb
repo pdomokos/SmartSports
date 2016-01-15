@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         resources :medications
         resources :lifestyles
         resources :family_histories
-        resources :lab_results
+        resources :labresults
         resources :notifications
         resources :sensor_measurements
         resources :custom_forms do
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     resources :diets
     resources :medications
     resources :family_histories
-    resources :lab_results
+    resources :labresults
     resources :sensor_measurements
     resources :profile
     resources :custom_forms do

@@ -35,9 +35,8 @@
   $(document).unbind("click.addCFB")
   $(document).on("click.addCFB", ".addCustomFormElementButton", (evt) ->
     evt.preventDefault()
-    console.log "add cfe clicked, "
-    console.log evt.target
     addForm = evt.target.closest("form")
+    console.log "add cfe clicked, #"+addForm.id
     params = decodeURIComponent($("#"+addForm.id).serialize())
     formid = $("#openModalAddCustomFormElement input[name=customFormId]").val()
     url = "/custom_forms/"+formid+"/custom_form_elements"
@@ -78,7 +77,11 @@
     console.log("illness types loaded")
     initLifestyle()
   )
-  Promise.all([p1, p2, p3, p4]).then( (results) ->
+  p5 = loadIllnessTypes( () ->
+    console.log("illness types loaded")
+    initLabresult()
+  )
+  Promise.all([p1, p2, p3, p4, p5]).then( (results) ->
     console.log "All promises fullfilled"
     initMeasurement()
     if typeof window.load_custom_form_element_defaults =='function'

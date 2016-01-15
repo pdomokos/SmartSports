@@ -2,11 +2,11 @@
   <input type="hidden" name="labresult[source]" value="<%= @default_source %>">
   <input type="hidden" name="labresult[category]" value="egfr_epi" />
 
-  <input id="egfr_epi" type="text" name="labresult[egfr_epi]" class="dataFormField" placeholder="eGFR-EPI"/>
+  <input type="text" class="egfr_epi dataFormField" name="labresult[egfr_epi]" placeholder="eGFR-EPI"/>
 
   <div class="dataFormFieldUnit egfr">ml/min/1.73m<sup>2</sup></div>
   <br>
 
-  <input id='egfr_epi_datepicker' type='text' class="dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
+  <input type='text' class="egfr_epi_datepicker dataFormField" name="labresult[date]" value="<%= DateTime.current.strftime("%F") %>"/>
   <br>
 </div>

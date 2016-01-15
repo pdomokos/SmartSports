@@ -20,7 +20,7 @@
       <% elsif  labresult_item.category=='egfr_epi' %>
           <span class="itemTitle">eGFR-EPI: </span><span><%= labresult_item.egfr_epi %> ml/min/1.73m2</span>
       <% elsif  labresult_item.category=='ketone' %>
-          <span class="itemTitle">Ketone: </span><span><%= labresult_item.ketone %> </span>
+          <span class="itemTitle">Ketone: </span><span><%= @ketoneHash[labresult_item.ketone] %> </span>
       <% else %>
           <span class="itemTitle">Unknown labresult</span>
       <% end %>
@@ -29,7 +29,7 @@
     </td>
 
   <td class="iconColumn">
-    <%= form_tag( "/users/#{current_user.id}/lab_results/#{labresult_item.id}", id: "delete_labresult_#{labresult_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
+    <%= form_tag( "/users/#{current_user.id}/labresults/#{labresult_item.id}", id: "delete_labresult_#{labresult_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">
           <i class="fa fa-trash-o fa-2x"></i>
         </button>

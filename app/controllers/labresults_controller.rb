@@ -1,7 +1,7 @@
-class LabResultsController < ApplicationController
-  include LabResultsCommon
+class LabresultsController < ApplicationController
+  include LabresultsCommon
   include SaveClickRecord
-
+  before_action :set_var
   def index
     user_id = params[:user_id]
 
@@ -14,7 +14,7 @@ class LabResultsController < ApplicationController
       @is_mobile = true
     end
 
-    @labresults = LabResult.where("user_id = #{user_id}")
+    @labresults = Labresult.where("user_id = #{user_id}")
 
     if order and order=="desc"
       @labresults = @labresults.order(created_at: :desc)
@@ -31,4 +31,15 @@ class LabResultsController < ApplicationController
     end
   end
 
+  private
+  def set_var
+    @ketoneHash = {
+        "Negative"=> "Negative",
+        "1"=> "+",
+        "2"=> "++",
+        "3"=> "+++",
+        "4"=> "++++",
+        "5"=> "+++++"
+    }
+  end
 end
