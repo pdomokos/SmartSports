@@ -24,7 +24,7 @@ class Lifestyle < ActiveRecord::Base
   @@painList = ["Slight mild", "Mild", "Moderate", "Severe", "Worst possible"]
   @@periodPainList = ["No pain","Mild pain","Moderate pain","Severe pain","Very painful"]
   @@periodVolumeList = ["Light", "Moderate", "Strong", "Quite heavy","Heavy"]
-  @@painTypeList = ["Acute","Nociceptive","Neuropathic(central)","Neuropathic(peripheral)","Visceral","Mixed"]
+  @@painTypeList = ["Acute","Nociceptive","Neuropathic(central)","Neuropathic(peripheral)","Visceral","Mixed","Angina","Cardiac arrhythmia"]
 
   def self.sleepList
     @@sleepList

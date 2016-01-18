@@ -108,20 +108,33 @@ class AnalysisDataController < ApplicationController
     )
     result.concat(meas_arr)
 
-    lifestyles = user.lifestyles.where(group: 'sleep')
+    lifestyles = user.lifestyles
     if f
       lifestyles = lifestyles.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t )
     end
-    result.concat(lifestyles.collect{|lifestyle| {
-                      id: lifestyle.id,
-                      tooltip: lifestyle.tooltip,
-                      title: 'Lifestyle',
-                      depth: 0,
-                      dates: [lifestyle.start_time, lifestyle.end_time],
-                      evt_type: 'lifestyle',
-                      source: 'SmartDiab'
-                  }})
-
+    lifes_arr = []
+    lifes_arr.concat(lifestyles.collect do |lifestyle|
+      ret = {
+          id: lifestyle.id,
+          tooltip: lifestyle.tooltip,
+          title: 'Lifestyle',
+          depth: 0,
+          dates: [lifestyle.start_time, lifestyle.end_time],
+          evt_type: 'lifestyle',
+          amount: lifestyle.amount,
+          source: 'SmartDiab'
+      }
+      if lifestyle.group=='stress'
+        ret['lf_group']= [lifestyle.group, "Stress"]
+      elsif lifestyle.group=='illness'
+        ret['lf_group']= [lifestyle.group, IllnessType.find(lifestyle.illness_type_id).name]
+      elsif lifestyle.group=='pain'
+        ret['lf_group']= [lifestyle.group, lifestyle.pain_type_name+"(pain)"]
+      end
+      ret
+    end
+    )
+    result.concat(lifes_arr)
 
     medications = user.medications.where("date between ? and ?", f, t)
     result.concat(medications.collect{|med| {

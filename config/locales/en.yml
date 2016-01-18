@@ -281,7 +281,7 @@ en:
   painList:                 "Slight mild,Mild,Moderate,Severe,Worst possible"
   periodPainList:           "No pain,Mild pain,Moderate pain,Severe pain,Very painful"
   periodVolumeList:         "Light, Moderate, Normal, Heavy, Extremely heavy"
-  painTypeList:             "Acute,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed"
+  painTypeList:             "Acute,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed,Angina,Cardiac arrhythmia"
 
 # genetics
   genetics:           "Genetics"

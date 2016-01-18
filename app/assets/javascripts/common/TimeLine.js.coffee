@@ -19,7 +19,6 @@ class TimeLine
 
   draw: () ->
     self = this
-    console.log "xxxxx"
     console.log @data
     if @data.length == 0
       @svg.append("text")
@@ -49,6 +48,9 @@ class TimeLine
     bg_extent = [0, 20]
     @bg_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bg_extent)
 
+    stress_extent = [0, 20]
+    @stress_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(stress_extent)
+
     @svg.append("clipPath")
       .attr("id", "chart-clip")
       .append("rect")
@@ -77,7 +79,7 @@ class TimeLine
     )
 
     linedata = $.grep(@data, (item) ->
-      return (item.evt_type=='exercise'||item.evt_type=='wellbeing')
+      return (item.evt_type=='exercise')
     )
     console.log "linedata"
     console.log linedata
@@ -96,6 +98,14 @@ class TimeLine
         (item.evt_type!='measurement'||(item.meas_type!='blood_pressure'&&item.meas_type!='blood_sugar')))
     )
 
+    lifestyledata = $.grep(@data, (item) ->
+      return (item.evt_type=='lifestyle'&& item.lf_group && (item.lf_group[0]=='illness' || item.lf_group[0]=='pain'))
+    )
+
+    stressdata = $.grep(@data, (item) ->
+      return (item.evt_type=='lifestyle' && item.lf_group && item.lf_group[0]=="stress")
+    )
+
     console.log "bgdata"
     console.log bgdata
     @draw_bgdata(canvas, bgdata)
@@ -107,6 +117,14 @@ class TimeLine
     console.log "bpdata"
     console.log bpdata
     @draw_bpdata(canvas, bpdata)
+
+    console.log "lifestyle line data"
+    console.log lifestyledata
+    @draw_lifestyledata(canvas, lifestyledata)
+
+    console.log "lifestyle point data"
+    console.log stressdata
+    @draw_stressdata(canvas, stressdata)
 
     for sens in sensordata
       @draw_sensordata(canvas, sens)
@@ -300,6 +318,93 @@ class TimeLine
       .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
       .attr("cy", (d) -> self.hr_scale(d.values[2]))
       .attr("r", "2")
+
+  draw_stressdata: (canvas, data) ->
+    self = this
+    console.log "STRESSDATA="
+    console.log data
+    if !data || data.length==0
+      return
+
+    getTooltip = (d) ->
+      title = d.lf_group[1]+
+        "<br/>At: "+moment(d.dates[0]).format("YYYY-MM-DD")+
+        "<br/>Source: "+d.source
+      return title
+
+    groups = canvas.selectAll("g.stressdata").data(data)
+    groupsEnter = groups.enter().append("g")
+    .attr("id", (d) -> d.id)
+    .attr("data-tooltip", getTooltip)
+    .attr("data-titlebar", true)
+    .attr("data-title", (d) -> d.title)
+    .attr("class", "stressdata")
+
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints wellbeing")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner wellbeing")
+
+    groupsEnter.selectAll("circle.timePoints")
+    .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()+12*60*60*1000))
+    .attr("cy", (d) -> self.stress_scale(0))
+    .attr("r", "5")
+
+    canvas.selectAll("g.stressdata > circle.timePointsInner")
+    .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()+12*60*60*1000))
+    .attr("cy", (d) -> self.stress_scale(0))
+    .attr("r", "2")
+
+  draw_lifestyledata: (canvas, data) ->
+    self = this
+    console.log "LIFESTYLEDATA="
+    console.log data
+    if !data || data.length==0
+      return
+    getTooltip = (d) ->
+      title = d.lf_group[1]+
+        "<br/>Duration:"+((d.dates[1]-d.dates[0])/60.0/60.0/1000.0).toFixed(1)+" hour(s)"+
+        "<br/>From: "+moment(d.dates[0]).format("YYYY-MM-DD HH:mm:SS")+
+        "<br/>Source: "+d.source
+      return title
+    self = this
+    groups = canvas.selectAll("g.lflinedata").data(data)
+    groupsEnter = groups.enter().append("g")
+    .attr("id", (d) -> d.id)
+    .attr("data-tooltip", getTooltip  )
+    .attr("data-titlebar", 'true')
+    .attr("data-title", (d) -> d.title)
+    .attr("class", "lflinedata")
+
+    groupsEnter.append("line").attr("class", (d)->d.evt_type+" timeLines wellbeing")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsA wellbeing")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner timePointsAInner wellbeing")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePoints timePointsB wellbeing")
+    groupsEnter.append("circle").attr("class", (d)->d.evt_type+" timePointsInner timePointsBInner wellbeing")
+
+    groupsEnter.selectAll("line")
+    .attr("x1", (d) -> self.time_scale(d.dates[0].getTime()))
+    .attr("y1", (d) -> self.y_scale(0))
+    .attr("x2", (d) -> self.time_scale(d.dates[1].getTime()))
+    .attr("y2", (d) -> self.y_scale(0))
+
+    groupsEnter.selectAll("circle.timePointsA")
+    .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+    .attr("cy", (d) -> self.y_scale(0))
+    .attr("r", "5")
+
+    canvas.selectAll("g.lflinedata > circle.timePointsAInner")
+    .attr("cx", (d) -> self.time_scale(d.dates[0].getTime()))
+    .attr("cy", (d) -> self.y_scale(0))
+    .attr("r", "2")
+
+    groupsEnter.selectAll("circle.timePointsB")
+    .attr("cx", (d) -> self.time_scale(d.dates[1].getTime()))
+    .attr("cy", (d) -> self.y_scale(0))
+    .attr("r", "5")
+
+    canvas.selectAll("g.lflinedata > circle.timePointsBInner")
+    .attr("cx", (d) -> self.time_scale(d.dates[1].getTime()))
+    .attr("cy", (d) -> self.y_scale(0))
+    .attr("r", "2")
 
   draw_sensordata: (canvas, data ) ->
     self = this

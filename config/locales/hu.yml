@@ -259,7 +259,7 @@ hu:
   painList:               "Nagyon enyhe,Enyhe,Mérsékelt,Erős,Tűrhetetlen"
   periodPainList:         "Nincs fájdalom,Gyenge fájdalom,Mérsékelt fájdalom,Erős fájdalom,Tűrhetetlen fájdalom"
   periodVolumeList:       "Alig észlelhető, Gyenge, Közepes, Erős, Rendkívül erős"
-  painTypeList:           "Akut,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed"
+  painTypeList:           "Akut,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed,Angina,Cardiac arrhythmia"
 
 # genetics
   genetics:           "Genetika"
