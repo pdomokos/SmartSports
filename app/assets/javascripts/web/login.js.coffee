@@ -1,4 +1,4 @@
-@profile_loaded = () ->
+@profile_reg_loaded = () ->
   console.log "profile loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
   $('#firstname_field').focus()
@@ -20,9 +20,9 @@
     #    redir to main page
     document.location = "/"+data.locale+"/pages/dashboard"
   ).on("ajax:error", (e, data, status, error) ->
-    console.log data.responseJSON
-#    popup_error(popup_messages.failed_to_add_data)
-    popup_error(data.responseJSON["msg"])
+    #console.log data.responseJSON
+    #popup_error(popup_messages.failed_to_add_data)
+    popup_error(data.statusText)
   )
   $("#emptyProfileForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
@@ -31,8 +31,9 @@
     #    redir to main page
     document.location = "/"+data.locale+"/pages/dashboard"
   ).on("ajax:error", (e, data, status, error) ->
-    console.log data.responseJSON
-    popup_error(data.responseJSON["msg"])
+    #console.log data.responseJSON
+    #popup_error(data.responseJSON["msg"])
+    popup_error(data.statusText)
   )
 
 
