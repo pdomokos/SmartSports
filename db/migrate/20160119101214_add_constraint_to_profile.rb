@@ -1,6 +1,6 @@
 class AddConstraintToProfile < ActiveRecord::Migration
   def change
-    remove_index :profiles, :user_id
+    remove_index :profiles, column: :user_id
     add_index :profiles, :user_id, unique: true
   end
 end
