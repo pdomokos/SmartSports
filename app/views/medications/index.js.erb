@@ -1,10 +1,2 @@
-<% if not @is_mobile %>
-    $("#recentResourcesTable").html("");
-    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/medication_item', :collection=> @medications ) %>");
-<% else %>
-    console.log("load medications js mobile called");
-    $("#medicationPage .recentResourcesListview").html("");
-    $("#medicationPage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/medication_item", formats: [:mobile], collection: @medications, as: "medication_item" ) %>");
-    $("#medicationPage .recentResourcesListview").listview( "refresh" );
-    $("#medicationPage .recentResourcesListview").trigger( "updatelayout");
-<% end %>
+$("#recentResourcesTable").html("");
+$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/medication_item', :collection=> @medications ) %>");

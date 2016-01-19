@@ -14,11 +14,6 @@ class MedicationsController < ApplicationController
     limit = params[:limit]
     favourites = params[:favourites]
 
-    @is_mobile = false
-    mobile = params[:mobile]
-    if mobile and mobile=="true"
-      @is_mobile = true
-    end
     u = User.find(user_id)
     @medications = u.medications
 

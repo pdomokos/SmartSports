@@ -74,7 +74,6 @@ Rails.application.routes.draw do
     get 'password_resets/update'
     resources :password_resets
 
-    get 'pages/mobilepage'
     get 'pages/main'
     get 'pages/dashboard'
     get 'pages/diet'

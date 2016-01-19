@@ -1,19 +1,7 @@
 class ProfileController < ApplicationController
   before_action :set_profile, only: [:show, :edit]
   before_action :set_locale
-  has_mobile_fu
   layout :which_layout
-
-  def formats=(values)
-    # fall back to the browser view if the mobile or tablet version does not exist
-    values << :html if values == [:mobile] or values == [:tablet]
-
-    # DEBUG: force mobile. Uncomment if not debugging!
-    #values = [:mobile, :html] if values == [:html]
-    # values = [:tablet, :html] if values == [:html]
-
-    super(values)
-  end
 
   def index
   end
@@ -104,11 +92,7 @@ class ProfileController < ApplicationController
     end
 
     def which_layout
-      if is_mobile_device?
-        'auth.mobile'
-      else
-        'auth'
-      end
+      'auth'
     end
 
 end

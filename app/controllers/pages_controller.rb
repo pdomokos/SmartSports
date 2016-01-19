@@ -1,12 +1,9 @@
 class PagesController < ApplicationController
   include DashboardHelper
 
-  # before_action :set_user_data, only: [:dashboard, :health, :exercise, :diet, :explore, :settings, :mobilepage]
-  before_action :redir_mobile, except: [:mobilepage, :signin]
   before_action :set_locale
   before_action :set_user_data
   before_filter :require_login, except: [:signin, :signup, :reset_password]
-  has_mobile_fu
   layout :which_layout
 
   @movesconn = nil
@@ -34,19 +31,6 @@ class PagesController < ApplicationController
     if I18n.locale.to_s=='hu'
       @lang_label = 'en'
     end
-  end
-
-  def mobilepage
-    @counts = []
-    @counts[0] = Diet.where(user_id: current_user.id).count
-    @counts[1] = Activity.where(user_id: current_user.id).count
-    @counts[2] = Measurement.where(user_id: current_user.id).count
-    @counts[3] = Medication.where(user_id: current_user.id).count
-    @counts[4] = Lifestyle.where(user_id: current_user.id).count
-    @counts[5] = FamilyHistory.where(user_id: current_user.id).count
-    @counts[6] = LabResult.where(user_id: current_user.id).count
-    @relativeList = JSON.dump(FamilyHistory.relativeList)
-    @diseaseList = JSON.dump(FamilyHistory.diseaseList)
   end
 
   def main
@@ -305,34 +289,11 @@ class PagesController < ApplicationController
 private
 
   def which_layout
-    if is_mobile_device?
-      if action_name=='signin' || action_name=='signup' || action_name=='reset_password'
-        'auth.mobile'
-      else
-        'pages.mobile'
-      end
-    elsif action_name=='signin' || action_name=='signup' || action_name=='reset_password'
+    if action_name=='signin' || action_name=='signup' || action_name=='reset_password'
       'auth'
     else
       'pages'
     end
-  end
-
-  def redir_mobile
-    if is_mobile_device?
-      redirect_to url_for( :action => 'mobilepage', :locale => I18n.locale)
-    end
-  end
-
-  def formats=(values)
-    # fall back to the browser view if the mobile or tablet version does not exist
-    values << :html if values == [:mobile] or values == [:tablet]
-
-    # DEBUG: force mobile. Uncomment if not debugging!
-    #values = [:mobile, :html] if values == [:html]
-    # values = [:tablet, :html] if values == [:html]
-
-    super(values)
   end
 
   def get_shown_user(params)

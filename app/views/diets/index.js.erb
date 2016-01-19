@@ -1,11 +1,3 @@
-<% if not @is_mobile %>
-    console.log("load diets js called");
-    $("#recentResourcesTable").html("");
-    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/diet_item', :collection=> @diets ) %>");
-<% else %>
-    console.log("load diets js mobile called");
-    $("#dietPage .recentResourcesListview").html("");
-    $("#dietPage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/diet_item", formats: [:mobile], collection: @diets, as: "diet_item" ) %>");
-    $("#dietPage .recentResourcesListview").listview( "refresh" );
-    $("#dietPage .recentResourcesListview").trigger( "updatelayout");
-<% end %>
+console.log("load diets js called");
+$("#recentResourcesTable").html("");
+$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/diet_item', :collection=> @diets ) %>");

@@ -1,11 +1,3 @@
-<% if not @is_mobile %>
-    console.log("load lifestyles js called");
-    $("#recentResourcesTable").html("");
-    $("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/lifestyle_item', :collection=> @lifestyles ) %>");
-<% else %>
-    console.log("load lifestyle js mobile called");
-    $("#wellbeingPage .recentResourcesListview").html("");
-    $("#wellbeingPage .recentResourcesListview").html("<%= escape_javascript( render partial: "shared/lifestyle_item", formats: [:mobile], collection: @lifestyles, as: "lifestyle_item" ) %>");
-    $("#wellbeingPage .recentResourcesListview").listview( "refresh" );
-    $("#wellbeingPage .recentResourcesListview").trigger( "updatelayout");
-<% end %>
+console.log("load lifestyles js called");
+$("#recentResourcesTable").html("");
+$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/lifestyle_item', :collection=> @lifestyles ) %>");

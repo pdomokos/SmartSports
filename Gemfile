@@ -53,8 +53,6 @@ gem 'omniauth-shine', :github => 'socialworkout/omniauth-shine'
 gem 'misfit_gem'
 gem 'omniauth-google-oauth2'
 
-gem 'mobile-fu'
-
 gem 'chronic'
 
 gem 'delayed_job_active_record'

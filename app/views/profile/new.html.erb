@@ -1,27 +1,15 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
-<% if is_mobile_device? %>
-    <div style="position:absolute;left:50%;margin-left:-240px;top:0px;">
 
-      <div style="width: 480px;height: 228px;color: white;">
-        <div style="padding-left: 100px;padding-top:20px;">
-          <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
-        </div>
-        <div style="padding-top: 15px;">
-          <span style="font-family: 'Open Sans', sans-serif;font-size: 18px;"><%=t 'fill_personal_info' %></span><br>
-        </div>
-      </div>
-    </div>
-<% else %>
-    <div style="position:absolute;left:47%;margin-left:-240px;top:100px;">
+<div style="position:absolute;left:47%;margin-left:-240px;top:100px;">
 
-      <div style="width: 600px;height: 128px;color: grey;">
-        <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
-        <div style="padding-top: 15px;">
-            <span style="font-family: 'Open Sans', sans-serif;font-size: 18px;"><%=t 'fill_personal_info' %></span><br>
-        </div>
-      </div>
+  <div style="width: 600px;height: 128px;color: grey;">
+    <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
+    <div style="padding-top: 15px;">
+        <span style="font-family: 'Open Sans', sans-serif;font-size: 18px;"><%=t 'fill_personal_info' %></span><br>
     </div>
-<% end %>
+  </div>
+</div>
+
 
 <div id="registerDiv" class="registerDiv">
   <div>

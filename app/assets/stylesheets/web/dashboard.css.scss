@@ -954,7 +954,7 @@ div.egfr {
 }
 
 .historyItem .start {
-  background-image: url("type/img_start.png");
+  background-image: image-url("type/img_start.png");
 }
 
 .bgc0 {
@@ -990,41 +990,41 @@ div.egfr {
 }
 
 .blood_pressure {
-  background-image: url("type/img_bloodPressure.png");
+  background-image: image-url("type/img_bloodPressure.png");
 }
 
 .blood_sugar {
-  background-image: url("type/img_bloodSugar.png");
+  background-image: image-url("type/img_bloodSugar.png");
 }
 
 .steps {
-  background-image: url("img_cycling.png");
+  background-image: image-url("img_cycling.png");
 }
 
 .exercise {
-  background-image: url("img_exercise@2x.png");
+  background-image: image-url("img_exercise@2x.png");
 }
 
 .insulin {
-  background-image: url("type/img_insulin.png");
+  background-image: image-url("type/img_insulin.png");
 }
 
 .cycling {
-  background-image: url("img_cycling.png");
+  background-image: image-url("img_cycling.png");
 }
 
 .food {
-  background-image: url("img_food.png");
+  background-image: image-url("img_food.png");
 }
 
 .weight {
-  background-image: url("img_weight.png");
+  background-image: image-url("img_weight.png");
 }
 
 .topcolor {
   width: 100%;
   min-height: 320px;
-  /*background: url("../images/dashboard_bg8.jpg");*/
+  /*background: image-url("../images/dashboard_bg8.jpg");*/
   background-position-y: bottom;
   padding-bottom: 20px;
 }
@@ -1039,7 +1039,7 @@ div.egfr {
 }
 
 .dashboardbody {
-  background: url("dashboard_bg9.jpg") center no-repeat !important;
+  background: image-url("dashboard_bg9.jpg") center no-repeat !important;
 }
 
 .tilesContainer {

@@ -104,9 +104,6 @@ GEM
       ruby-progressbar
     misfit_gem (0.1.2)
       oauth
-    mobile-fu (1.3.1)
-      rack-mobile-detect
-      rails
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     momentjs-rails (2.10.6)
@@ -158,8 +155,6 @@ GEM
       mimemagic (= 0.3.0)
     polyglot (0.3.5)
     rack (1.5.5)
-    rack-mobile-detect (0.4.0)
-      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.1.0)
@@ -252,7 +247,6 @@ DEPENDENCIES
   jquery-turbolinks
   minitest-reporters (= 1.0.5)
   misfit_gem
-  mobile-fu
   mocha
   momentjs-rails (>= 2.8.1)
   moves

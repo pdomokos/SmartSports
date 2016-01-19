@@ -67,15 +67,15 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def upload
-    # par = params.require(:user).permit( :name, :avatar)
-    user = User.find(params[:user_id])
-    user.avatar = params[:avatar]
-    user.save!
-    respond_to do |format|
-      format.html { redirect_to '/pages/mobilepage#settingsPage' }
-    end
-  end
+  # TODO is this not needed?
+  # def upload
+  #   user = User.find(params[:user_id])
+  #   user.avatar = params[:avatar]
+  #   user.save!
+  #   respond_to do |format|
+  #     format.html { redirect_to '/pages/mobilepage#settingsPage' }
+  #   end
+  # end
 
   def uploadAv
     user = User.find(params[:user_id])

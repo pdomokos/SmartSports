@@ -12,11 +12,6 @@ class ActivitiesController < ApplicationController
     order = params[:order]
     limit = params[:limit]
 
-    @is_mobile = false
-    mobile = params[:mobile]
-    if mobile and mobile=="true"
-      @is_mobile = true
-    end
     favourites = params[:favourites]
 
     @activities = Activity.where("user_id = #{user_id}")

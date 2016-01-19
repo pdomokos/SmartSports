@@ -1,30 +1,16 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
-<% if is_mobile_device? || is_tablet_device? %>
-    <div style="position:absolute;left:50%;margin-left:-240px;top:0px;">
 
-        <div style="width: 480px;height: 228px;color: white;">
-            <div style="padding-left: 100px;padding-top:20px;">
-                <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
-            </div>
-            <div style="float: left;padding-top: 15px;padding-left: 100px;">
-                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;"><%=t 'sign_up_text_part1' %></span><br>
-                <span><%=t 'sign_up_text_part2' %></span>
-            </div>
+<div style="position:absolute;left:47%;margin-left:-240px;top:100px;">
+
+    <div style="width: 600px;height: 128px;color: white;">
+        <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
+
+        <div style="float: left;padding-top: 35px;padding-left: 20px;">
+            <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;"><%=t 'sign_up_text_part1' %></span><br>
+            <span><%=t 'sign_up_text_part2' %></span>
         </div>
     </div>
-<% else %>
-    <div style="position:absolute;left:47%;margin-left:-240px;top:100px;">
-
-        <div style="width: 600px;height: 128px;color: white;">
-            <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
-
-            <div style="float: left;padding-top: 35px;padding-left: 20px;">
-                <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;"><%=t 'sign_up_text_part1' %></span><br>
-                <span><%=t 'sign_up_text_part2' %></span>
-            </div>
-        </div>
-    </div>
-<% end %>
+</div>
 
 <div id="registerDiv" class="registerDiv">
     <div>
@@ -42,13 +28,8 @@
     </div>
 </div>
 
-<% if is_mobile_device? %>
-    <%= render partial: 'features.mobile', locals: {  msg: "Already a Member? Click <a class=\"signupLink\" href=\"#{I18n.locale}/pages/signin\">Here</a> to Login!"} %>
-<% else %>
-    <% have_account = t 'have_account' %>
-    <%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signin\">" + have_account +"</a>"} %>
-<% end %>
-
+<% have_account = t 'have_account' %>
+<%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signin\">" + have_account +"</a>"} %>
 
 <script>
     signup_loaded()

@@ -11,11 +11,6 @@ class FamilyHistoriesController < ApplicationController
     order = params[:order]
     limit = params[:limit]
 
-    @is_mobile = false
-    mobile = params[:mobile]
-    if mobile and mobile=="true"
-      @is_mobile = true
-    end
     @family_histories = FamilyHistory.where("user_id = #{user_id}")
     if source
       @family_histories = @family_histories.where("source = '#{source}'")

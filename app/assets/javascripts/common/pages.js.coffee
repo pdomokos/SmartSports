@@ -2,35 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@pages_mobile_menu = () ->
-  self = this
-  console.log "pages mobile"
-  define_globals()
-
-  $.mobile.changePage.defaults.allowSamePageTransition = true
-  $.mobile.filterable.prototype.options.filterCallback = ( index, searchValue ) ->
-    return false
-
-
-  $("#logoutFormMobile").on("ajax:success", (e, data, status, xhr) ->
-    form_id = e.currentTarget.id
-    console.log "success "+form_id
-
-    document.location = '/login'
-  ).on("ajax:error", (e, xhr, status, error) ->
-    console.log e
-    console.log xhr
-    console.log error
-    $("#failurePopup").popup("open")
-  )
-
-#  $( document ).on( "swiperight", "#main-page", ( e ) ->
-#    console.log e
-#    if ( $( ".ui-page-active" ).jqmData( "panel" ) != "open" )
-#      if ( e.type == "swiperight" )
-#        $( "#menuPanel" ).panel( "open" );
-#  )
-
 @setTooltips = () ->
   $(".topBannerControl").tooltip({
       show: {

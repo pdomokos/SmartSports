@@ -29,12 +29,6 @@ class MeasurementsController < ApplicationController
     limit = params[:limit]
     favourites = params[:favourites]
 
-    @is_mobile = false
-    mobile = params[:mobile]
-    if mobile and mobile=="true"
-      @is_mobile = true
-    end
-
     @measurements = user.measurements
     if start
       @measurements = @measurements.where("date >= '#{start}'")

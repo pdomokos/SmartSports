@@ -8,12 +8,6 @@ class LabresultsController < ApplicationController
     order = params[:order]
     limit = params[:limit]
 
-    @is_mobile = false
-    mobile = params[:mobile]
-    if mobile and mobile=="true"
-      @is_mobile = true
-    end
-
     @labresults = Labresult.where("user_id = #{user_id}")
 
     if order and order=="desc"
