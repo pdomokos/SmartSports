@@ -111,7 +111,7 @@ button.dataFormField {
     color: #57C88A !important;
 }
 .dietStyle .dataFormField {
-  border: solid 1px #57C88A !important;
+  border: solid 1px #57C88A;
   width: 235px;
 };
 .dietStyle button {
@@ -1120,4 +1120,13 @@ body.wait button {
 
 .dismissNotif {
   cursor: pointer;
+}
+
+
+.infoButton {
+  border: none;
+  color: #ffffff;
+  width: 90px;
+  height: 40px;
+  margin-top: 10px;
 }

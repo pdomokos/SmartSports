@@ -20,7 +20,7 @@
       val = $(".diet_smoke_type").val()
       if !val
         val = "empty item"
-      popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+      popup_error(popup_messages.failed_to_add_data)
       smokeSelected = null
       return false
     smokeSelected = null
@@ -31,7 +31,7 @@
       val = $("#dinkname").val()
       if !val
         val = "empty item"
-      popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+      popup_error(popup_messages.failed_to_add_data)
       drinkSelected = null
       return false
     drinkSelected = null
@@ -55,14 +55,14 @@
     console.log data
     resetDiet()
     loadDietHistory()
-    popup_success(data['diet_name']+popup_messages.saved_successfully, $("#addFoodButton").css("background"))
+    popup_success(data['diet_name']+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)
     $('.diet_smoke_type').val(null)
     console.log xhr.responseText
     color = $("#addFoodButton").css("background")
-    popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -71,7 +71,7 @@
     loadDietHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data, $("#addFoodButton").css("background"))
+    popup_error(popup_messages.failed_to_delete_data)
   )
 
   $('.hisTitle').click ->
@@ -266,7 +266,7 @@
   val = $(sel+" .diet_food_name").val()
   if !val
     val = "empty item"
-    popup_error(popup_messages.failed_to_add_data, $("#addFoodButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data)
     return false
   return true
 

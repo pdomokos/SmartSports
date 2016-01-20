@@ -25,9 +25,9 @@
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+popup_messages.saved_successfully, $("#addActivityButton").css("background"))
+    popup_success(data['activity_name']+popup_messages.saved_successfully, "exerciseStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add+$("#activityname").val(), $("#addActivityButton").css("background"))
+    popup_error(popup_messages.failed_to_add+$("#activityname").val(), "exerciseStyle")
   )
 
   $("#regular-activity-create-form").on("ajax:success", (e, data, status, xhr) ->
@@ -41,9 +41,9 @@
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+popup_messages.saved_successfully, $("#addActivityButton").css("background"))
+    popup_success(data['activity_name']+popup_messages.saved_successfully, "exerciseStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add+$("#otheractivityname").val(), $("#addActivityButton").css("background"))
+    popup_error(popup_messages.failed_to_add+$("#otheractivityname").val(), "exerciseStyle")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -52,7 +52,7 @@
     loadExerciseHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data, $("#addActivityButton").css("background"))
+    popup_error(popup_messages.failed_to_delete_data, "exerciseStyle")
   )
 
   $('.hisTitle').click ->
@@ -66,9 +66,9 @@
   $("#recentResourcesTable").on("click", "td.activityItem", (e) ->
     data = JSON.parse(e.currentTarget.querySelector("input").value)
     if data.activity_category=="sport"
-      load_activity_exercise(".activity_exercise_elem", data)
+      load_activity_exercise(".formElement.activity_exercise_elem", data)
     else
-      load_activity_regular(".activity_regular_elem", data)
+      load_activity_regular(".formElement.activity_regular_elem", data)
   )
 
   $(document).unbind("click.exerciseShow")
@@ -237,7 +237,6 @@
       else
         $(".deleteExercise").removeClass("hidden")
       console.log "load recent activities  Successful AJAX call"
-      console.log textStatus
 
 @loadActivityTypes = (cb) ->
   self = this
@@ -275,7 +274,7 @@
   return ret
 
 @load_activity_exercise = (sel, data) ->
-  console.log "load activity"
+  console.log "load activity, sel="+sel
   console.log(data)
   activity = data['activity']
   $(sel+" input[name='activity[activity]']").val(activity.activity)
@@ -283,19 +282,28 @@
   $(sel+" input[name='activity[intensity]']").val(activity.intensity)
   $(sel+" .activity_exercise_percent").html(@intensities[activity.intensity])
   $(sel+" .activity_exercise_scale").slider({value: activity.intensity})
-  diff = moment(activity.end_time).diff(moment(activity.start_time))
+  diff = moment(activity.start_time).diff(moment(activity.end_time))
   curr = moment()
-  $(sel+" input[name='activity[start_time]']").val(moment(curr.diff(diff)).format(moment_fmt))
-  $(sel+" input[name='activity[end_time]']").val(curr.format(moment_fmt))
+  f = curr.format(moment_fmt)
+  t = curr.add(diff).format(moment_fmt)
+  $(sel+" input[name='activity[start_time]']").val(f)
+  $(sel+" input[name='activity[end_time]']").val(t)
 
 @load_activity_regular= (sel, data) ->
+  if !sel
+    sel=""
+  console.log('load regular, sel='+sel)
   activity = data['activity']
+  console.log(data)
+  console.log(activity)
   $(sel+" input[name='activity[activity]']").val(activity.activity)
   $(sel+" input[name='activity[activity_type_id]']").val(activity.activity_type_id)
   $(sel+" input[name='activity[intensity]']").val(activity.intensity)
   $(sel+" .activity_regular_percent").html(@intensities[activity.intensity])
   $(sel+" .activity_regular_scale").slider({value: activity.intensity})
-  diff = moment(activity.end_time).diff(moment(activity.start_time))
+  diff = moment(activity.start_time).diff(moment(activity.end_time))
   curr = moment()
-  $(sel+" input[name='activity[start_time]']").val(moment(curr.diff(diff)).format(moment_fmt))
-  $(sel+" input[name='activity[end_time]']").val(curr.format(moment_fmt))
+  f = curr.format(moment_fmt)
+  t = curr.add(diff).format(moment_fmt)
+  $(sel+" input[name='activity[start_time]']").val(f)
+  $(sel+" input[name='activity[end_time]']").val(t)

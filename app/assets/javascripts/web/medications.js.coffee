@@ -19,12 +19,12 @@
 
     loadMedicationHistory()
     resetMedications()
-    popup_success(data['medication_name']+popup_messages.saved_successfully, $("#addMedicationButton").css("background"))
+    popup_success(data['medication_name']+popup_messages.saved_successfully, "medicationStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data, "medicationStyle")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -33,7 +33,7 @@
     loadMedicationHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data, $("#addMedicationButton").css("background"))
+    popup_error(popup_messages.failed_to_delete_data, "medicationStyle")
   )
 
   $("#recentResourcesTable").on("click", "td.medicationItem", (e) ->
@@ -62,11 +62,11 @@
   console.log "initMedication, sel= "+selector
   self = this
   if selector==null||selector==undefined
-    selector = ""
+    selector = " "
   else
     selector = selector+" "
 
-  $(selector+"input[name='medication[date]'").datetimepicker(timepicker_defaults)
+  $(selector+"input[name='medication[date]']").datetimepicker(timepicker_defaults)
 
   $(selector+".oral_medication_name").autocomplete({
     minLength: 3,
@@ -179,10 +179,10 @@
 
 validate_medication_common = (sel) ->
   if !$(sel+" input[name='medication[medication_type_id]']").val()
-    popup_error(popup_messages.failed_to_add_data, $("#addMedicationButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data, "medicationStyle")
     return false
-  if( !$(sel+" input[name='medication[amount]'").val() || notpositive(sel+" input[name='medication[amount]'"))
-    popup_error(popup_messages.invalid_med_amount, $("#addMedicationButton").css("background"))
+  if( !$(sel+" input[name='medication[amount]']").val() || notpositive(sel+" input[name='medication[amount]']"))
+    popup_error(popup_messages.invalid_med_amount, "medicationStyle")
     return false
   return true
 
@@ -197,17 +197,18 @@ validate_medication_common = (sel) ->
 @load_medication_drugs = (sel, data) ->
   console.log "loading medication "+sel
   console.log data
-
   medication = data['medication']
-  $(sel+" input[name='medication[name]']").val(medication.name)
+
+  $(sel+" input[name='medication[name]']").val(data.medication_name)
   $(sel+" input[name='medication[medication_type_id]']").val(medication.medication_type_id)
-  $(sel+" input[name='medication[amount]'").val(medication.amount)
+  $(sel+" input[name='medication[amount]']").val(medication.amount)
   $(sel+" input[name='medication[date]']").val(moment().format(moment_fmt))
 
 @load_medication_insulin = (sel, data) ->
   console.log "loading insulin"
   medication = data['medication']
-  $(sel+" input[name='medication[name]']").val(medication.name)
+
+  $(sel+" input[name='medication[name]']").val(data.medication_name)
   $(sel+" input[name='medication[medication_type_id]']").val(medication.medication_type_id)
-  $(sel+" input[name='medication[amount]'").val(medication.amount)
+  $(sel+" input[name='medication[amount]']").val(medication.amount)
   $(sel+" input[name='medication[date]']").val(moment().format(moment_fmt))

@@ -32,7 +32,7 @@
 
   $("#familyhist-create-form button").click ->
     if(relativeSelected==null || diseaseSelected==null)
-      popup_error(popup_messages.failed_to_add_data, $("#addFamilyHistButton").css("background"))
+      popup_error(popup_messages.failed_to_add_data, "geneticsStyle")
 
       return false
     relativeSelected = null
@@ -46,9 +46,9 @@
     $("#"+form_id+" input.dataFormField").val("")
     $("#gen_hist_note").val("")
     load_family_histories()
-    popup_success(data['disease']+popup_messages.saved_successfully, $("#addFamilyHistButton").css("background"))
+    popup_success(data['disease']+popup_messages.saved_successfully, "geneticsStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add_data, $("#addFamilyHistButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data, "geneticsStyle")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -58,7 +58,7 @@
     load_family_histories()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data, $("#addFamilyHistButton").css("background"))
+    popup_error(popup_messages.failed_to_delete_data, "geneticsStyle")
   )
 
 @load_family_histories = () ->

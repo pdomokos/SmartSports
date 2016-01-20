@@ -27,7 +27,7 @@
         msg = data['pain_name']
 
     resetLifesyleForms()
-    popup_success(popup_messages.save_success, $("#addWellbeingButton").css("background"))
+    popup_success(popup_messages.save_success, "wellbeingStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     alert("Failed to create object.")
     $("input[name='lifestyle[name]']").val(null)
@@ -251,10 +251,10 @@
   group = formNode.querySelector("input[name='lifestyle[group]']").value
   console.log "group = "+group
   if group=='illness' && isempty("#"+formId+" input[name='lifestyle[name]']")
-    popup_error(popup_messages.illness_name_missing, $("#addMeasurementButton").css("background"))
+    popup_error(popup_messages.illness_name_missing, "wellbeingStyle")
     return false
   if group=='pain' && isempty("#"+formId+" input[name='lifestyle[pain_type_name]']")
-    popup_error(popup_messages.pain_name_missing, $("#addMeasurementButton").css("background"))
+    popup_error(popup_messages.pain_name_missing, "wellbeingStyle")
     return false
 
 @loadLifestyles = () ->

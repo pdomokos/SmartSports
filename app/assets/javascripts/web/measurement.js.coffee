@@ -21,11 +21,11 @@
     $('.defaultDatePicker').val(moment().format(moment_fmt))
 
     loadHealthHistory()
-    popup_success(popup_messages.save_success, $("#addMeasurementButton").css("background"))
+    popup_success(popup_messages.save_success, "healthStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     console.log error
-    popup_error(popup_messages.failed_to_add_data, $("#addMeasurementButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data, "healthStyle")
   )
 
   $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->
@@ -136,22 +136,22 @@
       (!isempty("#bp_sys") && isempty("#bp_dia")) ||
       (isempty("#bp_sys") && !isempty("#bp_dia")) ||
       (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr"))
-        popup_error(popup_messages.invalid_health_hr, $("#addMeasurementButton").css("background"))
+        popup_error(popup_messages.invalid_health_hr, "healthStyle")
         return false
     ),
     blood_sugar: ((node) ->
       if isempty("#glucose") || notpositive("#glucose")
-        popup_error(popup_messages.invalid_health_bg, $("#addMeasurementButton").css("background"))
+        popup_error(popup_messages.invalid_health_bg, "healthStyle")
         return false
     ),
     weight: ((node) ->
       if isempty("#weight") || notpositive("#weight")
-        popup_error(popup_messages.invalid_health_wd, $("#addMeasurementButton").css("background"))
+        popup_error(popup_messages.invalid_health_wd, "healthStyle")
         return false
     ),
     waist: ((node) ->
       if isempty("#waist") || notpositive("#waist")
-        popup_error(popup_messages.invalid_health_cd, $("#addMeasurementButton").css("background"))
+        popup_error(popup_messages.invalid_health_cd, "healthStyle")
         return false
     )
   }
@@ -231,7 +231,7 @@
   $(sel+" input[name='measurement[systolicbp]']").val(meas.systolicbp)
   $(sel+" input[name='measurement[diastolicbp]']").val(meas.diastolicbp)
   $(sel+" input[name='measurement[pulse]']").val(meas.pulse)
-  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
+  $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
 @load_measurement_blood_glucose = (sel, data) ->
   console.log "load_meas_bg"
@@ -253,16 +253,16 @@
   else
     $(sel+" input[name='measurement[blood_sugar]']").val("")
 
-  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
+  $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
 @load_measurement_weight = (sel, data) ->
   console.log "load_meas_weight"
   meas = data['measurement']
   $(sel+" input[name='measurement[weight]']").val(meas.weight)
-  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
+  $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
 @load_measurement_waist= (sel, data) ->
   console.log "load_meas_waist"
   meas = data['measurement']
   $(sel+" input[name='measurement[waist]']").val(meas.waist)
-  $(sel+" input[name='measurement[date]'").val(moment().format(moment_fmt))
+  $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))

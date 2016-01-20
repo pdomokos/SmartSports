@@ -15,7 +15,7 @@
           d.merge!({'activity_name' => activity_item.activity_type.name})
           d.merge!({'activity_category' => activity_item.activity_type.category})
         end
-        JSON.dump(d)
+        d.to_json
     %>">
 
     <span class="itemTitle"><%= activity_item.title %></span><span> <%=t :intensity %>: <%=(t :intensities).split(" ")[activity_item.intensity.to_i]%>,  <%=t :duration %>: <%= activity_item.duration %> <%=t :minute_abbr %></span>

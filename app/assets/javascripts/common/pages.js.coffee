@@ -77,13 +77,18 @@
   )
 
 @rotateLogo = () ->
-  $('img.loginLogo').animate({borderSpacing: -360}, {
-    step: (now, fx) ->
-      $(this).css('-webkit-transform', 'rotate(' + now + 'deg)')
-      $(this).css('-moz-transform', 'rotate(' + now + 'deg)')
-      $(this).css('transform', 'rotate(' + now + 'deg)')
-    , duration: 2000
-    }, 'linear')
+  $('img.loginLogo').animate({
+     'transform': 360
+    },
+    {
+      step: (now, fx) ->
+        $(this).css('-webkit-transform', 'rotate(' + now + 'deg)')
+        $(this).css('-moz-transform', 'rotate(' + now + 'deg)')
+        $(this).css('transform', 'rotate(' + now + 'deg)')
+      duration: 2000
+    },
+    'linear'
+  )
 
 @colorIndex = 0
 @changeColor = () ->
@@ -256,16 +261,22 @@
     id: d['id']
     }
 
-  window.popup_success = (msg, background='#9DCFFE') ->
+  window.removeClassesExcept = (sel, cname) ->
+    cl = $(sel)[0].classList
+    for c of cl
+      if c != cname
+        $(sel).removeClass(c)
+
+  window.popup_success = (msg, cls='dietStyle') ->
     $("#infoPopup span.msg").html(msg)
-    $("#infoOkButton").css
-      background: background
+    removeClassesExcept("#infoPopup", "dataCaptured")
+    $("#infoPopup").addClass(cls)
     $("#infoPopup").removeClass("hidden");
 
-  window.popup_error = (msg, background='#9DCFFE') ->
+  window.popup_error = (msg, cls='dietStyle') ->
     $("#errorPopup span.msg").html(msg)
-    $("#errorOkButton").css
-      background: background
+    removeClassesExcept("#errorPopup", "dataCaptured")
+    $("#errorPopup").addClass(cls)
     $("#errorPopup").removeClass("hidden");
 
   window.isempty = (sel) ->

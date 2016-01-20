@@ -16,7 +16,7 @@
       val = $("#control_txt").val()
       if !val
         val = "empty item"
-      popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+      popup_error(popup_messages.failed_to_add_data, "labresultStyle")
       controlSelected = null
       return false
     controlSelected = null
@@ -26,23 +26,23 @@
     btnItem = evt.target
     valueItem = btnItem.parentNode.querySelector("input[name='labresult[ketone]']")
     if(!valueItem.value)
-      popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+      popup_error(popup_messages.failed_to_add_data, "labresultStyle")
       return false
     return true
 
   $("#hba1c-create-form button").click ->
     if( isempty(".hba1c") || notpositive(".hba1c"))
-      popup_error(popup_messages.failed_to_create_HBA1C, $("#addLabResultButton").css("background"))
+      popup_error(popup_messages.failed_to_create_HBA1C, "labresultStyle")
       return false
     return true
   $("#ldlchol-create-form button").click ->
     if( isempty(".ldl_chol") || notpositive(".ldl_chol"))
-      popup_error(opup_messages.failed_to_create_LDL, $("#addLabResultButton").css("background"))
+      popup_error(opup_messages.failed_to_create_LDL, "labresultStyle")
       return false
     return true
   $("#egfrepi-create-form button").click ->
     if( isempty(".egfr_epi") || notpositive(".egfr_epi"))
-      popup_error(popup_messages.failed_to_create_EGFR, $("#addLabResultButton").css("background"))
+      popup_error(popup_messages.failed_to_create_EGFR, "labresultStyle")
       return false
     return true
 
@@ -51,12 +51,12 @@
     console.log data
     if data.ok
       load_visits()
-      popup_success("Notification "+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
+      popup_success("Notification "+popup_messages.saved_successfully, "labresultStyle")
     else
-      popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+      popup_error(popup_messages.failed_to_add_data, "labresultStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data, "labresultStyle")
   )
 
   $("form.resource-create-form.lab_results-form").on("ajax:success", (e, data, status, xhr) ->
@@ -74,10 +74,10 @@
 
     if !category
       category = 'control'
-    popup_success(capitalize(category)+popup_messages.saved_successfully, $("#addLabResultButton").css("background"))
+    popup_success(capitalize(category)+popup_messages.saved_successfully, "labresultStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_add_data, $("#addLabResultButton").css("background"))
+    popup_error(popup_messages.failed_to_add_data, "labresultStyle")
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -85,7 +85,7 @@
     loadLabresult()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
+    popup_error(popup_messages.failed_to_delete_data, "labresultStyle")
   )
 
   $("#recentVisitsTable").on("ajax:success", (e, data, status, xhr) ->
@@ -93,7 +93,7 @@
     load_visits()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
-    popup_error(popup_messages.failed_to_delete_data, $("#addLabResultButton").css("background"))
+    popup_error(popup_messages.failed_to_delete_data, "labresultStyle")
   )
 
 @initLabresult = () ->

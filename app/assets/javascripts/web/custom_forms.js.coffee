@@ -273,13 +273,13 @@
     $.when.apply(undefined, reqs).done( () ->
       console.log "ALL COMPLETE"
       #      location.href = "customforms"
-      popup_success(popup_messages.save_success, $("#addMeasurementButton").css("background"))
+      popup_success(popup_messages.save_success)
       console.log cb_succ
       if cb_succ
         cb_succ()
     ).fail( () ->
       console.log "SOME FAILED"
-      popup_error(popup_messages.failed_custom_form, $("#addMeasurementButton").css("background"))
+      popup_error(popup_messages.failed_custom_form)
       if cb_err!= undefined
         cb_err()
     )

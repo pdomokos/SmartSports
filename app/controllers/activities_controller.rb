@@ -53,7 +53,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => {:activities => @activities}}
+      format.json
       format.csv { send_data @activities.to_csv}
       format.js
     end
