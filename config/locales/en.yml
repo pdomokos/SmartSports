@@ -311,3 +311,13 @@ en:
   intensities: "Low Moderate High"
 
   time: "Time"
+
+# notifications
+  notification: "Notification"
+  add_notifications: "Add notifications for your patients."
+  notification_title: "Notification title"
+  notification_details_part1: "Notification detail"
+  notification_details_part2: "E.g. take your morning medication"
+  notification_fill_form: "Fill Form"
+  notification_form_to_fill: "Form to fill"
+  add_notification: "Add Notification"

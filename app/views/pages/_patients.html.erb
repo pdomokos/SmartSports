@@ -102,7 +102,7 @@
     <div id="openModalAddNotification" class="modalDialog">
       <div class="customStyle notificationStyle">
         <div class="table-toolbar">
-          <div class="modalTitle left">Notification</div>
+          <div class="modalTitle left"><%=t 'notification' %></div>
           <span id="closeModalAddNotification" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
         </div>
         <br/>
@@ -116,26 +116,26 @@
                 <div id="dataform" class="dataForm">
                   <br/>
                   <br/>
-                  <p class="dataFormRemark">Add notifications for your patients.</p>
-                  <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="Notification title">
+                  <p class="dataFormRemark"><%=t 'add_notifications' %></p>
+                  <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="<%=t 'notification_title' %>">
                   <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
                   <br/>
                   <textarea name="notification[detail]" class="dataFormField"
-                            placeholder="Notification detail&#13;&#10;E.g. take your morning medication"></textarea>
+                            placeholder="<%=t 'notification_details_part1' %> &#13;&#10;<%=t 'notification_details_part2' %>"></textarea>
                   <br/>
-                  <label class="dataFormRemark" for="fillForm">Fill Form</label>
+                  <label class="dataFormRemark" for="fillForm"><%=t 'notification_fill_form' %></label>
                   <input type="checkbox" id="fillForm">
                   <br/>
                   <input type="hidden" name="notification[created_by]" value="<%= current_user.id %>">
                   <div id="formDetails" class="hidden">
-                    <input type="search" name="elementName" id="elementName" class="dataFormField" placeholder="Form to fill">
+                    <input type="search" name="elementName" id="elementName" class="dataFormField" placeholder="<%=t 'notification_form_to_fill' %>">
 
                   </div>
 
                   <!--<input type="text" name="notification[location]" class="dataFormField" placeholder="Location">-->
                   <!--<input type="text" name="notification[location_url]" class="dataFormField" placeholder="Location URL">-->
 
-                  <button class="dataFormField add-notification-button" >Add Notification</button>
+                  <button class="dataFormField add-notification-button" ><%=t 'add_notification' %></button>
 
                 </div>
 

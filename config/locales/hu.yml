@@ -291,3 +291,13 @@ hu:
   intensities: "Alacsony Közepes Magas"
 
   time: "Időpont"
+
+# notifications
+  notification: "Értesítés"
+  add_notifications: "Küldjön értesítést betegeinek."
+  notification_title: "Értesítés címe"
+  notification_details_part1: "Értesítés leírása"
+  notification_details_part2: "Pl. vegye be a reggeli gyógyszerét"
+  notification_fill_form: "Form küldése"
+  notification_form_to_fill: "Kitöltendő form"
+  add_notification: "Értesítés hozzáadása"
