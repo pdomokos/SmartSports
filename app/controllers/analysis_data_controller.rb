@@ -281,6 +281,35 @@ class AnalysisDataController < ApplicationController
     )
     result.concat(meas_arr.flatten)
 
+    lifestyles = user.lifestyles
+    if f
+      lifestyles = lifestyles.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t )
+    end
+    lifes_arr = []
+    lifes_arr.concat(lifestyles.collect do |lifestyle|
+      ret = {
+          start: lifestyle.start_time,
+          evt_type: 'lifestyle',
+          group: lifestyle.group,
+          value1: lifestyle.amount
+      }
+      if lifestyle.group != 'stress'
+        ret['end'] = lifestyle.end_time
+      else
+        ret['end'] = lifestyle.start_time+1.day
+      end
+      if lifestyle.group=='illness'
+        ret['value2']= IllnessType.find(lifestyle.illness_type_id).name
+      elsif lifestyle.group=='pain'
+        ret['value2']= lifestyle.pain_type_name
+      else
+        ret['value2']= nil
+      end
+      ret
+    end
+    )
+    result.concat(lifes_arr)
+
     return result
   end
 
