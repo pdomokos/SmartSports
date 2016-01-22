@@ -22,6 +22,7 @@ class CustomForm < ActiveRecord::Base
       labresult_ldlchol
       medication_drugs
       medication_insulin
+      notification_date
       notification_visit
       lifestyle_illness
       lifestyle_pain
@@ -49,6 +50,7 @@ class CustomForm < ActiveRecord::Base
       water40
       oral40
       insulin40
+      regular40
       doctor_40
       illness40
       pain40
@@ -73,6 +75,7 @@ class CustomForm < ActiveRecord::Base
       labresultStyle
       medicationStyle
       medicationStyle
+      healthStyle
       labresultStyle
       wellbeingStyle
       wellbeingStyle
@@ -97,6 +100,7 @@ class CustomForm < ActiveRecord::Base
       labresult_ldlchol
       drugs
       insulin
+      time
       lab_results
       illness
       pain

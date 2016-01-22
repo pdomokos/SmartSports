@@ -1,0 +1,3 @@
+<div class="dataForm notification_date <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
+  <input id="notifSimpleDate" type='text' class="dataFormField default_date_picker" name="notification[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
+</div>

@@ -27,12 +27,16 @@
     if $("#fillForm").prop("checked")
       console.log "ch"
       $("#formDetails").removeClass("hidden")
+      $("#openModalAddNotification .formContents").addClass("hidden")
+      $("#elementName").val("")
+      $("#openModalAddNotification div.formContents").empty()
     else
       console.log "no ch"
       $("#formDetails").addClass("hidden")
       $("#openModalAddNotification .formContents").addClass("hidden")
       $("#elementName").val("")
       $("#openModalAddNotification div.formContents").empty()
+      getFormElement("notification_date", "#openModalAddNotification div.formContents", false)
   )
 
   $(document).unbind("click.addNotif")
@@ -43,6 +47,7 @@
     location.href = "#openModalAddNotification"
     resetNotifForm()
     $("#notifTitle").focus()
+    getFormElement("notification_date", "#openModalAddNotification div.formContents", false)
   )
 
   $("#openModalAddNotification").on("click", ".add-notification-button", (evt) ->
@@ -134,6 +139,9 @@
     $(".patientData .patientDetails").toggleClass("hidden")
   )
   loadPatients()
+
+@initNotification = () ->
+  $("#notifSimpleDate").datetimepicker(timepicker_defaults)
 
 @resetNotifForm = () ->
   $("#notifTitle").val("")
