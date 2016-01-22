@@ -71,6 +71,10 @@
     defaultHashVal = paramsToHash(defaultParams)
     console.log defaultHashVal
 
+    if defaultHashVal.hasOwnProperty("notification[date]")
+      data["notification[date]"] = defaultHashVal["notification[date]"]
+      data["notification[form_name]"] = "No form"
+
     timeKey = k+"[date]"
     console.log "checking "+timeKey
     if defaultHashVal.hasOwnProperty(timeKey)
