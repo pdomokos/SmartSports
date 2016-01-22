@@ -101,6 +101,10 @@ class AnalysisDataController < ApplicationController
                         ret['values']= [measurement.systolicbp, measurement.diastolicbp, measurement.pulse]
                       elsif measurement.meas_type=='blood_sugar'
                         ret['values'] = [measurement.blood_sugar]
+                      elsif measurement.meas_type=='weight'
+                        ret['values'] = [measurement.weight]
+                      elsif measurement.meas_type=='waist'
+                        ret['values'] = [measurement.waist]
                       end
 
                       ret

@@ -147,6 +147,7 @@
 
 
 @loadPatients = () ->
+  self = this
   $.ajax '/users.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
@@ -192,10 +193,30 @@
           initFormElements("#openModalAddNotification div.formContents", false)
 
           registerShowPatientData(uid)
-          initTimelineDatepicker(uid)
-          dateToShow = moment().format(moment_fmt)
-          d3.json("/users/"+uid+"/analysis_data.json?date="+dateToShow+"&weekly=true", timeline_data_received)
-          setTimelineTitle(dateToShow)
+
+          dateToShow = moment().format(moment_datefmt)
+          console.log("----------- Timeline starts --------------")
+          self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Weekly timeline")
+          self.timeline.draw("div.timelineChart")
+
+          $('#timeline_datepicker').datetimepicker({
+            format: 'Y-m-d',
+            timepicker: false,
+            onSelectDate: (ct, input) ->
+              console.log("timeline date selected")
+              self.timeline.update(moment(ct).format(moment_datefmt))
+              input.datetimepicker('hide')
+            todayButton: true
+          })
+
+          plist = ["weekly", "daily"]
+          $("#timeline_period").autocomplete({
+            minLength: 0,
+            source: plist,
+            select: (event, ui) ->
+              self.timeline.updatePeriod(ui['item']['label'])
+          }).focus ->
+            $(this).autocomplete("search")
 
           d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
           meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
