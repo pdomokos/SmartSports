@@ -30,8 +30,8 @@ hu:
   history_link:   "Történet"
   fav_link:       "Kedvencek"
 
-  start:          "Kezdet"
-  end:            "Vég"
+  start:          "Kezdés"
+  end:            "Befejezés"
 
   duration:       "időtartam"
   minute_abbr:    "perc"
@@ -67,6 +67,7 @@ hu:
   reset_password_button: "Kész"
 
 #profile
+  name: "Név"
   firstname: "Keresztnév"
   lastname: "Vezetéknév"
   skip: "Lépés kihagyása, tovább a SmartDiabra"
@@ -212,13 +213,13 @@ hu:
   waist_placeholder: "Haskörfogat, pl: 94"
 
   blood_sugar_time: "Időpont"
-  before_meal: "Evés előtt"
-  after_meal: "Evés után"
-  indep_meal: "Evéstől függetlenül"
-  bgTimeList: "Evéstől függetlenül,Evés előtt,Evés után"
+  before_meal: "Étkezés előtt"
+  after_meal: "Étkezés után"
+  indep_meal: "Étkezéstől függetlenül"
+  bgTimeList: "Étkezéstől függetlenül,Étkezés előtt,Étkezés után"
 
 # medication
-  medication:           "Gyógykezelés"
+  medication:           "Gyógyszer"
   drugs:                "Gyógyszer"
   insulin:              "Inzulin"
   drug_placeholder:     "Írjon legalább 3 betűt..."
@@ -241,8 +242,8 @@ hu:
   quality:            "Minőség"
   intensity:          "Intenzitás"
   sleep_fairly_good:  "Jó"
-  start:              "kezdete"
-  end:                "vége"
+  start:              "kezdés"
+  end:                "befejezés"
   stress_amount_average: "Átlagos"
   day:                "nap"
   illness_amount_mild: "Gyenge"
@@ -278,6 +279,7 @@ hu:
   reminder:           "Emlékeztető"
   select:             "Kérem válasszon..."
   doctorList:         "háziorvos;szakorvos"
+  labresult_ketone:   "Ketone"
 
   doctors_visit_general: "Háziorvos"
   doctors_visit_specialist: "Szakorvos"
@@ -291,6 +293,9 @@ hu:
   intensities: "Alacsony Közepes Magas"
 
   time: "Időpont"
+  daily_timeline: "Napi idővonal"
+  heart_trend: "Szív adatok"
+  activity_trend: "Mozgás adatok"
 
 # notifications
   notification: "Értesítés"
@@ -301,3 +306,4 @@ hu:
   notification_fill_form: "Form küldése"
   notification_form_to_fill: "Kitöltendő form"
   add_notification: "Értesítés hozzáadása"
+  notofications: "Értesítések"

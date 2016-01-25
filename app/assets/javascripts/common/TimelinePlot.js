@@ -229,7 +229,7 @@ TimelinePlot.prototype.initUI = function() {
         .attr("width", this.width)
         .attr("height", this.height);
 
-    this.setTitle("Weekly chart");
+//    this.setTitle("Weekly chart");
 
 };
 

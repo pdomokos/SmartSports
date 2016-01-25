@@ -89,6 +89,7 @@ en:
   reset_password_button: "Reset Password"
 
 #profile
+  name: "Name"
   firstname: "First name"
   lastname: "Last name"
   skip: "Skip this step and go directly to SmartDiab"
@@ -300,6 +301,7 @@ en:
   reminder:           "Reminder"
   select:             "Select..."
   doctorList:         "general partitioner;specialist"
+  labresult_ketone:   "Ketone"
 
   doctors_visit_general: "General Practitioner"
   doctors_visit_specialist: "Specialist"
@@ -311,6 +313,10 @@ en:
   intensities: "Low Moderate High"
 
   time: "Time"
+  daily_timeline: "Daily timeline"
+  heart_trend: "Heart trend"
+  activity_trend: "Activity trend"
+
 
 # notifications
   notification: "Notification"
@@ -321,3 +327,4 @@ en:
   notification_fill_form: "Fill Form"
   notification_form_to_fill: "Form to fill"
   add_notification: "Add Notification"
+  notofications: "Notifications"
