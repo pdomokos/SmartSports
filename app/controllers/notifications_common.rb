@@ -96,8 +96,8 @@ module NotificationsCommon
       pusher = Grocer.pusher(
           certificate: CONNECTION_CONFIG["NOTIF_CERT"],      # required
           passphrase:  CONNECTION_CONFIG["NOTIF_PASS"],                       # optional
-          # gateway:     "api.development.push.apple.com", # optional; See note below.
-          # port:        2195,                     # optional
+          gateway: "gateway.sandbox.push.apple.com",
+          port: 2195,
           retries:     3                         # optional
       )
 
