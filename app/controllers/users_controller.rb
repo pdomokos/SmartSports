@@ -2,8 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_filter :require_login, only: [:new, :create]
 
-  include UsersCommon
-
   # GET /users
   # GET /users.json
   def index
@@ -85,4 +83,50 @@ class UsersController < ApplicationController
     end
   end
 
+
+
+  # PATCH/PUT /users/1
+  # PATCH/PUT /users/1.json
+  def update
+    respond_to do |format|
+      par = params.require(:user).permit(:password, :password_confirmation, :name)
+      if @user.update(par)
+        format.json { render json: {ok: true, status: 'OK', msg: "Updated successfully"} }
+      else
+        key = @user.errors.values[0]
+        message = (I18n.translate(key))
+        format.json { render json: {ok: false, status: 'NOK', msg: message} }
+      end
+    end
+  end
+
+  # DELETE /users/1
+  # DELETE /users/1.json
+  def destroy
+    if !current_user.admin || current_user.id==@user.id
+      respond_to do |format|
+        # format.html { redirect_to errors_unauthorized_path }
+        format.json { render json: {:ok => false, :status => 'NOK', :msg => 'error_unauthorized'}, status: 403 }
+      end
+      return
+    end
+
+    @user.destroy
+    respond_to do |format|
+      # format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.json { render json: {:ok => true, :status => 'OK'} }
+    end
+  end
+
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar)
+  end
 end

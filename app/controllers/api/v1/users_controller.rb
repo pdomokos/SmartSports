@@ -50,11 +50,22 @@ module Api::V1
           end
         end
         send_success_json(@user.id, {:msg => "order updated"})
+      elsif
+        if request.put?
+            par = params.require(:user).permit(:dev_token)
+            if @user.update(par)
+              send_success_json_norecord(@user.id, {:msg => "token updated"})
+            else
+              send_error_json_norecord(@user.id, "failed to update token", 400)
+              logger.warn("token update failed, #{params}")
+            end
+        end
       else
         send_error_json(nil, "method unknown", 400)
       end
 
     end
+
     private
 
     def user_params

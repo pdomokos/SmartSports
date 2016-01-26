@@ -6,6 +6,11 @@ module ResponseHelper
     render json: resp
   end
 
+  def send_success_json_norecord(id, data={})
+    resp = data.merge({id: id, ok: true})
+    render json: resp
+  end
+
   def send_error_json(id, msg, status=200)
     click_msg = ""
     if msg.class==Array
