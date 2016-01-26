@@ -9,6 +9,7 @@ module NotificationsCommon
 
     respond_to do |format|
       if @notification.save
+        send_push(@notification)
         # format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
         format.json { send_success_json(@notification.id, {msg: "created" } ) }
       else
@@ -88,4 +89,56 @@ module NotificationsCommon
     return false
   end
   alias_method :owner?, :check_owner
+
+  def send_push(notif)
+    user = notif.user
+    if not user.dev_token.nil?
+      pusher = Grocer.pusher(
+          certificate: CONNECTION_CONFIG["NOTIF_CERT"],      # required
+          passphrase:  CONNECTION_CONFIG["NOTIF_PASS"],                       # optional
+          # gateway:     "api.development.push.apple.com", # optional; See note below.
+          # port:        2195,                     # optional
+          retries:     3                         # optional
+      )
+
+      msg = ""
+      if not notif.title.nil?
+        msg = msg + notif.title
+      end
+      if not notif.detail.nil?
+        msg = msg + " " + notif.detail
+      end
+      if msg==""
+        msg = "Empty message"
+      end
+
+      example = {
+          form_element: "activity_exercise",
+          defaults: {
+              medication:{
+                  date:"2016-01-20 09:32:00 +0100",
+                  amount:1,
+                  medication_type_id:47553
+              },
+              medication_name:"CETIRIZIN 1 A PHARMA  10 mg filmtabletta",
+              medication_type:"oral"
+          }
+      }
+      notification = Grocer::Notification.new(
+          device_token:      user.dev_token,
+          alert:             msg,
+          badge:             42,
+          category:          "a category",         # optional; used for custom notification actions
+          sound:             "siren.aiff",         # optional
+          expiry:            Time.now + 60*60,     # optional; 0 is default, meaning the message is not stored
+          # identifier:        1234,                 # optional; must be an integer
+          content_available: true,                  # optional; any truthy value will set 'content-available' to 1
+          custom: example
+      )
+
+      pusher.push(notification)
+
+    end
+  end
+
 end

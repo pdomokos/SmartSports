@@ -73,6 +73,7 @@ GEM
       oauth
     font-awesome-sass (4.5.0)
       sass (>= 3.2)
+    grocer (0.6.1)
     hashie (3.4.3)
     hike (1.2.3)
     http-cookie (1.0.2)
@@ -242,6 +243,7 @@ DEPENDENCIES
   doorkeeper
   fitgem
   font-awesome-sass
+  grocer
   ice_cube
   jbuilder (~> 2.0)
   jquery-turbolinks

@@ -40,7 +40,7 @@ Rails.application.configure do
   APP_CONFIG = {}
   APP_CONFIG['PAPERCLIP_PATH'] = ":rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension"
 
-  connection_config_fname = ENV['HOME']+'/.smartsport_connection_data'
+  connection_config_fname = File.join(ENV["HOME"],".smartsport_connection_data.yml")
   if not File.exists?(connection_config_fname)
     raise "Connections configuration file "+connection_config_fname+" does not exist."
   end

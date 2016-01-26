@@ -80,3 +80,5 @@ group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mocha'
 end
+
+gem 'grocer'
