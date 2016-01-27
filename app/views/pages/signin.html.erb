@@ -1,10 +1,10 @@
 
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
-<div style="position:absolute;left:50%;margin-left:-144px;width: 288px;top:100px;font-family: 'Open Sans', sans-serif;font-size: 20px;">
+<div class="signinHeader">
     <center>
         <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
         <br/>
-        <span style="color:white"><%=t 'sign_in' %></span>
+        <span class="signinTitle"><%=t 'sign_in' %></span>
     </center>
 </div>
 
@@ -25,7 +25,7 @@
 
 <% msg = "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signup\">"+ translate('create_account_part1')+ "</a> "+ translate('create_account_part2') %>
 
-<%= render partial: 'features', locals: { msg: msg} %>
+<%= render partial: 'shared/features', locals: { msg: msg} %>
 
 <script>
     signin_loaded()

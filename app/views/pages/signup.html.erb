@@ -1,15 +1,17 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
 
-<div style="position:absolute;left:47%;margin-left:-240px;top:100px;">
+<div class="signupHeader">
 
-    <div style="width: 600px;height: 128px;color: white;">
-        <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
 
-        <div style="float: left;padding-top: 35px;padding-left: 20px;">
-            <span style="font-family: 'Open Sans', sans-serif;font-size: 30px;"><%=t 'sign_up_text_part1' %></span><br>
-            <span><%=t 'sign_up_text_part2' %></span>
-        </div>
-    </div>
+  <%= image_tag "logo-login.png", id:"loginLogo", class: "loginLogo", alt:"Login" %>
+
+  <br/>
+  <span class="signinTitle"><%=t 'sign_up_text_part1' %></span>
+  <br/>
+
+  <span class="signinDetail"><%=t 'sign_up_text_part2' %></span>
+
+
 </div>
 
 <div id="registerDiv" class="registerDiv">
@@ -29,7 +31,7 @@
 </div>
 
 <% have_account = t 'have_account' %>
-<%= render partial: 'features', locals: {  msg: "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signin\">" + have_account +"</a>"} %>
+<%= render partial: 'shared/features', locals: {  msg: "<a class=\"signupLink\" href=\"/#{I18n.locale}/pages/signin\">" + have_account +"</a>"} %>
 
 <script>
     signup_loaded()

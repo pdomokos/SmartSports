@@ -210,3 +210,40 @@ a.signupLink, a.signupLink:visited {
   cursor: pointer;
   width: 5%;
 }
+
+.signinHeader {
+  position: absolute;
+  left: 50%;
+  margin-left: -144px;
+  width: 288px;
+  top: 100px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+}
+.signupHeader {
+  position: absolute;
+  left: 50%;
+  margin-left: -144px;
+  width: 430px;
+  top: 100px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+}
+
+.signinTitle {
+  color: white;
+}
+.signinDetail {
+  color: white;
+  font-size: 16px;
+}
+
+.featureStyle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  padding-bottom: 20px;
+}

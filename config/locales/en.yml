@@ -86,6 +86,7 @@ en:
   password: "Password"
   password_confirm: "Confirm password"
   reset_password: "Reset password"
+  reset_password_detail: "We have reset your password on your request. Please set a new password."
   reset_password_button: "Reset Password"
 
 #profile
@@ -328,3 +329,25 @@ en:
   notification_form_to_fill: "Form to fill"
   add_notification: "Add Notification"
   notofications: "Notifications"
+
+  user_created_email: |
+    Welcome to SmartDiab
+
+    SmartDiab is a new service that helps you manage your diabetes smarter by providing actionable
+    insights based on the objective data gathered from you, your wearable devices (fitness trackes,
+    sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
+
+    If you have not requested to create a SmartDiab account with your e-mail address,
+    please accept our apologies and disregard this e-mail. You may also forward this message
+    to info@smartdiab.com.
+
+    SmartDiab team
+
+  reset_password_email: |
+    Hello, %{email}
+
+    You have requested to reset your password.
+
+    To choose a new password, just follow this link: %{url}.
+
+    Have a great day!

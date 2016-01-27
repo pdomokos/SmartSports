@@ -1,26 +1,30 @@
-<div style="position:absolute;left:50%;margin-left:-144px;width: 288px;top:100px;font-family: 'Open Sans', sans-serif;font-size: 30px;">
-    <center>
+<div class="signinHeader">
+
         <%= image_tag "logo-login.png", id:"loginLogo", alt:"Login" %>
         <br/>
-        <span style="color:white"><%=t 'reset_password' %></span>
-    </center>
+        <span class="signinTitle"><%=t 'reset_password' %></span>
+
 </div>
 
 <div id="loginDiv" class="loginDiv">
     <div>
         <%= form_tag("/password_resets/"+@token+"/edit" , :method => :put, :remote => true, :id => 'pwChangeForm') do %>
-            <input name="lang" value="<%=I18n.locale%>" type="hidden" />
-            <input id="password_field" name="user[password]" type="password" class="loginField animField"/><br>
-            <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField"/><br>
+            <input name="lang" type="hidden" value="<%=I18n.locale%>" />
+            <input id="password_field" name="user[password]" type="password" class="loginField animField"
+                   placeholder="<%= t 'password'%>"/><br>
+            <input id="password_retry_field" name="user[password_confirmation]" type="password" class="loginField animField"
+                   placeholder="<%= t 'password_confirm'%>"/><br>
             <input type="submit" class="loginButton animButton" value="<%=t 'reset_password_button' %>"/>
         <% end %>
 
         <div style="padding-top: 5px;color: #A5A5A5;font-size: 12px;">
-
+          <span id="langswitcher" class="langSwitcher" ><%= @lang_label %></span>
         </div>
     </div>
 </div>
 
+<% msg = translate('reset_password_detail') %>
+<%= render partial: 'shared/features', locals: { msg: msg }%>
 <script type="text/javascript">
     resetpw_page_loaded();
 </script>

@@ -64,6 +64,7 @@ hu:
   password: "Jelszó"
   password_confirm: "Jelszó megerősítése"
   reset_password: "Új jelszó megadása"
+  reset_password_detail: "Kérésére a jelszavát töröltük. Adjon meg új jelszót."
   reset_password_button: "Kész"
 
 #profile
@@ -307,3 +308,20 @@ hu:
   notification_form_to_fill: "Kitöltendő form"
   add_notification: "Értesítés hozzáadása"
   notofications: "Értesítések"
+
+  user_created_email: |
+    Üdvözöli a SmartDiab!
+
+    ...
+
+    A SmartDiab csapata
+
+  reset_password_email: |
+    Kedves, %{email}
+
+    A jelszavának a megváltoztatását kérte.
+
+    Új jelszó megadásához kattintson a linkre: %{url}.
+
+    További szép napot!
+

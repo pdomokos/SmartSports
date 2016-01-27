@@ -139,8 +139,9 @@
   )
 
   $(document).unbind("click.userDetails")
-  $(document).on("click.userDetails", "#headerItemAvatar", () ->
-    $(".patientData .patientDetails").toggleClass("hidden")
+  $(document).on("click.userDetails", "#headerItemAvatar", (evt) ->
+    if evt.altKey
+      $(".patientData .patientDetails").toggleClass("hidden")
   )
   loadPatients()
 
