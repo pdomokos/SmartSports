@@ -6,23 +6,28 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.reset_password_email.subject
   #
-  def reset_password_email(user)
-    @user = user
-    @url  = edit_password_reset_url(id: user.reset_password_token, locale: 'en')
-    logger.info "Sending mail with: "+@url
+  def reset_password_email(mail_job)
+    logger.info(mail_job.as_json)
+    loc = mail_job.lang || "en"
+    @email = mail_job.email
+    logger.info("UserMailer.reset_password_email to: #{@email}, loc:#{loc}")
 
-    mail(:to => user.email, :subject => "Your password has been reset") do |format|
-      format.text
+    @url  = edit_password_reset_url(id: mail_job.mail_params[:reset_password_token], locale: loc)
+    I18n.with_locale(loc.to_sym) do
+      subj = I18n.t :reset_password_email_subj
+      mail(:to => @email, :subject => subj)
     end
   end
 
-  def user_created_email(user)
-    @user = user
+  def user_created_email(mail_job)
+    logger.info(mail_job.as_json)
     @url  = login_url
-    logger.info "Sending mail with: "+@url
-
-    mail(:to => user.email, :subject => "Your account is created!") do |format|
-      format.text
+    loc = mail_job.lang || "en"
+    dest_email = mail_job.email
+    logger.info "UserMailer.user_created_email to: #{dest_email}, url: @url, lang=#{loc}"
+    I18n.with_locale(loc.to_sym) do
+      subj = I18n.t :user_created_email_subj
+      mail(:to => dest_email, :subject => subj)
     end
   end
 end

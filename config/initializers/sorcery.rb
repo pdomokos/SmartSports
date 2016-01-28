@@ -441,7 +441,7 @@ module Sorcery
     module InstanceMethods
       def generic_send_email(method, mailer)
         config = sorcery_config
-        mail = config.send(mailer).delay.send(config.send(method), self)
+        Delayed::Job.enqueue InfoMailJob.new(config.send(method), self.email, self.mail_lang, {reset_password_token: self.reset_password_token})
       end
     end
   end

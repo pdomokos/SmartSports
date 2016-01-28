@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
+  attr_accessor :mail_lang
+
   def get_name
     if !self.profile.nil? && (!self.profile.firstname.nil?||!self.profile.lastname.nil?)&&(self.profile.firstname!=""||self.profile.lastname!="")
       name = ""

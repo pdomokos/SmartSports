@@ -24,7 +24,9 @@ class UsersController < ApplicationController
     @user.name = @user.username
     respond_to do |format|
       if @user.save
-        UserMailer.delay.user_created_email(@user)
+
+        mail_lang = params[:lang] || "en"
+        Delayed::Job.enqueue InfoMailJob.new(:user_created_email, @user.email, mail_lang, {})
 
         @user = login(user_params['email'], user_params['password'])
 
@@ -53,7 +55,8 @@ class UsersController < ApplicationController
       end
       return
     end
-
+    logger.info "user.show called, calling delayed mail"
+    Delayed::Job.enqueue InfoMailJob.new(:user_created_email, current_user.email, "hu", {})
   end
 
   # GET /users/new

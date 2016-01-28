@@ -343,6 +343,8 @@ en:
 
     SmartDiab team
 
+  user_created_email_subj: "SmartDiab user created"
+
   reset_password_email: |
     Hello, %{email}
 
@@ -351,3 +353,5 @@ en:
     To choose a new password, just follow this link: %{url}.
 
     Have a great day!
+
+  reset_password_email_subj: "SmartDiab password reset"

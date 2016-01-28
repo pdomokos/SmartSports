@@ -310,18 +310,28 @@ hu:
   notofications: "Értesítések"
 
   user_created_email: |
-    Üdvözöli a SmartDiab!
+    A SmartDiab üdvözli Önt!
 
-    ...
+    A SmartDiab a cukorbetegség kezeléséhez nyújt fontos segítséget. Az Ön által bevitt,
+    illetve a különböző aktivitásmérők és/vagy mobiltelefonos alkalmazások segítségével
+    gyűjtött adatok elemzésével segít Önnek egészségének megőrzésében.
+
+    Amennyiben Ön nem kezdeményezte egy SmartDiab fiók létrehozását az e-mail címe megadásával,
+    tekintse levelünket tárgytalannak. Ha úgy gondolja, hogy visszaéltek az e-mail címével,
+    továbbítsa ezt az üzenetet a info@smartdiab.com címre.
 
     A SmartDiab csapata
 
+  user_created_email_subj: "SmartDiab felhasználó létrehozása"
+
   reset_password_email: |
-    Kedves, %{email}
+    Tisztelt %{email}
 
-    A jelszavának a megváltoztatását kérte.
+    Ön kezdeményezte jelszava helyreállítását.
 
-    Új jelszó megadásához kattintson a linkre: %{url}.
+    Új jelszó megadásáshoz kattintson az alábbi linkre: %{url}.
 
-    További szép napot!
+    Szép napot kívánunk!
+    A SmartDiab csapata
 
+  reset_password_email_subj: "SmartDiab jelszó visszaállítás"

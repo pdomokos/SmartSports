@@ -4,7 +4,10 @@ module PasswordResetsCommon
       @user = User.find_by_email(params[:email])
       begin
         if @user
-          logger.info "delivering password reset instructions to "+params[:email]
+          logger.info "delivering password reset instructions to #{params[:email]}, locale: #{params[:lang]}"
+          if params[:lang]
+            @user.mail_lang = params[:lang]
+          end
           @user.deliver_reset_password_instructions!
           render json: {:ok => true, :locale => I18n.locale}
         else
