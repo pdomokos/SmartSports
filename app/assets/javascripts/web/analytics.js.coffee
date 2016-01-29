@@ -12,8 +12,7 @@
     background: "rgba(240, 108, 66, 0.3)"
 
   dateToShow = moment().format(moment_datefmt)
-  console.log("----------- Timeline starts --------------")
-  self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Weekly timeline")
+  self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Daily timeline", {period: "daily"})
   self.timeline.draw("div.timelineChart")
 
   $('#timeline_datepicker').datetimepicker({
@@ -26,15 +25,6 @@
     todayButton: true
   })
 
-  plist = ["weekly", "daily"]
-  $("#timeline_period").autocomplete({
-    minLength: 0,
-    source: plist,
-    select: (event, ui) ->
-      self.timeline.updatePeriod(ui['item']['label'])
-  }).focus ->
-    $(this).autocomplete("search")
-
   d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
   meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
   d3.json(meas_summary_url, draw_health_trend)
@@ -44,14 +34,6 @@
   console.log "getting health data for user:"+uid
   meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
   d3.json(meas_summary_url, draw_health_trend)
-
-  d = new Date()
-  d.setDate(d.getDate()-31)
-  day_2week = fmt(d)
-  actions_lastweek_url = "/users/" + uid + "/measurements.json?start="+day_2week
-  #d3.json(actions_lastweek_url, draw_blood_sugar)
-
-#  initTimelineDatepicker(uid)
 
 @bg_data_received = (jsondata) ->
   console.log "bg_data_received "+jsondata.length
