@@ -22,6 +22,9 @@ class NotificationsController < ApplicationController
       @notifications = @notifications.order(created_at: :desc)
     end
 
+    if params[:ntype] == 'visits'
+      @notifications = @notifications.where("notification_type=1 or notification_type=2")
+    end
     if params[:active]
       @notifications = active_notifications(@notifications)
     end

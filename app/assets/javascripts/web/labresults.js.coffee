@@ -46,11 +46,11 @@
       return false
     return true
 
-  $("form.resource-create-form.notifications-form").on("ajax:success", (e, data, status, xhr) ->
+  $("form.resource-create-form.notification-form").on("ajax:success", (e, data, status, xhr) ->
     console.log "notification created, ret = "
     console.log data
     if data.ok
-      load_visits()
+      loadVisits()
       popup_success("Notification "+popup_messages.saved_successfully, "labresultStyle")
     else
       popup_error(popup_messages.failed_to_add_data, "labresultStyle")
@@ -106,6 +106,7 @@
   ]
 
   controlSelected = null
+  notif_types = ['doctors_visit_general', 'doctors_visit_specialist']
   $("#control_txt").autocomplete({
     minLength: 0,
     source: controlList,
@@ -113,6 +114,7 @@
       console.log ui.item
       controlSelected = ui.item
       $("#control").val(ui.item.intValue)
+      $("#nType").val(notif_types[ui.item.intValue-1])
   }).focus ->
     $(this).autocomplete("search")
 
@@ -185,7 +187,7 @@
     todayButton: true
   })
 
-  $('.controll_datepicker').datetimepicker(timepicker_defaults)
+  $('#controll_datepicker').datetimepicker(timepicker_defaults)
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 
@@ -209,7 +211,7 @@
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent lab_results"
   lang = $("#data-lang-labresult")[0].value
-  url = '/users/' + current_user + '/notifications.js?upcoming=true&order=asc&limit=10&lang='+lang
+  url = '/users/' + current_user + '/notifications.js?upcoming=true&order=desc&limit=10&ntype=visits&lang='+lang
   console.log url
   $.ajax url,
     type: 'GET',
