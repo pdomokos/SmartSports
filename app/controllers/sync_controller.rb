@@ -1,4 +1,5 @@
 class SyncController < ApplicationController
+  before_action :check_owner
 
   def get_last_synced_final_date(user_id, source, group=nil)
     last_sync_date = nil
