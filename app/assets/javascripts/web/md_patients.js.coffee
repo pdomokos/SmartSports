@@ -209,7 +209,7 @@
 
           dateToShow = moment().format(moment_datefmt)
           console.log("----------- Timeline starts --------------")
-          self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Weekly timeline")
+          self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Weekly timeline", {period: "weekly"})
           self.timeline.draw("div.timelineChart")
 
           $('#timeline_datepicker').datetimepicker({
