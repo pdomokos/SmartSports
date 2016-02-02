@@ -1,17 +1,87 @@
 @profile_reg_loaded = () ->
   console.log "profile loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
-  $('#firstname_field').focus()
-  $('#profile_birth_datepicker').datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false,
-    maxDate: '0',
-    minDate: new Date(1900, 1 - 1, 1),
-    defaultDate: new Date(1980, 1 - 1, 1)
+  $('#lastname_field').focus()
+
+  $('#profile_datepicker').datetimepicker({
+    format: 'Y',
+    timepicker: false
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
-    todayButton: true
   })
+
+  langList = [{ label: "Magyar", value: "hu"},
+    { label: "English", value: "en"}
+  ]
+  $("#lang_sel").autocomplete({
+    minLength: 0,
+    source: langList
+    change: (event, ui) ->
+      console.log ui.item
+      setLang(event, ui)
+    select: (event, ui) ->
+      setLang(event, ui)
+      return false
+  }).focus ->
+    $(this).autocomplete("search")
+
+  gendervals = $("#gender_values").val().split(",")
+  sexList = [{ label: gendervals[0], value: "male"},
+    { label: gendervals[1], value: "female"}
+  ]
+  $("#sex_sel").autocomplete({
+      minLength: 0,
+      source: sexList
+      change: (event, ui) ->
+        console.log ui.item
+        setGender(event, ui)
+      select: (event, ui) ->
+        setGender(event, ui)
+        return false
+  }).focus ->
+    $(this).autocomplete("search")
+
+  yesnovals = $("#yes_no_values").val().split(",")
+  yesnoList = [{ label: yesnovals[0], value: "1"},
+    { label: yesnovals[1], value: "0"}
+  ]
+  $("#smoke_sel").autocomplete({
+    minLength: 0,
+    source: yesnoList
+    change: (event, ui) ->
+      console.log ui.item
+      setSmoke(event, ui)
+    select: (event, ui) ->
+      setSmoke(event, ui)
+      return false
+  }).focus ->
+    $(this).autocomplete("search")
+
+#  $("#insulin_sel").autocomplete({
+#    minLength: 0,
+#    source: yesnoList
+#    change: (event, ui) ->
+#      console.log ui.item
+#  }).focus ->
+#    $(this).autocomplete("search")
+
+  setSmoke = (event, ui) ->
+    labelItem = event.target
+    labelItem.value = ui['item']['label']
+    valueItem = labelItem.parentNode.querySelector("input[name='profile[smoke]']")
+    valueItem.value = ui['item']['value']
+
+  setGender = (event, ui) ->
+    labelItem = event.target
+    labelItem.value = ui['item']['label']
+    valueItem = labelItem.parentNode.querySelector("input[name='profile[sex]']")
+    valueItem.value = ui['item']['value']
+
+  setLang = (event, ui) ->
+    labelItem = event.target
+    labelItem.value = ui['item']['label']
+    valueItem = labelItem.parentNode.querySelector("input[name='profile[default_lang]']")
+    valueItem.value = ui['item']['value']
 
   $("#profileForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id

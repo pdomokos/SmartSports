@@ -96,7 +96,7 @@ en:
   skip: "Skip this step and go directly to SmartDiab"
   save: "Save"
   fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to SmartDiab."
-  height: "Height"
+  height: "Height, eg: 180"
   date_of_birth: "Year of birth"
   sex: "Sex"
   male: "Male"
@@ -109,6 +109,8 @@ en:
   answer_no: "no"
   upload_photo: "Upload photo"
   recommended_size: "Recommended size 160x160 px"
+  yes_no_list: "Yes,No"
+  gender_list: "Male,Female"
 
 # erorrs
   back_home:      "Back"
