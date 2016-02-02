@@ -10,6 +10,7 @@ class PagesController < ApplicationController
   @withingsconn = nil
   @fitbitconn = nil
   @googleconn = nil
+  @misfitconn = nil
 
   include SaveClickRecord
 
@@ -280,6 +281,14 @@ class PagesController < ApplicationController
       fit_conn.destroy!
     end
     redirect_to :controller => 'pages', :action => 'googlefit', :locale => I18n.locale
+  end
+
+  def misfit_destroy
+    misfit_conn = Connection.where(user_id: current_user.id, name: 'misfit').first
+    if misfit_conn
+      misfit_conn.destroy!
+    end
+    redirect_to :controller => 'pages', :action => 'misfit', :locale => I18n.locale
   end
 
   def friendship

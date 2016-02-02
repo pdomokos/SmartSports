@@ -107,7 +107,7 @@ Rails.application.routes.draw do
     get 'profile/new'
     post 'profile/set_default_lang'
 
-    get 'sync/misfit_destroy'
+    get 'pages/misfit_destroy'
     get 'pages/mdestroy'
     get 'pages/wdestroy'
     get 'pages/fdestroy'

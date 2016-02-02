@@ -156,7 +156,7 @@
 
   $("#disconnect-misfit-button").click (event) ->
     event.preventDefault()
-    window.location = '/sync/misfit_destroy'
+    window.location = '/pages/misfit_destroy'
 
   $("#misfit-link").addClass("menulink-selected")
 
