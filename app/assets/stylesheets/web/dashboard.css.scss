@@ -957,68 +957,81 @@ div.egfr {
   background-image: image-url("type/img_start.png");
 }
 
-.bgc0 {
+.dashboardBgColor {
   background-color: #4FBDF2 !important;
 }
 
-.bgc1 {
+.dietBgColor {
   background-color: #57C88A !important;
 }
 
-.bgc2 {
+.exerciseBgColor {
   background-color: #F09938 !important;;
 }
 
-.bgc3 {
+.healthBgColor {
   background-color: #8980CA !important;;
 }
 
-.bgc5 {
+.wellbeingBgColor {
   background-color: #EA70B5 !important;
 }
 
-.bgc4 {
+.medicationBgColor {
   background-color: #6CC5CC !important;;
 }
 
-.bgc6 {
+.geneticsBgColor {
   background-color: #2BC7EC !important;;
 }
 
-.bgc7 {
+.labresultBgColor {
   background-color: #EBAAAB !important;;
 }
 
-.blood_pressure {
+.startType {
+  background-image: image-url("type/img_start.png");
+}
+
+.bloodPressureType {
   background-image: image-url("type/img_bloodPressure.png");
 }
 
-.blood_sugar {
+.bloodSugarType {
   background-image: image-url("type/img_bloodSugar.png");
 }
 
-.steps {
-  background-image: image-url("img_cycling.png");
+.stepsType {
+  background-image: image-url("type/img_steps.png");
 }
 
-.exercise {
-  background-image: image-url("img_exercise@2x.png");
+.exerciseType {
+  background-image: image-url("type/img_exercise.png");
 }
 
-.insulin {
+.insulinType {
   background-image: image-url("type/img_insulin.png");
 }
-
-.cycling {
-  background-image: image-url("img_cycling.png");
+.drugType {
+  background-image: image-url("type/img_medication.png");
+}
+.cyclingType {
+  background-image: image-url("type/img_cycling.png");
 }
 
-.food {
-  background-image: image-url("img_food.png");
+.foodType {
+  background-image: image-url("type/img_food.png");
 }
 
-.weight {
-  background-image: image-url("img_weight.png");
+.drinkType {
+  background-image: image-url("type/img_drink.png");
+}
+
+.weightType {
+  background-image: image-url("type/img_weight.png");
+}
+.sleepType {
+  background-image: image-url("type/img_sleep.png");
 }
 
 .topcolor {

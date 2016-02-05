@@ -56,29 +56,49 @@ class AnalysisDataController < ApplicationController
       activities = activities.where("start_time between ? and ?", f, t)
     end
 
-    result.concat(activities.collect{|act| {
+    result.concat(activities.collect{|act|
+                    item = {
                       id: act.id,
                       tooltip: act.try(:activity_type).try(:name),
                       title: 'Exercise',
                       depth: 0,
                       dates: [act.start_time, act.end_time],
+                      kind: 'exercise',
                       evt_type: 'exercise',
-                      source: 'SmartDiab'
-                  }})
+                      source: 'SmartDiab'}
+                    if act['activity_type_id']==6
+                      item['evt_type']='cycling'
+                    elsif act['activity_type_id']==60 || !act['steps'].nil? && act['steps']>0
+                      item['evt_type']='steps'
+                      if item['tooltip']
+                        item['tooltip'] = item['tooltip']+" "+act.steps+" steps"
+                      end
+                    end
+                    item
+                  })
 
     diets = user.diets
     if f
       diets = diets.where("date between ? and ?", f, t)
     end
-    result.concat(diets.collect{|diet| {
+    result.concat(diets.collect{|diet|
+                    item = {
                       id: diet.id,
                       tooltip: diet.try(:food_type).try(:name),
                       title: 'Diet',
                       depth: 0,
                       dates: [diet.date],
-                      evt_type: 'diet',
+                      kind: 'diet',
+                      evt_type: 'food',
                       source: 'SmartDiab'
-                  }})
+                    }
+                    if diet.diet_type== 'Drink'
+                      item['evt_type'] = 'drink'
+                    end
+
+                    item
+                  })
+
 
     measurements = user.measurements
     if f
@@ -92,8 +112,8 @@ class AnalysisDataController < ApplicationController
                           title: 'Health',
                           depth: 0,
                           dates: [measurement.date],
-                          evt_type: 'measurement',
-                          meas_type: measurement.meas_type,
+                          kind: 'health',
+                          evt_type: measurement.meas_type,
                           source: 'SmartDiab'
                       }
 
@@ -124,6 +144,7 @@ class AnalysisDataController < ApplicationController
           title: 'Lifestyle',
           depth: 0,
           dates: [lifestyle.start_time, lifestyle.end_time],
+          kind: 'lifestyle',
           evt_type: 'lifestyle',
           amount: lifestyle.amount,
           source: 'SmartDiab'
@@ -141,16 +162,23 @@ class AnalysisDataController < ApplicationController
     result.concat(lifes_arr)
 
     medications = user.medications.where("date between ? and ?", f, t)
-    result.concat(medications.collect{|med| {
+    result.concat(medications.collect{|med|
+                    item = {
                       id: med.id,
                       tooltip: med.try(:medication_type).try(:name)+" : #{med.amount}",
                       title: 'Medication',
                       depth: 0,
                       dates: [med.date],
-                      evt_type: 'medication',
+                      kind: 'medication',
+                      evt_type: 'drug',
                       group: med.try(:medication_type).try(:group),
                       source: 'SmartDiab'
-                  }})
+                    }
+                    if med.medication_type.try(:group)=='insulin'
+                      item['evt_type'] = 'insulin'
+                    end
+                    item
+                  })
 
     sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
     for sens in sensors do
@@ -170,7 +198,7 @@ class AnalysisDataController < ApplicationController
       etype = 'exercise'
       if d.activity=='sleep'
         title = 'Well-being'
-        etype = 'wellbeing'
+        etype = 'sleep'
       end
       {
           id: d.id,
@@ -178,6 +206,7 @@ class AnalysisDataController < ApplicationController
           title: title,
           source: d.source.capitalize,
           depth: 0,
+          kind: 'wellbeing',
           evt_type: etype,
           dates: [d.start_time, d.end_time]
       }

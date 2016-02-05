@@ -47,6 +47,18 @@
     popup_error(popup_messages.failed_to_add_data)
   )
 
+  $.ajax '/users/' + uid + '/analysis_data.json?date='+moment().format(moment_datefmt)+'&weekly=true',
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load analysis_data AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load analysis_data AJAX success"
+      window.adata = data
+      histData = convertToHistory(data)
+      window.origData = historyData
+      window.histData = histData
+      addPoints("#canv", histData)
+
 @loadPatientNotifications = (userId) ->
   url = '/users/' + userId + '/notifications.js?order=desc&limit=5&patient=true&active=true'
   console.log "calling load notifications for: "+userId+" "+url

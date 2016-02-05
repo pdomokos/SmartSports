@@ -3,24 +3,18 @@
     dashboard_loaded();
 </script>
 
-<script>
-    $(function () {
-        addPoints($("#canv"), historyData);
-    })
-</script>
-
 <%= render partial: 'static_data' %>
 
 <div class="topcolor">
   <div class="historyContainer" style="">
-    <div style="text-align: center;color: #ffffff;">
-      <%=t 'today'%>
+    <div class="title">
+      <!--<%=t 'today'%>-->
     </div>
 
-    <div id="canv" style="position:relative;margin-left: 40px;margin-top: 20px;">
+    <div id="canv" class="canv">
     </div>
-    <div style="clear: both">
 
+    <div class="clearBoth">
     </div>
   </div>
 

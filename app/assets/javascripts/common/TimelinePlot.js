@@ -70,8 +70,8 @@ TimelinePlot.prototype.scaleVal = function(dataPoint, defaultValue, idx) {
         } else {
             value = dataPoint.values[idx];
         }
-        if(dataPoint.evt_type=="measurement" && dataPoint.meas_type in self.transforms) {
-            y_scale = self.transforms[dataPoint.meas_type].scale;
+        if(dataPoint.kind=="health" && dataPoint.evt_type in self.transforms) {
+            y_scale = self.transforms[dataPoint.evt_type].scale;
         }
     }
     return y_scale(value);
@@ -87,8 +87,8 @@ TimelinePlot.prototype.drawPoints = function(data) {
         .attr("data-title", function(d) {return d.title;})
         .attr("class", "pointdata");
 
-    groupsEnter.append("circle").attr("class", function(d) { return d.evt_type+" timePoints timePointsA";});
-    groupsEnter.append("circle").attr("class", function(d) { return d.evt_type+" timePointsInner timePointsAInner";});
+    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePoints timePointsA";});
+    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePointsInner timePointsAInner";});
 
     groupsEnter.selectAll("circle.timePointsA")
         .attr("cx", function(d) {
@@ -121,11 +121,11 @@ TimelinePlot.prototype.drawLines = function(data) {
         .attr("data-title", function(d) {return d.title;})
         .attr("class", "linedata");
 
-    groupsEnter.append("line").attr("class", function(d) { return d.evt_type+" timeLines";});
-    groupsEnter.append("circle").attr("class", function(d) { return d.evt_type+" timePoints timePointsA";});
-    groupsEnter.append("circle").attr("class", function(d) { return d.evt_type+" timePointsInner timePointsAInner";});
-    groupsEnter.append("circle").attr("class", function(d) { return d.evt_type+" timePoints timePointsB";});
-    groupsEnter.append("circle").attr("class", function(d) { return d.evt_type+" timePointsInner timePointsBInner";});
+    groupsEnter.append("line").attr("class", function(d) { return d.kind+" timeLines";});
+    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePoints timePointsA";});
+    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePointsInner timePointsAInner";});
+    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePoints timePointsB";});
+    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePointsInner timePointsBInner";});
 
     var time_scale = self.transforms.time.scale;
     groupsEnter.select("line")
@@ -171,11 +171,11 @@ TimelinePlot.prototype.dataAdapter = function(data) {
     for(i = 0; i < data.length; ++i ) {
         var d = data[i];
         var dispType = "other";
-        if(new Set(["exercise", "medication", "diet"]).has(d.evt_type)) {
+        if(new Set(["exercise", "medication", "diet"]).has(d.kind)) {
             dispType = "point";
-        } else if(d.evt_type=="measurement"){
+        } else if(d.kind=="health"){
             dispType = "point";
-            if(d.evt_type=="measurement"&&d.meas_type=="blood_pressure") {
+            if(d.kind=="health"&&d.evt_type=="blood_pressure") {
                 // add the pulse measurement as a separate data point
                 var pulse = $.extend({}, d);
                 pulse["disp_type"] = "point";
@@ -189,7 +189,7 @@ TimelinePlot.prototype.dataAdapter = function(data) {
                 d.values = [origValues[0], origValues[1]];
                 dispType = "line";
             }
-        } else if(d.evt_type=="lifestyle") {
+        } else if(d.kind=="lifestyle") {
             dispType = "line";
         }
 

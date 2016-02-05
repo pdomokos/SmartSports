@@ -2,7 +2,3 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-testfn = () ->
-  console.log "analysis_data.js.coffee testing"
-
-testfn()
