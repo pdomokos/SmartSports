@@ -139,12 +139,18 @@
 
   foodSelected = null
   $(".diet_food_name").autocomplete({
-    minLength: 3,
+    minLength: 0,
     source: (request, response) ->
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in getStored('sd_foods')
+      user_lang = $("#user-lang")[0].value
+      if user_lang
+        foodkey = 'sd_foods_'+user_lang
+      else
+        foodkey = 'sd_foods_hu'
+
+      for element in getStored(foodkey)
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -165,7 +171,13 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in getStored('sd_drinks')
+      user_lang = $("#user-lang")[0].value
+      if user_lang
+        drinkkey = 'sd_drinks_'+user_lang
+      else
+        drinkkey = 'sd_drinks_hu'
+
+      for element in getStored(drinkkey)
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -179,7 +191,7 @@
   }).focus ->
     $(this).autocomplete("search")
 
-  smokeList = [
+  smokeList_hu = [
     {label: "1 Cigaretta"             ,value: "1 Cigaretta"            },
     {label: "1 Szivar"                ,value: "1 Szivar"               },
     {label: "1 Szivarka"              ,value: "1 Szivarka"             },
@@ -189,6 +201,24 @@
     {label: "1 Nikotinos rágó"        ,value: "1 Nikotinos rágó"       },
     {label: "1 Nikotinos tapasz"      ,value: "1 Nikotinos tapasz"     }]
 
+  smokeList_en = [
+    {label: "1 Cigarette"             ,value: "1 Cigaretta"            },
+    {label: "1 Cigar"                 ,value: "1 Szivar"               },
+    {label: "1 Cigarillo"             ,value: "1 Szivarka"             },
+    {label: "1 Pipe"                  ,value: "1 Pipa"                 },
+    {label: "1 Electric cigarette"    ,value: "1 Elektromos cigaretta" },
+    {label: "1 Nicotine nose-spray"   ,value: "1 Nikotinos orrspray"   },
+    {label: "1 Nicotine chewing gum"  ,value: "1 Nikotinos rágó"       },
+    {label: "1 Nicotine patch"        ,value: "1 Nikotinos tapasz"     }]
+
+  user_lang = $("#user-lang")[0].value
+  if user_lang
+    if user_lang == 'en'
+      smokeList = smokeList_en
+    else if user_lang == 'hu'
+      smokeList = smokeList_hu
+  else
+    smokeList = smokeList_hu
   smokeSelected = null
   $(".diet_smoke_type").autocomplete({
     minLength: 0,
@@ -235,8 +265,15 @@
   self = this
   current_user = $("#current-user-id")[0].value
   popup_messages = JSON.parse($("#popup-messages").val())
+  user_lang = $("#user-lang")[0].value
+  db_version = $("#db-version")[0].value
 
-  if !getStored('sd_foods')
+  if user_lang
+    foodkey = 'sd_foods_'+user_lang
+  else
+    foodkey = 'sd_foods_hu'
+
+  if !getStored(foodkey) || testDbVer(db_version)
     console.log "loading food types"
     ret = $.ajax '/food_types.json',
       type: 'GET',
@@ -245,13 +282,24 @@
       success: (data, textStatus, jqXHR) ->
         console.log "load food_types  Successful AJAX call"
 
-        setStored('sd_foods', data.filter( (d) ->
-          d['category'] != 'Ital'
+        setStored('sd_foods_hu', data.filter( (d) ->
+          d['category'] == "Food" && d['lang'] == 'hu'
         ).map( window.food_map_fn ))
 
-        setStored('sd_drinks', data.filter( (d) ->
-          d['category'] == 'Ital'
+        setStored('sd_drinks_hu', data.filter( (d) ->
+          d['category'] == "Drink" && d['lang'] == 'hu'
         ).map( window.food_map_fn ))
+
+        setStored('sd_foods_en', data.filter( (d) ->
+          d['category'] == "Food" && d['lang'] == 'en'
+        ).map( window.food_map_fn ))
+
+        setStored('sd_drinks_en', data.filter( (d) ->
+          d['category'] == "Drink" && d['lang'] == 'en'
+        ).map( window.food_map_fn ))
+
+        setStored('db_version', db_version)
+
         cb()
   else
     console.log "food types already loaded"

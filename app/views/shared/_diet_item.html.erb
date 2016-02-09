@@ -28,11 +28,11 @@
       <% end %>
   <% elsif diet_item.diet_type== "Calory" %>
         <% if diet_item.calories %>
-            <span class="itemTitle"><%= t "quick_calories" %></span>
+            <span class="itemTitle"><%= (t :quick_calories) %></span>
             <span> <%= diet_item.calories %>kcal</span>
         <% end %>
         <% if diet_item.carbs %>
-            <span> carbs: <%= diet_item.carbs %>g</span>
+            <span> <%= (t :carbs) %>: <%= diet_item.carbs %>g</span>
         <% end %>
   <% elsif diet_item.diet_type== "Drink" %>
       <% if diet_item.food_type %>

@@ -184,13 +184,13 @@ en:
 
 # diet
   food: "Food"
-  food_placeholer: "Type at least three letters..."
+  food_placeholer: "Select..."
   quick_calories: "Quick calories"
   quick_calories_prefix:  "Quick calories"
   quick_calories_placeholder: "Type calories here..."
   quick_carbs_placeholder: "Type carbs here..."
   drink: "Drink"
-  drink_placeholder: "Start typing or select..."
+  drink_placeholder: "Select..."
   smoking: "Smoking"
   smoking_placeholder: "Select..."
   patient_name_placeholder: "Patient Name"
@@ -287,7 +287,7 @@ en:
   painList:                 "Slight mild,Mild,Moderate,Severe,Worst possible"
   periodPainList:           "No pain,Mild pain,Moderate pain,Severe pain,Very painful"
   periodVolumeList:         "Light, Moderate, Normal, Heavy, Extremely heavy"
-  painTypeList:             "Acute,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed,Angina,Cardiac arrhythmia"
+  painTypeList:             "Szövetsérüléssel járó fájdalom,Zsigeri fájdalom,Idegi eredetű fájdalom,Lelki eredetű fájdalom,Mellkasi szorító fájdalom,Migrén,Ízületi fájdalom,Hát-derékfájdalom"
 
 # genetics
   genetics:           "Genetics"

@@ -10,9 +10,9 @@ class FoodTypesController < ApplicationController
     else
       food_types = FoodType.all
       if ftype == 'drink'
-        food_types = food_types.where("category = 'Ital'")
+        food_types = food_types.where("category = 'Drink'")
       elsif ftype=='food'
-        food_types = food_types.where("category != 'Ital'")
+        food_types = food_types.where("category = 'Food'")
       end
     end
     if limit

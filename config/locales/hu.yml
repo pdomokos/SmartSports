@@ -162,13 +162,13 @@ hu:
 
 # diet
   food:             "Étel"
-  food_placeholer: "Írjon legalább 3 betűt..."
+  food_placeholer: "Válasszon..."
   quick_calories:  "Gyors kalória megadás"
   quick_calories_prefix:  "Gyors kalória"
   quick_calories_placeholder: "Írja be a kalóriát..."
   quick_carbs_placeholder: "Írja be a szénhidrátot..."
   drink:            "Ital"
-  drink_placeholder: "Írjon vagy válasszon..."
+  drink_placeholder: "Válasszon..."
   smoking:            "Dohányzás"
   smoking_placeholder: "Válasszon..."
   patient_name_placeholder: "Beteg neve"
@@ -265,7 +265,7 @@ hu:
   painList:               "Nagyon enyhe,Enyhe,Mérsékelt,Erős,Tűrhetetlen"
   periodPainList:         "Nincs fájdalom,Gyenge fájdalom,Mérsékelt fájdalom,Erős fájdalom,Tűrhetetlen fájdalom"
   periodVolumeList:       "Alig észlelhető, Gyenge, Közepes, Erős, Rendkívül erős"
-  painTypeList:           "Akut,Nociceptive,Neuropathic(central),Neuropathic(peripheral),Visceral,Mixed,Angina,Cardiac arrhythmia"
+  painTypeList:            "Szövetsérüléssel járó fájdalom,Zsigeri fájdalom,Idegi eredetű fájdalom,Lelki eredetű fájdalom,Mellkasi szorító fájdalom,Migrén,Ízületi fájdalom,Hát-derékfájdalom"
 
 # genetics
   genetics:           "Genetika"

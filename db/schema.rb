@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 20160209073607) do
     t.float  "prot"
     t.float  "carb"
     t.float  "fat"
+    t.string "lang"
   end
 
   create_table "friendships", force: true do |t|

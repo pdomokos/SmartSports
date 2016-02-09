@@ -68,6 +68,27 @@ namespace :smartdiab do
     end
   end
 
+  task init_foods_simple: :environment do
+    if FoodType.all.size != 0
+      FoodType.all.each {|mt|
+        mt.destroy!
+      }
+    end
+
+    foodlist = nil
+    dirName = File.dirname(__FILE__)
+    f = dirName + "/init_food.csv"
+    foodlist = CSV.read(f, headers: true, col_sep: ";")
+
+    #print foodlist.first.as_json.pretty_inspect
+    foodlist.each do |m|
+      # ["name", "category", "lang"]
+      ft = FoodType.new(:name => m['name'], :category =>  m['category'], :lang => m['lang'])
+      ft.save!
+    end
+
+  end
+
   task load_foods_csv: :environment do
     if FoodType.all.size != 0
       FoodType.all.each {|mt|

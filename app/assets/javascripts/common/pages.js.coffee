@@ -247,7 +247,8 @@
       fat: d['fat'],
       carb: d['carb'],
       prot: d['prot'],
-      categ: d['category']
+      categ: d['category'],
+      lang: d['lang']
     }
 
   window.activity_map_fn = (d) ->

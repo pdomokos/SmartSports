@@ -294,6 +294,18 @@
   return m.format(moment_fmt)
 
 
+@testDbVer = (actualDbVersion) ->
+  if typeof(Storage) != "undefined"
+    try
+      storedDbVersion = JSON.parse(localStorage.getItem("db_version"))
+      if !storedDbVersion || storedDbVersion !=  actualDbVersion
+        localStorage.clear
+        return true
+    catch
+      return false
+  else
+    return false
+
 @getStored = (key) ->
   if typeof(Storage) != "undefined"
     try

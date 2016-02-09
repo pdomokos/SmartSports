@@ -9,13 +9,13 @@ module DietsCommon
     if not @diet.date
       @diet.date = DateTime.now
     end
-    if (@diet.diet_type=='Food' || @diet.diet_type=='Drink' )
-      ft = FoodType.find_by_id(@diet.food_type_id)
-      @diet.calories = @diet.amount*ft.kcal
-      @diet.carbs = @diet.amount*ft.carb
-      @diet.fat = @diet.amount*ft.fat
-      @diet.prot = @diet.amount*ft.prot
-    end
+    # if (@diet.diet_type=='Food' || @diet.diet_type=='Drink' )
+    #   ft = FoodType.find_by_id(@diet.food_type_id)
+    #   @diet.calories = @diet.amount*ft.kcal
+    #   @diet.carbs = @diet.amount*ft.carb
+    #   @diet.fat = @diet.amount*ft.fat
+    #   @diet.prot = @diet.amount*ft.prot
+    # end
 
     if @diet.diet_type=='Calory'
       diet_name = I18n.t :quick_calories_prefix
@@ -63,10 +63,10 @@ module DietsCommon
         end
         update_hash[:food_type_id] = ft.id
         update_hash[:name] = ft.name
-        update_hash[:calories] = amount*ft.kcal
-        update_hash[:carbs] = amount*ft.carb
-        update_hash[:fat] = amount*ft.fat
-        update_hash[:prot] = amount*ft.prot
+        # update_hash[:calories] = amount*ft.kcal
+        # update_hash[:carbs] = amount*ft.carb
+        # update_hash[:fat] = amount*ft.fat
+        # update_hash[:prot] = amount*ft.prot
       else
         send_error_json(@diet.id,  "Invalid food type", 400)
         return
