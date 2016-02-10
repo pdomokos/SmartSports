@@ -5,7 +5,16 @@ class OmniAuth::Strategies::Moves
         ''
       end
     end
-
+class OmniAuth::Strategies::Shine
+  def query_string
+    ''
+  end
+end
+class OmniAuth::Strategies::GoogleOauth2
+  def query_string
+    ''
+  end
+end
 Rails.application.config.middleware.use OmniAuth::Builder do
   if defined? CONNECTION_CONFIG
     provider :moves, CONNECTION_CONFIG['MOVES_KEY'], CONNECTION_CONFIG['MOVES_SECRET']

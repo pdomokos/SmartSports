@@ -48,44 +48,66 @@ Withings.consumer_key = CONNECTION_CONFIG['WITHINGS_KEY']
 Withings.consumer_secret = CONNECTION_CONFIG['WITHINGS_SECRET']
 
 class WithingsSynchronizer < SynchronizerBase
-
-  def sync()
+  def sync(conn)
     begin
-      connection_data = JSON.parse(Connection.find(connection_id).data)
-      withings_user =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
-      meas = sync_withings_meas(withings_user)
-      act = sync_withings_act(withings_user)
-      slp = sync_withings_sleep(withings_user)
+      connection_data = JSON.parse(conn.data)
+      @client =  Withings::User.authenticate(connection_data['uid'], connection_data['token'], connection_data['secret'])
+
+      Summary.transaction do
+        from = get_last_measurement_date('withings')
+        from ||= DateTime.parse("2010-01-01")
+        sync_withings_meas(from)
+
+        from = get_last_summary_date('withings', 'walking')
+        from ||= DateTime.parse("2010-01-01")
+        sync_withings_act(from.strftime(dateFormat), DateTime.now().strftime(dateFormat))
+
+        from = get_last_summary_date('withings', 'sleep')
+        from ||= DateTime.parse("2010-01-01")
+        sync_withings_sleep(from)
+      end
+
+      return true
     rescue Exception => e
       logger.error("Withings sync failed for user: #{connection_data['uid']}")
       logger.error(e.message )
       logger.error(e.backtrace.join("\n") )
+      return false
     end
   end
 
   private
 
-  def remove_activities_on_date(source, date, group=nil)
-    to_remove = Summary.where("user_id= #{user_id} and source = '#{source}' and date=?", DateTime.parse(date))
-    if not group.nil?
-      to_remove = to_remove.where(group: group)
-    end
-    to_remove.each { |it| it.destroy!}
+  # def remove_activities_on_date(source, date, group=nil)
+  #   to_remove = Summary.where("user_id= #{user_id} and source = '#{source}' and date>=? and date<?",
+  #                             Date.parse(date).midnight, Date.parse(date).midnight+1.day)
+  #   if not group.nil?
+  #     to_remove = to_remove.where(group: group)
+  #   end
+  #   n = to_remove.delete_all
+  #   logger.info("deleted #{n} summaries, user_id=#{user_id}")
 
-    f = Time.zone.parse(date+' 00:00:00')
-    t = Time.zone.parse(date+' 23:59:59')
-    sleep_to_remove = TrackerDatum.where('end_time between ? and ?', f, t).where(source: 'withings').where(group: 'sleep')
-    sleep_to_remove.each { |it| it.destroy!}
+    # f = Time.zone.parse(date+' 00:00:00')
+    # t = Time.zone.parse(date+' 23:59:59')
+    # sleep_to_remove = TrackerDatum.where('end_time between ? and ?', f, t).where(source: 'withings').where(group: 'sleep')
+    # sleep_to_remove.each { |it| it.destroy!}
+  # end
+
+  def sync_withings_act(from, to)
+    deleted = remove_summaries_from_date("withings", from, 'walking')
+    logger.info("deleted #{deleted} walk summaries")
+    act = client.get_activities({:startdateymd => from, :enddateymd => to})
+    logger.info("adding #{act['activities'].size()} walk summaries")
+    for item in act['activities']
+      save_withings_act(item)
+    end
   end
 
   def save_withings_act(rec)
     soft = rec['soft']
     moderate = rec['moderate']
     intense = rec['intense']
-    isFinal = false
-    if DateTime.parse(rec['date']) < Date.today()
-      isFinal = true
-    end
+
     new_act =  Summary.new( user_id: user_id, source: 'withings', date: DateTime.parse(rec['date']),
                             total_duration: soft+moderate+intense,
                             soft_duration: soft,
@@ -96,47 +118,17 @@ class WithingsSynchronizer < SynchronizerBase
                             calories: rec['calories'],
                             elevation: rec['elevation'],
                             synced_at: DateTime.now(),
-                            sync_final: isFinal,
                             group: 'walking'
     )
     new_act.save!
   end
 
-  def get_withings_last_sync
-    result = DateTime.parse("2010-01-01 00:00:00").to_i
-    withings_meas_query = Measurement.where("user_id = #{user_id} and source = 'withings'").order(created_at: :desc).limit(1)
-    if withings_meas_query.size() >0
-      result = withings_meas_query[0].created_at.to_i
-    end
-    return result
-  end
-
-  def sync_withings_act(withings_user)
-    dateFormat = "%Y-%m-%d %H:%M:%S"
-    dateFormat_ymd = "%Y-%m-%d"
-    today_ymd = DateTime.now().strftime(dateFormat_ymd)
-    last_sync_date = get_last_synced_final_date("withings")
-    if last_sync_date
-      start_date = last_sync_date+1.day
-      act = withings_user.get_activities({:startdateymd => start_date.strftime(dateFormat_ymd), :enddateymd => today_ymd})
-      for item in act['activities']
-        remove_activities_on_date("withings", item['date'])
-        save_withings_act(item)
-      end
-    else
-      act = withings_user.get_activities({:startdateymd => "2010-01-01", :enddateymd => today_ymd})
-      for item in act['activities']
-        save_withings_act(item)
-      end
-    end
-  end
-
-  def sync_withings_meas(withings_user)
-
-    lastupdate = get_withings_last_sync()
-
-    meas = withings_user.getmeas({ :lastupdate => lastupdate})
-
+  def sync_withings_meas(from)
+    lastUpdateTs = from.to_i
+    deleted = remove_measurements_from_date('withings', from.strftime(dateFormat))
+    logger.info("deleted #{deleted} meas")
+    meas = client.getmeas({ :lastupdate => lastUpdateTs})
+    logger.info("adding #{meas.size()} meas")
     for item in meas do
       measurement = Measurement.new( {
                                          :user_id => user_id,
@@ -147,69 +139,58 @@ class WithingsSynchronizer < SynchronizerBase
                                          :pulse => item.heart_pulse,
                                          :SPO2 => item.spo2}
       )
-      logger.debug measurement.to_json
       measurement.save!
     end
-    return meas
   end
 
-  def sync_withings_sleep(withings_user)
-    dateFormat = "%Y-%m-%d %H:%M:%S"
-    dateFormat_ymd = "%Y-%m-%d"
-    today_ymd = DateTime.now().strftime(dateFormat_ymd)
-    last_sync_date = get_last_synced_final_date("withings", "sleep")
-    if last_sync_date
-      start_date = last_sync_date+1.day
-      sleep_data = withings_user.getconn().get_request("/v2/sleep",
-                                                       {:startdateymd => start_date.strftime(dateFormat_ymd),
-                                                        :enddateymd => DateTime.now().strftime(dateFormat_ymd),
-                                                        :action => "getsummary"})
+  def sync_withings_sleep(from)
+    deleted = remove_summaries_from_date( "withings", from.strftime(dateFormat), "sleep")
+    logger.info("deleted #{deleted} sleep summaries")
 
-      for item in sleep_data['series']
-        remove_activities_on_date( "withings", item['date'], "sleep")
-        save_withings_sleep_summary(item)
-      end
-    else
-      sleep_data = withings_user.getconn().get_request("/v2/sleep",
-                                                       {:startdateymd => "2010-01-01",
-                                                        :enddateymd => DateTime.now().strftime(dateFormat_ymd),
-                                                        :action => "getsummary"})
-
-      for item in sleep_data['series']
-        save_withings_sleep_summary(item)
-      end
+    today=DateTime.now().midnight+1.day
+    to = from+199.days
+    while to<today
+      import_sleep_items(from, to)
+      from = to
+      to = to+199.days
     end
+    to = DateTime.now()
+    import_sleep_items(from, to)
+  end
 
-    return sleep_data
+  def import_sleep_items(from, to)
+    sleep_data = client.getconn().get_request("/v2/sleep",
+                                                     {:startdateymd => from.strftime(dateFormat),
+                                                      :enddateymd => to.strftime(dateFormat),
+                                                      :action => "getsummary"})
+    logger.info("adding #{sleep_data['series'].size()} sleep summaries")
+    for item in sleep_data['series']
+      save_withings_sleep_summary(item)
+    end
   end
 
   def save_withings_sleep_summary(rec)
-    isFinal = false
-    if Time.zone.parse(rec['date']) < Date.today().midnight()
-      isFinal = true
-    end
     light = rec['data']['lightsleepduration']
     deep = rec['data']['deepsleepduration']
     new_sleep =  Summary.new( user_id: user_id, source: 'withings', date: DateTime.parse(rec['date']),
                               total_duration: light+deep,
                               synced_at: DateTime.now(),
-                              sync_final: isFinal,
                               group: 'sleep'
     )
     new_sleep.save!
 
-    tracker_data = TrackerDatum.new( user_id: user_id, source: 'withings',
-                                     start_time: Time.zone.strptime(rec['startdate'], '%s'),
-                                     end_time: Time.zone.strptime(rec['enddate'], '%s'),
-                                     activity:  'sleep',
-                                     group: 'sleep',
-                                     manual: false,
-                                     duration: nil,
-                                     distance: nil,
-                                     steps: nil,
-                                     calories: nil,
-                                     synced_at: DateTime.now(),
-                                     sync_final: isFinal)
-    tracker_data.save!
+    # tracker_data = TrackerDatum.new( user_id: user_id, source: 'withings',
+    #                                  start_time: Time.zone.strptime(rec['startdate'], '%s'),
+    #                                  end_time: Time.zone.strptime(rec['enddate'], '%s'),
+    #                                  activity:  'sleep',
+    #                                  group: 'sleep',
+    #                                  manual: false,
+    #                                  duration: nil,
+    #                                  distance: nil,
+    #                                  steps: nil,
+    #                                  calories: nil,
+    #                                  synced_at: DateTime.now(),
+    #                                  sync_final: isFinal)
+    # tracker_data.save!
   end
 end

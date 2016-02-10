@@ -1,0 +1,39 @@
+<input id="popup-messages" value="<%=@values%>" type="hidden" />
+<div class="sectionTitle c0">
+  <%= t :title_connections %>
+</div>
+
+<div id="sectionConnections" class="menu-section">
+  <table class="historyTable"  cellpadding="0" cellspacing="0">
+    <tbody id="recentResourcesTable">
+
+    </tbody>
+  </table>
+</div>
+
+<table class="hidden">
+  <tbody id="template_addconn">
+  <tr class="bg">
+    <td style="width:40px;">
+    </td>
+
+    <td class="historyTitle addConnItem">
+      <form>
+      <select class="dataFormField" name="connectionName">
+      </select>
+      <button class="tableControl addConnButton"><i class="fa fa-plus-square-o fa-2x"></i></button>
+      </form>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+
+<% content_for :menu do %>
+    <%= render "settingsmenu" %>
+<% end %>
+<script type="text/javascript">
+  pages_menu()
+  connections_loaded();
+</script>

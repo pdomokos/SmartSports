@@ -2,10 +2,9 @@ class GoogleSynchronizer < SynchronizerBase
   require "net/https"
   require "uri"
 
-  def sync()
+  def sync(conn)
     begin
-      google_conn = Connection.find(connection_id)
-      connection_data = JSON.parse(google_conn.data)
+      connection_data = JSON.parse(conn.data)
       @access_token = connection_data["token"] # only works if not expired
       @refresh_token = connection_data["refresh_token"]
       res = query_steps()
@@ -17,7 +16,7 @@ class GoogleSynchronizer < SynchronizerBase
       if jsonarr["error"] != nil
         errorcode = jsonarr["error"]["code"]
         if errorcode && errorcode.to_i == 401
-          refresh_token(google_conn)
+          refresh_token(conn)
           res = query_steps()
           response = res[0]
           startTime = res[1].to_i
@@ -26,10 +25,12 @@ class GoogleSynchronizer < SynchronizerBase
       end
 
       sync_data(jsonarr, startTime)
+      return true
     rescue Exception => e
       logger.error("Withings sync failed for user: #{connection_data['uid']}")
       logger.error(e.message)
       logger.error(e.backtrace.join("\n"))
+      return false
     end
   end
 

@@ -1,0 +1,29 @@
+.connIcon {
+  width: 30px;
+  height: 30px;
+}
+
+td.syncConn button {
+  margin-top: 6px;
+}
+
+td.deleteConn button {
+  margin-top: 6px;
+}
+
+.tag.steps { background-color: #f46d43 };
+.tag.sleep { background-color: #fdae61 };
+
+.historyTable button.addConnButton {
+  margin-top: 10px;
+  color: green;
+}
+
+.addConnItem {
+  padding-top: 6px;
+  padding-bottom: 0px;
+}
+
+.red {
+  color: red;
+}

@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     resources :custom_forms do
       resources :custom_form_elements
     end
+    resources :connections
     get 'analysis_data' => 'analysis_data#index'
     post 'upload'
     post 'uploadAv'
@@ -93,12 +94,9 @@ Rails.application.routes.draw do
     get 'pages/explore'
     get 'pages/customforms'
     get 'pages/traffic'
+
     get 'pages/profile'
-    get 'pages/moves'
-    get 'pages/withings'
-    get 'pages/fitbit'
-    get 'pages/misfit'
-    get 'pages/googlefit'
+    get 'pages/connections'
 
     get 'pages/signin'
     get 'pages/signup'
@@ -107,28 +105,11 @@ Rails.application.routes.draw do
     get 'profile/new'
     post 'profile/set_default_lang'
 
-    get 'sync/misfit_destroy'
-    get 'pages/mdestroy'
-    get 'pages/wdestroy'
-    get 'pages/fdestroy'
-    get 'pages/gfdestroy'
-
   end
   # resources :summaries
   # resources :notifications
   # resources :measurements
   resources :friendships
-
-  get 'sync/test_withings'
-
-  get 'sync/sync_moves'
-  get 'sync/sync_withings'
-  get 'sync/sync_fitbit'
-  get 'sync/sync_moves_act_daily'
-  get 'sync/sync_withings_sleep_test'
-  get 'sync/sync_google'
-  get 'sync/sync_misfit'
-  get 'sync/test_misfit'
 
   get '/auth/moves/callback' => 'connections#movescb'
   get '/auth/withings/callback' => 'connections#withingscb'

@@ -1,0 +1,54 @@
+<tr class="bg" data-conn="<%= connection_item.name %>">
+  <td style="width:40px;" class="padded">
+    <%= image_tag "menu/#{connection_item.name}60.png", class: "connIcon" %>
+  </td>
+
+  <td id="connection_item_<%= connection_item.id %>" class="historyTitle padded dietItem">
+
+    <span class="itemTitle"><%= connection_item.name %></span>
+
+    <div class="right">
+      <span class="tag steps">steps</span>
+      <% if connection_item.name=="withings" || connection_item.name=="fitbit" %>
+          <span class="tag sleep">sleep</span>
+      <%end %>
+    </div>
+
+    <span>
+      <% if connection_item.synced_at %>
+        Last sync: <%= connection_item.synced_at.strftime("%F, %H:%M") if connection_item.created_at %>
+      <% else %>
+        Not yet synced.
+      <% end %>
+      <% if connection_item.sync_status=="failure" %>
+        <i class="fa fa-exclamation-triangle red"></i>
+      <% end %>
+    </span>
+
+  </td>
+
+  <td class="iconColumn syncConn">
+    <%= form_tag("/users/#{current_user.id}/connections/#{connection_item.id}",
+                 id: "delete_connection_#{connection_item.id}",
+                 remote: true,
+                 method: "patch",
+                 class: "resource-sync-form") do %>
+        <button class="tableControl syncConnButton">
+          <i class="fa fa-refresh fa-2x <% if connection_item.sync_status=="pending"%>fa-spin<%end%>"></i>
+        </button>
+        <input type="hidden" name="sync" value="true">
+    <% end %>
+  </td>
+
+  <td class="iconColumn deleteConn">
+    <%= form_tag("/users/#{current_user.id}/connections/#{connection_item.id}",
+                 id: "delete_connection_#{connection_item.id}",
+                 remote: true,
+                 method: "delete",
+                 class: "resource-delete-form") do %>
+        <button class="tableControl">
+          <i class="fa fa-trash-o fa-2x"></i>
+        </button>
+    <% end %>
+  </td>
+</tr>

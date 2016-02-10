@@ -1,0 +1,2 @@
+$("#recentResourcesTable").html("");
+$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/connection_item', :collection=> @connections ) %>");

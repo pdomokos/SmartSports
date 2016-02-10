@@ -1,47 +1,51 @@
 class MisfitSynchronizer < SynchronizerBase
 
-  def sync()
+  def sync(conn)
     begin
       consumer_key = CONNECTION_CONFIG['MISFIT_KEY']
       consumer_secret = CONNECTION_CONFIG['MISFIT_SECRET']
-      connection_data = JSON.parse(Connection.find(connection_id).data)
-      client ||= MisfitGem::Client.new(
+      connection_data = JSON.parse(conn.data)
+      @client ||= MisfitGem::Client.new(
           consumer_key: consumer_key,
           consumer_secret: consumer_secret,
           token: connection_data['token']
       )
-      dateFormat_ymd = "%Y-%m-%d"
-      today_ymd = DateTime.now().strftime(dateFormat_ymd)
-      today_minus_28_ymd = (DateTime.now()-28.days).strftime(dateFormat_ymd)
-      last_sync_date = get_last_synced_final_date("misfit")
-      if last_sync_date
-        start_date = last_sync_date+1.day
-        act = client.get_summary(start_date: start_date.strftime(dateFormat_ymd), end_date: today_ymd, detail: true)
-        if not act.nil?
-          for item in act['summary']
-            remove_activities_on_date("misfit", item['date'])
-            save_misfit_act(item)
-          end
-        end
-      else
-        logger.info "sync misfit summary: #{today_minus_28_ymd}, #{today_ymd}"
-        act = client.get_summary(start_date: today_minus_28_ymd, end_date: today_ymd, detail: true)
-        if not act.nil?
-          for item in act['summary']
-            save_misfit_act(item)
-          end
-        end
+
+      today = DateTime.now()
+
+      from = get_last_summary_date('misfit', 'walking')
+      from ||= DateTime.now()-1.year
+
+      remove_summaries_from_date("misfit", from.strftime(dateFormat), "walking")
+      to = from+28.days
+      while to<today
+        import_summaries(from, to)
+        from = to
+        to = to+28.days
       end
+      if from<today.midnight+1.day
+        to = today.midnight+1.day
+        import_summaries(from, to)
+      end
+      return true
 
     rescue Exception => e
       logger.error("Misfit sync failed for user: #{connection_data['uid']}")
       logger.error(e.message)
       logger.error(e.backtrace.join("\n"))
+      return false
     end
   end
 
   private
 
+  def import_summaries(from, to)
+    logger.info("saving: #{from.strftime(dateFormat)} - #{to.strftime(dateFormat)}")
+    act = client.get_summary(start_date: from.strftime(dateFormat), end_date: to.strftime(dateFormat), detail: true)
+    for item in act['summary']
+      save_misfit_act(item)
+    end
+  end
   def save_misfit_act(rec)
     isFinal = false
     if DateTime.parse(rec['date']) < Date.today()

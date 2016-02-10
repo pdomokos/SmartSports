@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126074343) do
+ActiveRecord::Schema.define(version: 20160209073607) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -63,10 +63,12 @@ ActiveRecord::Schema.define(version: 20160126074343) do
   create_table "connections", force: true do |t|
     t.string   "name"
     t.string   "type"
-    t.text     "data",       limit: 1024
+    t.text     "data",        limit: 1024
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.datetime "synced_at"
+    t.integer  "sync_status", limit: 10,   default: 0
   end
 
   add_index "connections", ["name", "user_id"], name: "index_connection_on_name_and_user_id", unique: true

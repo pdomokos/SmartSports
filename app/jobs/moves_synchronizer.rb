@@ -1,14 +1,16 @@
 class MovesSynchronizer < SynchronizerBase
 
-  def sync()
+  def sync(conn)
     begin
-      connection_data = JSON.parse(Connection.find(connection_id).data)
+      connection_data = JSON.parse(conn.data)
       status = do_sync_moves(connection_data)
       status_tracker = do_sync_moves_tracker(connection_data)
+      return true
     rescue Exception => e
       logger.error("Moves sync failed for user: #{connection_data['uid']}")
       logger.error(e.message)
       logger.error(e.backtrace.join("\n"))
+      return false
     end
   end
 

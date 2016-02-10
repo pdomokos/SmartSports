@@ -10,6 +10,7 @@ hu:
   menu_analytics:  "Elemzés"
   menu_statistics: "Statisztika"
   menu_profile: "Profil"
+  menu_connections: "Kapcsolatok"
   menu_custom: "Saját"
   menu_users: "Felhasználók"
   menu_forms: "Kérdőívek"
@@ -17,14 +18,15 @@ hu:
   menu_patient_groups: "Beteg Csoportok"
   menu_custom_full: "Saját Kérdőívek"
 
-  title_profile: "SZEMÉLYES PROFIL"
+  title_profile: "Profil"
+  title_connections: "Csatlakoztatott eszközök"
 
   settings_active_since: "Csatlakozás dátuma"
   settings_not_connected: "Nincs csatlakozva"
   settings_last_sync: "Utolsó szinkronizáció"
-  settings_sync_now: "SZINKRONIZÁLÁS"
-  settings_disconnect: "KAPCSOLAT BONTÁSA"
-  settings_connect: "CSATLAKOZÁS"
+  settings_sync_now: "Szinkronizálás"
+  settings_disconnect: "Kapcsolat bontása"
+  settings_connect: "Csatlakozás"
 
   button_add:     "Hozzáad"
   history_link:   "Történet"

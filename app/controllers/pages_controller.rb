@@ -243,43 +243,12 @@ class PagesController < ApplicationController
     render json: {  data: visits.to_json , email: email, :status => "OK"}
   end
 
-
-
   def error
     # to display some error in case of app failure
   end
 
-
-  def mdestroy
-    moves_conn = Connection.where(user_id: current_user.id, name: 'moves').first
-    if moves_conn
-      moves_conn.destroy!
-    end
-    redirect_to :controller => 'pages', :action => 'moves', :locale => I18n.locale
-  end
-
-  def wdestroy
-    withings_conn = Connection.where(user_id: current_user.id, name: 'withings').first
-    if withings_conn
-      withings_conn.destroy!
-    end
-    redirect_to :controller => 'pages', :action => 'withings', :locale => I18n.locale
-  end
-
-  def fdestroy
-    fitbit_conn = Connection.where(user_id: current_user.id, name: 'fitbit').first
-    if fitbit_conn
-      fitbit_conn.destroy!
-    end
-    redirect_to :controller => 'pages', :action => 'fitbit', :locale => I18n.locale
-  end
-
-  def gfdestroy
-    fit_conn = Connection.where(user_id: current_user.id, name: 'google').first
-    if fit_conn
-      fit_conn.destroy!
-    end
-    redirect_to :controller => 'pages', :action => 'googlefit', :locale => I18n.locale
+  def connections
+    @connections = Connection.where(user_id: current_user.id)
   end
 
   def friendship
