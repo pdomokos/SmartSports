@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20160209073607) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.datetime "synced_at"
-    t.integer  "sync_status", limit: 10,   default: 0
+    t.integer  "sync_status", limit: 1,    default: 0
   end
 
   add_index "connections", ["name", "user_id"], name: "index_connection_on_name_and_user_id", unique: true
