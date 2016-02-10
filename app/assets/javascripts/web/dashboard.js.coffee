@@ -53,10 +53,7 @@
       console.log "load analysis_data AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       console.log "load analysis_data AJAX success"
-      window.adata = data
       histData = convertToHistory(data)
-      window.origData = historyData
-      window.histData = histData
       addPoints("#canv", histData)
 
 @loadPatientNotifications = (userId) ->
