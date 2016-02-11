@@ -63,32 +63,32 @@ module NotificationsCommon
     params.require(:notification).permit( :title, :detail, :notification_type, :notification_data, :date, :remind_at, :location, :location_url, :created_by, :recurrence_data, :default_data, :form_name)
   end
 
-  def check_owner()
-    notif_id = params[:id].to_i
-    if action_name=='index'
-      user_id = params[:user_id].to_i
-      u = User.where(id: user_id).first
-      if u.nil?
-        return false
-      end
-    else
-      notif = Notification.where(id: notif_id).first
-      if notif.nil?
-        return false
-      end
-      user_id = notif.user_id
-    end
-
-    logger.info("notif id: #{notif_id} user_id: #{user_id} curr_uid: #{current_user.id}")
-    if user_id.nil?
-      return false
-    end
-    if self.try(:current_user).try(:id) == user_id
-      return true
-    end
-    return false
-  end
-  alias_method :owner?, :check_owner
+  # def check_owner()
+  #   notif_id = params[:id].to_i
+  #   if action_name=='index'
+  #     user_id = params[:user_id].to_i
+  #     u = User.where(id: user_id).first
+  #     if u.nil?
+  #       return false
+  #     end
+  #   else
+  #     notif = Notification.where(id: notif_id).first
+  #     if notif.nil?
+  #       return false
+  #     end
+  #     user_id = notif.user_id
+  #   end
+  #
+  #   logger.info("notif id: #{notif_id} user_id: #{user_id} curr_uid: #{current_user.id}")
+  #   if user_id.nil?
+  #     return false
+  #   end
+  #   if self.try(:current_user).try(:id) == user_id
+  #     return true
+  #   end
+  #   return false
+  # end
+  # alias_method :owner?, :check_owner
 
   def send_push(notif)
     user = notif.user
