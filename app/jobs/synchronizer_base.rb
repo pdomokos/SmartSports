@@ -4,11 +4,14 @@ class SynchronizerBase
   attr_reader :connection_id
   attr_reader :dateFormat
   attr_reader :client
+  attr_reader :timezone
+
   def initialize(user_id, connection_id, logger)
     @user_id = user_id
     @connection_id = connection_id
     @logger = logger
     @dateFormat = "%F"
+    @timezone = Time.zone
   end
 
   def get_last_synced_final_date(source, group=nil)
@@ -43,8 +46,8 @@ class SynchronizerBase
 
   def remove_summaries_from_date(source, date, group=nil)
     to_remove = Summary.where("user_id= #{user_id} and source = '#{source}' and date>=?",
-                              Date.parse(date).midnight.strftime("%F %T"))
-    if not group.nil?
+                              timezone.parse(date).midnight.strftime("%F %T"))
+    unless group.nil?
       to_remove = to_remove.where(group: group)
     end
 
@@ -58,9 +61,13 @@ class SynchronizerBase
     ret = to_remove.delete_all
     return ret
   end
-  def get_last_summary_date(source, group)
+  def get_last_summary_date(source, group=nil)
     u = User.find_by_id(user_id)
-    s = u.summaries.where(source: source).where(group: group).order(date: :desc).limit(1).first
+    s = u.summaries.where(source: source)
+    unless group.nil?
+      s = s.where(group: group)
+    end
+    s = s.order(date: :desc).limit(1).first
     s.try(:date)
   end
   def get_last_measurement_date(source)

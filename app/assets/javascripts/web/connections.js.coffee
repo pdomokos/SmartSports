@@ -34,6 +34,13 @@
             console.log("connection timer fired")
             load_connections()
           , 10000)
+
+          if typeof self.timeoutId2=="number"
+            window.clearTimeout(self.timeoutId2)
+          self.timeoutId2 = setTimeout( () ->
+            console.log("connection timer 2 fired")
+            load_connections()
+          , 50000)
         )
   else
     console.log("not on connections page")

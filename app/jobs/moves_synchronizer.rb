@@ -3,8 +3,24 @@ class MovesSynchronizer < SynchronizerBase
   def sync(conn)
     begin
       connection_data = JSON.parse(conn.data)
-      status = do_sync_moves(connection_data)
-      status_tracker = do_sync_moves_tracker(connection_data)
+      @client = Moves::Client.new(connection_data["token"])
+
+      profile = client.profile['profile']
+      @timezone = ActiveSupport::TimeZone.new(profile['currentTimeZone']['id'])
+
+      synced_at = conn.synced_at
+      last_sum = get_last_summary_date('moves')
+      from = last_sum
+      if !synced_at.nil? and !last_sum.nil? and synced_at>last_sum
+        from = synced_at
+      end
+      from ||= timezone.parse(profile['firstDate'])
+
+      added = do_sync_moves(from)
+      logger.info("moves added #{added} summary records")
+
+      # no daily storyline for now..
+      # status_tracker = do_sync_moves_tracker(connection_data)
       return true
     rescue Exception => e
       logger.error("Moves sync failed for user: #{connection_data['uid']}")
@@ -16,60 +32,49 @@ class MovesSynchronizer < SynchronizerBase
 
   private
 
-  def do_sync_moves(sess)
-    dateFormat = "%Y-%m-%d"
-    @moves = Moves::Client.new(sess["token"])
-    @profile = @moves.profile['profile']
-    currDate = get_last_synced_final_date("moves")
-    if currDate
-      currDate = currDate+1.day
-    else
-      currDate = Date.parse(@profile['firstDate'])
+  def do_sync_moves(from)
+
+    remove_summaries_from_date("moves", from.strftime(dateFormat))
+
+    total = 0
+    today = DateTime.now()
+    to = from+30.days
+    while to<today
+      total += import_summaries(from, to)
+      from = to+1.day
+      to = from+30.days
     end
-    today = Date.today()
-    todayYmd = today.strftime(dateFormat)
-    while currDate <= today
-      dbActivities = Summary.where("user_id= #{user_id} and source = 'moves' and (date between '#{currDate} 00:00:00' and '#{currDate} 23:59:59' )")
-      if !dbActivities.all? { |a| a.sync_final }
-        dbActivities.each { |a| a.destroy }
-        dbActivities = nil
-      end
-      if dbActivities.nil? or dbActivities.size == 0
-        logger.info "syncing #{currDate}"
-        currDateYmd = currDate.strftime(dateFormat)
-        summary = @moves.daily_summary(currDateYmd)
-        for item in summary do
-          if item['summary']
-            lastUpdate = item['lastUpdate']
-            sItem = item['summary']
-            isFinal = false
-            logger.info "currdate="+currDate.to_s
-            logger.info "today="+today.to_s
-            if currDate < today
-              isFinal = true
-            end
-            i = 0
-            for rec in sItem do
-              act = Summary.new(user_id: user_id, source: 'moves', date: currDate, activity: rec['activity'], group: rec['group'],
-                                total_duration: rec['duration'],
-                                distance: rec['distance'],
-                                steps: rec['steps'].to_i,
-                                calories: rec['calories'],
-                                synced_at: DateTime.now(),
-                                sync_final: isFinal
-              )
-              act.save!
-              i = i + 1
-            end
-          else
-            logger.info "no activities for #{currDate}"
-          end
+    if from<today.midnight
+      to = today
+      total += import_summaries(from, to)
+    end
+
+
+    return total
+  end
+
+  def import_summaries(from, to)
+    total = 0
+    summaries = client.daily_summary(from..to)
+    for summary in summaries do
+      currDate = timezone.parse(summary["date"])
+      unless  summary["summary"].nil?
+        for rec in summary["summary"] do
+
+          act = Summary.new(user_id: user_id, source: 'moves', date: currDate, activity: rec['activity'], group: rec['group'],
+                            total_duration: rec['duration'],
+                            distance: rec['distance'],
+                            steps: rec['steps'].to_i,
+                            calories: rec['calories'],
+                            synced_at: DateTime.now())
+          act.save!
+          # logger.info("adding: #{act.id} on #{currDate}, from=#{from}")
+          total += 1
         end
       end
-
-      currDate = currDate+1.day
     end
-    return "OK"
+    logger.info("moves adding #{total} records #{from.strftime(dateFormat)} - #{to.strftime(dateFormat)}")
+    return total
   end
 
   def remove_tracker_data_not_final(source)
@@ -77,22 +82,20 @@ class MovesSynchronizer < SynchronizerBase
     to_remove.each { |it| it.destroy! }
   end
 
-  def do_sync_moves_tracker(sess)
-    dateFormat = "%Y-%m-%d"
-    @moves = Moves::Client.new(sess["token"])
-    @profile = @moves.profile['profile']
+  def do_sync_moves_tracker()
+    profile = client.profile['profile']
     remove_tracker_data_not_final("moves")
     currDate = get_last_synced_tracker_final_date("moves")
     if currDate
       currDate = Date.parse(currDate)+1.day
     else
-      currDate = Date.parse(@profile['firstDate'])
+      currDate = Date.parse(profile['firstDate'])
     end
     today = Date.today()
     while currDate <= today
       logger.info "syncing #{currDate}"
       currDateYmd = currDate.strftime(dateFormat)
-      storyline = @moves.daily_storyline(currDateYmd)
+      storyline = client.daily_storyline(currDateYmd)
       for item in storyline
         if item['segments']
           segments = item['segments']
