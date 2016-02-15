@@ -57,7 +57,8 @@ class ApplicationController < ActionController::Base
 
 #
   def check_auth()
-    if !owner?() && !doctor?()
+    logger.info("owner: #{owner?} doctor: #{doctor?}")
+    if not owner?() and not doctor?()
       send_error_json(params[:id], "Unauthorized", 403)
       return false
     end
