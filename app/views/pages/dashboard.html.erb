@@ -37,7 +37,7 @@
           </div>
       <%else%>
           <div>
-            <span><%=t('no_bg_today_html', :href => link_to( t('add_bg'), url_for( :action => 'health', :locale => I18n.default_locale ))) %></span>
+            <span><%=t('no_bg_today_html', :href => link_to( t('add_bg'), url_for( :action => 'health', :locale => I18n.locale ))) %></span>
           </div>
       <%end%>
     </div>
@@ -93,7 +93,7 @@
           </div>
       <% else %>
           <div>
-            <span><%=t('no_calories_today_html', :href => link_to( t('add_calorie'), url_for( :action => 'diet', :locale => I18n.default_locale ))) %></span>
+            <span><%=t('no_calories_today_html', :href => link_to( t('add_calorie'), url_for( :action => 'diet', :locale => I18n.locale ))) %></span>
           </div>
       <% end %>
     </div>
@@ -121,7 +121,7 @@
           </div>
       <% else %>
           <div>
-            <span><%=t('no_calories_burned_today_html', :href => link_to( t('add_exercise'), url_for( :action => 'exercise', :locale => I18n.default_locale ))) %></span>
+            <span><%=t('no_calories_burned_today_html', :href => link_to( t('add_exercise'), url_for( :action => 'exercise', :locale => I18n.locale ))) %></span>
           </div>
       <% end %>
     </div>

@@ -44,6 +44,21 @@ function determineTooltip(point) {
 }
 
 function convertToHistory(data) {
+    var result = [];
+    if(data.length == 0) {
+        var ret3 = {};
+        d = moment(new Date()).format(moment_date2fmt);
+        ret3['time'] = d;
+        var hmap = {};
+        hmap['kind'] = "start"
+        hmap['type'] = "start";
+        hmap['date'] = d;
+        hmap['tooltip'] = "";
+        ret3['history'] = [];
+        ret3['history'].push(hmap);
+        result.push(ret3);
+        return result;
+    }
     var adata = data.filter(function(d) {return d['evt_type']!= 'waist';});
     var amap = {};
     var k = new Set(adata.map(function (p) {

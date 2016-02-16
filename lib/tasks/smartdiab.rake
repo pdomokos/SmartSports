@@ -164,4 +164,21 @@ namespace :smartdiab do
       JSON.dump(arr, f)
     end
   end
+
+  task export_activities: :environment do
+    k = ["name", "kcal", "category"]
+    CSV.open("#{ENV['HOME']}/Downloads/activity_exported.csv", 'w') do |csv|
+      csv << k
+      prev = nil
+      ActivityType.all.order("id").each do |at|
+        row = at.as_json
+        cmp = row.clone
+        cmp.delete('id')
+        if cmp!=prev
+          prev=cmp
+          csv << k.map{|it| row[it]}
+        end
+      end
+    end
+  end
 end

@@ -1,0 +1,155 @@
+name,kcal,category
+Aerobik,81.0,sport
+Asztalitenisz (pingpong),50.0,sport
+Balett,56.0,sport
+Baseball,63.0,sport
+Biciklizés - egykerekű,63.0,sport
+Biciklizés,100.0,sport
+Biciklizés - terep,106.0,sport
+Biliárd,31.0,sport
+Bírkózás,75.0,sport
+Bowling,38.0,sport
+Box,150.0,sport
+Boxzsák ütögetés,75.0,sport
+Búvárkodás,88.0,sport
+Croquet,31.0,sport
+Crossfit,72.0,sport
+Curling (jégteke),50.0,sport
+Darts,31.0,sport
+Ejtőernyőzés,38.0,sport
+Elliptikus tréner,85.0,sport
+Evezés,88.0,sport
+Evezőgép,88.0,sport
+Fallabda (Squash),150.0,sport
+Frizbizés,38.0,sport
+Futás,156.0,sport
+Futás - lépcsőn felfelé,188.0,sport
+Futás - tájfutás,113.0,sport
+Gátfutás,125.0,sport
+Gimnasztika,50.0,sport
+Golf,56.0,sport
+Gördeszkázás,63.0,sport
+Görkorcsolyázás,88.0,sport
+Gyalogtúra,75.0,sport
+Gymstick,110.0,sport
+Hacky sack,50.0,sport
+Harcművészetek,125.0,sport
+Hegymászás,94.0,sport
+Hot Iron,88.0,sport
+Íjászat,44.0,sport
+Jégkorong,100.0,sport
+Jóga,50.0,sport
+Kajakozás,63.0,sport
+Kenuzás,88.0,sport
+Kézilabda,100.0,sport
+Kirándulás,75.0,sport
+Korcsolyázás,88.0,sport
+Kosárlabda,75.0,sport
+Krikett,63.0,sport
+Labdarúgás,100.0,sport
+Lacrosse,100.0,sport
+Lépcsőzés,113.0,sport
+Lovaglás,50.0,sport
+Magasugrás,75.0,sport
+Műugrás,38.0,sport
+Nordic Walking,74.0,sport
+Nyújtás,31.0,sport
+Pilátesz,31.0,sport
+Racquetball,88.0,sport
+Rögbi,125.0,sport
+Röplabda,38.0,sport
+Séta,41.0,sport
+Shuffleboard,38.0,sport
+Síelés,62.0,sport
+Sífutás - emelkedőn felfelé,206.0,sport
+Sífutás,100.0,sport
+Sígép,88.0,sport
+Softball,63.0,sport
+Spinning,138.0,sport
+Stretching,31.0,sport
+Súlyemelés,75.0,sport
+Súlyzós edzés,75.0,sport
+Sziklamászás,138.0,sport
+Szobabiciklizés,88.0,sport
+Szörfözés,38.0,sport
+Tai chi,50.0,sport
+Tánc - gyors táncok,69.0,sport
+Tánc - lassú táncok,38.0,sport
+Teke,38.0,sport
+Tenisz,88.0,sport
+Természetjárás,75.0,sport
+Testépítés,75.0,sport
+Tollaslabda,56.0,sport
+Torna,44.0,sport
+Trambulinozás,44.0,sport
+TRX edzés,79.0,sport
+Túrázás,88.0,sport
+Ugrókötelezés,125.0,sport
+Úszás - gyorsúszás,125.0,sport
+Úszás - hátúszás,88.0,sport
+Úszás - mellúszás,125.0,sport
+Úszás - pillangóúszás,138.0,sport
+Úszás - szinkronúszás,100.0,sport
+Vadvízi evezés,63.0,sport
+Versenygyaloglás,81.0,sport
+Vitorlázás,38.0,sport
+Vívás,75.0,sport
+Víz alatti hoki,113.0,sport
+Víz alatti rögbi,113.0,sport
+Vízi jogging,100.0,sport
+Víziaerobik,50.0,sport
+Vízibiciklizés,50.0,sport
+Vízilabda,125.0,sport
+Víziröplabda,38.0,sport
+Vízisí,75.0,sport
+Zsonglőrködés,50.0,sport
+Zumba,98.0,sport
+Állatgondozás,56.0,daytoday
+Ásás,106.0,daytoday
+Asztalos munkák,44.0,daytoday
+Beágyazás / Megágyzás,25.0,daytoday
+Bevásárlás,29.0,daytoday
+Favágás baltával,213.0,daytoday
+Felmosás,44.0,daytoday
+Festés,56.0,daytoday
+Főzés és ételelőkészítés,25.0,daytoday
+Fűnyírás,69.0,daytoday
+Fűrészelés,94.0,daytoday
+Gereblyézés,54.0,daytoday
+Hólapátolás,75.0,daytoday
+Kapálás,56.0,daytoday
+Kertészkedés,50.0,daytoday
+Locsolás,19.0,daytoday
+Mosogatás,29.0,daytoday
+Padlósúrolás,47.0,daytoday
+Porszívózás,44.0,daytoday
+Portörlés,31.0,daytoday
+Söprögetés,41.0,daytoday
+Takarítás,44.0,daytoday
+Teregetés,29.0,daytoday
+Vasalás,29.0,daytoday
+Állás,25.0,misc
+Alvás,12.0,misc
+Cipekedés,75.0,misc
+Fekvés,14.0,misc
+Fürdés,19.0,misc
+Horgászás,38.0,misc
+Járművezetés,31.0,misc
+Katonai menetelés,81.0,misc
+Kerekesszék hajtása,100.0,misc
+Kutyasétáltatás,38.0,misc
+Madárfigyelés,31.0,misc
+Masszírozás,50.0,misc
+Munka - irodai munkák,19.0,misc
+Munka – fizikai munkák,81.0,misc
+Öltözködés,25.0,misc
+Rakodás,100.0,misc
+Szeretkezés,16.0,misc
+Ülés,19.0,misc
+Zenélés,34.0,misc
+Zuhanyozás,25.0,misc
+Ülő munka,9.0,custom
+Álló munka,38.0,custom
+Könnyű fizikai munka,60.0,custom 
+Fizikai munka,100.0,custom
+Nehéz fizikai munka,160.0,custom

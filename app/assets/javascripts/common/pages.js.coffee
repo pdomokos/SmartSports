@@ -111,7 +111,7 @@
 @define_globals = () ->
   window.timepicker_defaults = {
     format: 'Y-m-d H:i',
-    step: 5,
+    step: 10,
     todayButton: true
     onSelectTime: (ct, input) ->
       input.datetimepicker('hide')

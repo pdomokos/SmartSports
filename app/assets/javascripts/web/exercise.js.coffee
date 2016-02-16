@@ -19,8 +19,9 @@
     console.log "success "+form_id
 
     $("#"+form_id+" input.dataFormField").val("")
-    $('#activity_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
-    $('#activity_end_datepicker').val(moment().format(moment_fmt))
+
+    $('.activity_exercise_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
+    $('.activity_exercise_end_datepicker').val(moment().format(moment_fmt))
     $('#activity_type_id').val(null)
 
     loadExerciseHistory()
@@ -35,8 +36,8 @@
     console.log "success "+form_id
 
     $("#"+form_id+" input.dataFormField").val("")
-    $('#activity_other_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
-    $('#activity_other_end_datepicker').val(moment().format(moment_fmt))
+    $('.activity_regular_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
+    $('.activity_regular_end_datepicker').val(moment().format(moment_fmt))
     $('#activity_other_type_id').val(null)
 
     loadExerciseHistory()
@@ -241,8 +242,10 @@
 @loadActivityTypes = (cb) ->
   self = this
   @intensities = $("#intensity_values").val().split(" ")
+  db_version = $("#db-version")[0].value
+  console.log db_version
   console.log "calling load activity types"
-  if !getStored("sd_activities")
+  if !getStored("sd_activities") || testDbVer(db_version)
     ret = $.ajax '/activity_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
@@ -264,6 +267,8 @@
           label: d['name'],
           id: d['id']
           }))
+
+        setStored('db_version', db_version)
         cb()
   else
     ret = new Promise( (resolve, reject) ->

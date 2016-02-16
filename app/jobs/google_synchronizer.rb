@@ -38,7 +38,7 @@ class GoogleSynchronizer < SynchronizerBase
 
   def remove_summary_not_final(source)
     to_remove = Summary.where("user_id= #{user_id} and source = '#{source}' and sync_final = 'f'")
-    to_remove.each { |it| it.destroy! }
+    to_remove.delete_all
   end
 
 
