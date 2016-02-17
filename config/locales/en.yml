@@ -31,7 +31,7 @@ en:
   menu_analytics:  "Analytics"
   menu_statistics:  "Statistics"
   menu_profile: "Profile"
-  menu_connections: "Connections"
+  menu_connections: "Devices"
   menu_custom: "Custom"
   menu_users: "Users"
   menu_forms: "Forms"
@@ -41,6 +41,7 @@ en:
 
   title_profile: "Profile"
   title_connections: "Connected devices"
+  title_no_connections: "No connected devices"
 
   settings_active_since: "Active since"
   settings_not_connected: "Not connected"
@@ -48,6 +49,7 @@ en:
   settings_sync_now: "Synchronize now"
   settings_disconnect: "Disconnect"
   settings_connect: "Connect"
+  settings_add_device: "Add Device"
 
   button_add:     "Add"
   history_link:   "History"
@@ -161,6 +163,7 @@ en:
     illness_name_missing: "Illness name is missing"
     pain_name_missing: "Pain name is missing"
     failed_custom_form: "Failed to save custom form"
+    connection_added: "The %{conn} connection has been added successfully. Click the Sync button to synchronize now."
 # dashboard
   today: "Today"
   lastweek: "Last Week"

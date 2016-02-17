@@ -249,6 +249,7 @@ class PagesController < ApplicationController
 
   def connections
     @connections = Connection.where(user_id: current_user.id)
+    @add_conn = params[:addconn] unless params[:addconn].nil?
   end
 
   def friendship

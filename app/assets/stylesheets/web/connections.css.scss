@@ -27,3 +27,20 @@ td.deleteConn button {
 .red {
   color: red;
 }
+
+.addDeviceButton {
+  background: #57C88A !important;
+  border-color: #57C88A !important;
+  margin-top: 0px !important;
+}
+
+.connectionsSelect {
+  border-color: #57C88A !important;
+}
+
+button.trashConn {
+  cursor: pointer;
+}
+button.syncConnButton {
+  cursor: pointer;
+}

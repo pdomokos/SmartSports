@@ -10,7 +10,7 @@ hu:
   menu_analytics:  "Elemzés"
   menu_statistics: "Statisztika"
   menu_profile: "Profil"
-  menu_connections: "Kapcsolatok"
+  menu_connections: "Eszközök"
   menu_custom: "Saját"
   menu_users: "Felhasználók"
   menu_forms: "Kérdőívek"
@@ -20,6 +20,7 @@ hu:
 
   title_profile: "Profil"
   title_connections: "Csatlakoztatott eszközök"
+  title_no_connections: "Nincsenek csatlakoztatott eszközök"
 
   settings_active_since: "Csatlakozás dátuma"
   settings_not_connected: "Nincs csatlakozva"
@@ -27,6 +28,7 @@ hu:
   settings_sync_now: "Szinkronizálás"
   settings_disconnect: "Kapcsolat bontása"
   settings_connect: "Csatlakozás"
+  settings_add_device: "Eszköz hozzáadása"
 
   button_add:     "Hozzáad"
   history_link:   "Történet"
@@ -139,6 +141,7 @@ hu:
     illness_name_missing: "A betegség neve hiányzik"
     pain_name_missing: "A fájdalom megnevezése hiányzik"
     failed_custom_form: "A saját form mentése sikertelen"
+    connection_added: "A %{conn} kapcsolat sikeresen létrejött. A szinkronizáláshoz klikkeljen a Sync gombra."
 # dashboard
   today:  "Mai nap"
   lastweek: "Elmúlt hét"

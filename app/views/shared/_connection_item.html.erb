@@ -3,7 +3,7 @@
     <%= image_tag "menu/#{connection_item.name}60.png", class: "connIcon" %>
   </td>
 
-  <td id="connection_item_<%= connection_item.id %>" class="historyTitle padded dietItem">
+  <td id="connection_item_<%= connection_item.id %>" class="historyTitle padded connectionItem">
 
     <span class="itemTitle"><%= connection_item.name %></span>
 
@@ -46,7 +46,7 @@
                  remote: true,
                  method: "delete",
                  class: "resource-delete-form") do %>
-        <button class="tableControl">
+        <button class="tableControl trashConn">
           <i class="fa fa-trash-o fa-2x"></i>
         </button>
     <% end %>

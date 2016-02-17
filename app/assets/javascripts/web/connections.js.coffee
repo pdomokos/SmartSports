@@ -9,12 +9,12 @@
 
   $("#sectionConnections").on("ajax:success", "form.resource-delete-form", (e, data, status, xhr) ->
     console.log "delete conn success"
-    load_connections()
+    load_connections(true)
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error(popup_messages.failed_to_add_data)
   )
 
-@load_connections = () ->
+@load_connections = (nopopup=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
 
@@ -42,6 +42,19 @@
             load_connections()
           , 50000)
         )
+        $("#addDeviceButton").on("click", () ->
+          $("#addDeviceButton").addClass("hidden")
+          $("#addconnForm").removeClass("hidden")
+        )
+        if $("#recentResourcesTable .connectionItem").size()>0
+          $("#conntitle").removeClass("hidden")
+          $("#noconntitle").addClass("hidden")
+        else
+          $("#noconntitle").removeClass("hidden")
+          $("#conntitle").addClass("hidden")
+        if $("#addconn").val()!="" and !nopopup
+          console.log "addconn: "+$("#addconn_message").val()
+          popup_success($("#addconn-message").val())
   else
     console.log("not on connections page")
 

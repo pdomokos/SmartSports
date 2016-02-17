@@ -53,7 +53,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'misfit', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale
+    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale, :addconn => 'misfit'
   end
 
   def movescb
@@ -66,7 +66,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'moves', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale
+    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale, :addconn => 'moves'
   end
 
   def withingscb
@@ -75,10 +75,10 @@ class ConnectionsController < ActionController::Base
       data = auth['credentials']
       data.merge!({"uid" => params[:userid]})
       u = User.find(current_user.id)
-      conn  = u.connections.create(name: 'connections', data: data.to_json, user_id: u.id)
+      conn  = u.connections.create(name: 'withings', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale
+    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale, :addconn => 'withings'
   end
 
   def fitbitcb
@@ -89,7 +89,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'fitbit', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale
+    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale, :addconn => 'fitbit'
   end
 
   def googlecb
@@ -100,7 +100,7 @@ class ConnectionsController < ActionController::Base
       conn  = u.connections.create(name: 'google', data: data.to_json, user_id: u.id)
       conn.save!
     end
-    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale
+    redirect_to :controller => 'pages', :action => 'connections', :locale => I18n.locale, :addconn => 'google'
   end
 
   private
