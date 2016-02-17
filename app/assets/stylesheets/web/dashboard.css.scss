@@ -1032,9 +1032,14 @@ div.egfr {
 }
 
 .dashboardbody {
-  background: image-url("dashboard_bg9.jpg") center no-repeat !important;
+  background: image-url("smartdiab_bg1_small.jpg") center no-repeat !important;
+  background-position-y: -300px !important;
 }
-
+@media screen and (min-width: 2000px) {
+  .dashboardbody {
+    background: image-url("smartdiab_bg1.jpg") center no-repeat !important;
+  }
+}
 .tilesContainer {
   clear: both;
   position:relative;
