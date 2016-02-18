@@ -168,7 +168,13 @@
       matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
       result = []
       cnt = 0
-      for element in getStored("sd_activities")
+      user_lang = $("#user-lang")[0].value
+      if user_lang
+        activity_key = 'sd_activities_'+user_lang
+      else
+        activity_key = 'sd_activities_hu'
+
+      for element in getStored(activity_key)
         if matcher.test(remove_accents(element.label))
           result.push(element)
           cnt += 1
@@ -242,10 +248,17 @@
 @loadActivityTypes = (cb) ->
   self = this
   @intensities = $("#intensity_values").val().split(" ")
+  user_lang = $("#user-lang")[0].value
   db_version = $("#db-version")[0].value
   console.log db_version
   console.log "calling load activity types"
-  if !getStored("sd_activities") || testDbVer(db_version)
+
+  if user_lang
+    activity_key = 'sd_activities_'+user_lang
+  else
+    activity_key = 'sd_activities_hu'
+
+  if !getStored(activity_key) || testDbVer(db_version)
     ret = $.ajax '/activity_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
@@ -253,15 +266,16 @@
       success: (data, textStatus, jqXHR) ->
         console.log "load activity_types  Successful AJAX call"
 
-        setStored("sd_activities", data.filter( (d) ->
-          d['category'] == 'sport'
+        setStored('sd_activities_hu', data.filter( (d) ->
+          d['category'] == 'sport' && d['lang'] == 'hu'
         ).map( (d) ->
           {
           label: d['name'],
           id: d['id']
           }))
-        setStored("sd_other_activities", data.filter( (d) ->
-          d['category'] == 'custom'
+
+        setStored('sd_activities_en', data.filter( (d) ->
+          d['category'] == 'sport' && d['lang'] == 'en'
         ).map( (d) ->
           {
           label: d['name'],

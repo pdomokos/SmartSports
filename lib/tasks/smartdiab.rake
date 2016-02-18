@@ -41,8 +41,9 @@ namespace :smartdiab do
       }
     end
 
-    csv_text = File.read("#{ENV['HOME']}/Downloads/activities.csv")
-    csv = CSV.parse(csv_text, :headers => true)
+    dirName = File.dirname(__FILE__)
+    csv_text = dirName + "/init_activity.csv"
+    csv = CSV.read(csv_text, headers: true, col_sep: ";")
     csv.each do |row|
       ActivityType.create!(row.to_hash)
     end

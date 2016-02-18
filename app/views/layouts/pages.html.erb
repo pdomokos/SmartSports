@@ -21,7 +21,7 @@
       <div class="left">
           <%= link_to root_path do %>
             <%= image_tag("logo-login.png", alt: "Dashboard", style: "margin-top: 10px; width: 40px; float: left;", id: "headerLoginLogo", class: "loginLogo") %>
-            <span class="logoTitle">SmartDiab</span>
+            <span class="logoTitle">SmartDiab - intelligent diabetes management</span>
           <% end %>
           </div>
           <div class="right">
@@ -32,7 +32,7 @@
               <% end %>
             </div>
 
-            <div id="langswitcher" class="langSwitcherTop topBannerControl" title="Change Language"><%= @lang_label %></div>
+            <!--<div id="langswitcher" class="langSwitcherTop topBannerControl" title="Change Language"><!%= @lang_label %></div>-->
 
             <% if current_user.admin %>
             <div class="imgContainer headerItemIcon topBannerControl" title="Admin">
@@ -56,7 +56,7 @@
             </div>
             <% end %>
 
-            <div class="topBannerRight topBannerControl" title="Patient Settings">
+            <div class="topBannerRight topBannerControl" title="Profile Settings">
             <%= link_to url_for( :action => 'profile', :locale => I18n.locale ), :class => "titleIcon" do %>
                 <%= image_tag current_user.avatar.url(:medium), class: "headerItemAvatar" %>
             <% end %>

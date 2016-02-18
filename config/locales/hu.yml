@@ -164,7 +164,7 @@ hu:
   body_weight: "Testsúly"
 
 # diet
-  food:             "Étel"
+  food:             "Étkezés"
   food_placeholer: "Válasszon..."
   quick_calories:  "Gyors kalória megadás"
   quick_calories_prefix:  "Gyors kalória"

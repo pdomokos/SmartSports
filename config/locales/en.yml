@@ -186,7 +186,7 @@ en:
   body_weight: "Body weight"
 
 # diet
-  food: "Food"
+  food: "Meal"
   food_placeholer: "Select..."
   quick_calories: "Quick calories"
   quick_calories_prefix:  "Quick calories"

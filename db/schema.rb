@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209073607) do
+ActiveRecord::Schema.define(version: 20160218092946) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20160209073607) do
     t.string "name"
     t.float  "kcal"
     t.string "category"
+    t.string "lang"
   end
 
   create_table "click_records", force: true do |t|
