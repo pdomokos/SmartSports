@@ -6,7 +6,7 @@ class TrendChart
 
     console.log "Creating TrendChart "+TrendChart.count
 
-    @base_r = 3
+    @base_r = 4
     @selected_r = 8
     @preproc_cb = null
 
@@ -178,6 +178,10 @@ class TrendChart
     for k in @series_keys
       dd = self.series.filter( (d) -> d[k]!=null)
       if dd.length > 0
+        canvas.append("path")
+          .datum(dd)
+          .attr("class", "line "+self.color_map[k]+" "+k)
+          .attr("d", self.line[k])
         canvas.selectAll("circle."+k+"-avg")
           .data(dd)
           .enter()
@@ -198,10 +202,7 @@ class TrendChart
               if self.cb_click
                 self.cb_click(d, this)
             )
-        canvas.append("path")
-          .datum(dd)
-          .attr("class", "line "+self.color_map[k]+" "+k)
-          .attr("d", self.line[k])
+
 
   get_data_len: () ->
     num = 0

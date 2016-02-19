@@ -246,8 +246,6 @@
       }).focus ->
         $(this).autocomplete("search")
 
-@patient_act_data_received = (jsondata) ->
-  draw_trends(jsondata)
 
 @loadNotifications = (userId) ->
   console.log "calling load notifications for: "+userId
@@ -263,10 +261,10 @@
   $(document).on("click.showPatientData", ".md-show-table", (evt) ->
     console.log "datatable clicked"
     get_table_row = (item ) ->
+      e = ""
       if item.end
         e = moment(item.end).format(moment_fmt)
-      else
-        e = ""
+
       return ([moment(item.start).format(moment_fmt), e, item.evt_type, item.group, item.value1, item.value2 ])
 
     url = '/users/' + uid + '/analysis_data.json?tabular=true'

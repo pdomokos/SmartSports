@@ -265,7 +265,7 @@
     window.chartData = chartData
     summary = getSummary(chartData)
     showSummary( measName, summary )
-    @lineChart = new LineChart("bg", chartData, yaxisTitle)
+    @lineChart = new ZoomableLineChart("bg", chartData, yaxisTitle)
     @lineChart.draw()
 
     highlight_extents = getExtentsMiddle(@lineChart.getTimeExtent())

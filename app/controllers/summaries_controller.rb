@@ -22,11 +22,13 @@ class SummariesController < ApplicationController
 
     @summaries = @summaries.order(:date)
 
-    if params[:daily] and params[:daily] == "true"
-      keys = ["walking", "running", "cycling", "sleep"]
-
-      result = []
-      cd
+    if params[:bysource] and params[:bysource] == "true"
+      by_source = @summaries.group_by { |s| s.source }
+      keys = by_source.keys
+      result = {}
+      for k in keys do
+        result[k] = by_source[k].group_by { |s| s.group }
+      end
     else
       result = Hash.new { |hash, key| hash[key] = [] }
       for act in @summaries do

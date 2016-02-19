@@ -98,7 +98,7 @@ module NotificationsCommon
           }
       }
       notification = Grocer::Notification.new(
-          device_token:      user.dev_token,
+          device_token:      user.dev_token.upcase,
           alert:             msg,
           badge:             42,
           category:          "a category",         # optional; used for custom notification actions
