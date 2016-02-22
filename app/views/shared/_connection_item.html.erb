@@ -8,17 +8,17 @@
     <span class="itemTitle"><%= connection_item.name %></span>
 
     <div class="right">
-      <span class="tag steps">steps</span>
+      <span class="tag steps"><%=t 'conn_steps'%></span>
       <% if connection_item.name=="withings" || connection_item.name=="fitbit" %>
-          <span class="tag sleep">sleep</span>
+          <span class="tag sleep"><%=t 'conn_sleep'%></span>
       <%end %>
     </div>
 
     <span>
       <% if connection_item.synced_at %>
-        Last sync: <%= connection_item.synced_at.strftime("%F, %H:%M") if connection_item.created_at %>
+        <%=t 'conn_last_sync'%> <%= connection_item.synced_at.strftime("%F, %H:%M") if connection_item.created_at %>
       <% else %>
-        Not yet synced.
+        <%=t 'conn_not_synced'%>
       <% end %>
       <% if connection_item.sync_status=="failure" %>
         <i class="fa fa-exclamation-triangle red"></i>

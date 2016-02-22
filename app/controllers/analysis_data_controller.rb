@@ -22,8 +22,12 @@ class AnalysisDataController < ApplicationController
     result = nil
     if params[:tabular]
       result = get_tabular_data(user, f, t)
+    elsif params[:dashboard]
+      result = get_timeline_data(user, f, t, true)
+      sorted = result.sort_by{|e| e[:dates][0]}
+      result = sorted.last(15)
     else
-      result = get_timeline_data(user, f, t)
+      result = get_timeline_data(user, f, t, false)
     end
 
     respond_to do |format|
@@ -47,7 +51,7 @@ class AnalysisDataController < ApplicationController
     end
   end
 
-  def get_timeline_data(user, f, t)
+  def get_timeline_data(user, f, t, dashboard)
     result = []
 
     activities = user.activities
@@ -92,6 +96,12 @@ class AnalysisDataController < ApplicationController
                       evt_type: 'food',
                       source: 'SmartDiab'
                     }
+                    if diet.diet_type== 'Calory'
+                      item['tooltip'] = 'quick calories'
+                    end
+                    if diet.diet_type== 'Smoke'
+                      item['tooltip'] = 'smoke'
+                    end
                     if diet.diet_type== 'Drink'
                       item['evt_type'] = 'drink'
                     end
@@ -132,87 +142,88 @@ class AnalysisDataController < ApplicationController
     )
     result.concat(meas_arr)
 
-    lifestyles = user.lifestyles
-    if f
-      lifestyles = lifestyles.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t )
-    end
-    lifes_arr = []
-    lifes_arr.concat(lifestyles.collect do |lifestyle|
-      ret = {
-          id: lifestyle.id,
-          tooltip: lifestyle.tooltip,
-          title: 'Lifestyle',
-          depth: 0,
-          dates: [lifestyle.start_time, lifestyle.end_time],
-          kind: 'lifestyle',
-          evt_type: 'lifestyle',
-          amount: lifestyle.amount,
-          source: 'SmartDiab'
+    if(!dashboard)
+      lifestyles = user.lifestyles
+      if f
+        lifestyles = lifestyles.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t )
+      end
+      lifes_arr = []
+      lifes_arr.concat(lifestyles.collect do |lifestyle|
+        ret = {
+            id: lifestyle.id,
+            tooltip: lifestyle.tooltip,
+            title: 'Lifestyle',
+            depth: 0,
+            dates: [lifestyle.start_time, lifestyle.end_time],
+            kind: 'lifestyle',
+            evt_type: 'lifestyle',
+            amount: lifestyle.amount,
+            source: 'SmartDiab'
+        }
+        if lifestyle.group=='stress'
+          ret['lf_group']= [lifestyle.group, "Stress"]
+        elsif lifestyle.group=='illness'
+          ret['lf_group']= [lifestyle.group, IllnessType.find(lifestyle.illness_type_id).name]
+        elsif lifestyle.group=='pain'
+          ret['lf_group']= [lifestyle.group, lifestyle.pain_type_name+"(pain)"]
+        end
+        ret
+      end
+      )
+      result.concat(lifes_arr)
+
+      medications = user.medications.where("date between ? and ?", f, t)
+      result.concat(medications.collect{|med|
+                      item = {
+                        id: med.id,
+                        tooltip: med.try(:medication_type).try(:name)+" : #{med.amount}",
+                        title: 'Medication',
+                        depth: 0,
+                        dates: [med.date],
+                        kind: 'medication',
+                        evt_type: 'drug',
+                        group: med.try(:medication_type).try(:group),
+                        source: 'SmartDiab'
+                      }
+                      if med.medication_type.try(:group)=='insulin'
+                        item['evt_type'] = 'insulin'
+                      end
+                      item
+                    })
+
+      sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
+      for sens in sensors do
+        if sens.version && sens.version =='2.0'
+          proc_20_sensor(sens, result)
+        else
+          proc_old_sensor(sens, result)
+        end
+      end
+
+      # tracker data
+      tracker_data = user.tracker_data.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t).where.not(group: 'transport')
+      tracker_filtered = tracker_data.select{|d|
+        !d.activity.nil? && d.activity!='transport' && (d.activity!='walking'||(d.end_time-d.start_time>240.0))
+      }.collect {|d|
+        title = 'Exercise'
+        etype = 'exercise'
+        if d.activity=='sleep'
+          title = 'Well-being'
+          etype = 'sleep'
+        end
+        {
+            id: d.id,
+            tooltip: d.activity.try(:capitalize),
+            title: title,
+            source: d.source.capitalize,
+            depth: 0,
+            kind: 'wellbeing',
+            evt_type: etype,
+            dates: [d.start_time, d.end_time]
+        }
       }
-      if lifestyle.group=='stress'
-        ret['lf_group']= [lifestyle.group, "Stress"]
-      elsif lifestyle.group=='illness'
-        ret['lf_group']= [lifestyle.group, IllnessType.find(lifestyle.illness_type_id).name]
-      elsif lifestyle.group=='pain'
-        ret['lf_group']= [lifestyle.group, lifestyle.pain_type_name+"(pain)"]
-      end
-      ret
+      result.concat(tracker_filtered)
     end
-    )
-    result.concat(lifes_arr)
-
-    medications = user.medications.where("date between ? and ?", f, t)
-    result.concat(medications.collect{|med|
-                    item = {
-                      id: med.id,
-                      tooltip: med.try(:medication_type).try(:name)+" : #{med.amount}",
-                      title: 'Medication',
-                      depth: 0,
-                      dates: [med.date],
-                      kind: 'medication',
-                      evt_type: 'drug',
-                      group: med.try(:medication_type).try(:group),
-                      source: 'SmartDiab'
-                    }
-                    if med.medication_type.try(:group)=='insulin'
-                      item['evt_type'] = 'insulin'
-                    end
-                    item
-                  })
-
-    sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
-    for sens in sensors do
-      if sens.version && sens.version =='2.0'
-        proc_20_sensor(sens, result)
-      else
-        proc_old_sensor(sens, result)
-      end
-    end
-
-    # tracker data
-    tracker_data = user.tracker_data.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t).where.not(group: 'transport')
-    tracker_filtered = tracker_data.select{|d|
-      !d.activity.nil? && d.activity!='transport' && (d.activity!='walking'||(d.end_time-d.start_time>240.0))
-    }.collect {|d|
-      title = 'Exercise'
-      etype = 'exercise'
-      if d.activity=='sleep'
-        title = 'Well-being'
-        etype = 'sleep'
-      end
-      {
-          id: d.id,
-          tooltip: d.activity.try(:capitalize),
-          title: title,
-          source: d.source.capitalize,
-          depth: 0,
-          kind: 'wellbeing',
-          evt_type: etype,
-          dates: [d.start_time, d.end_time]
-      }
-    }
-    result.concat(tracker_filtered)
-
     return result
   end
 

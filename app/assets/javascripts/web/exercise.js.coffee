@@ -82,7 +82,7 @@
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "datatable activity AJAX Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
-        tblData = $.map(data.activities,(item,i) ->
+        tblData = $.map(data,(item,i) ->
           return([get_exercise_table_row(item)])
         ).filter( (v) ->
           return(v!=null)

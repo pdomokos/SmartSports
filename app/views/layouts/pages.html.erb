@@ -26,7 +26,7 @@
           </div>
           <div class="right">
 
-            <div class="headerItemRight topBannerControl" title="Sign Out">
+            <div class="headerItemRight topBannerControl" title="<%=t 'alt_sign_out'%>">
               <%= form_tag logout_path, :method => :post, :id => 'logoutForm', :remote => true do %>
                   <input type="image" src="<%= image_url "menu/logout.png" %>"  style="width: 20px;padding-top: 15px;">
               <% end %>
@@ -42,27 +42,27 @@
             </div>
             <% end %>
 
-            <div class="imgContainer headerItemIcon topBannerControl" title="Data Explorer">
+            <div class="imgContainer headerItemIcon topBannerControl" title="<%=t 'alt_data_explorer'%>">
             <%= link_to url_for( :action => 'analytics', :locale => I18n.locale ) do %>
                 <i class="fa fa-line-chart fa-lg headerItemIconMod"></i>
             <% end %>
             </div>
 
             <% if current_user.doctor? %>
-            <div class="imgContainer headerItemIcon topBannerControl" title="Doctor">
+            <div class="imgContainer headerItemIcon topBannerControl" title="<%=t 'alt_doctor_page'%>">
             <%= link_to url_for( :action => 'md_patients', :locale => I18n.locale ) do %>
                 <i class="fa fa-stethoscope fa-lg headerItemIconMod"></i>
             <% end %>
             </div>
             <% end %>
 
-            <div class="topBannerRight topBannerControl" title="Profile Settings">
+            <div class="topBannerRight topBannerControl" title="<%=t 'alt_profile_settings'%>">
             <%= link_to url_for( :action => 'profile', :locale => I18n.locale ), :class => "titleIcon" do %>
                 <%= image_tag current_user.avatar.url(:medium), class: "headerItemAvatar" %>
             <% end %>
             </div>
 
-            <div class="topBannerRight topBannerControl" title="Dashboard">
+            <div class="topBannerRight topBannerControl" title="<%=t 'menu_dashboard'%>">
               <%= link_to url_for( :action => 'dashboard', :locale => I18n.locale ), :class => "titleIcon" do %>
                   <span class="headerItemName"><%= @display_name %></span>
               <%end %>

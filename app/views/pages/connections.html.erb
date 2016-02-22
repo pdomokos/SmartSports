@@ -1,5 +1,5 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
-<input id="addconn-message" class='hidden' value="<%=t('popupmessages.connection_added', :conn=> @add_conn.try(:capitalize))%>"/>
+<input id="addconn-message" class='hidden' value="<%=t('popupmessages.connection_added_html', :conn=> @add_conn.try(:capitalize))%>"/>
 
 
 <div id="conntitle" class="sectionTitle c0 hidden">
@@ -45,3 +45,6 @@
   pages_menu()
   connections_loaded();
 </script>
+<% content_for :title_text do %>
+    <%=t 'menu_connections' %> | SmartDiab
+<% end %>

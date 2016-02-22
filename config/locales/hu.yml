@@ -46,6 +46,17 @@ hu:
   delete:   "Töröl"
 
   notifications: "Értesítések"
+
+  alt_profile_settings: "Profil beállítások"
+  alt_doctor_page: "Doktor"
+  alt_data_explorer: "Adat megjelenítés"
+  alt_sign_out: "Kilépés"
+
+  conn_steps: "Lépésszám"
+  conn_sleep: "Alvás"
+  conn_not_synced: "Nincs szinkronizálva."
+  conn_last_sync: "Utolsó szinkronizálás:"
+
 #login
   sign_in: "Jelentkezzen be a SmartDiab fiókjába"
   login_button: "Belépés"
@@ -141,7 +152,7 @@ hu:
     illness_name_missing: "A betegség neve hiányzik"
     pain_name_missing: "A fájdalom megnevezése hiányzik"
     failed_custom_form: "A saját form mentése sikertelen"
-    connection_added: "A %{conn} kapcsolat sikeresen létrejött. A szinkronizáláshoz klikkeljen a Sync gombra."
+    connection_added_html: "A %{conn} kapcsolat sikeresen létrejött. A szinkronizáláshoz klikkeljen a <i class='fa fa-refresh fa-1x'></i> nyílra"
 # dashboard
   today:  "Mai nap"
   lastweek: "Elmúlt hét"

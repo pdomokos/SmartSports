@@ -68,6 +68,16 @@ en:
 
   notifications: "Notifications"
 
+  alt_profile_settings: "Profile Settings"
+  alt_doctor_page: "Doctor"
+  alt_data_explorer: "Data Explorer"
+  alt_sign_out: "Sign Out"
+
+  conn_steps: "steps"
+  conn_sleep: "sleep"
+  conn_not_synced: "Not yet synced."
+  conn_last_sync: "Last sync:"
+
 #login
   sign_in: "Sign in to SmartDiab"
   login_button: "Login"
@@ -163,7 +173,7 @@ en:
     illness_name_missing: "Illness name is missing"
     pain_name_missing: "Pain name is missing"
     failed_custom_form: "Failed to save custom form"
-    connection_added: "The %{conn} connection has been added successfully. Click the Sync button to synchronize now."
+    connection_added_html: "The %{conn} connection has been added successfully. Click <i class='fa fa-refresh fa-1x'></i> to synchronize now."
 # dashboard
   today: "Today"
   lastweek: "Last Week"

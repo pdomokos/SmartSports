@@ -47,7 +47,7 @@
     popup_error(popup_messages.failed_to_add_data)
   )
 
-  $.ajax '/users/' + uid + '/analysis_data.json?date='+moment().format(moment_datefmt)+'&weekly=true',
+  $.ajax '/users/' + uid + '/analysis_data.json?date='+moment().format(moment_datefmt)+'&weekly=true&dashboard=true',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load analysis_data AJAX Error: #{textStatus}"

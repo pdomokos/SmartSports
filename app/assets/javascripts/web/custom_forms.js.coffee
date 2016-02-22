@@ -309,7 +309,10 @@
 @getStored = (key) ->
   if typeof(Storage) != "undefined"
     try
-      return JSON.parse(localStorage.getItem(key))
+      store = JSON.parse(localStorage.getItem(key))
+      if store.length == 0
+         return undefined
+      return store
     catch
       return undefined
   else
