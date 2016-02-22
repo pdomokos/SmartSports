@@ -85,17 +85,9 @@ module NotificationsCommon
         msg = "Empty message"
       end
 
-      example = {
-          form_element: "activity_exercise",
-          defaults: {
-              medication:{
-                  date:"2016-01-20 09:32:00 +0100",
-                  amount:1,
-                  medication_type_id:47553
-              },
-              medication_name:"CETIRIZIN 1 A PHARMA  10 mg filmtabletta",
-              medication_type:"oral"
-          }
+      notif_data = {
+          user_name: user.username,
+          user_id: user.id
       }
       notification = Grocer::Notification.new(
           device_token:      user.dev_token.upcase,
@@ -106,7 +98,7 @@ module NotificationsCommon
           expiry:            Time.now + 60*60,     # optional; 0 is default, meaning the message is not stored
           # identifier:        1234,                 # optional; must be an integer
           content_available: true,                  # optional; any truthy value will set 'content-available' to 1
-          custom: example
+          custom: notif_data
       )
 
       pusher.push(notification)
