@@ -27,58 +27,100 @@
 
   d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", draw_bg_data)
 
-  startDate = moment().subtract(6, 'months').format(moment_datefmt)
-  meas_summary_url = "/users/" + uid + "/measurements.json?summary=true&start="+startDate
+  measStartDate = moment().subtract(6, 'months').format(moment_datefmt)
+  meas_summary_url = "/users/" + uid + "/measurements.json?summary=true&start="+measStartDate
   d3.json(meas_summary_url, draw_health_trend)
 
+  startDate = moment().subtract(12, 'months').format(moment_datefmt)
   d3.json("/users/"+uid+"/summaries.json?bysource=true&start="+startDate, draw_patient_activity_data)
 
 
 @draw_bg_data = (jsondata) ->
-  console.log "bg_data_received "+jsondata.length
-  bg_trend_chart = new BGChart("bg", jsondata, 1.0/8)
-  bg_extent = bg_trend_chart.get_time_extent()
-  higlight_extents = getExtentsMiddle(bg_extent)
+  data = {}
+  grp_map = {}
+  grp_map[48] = "Unspecified"
+  grp_map[58] = "Pre Breakfast"
+  grp_map[60] = "Pre Lunch"
+  grp_map[62] = "Pre Supper"
+  data['blood_glucose'] = $.map(jsondata, (d) ->
+    return {date: d.date, value: d.blood_sugar, group: grp_map[d.blood_sugar_time]}
+  )
+  console.log(new Set($.map(jsondata, (d) -> return d.blood_sugar_time)))
+  bg_trend_chart = new LineChart("bg-container", data, "mmol/L")
+#  bg_extent = bg_trend_chart.get_time_extent()
+#  higlight_extents = getExtentsMiddle(bg_extent)
   bg_trend_chart.draw()
-  if jsondata && jsondata.size>0
-    bg_trend_chart.add_highlight(higlight_extents[0], higlight_extents[1], "selA")
-    bg_trend_chart.add_highlight(higlight_extents[1], higlight_extents[2], "selB")
+#  if jsondata && jsondata.size>0
+#    bg_trend_chart.add_highlight(higlight_extents[0], higlight_extents[1], "selA")
+#    bg_trend_chart.add_highlight(higlight_extents[1], higlight_extents[2], "selB")
 
 
 @draw_health_trend = (data) ->
-  heart_trend_chart = new TrendChart("heart-trend", data,
-    ["systolicbp", "pulse", "diastolicbp"],
-    ["SYS", "HR", "DIA"],
-    ["left", "right", "left"]
-    ["colset4_0", "colset4_1", "colset4_2"],
-    ["mmHg", "1/min"],
-    false
-  )
-  heart_trend_chart.margin = {top: 20, right: 45, bottom: 20, left: 30}
+#  heart_trend_chart = new TrendChart("heart-trend", data,
+#    ["systolicbp", "pulse", "diastolicbp"],
+#    ["SYS", "HR", "DIA"],
+#    ["left", "right", "left"]
+#    ["colset4_0", "colset4_1", "colset4_2"],
+#    ["mmHg", "1/min"],
+#    false
+#  )
+#  heart_trend_chart.margin = {top: 20, right: 45, bottom: 20, left: 30}
+#  heart_trend_chart.draw()
+  convert = (raw) ->
+    sys = []
+    dia = []
+    pulse = []
+    raw.forEach( (d) ->
+      if d.systolicbp && d.systolicbp>0
+        sys.push({date: d.date, value: d.systolicbp, group: "Sys"})
+      if d.diastolicbp && d.diastolicbp>0
+        dia.push({date: d.date, value: d.diastolicbp, group: "Dia"})
+      if d.pulse && d.pulse>0
+        pulse.push({date: d.date, value: d.pulse, group: "Pulse"})
+    )
+    return {sys: sys, dia: dia, pulse: pulse}
+
+  heartData = convert(data)
+  console.log("HEART DATA", heartData)
+  chartParams = {
+    leftLabel: "1/min",
+    rightLabel: "Hgmm",
+    leftGroups: ["pulse", ""]
+  }
+  heart_trend_chart = new LineChart("heart-trend-container", heartData, "Heart Data", chartParams)
   heart_trend_chart.draw()
+
 
 @draw_patient_activity_data = (jsondata) ->
   console.log "patient data"
-  window.devdata = jsondata
+  getters = {
+    cycling: (d) ->
+      return d.distance
+    running: (d) ->
+      return d.steps
+    walking: (d) ->
+      return d.steps
+  }
   Object.keys(jsondata).forEach( (src)->
     dev_chart = $("#device-data-template").children().first().clone()
-    $(dev_chart).find("div.training-type").html(capitalize(src))
+    container_name = src+"_data-container"
+    dev_chart.attr("id", container_name)
     $("#analytics-container").append(dev_chart)
+
+    $(dev_chart).find("div.training-type").html(capitalize(src))
+    devData = {}
+    keys = Object.keys(jsondata[src])
+    keys.forEach( (k) ->
+      if k!="sleep" && k!="transport"
+        grpData = $.map(jsondata[src][k], (d) ->
+          return {date: d.date, value: getters[k](d), group: k};
+        )
+        grpData = grpData.filter((d) -> d.value!=0)
+
+        devData[k] = grpData
+    )
+    graph = new LineChart(container_name, devData, src, ["cycling"])
+    graph.draw()
   )
-@draw_trends = (jsondata) ->
-  act_trend_chart = new TrainingTrendChart("activity-trend", jsondata,
-    ["steps", "running_duration", "cycling_duration"],
-    ["Steps"," Running", "Cycling", ],
-    ["right", "left", "left"],
-    ["colset7_5", "colset2_0", "colset2_2"],
-    ["minutes", "steps"]
-    true
-  )
-  act_trend_chart.preproc_cb = (data) ->
-    keys = ["walking_duration", "running_duration", "cycling_duration"]
-    for d in data
-      for k in keys
-        d[k] = d[k]/60.0
-  act_trend_chart.margin = {top: 20, right: 50, bottom: 20, left: 35}
-  act_trend_chart.draw()
+
 

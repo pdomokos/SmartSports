@@ -42,20 +42,51 @@
   fill: white;
 }
 
-.grayline {
+.grayLine {
   stroke: #bfbfbf;
 }
-.bg1Point {
+.col1Point {
   fill: #f8756d;
 }
-.bg2Point {
+.col2Point {
   fill: #7cae00
 }
-.bg3Point {
+.col3Point {
   fill: #c77cff
 }
-.bg4Point {
+.col4Point {
   fill: #00bfc4
+}
+
+.col1Line {
+  stroke: #f8756d;
+}
+.col2Line {
+  stroke: #7cae00
+}
+.col3Line {
+  stroke: #c77cff
+}
+.col4Line {
+  stroke: #00bfc4
+}
+
+
+.col1Text {
+  background-color: #f8756d;
+  color: white;
+}
+.col2Text {
+  background-color: #7cae00;
+  color: white;
+}
+.col3Text {
+  background-color: #c77cff;
+  color: white;
+}
+.col4Text {
+  background-color: #00bfc4;
+  color: white;
 }
 
 .selA {

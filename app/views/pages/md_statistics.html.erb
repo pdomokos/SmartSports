@@ -5,12 +5,11 @@
     <div class="analytics-block mainContent" id="analytics-container">
 
         <div class="columns">
-            <div class="boxed-group connection-block">
-              <div class="noClickSelect chartHeader allDataChart">
+            <div id="bg-container" class="boxed-group connection-block">
+              <h3 class="noClickSelect chartHeader allDataChart">
+              </h3>
 
-              </div>
-
-              <div id="bg-container" class="boxed-group-inner chart bloodglucose-chart">
+              <div  class="boxed-group-inner chart bloodglucose-chart">
                 <svg class="bg-chart-svg" id="overviewChart">
                 </svg>
               </div>
@@ -35,6 +34,10 @@
     </div>
 
 </section>
+
+<div id="legend-template" class="hidden">
+  <span class="chart-legend"></span>
+</div>
 
 <script>
     pages_menu();

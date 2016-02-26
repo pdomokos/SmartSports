@@ -212,12 +212,12 @@
 @showSummary = (meas, summary) ->
   from = moment(summary.from).format(moment_fmt)
   to = moment(summary.to).format(moment_fmt)
-  $(".allDataChart").html("<i class='fa fa-bar-chart fa-2x'></i><span class='bold'>"+meas+" </span><span>Interval: "+from+" to "+to+" Data points: "+summary.length+" Mean: "+summary.mean.toFixed(2)+"</span>")
+  $(".allDataChart").html("<div class='training-type left'><i class='fa fa-bar-chart fa-2x'></i>"+meas+" Interval: "+from+" to "+to+" Data points: "+summary.length+" Mean: "+summary.mean.toFixed(2)+"</div><div class='selected-meas legend-container right'></div>")
 
 @updateHighlight = () ->
   self = this
   console.log "updatehighlight"
-  if self.lineChart && self.lineChart.chartData && self.lineChart.chartData.length > 0
+  if self.lineChart && self.lineChart.chartData
     console.log "updating"
     self.lineChart.clearHighlights()
     self.lineChart.addHighlight($('input[name=startA]').val(), $('input[name=endA]').val(), 'selA')
@@ -265,28 +265,32 @@
     window.chartData = chartData
     summary = getSummary(chartData)
     showSummary( measName, summary )
-    @lineChart = new ZoomableLineChart("bg", chartData, yaxisTitle)
-    @lineChart.draw()
+    setTimeout(() ->
+      console.log("legend: ",$(".chart-legend"))
+      data = {}
+      data[meas] = chartData
+      @lineChart = new ZoomableLineChart("bg-container", data, yaxisTitle)
 
-    highlight_extents = getExtentsMiddle(@lineChart.getTimeExtent())
+      @lineChart.draw()
+      highlight_extents = getExtentsMiddle(@lineChart.timeExtent)
 
+      $(getSel("startA")).val(highlight_extents[0][0])
+      $(getSel("endA")).val(highlight_extents[0][1])
+      $(getSel("startB")).val(highlight_extents[1][0])
+      $(getSel("endB")).val(highlight_extents[1][1])
+      $(getSel("startA")).removeAttr("disabled")
+      $(getSel("endA")).removeAttr("disabled")
+      $(getSel("startB")).removeAttr("disabled")
+      $(getSel("endB")).removeAttr("disabled")
+      $(".dataSelect i.showChart").removeAttr("disabled")
+      updateHighlight()
 
-    $(getSel("startA")).val(highlight_extents[0][0])
-    $(getSel("endA")).val(highlight_extents[0][1])
-    $(getSel("startB")).val(highlight_extents[1][0])
-    $(getSel("endB")).val(highlight_extents[1][1])
-    $(getSel("startA")).removeAttr("disabled")
-    $(getSel("endA")).removeAttr("disabled")
-    $(getSel("startB")).removeAttr("disabled")
-    $(getSel("endB")).removeAttr("disabled")
-    $(".dataSelect i.showChart").removeAttr("disabled")
-    updateHighlight()
-
-    $(".dataSelect li.attrSelectDone").removeClass("grayed")
-    $(".dataSelect li.aSelect").removeClass("grayed")
-    $(".dataSelect li.sSelectDone").removeClass("grayed")
-    $(".dataSelect li.bSelect").removeClass("grayed")
-    $(".dataSelect li.showChart").removeClass("grayed")
+      $(".dataSelect li.attrSelectDone").removeClass("grayed")
+      $(".dataSelect li.aSelect").removeClass("grayed")
+      $(".dataSelect li.sSelectDone").removeClass("grayed")
+      $(".dataSelect li.bSelect").removeClass("grayed")
+      $(".dataSelect li.showChart").removeClass("grayed")
+    ,0)
 
 @showAnalysis = (evt) =>
   console.log("add analysis clicked")

@@ -231,11 +231,11 @@
           }).focus ->
             $(this).autocomplete("search")
 
-          d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", bg_data_received)
+          d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", draw_bg_data)
           meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
           d3.json(meas_summary_url, draw_health_trend)
 
-          d3.json("/users/"+uid+"/summaries.json", patient_act_data_received)
+#          d3.json("/users/"+uid+"/summaries.json", draw_patient_activity_data)
 
         create: (event, ui) ->
 #          document.body.style.cursor = 'auto'
