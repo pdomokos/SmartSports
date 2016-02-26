@@ -23,7 +23,7 @@
 <div id="openModalAddCustomForm" class="modalDialog">
   <div class="customStyle">
     <div class="table-toolbar">
-      <div class="modalTitle left">Add Custom Form</div>
+      <div class="modalTitle left"><%=t 'add_custom_form' %></div>
       <span id="closeModalAddCustomForm" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
     </div>
     <br/>
@@ -45,16 +45,16 @@
         </style>
         <%= form_tag( "/users/#{current_user.id}/custom_forms", remote: true, id: "custom-create-form") do %>
             <div id="dataform" class="dataForm">
-              <p class="dataFormRemark">You can create your own forms with your frequently recorded data and default values.</p>
-              <p class="titleSub">Form Data</p>
-              <input id="iconselect" class="dataFormField left iconselect_img_myForms" placeholder="Select icon for the new form">
+              <p class="dataFormRemark"><%=t 'add_custom_form_info' %></p>
+              <p class="titleSub"><%=t 'add_custom_form_title' %></p>
+              <input id="iconselect" class="dataFormField left iconselect_img_myForms" placeholder="<%=t 'add_custom_form_icon_placeholder' %>">
               <br/>
-              <input type="text" name="custom_form[form_name]" id="input-form_name" class="dataFormField" placeholder="Form name, e.g. Morning Form">
-              <input type="text" name="custom_form[form_tag]" id="input-form_name" class="dataFormField" placeholder="Form tag, e.g. diabetes_morning_form_1">
+              <input type="text" name="custom_form[form_name]" id="input-form_name" class="dataFormField" placeholder="<%=t 'add_custom_form_name_placeholder' %>">
+              <input type="text" name="custom_form[form_tag]" id="input-form_name" class="dataFormField" placeholder="<%=t 'add_custom_form_tag_placeholder' %>">
               <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
 
               <input id="formicon" name="custom_form[image_name]" type="hidden" value="img_myForms">
-              <button id="add-custom-button" class="dataFormField" >Add Form</button>
+              <button id="add-custom-button" class="dataFormField" ><%=t 'add_form' %></button>
             </div>
             <div id="iconform" class=hidden>
               <ul class="img-list cf">
@@ -65,7 +65,7 @@
                 <% end %>
               </ul>
               <br/>
-              <span id="backToForm" class="backbtn">Back</span>
+              <span id="backToForm" class="backbtn"><%=t 'add_custom_back' %></span>
             </div>
         <% end %>
 
@@ -78,7 +78,7 @@
 <div id="openModalAddCustomFormElement" class="modalDialog">
   <div class="customStyle">
     <div class="table-toolbar">
-      <div class="modalTitle left">Add Form Element</div>
+      <div class="modalTitle left"><%=t 'add_custom_item' %></div>
       <span id="closeModalAddCustomForm" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
     </div>
     <div class="clearBoth"></div>
@@ -87,9 +87,8 @@
       <div class="addElementContainer">
 
         <div class="dataForm">
-          <p class="dataFormRemark">Add elements to your forms.</p>
-          <p class="titleSub">Element</p>
-          <input type="search" id="elementName" class="dataFormField" placeholder="Select element type">
+          <p class="titleSub"><%=t 'add_custom_item_title' %></p>
+          <input type="search" id="elementName" class="dataFormField" placeholder="<%=t 'add_custom_item_type' %>">
           <input type="hidden" name="customFormId">
           <div class="formContents">
 

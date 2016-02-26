@@ -13,6 +13,8 @@
   <div class="dataFormFieldUnitHalf illness_percent"><%=t 'illness_amount_mild'%></div>
   <input class="illness_amount" type="hidden" name="lifestyle[amount]"/>
 
+  <textarea class="dataFormTextArea illness_details" name="lifestyle[details]" placeholder="<%=t 'lifestyle_details'%>"></textarea>
+  <div class="dataFormAreaUnit"></div>
 
   <input type='text' class="dataFormField illness_start_datepicker default_date_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>

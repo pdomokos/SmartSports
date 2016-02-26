@@ -22,7 +22,13 @@
       <span class="itemTitle"><%= diet_item.name %></span>
   <% elsif diet_item.diet_type== "Food" %>
       <% if diet_item.food_type %>
-          <span class="itemTitle"><%= diet_item.food_type.name %></span><span> <%= diet_item.amount * 100 %>g</span>
+          <% vals = (t :amount_values).split(",")
+             amount = diet_item.amount
+             if amount > 2
+                amount = 1
+             end
+          %>
+          <span class="itemTitle"><%= diet_item.food_type.name %></span><span> <%= vals[amount] %></span>
       <% else %>
           Food <%= diet_item.name %>
       <% end %>

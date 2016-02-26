@@ -83,6 +83,15 @@ module ApplicationHelper
     end
   end
 
+  def get_lifestyle_time_min(start_time, end_time)
+    if start_time && end_time
+      d = end_time - start_time
+      (d/60).to_i
+    else
+      ""
+    end
+  end
+
   def get_lifestyle_date(lifestyle_date)
     if lifestyle_date
       lifestyle_date.strftime("%F")

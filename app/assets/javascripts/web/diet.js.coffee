@@ -6,6 +6,7 @@
     background: "rgba(87, 200, 138, 0.3)"
 
   popup_messages = JSON.parse($("#popup-messages").val())
+  amount_values = $("#amount_values").val().split(",")
 
   document.body.style.cursor = 'wait'
   loadFoodTypes( () ->
@@ -62,7 +63,9 @@
     $('.diet_smoke_type').val(null)
     console.log xhr.responseText
     color = $("#addFoodButton").css("background")
-    popup_error(popup_messages.failed_to_add_data)
+#    popup_error(popup_messages.failed_to_add_data)
+    resp = JSON.parse(xhr.responseText)
+    popup_error(resp.msg)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -86,10 +89,11 @@
     validate_diet_food("#diet_forms .diet_food_elem")
 
 @resetDiet = () ->
+  amount_values = $("#amount_values").val().split(",")
   $("div.diet > input.dataFormField").val("")
-  $(".diet_food_scale").slider({ value: 2 })
+  $(".diet_food_scale").slider({ value: 1 })
   fval = $(".diet_food_scale").slider("value")
-  $(".diet_food_unit").html(fval*100+"g")
+  $(".diet_food_unit").html(amount_values[fval])
   $(".diet_drink_scale").slider({ value: 2 })
   dval = $(".diet_drink_scale").slider("value")
   $(".diet_drink_unit").html(dval+" dl")
@@ -105,22 +109,23 @@
 
 @initDiet = () ->
   self = this
+  amount_values = $("#amount_values").val().split(",")
   console.log "initdiet called"
   $(".diet_food_datepicker").datetimepicker(timepicker_defaults)
-  $(".diet_food_amount").val(2)
+  $(".diet_food_amount").val(1)
   $(".diet_drink_datepicker").datetimepicker(timepicker_defaults)
   $(".diet_drink_amount").val(2)
   $(".diet_calories_datepicker").datetimepicker(timepicker_defaults)
   $(".diet_smoking_datepicker").datetimepicker(timepicker_defaults)
 
   $(".diet_food_scale").slider({
-    min: 0.25,
-    max: 5.0,
-    step: 0.25,
-    value: 2
+    min: 0,
+    max: 2,
+    step: 1,
+    value: 1
   }).slider({
     slide: (event, ui) ->
-      event.target.parentElement.parentElement.querySelector("div.diet_food_unit").innerHTML = " "+ui.value*100+"g"
+      event.target.parentElement.parentElement.querySelector("div.diet_food_unit").innerHTML = " "+amount_values[ui.value]
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector("input.diet_food_amount").value = ui.value
   })
@@ -237,8 +242,9 @@
 @loadDiets = () ->
   self = this
   current_user = $("#current-user-id")[0].value
+  lang = $("#data-lang-diet")[0].value
   console.log "calling load recent diets"
-  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=10',
+  $.ajax '/users/' + current_user + '/diets.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent diets AJAX Error: #{textStatus}"
@@ -319,12 +325,13 @@
   return true
 
 @load_diet_food =  (sel, data) ->
+  amount_values = $("#amount_values").val().split(",")
   diet = data['diet']
   console.log "load diet food to:"+sel+" diet: "+diet.name
   console.log diet
   $(sel+" input[name='diet[name]']").val(diet.name)
   $(sel+" input[name='diet[food_type_id]']").val(diet.food_type_id)
-  $(sel+" .diet_food_unit").html(diet.amount*100+"g")
+  $(sel+" .diet_food_unit").html(amount_values[diet.amount])
   $(sel+" .diet_food_scale").slider({value: diet.amount})
   $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 

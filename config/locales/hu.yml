@@ -213,6 +213,8 @@ hu:
 
   activity_unknown: "Ismeretlen aktivitás"
 
+  amount_values: "Kevés,Átlagos,Sok"
+
 # health
   health:           "Egészség"
   blood_pressure:   "Vérnyomás"
@@ -236,6 +238,8 @@ hu:
   after_meal: "Étkezés után"
   indep_meal: "Étkezéstől függetlenül"
   bgTimeList: "Étkezéstől függetlenül,Étkezés előtt,Étkezés után"
+
+  pulse: "Pulzus"
 
 # medication
   medication:           "Gyógyszer"
@@ -279,7 +283,8 @@ hu:
   painList:               "Nagyon enyhe,Enyhe,Mérsékelt,Erős,Tűrhetetlen"
   periodPainList:         "Nincs fájdalom,Gyenge fájdalom,Mérsékelt fájdalom,Erős fájdalom,Tűrhetetlen fájdalom"
   periodVolumeList:       "Alig észlelhető, Gyenge, Közepes, Erős, Rendkívül erős"
-  painTypeList:            "Szövetsérüléssel járó fájdalom,Zsigeri fájdalom,Idegi eredetű fájdalom,Lelki eredetű fájdalom,Mellkasi szorító fájdalom,Migrén,Ízületi fájdalom,Hát-derékfájdalom"
+  painTypeList:           "Szövetsérüléssel járó fájdalom,Zsigeri fájdalom,Idegi eredetű fájdalom,Lelki eredetű fájdalom,Mellkasi szorító fájdalom,Migrén,Ízületi fájdalom,Hát-derékfájdalom"
+  lifestyle_details:      "Részletek"
 
 # genetics
   genetics:           "Genetika"
@@ -315,6 +320,19 @@ hu:
   daily_timeline: "Napi idővonal"
   heart_trend: "Szív adatok"
   activity_trend: "Mozgás adatok"
+
+# custom
+  add_custom_form: "Egyedi kérdőív hozzáadása"
+  add_custom_form_info: "Itt összeállíthatja saját kérdőíveit a leggyakrabban használt elemekkel és alapértelmezett értékekkel."
+  add_custom_form_title: "Kérdőív"
+  add_custom_form_icon_placeholder: "Válasszon ikont az új kérdőívhez"
+  add_custom_form_name_placeholder: "Kérdőív név, pl.: Reggeli Form"
+  add_custom_form_tag_placeholder: "Kérdőív tag, pl.: diabetes_reggeli_form_1"
+  add_form: "Kérdőív hozzáadása"
+  add_custom_back: "Vissza"
+  add_custom_item: "Új elem hozzáadása"
+  add_custom_item_title: "Elem"
+  add_custom_item_type: "Válasszon egy elemet"
 
 # notifications
   notification: "Értesítés"

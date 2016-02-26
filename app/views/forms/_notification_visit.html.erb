@@ -3,10 +3,11 @@
   <input id="control_txt" type="search" class="dataFormField" name="notification[title]" placeholder="<%=t 'select' %>">
   <input id="nType" type="hidden" name="notification[notification_type]" >
   <div class="dataFormFieldUnitNarrow"></div>
-  <textarea class="dataFormField" name="notification[detail]" placeholder="Részletek"></textarea>
+
+  <textarea class="dataFormTextArea notification_details" name="notification[detail]" placeholder="<%=t 'lifestyle_details'%>"></textarea>
+  <div class="dataFormAreaUnit"></div>
 
   <input id='controll_datepicker' type='text' class="dataFormField" name="notification[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnitNarrow"></div>
 
-  <div class="dataFormFieldUnitNarrow"></div>
 </div>

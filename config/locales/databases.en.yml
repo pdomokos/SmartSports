@@ -1,0 +1,57 @@
+en:
+  activities:
+    sitting: "Sitting"
+    standing: "Standing"
+    housework: "Housework"
+    walking: "Walking"
+    running: "Running"
+    bicycling: "Bicycling"
+    aerobics: "Aerobics, fitness or gym"
+    swimming: "Swimming"
+    anysport: "Any sports"
+
+  diets:
+    food:
+      breakfast: "Breakfast"
+      lunch: "Lunch"
+      dinner: "Dinner"
+      snack: "Snack"
+    drink:
+      water: "Water"
+      milk: "Milk"
+      tea: "Tea"
+      coffee: "Coffee"
+      soft_drink: "Soft drink"
+      juice: "Juice"
+      beer: "Beer"
+      wine: "Wine"
+      spirit: "Spirit"
+    smoke:
+      cigarette: "1 Cigarette"
+      cigar: "1 Cigar"
+      cigarillo: "1 Cigarillo"
+      pipe: "1 Pipe"
+      electric_cigarette: "1 Electric cigarette"
+      nicotine_nose_spray: "1 Nikotine nose-spray"
+      nicotine_chewing_gum: "1 Nicotine chewing gum"
+      nicotine_patch: "1 Nicotine patch"
+
+  pains:
+    paintype1: "Szövetsérüléssel járó fájdalom"
+    paintype2: "Zsigeri fájdalom"
+    paintype3: "Idegi eredetű fájdalom"
+    paintype4: "Lelki eredetű fájdalom"
+    paintype5: "Mellkasi szorító fájdalom"
+    paintype6: "Migrén"
+    paintype7: "Ízületi fájdalom"
+    paintype8: "Hát-derékfájdalom"
+
+  relatives:
+    reltype1: "szülő"
+    reltype2: "nagyszülő"
+    reltype3: "dédszülő"
+    reltype4: "testvér"
+    reltype5: "unokaöcs/unokahúg"
+
+
+

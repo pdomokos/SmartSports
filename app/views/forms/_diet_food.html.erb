@@ -10,7 +10,7 @@
   </div>
 
   <input class="diet_food_amount" name="diet[amount]" type="hidden">
-  <div class="dataFormFieldUnit diet_food_unit">200g</div>
+  <div class="dataFormFieldUnit diet_food_unit"><%=t 'stress_amount_average' %></div>
 
   <input type='text' class="dataFormField diet_food_datepicker" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <br/>

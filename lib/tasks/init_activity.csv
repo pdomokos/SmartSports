@@ -1,19 +1,10 @@
-name;kcal;category;lang
-Ülés;19;sport;hu
-Állás;32;sport;hu
-Séta;41;sport;hu
-Házimunka;38;sport;hu
-Kocogás vagy futás;113;sport;hu
-Kerékpározás;100;sport;hu
-"Aerobik, fitness vagy konditerem";81;sport;hu
-Úszás;125;sport;hu
-Egyéb sport;81;sport;hu
-Sitting;19;sport;en
-Standing;32;sport;en
-Walking;41;sport;en
-Housework;38;sport;en
-Jogging or running;113;sport;en
-Bicycling;100;sport;en
-"Aerobics, fitness or gym activities";81;sport;en
-Swimming;125;sport;en
-Any sports;81;sport;en
+name;kcal;category
+sitting;1.8;sport
+standing;4.43;sport
+housework;3.525;sport
+walking;5.58;sport
+running;10.91;sport
+bicycling;8.64;sport
+aerobics;5.67;sport
+swimming;7.86;sport
+anysport;7.11;sport

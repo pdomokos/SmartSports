@@ -55,6 +55,6 @@ module LifestylesCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def lifestyle_params
-    params.require(:lifestyle).permit(:user_id, :illness_type_id, :pain_type_name, :source, :group, :name, :amount, :period_volume, :start_time, :end_time, :favourite)
+    params.require(:lifestyle).permit(:user_id, :illness_type_id, :pain_type_name, :source, :group, :name, :details, :amount, :period_volume, :start_time, :end_time, :favourite)
   end
 end

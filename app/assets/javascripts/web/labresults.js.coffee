@@ -50,6 +50,8 @@
     console.log "notification created, ret = "
     console.log data
     if data.ok
+      $("#control_txt").val(null)
+      $(".notification_details").val(null)
       loadVisits()
       popup_success("Notification "+popup_messages.saved_successfully, "labresultStyle")
     else
@@ -71,6 +73,7 @@
     $(".ldl_chol").val(null)
     $(".egfr_epi").val(null)
     $(".ketone").val(null)
+    $(".notification_details").val(null)
 
     if !category
       category = 'control'

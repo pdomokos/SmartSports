@@ -244,6 +244,8 @@
   $("input[name='lifestyle[name]']").val("")
   $("input[name='lifestyle[illness_type_id]']").val("")
   $("input[name='lifestyle[pain_type_name]']").val("")
+  $(".illness_details").val("")
+  $(".pain_details").val("")
 
 @validateLifestyleForm = (formId) ->
   console.log "validate lifestyle: "+formId
@@ -318,6 +320,7 @@
   $(sel+" input[name='lifestyle[illness_type_id]").val(lifestyle.illness_type_id)
   $(sel+" .illness_scale").slider({value: lifestyle.amount})
   $(sel+" .illness_percent").html(illnessList[lifestyle.amount])
+  $(sel+" .illness_details").val(lifestyle.details)
   $(sel+" input[name='lifestyle[start_time]']").val(new moment().format(moment_datefmt))
   $(sel+" input[name='lifestyle[end_time]']").val(new moment().format(moment_datefmt))
 
@@ -328,6 +331,7 @@
   $(sel+" .pain_type_name").val(lifestyle.pain_type_name)
   $(sel+" .pain_scale").slider({value: lifestyle.amount})
   $(sel+" .pain_percent").html(illnessList[lifestyle.amount])
+  $(sel+" .pain_details").val(lifestyle.details)
   $(sel+" input[name='lifestyle[start_time]']").val(new moment().format(moment_fmt))
   $(sel+" input[name='lifestyle[end_time]']").val(new moment().format(moment_fmt))
 

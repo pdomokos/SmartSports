@@ -12,6 +12,8 @@
   <div class="dataFormFieldUnitHalf pain_percent"><%=t 'pain_amount_mild'%></div>
   <input class="pain_amount" type="hidden" name="lifestyle[amount]"/>
 
+  <textarea class="dataFormTextArea pain_details" name="lifestyle[details]" placeholder="<%=t 'lifestyle_details'%>"></textarea>
+  <div class="dataFormAreaUnit"></div>
 
   <input type='text' class="dataFormField pain_start_datepicker default_datetime_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>

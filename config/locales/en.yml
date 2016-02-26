@@ -234,6 +234,8 @@ en:
 
   activity_unknown: "Unknown activity"
 
+  amount_values: "Below average,Average,Above average "
+
 # health
   health:           "Health"
   blood_pressure:   "Blood Pressure"
@@ -257,6 +259,8 @@ en:
   after_meal: "After meal"
   indep_meal: "Independent to meal"
   bgTimeList: "Independent to meal,Before meal,After meal"
+
+  pulse: "Pulse"
 
 # medication
   medication:           "Medication"
@@ -301,6 +305,7 @@ en:
   periodPainList:           "No pain,Mild pain,Moderate pain,Severe pain,Very painful"
   periodVolumeList:         "Light, Moderate, Normal, Heavy, Extremely heavy"
   painTypeList:             "Szövetsérüléssel járó fájdalom,Zsigeri fájdalom,Idegi eredetű fájdalom,Lelki eredetű fájdalom,Mellkasi szorító fájdalom,Migrén,Ízületi fájdalom,Hát-derékfájdalom"
+  lifestyle_details:        "Details"
 
 # genetics
   genetics:           "Genetics"
@@ -335,6 +340,18 @@ en:
   heart_trend: "Heart trend"
   activity_trend: "Activity trend"
 
+# custom
+  add_custom_form: "Add Custom Form"
+  add_custom_form_info: "You can create your own forms with your frequently recorded data and default values."
+  add_custom_form_title: "Form Data"
+  add_custom_form_icon_placeholder: "Select icon for the new form"
+  add_custom_form_name_placeholder: "Form name, e.g. Morning Form"
+  add_custom_form_tag_placeholder: "Form tag, e.g. diabetes_morning_form_1"
+  add_form: "Add Form"
+  add_custom_back: "Back"
+  add_custom_item: "Add a New Item"
+  add_custom_item_title: "Item"
+  add_custom_item_type: "Select item"
 
 # notifications
   notification: "Notification"

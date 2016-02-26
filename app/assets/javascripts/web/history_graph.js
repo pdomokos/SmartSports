@@ -47,7 +47,7 @@ function convertToHistory(data) {
     var result = [];
     if(data.length == 0) {
         var ret3 = {};
-        d = moment(new Date()).format(moment_date2fmt);
+        d = moment(new Date()).format(moment_datefmt);
         ret3['time'] = d;
         var hmap = {};
         hmap['kind'] = "start"
@@ -62,13 +62,13 @@ function convertToHistory(data) {
     var adata = data.filter(function(d) {return d['evt_type']!= 'waist';});
     var amap = {};
     var k = new Set(adata.map(function (p) {
-        return moment(p['dates'][0]).format(moment_date2fmt)
+        return moment(p['dates'][0]).format(moment_datefmt)
     }));
     k.forEach(function (v) {
         amap[v] = []
     });
     adata.forEach(function (p) {
-        amap[moment(p['dates'][0]).format(moment_date2fmt)].push(p)
+        amap[moment(p['dates'][0]).format(moment_datefmt)].push(p)
     });
     var result = [];
     var dateKeys = Object.keys(amap);
