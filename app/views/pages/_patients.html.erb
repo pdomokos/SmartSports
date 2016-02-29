@@ -1,5 +1,5 @@
 
-<div class="hidden patientData">
+<div class="hidden patientData" id="analytics-container">
 
   <div class="columns hidden patientDetails">
     <div class="boxed-group connection-block">
@@ -84,20 +84,6 @@
       </div>
     </div>
 
-  <div class="columns">
-    <div id="activity-trend-container" class="boxed-group connection-block">
-      <h3 class="noClickSelect">
-        <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-        <div class="training-type left"><%=t 'activity_trend'%></div>
-        <div class="selected-meas legend-container right"></div>
-      </h3>
-
-      <div class="boxed-group-inner chart activity-trend-chart">
-        <svg class="activity-trend-chart-svg">
-        </svg>
-      </div>
-    </div>
-  </div>
 
     <div id="openModalAddNotification" class="modalDialog">
       <div class="customStyle notificationStyle">
@@ -150,3 +136,5 @@
       </div>
     </div>
 </div>
+
+<%= render "device_data" %>

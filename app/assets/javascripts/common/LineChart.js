@@ -1,13 +1,13 @@
 "use strict";
-function LineChart(chartElement, data, title, chartParams) {
+function LineChart(chartElement, data, chartParams) {
     this.chartElement = chartElement;
     this.chartData = data;
-    this.yTitle = title;
     this.margin = {top: 40, right: 60, bottom: 40, left: 60};
     this.width = $("#" + chartElement).parent().width();
     this.aspect = 2.0 / 7;
     this.height = this.aspect * this.width - this.margin.top - this.margin.bottom;
     this.highlights = [];
+    this.chartParams = chartParams;
 
     function getMap(data, colors) {
         var labelSet = new Set();
@@ -103,26 +103,28 @@ function LineChart(chartElement, data, title, chartParams) {
             .call(this.timeAxis);
 
         if(this.rightScale!==undefined) {
-            var rightAxis = d3.svg.axis().scale(this.rightScale).orient("right");
+            self.rightAxis = d3.svg.axis().scale(this.rightScale).orient("right");
+            var lb1 = (self.chartParams&&self.chartParams.rightLabel)||"steps";
             this.svg.append("g")
                 .attr("class", "y axis")
                 .attr("transform", "translate( " + (this.width - this.margin.left) + ", " + this.margin.top + " )")
                 .attr("stroke-width", "0")
-                .call(rightAxis)
+                .call(self.rightAxis)
                 .append("text")
-                .text("steps")
+                .text(lb1)
                 .attr("transform", "translate(" + (-this.margin.left / 2) + ", " + (-this.margin.top / 2) + ")");
         }
 
         if(this.leftScale!==undefined) {
-            var leftAxis = d3.svg.axis().scale(this.leftScale).orient("left");
+            self.leftAxis = d3.svg.axis().scale(this.leftScale).orient("left");
+            var lb2 = (self.chartParams&&self.chartParams.leftLabel)||"distance(m)";
             this.svg.append("g")
                 .attr("class", "y axis")
                 .attr("transform", "translate( " + (this.margin.left) + ", " + this.margin.top + " )")
                 .attr("stroke-width", "0")
-                .call(leftAxis)
+                .call(self.leftAxis)
                 .append("text")
-                .text("distance(m)")
+                .text(lb2)
                 .attr("transform", "translate(" + (-this.margin.left / 2) + ", " + (-this.margin.top / 2) + ")");
         }
         this.addLegend();
@@ -160,7 +162,7 @@ function LineChart(chartElement, data, title, chartParams) {
                 .y(function (d) {
                     return (currScale(d.value))
                 });
-
+            self.line = line;
             var lineColor = "grayLine";
             if(inGroups.size===1) {
                 lineColor = self.getElementClass(grp, "Line");
@@ -249,7 +251,7 @@ function LineChart(chartElement, data, title, chartParams) {
         if(ex===undefined) {
             ex = this.valueExtent;
         }
-        return d3.scale.linear().range([this.height - this.margin.bottom - this.margin.top, 0]).domain(ex);
+        return d3.scale.linear().range([this.height - this.margin.bottom - this.margin.top, 0]).domain(ex).nice();
     };
 
     this.calcExtent = function (groups) {
@@ -322,7 +324,9 @@ function ZoomableLineChart(chartElement, data, title) {
         var self = this;
         return function () {
             //console.log(self.chartData);
-            var visibleData = self.chartData.filter(function (d) {
+            var keys = Object.keys(self.chartData);
+            var currData = self.chartData[keys[0]];
+            var visibleData = currData.filter(function (d) {
                 var dt = self.timeScale(moment(d.date).toDate());
                 return (dt >= 0 && dt < self.width && d.value > 0);
             });
@@ -341,19 +345,19 @@ function ZoomableLineChart(chartElement, data, title) {
                 self.valueExtent = d3.extent(visibleData, function (d) {
                     return d.value
                 });
-                self.scaleLeft.domain(self.valueExtent).nice();
+                self.rightScale.domain(self.valueExtent).nice();
 
                 self.svg.selectAll("circle")
                     .attr("cx", function (d) {
                         return self.timeScale(moment(d.date).toDate())
                     })
                     .attr("cy", function (d) {
-                        return self.scaleLeft(d.value)
+                        return self.rightScale(d.value)
                     });
 
-                self.svg.selectAll("path.grayline").attr("d", self.line);
+                self.svg.selectAll("path.grayLine").attr("d", self.line);
                 self.svg.select("g.x.axis").call(self.timeAxis);
-                self.svg.select("g.y.axis").call(self.yAxis);
+                self.svg.select("g.y.axis").call(self.rightAxis);
             }
         }
     };

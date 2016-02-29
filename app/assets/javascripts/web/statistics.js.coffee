@@ -273,14 +273,15 @@
       .style("font-size", "16px")
       .text("Time of Day");
 
-@draw_boxplot = (eid, data, rangeA, rangeB) ->
+@draw_boxplot = (eid, data, rangeA, rangeB, colorMap) ->
   self = this
   minv = Infinity
   maxv = -Infinity
   boxDataA = {}
   boxDataB = {}
 
-  colorMap = getColorMap(data);
+  console.log("draw_boxplot", data)
+#  colorMap = getColorMap(data);
 
 #  console.log data[0]
   data.forEach( (d)->

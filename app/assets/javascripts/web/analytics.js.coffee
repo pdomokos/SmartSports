@@ -46,7 +46,10 @@
     return {date: d.date, value: d.blood_sugar, group: grp_map[d.blood_sugar_time]}
   )
   console.log(new Set($.map(jsondata, (d) -> return d.blood_sugar_time)))
-  bg_trend_chart = new LineChart("bg-container", data, "mmol/L")
+  chartParams = {
+    rightLabel: "mmol/L"
+  }
+  bg_trend_chart = new LineChart("bg-container", data, chartParams)
 #  bg_extent = bg_trend_chart.get_time_extent()
 #  higlight_extents = getExtentsMiddle(bg_extent)
   bg_trend_chart.draw()
@@ -72,11 +75,11 @@
     pulse = []
     raw.forEach( (d) ->
       if d.systolicbp && d.systolicbp>0
-        sys.push({date: d.date, value: d.systolicbp, group: "Sys"})
+        sys.push({date: d.date, value: d.systolicbp, group: "sys"})
       if d.diastolicbp && d.diastolicbp>0
-        dia.push({date: d.date, value: d.diastolicbp, group: "Dia"})
+        dia.push({date: d.date, value: d.diastolicbp, group: "dia"})
       if d.pulse && d.pulse>0
-        pulse.push({date: d.date, value: d.pulse, group: "Pulse"})
+        pulse.push({date: d.date, value: d.pulse, group: "pulse"})
     )
     return {sys: sys, dia: dia, pulse: pulse}
 
@@ -85,9 +88,9 @@
   chartParams = {
     leftLabel: "1/min",
     rightLabel: "Hgmm",
-    leftGroups: ["pulse", ""]
+    leftGroups: ["pulse"]
   }
-  heart_trend_chart = new LineChart("heart-trend-container", heartData, "Heart Data", chartParams)
+  heart_trend_chart = new LineChart("heart-trend-container", heartData, chartParams)
   heart_trend_chart.draw()
 
 
@@ -119,7 +122,12 @@
 
         devData[k] = grpData
     )
-    graph = new LineChart(container_name, devData, src, ["cycling"])
+    chartParams = {
+      leftLabel: "distance(m)",
+      rightLabel: "steps",
+      leftGroups: ["cycling"]
+    }
+    graph = new LineChart(container_name, devData, chartParams)
     graph.draw()
   )
 

@@ -313,12 +313,13 @@
     dioastolic: "DIA (mmHg)",
     pulse: "Pulse (1/min)",
   }
-  pp = new ParallelPlot(eid, @lineChart.chartData, axisLabels[$("section.dataSelect input[name=attributeName]").val()])
+  keys = Object.keys(@lineChart.chartData)
+  pp = new ParallelPlot(eid, @lineChart.chartData[keys[0]], axisLabels[$("section.dataSelect input[name=attributeName]").val()])
   pp.draw(rangeA, rangeB)
 
   console.log("Ranges:")
   console.log rangeA
   console.log rangeB
-  draw_boxplot(eid, @lineChart.chartData, rangeA, rangeB)
+  draw_boxplot(eid, @lineChart.chartData[keys[0]], rangeA, rangeB, @lineChart.colorMap)
 
   $("div.stat-container").removeClass("hidden")

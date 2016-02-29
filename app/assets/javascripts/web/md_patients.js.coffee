@@ -232,10 +232,13 @@
             $(this).autocomplete("search")
 
           d3.json("/users/"+uid+"/measurements.json?meas_type=blood_sugar", draw_bg_data)
-          meas_summary_url = "/users/" + uid + "/measurements.json?summary=true"
+
+          measStartDate = moment().subtract(6, 'months').format(moment_datefmt)
+          meas_summary_url = "/users/" + uid + "/measurements.json?summary=true&start="+measStartDate
           d3.json(meas_summary_url, draw_health_trend)
 
-#          d3.json("/users/"+uid+"/summaries.json", draw_patient_activity_data)
+          startDate = moment().subtract(12, 'months').format(moment_datefmt)
+          d3.json("/users/"+uid+"/summaries.json?bysource=true&start="+startDate, draw_patient_activity_data)
 
         create: (event, ui) ->
 #          document.body.style.cursor = 'auto'
@@ -305,4 +308,41 @@
   $(document).on("click.closePatient", "#close-patient-data", (evt) ->
     $("#health-data-container").html("")
     location.href = "#close"
+  )
+
+@draw_patient_activity_data = (jsondata) ->
+  console.log "patient data"
+  getters = {
+    cycling: (d) ->
+      return d.distance
+    running: (d) ->
+      return d.steps
+    walking: (d) ->
+      return d.steps
+  }
+  Object.keys(jsondata).forEach( (src)->
+    dev_chart = $("#device-data-template").children().first().clone()
+    container_name = src+"_data-container"
+    dev_chart.attr("id", container_name)
+    $("#analytics-container").append(dev_chart)
+
+    $(dev_chart).find("div.training-type").html(capitalize(src))
+    devData = {}
+    keys = Object.keys(jsondata[src])
+    keys.forEach( (k) ->
+      if k!="sleep" && k!="transport"
+        grpData = $.map(jsondata[src][k], (d) ->
+          return {date: d.date, value: getters[k](d), group: k};
+        )
+        grpData = grpData.filter((d) -> d.value!=0)
+
+        devData[k] = grpData
+    )
+    chartParams = {
+      leftLabel: "distance(m)",
+      rightLabel: "steps",
+      leftGroups: ["cycling"]
+    }
+    graph = new LineChart(container_name, devData, chartParams)
+    graph.draw()
   )
