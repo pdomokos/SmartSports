@@ -1074,15 +1074,22 @@ div.egfr {
   float: left;
 }
 
-.dashboardbody {
-  background: image-url("smartdiab_bg1_small.jpg") center no-repeat !important;
-  background-position-y: -300px !important;
+@media screen and (max-width: 2000px) {
+  .dashboardbody {
+    background: url("/assets/smartdiab_bg1_s.jpg") -100px -150px no-repeat !important;
+  }
 }
 @media screen and (min-width: 2000px) {
   .dashboardbody {
-    background: image-url("smartdiab_bg1_medium.jpg") 100px -300px no-repeat !important;
+    background: url("/assets/smartdiab_bg1_m.jpg") 100px -300px no-repeat !important;
   }
 }
+@media screen and (min-width: 3000px) {
+  .dashboardbody {
+    background: url("/assets/smartdiab_bg1_l.jpg") 100px -300px no-repeat !important;
+  }
+}
+
 .tilesContainer {
   clear: both;
   position:relative;
