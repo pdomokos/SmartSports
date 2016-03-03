@@ -88,7 +88,7 @@
     console.log "success "+form_id
 
     #    redir to main page
-    document.location = "/"+data.locale+"/pages/dashboard"
+    document.location = urlPrefix()+data.locale+"/pages/dashboard"
   ).on("ajax:error", (e, data, status, error) ->
     #console.log data.responseJSON
     #popup_error(popup_messages.failed_to_add_data)
@@ -99,7 +99,7 @@
     console.log "success "+form_id
 
     #    redir to main page
-    document.location = "/"+data.locale+"/pages/dashboard"
+    document.location = urlPrefix()+data.locale+"/pages/dashboard"
   ).on("ajax:error", (e, data, status, error) ->
     #console.log data.responseJSON
     #popup_error(data.responseJSON["msg"])
@@ -115,12 +115,10 @@
     form_id = e.currentTarget.id
     console.log "success "+form_id
 
-    #    redir to main page
-    #    document.location = "/"
     if(data.ok == false)
       popup_error(data.responseJSON["msg"])
     else
-      document.location = "/"+data.locale+"/profile/new"
+      document.location = urlPrefix()+data.locale+"/profile/new"
   ).on("ajax:error", (e, data, status, error) ->
     console.log data.responseJSON
     popup_error(data.responseJSON["msg"])
@@ -139,9 +137,9 @@
     console.log "success "+form_id
 #    redir to main page
     if data.profile
-      document.location = "/"
+      document.location = urlPrefix()
     else
-      document.location = "/"+data.locale+"/profile/new"
+      document.location = urlPrefix()+data.locale+"/profile/new"
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log error
     popup_error(xhr.responseJSON["msg"])
@@ -159,7 +157,7 @@
     console.log "success "+form_id
     if data.ok
       popup_success(popup_messages.passwd_reset_success)
-      document.location = "/"+data.locale+"/pages/signin"
+      document.location = urlPrefix()+data.locale+"/pages/signin"
     else
       popup_error(popup_messages.password_reset_failed)
   ).on("ajax:error", (e, data, status, error) ->
@@ -176,7 +174,7 @@
     console.log data.locale
     if data.ok
        popup_success(xhr.responseJSON["msg"])
-       document.location = "/"+data.locale+"/pages/signin"
+       document.location = urlPrefix()+data.locale+"/pages/signin"
     else
       console.log xhr.responseJSON
       popup_error(xhr.responseJSON["msg"])
