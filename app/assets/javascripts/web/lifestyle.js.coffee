@@ -301,8 +301,8 @@
     painkey = 'sd_pains_'+user_lang
   else
     painkey = 'sd_pains_hu'
-  if !getStored("sd_illnesses") || !getStored(painkey) || testDbVer(db_version)
-    ret = $.ajax urlPrefix()+'/illness_types.json',
+  if getStored("sd_illnesses")==undefined || getStored("sd_illnesses").length==0 || getStored(painkey)==undefined || getStored(painkey).length==0|| testDbVer(db_version)
+    ret = $.ajax urlPrefix()+'illness_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "load illness_types AJAX Error: #{textStatus}"

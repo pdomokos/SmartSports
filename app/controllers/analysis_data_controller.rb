@@ -110,7 +110,11 @@ class AnalysisDataController < ApplicationController
                     if diet.diet_type== 'Calory'
                       item['tooltip'] = (I18n.t :quick_calories)
                     else
-                      item['tooltip'] = food_val_list[food_key_list.find(diet.food_type_id).category][food_key_list.find(diet.food_type_id).name]
+                      category = food_key_list.find_by_id(diet.food_type_id).try(:category)
+                      name = food_key_list.find_by_id(diet.food_type_id).try(:name)
+                      unless category.nil? || name.nil?
+                        item['tooltip'] = food_val_list[category][name]
+                      end
                     end
 
                     item
