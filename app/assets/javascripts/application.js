@@ -24,7 +24,7 @@
 //= require_tree ./web
 
 function urlPrefix() {
-    return window.url_prefix||"";
+    return window.url_prefix;
 }
 
 function b64ToUint6 (nChr) {
