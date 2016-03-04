@@ -22,7 +22,11 @@
 en:
   project_name: "SmartDiab"
   top_title: "SmartDiab - intelligent diabetes management"
+  all: "All"
+  site_traffic: "Site traffic"
+  invite_doctor: "Invite doctor"
 
+  tooltip_signedin: "Signed in as"
   menu_dashboard: "Dashboard"
   menu_diet:      "Diet"
   menu_exercise:  "Exercise"
@@ -37,6 +41,7 @@ en:
   menu_connections: "Devices"
   menu_custom: "Custom"
   menu_users: "Users"
+  menu_doctors: "Doctors"
   menu_forms: "Forms"
   menu_patients: "Patient"
   menu_patient_groups: "Patient Groups"

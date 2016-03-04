@@ -89,6 +89,7 @@ Rails.application.routes.draw do
     get 'pages/analytics'
     get 'pages/profile'
     get 'pages/admin'
+    get 'pages/admin_doctors'
     get 'pages/md_patients'
     get 'pages/md_customforms'
     get 'pages/md_statistics'

@@ -1,7 +1,11 @@
 hu:
   project_name: "SmartDiab"
   top_title: "SmartDiab - intelligent diabetes management"
+  all: "Összes"
+  site_traffic: "A weblap forgalma"
+  invite_doctor: "Orvos meghívása"
 
+  tooltip_signedin: "Bejelentkezett felhasználó"
   menu_dashboard: "Asztal"
   menu_diet:      "Étrend"
   menu_exercise:  "Testmozgás"
@@ -16,6 +20,7 @@ hu:
   menu_connections: "Eszközök"
   menu_custom: "Saját"
   menu_users: "Felhasználók"
+  menu_doctors: "Orvosok"
   menu_forms: "Kérdőívek"
   menu_patients: "Betegek"
   menu_patient_groups: "Beteg Csoportok"

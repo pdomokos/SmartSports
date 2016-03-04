@@ -50,24 +50,14 @@
             <% end %>
             </div>
 
-            <% if current_user.doctor? %>
-            <div class="imgContainer headerItemIcon topBannerControl" title="<%=t 'alt_doctor_page'%>">
-            <%= link_to url_for( :action => 'md_patients', :locale => I18n.locale ) do %>
-                <i class="fa fa-stethoscope fa-lg headerItemIconMod"></i>
-            <% end %>
-            </div>
-            <% end %>
-
             <div class="topBannerRight topBannerControl" title="<%=t 'alt_profile_settings'%>">
             <%= link_to url_for( :action => 'profile', :locale => I18n.locale ), :class => "titleIcon" do %>
                 <%= image_tag current_user.avatar.url(:medium), class: "headerItemAvatar" %>
             <% end %>
             </div>
 
-            <div class="topBannerRight topBannerControl" title="<%=t 'menu_dashboard'%>">
-              <%= link_to url_for( :action => 'dashboard', :locale => I18n.locale ), :class => "titleIcon" do %>
-                  <span class="headerItemName"><%= @display_name %></span>
-              <%end %>
+            <div class="topBannerRight topBannerControl" title="<%=t 'tooltip_signedin'%>">
+              <span class="headerItemName"><%= @display_name %></span>
             </div>
 
         </div>

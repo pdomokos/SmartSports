@@ -1,0 +1,30 @@
+<tr class="bg">
+    <td class="padded icons-two">
+      <i class="fa fa-stethoscope fa-lg "></i>
+    </td>
+
+  <td class="historyTitle padded dietItem">
+    <span><%= doctor_item.name %></span>
+  </td>
+  <td class="historyTitle padded dietItem">
+    <span><%= doctor_item.email %></span>
+  </td>
+  <td class="historyTitle padded dietItem">
+    <span><%= doctor_item.id %></span>
+  </td>
+
+  <td class="historyTitle padded dietItem tag">
+    <span class="tag kcal right">cardiologist</span>
+  </td>
+
+  <td class="icons-more">
+    <button id="fav-icon" class="tableControl">
+      <i class="fa fa-star fa-2x is-favorite"></i>
+      <input type="hidden" name="diet[favourite]" value="false">
+    </button>
+
+    <button class="tableControl">
+      <i class="fa fa-trash-o fa-2x"></i>
+    </button>
+  </td>
+</tr>
