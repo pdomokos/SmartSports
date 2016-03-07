@@ -20,7 +20,7 @@ module ActivitiesCommon
       end
     end
 
-    if user.profile.dateofbirth && user.profile.weight && user.profile.height && actType.kcal && @activity.duration
+    if user.profile && user.profile.dateofbirth && user.profile.weight && user.profile.height && actType.kcal && @activity.duration
       ages = age(user.profile.dateofbirth)
       durationInHour = @activity.duration/60.0
       if user.profile.sex == "female"

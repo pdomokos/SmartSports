@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   #
   def reset_password_email(mail_job)
     logger.info(mail_job.as_json)
-    loc = mail_job.lang || "en"
+    loc = mail_job.try(:lang) || "en"
     @email = mail_job.email
     logger.info("UserMailer.reset_password_email to: #{@email}, loc:#{loc}")
 
