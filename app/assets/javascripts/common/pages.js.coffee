@@ -272,6 +272,13 @@
     lang: d['lang']
     }
 
+  window.labresults_map_fn = (d) ->
+    {
+    label: d['name'],
+    id: d['id'],
+    lang: d['lang']
+    }
+
   window.illness_map_fn = (d) ->
     {
     label: d['name'],

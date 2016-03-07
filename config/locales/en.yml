@@ -115,6 +115,7 @@ en:
   fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to SmartDiab."
   height: "Height, eg: 180"
   date_of_birth: "Year of birth"
+  date_of_birth_placeholder: "Year of birth, eg: 1970"
   sex: "Sex"
   male: "Male"
   female: "Female"
@@ -138,6 +139,7 @@ en:
   error_profile_height_format: "Height must be a number!"
   error_profile_weight_interval: "Weight must be between 20-500kg!"
   error_profile_height_interval: "Height must be between 100-250cm!"
+  error_profile_year_interval: "Year of birth must be between 1900-2016"
   error_registration_password: "Password must be at least 4 characters!"
   error_registration_password_confirmation: "Please fill password confirmation field!"
   error_registration_password_confirmation2: "Passwords are different!"
@@ -238,6 +240,7 @@ en:
   activity_unknown: "Unknown activity"
 
   amount_values: "Below average,Average,Above average "
+  cal_message: "To see how many calories you've burned, you'll need to fill out your age, height, weight, and gender."
 
 # health
   health:           "Health"
@@ -300,7 +303,7 @@ en:
   period_amount_mild_pain:  "Mild pain"
   period_volume:            "Volume"
   period_volume_moderate:   "Moderate"
-  illness_placeholder:      "Type at least three letters..."
+  illness_placeholder:      "Select..."
   pain_placeholder:         "Select..."
   unknown:                  "Unknown"
   sleepList:                "Very bad,Fairly bad,Fairly good,Very good"
@@ -318,6 +321,14 @@ en:
   relative:           "Relative"
   diabetes:           "Diabetes"
   genetics_history:   "Patient history"
+  personal_history:   "Personal history"
+  family_history:     "Family history"
+  relatives:          "Relatives"
+  diabetes_type:      "Your diabetes type"
+  autoantibody_test:  "Autoantibody test"
+  autoantibody_value: "Autoantibody value"
+  positive:           "Positive"
+  negative:           "Negative"
 
 # lab results
   lab_results:        "Doctor's visit"

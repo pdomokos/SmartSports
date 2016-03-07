@@ -18,7 +18,6 @@ class ProfileController < ApplicationController
   end
 
   def create
-    profile_params['dateofbirth'] = profile_params['dateofbirth'].to_s.concat("-01-01").to_date
     @profile = Profile.new(profile_params)
     if !profile_params['sex']
       @profile.sex = "female"
@@ -52,9 +51,6 @@ class ProfileController < ApplicationController
 
     respond_to do |format|
       par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :dateofbirth, :smoke, :insulin, :default_lang)
-      if par['dateofbirth'] &&  par['dateofbirth'].to_i != 0
-        par['dateofbirth'] = par['dateofbirth'].to_s.concat("-01-01").to_date
-      end
       if par['default_lang']
         I18n.locale = par['default_lang']
       end
