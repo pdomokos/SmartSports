@@ -1,6 +1,7 @@
 @admin_common = () ->
   define_globals()
   setTooltips()
+  registerPopupHandler()
 
 @admin_loaded = () ->
   console.log "admin loaded"
@@ -17,6 +18,7 @@
       console.log "Successful AJAX call"
       if result['status'] == "OK"
         drawTraffic(result)
+        $("body").scrollTop(0)
       else
         console.log "status nok"
 
@@ -35,6 +37,7 @@
         $(".chartData").html(data.email)
       else
         $(".chartData").html("All")
+      $("body").scrollTop(0)
   ).on("ajax:error", (e, data, status, xhr) ->
     console.log "err"
   )

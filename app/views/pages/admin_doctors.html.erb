@@ -1,13 +1,17 @@
+<input id="popup-messages" value="<%=@values%>" type="hidden" />
 <% if current_user.admin %>
     <div class="adminTitle dietColor">
       <i class="fa fa-envelope-o fa-lg "></i>
       <span class="hisTitle"><%= t :invite_doctor%></span>
     </div>
-    <div class="contentBg" id="diet_forms">
+    <div class="contentBg" id="inviteDoctorContainer">
       <div class="p10">
         <div class="dataFormContainer formElement dietStyle">
-            <input type="text" class="dataFormField" placeholder="Enter email address">
+          <%= form_tag( root_path+"users", remote: true, class: "inviteDoctorForm" ) do %>
+            <input type="text" name="user[email]" class="dataFormField" placeholder="Enter email address"/>
+            <input type="hidden" name="user[doctor]" value="true"/>
             <button class="dataFormField">Invite</button>
+          <% end %>
         </div>
       </div>
         <div class="clearBoth"></div>

@@ -161,6 +161,8 @@ hu:
     pain_name_missing: "A fájdalom megnevezése hiányzik"
     failed_custom_form: "A saját form mentése sikertelen"
     connection_added_html: "A %{conn} kapcsolat sikeresen létrejött. A szinkronizáláshoz klikkeljen a <i class='fa fa-refresh fa-1x'></i> nyílra"
+    doctor_create_fail_email_exists: "Sikertelen az orvos meghívása, %{email} már foglalt."
+    doctor_invited_msg: "Meghívás sikeres: %{email}"
 # dashboard
   today:  "Mai nap"
   lastweek: "Elmúlt hét"
@@ -381,3 +383,11 @@ hu:
     A SmartDiab csapata
 
   reset_password_email_subj: "SmartDiab jelszó visszaállítás"
+  doctor_invite_email_subj: "Orvos meghívó a SmartDiab-ra"
+  doctor_invite_email: |
+      A SmartDiab üdvözli Önt!
+
+      Csatlakzzon orvosként a SmartDiab-hoz, a jelszó beállításához kövesse a linket: %{url}.
+
+      Szép napot kívánunk!
+      A SmartDiab csapata

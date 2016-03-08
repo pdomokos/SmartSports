@@ -18,13 +18,11 @@
   </td>
 
   <td class="icons-more">
-    <button id="fav-icon" class="tableControl">
-      <i class="fa fa-star fa-2x is-favorite"></i>
-      <input type="hidden" name="diet[favourite]" value="false">
-    </button>
 
-    <button class="tableControl">
-      <i class="fa fa-trash-o fa-2x"></i>
-    </button>
+      <i class="fa fa-star fa-lg is-favorite"></i>
+
+    <%= link_to user_path(doctor_item), method: :delete, remote: true, class: "resourceIcon", data: {confirm: "Are you sure?"} do %>
+      <i class="fa fa-trash-o fa-lg"></i>
+    <% end %>
   </td>
 </tr>
