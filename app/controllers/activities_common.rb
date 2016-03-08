@@ -20,8 +20,8 @@ module ActivitiesCommon
       end
     end
 
-    if user.profile && user.profile.dateofbirth && user.profile.weight && user.profile.height && actType.kcal && @activity.duration
-      ages = Time.now.year - user.profile.dateofbirth
+    if user.profile && user.profile.year_of_birth && user.profile.weight && user.profile.height && actType.kcal && @activity.duration
+      ages = Time.now.year - user.profile.year_of_birth
 
       durationInHour = @activity.duration/60.0
       if user.profile.sex == "female"
@@ -34,7 +34,7 @@ module ActivitiesCommon
     # respond_to do |format|
     if @activity.save
       cal_message = ""
-      if !(user.profile.height && user.profile.weight && user.profile.dateofbirth && user.profile.sex)
+      if !(user.profile.height && user.profile.weight && user.profile.year_of_birth && user.profile.sex)
         cal_message = (I18n.t :cal_message)
       end
       send_success_json(@activity.id, {activity_name: @activity.activity, cal_message: cal_message})

@@ -335,12 +335,12 @@ ActiveRecord::Schema.define(version: 20160305090239) do
     t.float    "weight"
     t.float    "height"
     t.string   "sex"
-    t.integer  "dateofbirth"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "smoke",        default: false
-    t.boolean  "insulin",      default: false
+    t.boolean  "smoke",         default: false
+    t.boolean  "insulin",       default: false
     t.string   "default_lang"
+    t.integer  "year_of_birth"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", unique: true
