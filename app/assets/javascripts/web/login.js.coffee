@@ -152,11 +152,13 @@
   popup_messages = JSON.parse($("#popup-messages").val())
   $("#forgotten_email_field").focus()
 
-  $(window).load ->
-    $("#infoPopup").one( "click", ".infoButton", () ->
-      lang = $("#lang")[0].value
-      document.location = urlPrefix()+lang+"/pages/signin"
-    )
+
+  $("#infoPopup").one( "click", ".infoButton", () ->
+    console.log document.location.href
+    lang = document.location.pathname.split("/")[1]
+    url = urlPrefix()+lang+"/pages/signin"
+    document.location = url
+  )
   $("#pwResetForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
@@ -172,21 +174,23 @@
 @resetpw_page_loaded = () ->
   console.log "resetpw page loaded"
 
-  $(window).load ->
-    $("#infoPopup").one( "click", ".infoButton", () ->
-      lang = $("#lang")[0].value
+  $("#infoPopup").one( "click", ".infoButton", () ->
+      lang = document.location.pathname.split("/")[1]
       document.location = urlPrefix()+lang+"/pages/signin"
-    )
+  )
   $("#pwChangeForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
-    console.log data.locale
+    console.log xhr.responseJSON
     if data.ok
        popup_success(xhr.responseJSON["msg"])
     else
       console.log xhr.responseJSON
       popup_error(xhr.responseJSON["msg"])
   ).on("ajax:error", (e, data, status, xhr) ->
-    popup_error(xhr.responseJSON["msg"])
+    console.log xhr.responseJSON
+
+    errorMessage = (xhr.responseJSON && xhr.responseJSON["msg"]) || "Invalid pasword reset"
+    popup_error(errorMessage)
     #popup_error(popup_messages.password_reset_failed)
   )

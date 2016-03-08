@@ -16,6 +16,7 @@
     <input id="user-lang" value="<%=I18n.locale%>" type="hidden" />
     <input id="db-version" value="<%=SmartSports::DBVERSION%>" type="hidden" />
     <input id="amount_values" value="<%=t :amount_values%>" type="hidden" />
+    <%= render partial: 'shared/popups' %>
     <%= yield :background_style %>
     <%= yield :menu %>
 
@@ -63,17 +64,12 @@
         </div>
     </div>
 
-
     <div style="margin-left: 220px; margin-top: 60px;margin-right: 80px;">
         <div style="margin-left: 40px;margin-top: 80px;">
             <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
             <%= yield %>
-
         </div>
     </div>
-
-    <%= render partial: 'shared/popups' %>
-
 
 </body>
 </html>

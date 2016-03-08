@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    if params.fetch("user", {}).fetch("doctor", "")
+    if params.fetch("user", {}).fetch("doctor", false)
       if current_user.nil? || !current_user.admin?
         send_error_json("", "Unauthorized", 403)
         return

@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     @email = mail_job.email
     logger.info("UserMailer.reset_password_email to: #{@email}, loc:#{loc}")
 
-    @url  = edit_password_reset_url(id: mail_job.mail_params[:reset_password_token], locale: loc)
+    @url  = mail_job.mail_params[:reset_url]
     I18n.with_locale(loc.to_sym) do
       subj = I18n.t :reset_password_email_subj
       mail(:to => @email, :subject => subj)
