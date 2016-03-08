@@ -152,12 +152,16 @@
   popup_messages = JSON.parse($("#popup-messages").val())
   $("#forgotten_email_field").focus()
 
+  $(window).load ->
+    $("#infoPopup").one( "click", ".infoButton", () ->
+      lang = $("#lang")[0].value
+      document.location = urlPrefix()+lang+"/pages/signin"
+    )
   $("#pwResetForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     if data.ok
       popup_success(popup_messages.passwd_reset_success)
-      document.location = urlPrefix()+data.locale+"/pages/signin"
     else
       popup_error(popup_messages.password_reset_failed)
   ).on("ajax:error", (e, data, status, error) ->
@@ -168,13 +172,17 @@
 @resetpw_page_loaded = () ->
   console.log "resetpw page loaded"
 
+  $(window).load ->
+    $("#infoPopup").one( "click", ".infoButton", () ->
+      lang = $("#lang")[0].value
+      document.location = urlPrefix()+lang+"/pages/signin"
+    )
   $("#pwChangeForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
     console.log data.locale
     if data.ok
        popup_success(xhr.responseJSON["msg"])
-       document.location = urlPrefix()+data.locale+"/pages/signin"
     else
       console.log xhr.responseJSON
       popup_error(xhr.responseJSON["msg"])

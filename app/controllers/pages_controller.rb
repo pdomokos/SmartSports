@@ -111,9 +111,7 @@ class PagesController < ApplicationController
   end
 
   def genetics
-    @relativeList = JSON.dump(FamilyHistory.relativeList)
-    @diseaseList = JSON.dump(FamilyHistory.diseaseList)
-    @family_histories = current_user.family_histories.order(created_at: :desc).limit(4)
+    @genetics = current_user.genetics.order(created_at: :desc).limit(4)
     save_click_record(:success, nil, nil)
   end
 

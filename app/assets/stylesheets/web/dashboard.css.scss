@@ -264,15 +264,16 @@ button.dataFormField {
 .geneticsStyle button {
   background: #2BC7EC !important;
 }
-.geneticsStyle div.dataFormContainer {
+.geneticsStyle.dataFormContainer {
   width: 320px;
   //height: 350px;
 }
-.geneticsStyle div.dataFormSeparator {
-  height:325px !important;
+.geneticsStyle.dataFormSeparator {
+  height:430px !important;
 }
 .geneticsStyle .dataForm {
   height: 195px;
+  width: 300px;
 }
 
 .c7, .labresultColor {
@@ -1041,6 +1042,10 @@ div.egfr {
 
 .drinkType {
   background-image: image-url("type/img_drink.png");
+}
+
+.smokeType {
+  background-image: image-url("type/img_smoke.png");
 }
 
 .weightType {
