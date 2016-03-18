@@ -76,7 +76,10 @@
   $(document).on("click.exerciseShow", "#exercise-show-table", (evt) ->
     console.log "datatable clicked"
     current_user = $("#current-user-id")[0].value
-    url = 'users/' + current_user + '/activities.json'
+    lang = $("#user-lang")[0].value
+    header = $("#header_values").val().split(" ")
+    url = 'users/' + current_user + '/activities.json'+'?lang='+lang
+    console.log url
     $.ajax urlPrefix()+url,
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
@@ -87,18 +90,43 @@
         ).filter( (v) ->
           return(v!=null)
         )
+        if lang == 'hu'
+          plugin = {
+            sEmptyTable: "Nincs rendelkezésre álló adat",
+            sInfo: "Találatok: _START_ - _END_ Összesen: _TOTAL_",
+            sInfoEmpty: "Nulla találat",
+            sInfoFiltered: "(_MAX_ összes rekord közül szűrve)",
+            sInfoPostFix: "",
+            sInfoThousands: " ",
+            sLengthMenu: "_MENU_ találat oldalanként",
+            sLoadingRecords: "Betöltés...",
+            sProcessing: "Feldolgozás...",
+            sSearch: "Keresés:",
+            sZeroRecords: "Nincs a keresésnek megfelelő találat",
+            oPaginate: {
+              sFirst: "Első",
+              sPrevious: "Előző",
+              sNext: "Következő",
+              sLast: "Utolsó"
+            },
+            oAria: {
+              sSortAscending: ": aktiválja a növekvő rendezéshez",
+              sSortDescending: ": aktiválja a csökkenő rendezéshez"
+            }
+          }
         $("#exercise-data-container").html("<table id=\"exercise-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
         $("#exercise-data").dataTable({
           "data": tblData,
           "columns": [
-            {"title": "id"},
-            {"title": "date"},
-            {"title": "name"},
-            {"title": "intensity"},
-            {"title": "duration"}
+            {"title": header[0]},
+            {"title": header[1]},
+            {"title": header[2]},
+            {"title": header[3]},
+            {"title": header[4]}
           ],
-          "order": [[1, "desc"]],
-          "lengthMenu": [10]
+          "order": [[0, "desc"]],
+          "lengthMenu": [10],
+          "language": plugin
         })
         location.href = "#openModalEx"
   )
@@ -106,7 +134,8 @@
   $(document).unbind("click.downloadExercise")
   $(document).on("click.downloadExercise", "#download-exercise-data", (evt) ->
     current_user = $("#current-user-id")[0].value
-    url = '/users/' + current_user + '/activities.csv?order=desc'
+    lang = $("#user-lang")[0].value
+    url = '/users/' + current_user + '/activities.csv?order=desc&lang='+lang
     location.href = url
   )
 
@@ -117,9 +146,10 @@
   )
 
 @get_exercise_table_row = (item ) ->
-  if item.activity==null || !item.intensity || !item.duration
+  if item.activity==null
     return null
-  return ([item.id, moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.activity, item.intensity, item.duration])
+  intensities = $("#intensity_values").val().split(" ")
+  return ([moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.activity, intensities[Math.round(item.intensity)], item.duration, Math.round(item.calories * 100) / 100])
 
 @initActivity = (selector) ->
   console.log "initActivity called, selector="+selector

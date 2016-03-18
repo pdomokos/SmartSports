@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     #get 'password_resets/create'
     #get 'password_resets/edit'
     #get 'password_resets/update'
-    #put '/password_resets/:id/edit' => 'password_resets#update'
+    put '/password_resets/:id/edit' => 'password_resets#update'
     resources :password_resets
 
     get 'pages/main'

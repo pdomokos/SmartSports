@@ -93,6 +93,7 @@
 @signup_loaded = () ->
   console.log "signup loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
+  $('[data-toggle="tooltip"]').tooltip();
   $('#username_field').focus()
   $("#signupForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
@@ -135,13 +136,10 @@
 
   $("#infoPopup").one( "click", ".infoButton", () ->
     console.log document.location.href
-    path = document.location.pathname.split("/")
-    if path.length == 4
-      lang = path[1]
-    else if path.size() == 5
-      lang = path[2]
+    if document.location.pathname.indexOf("en") > -1
+      lang = "en"
     else
-      lang = 'hu'
+      lang = "hu"
     document.location = urlPrefix()+lang+"/pages/signin"
   )
   $("#pwResetForm").on("ajax:success", (e, data, status, error) ->
@@ -160,13 +158,10 @@
   console.log "resetpw page loaded"
 
   $("#infoPopup").one( "click", ".infoButton", () ->
-    path = document.location.pathname.split("/")
-    if path.length == 4
-      lang = path[1]
-    else if path.size() == 5
-      lang = path[2]
+    if document.location.pathname.indexOf("en") > -1
+      lang = "en"
     else
-      lang = 'hu'
+      lang = "hu"
     document.location = urlPrefix()+lang+"/pages/signin"
   )
   $("#pwChangeForm").on("ajax:success", (e, data, status, xhr) ->

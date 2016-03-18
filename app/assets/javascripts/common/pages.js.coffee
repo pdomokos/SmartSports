@@ -9,6 +9,7 @@
       }
     }
   )
+  $('[data-toggle="tooltip"]').tooltip();
 
 @pages_menu = () ->
   self = this
