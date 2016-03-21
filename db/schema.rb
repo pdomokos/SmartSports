@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309115201) do
+ActiveRecord::Schema.define(version: 20160321121447) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -116,11 +116,12 @@ ActiveRecord::Schema.define(version: 20160309115201) do
     t.float    "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "favourite",    default: false
+    t.boolean  "favourite",      default: false
     t.float    "fat"
     t.float    "prot"
     t.string   "category"
     t.integer  "food_type_id"
+    t.string   "food_type_name"
   end
 
   create_table "food_types", force: true do |t|

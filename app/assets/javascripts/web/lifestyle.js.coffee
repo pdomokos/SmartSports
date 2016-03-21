@@ -3,7 +3,7 @@
   @popup_messages = JSON.parse($("#popup-messages").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
-  $("#wellbeing-link").css
+  $("#lifestyle-link").css
     background: "rgba(232, 115, 180, 0.3)"
 
   loadIllnessTypes( () ->
