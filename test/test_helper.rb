@@ -18,9 +18,20 @@ class ActiveSupport::TestCase
   include Sorcery::TestHelpers::Rails::Controller
 end
 
+DatabaseCleaner.strategy = :transaction
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
+  setup do
+    DatabaseCleaner.start
+  end
+
+  teardown do
+    DatabaseCleaner.clean
+    Capybara.reset_sessions!
+  end
+
 end
 
 ActionDispatch::IntegrationTest.extend Minitest::Spec::DSL

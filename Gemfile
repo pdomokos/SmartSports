@@ -82,6 +82,7 @@ group :test do
   gem 'capybara'
   gem 'capybara_minitest_spec'
   gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 gem 'grocer'

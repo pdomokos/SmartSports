@@ -10,18 +10,54 @@ class LoginTest < ActionDispatch::IntegrationTest
 
   test 'successful login should take to dashboard page' do
     visit '/'
-    fill_in 'email', :with => 'balint@abc.de'
-    fill_in 'password', :with => 'testpw'
+    within('body') do
+      fill_in 'email', :with => 'balint@abc.de'
+      fill_in 'password', :with => 'testpw'
+    end
+
     click_button 'Login'
     page.must_have_content('SmartDiab - intelligent diabetes management')
   end
 
   test 'failed login should show error popup' do
     visit '/'
-    fill_in 'email', :with => 'balint@abc.de'
-    fill_in 'password', :with => 'wrongpw'
+
+    within('body') do
+      popup = find("#errorPopup", :visible=>false)
+      assert !popup.visible?
+
+      fill_in 'email', :with => 'balint@abc.de'
+      fill_in 'password', :with => 'wrongpw'
+    end
+
     click_button 'Login'
-    assert find("div#errorPopup['class']").indexOf('hidden')===-1
+
+    within('body') do
+      popup = find("#errorPopup")
+      assert popup.visible?
+    end
+  end
+
+
+  test 'can enter blood glucose after successful login' do
+    visit '/'
+    within('body') do
+      fill_in 'email', :with => 'balint@abc.de'
+      fill_in 'password', :with => 'testpw'
+    end
+
+    click_button 'Login'
+    page.must_have_content('SmartDiab - intelligent diabetes management')
+
+    click_link 'health-link'
+    within('#health_2') do
+      fill_in 'measurement[blood_sugar]', :with => '5.7'
+      click_button 'Add'
+    end
+
+    within('#recentMeasTable') do
+      page.must_have_content('Blood Glucose: 5.7 mmol/L')
+    end
   end
 
 end
