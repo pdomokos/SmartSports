@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       resources :medication_types
       resources :food_types
       resources :activity_types
-      resources :illness_types
+      resources :lifestyle_types
       resources :genetics_types
       resources :labresult_types
       get 'profile' => 'profile#show'
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   resources :medication_types
   resources :food_types
   resources :activity_types
-  resources :illness_types
+  resources :lifestyle_types
   resources :genetics_types
   resources :labresult_types
   resources :click_records

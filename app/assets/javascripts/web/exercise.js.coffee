@@ -68,8 +68,8 @@
     data = JSON.parse(e.currentTarget.querySelector("input").value)
     if data.activity_category=="sport"
       load_activity_exercise(".formElement.activity_exercise_elem", data)
-    else
-      load_activity_regular(".formElement.activity_regular_elem", data)
+#    else
+#      load_activity_regular(".formElement.activity_regular_elem", data)
   )
 
   $(document).unbind("click.exerciseShow")
@@ -224,30 +224,30 @@
   }).focus ->
     $(this).autocomplete("search")
 
-  otherActivitySelected = null
-  $(".activity_regular_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      for element in getStored("sd_other_activities")
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".activity_regular_type_id").val(ui.item.id)
-      $(".activity_regular_scale" ).slider({
-        value: "1"
-      })
-      $(".activity_regular_percent").text(intensities[1])
-    create: (event, ui) ->
-      $(".activity_regular_name").removeAttr("disabled")
-    change: (event, ui) ->
-      otherActivitySelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+#  otherActivitySelected = null
+#  $(".activity_regular_name").autocomplete({
+#    minLength: 0,
+#    source: (request, response) ->
+#      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
+#      result = []
+#      cnt = 0
+#      for element in getStored("sd_other_activities")
+#        if matcher.test(remove_accents(element.label))
+#          result.push(element)
+#          cnt += 1
+#      response(result)
+#    select: (event, ui) ->
+#      $(".activity_regular_type_id").val(ui.item.id)
+#      $(".activity_regular_scale" ).slider({
+#        value: "1"
+#      })
+#      $(".activity_regular_percent").text(intensities[1])
+#    create: (event, ui) ->
+#      $(".activity_regular_name").removeAttr("disabled")
+#    change: (event, ui) ->
+#      otherActivitySelected = ui['item']
+#  }).focus ->
+#    $(this).autocomplete("search")
 
 
 @loadExerciseHistory = () ->
@@ -297,19 +297,19 @@
         console.log "load activity_types  Successful AJAX call"
 
         setStored('sd_activities_hu', data.filter( (d) ->
-          d['category'] == 'sport' && d['lang'] == 'hu'
+          d['category'] == 'sport'
         ).map( (d) ->
           {
-          label: d['name'],
-          id: d['id']
+          label: d['hu'],
+          id: d['name']
           }))
 
         setStored('sd_activities_en', data.filter( (d) ->
-          d['category'] == 'sport' && d['lang'] == 'en'
+          d['category'] == 'sport'
         ).map( (d) ->
           {
-          label: d['name'],
-          id: d['id']
+          label: d['en'],
+          id: d['name']
           }))
 
         setStored('db_version', db_version)
@@ -327,7 +327,7 @@
   console.log(data)
   activity = data['activity']
   $(sel+" input[name='activity[activity]']").val(activity.activity)
-  $(sel+" input[name='activity[activity_type_id]']").val(activity.activity_type_id)
+  $(sel+" input[name='activity[activity_type_name]']").val(activity.activity_type_name)
   $(sel+" input[name='activity[intensity]']").val(activity.intensity)
   $(sel+" .activity_exercise_percent").html(@intensities[activity.intensity])
   $(sel+" .activity_exercise_scale").slider({value: activity.intensity})
@@ -335,24 +335,24 @@
   curr = moment()
   f = curr.format(moment_fmt)
   t = curr.add(diff).format(moment_fmt)
-  $(sel+" input[name='activity[start_time]']").val(f)
-  $(sel+" input[name='activity[end_time]']").val(t)
+  $(sel+" input[name='activity[start_time]']").val(t)
+  $(sel+" input[name='activity[end_time]']").val(f)
 
-@load_activity_regular= (sel, data) ->
-  if !sel
-    sel=""
-  console.log('load regular, sel='+sel)
-  activity = data['activity']
-  console.log(data)
-  console.log(activity)
-  $(sel+" input[name='activity[activity]']").val(activity.activity)
-  $(sel+" input[name='activity[activity_type_id]']").val(activity.activity_type_id)
-  $(sel+" input[name='activity[intensity]']").val(activity.intensity)
-  $(sel+" .activity_regular_percent").html(@intensities[activity.intensity])
-  $(sel+" .activity_regular_scale").slider({value: activity.intensity})
-  diff = moment(activity.start_time).diff(moment(activity.end_time))
-  curr = moment()
-  f = curr.format(moment_fmt)
-  t = curr.add(diff).format(moment_fmt)
-  $(sel+" input[name='activity[start_time]']").val(f)
-  $(sel+" input[name='activity[end_time]']").val(t)
+#@load_activity_regular= (sel, data) ->
+#  if !sel
+#    sel=""
+#  console.log('load regular, sel='+sel)
+#  activity = data['activity']
+#  console.log(data)
+#  console.log(activity)
+#  $(sel+" input[name='activity[activity]']").val(activity.activity)
+#  $(sel+" input[name='activity[activity_type_id]']").val(activity.activity_type_id)
+#  $(sel+" input[name='activity[intensity]']").val(activity.intensity)
+#  $(sel+" .activity_regular_percent").html(@intensities[activity.intensity])
+#  $(sel+" .activity_regular_scale").slider({value: activity.intensity})
+#  diff = moment(activity.start_time).diff(moment(activity.end_time))
+#  curr = moment()
+#  f = curr.format(moment_fmt)
+#  t = curr.add(diff).format(moment_fmt)
+#  $(sel+" input[name='activity[start_time]']").val(f)
+#  $(sel+" input[name='activity[end_time]']").val(t)

@@ -36,7 +36,6 @@ namespace :smartdiab do
     Rake::Task['smartdiab:init_activity'].execute
     Rake::Task['smartdiab:init_food'].execute
     Rake::Task['smartdiab:init_genetics'].execute
-    Rake::Task['smartdiab:init_illness'].execute
     Rake::Task['smartdiab:init_labresult'].execute
     Rake::Task['smartdiab:init_lifestyle'].execute
     if InitVersion.all.size == 1
@@ -114,21 +113,6 @@ namespace :smartdiab do
     csv = CSV.read(csv_text, headers: true, col_sep: ";")
     csv.each do |row|
       LifestyleType.create!(row.to_hash)
-    end
-  end
-
-  task init_illness: :environment do
-    if IllnessType.all.size != 0
-      IllnessType.all.delete_all
-    end
-
-    dirName = File.dirname(__FILE__)
-    csv_text = dirName + "/init_illness.csv"
-    csv = CSV.read(csv_text, headers: true, col_sep: ";")
-
-    csv.each do |row|
-      ft = IllnessType.new(:id => row['id'], :name =>  row['name'])
-      ft.save!
     end
   end
 
