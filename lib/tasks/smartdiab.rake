@@ -2,35 +2,6 @@ require 'json'
 require 'csv'
 
 namespace :smartdiab do
-  "Load default medications"
-  task init_medication: :environment do
-    if MedicationType.all.size != 0
-      MedicationType.all.delete_all
-    end
-
-    insulin = Regexp.new(/insulin/)
-    injection = Regexp.new(/injekc/)
-
-    File.open("#{ENV['HOME']}/Downloads/medications.json") do |f|
-      medlist = JSON.load(f)
-
-      #print medlist.first.as_json.pretty_inspect
-      medlist.each do |m|
-
-        grp = "oral"
-        if insulin === m['substance']
-          grp = "insulin"
-        else
-          if injection === m['name'] or m['name'].start_with?('[')
-            next
-          end
-        end
-
-        mt = MedicationType.new(:name =>  m['name'], :group => grp)
-        mt.save!
-      end
-    end
-  end
 
   task init_db: :environment do
     Rake::Task['smartdiab:init_activity'].execute
@@ -45,6 +16,19 @@ namespace :smartdiab do
       InitVersion.all.delete_all
       v = InitVersion.new(:id => 1, :version_number =>  1)
       v.save!
+    end
+  end
+
+  task init_medication: :environment do
+    if MedicationType.all.size != 0
+      MedicationType.all.delete_all
+    end
+
+    dirName = File.dirname(__FILE__)
+    csv_text = dirName + "/init_medication.csv"
+    csv = CSV.read(csv_text, headers: true, col_sep: ",")
+    csv.each do |row|
+      MedicationType.create!(row.to_hash)
     end
   end
 
@@ -116,6 +100,50 @@ namespace :smartdiab do
     end
   end
 
+    # task init_medication: :environment do
+    #   if MedicationType.all.size != 0
+    #     MedicationType.all.delete_all
+    #   end
+    #
+    #   insulin = Regexp.new(/insulin/)
+    #   injection = Regexp.new(/injekc/)
+    #
+    #   File.open("#{ENV['HOME']}/Downloads/medications.json") do |f|
+    #     medlist = JSON.load(f)
+    #
+    #     #print medlist.first.as_json.pretty_inspect
+    #     medlist.each do |m|
+    #
+    #       grp = "oral"
+    #       if insulin === m['substance']
+    #         grp = "insulin"
+    #       else
+    #         if injection === m['name'] or m['name'].start_with?('[')
+    #           next
+    #         end
+    #       end
+    #
+    #       mt = MedicationType.new(:name =>  m['name'], :group => grp)
+    #       mt.save!
+    #     end
+    #   end
+    # end
+  # task export_medicines: :environment do
+  #   k = ["id", "name", "en", "group"]
+  #   CSV.open("#{ENV['HOME']}/Downloads/medication_types_exported.csv", 'w') do |csv|
+  #     csv << k
+  #     prev = nil
+  #     MedicationType.all.each do |ft|
+  #       row = ft.as_json
+  #       cmp = row.clone
+  #       if cmp!=prev
+  #         prev=cmp
+  #         csv << k.map{|it| row[it]}
+  #       end
+  #     end
+  #   end
+  # end
+  #
   # task load_foods_csv: :environment do
   #   if FoodType.all.size != 0
   #     FoodType.all.each {|mt|
