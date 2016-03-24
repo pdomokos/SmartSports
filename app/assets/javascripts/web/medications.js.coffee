@@ -178,7 +178,7 @@
             id: d['name']
         }))
         setStored("sd_pills_en", data.filter( (d) ->
-          d['category'] == 'oral_en'
+          d['category'] == 'drugs_en'
         ).map( (d) ->
           {
           label: d['en'],
