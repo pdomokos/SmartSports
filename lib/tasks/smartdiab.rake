@@ -28,7 +28,9 @@ namespace :smartdiab do
     csv_text = dirName + "/init_medication.csv"
     csv = CSV.read(csv_text, headers: true, col_sep: ",")
     csv.each do |row|
-      MedicationType.create!(row.to_hash)
+      if row['name'].size < 255
+        MedicationType.create!(row.to_hash)
+      end
     end
   end
 
