@@ -199,7 +199,7 @@
     labresultkey = 'sd_labresult_'+user_lang
   else
     labresultkey = 'sd_labresult_hu'
-  if !getStored(labresultkey) || testDbVer(db_version,['sd_labresult_hu','sd_labresult_en'])
+  if getStored(labresultkey)==undefined || getStored(labresultkey).length==0 || testDbVer(db_version,['sd_labresult_hu','sd_labresult_en'])
     ret = $.ajax '/labresult_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->

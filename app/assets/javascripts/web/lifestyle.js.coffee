@@ -310,7 +310,7 @@
   else
     painkey = 'sd_pains_hu'
     illnesskey = 'sd_illness_hu'
-  if !getStored(illnesskey) || testDbVer(db_version,['sd_illness_hu','sd_illness_en','sd_pains_hu','sd_pains_en'])
+  if getStored(illnesskey)==undefined || getStored(illnesskey).length==0 || testDbVer(db_version,['sd_illness_hu','sd_illness_en','sd_pains_hu','sd_pains_en'])
     ret = $.ajax urlPrefix()+'lifestyle_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->

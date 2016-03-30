@@ -288,7 +288,7 @@
   else
     activity_key = 'sd_activities_hu'
 
-  if !getStored(activity_key) || testDbVer(db_version,['sd_activities_hu','sd_activities_en'])
+  if getStored(activity_key)==undefined || getStored(activity_key).length==0 || testDbVer(db_version,['sd_activities_hu','sd_activities_en'])
     ret = $.ajax urlPrefix()+'activity_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->

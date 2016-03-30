@@ -161,7 +161,7 @@
   else
     pillkey = 'sd_pills_hu'
 
-  if !getStored(pillkey) || testDbVer(db_version,['sd_pills_hu', 'sd_pills_en', 'sd_insulin_hu', 'sd_insulin_en'])
+  if getStored(pillkey)==undefined || getStored(pillkey).length==0 || testDbVer(db_version,['sd_pills_hu', 'sd_pills_en', 'sd_insulin_hu', 'sd_insulin_en'])
     console.log "calling load medication types"
     ret = $.ajax urlPrefix()+'medication_types.json',
       type: 'GET',
