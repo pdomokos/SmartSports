@@ -134,9 +134,14 @@
   })
   $(selector+".stress_amount").val(1)
 
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
+
   $(selector+'.stress_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -156,7 +161,8 @@
 
   $(selector+'.illness_start_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -164,7 +170,8 @@
 
   $(selector+'.illness_end_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -215,7 +222,8 @@
 
   $(selector+'.period_start_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -223,7 +231,8 @@
 
   $(selector+'.period_end_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
