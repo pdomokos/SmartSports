@@ -22,9 +22,8 @@ class ActivitiesController < ApplicationController
     end
     if order and order=="desc"
       @activities = @activities.order(start_time: :desc)
-    else
-      @activities = @activities.order(start_time: :asc)
     end
+
     if limit and limit.to_i>0
       @activities = @activities.limit(limit)
     end
@@ -45,20 +44,6 @@ class ActivitiesController < ApplicationController
       @activities = @activities.where(favourite: true)
     end
 
-    for a in @activities
-      if a.activity_type
-        if lang
-          if lang == "hu"
-            a.activity = DB_HU_CONFIG['activities'][a.activity_type.name]
-          elsif lang == "en"
-            a.activity = DB_EN_CONFIG['activities'][a.activity_type.name]
-          end
-        else
-         a.activity = a.activity_type.name
-        end
-      end
-    end
-
     respond_to do |format|
       format.html
       format.json
@@ -70,17 +55,6 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
-  end
-
-  # GET /activities/new
-  def new
-    @activity = Activity.new
-    @user = current_user
-  end
-
-  # GET /activities/1/edit
-  def edit
-    @user = current_user
   end
 
 end

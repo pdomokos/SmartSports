@@ -3,7 +3,7 @@
 one:
   user_id: 1
   source: MyString
-  activity: MyString
+  activity_type_id: 1
   group: MyString
   game_id: 1
   start_time: 2015-01-14 15:33:38
@@ -13,19 +13,18 @@ one:
   distance: 1.5
   calories: 1.5
   manual: false
-  activity_type_id: 1
 
 two:
   user_id: 1
   source: MyString
-  activity: MyString
+  activity_type_id: 2
   group: MyString
   game_id: 1
-  start_time: 2015-01-14 15:33:38
+  start_time: 2015-01-14 14:33:38
   end_time: 2015-01-14 15:33:38
   steps: 1
   duration: 1
   distance: 1.5
   calories: 1.5
   manual: false
-  activity_type_id: 1
+

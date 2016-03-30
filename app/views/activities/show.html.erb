@@ -12,7 +12,7 @@
 
 <p>
   <strong>Activity:</strong>
-  <%= @activity.activity %>
+  <%= @activity.activity_type.try(:name) %>
 </p>
 
 <p>

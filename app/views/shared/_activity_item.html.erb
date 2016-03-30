@@ -36,7 +36,6 @@
 
   </td>
 
-
   <td class="iconColumn">
     <%= form_tag(root_path+"users/#{current_user.id}/activities/#{activity_item.id}", id: "mod_act_#{activity_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
         <button id="fav-icon" class="tableControl">

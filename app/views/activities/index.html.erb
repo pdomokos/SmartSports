@@ -3,7 +3,7 @@
     <tr>
       <th>User name</th>
       <th>Source</th>
-      <th>Activity</th>
+      <th>Name</th>
       <th>Group</th>
       <th>Game</th>
       <th>Start time</th>
@@ -22,7 +22,7 @@
       <tr>
         <td><%= activity.user.name %></td>
         <td><%= activity.source %></td>
-        <td><%= activity.activity %></td>
+        <td><%= activity.activity_type.try(:name) %></td>
         <td><%= activity.group %></td>
         <td><%= activity.game_id %></td>
         <td><%= activity.start_time %></td>

@@ -3,3 +3,9 @@ one:
   name: test activity
   kcal: 20.0
   category: sport
+
+two:
+  id: 2
+  name: test2
+  kcal: 40.0
+  category: sport

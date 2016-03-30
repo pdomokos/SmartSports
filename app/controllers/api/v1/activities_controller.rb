@@ -5,20 +5,23 @@ module Api::V1
     include ActivitiesCommon
 
     def index
-      lim = 10
-      if params[:limit]
-        lim = params[:limit].to_i
-      end
       user_id = params[:user_id]
-
       if current_resource_owner.id != user_id.to_i
         render json: nil, status: 403
         return
       end
 
       user = User.find(user_id)
-      activities = user.activities.where(source: @default_source).order(created_at: :desc).limit(lim)
-      render json: activities
+      @activities = user.activities
+      if params[:source]
+        @activities = @activities.where(source: params[:source])
+      end
+      @activities = @activities.order(start_time: :desc)
+      if params[:limit]
+        @activities = @activities.limit(params[:limit].to_i)
+      end
+
+      render :template => "/activities/index.json"
     end
 
   end

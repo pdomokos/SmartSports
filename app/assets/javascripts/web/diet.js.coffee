@@ -60,8 +60,6 @@
     $('#diet_drink_type_id').val(null)
     $('.diet_smoke_type').val(null)
     console.log xhr.responseText
-    color = $("#addFoodButton").css("background")
-#    popup_error(popup_messages.failed_to_add_data)
     resp = JSON.parse(xhr.responseText)
     popup_error(resp.msg)
   )

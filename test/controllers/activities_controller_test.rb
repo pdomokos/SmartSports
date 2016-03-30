@@ -14,16 +14,11 @@ class ActivitiesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:activities)
   end
 
-  test "should get new" do
-    get :new, user_id: @user
-    assert_response :success
-  end
-
   test "should create activity" do
 
     assert_difference('Activity.count') do
       post :create, user_id: @user.id, activity: {
-          activity: @activity.activity,
+          name: @act_type.name,
           calories: @activity.calories,
           distance: @activity.distance,
           duration: @activity.duration,
@@ -33,8 +28,7 @@ class ActivitiesControllerTest < ActionController::TestCase
           manual: @activity.manual,
           source: @activity.source,
           start_time: @activity.start_time,
-          steps: @activity.steps,
-          activity_type_id: @act_type.id
+          steps: @activity.steps
       }, format: :json
       json_result = JSON.parse(response.body)
       assert_equal json_result["ok"], true
@@ -47,14 +41,9 @@ class ActivitiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, user_id: @user, id: @activity
-    assert_response :success
-  end
-
   test "should update activity" do
     patch :update, user_id: @user.id, id: @activity.id, activity: {
-        activity: @activity.activity,
+        name: @act_type.name,
         calories: @activity.calories,
         distance: @activity.distance,
         duration: @activity.duration,
@@ -65,7 +54,6 @@ class ActivitiesControllerTest < ActionController::TestCase
         source: @activity.source,
         start_time: @activity.start_time,
         steps: @activity.steps,
-        activity_type_id: @act_type.id,
         favourite: true
     }, format: :json
     json_result = JSON.parse(response.body)

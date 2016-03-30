@@ -26,9 +26,10 @@
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+popup_messages.saved_successfully+' '+data['cal_message'], "exerciseStyle")
+    popup_success(get_label(data['name'])+popup_messages.saved_successfully+' '+data['cal_message'], "exerciseStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add+$(".activity_exercise_name").val()+' '+xhr.responseJSON.msg, "exerciseStyle")
+    console.log(xhr)
+    popup_error(popup_messages.failed_to_add+get_label(xhr.responseJSON.data)+' '+xhr.responseJSON.msg, "exerciseStyle")
   )
 
   $("#regular-activity-create-form").on("ajax:success", (e, data, status, xhr) ->
@@ -68,8 +69,6 @@
     data = JSON.parse(e.currentTarget.querySelector("input").value)
     if data.activity_category=="sport"
       load_activity_exercise(".formElement.activity_exercise_elem", data)
-#    else
-#      load_activity_regular(".formElement.activity_regular_elem", data)
   )
 
   $(document).unbind("click.exerciseShow")
@@ -210,7 +209,7 @@
           cnt += 1
       response(result)
     select: (event, ui) ->
-      $(".activity_exercise_type_id").val(ui.item.id)
+      $(".activity_exercise_name").val(ui.item.id)
       $(".activity_exercise_scale" ).slider({
         value: "1"
       })
@@ -223,32 +222,6 @@
       console.log ui['item']
   }).focus ->
     $(this).autocomplete("search")
-
-#  otherActivitySelected = null
-#  $(".activity_regular_name").autocomplete({
-#    minLength: 0,
-#    source: (request, response) ->
-#      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-#      result = []
-#      cnt = 0
-#      for element in getStored("sd_other_activities")
-#        if matcher.test(remove_accents(element.label))
-#          result.push(element)
-#          cnt += 1
-#      response(result)
-#    select: (event, ui) ->
-#      $(".activity_regular_type_id").val(ui.item.id)
-#      $(".activity_regular_scale" ).slider({
-#        value: "1"
-#      })
-#      $(".activity_regular_percent").text(intensities[1])
-#    create: (event, ui) ->
-#      $(".activity_regular_name").removeAttr("disabled")
-#    change: (event, ui) ->
-#      otherActivitySelected = ui['item']
-#  }).focus ->
-#    $(this).autocomplete("search")
-
 
 @loadExerciseHistory = () ->
   load_exercise()
@@ -274,6 +247,23 @@
       else
         $(".deleteExercise").removeClass("hidden")
       console.log "load recent activities  Successful AJAX call"
+
+@get_label = (key) ->
+  user_lang = $("#user-lang")[0].value
+  if user_lang
+    activity_key = 'sd_activities_'+user_lang
+  else
+    activity_key = 'sd_activities_hu'
+
+  if getStored(activity_key)==undefined || getStored(activity_key).length==0
+    return "Unknown"
+  value = getStored(activity_key).filter((d) ->
+    return d.id==key;
+  )
+  if value.length==0
+    value = "Unknown"
+  else
+    value = value[0].label
 
 @loadActivityTypes = (cb) ->
   self = this
@@ -337,22 +327,3 @@
   t = curr.add(diff).format(moment_fmt)
   $(sel+" input[name='activity[start_time]']").val(t)
   $(sel+" input[name='activity[end_time]']").val(f)
-
-#@load_activity_regular= (sel, data) ->
-#  if !sel
-#    sel=""
-#  console.log('load regular, sel='+sel)
-#  activity = data['activity']
-#  console.log(data)
-#  console.log(activity)
-#  $(sel+" input[name='activity[activity]']").val(activity.activity)
-#  $(sel+" input[name='activity[activity_type_id]']").val(activity.activity_type_id)
-#  $(sel+" input[name='activity[intensity]']").val(activity.intensity)
-#  $(sel+" .activity_regular_percent").html(@intensities[activity.intensity])
-#  $(sel+" .activity_regular_scale").slider({value: activity.intensity})
-#  diff = moment(activity.start_time).diff(moment(activity.end_time))
-#  curr = moment()
-#  f = curr.format(moment_fmt)
-#  t = curr.add(diff).format(moment_fmt)
-#  $(sel+" input[name='activity[start_time]']").val(f)
-#  $(sel+" input[name='activity[end_time]']").val(t)

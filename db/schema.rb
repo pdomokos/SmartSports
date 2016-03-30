@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323094828) do
+ActiveRecord::Schema.define(version: 20160330083455) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20160323094828) do
     t.boolean  "manual"
     t.string   "source"
     t.string   "group"
-    t.string   "activity"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "steps"
@@ -30,9 +29,8 @@ ActiveRecord::Schema.define(version: 20160323094828) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "intensity"
-    t.boolean  "favourite",          default: false
+    t.boolean  "favourite",        default: false
     t.integer  "activity_type_id"
-    t.string   "activity_type_name"
   end
 
   add_index "activities", ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at"
