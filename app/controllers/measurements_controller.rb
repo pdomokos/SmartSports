@@ -64,17 +64,17 @@ class MeasurementsController < ApplicationController
       result = []
       for day in days
         daily = daily_data[day]
-        temp = {"date" => day, "systolicbp"=>0, "diastolicbp"=>0, "pulse"=>0, "SPO2"=>0, "blood_sugar" => nil, "weight" => nil, "waist" => nil}
+        aggr = {"date" => day, "systolicbp"=>0, "diastolicbp"=>0, "pulse"=>0, "SPO2"=>0, "blood_sugar" => nil, "weight" => nil, "waist" => nil}
         for meas in ["systolicbp", "diastolicbp", "pulse", "SPO2", "blood_sugar", "weight", "waist"]
           values = daily.select { |d| !d[meas].nil?}.map { |d| d[meas] }
           num = values.length
           if num > 0
-            temp[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num)
+            aggr[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num)
           else
-            temp[meas] = nil
+            aggr[meas] = nil
           end
         end
-        result << temp
+        result << aggr
       end
 
       respond_to do |format|

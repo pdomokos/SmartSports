@@ -5,15 +5,15 @@ one:
   source: MyString
   date: 2014-10-27 16:37:26
   diastolicbp: 1
-  systolicbp: 1
-  pulse: 1
-  SPO2: 1
+  systolicbp: 3
+  pulse: 4
+  SPO2: 5
 
 two:
   user_id: 1
   source: MyString
-  date: 2014-10-27 16:37:26
-  diastolicbp: 1
-  systolicbp: 1
-  pulse: 1
-  SPO2: 1
+  date: 2014-10-27 15:37:26
+  diastolicbp: 5
+  systolicbp: 6
+  pulse: 7
+  SPO2: 8

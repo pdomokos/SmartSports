@@ -25,8 +25,9 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
   setup do
     DatabaseCleaner.start
+    I18n.locale = 'en'
   end
-
+  
   teardown do
     DatabaseCleaner.clean
     Capybara.reset_sessions!
