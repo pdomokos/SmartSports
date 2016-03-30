@@ -212,9 +212,13 @@
           self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Weekly timeline", {period: "weekly"})
           self.timeline.draw("div.timelineChart")
 
+          user_lang = $("#user-lang")[0].value
+          if !user_lang
+            user_lang='hu'
           $('#timeline_datepicker').datetimepicker({
             format: 'Y-m-d',
             timepicker: false,
+            lang: user_lang,
             onSelectDate: (ct, input) ->
               console.log("timeline date selected")
               self.timeline.update(moment(ct).format(moment_datefmt))

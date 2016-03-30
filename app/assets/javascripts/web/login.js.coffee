@@ -3,9 +3,14 @@
   popup_messages = JSON.parse($("#popup-messages").val())
   $('#lastname_field').focus()
 
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
+
   $('#profile_datepicker').datetimepicker({
     format: 'Y',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
   })

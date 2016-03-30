@@ -6,9 +6,13 @@
 
   popup_messages = JSON.parse($("#popup-messages").val())
 
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
   $('#profile_birth_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
+    lang: user_lang,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true,

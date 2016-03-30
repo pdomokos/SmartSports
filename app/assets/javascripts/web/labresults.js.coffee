@@ -156,30 +156,38 @@
   }).focus ->
     $(this).autocomplete("search")
 
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
+
   $('.hba1c_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
   $('.ldl_chol_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
   $('.egfr_epi_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
   })
   $('.ketone_datepicker').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true

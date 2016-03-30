@@ -63,9 +63,13 @@
   }).focus ->
     $(this).autocomplete("search")
 
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
   $('input[name=startA]').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
       self.updateHighlight()
@@ -73,7 +77,8 @@
   })
   $('input[name=endA]').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
       self.updateHighlight()
@@ -81,7 +86,8 @@
   })
   $('input[name=startB]').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
       self.updateHighlight()
@@ -89,7 +95,8 @@
   })
   $('input[name=endB]').datetimepicker({
     format: 'Y-m-d',
-    timepicker: false
+    timepicker: false,
+    lang: user_lang
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
       self.updateHighlight()
