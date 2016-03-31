@@ -3,17 +3,37 @@ module MedicationsCommon
   # POST /users/[user_id]/medications
   # POST /users/[user_id]/medications.json
   def create
-    user_id = params[:user_id]
-    user = User.find(user_id)
-    name = params['medication']['name']
-    params[:medication].delete :name
-    mt = MedicationType.find_by_name(name)
+    @user_id = params[:user_id]
 
-    medication = user.medications.build(medication_params)
-    medication.medication_type = mt
+    par = medication_params
+    par.merge!(:user_id => @user_id)
+
+    medication = Medication.new(par)
+    if params[:medication][:medication_type_id] == nil || params[:medication][:medication_type_id] == ""
+      cust = CustomMedicationType.new
+      if params[:elementName] == "medication_insulin"
+        cust.category = "custom_insulin"
+      elsif params[:elementName] == "medication_drugs"
+        cust.category = "custom_drug"
+      else
+        cust.category = "custom"
+      end
+      cust.name = params[:medication][:custom_medication_type_name]
+      uniqId = SecureRandom.urlsafe_base64(16)
+      cust.key = uniqId
+      cust.medication = medication
+      medication.custom_medication_type = cust
+      medication.custom_medication_type_key = uniqId
+    end
 
     if medication.save
-      send_success_json(medication.id, {name: medication.medication_type.name, title: medication.medication_type.title})
+      if medication.medication_type
+        mt = MedicationType.find(medication.medication_type.name)
+        send_success_json(medication.id, {medication_name: mt.title})
+      else
+        cmt = CustomMedicationType.where(key: medication.custom_medication_type_key).first
+        send_success_json(medication.id, {medication_name: cmt.name})
+      end
     else
       send_error_json(medication.id, medication.errors.full_messages.to_sentence, 400)
     end
@@ -53,6 +73,21 @@ module MedicationsCommon
         send_error_json(nil, "Invalid medication_type_id", 400)
         return
       end
+    elsif params['medication'] && params['medication']['custom_medication_type_name']
+      cust = CustomMedicationType.new
+      if params[:elementName] == "medication_insulin"
+        cust.category = "custom_insulin"
+      elsif params[:elementName] == "medication_drugs"
+        cust.category = "custom_drug"
+      else
+        cust.category = "custom"
+      end
+      cust.name = params[:medication][:custom_medication_type_name]
+      uniqId = SecureRandom.urlsafe_base64(16)
+      cust.key = uniqId
+      cust.medication_id = @medication.id
+      @medication.custom_medication_type = cust
+      @medication.custom_medication_type_key = uniqId
     end
 
     if @medication.update_attributes(update_hash)
@@ -77,6 +112,10 @@ module MedicationsCommon
       send_error_json(@medication.id, "Unauthorized", 403)
       return
     end
+    if @medication.custom_medication_type_key
+      cmt = CustomMedicationType.where(key: @medication.custom_medication_type_key).last
+      cmt.destroy
+    end
 
     if @medication.destroy
       send_success_json(@medication.id, {:msg => "Deleted successfully"})
@@ -90,7 +129,7 @@ module MedicationsCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def medication_params
-    params.require(:medication).permit(:user_id, :source, :name, :amount, :date, :favourite)
+    params.require(:medication).permit(:user_id, :source, :medication_type_id, :custom_medication_type_name, :amount, :date, :favourite)
   end
 
 end
