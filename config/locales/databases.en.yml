@@ -35,6 +35,8 @@ en:
       nicotine_nose_spray: "1 Nicotine nose-spray"
       nicotine_chewing_gum: "1 Nicotine chewing gum"
       nicotine_patch: "1 Nicotine patch"
+    Calory:
+      calory: "Calory"
 
   lifestyle:
     illnesses:

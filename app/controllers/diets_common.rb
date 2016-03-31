@@ -5,38 +5,26 @@ module DietsCommon
   def create
     user_id = params[:user_id]
     user = User.find(user_id)
+
+    name = params['diet']['name']
+    params[:diet].delete :name
+
     @diet = user.diets.build(diet_params)
     if not @diet.date
       @diet.date = DateTime.now
     end
-    # if (@diet.diet_type=='Food' || @diet.diet_type=='Drink' )
-    #   ft = FoodType.find_by_id(@diet.food_type_id)
-    #   @diet.calories = @diet.amount*ft.kcal
-    #   @diet.carbs = @diet.amount*ft.carb
-    #   @diet.fat = @diet.amount*ft.fat
-    #   @diet.prot = @diet.amount*ft.prot
-    # end
-    if params['diet'] && params['diet']['food_type_name']
-      ft = FoodType.where(name: params['diet']['food_type_name']).first
-      if ft != nil
-        @diet.food_type_id = ft.id
-      end
-    end
 
-    if @diet.diet_type=='Calory'
-      diet_name = I18n.t :quick_calories_prefix
-    elsif @diet.diet_name && @diet.diet_name != ""
-      diet_name = @diet.diet_name
+    foodType = FoodType.where(name: name).first
+    if foodType.nil?
+      send_error_json(name, "Invalid food type", 404)
+      return
     end
-    # else
-    #   diet_name = @diet.food_type.name
-    # end
+    @diet.food_type_id = foodType.id
 
-    @diet.name = diet_name
     if @diet.save
-      send_success_json(@diet.id, { diet_name: diet_name})
+      send_success_json(@diet.id, { name: @diet.food_type.name, category: @diet.food_type.category})
     else
-      send_error_json(nil,  @diet.errors.full_messages.to_sentence, 400)
+      send_error_json(name,  @diet.errors.full_messages.to_sentence, 400)
     end
   end
 
@@ -119,7 +107,7 @@ module DietsCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def diet_params
-    params.require(:diet).permit(:user_id, :source, :name, :date, :calories, :carbs, :amount, :category, :diet_type, :fat, :prot, :food_type_id, :food_type_name, :favourite)
+    params.require(:diet).permit(:user_id, :source, :name, :date, :calories, :carbs, :amount, :category, :fat, :prot, :favourite)
   end
   def diet_update_params
     params.require(:diet).permit(:favourite, :amount, :date)

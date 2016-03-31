@@ -35,6 +35,8 @@ hu:
       nicotine_nose_spray: "1 Nikotinos orrspray"
       nicotine_chewing_gum: "1 Nikotinos rágó"
       nicotine_patch: "1 Nikotinos tapasz"
+    Calory:
+      calory: "Kalória"
 
   lifestyle:
     illnesses:

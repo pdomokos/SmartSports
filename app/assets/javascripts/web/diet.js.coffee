@@ -54,7 +54,7 @@
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     resetDiet()
     loadDietHistory()
-    popup_success(data['diet_name']+popup_messages.saved_successfully)
+    popup_success(get_food_label(data['name'])+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#diet_type_id').val(null)
     $('#diet_drink_type_id').val(null)
@@ -154,7 +154,7 @@
           cnt += 1
       response(result)
     select: (event, ui) ->
-      $(".diet_type_id").val(ui.item.id)
+      $(".diet_type_name").val(ui.item.id)
     create: (event, ui) ->
       $(".diet_food_name").removeAttr("disabled")
     change: (event, ui) ->
@@ -231,6 +231,37 @@
       console.log "load recent diets AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
       $(".deleteDiet").removeClass("hidden")
+
+@get_food_label = (key) ->
+  user_lang = $("#user-lang")[0].value
+  arr = ['sd_foods_', 'sd_drinks_', 'sd_smoke_']
+
+  value = null
+  console.log "get_label "+key
+  if(key=='calory')
+    if user_lang && user_lang=='hu'
+      value = 'Gyors kalória'
+    if user_lang && user_lang=='en'
+      value = 'Quick calory'
+  if value != null
+    return value
+
+  arr.forEach((item) ->
+    if user_lang
+      food_db = item+user_lang
+    else
+      food_db = item+'hu'
+
+    if getStored(food_db)!=undefined && getStored(food_db).length!=0
+      tmp = getStored(food_db).filter((d) ->
+        return d.id==key;
+      )
+      if tmp.length!=0
+        value = tmp[0].label
+  )
+  if value==null
+    value = 'Unknown'
+  return value
 
 @load_favs = () ->
   self = this

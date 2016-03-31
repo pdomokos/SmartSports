@@ -7,3 +7,8 @@ fttwo:
   id: 2
   name: water
   category: Drink
+
+ftthree:
+  id: 3
+  name: calory
+  category: Calory
