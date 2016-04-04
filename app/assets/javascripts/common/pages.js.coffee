@@ -110,7 +110,7 @@
   }, 2000)
   $('.animField').animate({borderColor: buttonBackgrounds[self.colorIndex]}, 2000)
 
-@define_globals = (lang='hu') ->
+@define_globals = () ->
   user_lang = $("#user-lang")[0].value
   if !user_lang
     user_lang='hu'

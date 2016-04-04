@@ -1,11 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  date: 2015-02-27 12:22:01
+  id: 1
+  user_id: 1
+  date: 2015-02-26 12:22:01
   medication_type_id: 1
   amount: 1
+  source: testdiab
 
 two:
+  id: 2
+  user_id: 1
   date: 2015-02-27 12:22:01
-  medication_type_id: 1
-  amount: 1
+  medication_type_id: 3
+  amount: 5
+  source: testdiab

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330083455) do
+ActiveRecord::Schema.define(version: 20160401064733) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -250,10 +250,14 @@ ActiveRecord::Schema.define(version: 20160330083455) do
   add_index "measurements", ["user_id"], name: "index_measurements_on_user_id"
 
   create_table "medication_types", force: true do |t|
-    t.string "group"
-    t.string "name"
+    t.string "category"
+    t.string "title"
     t.float  "dosage"
+    t.string "name"
   end
+
+  add_index "medication_types", ["name"], name: "index_medication_types_on_name"
+  add_index "medication_types", ["title"], name: "index_medication_types_on_title"
 
   create_table "medications", force: true do |t|
     t.integer  "user_id"

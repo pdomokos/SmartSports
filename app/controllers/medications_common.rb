@@ -3,15 +3,17 @@ module MedicationsCommon
   # POST /users/[user_id]/medications
   # POST /users/[user_id]/medications.json
   def create
-    @user_id = params[:user_id]
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    name = params['medication']['name']
+    params[:medication].delete :name
+    mt = MedicationType.find_by_name(name)
 
-    par = medication_params
-    par.merge!(:user_id => @user_id)
-
-    medication = Medication.new(par)
+    medication = user.medications.build(medication_params)
+    medication.medication_type = mt
 
     if medication.save
-      send_success_json(medication.id, {medication_name: medication.medication_type.name})
+      send_success_json(medication.id, {name: medication.medication_type.name, title: medication.medication_type.title})
     else
       send_error_json(medication.id, medication.errors.full_messages.to_sentence, 400)
     end
@@ -88,7 +90,7 @@ module MedicationsCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def medication_params
-    params.require(:medication).permit(:user_id, :source, :medication_type_id, :amount, :date, :favourite)
+    params.require(:medication).permit(:user_id, :source, :name, :amount, :date, :favourite)
   end
 
 end

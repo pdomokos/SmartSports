@@ -2,7 +2,7 @@
 
   <td style="width:40px;" class="padded">
     <% if  medication_item.medication_type %>
-        <% if medication_item.medication_type.group == 'insulin' || medication_item.medication_type.group == 'insulin_en' %>
+        <% if medication_item.medication_type.category == 'insulin' || medication_item.medication_type.category == 'insulin_en' %>
             <%= image_tag "insulin40.png" %>
         <% else %>
             <%= image_tag "oral40.png" %>
@@ -17,12 +17,12 @@
         m = {'medication' => medication_item.as_json}
         if medication_item.medication_type
         m.merge!({'medication_name' => medication_item.medication_type.name})
-        m.merge!({'medication_type' => medication_item.medication_type.group})
+        m.merge!({'medication_type' => medication_item.medication_type.category})
         end
         JSON.dump(m)
     %>">
-    <% if  medication_item.medication_type and medication_item.medication_type.group %>
-        <strong><%= medication_item.medication_type.name %></strong>
+    <% if  medication_item.medication_type and medication_item.medication_type.category %>
+        <strong><%= medication_item.medication_type.title %></strong>
         <% if medication_item.amount && medication_item.amount > 0 %>
             <br/><span><%=(t :amount)%>: <%= medication_item.amount %></span>
         <% end %>

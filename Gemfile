@@ -73,6 +73,8 @@ gem 'yaml_db'
 
 gem 'ice_cube'
 
+gem 'smarter_csv'
+
 group :production, :staging do
   gem 'mysql2', '~> 0.3.18'
 end

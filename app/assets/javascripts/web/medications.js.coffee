@@ -19,7 +19,7 @@
 
     loadMedicationHistory()
     resetMedications()
-    popup_success(data['medication_name']+popup_messages.saved_successfully, "medicationStyle")
+    popup_success(data['title']+popup_messages.saved_successfully, "medicationStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)
@@ -68,7 +68,7 @@
 
   $(selector+"input[name='medication[date]']").datetimepicker(timepicker_defaults)
 
-  $(selector+".oral_medication_name").autocomplete({
+  $(selector+".oral_medication_sel").autocomplete({
     minLength: 3,
     source: (request, response) ->
       matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
@@ -85,14 +85,14 @@
           cnt += 1
       response(result)
     select: (event, ui) ->
-      $(selector+".oral_medication_id").val(ui.item.id)
+      $(selector+".oral_medication_name").val(ui.item.id)
     create: (event, ui) ->
-      $(selector+".oral_medication_name").removeAttr("disabled")
+      $(selector+".oral_medication_sel").removeAttr("disabled")
     change: (event, ui) ->
       console.log ui['item']
   })
 
-  $(selector+".medication_insulin_name").autocomplete({
+  $(selector+".insulin_medication_sel").autocomplete({
     minLength: 0,
     source: (request, response) ->
       matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term, ""), "i")
@@ -110,9 +110,9 @@
       response(result)
     select: (event, ui) ->
       console.log ui
-      $(selector+".medication_insulin_id").val(ui.item.id)
+      $(selector+".insulin_medication_name").val(ui.item.id)
     create: (event, ui) ->
-      $(selector+".medication_insulin_name").removeAttr("disabled")
+      $(selector+".insulin_medication_sel").removeAttr("disabled")
     change: (event, ui) ->
       insulinSelected = ui['item']
   }).focus ->
@@ -211,7 +211,7 @@
     return ret
 
 validate_medication_common = (sel) ->
-  if !$(sel+" input[name='medication[medication_type_id]']").val()
+  if !$(sel+" input[name='medication[name]']").val()
     popup_error(popup_messages.failed_to_add_data, "medicationStyle")
     return false
   if( !$(sel+" input[name='medication[amount]']").val() || notpositive(sel+" input[name='medication[amount]']"))

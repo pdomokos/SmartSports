@@ -1,4 +1,4 @@
-id,name,group
+id,title,category
 1,14C-Helizo kemény kapszula,oral
 2,"5-FLUOROURACIL ""EBEWE""  50 mg/ml koncentrátum oldatos infúzióhoz",oral
 3,Abasaglar 100 egység/ml oldatos injekció előretöltött injekciós tollban,insulin
@@ -15139,7 +15139,6 @@ id,name,group
 15138,Beromun tasonermin-L03AX11,drugs_en
 15139,Betaferon interferon beta-1b-L03AB08,drugs_en
 15140,Betmiga mirabegron-G04BD12,drugs_en
-15141,Bexsero recombinant Neisseria meningitidis group-B NHBA fusion protein /recombinant Neisseria meningitidis group-B NadA protein /recombinant Neisseria meningitidis group B fHbp fusion protein /outer membrane vesiclesfrom Neisseria meningitidis group-B strain NZ98 / 254 measured as amount of total protein containing the PorA P1.4-J07AH09 ,drugs_en
 15142,Bextra valdecoxib-M01AH03,drugs_en
 15143,BindRen colestilan-V03AE ,drugs_en
 15144,Binocrit epoetin alfa-B03XA01,drugs_en
@@ -15416,7 +15415,6 @@ id,name,group
 15415,Herceptin trastuzumab-L01XC03,drugs_en
 15416,Hetlioz tasimelteon-N05CH,drugs_en
 15417,Hexacima diphtheria toxoid /tetanus toxoid / two-component acellular pertussis(pertussis toxoidand filamentous haemagglutinin ) /inactivated poliomyelitis virus types 1,drugs_en
-15418,Hexavac purified diphtheria toxoid / purified tetanus toxoid / purified pertussis toxoid / purified pertussis filamentous haemagglutinin / hepatitis B surface antigen / inactivated type 1 poliovirus (Mahoney) / inactivated type 2 poliovirus (MEF 1) / inactivated type 3 poliovirus (Saukett) / Haemophilus influenzae type b polysaccharide-J07CA,drugs_en
 15419,Hexyon diphtheria toxoid/ tetanus toxoid/ two-component acellular pertussis (pertussis toxoidand filamentous haemagglutinin)/ inactivated poliomyelitis virus types 1,drugs_en
 15420,Hirobriz Breezhaler indacaterol maleate-R03AC18,drugs_en
 15421,Hizentra human normal immunoglobulin (SCIg)-J06BA01,drugs_en
@@ -15639,7 +15637,6 @@ id,name,group
 15638,Nexavar sorafenib-L01XE05,drugs_en
 15639,Nexium Control esomeprazole-A02BC05,drugs_en
 15640,NexoBrid concentrate of proteolytic enzymes enriched in bromelain-D03BA03,drugs_en
-15641,Nimenrix Neisseria meningitidis serogroup A polysaccharide conjugated to tetanus toxoid / Neisseria meningitidis serogroup C polysaccharide conjugated to tetanus toxoid /Neisseria meningitidis serogroup W-135 polysaccharide conjugated to tetanus toxoid / Neisseria meningitidis serogroup Y polysaccharide conjugated to tetanus toxoid-J07AH08 ,drugs_en
 15642,Nimvastid rivastigmine-N06DA03,drugs_en
 15643,Nivestim filgrastim-L03AA02,drugs_en
 15644,Nivolumab BMS nivolumab-L01XC17,drugs_en
@@ -15762,15 +15759,12 @@ id,name,group
 15761,Prepandemic Influenza Vaccine (H5N1) (Split Virion  Inactivated,drugs_en
 15762,Prepandemic influenza vaccine (H5N1) (surface antigen  inactivated,drugs_en
 15763,Prepandrix A/Indonesia/05/2005 (H5N1) like strain used (PR8-IBCDC-RG2)-J07BB02,drugs_en
-15764,Prevenar pneumococcal polysaccharide serotype 4 /pneumococcal polysaccharide serotype 6B /pneumococcal polysaccharide serotype 9V /pneumococcal polysaccharide serotype 14 / pneumococcal oligosaccharide serotype 18C /pneumococcal polysaccharide serotype 19F /pneumococcal polysaccharide serotype 23F-J07AL02,drugs_en
-15765,Prevenar 13 pneumococcal polysaccharide serotype 1 /pneumococcal polysaccharide serotype 14 /pneumococcal polysaccharide serotype 18C /pneumococcal polysaccharide serotype 19A / pneumococcal polysaccharide serotype 19F /pneumococcal polysaccharide serotype 23F /pneumococcal polysaccharide serotype 3 /pneumococcal polysaccharide serotype 4 / pneumococcal polysaccharide serotype 5 / pneumococcal polysaccharide serotype 6A / pneumococcal polysaccharide serotype 6B /pneumococcal polysaccharide serotype 7F /pneumococcal polysaccharide serotype 9V protein-J07AL02,drugs_en
 15766,Prezista darunavir-J05AE10,drugs_en
 15767,Prialt ziconotide-N02BG08,drugs_en
 15768,Primavax diphtheria toxoid purified /hepatitis B,drugs_en
 15769,Pritor telmisartan-C09CA07,drugs_en
 15770,PritorPlus telmisartan / hydrochlorothiazide-C09DA07,drugs_en
 15771,Privigen human normal immunoglobulin (IVIg)-J06BA02,drugs_en
-15772,Procomvax polyribosylribitol phosphate from Haemophilus influenzae type b as PRP-OMPC / outer membrane protein complex of Neisseria meningitidis (outer membrane protein complex of the B11 strain of Neisseria meningitidis subgroup B) / adsorbed hepatitis B surface antigen produced in recombinant yeast cells (Saccharomyces cerevisiae)-J07CA,drugs_en
 15773,Procoralan ivabradine hydrochloride-C01EB17,drugs_en
 15774,Procysbi mercaptamine bitartrate-A16AA04,drugs_en
 15775,Prolia denosumab-M05BX04,drugs_en

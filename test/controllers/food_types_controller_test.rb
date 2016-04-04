@@ -20,7 +20,7 @@ class FoodTypesControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     result = JSON.parse(response.body)
-    assert_equal 2, result.size
+    assert_equal 3, result.size
   end
 
 end

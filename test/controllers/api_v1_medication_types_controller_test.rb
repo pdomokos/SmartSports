@@ -1,6 +1,6 @@
 require 'test_helper'
 module Api::V1
-  class FoodTypesControllerTest < ActionController::TestCase
+  class MedicationTypesControllerTest < ActionController::TestCase
     setup do
       @user = users(:one)
       token = mock()
@@ -11,10 +11,11 @@ module Api::V1
 
     test "should get index" do
       get :index
-      assert_response :success
       result = JSON.parse(response.body)
+      assert_response :success
       assert_equal 3, result.size
-      assert_equal "Reggeli", result[0]['hu']
+      assert_equal "kalmopirin", result[0]['hu']
+      assert_equal "oral", result[0]['category']
     end
   end
 end

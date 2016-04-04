@@ -213,6 +213,7 @@ GEM
       websocket (~> 1.0)
     simplificator-withings (0.7.0)
       httparty (~> 0.13)
+    smarter_csv (1.1.0)
     sorcery (0.9.1)
       bcrypt (~> 3.1)
       oauth (~> 0.4, >= 0.4.4)
@@ -291,6 +292,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver
   simplificator-withings
+  smarter_csv
   sorcery
   spring
   sqlite3

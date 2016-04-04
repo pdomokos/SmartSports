@@ -11,9 +11,9 @@
     <%= favicon_link_tag 'logo-login.png' %>
 </head>
 <body class="bodyBg bgAnimation">
-
-<%= render partial: 'shared/popups' %>
-<%= yield %>
+    <input id="user-lang" value="<%=I18n.locale%>" type="hidden" />
+    <%= render partial: 'shared/popups' %>
+    <%= yield %>
 
 <script type="text/javascript">
 pages_menu()
