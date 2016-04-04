@@ -1,6 +1,6 @@
 <div class="dataForm wellbeing_period <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-  <input type="hidden" name="lifestyle[group]" value="period"/>
+  <input type="hidden" name="lifestyle[lifestyle_type_name]" value="period">
 
   <input type='text' class="dataFormField period_start_datepicker default_date_picker" name="lifestyle[start_time]" value="<%= DateTime.current.strftime("%F") %>"/>
   <div class="dataFormFieldUnit"><%=t 'start'%></div>

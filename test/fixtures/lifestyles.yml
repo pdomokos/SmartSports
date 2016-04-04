@@ -2,16 +2,19 @@
 
 one:
   user_id: 1
-  source: mysource1
-  group: mygroup1
-  start_time: 2014-10-27 16:37:26
-  name: MyString
-  amount: 1.5
+  source: smartdiab
+  lifestyle_type_name: sleep
+  start_time: 2014-10-26 16:37:26
+  end_time: 2014-10-27 06:37:26
+  amount: 2
 
 two:
   user_id: 1
-  source: mysource2
-  group: mygroup2
-  start_time: 2014-10-28 16:37:26
-  name: MyString
-  amount: 1.6
+  source: smartdiab
+  lifestyle_type_name: illness
+  lifestyle_type_id: 1
+  name: illnesstype1
+  start_time: 2014-10-27 16:37:26
+  end_time: 2014-10-28 06:37:26
+  details: asdfasdf
+  amount: 3
