@@ -1,8 +1,5 @@
 class LifeStyleValidator < ActiveModel::Validator
   def validate(record)
-    if ((record.group == 'illness' || record.group == 'pain') && record.lifestyle_type_name == nil)
-      record.errors[:lifestyle_type_name] << 'no_value'
-    end
     if record.start_time && record.end_time
       if record.end_time < record.start_time
         record.errors[:base] << (I18n.t :error_end_time_greater)
@@ -15,7 +12,7 @@ class Lifestyle < ActiveRecord::Base
   belongs_to :user
   belongs_to :lifestyle_type
   validates :user_id, presence: true
-  validates :group, presence: true
+  validates :lifestyle_type_name, presence: true
   validates :start_time, presence: true
   validates :amount, :numericality => true, :allow_nil => true
   validates_with LifeStyleValidator

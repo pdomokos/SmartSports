@@ -24,7 +24,7 @@ module LifestylesCommon
       if @lifestyle.lifestyle_type
         illness_name = @lifestyle.lifestyle_type.name
       end
-      send_success_json(@lifestyle.id, {group: @lifestyle.group,
+      send_success_json(@lifestyle.id, {lifestyle_type_name: @lifestyle.lifestyle_type_name,
                                         pain_name: illness_name,
                                         illness_name: illness_name})
     else
@@ -71,6 +71,6 @@ module LifestylesCommon
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def lifestyle_params
-    params.require(:lifestyle).permit(:user_id, :lifestyle_type_id, :lifestyle_type_name, :source, :group, :name, :details, :amount, :period_volume, :start_time, :end_time, :favourite)
+    params.require(:lifestyle).permit(:user_id, :lifestyle_type_id, :lifestyle_type_name, :source, :name, :details, :amount, :period_volume, :start_time, :end_time, :favourite)
   end
 end

@@ -172,12 +172,12 @@ class AnalysisDataController < ApplicationController
             amount: lifestyle.amount,
             source: 'SmartDiab'
         }
-        if lifestyle.group=='stress'
+        if lifestyle.lifestyle_type.category=='stress'
           ret['lf_group']= [lifestyle.group, "Stress"]
-        elsif lifestyle.group=='illness'
-          ret['lf_group']= [lifestyle.group, lifestyle.lifestyle_type_name]
-        elsif lifestyle.group=='pain'
-          ret['lf_group']= [lifestyle.group, lifestyle.lifestyle_type_name+"(pain)"]
+        elsif lifestyle.lifestyle_type.category=='illness'
+          ret['lf_group']= [lifestyle.lifestyle_type.category, lifestyle.name]
+        elsif lifestyle.lifestyle_type.category=='pain'
+          ret['lf_group']= [lifestyle.lifestyle_type.category, lifestyle.name+"(pain)"]
         end
         ret
       end
@@ -349,12 +349,12 @@ class AnalysisDataController < ApplicationController
           group: lifestyle.group,
           value1: lifestyle.amount
       }
-      if lifestyle.group != 'stress'
+      if lifestyle.lifestyle_type_name != 'stress'
         ret['end'] = lifestyle.end_time
       else
         ret['end'] = lifestyle.start_time+1.day
       end
-      if lifestyle.group=='illness'
+      if lifestyle.lifestyle_type_name=='illness'
         ret['value2']= lifestyle.lifestyle_type_name
       elsif lifestyle.group=='pain'
         ret['value2']= lifestyle.lifestyle_type_name

@@ -1,0 +1,9 @@
+ltone:
+  id: 1
+  name: illnesstype1
+  category: illnesses
+
+lttwo:
+  id: 2
+  name: paintype1
+  category: pains

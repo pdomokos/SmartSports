@@ -101,7 +101,7 @@ module DashboardHelper
     end
 
     @show_sleep = false
-    sleep_today = current_user.lifestyles.where("end_time between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day).where(group: 'sleep')
+    sleep_today = current_user.lifestyles.where("end_time between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day).where(lifestyle_type_name: 'sleep')
     if sleep_today.length >0
       @show_sleep = true
       @sleep_amount = get_duration_amount(sleep_today)

@@ -19,17 +19,17 @@
     $('#illnessname').val(null)
     $('#pain_name').val(null)
     console.log data
-    msg = capitalize(data['group'])
-    if data['group']=='illness'
+    msg = capitalize(data['lifestyle_type_name'])
+    if data['lifestyle_type_name']=='illness'
       msg = data['illness_name']
     else
-      if data['group'] =='pain'
+      if data['lifestyle_type_name'] =='pain'
         msg = data['pain_name']
 
     resetLifesyleForms()
     popup_success(popup_messages.save_success, "wellbeingStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add+' '+xhr.responseJSON.msg, "lifestyleStyle")
+    popup_error(popup_messages.failed_to_add, "lifestyleStyle")
     $("input[name='lifestyle[name]']").val(null)
     $('#illnessname').val(null)
     $('#pain_name').val(null)
@@ -42,9 +42,9 @@
 
   $("#recentResourcesTable").on("click", "td.lifestyleItem", (e) ->
     data = JSON.parse(e.currentTarget.querySelector("input").value)
-    fn = window["load_lifestyle_"+data.lifestyle.group];
+    fn = window["load_lifestyle_"+data.lifestyle_type_name];
     if typeof fn == 'function'
-      fn('#lifestyle_forms .lifestyle_'+data.lifestyle.group+"-create-form", data)
+      fn('#lifestyle_forms .lifestyle_'+data.lifestyle_type_name+"-create-form", data)
   )
 
   $("#recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
@@ -285,7 +285,7 @@
 @validateLifestyleForm = (formId) ->
   console.log "validate lifestyle: "+formId
   formNode = document.getElementById(formId)
-  group = formNode.querySelector("input[name='lifestyle[group]']").value
+  group = formNode.querySelector("input[name='lifestyle[lifestyle_type_name]']").value
   console.log "group = "+group
   if group=='illness' && isempty("#"+formId+" input[name='lifestyle[name]']")
     popup_error(popup_messages.illness_name_missing, "wellbeingStyle")
