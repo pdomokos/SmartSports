@@ -19,9 +19,9 @@ class DietsController < ApplicationController
       @diets = @diets.where("source = '#{source}'")
     end
     if order and order=="desc"
-      @diets = @diets.order(created_at: :desc)
+      @diets = @diets.order(date: :desc)
     else
-      @diets = @diets.order(created_at: :asc)
+      @diets = @diets.order(date: :asc)
     end
     if limit and limit.to_i>0
       @diets = @diets.limit(limit)

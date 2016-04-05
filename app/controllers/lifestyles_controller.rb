@@ -18,7 +18,7 @@ class LifestylesController < ApplicationController
     if source and source != ''
       @lifestyles = @lifestyles.where(source: source)
     end
-    @lifestyles = @lifestyles.order(created_at: :desc)
+    @lifestyles = @lifestyles.order(start_time: :desc)
     # if order and order=="desc"
     #   @lifestyles = @lifestyles.order(created_at: :desc)
     # else
