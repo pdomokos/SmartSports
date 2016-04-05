@@ -86,9 +86,8 @@
       success: (data, textStatus, jqXHR) ->
         tblData = $.map(data,(item,i) ->
           return([get_exercise_table_row(item)])
-        ).filter( (v) ->
-          return(v!=null)
         )
+        console.log("tblData", tblData)
         if lang == 'hu'
           plugin = {
             sEmptyTable: "Nincs rendelkezésre álló adat",
@@ -145,11 +144,13 @@
   )
 
 @get_exercise_table_row = (item ) ->
-  if item.activity==null
-    return null
+  console.log item
   intensities = $("#intensity_values").val().split(" ")
-  return ([moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.activity, intensities[Math.round(item.intensity)], item.duration, Math.round(item.calories * 100) / 100])
-
+  ret = [moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.name, intensities[Math.round(item.intensity)], item.duration, Math.round(item.calories * 100) / 100]
+  if ret[2]==undefined
+    ret[2] = ""
+  return ret
+  
 @initActivity = (selector) ->
   console.log "initActivity called, selector="+selector
   self = this
