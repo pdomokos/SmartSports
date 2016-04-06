@@ -88,14 +88,6 @@ ActiveRecord::Schema.define(version: 20160404101332) do
     t.string  "form_tag"
   end
 
-  create_table "custom_medication_types", force: true do |t|
-    t.integer "medication_id"
-    t.string  "key"
-    t.string  "category"
-    t.string  "name"
-    t.float   "dosage"
-  end
-
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -274,11 +266,8 @@ ActiveRecord::Schema.define(version: 20160404101332) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "medication_type_id"
-    t.boolean  "favourite",                   default: false
+    t.boolean  "favourite",            default: false
     t.string   "medication_type_name"
-    t.integer  "custom_medication_type_id"
-    t.string   "custom_medication_type_key"
-    t.string   "custom_medication_type_name"
   end
 
   create_table "notifications", force: true do |t|

@@ -101,13 +101,7 @@ class PagesController < ApplicationController
 
   def lifestyle
     @lifestyles = current_user.lifestyles.order(created_at: :desc).limit(4)
-    @sleepList = Lifestyle.sleepList.join(";")
-    @stressList = Lifestyle.stressList.join(";")
-    @illnessList = Lifestyle.illnessList.join(";")
-    @painList = Lifestyle.painList.join(";")
-    @periodPainList = Lifestyle.periodPainList.join(";")
-    @periodVolumeList = Lifestyle.periodVolumeList.join(";")
-    @painTypeList = Lifestyle.painTypeList.join(";")
+    @titles = JSON.generate({sleep: t(:sleep), stress: t(:stress), illness: t(:illness), pain: t(:pain), period: t(:period)})
     save_click_record(:success, nil, nil)
   end
 

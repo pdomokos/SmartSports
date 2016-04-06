@@ -1,6 +1,6 @@
 <div class="dataForm wellbeing_stress <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
-  <input type="hidden" name="lifestyle[lifestyle_type_name]" value="stress">
+  <input type="hidden" name="lifestyle[name]" value="stress">
 
   <label style="margin-left: 20px;"><%=t 'intensity'%></label>
   <div class="dataScale">

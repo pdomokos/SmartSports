@@ -39,7 +39,7 @@ en:
       calory: "Calory"
 
   lifestyle:
-    illnesses:
+    illness:
       illnesstype1: "Infectious and parasitic disease"
       illnesstype2: "Neoplasm"
       illnesstype3: "Disease of the blood and blood-forming organs"
@@ -58,7 +58,7 @@ en:
       illnesstype16: "Pregnancy, childbirth and postnatal period"
       illnesstype17: "Congenital malformation"
       illnesstype18: "Injury, poisoning and consequences of external causes"
-    pains:
+    pain:
       paintype1: "Chronic pain (lasting over 3 months)"
       paintype2: "Thermal, mechanical and chemical pain"
       paintype3: "Visceral pain (migraine, abdominal, thoracic pain)"
@@ -67,6 +67,12 @@ en:
       paintype6: "Psychogenic pain (caused by mental, emotional factors)"
       paintype7: "Breakthrough pain (caused by cancers)"
       paintype8: "Incident pain"
+    period:
+      period:    "Period"
+    sleep:
+      sleep:     "Sleep"
+    stress:
+      stress:    "Stress"
 
   labresult:
     ketone:
@@ -101,7 +107,3 @@ en:
       antibodytype4: "Insulinoma-Associated-2 Autoantibodies"
       antibodytype5: "Islet Cell Cytoplasmic Autoantibodies"
       antibodytype6: "Zinc Transporter 8"
-
-
-
-

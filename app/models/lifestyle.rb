@@ -12,49 +12,18 @@ class Lifestyle < ActiveRecord::Base
   belongs_to :user
   belongs_to :lifestyle_type
   validates :user_id, presence: true
-  validates :lifestyle_type_name, presence: true
   validates :start_time, presence: true
   validates :amount, :numericality => true, :allow_nil => true
   validates_with LifeStyleValidator
 
-  @@sleepList = ["Very bad", "Fairly bad", "Fairly good", "Very good"]
-  @@stressList = ["Below average", "Average", "Medium", "High"]
-  @@illnessList = ["Slight mild", "Mild", "Moderate", "Severe", "More severe"]
-  @@painList = ["Slight mild", "Mild", "Moderate", "Severe", "Worst possible"]
-  @@periodPainList = ["No pain","Mild pain","Moderate pain","Severe pain","Very painful"]
-  @@periodVolumeList = ["Light", "Moderate", "Strong", "Quite heavy","Heavy"]
-  @@painTypeList = ["Szövetsérüléssel járó fájdalom","Zsigeri fájdalom","Idegi eredetű fájdalom","Lelki eredetű fájdalom","Mellkasi szorító fájdalom","Migrén","Ízületi fájdalom", "Hát-derékfájdalom"]
-
-  def self.sleepList
-    @@sleepList
-  end
-  def self.stressList
-    @@stressList
-  end
-  def self.illnessList
-    @@illnessList
-  end
-  def self.painList
-    @@painList
-  end
-  def self.periodPainList
-    @@periodPainList
-  end
-  def self.periodVolumeList
-    @@periodVolumeList
-  end
-  def self.painTypeList
-    @@painTypeList
-  end
-
   def title
-    if self.group
-      if self.group=="illness"
+    if self.lifestyle_type
+      if self.lifestyle_type.category=="illness"
         return self.lifestyle_type.name
-      elsif self.group == "pain"
+      elsif self.lifestyle_type.category == "pain"
         return "#{self.lifestyle_type.name} pain"
       else
-        return self.group.capitalize
+        return self.lifestyle_type.category.capitalize
       end
     else
       return "Unknown"
@@ -63,31 +32,36 @@ class Lifestyle < ActiveRecord::Base
 
   def subtitle
     result = "Unknown"
-    case self.group
-      when "sleep"
-        result = @@sleepList[self.amount] if self.amount
-      when "stress"
-        result = @@stressList[self.amount] if self.amount
-      when "illness"
-        result = @@illnessList[self.amount] if self.amount
-      when "pain"
-        result = @@painList[self.amount] if self.amount
-      when "period"
-        result = "#{@@periodPainList[self.amount]}, #{@@periodVolumeList[self.period_volume]} volume" if self.amount
+    if self.lifestyle_type
+      case self.lifestyle_type.category
+        when "sleep"
+          result = t(:sleepList)[self.amount] if self.amount
+        when "stress"
+          result = t(:stressList)[self.amount] if self.amount
+        when "illness"
+          result = t(:illnessList)[self.amount] if self.amount
+        when "pain"
+          result = t(:painList)[self.amount] if self.amount
+        when "period"
+          result = "#{t(:periodPainList)[self.amount]}, #{t(:periodVolumeList)[self.period_volume]} volume" if self.amount
+      end
     end
     return result
   end
 
   def tooltip
-    result = self.group
-    if self.group=='sleep'
-      result = "Sleep, #{@@sleepList[self.amount] if self.amount}"
+    result = "Unknown"
+    if self.lifestyle_type
+      result = self.lifestyle_type.category
+      if self.self.lifestyle_type.category=='sleep'
+        result = "Sleep, #{ t(:sleepList)[self.amount] if self.amount}"
+      end
     end
     return result
   end
 
   def interval
-    if self.group == 'stress'
+    if self.lifestyle_type && self.lifestyle_type.category == 'stress'
       result = "On: #{self.start_time.strftime('%F')}"
       return result
     end
@@ -102,6 +76,6 @@ class Lifestyle < ActiveRecord::Base
     else
       end_time = ""
     end
-    return   "From: #{start_time} To: #{end_time}"
+    return "From: #{start_time} To: #{end_time}"
   end
 end

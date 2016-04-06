@@ -16,7 +16,7 @@ module Api::V1
       result = JSON.parse(response.body)
       assert_equal 2, result.size
       assert_equal "illnesstype1", result[0]['name']
-      assert_equal "illnesses", result[0]['category']
+      assert_equal "illness", result[0]['category']
     end
   end
 end

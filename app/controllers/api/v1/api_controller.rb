@@ -6,6 +6,7 @@ module Api::V1
     rescue_from Exception, :with => :general_error_handler
     respond_to :json
 
+    include RequestHelper
     include ResponseHelper
     include SaveClickRecord
 

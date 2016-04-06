@@ -39,7 +39,7 @@ hu:
       calory: "Kalória"
 
   lifestyle:
-    illnesses:
+    illness:
       illnesstype1: "Fertőző és parazitás betegség"
       illnesstype2: "Daganat"
       illnesstype3: "A vér és a vérképző szervek betegsége"
@@ -58,7 +58,7 @@ hu:
       illnesstype16: "Terhesség, szülés és gyermekágy"
       illnesstype17: "Veleszületett rendellenesség"
       illnesstype18: "Sérülés, mérgezés és külső okok következményei"
-    pains:
+    pain:
       paintype1: "Krónikus fájdalom (3 hónapon túl fennálló)"
       paintype2: "Égés, fagyás, mechanikai és kémiai eredetű fájdalom"
       paintype3: "Belső szervi fájdalom (migrén, hasfájás, mellkasi fájdalom)"
@@ -67,6 +67,12 @@ hu:
       paintype6: "Pszichés fájdalom (depresszióhoz, érzelmi állapothoz társuló)"
       paintype7: "Áttörő fájdalom (daganatok mellett)"
       paintype8: "Balesetből eredő fájdalom"
+    period:
+      period:    "Menstruációs ciklus"
+    sleep:
+      sleep:     "Alvás"
+    stress:
+      stress:    "Stressz"
 
   labresult:
       ketone:

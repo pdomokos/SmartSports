@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   before_action :set_default_variables
 
+  include RequestHelper
+
   private
 
   def set_locale

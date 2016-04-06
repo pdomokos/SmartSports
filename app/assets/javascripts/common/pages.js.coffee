@@ -118,7 +118,8 @@
     format: 'Y-m-d H:i',
     step: 10,
     todayButton: true,
-    lang: user_lang
+    lang: user_lang,
+    scrollInput: false,
     onSelectTime: (ct, input) ->
       input.datetimepicker('hide')
   }

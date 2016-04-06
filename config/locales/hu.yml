@@ -282,7 +282,7 @@ hu:
   stress:             "Stressz"
   illness:            "Betegség"
   pain:               "Fájdalom"
-  periods:            "Menstruációs ciklus"
+  period:             "Menstruációs ciklus"
   quality:            "Minőség"
   intensity:          "Intenzitás"
   sleep_fairly_good:  "Jó"

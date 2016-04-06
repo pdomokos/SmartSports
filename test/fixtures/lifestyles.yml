@@ -3,7 +3,7 @@
 one:
   user_id: 1
   source: smartdiab
-  lifestyle_type_name: sleep
+  lifestyle_type_id: 1
   start_time: 2014-10-26 16:37:26
   end_time: 2014-10-27 06:37:26
   amount: 2
@@ -11,10 +11,8 @@ one:
 two:
   user_id: 1
   source: smartdiab
-  lifestyle_type_name: illness
-  lifestyle_type_id: 1
-  name: illnesstype1
-  start_time: 2014-10-27 16:37:26
+  lifestyle_type_id: 2
+  start_time: 2014-10-27 16:38:26
   end_time: 2014-10-28 06:37:26
   details: asdfasdf
   amount: 3

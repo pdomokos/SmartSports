@@ -8,8 +8,10 @@ class LifestylesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, user_id: @user
+    get :index, {user_id: @user, format: :json}
     assert_response :success
-    assert_not_nil assigns(:lifestyles)
+    json_result = JSON.parse(response.body)
+    assert_equal 'paintype1', json_result[0]['name']
+    assert_equal 'illnesstype1', json_result[1]['name']
   end
 end

@@ -1,6 +1,7 @@
 @wellbeing_loaded = () ->
   uid = $("#current-user-id")[0].value
   @popup_messages = JSON.parse($("#popup-messages").val())
+  @resource_titles = JSON.parse($("#resource_titles").val())
 
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#lifestyle-link").css
@@ -15,21 +16,12 @@
     self = this
     form_id = e.currentTarget.id
     loadLifestyles()
-    $("input[name='lifestyle[name]']").val(null)
-    $('#illnessname').val(null)
-    $('#pain_name').val(null)
-    console.log data
-    msg = capitalize(data['lifestyle_type_name'])
-    if data['lifestyle_type_name']=='illness'
-      msg = data['illness_name']
-    else
-      if data['lifestyle_type_name'] =='pain'
-        msg = data['pain_name']
 
+    msg = data['category']
     resetLifesyleForms()
-    popup_success(popup_messages.save_success, "wellbeingStyle")
+    popup_success(popup_messages.save_success+" ("+resource_titles[msg]+")", "wellbeingStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
-    popup_error(popup_messages.failed_to_add, "lifestyleStyle")
+    popup_error(popup_messages.failed_to_add_data, "lifestyleStyle")
     $("input[name='lifestyle[name]']").val(null)
     $('#illnessname').val(null)
     $('#pain_name').val(null)
@@ -141,7 +133,8 @@
   $(selector+'.stress_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
-    lang: user_lang
+    lang: user_lang,
+    scrollInput: false,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -162,7 +155,8 @@
   $(selector+'.illness_start_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
-    lang: user_lang
+    lang: user_lang,
+    scrollInput: false,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -171,7 +165,8 @@
   $(selector+'.illness_end_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
-    lang: user_lang
+    lang: user_lang,
+    scrollInput: false,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -223,7 +218,8 @@
   $(selector+'.period_start_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
-    lang: user_lang
+    lang: user_lang,
+    scrollInput: false,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -232,7 +228,8 @@
   $(selector+'.period_end_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
-    lang: user_lang
+    lang: user_lang,
+    scrollInput: false,
     onSelectDate: (ct, input) ->
       input.datetimepicker('hide')
     todayButton: true
@@ -281,18 +278,12 @@
   $(".pain_type_name").val("")
   $(".illness_details").val("")
   $(".pain_details").val("")
+  $(".lifestyle_illness-create-form input[name='lifestyle[name]']").val(null)
+  $(".lifestyle_pain-create-form input[name='lifestyle[name]']").val(null)
 
 @validateLifestyleForm = (formId) ->
   console.log "validate lifestyle: "+formId
-  formNode = document.getElementById(formId)
-  group = formNode.querySelector("input[name='lifestyle[lifestyle_type_name]']").value
-  console.log "group = "+group
-  if group=='illness' && isempty("#"+formId+" input[name='lifestyle[name]']")
-    popup_error(popup_messages.illness_name_missing, "wellbeingStyle")
-    return false
-  if group=='pain' && isempty("#"+formId+" input[name='lifestyle[name]']")
-    popup_error(popup_messages.pain_name_missing, "wellbeingStyle")
-    return false
+  return true
 
 @loadLifestyles = () ->
   self = this
@@ -328,7 +319,7 @@
         console.log "load lifestyle_types  Successful AJAX call"
 
         setStored("sd_illness_hu", data.filter( (d) ->
-          d['category'] == "illnesses"
+          d['category'] == "illness"
         ).map( (d) ->
           {
           label: d['hu'],
@@ -336,7 +327,7 @@
           }))
 
         setStored("sd_illness_en", data.filter( (d) ->
-          d['category'] == "illnesses"
+          d['category'] == "illness"
         ).map( (d) ->
           {
           label: d['en'],
@@ -344,7 +335,7 @@
           }))
 
         setStored('sd_pains_hu', data.filter( (d) ->
-          d['category'] == "pains"
+          d['category'] == "pain"
         ).map( (d) ->
           {
           label: d['hu'],
@@ -352,7 +343,7 @@
           }))
 
         setStored('sd_pains_en', data.filter( (d) ->
-          d['category'] == "pains"
+          d['category'] == "pain"
         ).map( (d) ->
           {
           label: d['en'],

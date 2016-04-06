@@ -1,9 +1,9 @@
 ltone:
   id: 1
   name: illnesstype1
-  category: illnesses
+  category: illness
 
 lttwo:
   id: 2
   name: paintype1
-  category: pains
+  category: pain
