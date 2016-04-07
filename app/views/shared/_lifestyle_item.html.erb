@@ -1,12 +1,10 @@
 <tr class="bg">
 
   <td style="width:40px;" class="padded">
-    <% if lifestyle_item.lifestyle_type_name %>
-        <% if not lifestyle_item.lifestyle_type.nil? %>
-            <%= image_tag lifestyle_item.lifestyle_type.category.downcase+"40.png" %>
-        <% else %>
-            <%= image_tag "palmtree40.png" %>
-        <% end %>
+    <% if not lifestyle_item.lifestyle_type.nil? %>
+        <%= image_tag lifestyle_item.lifestyle_type.category.downcase+"40.png" %>
+    <% else %>
+        <%= image_tag "palmtree40.png" %>
     <% end %>
   </td>
 
