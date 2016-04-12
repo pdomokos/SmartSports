@@ -11,8 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20160407135037) do
 
-ActiveRecord::Schema.define(version: 20160404101332) do
   create_table "activities", force: true do |t|
     t.integer  "user_id"
     t.integer  "game_id"
@@ -123,6 +123,18 @@ ActiveRecord::Schema.define(version: 20160404101332) do
     t.string   "food_type_name"
   end
 
+  create_table "family_records", force: true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.string   "diabetes_key"
+    t.string   "relative_key"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "family_records", ["user_id"], name: "index_family_records_on_user_id"
+
   create_table "food_types", force: true do |t|
     t.string "name"
     t.string "category"
@@ -143,36 +155,6 @@ ActiveRecord::Schema.define(version: 20160404101332) do
   end
 
   add_index "friendships", ["user1_id", "user2_id"], name: "index_friendships_on_user1_id_and_user2_id"
-
-  create_table "genetics", force: true do |t|
-    t.integer  "user_id"
-    t.string   "source"
-    t.string   "relative"
-    t.string   "diabetes"
-    t.string   "antibody"
-    t.text     "note"
-    t.string   "group"
-    t.integer  "diabetes_type_id"
-    t.integer  "antibody_type_id"
-    t.integer  "relative_type_id"
-    t.boolean  "antibody_kind"
-    t.string   "antibody_value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "relative_type_name"
-    t.string   "diabetes_type_name"
-    t.string   "antibody_type_name"
-  end
-
-  add_index "genetics", ["user_id", "created_at"], name: "index_genetics_on_user_id_and_created_at"
-  add_index "genetics", ["user_id", "source"], name: "index_genetics_on_user_id_and_source"
-  add_index "genetics", ["user_id"], name: "index_genetics_on_user_id"
-
-  create_table "genetics_types", force: true do |t|
-    t.string "name"
-    t.string "category"
-    t.string "lang"
-  end
 
   create_table "init_versions", force: true do |t|
     t.integer "version_number"
@@ -250,9 +232,9 @@ ActiveRecord::Schema.define(version: 20160404101332) do
 
   create_table "medication_types", force: true do |t|
     t.string "category"
-    t.string "title"
     t.float  "dosage"
     t.string "name"
+    t.string "title"
   end
 
   add_index "medication_types", ["name"], name: "index_medication_types_on_name"
@@ -334,6 +316,20 @@ ActiveRecord::Schema.define(version: 20160404101332) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true
+
+  create_table "personal_records", force: true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.string   "diabetes_key"
+    t.string   "antibody_key"
+    t.text     "note"
+    t.boolean  "antibody_kind"
+    t.string   "antibody_value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "personal_records", ["user_id"], name: "index_personal_records_on_user_id"
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"

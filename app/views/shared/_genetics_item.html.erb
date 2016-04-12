@@ -1,51 +1,60 @@
 <tr class="bg">
 
     <td style="width:40px;" class="padded">
-      <%if genetics_item.group && genetics_item.group == "family_history"%>
-        <%= image_tag "family40.png" %>
+      <%if genetics_item && genetics_item.class == PersonalRecord %>
+        <%= image_tag "doctor_40.png" %>
       <%else%>
-          <%= image_tag "doctor_40.png" %>
+        <%= image_tag "family40.png" %>
       <%end%>
     </td>
 
     <td class="historyTitle padded familyhistoryItem">
       <span>
-        <% if genetics_item && genetics_item.relative_type_id && genetics_item.group && genetics_item.group == "family_history"%>
-            <%gen_type = GeneticsType.find(genetics_item.relative_type_id) %>
+        <% if genetics_item && genetics_item.class == PersonalRecord%>
             <%if I18n.locale == :hu%>
-                <%= DB_HU_CONFIG['genetics'][gen_type.category][gen_type.name] %>
+                <%= DB_HU_CONFIG['genetics']['diabetes'][genetics_item.diabetes_key] %>
             <%else%>
-                <%= DB_EN_CONFIG['genetics'][gen_type.category][gen_type.name] %>
+                <%= DB_EN_CONFIG['genetics']['diabetes'][genetics_item.diabetes_key] %>
             <%end%>,
-        <%end%>
-      </span>
-      <span>
-        <% if genetics_item && genetics_item.diabetes_type_id%>
-            <%gen_type = GeneticsType.find(genetics_item.diabetes_type_id) %>
             <%if I18n.locale == :hu%>
-                <%= DB_HU_CONFIG['genetics'][gen_type.category][gen_type.name] %>
+                <%= DB_HU_CONFIG['genetics']['autoantibody'][genetics_item.antibody_key] %>
             <%else%>
-                <%= DB_EN_CONFIG['genetics'][gen_type.category][gen_type.name] %>
-            <%end%>
-        <%end%>
-      </span>
-      <span>
-        <% if genetics_item && genetics_item.antibody_type_id && genetics_item.group && genetics_item.group == "personal_history" %>,
-            <%gen_type = GeneticsType.find(genetics_item.antibody_type_id) %>
+                <%= DB_EN_CONFIG['genetics']['autoantibody'][genetics_item.antibody_key] %>
+            <%end%>,
+            <% if genetics_item.antibody_kind==true%>
+                <%=t :positive%>,
+            <% else %>
+                <%=t :negative%>,
+            <% end %>
+            <%= genetics_item.antibody_value %>
+        <%elsif genetics_item && genetics_item.class == FamilyRecord%>
             <%if I18n.locale == :hu%>
-                <%= DB_HU_CONFIG['genetics'][gen_type.category][gen_type.name] %>
+                <%= DB_HU_CONFIG['genetics']['relatives'][genetics_item.relative_key] %>
             <%else%>
-                <%= DB_EN_CONFIG['genetics'][gen_type.category][gen_type.name] %>
+                <%= DB_EN_CONFIG['genetics']['relatives'][genetics_item.relative_key] %>
+            <%end%>,
+            <%if I18n.locale == :hu%>
+                <%= DB_HU_CONFIG['genetics']['diabetes'][genetics_item.diabetes_key] %>
+            <%else%>
+                <%= DB_EN_CONFIG['genetics']['diabetes'][genetics_item.diabetes_key] %>
             <%end%>
         <%end%>
       </span>
       <br/>
-      <span><%= genetics_item.note %></span>
+      <span><%if genetics_item && genetics_item.note %>
+                <%= genetics_item.note%>
+            <%end%>
+      </span>
     </td>
 
 
   <td class="iconColumn">
-    <%= form_tag( root_path+"users/#{current_user.id}/genetics/#{genetics_item.id}", id: "delete_ls_#{genetics_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
+    <% if genetics_item && genetics_item.class == PersonalRecord%>
+        <% resource = 'personal_records'%>
+    <% elsif genetics_item && genetics_item.class == FamilyRecord%>
+        <% resource = 'family_records'%>
+    <%end%>
+    <%= form_tag( root_path+"users/#{current_user.id}/#{resource}/#{genetics_item.id}", id: "delete_ls_#{genetics_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">
           <i class="fa fa-trash-o fa-2x"></i>
         </button>

@@ -12,6 +12,7 @@
    initFn = local_assigns.fetch(:locals, {})[:initFn]
    initSelector = local_assigns.fetch(:locals, {})[:initSelector]
    customFormId = local_assigns.fetch(:locals, {})[:customFormId]
+   resource = local_assigns.fetch(:locals, {})[:resource]
    cfe = ""
    if eid!=nil
      cfe = "cfe-#{eid}"
@@ -22,14 +23,22 @@
    if buttonClass == nil
      buttonClass = ""
    end
+   if resource == nil
+     elNamePl = elementName.split('_')[0].pluralize
+     elName = elementName.split('_')[0]
+   else
+     elNamePl = resource
+     elName = resource
+   end
 %>
+
 <div class="dataFormContainer formElement <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>">
   <div class="dataFormTitle">
     <%= image_tag img %><br/>
     <%=t title %>
   </div>
   <div class="clearBoth"></div>
-  <%= form_tag( root_path+"users/#{current_user.id}/#{elementName.split('_')[0].pluralize}", remote: true, class: "resource-create-form #{elementName.split('_')[0]}-form "+elementName+"-create-form "+cfe, id: elementId) do %>
+  <%= form_tag( root_path+"users/#{current_user.id}/#{elNamePl}", remote: true, class: "resource-create-form #{elName}-form "+elementName+"-create-form "+cfe, id: elementId) do %>
       <%= token_tag %>
       <%= render "forms/#{elementName}" %>
       <input type="hidden" name="elementName" value="<%= elementName %>">

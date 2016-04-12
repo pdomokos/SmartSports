@@ -1,7 +1,7 @@
 <div class="dataForm diet_drink diet <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="diet[source]" value="<%= @default_source %>">
 
-  <input type="search" name="diet[diet_name]" class="dataFormField diet_drink_name" placeholder="<%=t 'drink_placeholder' %>" disabled>
+  <input type="search" class="dataFormField diet_drink_name" placeholder="<%=t 'drink_placeholder' %>" disabled>
   <input class="diet_drink_type_id" name="diet[name]" type="hidden">
 
   <div class="dataScale">
