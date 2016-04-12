@@ -1,0 +1,1 @@
+json.extract! @personal_records, :id, :user_id, :source, :diabetes_key, :antibody_key, :note, :antibody_kind, :antibody_value, :created_at, :updated_at

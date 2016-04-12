@@ -1,14 +1,13 @@
 class RenameMedicationTypeGroup < ActiveRecord::Migration
   def up
     rename_column :medication_types, :group, :category
-    rename_column :medication_types, :name, :title
-    add_column :medication_types, :name, :string
-    add_index :medication_types, :name
+    add_column :medication_types, :title, :string
+    add_index :medication_types, :title
   end
 
   def down
-    remove_index :medication_types, :name
+    remove_column :medication_types, :title
+    remove_index :medication_types, :title
     rename_column :medication_types, :category, :group
-    rename_column :medication_types, :title, :name
   end
 end

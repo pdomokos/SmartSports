@@ -12,7 +12,8 @@ Rails.application.routes.draw do
         resources :diets
         resources :medications
         resources :lifestyles
-        resources :genetics
+        resources :personal_records
+        resources :family_records
         resources :labresults
         resources :notifications
         resources :sensor_measurements
@@ -24,8 +25,8 @@ Rails.application.routes.draw do
       resources :food_types
       resources :activity_types
       resources :lifestyle_types
-      resources :genetics_types
       resources :labresult_types
+      resources :genetics_record_types
       get 'profile' => 'profile#show'
       put 'profile' => 'profile#update'
       post 'profile_image' => 'profile#profile_image'
@@ -41,8 +42,9 @@ Rails.application.routes.draw do
   resources :food_types
   resources :activity_types
   resources :lifestyle_types
-  resources :genetics_types
   resources :labresult_types
+  resources :genetics_record_types
+  resources :family_record_types
   resources :click_records
   resources :custom_forms do
     resources :custom_form_elements
@@ -58,6 +60,8 @@ Rails.application.routes.draw do
     resources :lifestyles
     resources :diets
     resources :medications
+    resources :personal_records
+    resources :family_records
     resources :genetics
     resources :labresults
     resources :sensor_measurements

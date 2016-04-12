@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  user_id: 1
   source: MyString
-  diabetes: MyString
-  group:  MyString
+  diabetes_key: MyString
   note: MyText
 
 two:
+  user_id: 1
   source: MyString
-  diabetes: MyString
-  group: MyString
+  diabetes_key: MyString
   note: MyText

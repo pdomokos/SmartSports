@@ -272,7 +272,14 @@
     lang: d['lang']
     }
 
-  window.genetics_map_fn = (d) ->
+  window.personal_record_map_fn = (d) ->
+    {
+    label: d['name'],
+    id: d['id'],
+    lang: d['lang']
+    }
+
+  window.family_record_map_fn = (d) ->
     {
     label: d['name'],
     id: d['id'],

@@ -1,5 +1,5 @@
 @genetics_loaded = () ->
-  console.log("genetics loaded")
+  console.log("personal_records loaded")
 
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#genetics-link").css
@@ -132,28 +132,20 @@
 @load_genetics_types = (cb) ->
   self = this
   current_user = $("#current-user-id")[0].value
-  console.log "calling load genetics types"
+  console.log "calling load genetic_record types"
   user_lang = $("#user-lang")[0].value
   db_version = $("#db-version")[0].value
   if user_lang
-    geneticskey = 'sd_relatives_'+user_lang
+    geneticskey = 'sd_diabetes_'+user_lang
   else
-    geneticskey = 'sd_relatives_hu'
-  if getStored(geneticskey)==undefined || getStored(geneticskey).length==0 || testDbVer(db_version,['sd_relatives_hu','sd_diabetes_hu','sd_autoantibody_hu','sd_relatives_en','sd_diabetes_en','sd_autoantibody_en'])
-    ret = $.ajax '/genetics_types.json',
+    geneticskey = 'sd_diabetes_hu'
+  if getStored(geneticskey)==undefined || getStored(geneticskey).length==0 || testDbVer(db_version,['sd_diabetes_hu','sd_autoantibody_hu','sd_relatives_hu','sd_diabetes_en','sd_autoantibody_en','sd_relatives_en'])
+    ret = $.ajax '/genetics_record_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load genetics_types AJAX Error: #{textStatus}"
+        console.log "load personal_record_types AJAX Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
-        console.log "load genetics_types  Successful AJAX call"
-
-        setStored('sd_relatives_hu', data.filter( (d) ->
-          d['category'] == "relatives"
-        ).map( (d) ->
-          {
-          label: d['hu'],
-          id: d['name']
-          }))
+        console.log "load personal_record_types  Successful AJAX call"
 
         setStored('sd_diabetes_hu', data.filter( (d) ->
           d['category'] == "diabetes"
@@ -169,15 +161,6 @@
         ).map( (d) ->
           {
           label: d['hu'],
-          id: d['name']
-          }))
-
-
-        setStored('sd_relatives_en', data.filter( (d) ->
-          d['category'] == "relatives"
-        ).map( (d) ->
-          {
-          label: d['en'],
           id: d['name']
           }))
 
@@ -199,14 +182,30 @@
           id: d['name']
           }))
 
+        setStored('sd_relatives_hu', data.filter( (d) ->
+          d['category'] == "relatives"
+        ).map( (d) ->
+          {
+          label: d['hu'],
+          id: d['name']
+          }))
+
+        setStored('sd_relatives_en', data.filter( (d) ->
+          d['category'] == "relatives"
+        ).map( (d) ->
+          {
+          label: d['en'],
+          id: d['name']
+          }))
+
 
         setStored('db_version', db_version)
         cb()
   else
     ret = new Promise( (resolve, reject) ->
-      console.log "genetics already downloaded"
+      console.log "personal_records already downloaded"
       cb()
-      resolve("genetics cbs called")
+      resolve("personal_records cbs called")
     )
   return ret
 
@@ -214,12 +213,12 @@
   self = this
   current_user = $("#current-user-id")[0].value
   lang = $("#user-lang")[0].value
-  console.log "calling load recent genetics"
+  console.log "calling load recent personal_records"
   url = 'users/' + current_user + '/genetics.js?source='+window.default_source+'&order=desc&limit=10&lang='+lang
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent genetics hist AJAX Error: #{textStatus}"
+      console.log "load recent personal_records hist AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
-      console.log "load recent genetics hist  Successful AJAX call"
+      console.log "load recent personal_records hist  Successful AJAX call"
       console.log textStatus

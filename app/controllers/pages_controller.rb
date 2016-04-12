@@ -106,7 +106,7 @@ class PagesController < ApplicationController
   end
 
   def genetics
-    @genetics = current_user.genetics.order(created_at: :desc).limit(4)
+    @personal_records = current_user.personal_records.order(created_at: :desc).limit(4)
     save_click_record(:success, nil, nil)
   end
 

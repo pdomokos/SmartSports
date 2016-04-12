@@ -11,9 +11,9 @@ class LabresultsController < ApplicationController
     @labresults = Labresult.where("user_id = #{user_id}")
 
     if order and order=="desc"
-      @labresults = @labresults.order(created_at: :desc)
+      @labresults = @labresults.order(date: :desc)
     else
-      @labresults = @labresults.order(created_at: :asc)
+      @labresults = @labresults.order(date: :asc)
     end
     if limit and limit.to_i>0
       @labresults = @labresults.limit(limit)

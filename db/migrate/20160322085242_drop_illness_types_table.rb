@@ -6,6 +6,7 @@ class DropIllnessTypesTable < ActiveRecord::Migration
   def down
     create_table :illness_types do |t|
       t.string :name
+      t.string :category
       t.string :lang
     end
   end

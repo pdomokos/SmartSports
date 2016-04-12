@@ -1,2 +1,3 @@
-json.extract! @genetics, :id, :user_id, :source, :source, :relative, :diabetes, :antibody, :note, :group, :relative_type_id, :relative_type_name, :diabetes_type_id, :diabetes_type_name, :antibody_type_id, :antibody_type_name, :antibody_kind, :antibody_value, :created_at, :updated_at
-
+json.extract! @genetics_records, :id, :user_id, :source, :diabetes_key, :antibody_key, :relative_key, :note, :antibody_kind, :antibody_value, :created_at, :updated_at
+# json.extract! @personal_records, :id, :user_id, :source, :diabetes_key, :antibody_key, :note, :antibody_kind, :antibody_value, :created_at, :updated_at
+# json.extract! @family_records, :id, :user_id, :source, :relative_key, :diabetes_key, :note, :created_at, :updated_at
