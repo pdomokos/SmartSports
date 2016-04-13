@@ -40,10 +40,10 @@
     <%= form_tag(root_path+"users/#{current_user.id}/activities/#{activity_item.id}", id: "mod_act_#{activity_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
         <button id="fav-icon" class="tableControl">
           <% if activity_item.favourite %>
-              <i class="fa fa-star fa-2x is-favorite"></i>
+              <i class="fa fa-star fa-2x is-favorite iconTooltip" title="<%=t 'remove_from_fav'%>"></i>
               <input type="hidden" name="activity[favourite]" value="false" >
           <% else %>
-              <i class="fa fa-star fa-2x no-favorite"></i>
+              <i class="fa fa-star fa-2x no-favorite iconTooltip" title="<%=t 'add_to_fav'%>"></i>
               <input type="hidden" name="activity[favourite]" value="true" >
           <% end %>
         </button>
@@ -53,7 +53,7 @@
   <td class="iconColumn deleteExercise">
     <%= form_tag(root_path+"users/#{current_user.id}/activities/#{activity_item.id}", id: "delete_act_#{activity_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">
-          <i class="fa fa-trash-o fa-2x"></i>
+          <i class="fa fa-trash-o fa-2x iconTooltip" title="<%=t 'remove_item'%>"></i>
         </button>
     <% end %>
   </td>

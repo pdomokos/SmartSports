@@ -66,6 +66,10 @@ hu:
   conn_not_synced: "Nincs szinkronizálva."
   conn_last_sync: "Utolsó szinkronizálás:"
 
+  add_to_fav: "Hozzáadás kedvencekhez"
+  remove_from_fav: "Eltávolítás kedvencek közül"
+  remove_item: "Elem törlése"
+
 #login
   sign_in: "Jelentkezzen be a SmartDiab fiókjába"
   login_button: "Belépés"

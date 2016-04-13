@@ -30,7 +30,7 @@ en:
   tooltip_user_info: "Registration date"
   menu_dashboard: "Dashboard"
   menu_diet:      "Diet"
-  menu_exercise:  "Exercise"
+  menu_exercise:  "Activity"
   menu_health:    "Health"
   menu_medication: "Medication"
   menu_wellbeing: "Well-being"
@@ -86,6 +86,10 @@ en:
   conn_sleep: "sleep"
   conn_not_synced: "Not yet synced."
   conn_last_sync: "Last sync:"
+
+  add_to_fav: "Add to Favourites"
+  remove_from_fav: "Remove from Favourites"
+  remove_item: "Remove item"
 
 #login
   sign_in: "Sign in to SmartDiab"
