@@ -9,6 +9,14 @@
       }
     }
   )
+
+  $(".iconTooltip").tooltip({
+      show: {
+        delay: 500
+      }
+    }
+  )
+
   $('[data-toggle="tooltip"]').tooltip();
 
 @pages_menu = () ->
@@ -305,8 +313,9 @@
       if c != cname
         $(sel).removeClass(c)
 
-  window.popup_success = (msg, cls='dietStyle') ->
+  window.popup_success = (msg, cls='dietStyle', calMsg='') ->
     $("#infoPopup span.msg").html(msg)
+    $("#infoPopup span.calMsg").html(calMsg)
     removeClassesExcept("#infoPopup", "dataCaptured")
     $("#infoPopup").addClass(cls)
     $("#infoPopup").removeClass("hidden");
