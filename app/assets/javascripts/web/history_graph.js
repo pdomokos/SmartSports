@@ -40,8 +40,7 @@ function determineImage(point) {
 }
 
 function determineTooltip(point) {
-    var tt = point['date']+"<br/>"+point['tooltip'];
-    return tt;
+    return point['date'] + "<br/>" + point['tooltip'];
 }
 
 function convertToHistory(data) {
@@ -51,7 +50,7 @@ function convertToHistory(data) {
         d = moment(new Date()).format(moment_datefmt);
         ret3['time'] = d;
         var hmap = {};
-        hmap['kind'] = "start"
+        hmap['kind'] = "start";
         hmap['type'] = "start";
         hmap['date'] = d;
         hmap['tooltip'] = "";
@@ -71,7 +70,6 @@ function convertToHistory(data) {
     adata.forEach(function (p) {
         amap[moment(p['dates'][0]).format(moment_datefmt)].push(p)
     });
-    var result = [];
     var dateKeys = Object.keys(amap);
     dateKeys.sort();
     dateKeys.forEach(function (currKey) {
@@ -89,7 +87,7 @@ function convertToHistory(data) {
             if(a['date']==b['date']) return 0;
             if(a['date']<b['date']) return -1;
             return 1;
-        })
+        });
         result.push(ret);
     });
     return result;
@@ -116,9 +114,6 @@ function computeLeft(history, w, a, b) {
 
 function addPoint(canvas, length, history, a, b) {
     var w = $(canvas).width();
-    var step = w / length;
-    var count = countElements(history);
-
     var left = computeLeft(history, w, a, b);
     var point = getElement(history, a, b);
 
@@ -152,5 +147,5 @@ function addPoints(canvas, history) {
 
     pointsHTML += "<div style='clear:both;'></div>";
     $(canvas).html(pointsHTML);
-    $(canvas+" .inner").qtip()
+    $(canvas+" .inner").qtip();
 }

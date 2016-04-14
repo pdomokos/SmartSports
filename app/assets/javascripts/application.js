@@ -23,6 +23,8 @@
 //= require_tree ./common
 //= require_tree ./web
 
+'use strict';
+
 function urlPrefix() {
     return window.url_prefix;
 }

@@ -84,7 +84,8 @@ group :test do
   gem 'mocha'
   gem 'capybara'
   gem 'capybara_minitest_spec'
-  gem 'selenium-webdriver'
+  gem 'poltergeist'
+  # gem 'selenium-webdriver'
   gem 'database_cleaner'
 end
 
