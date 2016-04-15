@@ -232,9 +232,9 @@ ActiveRecord::Schema.define(version: 20160407135037) do
 
   create_table "medication_types", force: true do |t|
     t.string "category"
+    t.string "title"
     t.float  "dosage"
     t.string "name"
-    t.string "title"
   end
 
   add_index "medication_types", ["name"], name: "index_medication_types_on_name"

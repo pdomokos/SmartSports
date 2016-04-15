@@ -17,7 +17,6 @@ namespace :smartdiab do
   task init_db: :environment do
     Rake::Task['smartdiab:init_activity'].execute
     Rake::Task['smartdiab:init_food'].execute
-    Rake::Task['smartdiab:init_genetics'].execute
     Rake::Task['smartdiab:init_labresult'].execute
     Rake::Task['smartdiab:init_lifestyle'].execute
     updateVersion()
@@ -62,19 +61,6 @@ namespace :smartdiab do
       FoodType.create!(chunk)
     end
     puts 'FoodTypes loaded'
-  end
-
-  task init_genetics: :environment do
-    if GeneticsType.all.size != 0
-      GeneticsType.all.delete_all
-    end
-
-    dirName = File.dirname(__FILE__)
-    csv_text = dirName + "/init_genetics.csv"
-    ret = SmarterCSV.process(csv_text, headers: true, col_sep: ";", chunk_size: 2000) do |chunk|
-      GeneticsType.create!(chunk)
-    end
-    puts 'GeneticsTypes loaded'
   end
 
   task init_labresult: :environment do
