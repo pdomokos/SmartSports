@@ -7,6 +7,12 @@
         <% else %>
             <%= image_tag "oral40.png" %>
         <% end %>
+    <% elsif medication_item.custom_medication_type%>
+        <% if medication_item.custom_medication_type.category == 'custom_insulin' %>
+            <%= image_tag "insulin40.png" %>
+        <% else %>
+            <%= image_tag "oral40.png" %>
+        <% end %>
     <% else %>
         <%= image_tag "oral40.png" %>
     <% end %>
@@ -16,13 +22,21 @@
     <input id="medication_data_<%=medication_item.id%>" type="hidden" value="<%=
         m = {'medication' => medication_item.as_json}
         if medication_item.medication_type
-        m.merge!({'medication_name' => medication_item.medication_type.name})
-        m.merge!({'medication_type' => medication_item.medication_type.category})
+            m.merge!({'medication_name' => medication_item.medication_type.name})
+            m.merge!({'medication_type' => medication_item.medication_type.category})
+        elsif medication_item.custom_medication_type
+            m.merge!({'medication_name' => medication_item.custom_medication_type.name})
+            m.merge!({'medication_type' => medication_item.custom_medication_type.category})
         end
         JSON.dump(m)
     %>">
     <% if  medication_item.medication_type and medication_item.medication_type.category %>
         <strong><%= medication_item.medication_type.title %></strong>
+        <% if medication_item.amount && medication_item.amount > 0 %>
+            <br/><span><%=(t :amount)%>: <%= medication_item.amount %></span>
+        <% end %>
+    <% elsif medication_item.custom_medication_type and medication_item.custom_medication_type.category %>
+        <strong><%= medication_item.custom_medication_type.name %></strong>
         <% if medication_item.amount && medication_item.amount > 0 %>
             <br/><span><%=(t :amount)%>: <%= medication_item.amount %></span>
         <% end %>

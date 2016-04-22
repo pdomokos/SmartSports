@@ -6,14 +6,39 @@ module MedicationsCommon
     user_id = params[:user_id]
     user = User.find(user_id)
     name = params['medication']['name']
+    custom_name = params['medication']['custom_name']
     params[:medication].delete :name
-    mt = MedicationType.find_by_name(name)
-
+    params[:medication].delete :custom_name
     medication = user.medications.build(medication_params)
-    medication.medication_type = mt
+    if(name != nil && name != "")
+      mt = MedicationType.find_by_name(name)
+      medication.medication_type = mt
+    elsif(custom_name != nil && custom_name != "")
+      cmt = CustomMedicationType.find_by_name(custom_name)
+      if cmt == nil || (cmt.category=='custom_insulin' && params[:elementName] == "medication_drugs") || (cmt.category=='custom_drug' && params[:elementName] == "medication_insulin")
+        cmt = CustomMedicationType.new
+        if params[:elementName] == "medication_insulin"
+          cmt.category = "custom_insulin"
+        elsif params[:elementName] == "medication_drugs"
+          cmt.category = "custom_drug"
+        else
+          cmt.category = "custom"
+        end
+        cmt.name = custom_name
+        uniqId = SecureRandom.urlsafe_base64(16)
+        cmt.key = uniqId
+      end
+      medication.custom_medication_type = cmt
+    end
 
     if medication.save
-      send_success_json(medication.id, {name: medication.medication_type.name, title: medication.medication_type.title})
+      if medication.medication_type
+        mt = MedicationType.find(medication.medication_type.name)
+        send_success_json(medication.id, {medication_name: mt.title})
+      else
+        cmt = CustomMedicationType.where(key: cmt.key).first
+        send_success_json(medication.id, {medication_name: cmt.name})
+      end
     else
       send_error_json(medication.id, medication.errors.full_messages.to_sentence, 400)
     end
@@ -67,6 +92,16 @@ module MedicationsCommon
       send_error_json(nil, "Delete error", 400)
       return
     end
+
+    if !check_owner()
+      send_error_json(@medication.id, "Unauthorized", 403)
+      return
+    end
+
+    # if @medication.custom_medication_type_id != nil
+    #    cmt = CustomMedicationType.find(@medication.custom_medication_type_id)
+    #    cmt.destroy
+    # end
 
     if @medication.destroy
       send_success_json(@medication.id, {:msg => "Deleted successfully"})

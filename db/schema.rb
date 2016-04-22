@@ -101,6 +101,12 @@ ActiveRecord::Schema.define(version: 20160524092420) do
     t.datetime "created_at"
   end
 
+  create_table "custom_medication_types", force: true do |t|
+    t.string "key"
+    t.string "category"
+    t.string "name"
+  end
+
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
