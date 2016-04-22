@@ -27,6 +27,7 @@ function determineImage(point) {
         sleep: "sleepType",
         drink: "drinkType",
         food: "foodType",
+        calory: "foodType",
         smoke: "smokeType"
     };
     var ret = "";
