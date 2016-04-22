@@ -19,7 +19,7 @@
 
     loadMedicationHistory()
     resetMedications()
-    popup_success(data['title']+popup_messages.saved_successfully, "medicationStyle")
+    popup_success(data['medication_name']+popup_messages.saved_successfully, "medicationStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)
@@ -38,9 +38,9 @@
 
   $("#recentResourcesTable").on("click", "td.medicationItem", (e) ->
     data = JSON.parse(e.currentTarget.querySelector("input").value)
-    if(data.medication_type=="insulin")
+    if(data.medication_type=="insulin" || data.custom_medication_type=="custom_insulin")
       load_medication_insulin("#insulin_form", data)
-    if(data.medication_type=="oral")
+    if(data.medication_type=="oral" || data.custom_medication_type=="custom_drug")
       load_medication_drugs("#drugs_form", data)
   )
 
@@ -68,6 +68,18 @@
 
   $(selector+"input[name='medication[date]']").datetimepicker(timepicker_defaults)
 
+  current_user = $("#current-user-id")[0].value
+  custom_medications = null
+  url = 'users/' + current_user + '/custom_medication_types.json'
+  $.ajax urlPrefix()+url,
+    type: 'GET',
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "load custom medications AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "load custom medications  Successful AJAX call"
+      custom_medications = data
+
+  console.log custom_medications
   $(selector+".oral_medication_sel").autocomplete({
     minLength: 3,
     source: (request, response) ->
@@ -79,17 +91,26 @@
         pillkey = 'sd_pills_'+user_lang
       else
         pillkey = 'sd_pills_hu'
-      for element in getStored(pillkey)
+      store = getStored(pillkey)
+      custom_drugs = []
+      for customelement in custom_medications
+        if customelement['category'] == 'custom_drug'
+          custom_drugs.push(customelement)
+      store = store.concat(custom_drugs)
+      for element in store
         if matcher.test(element.label)
           result.push(element)
           cnt += 1
       response(result)
     select: (event, ui) ->
-      $(selector+".oral_medication_name").val(ui.item.id)
+        $(selector+".oral_medication_name").val(ui.item.id)
     create: (event, ui) ->
       $(selector+".oral_medication_sel").removeAttr("disabled")
     change: (event, ui) ->
       console.log ui['item']
+      if ui['item'] == null || (ui['item'].category && ui['item'].category.startsWith("custom"))
+        $(selector+".oral_medication_name").val(null)
+        $(selector+".oral_medication_custom_name").val($(selector+".oral_medication_sel").val())
   })
 
   $(selector+".insulin_medication_sel").autocomplete({
@@ -103,7 +124,13 @@
         insulinkey = 'sd_insulin_'+user_lang
       else
         insulinkey = 'sd_insulin_hu'
-      for element in getStored(insulinkey)
+      store = getStored(insulinkey)
+      custom_insulins = []
+      for customelement in custom_medications
+        if customelement['category'] == 'custom_insulin'
+          custom_insulins.push(customelement)
+      store = store.concat(custom_insulins)
+      for element in store
         if matcher.test(element.label)
           result.push(element)
           cnt += 1
@@ -115,11 +142,16 @@
       $(selector+".insulin_medication_sel").removeAttr("disabled")
     change: (event, ui) ->
       insulinSelected = ui['item']
+      if ui['item'] == null || (ui['item'].category && ui['item'].category.startsWith("custom"))
+        $(selector+".insulin_medication_name").val(null)
+        $(selector+".insulin_medication_custom_name").val($(selector+".insulin_medication_sel").val())
   }).focus ->
     console.log "insulin focus called"
     $(this).autocomplete("search")
 
 @resetMedications = () ->
+  $(".custom_oral_medication_name").val("")
+  $(".custom_insulin_medication_name").val("")
   $('.medication_drugs_datepicker').val(moment().format(moment_fmt))
   $('.medication_insulin_datepicker').val(moment().format(moment_fmt))
 
@@ -211,7 +243,7 @@
     return ret
 
 validate_medication_common = (sel) ->
-  if !$(sel+" input[name='medication[name]']").val()
+  if (!$(sel+" input[name='medication[name]']").val() && !$(sel+" input[name='medication[custom_name]']").val())
     popup_error(popup_messages.failed_to_add_data, "medicationStyle")
     return false
   if( !$(sel+" input[name='medication[amount]']").val() || notpositive(sel+" input[name='medication[amount]']"))
@@ -232,8 +264,12 @@ validate_medication_common = (sel) ->
   console.log data
   medication = data['medication']
 
-  $(sel+" input[name='medication[name]']").val(data.medication_name)
-  $(sel+" input[name='medication[medication_name]']").val(get_medication_label(data.medication_name))
+  if medication.medication_type_id
+    $(sel+" input[name='medication[name]']").val(data['medication_name'])
+    $(sel+" input[name='medication[medication_name]']").val(get_medication_label(data['medication_name']))
+  else if medication.custom_medication_type_id
+    $(sel+" input[name='medication[name]']").val(data['medication_name'])
+    $(sel+" input[name='medication[medication_custom_name]']").val(data['medication_name'])
   $(sel+" input[name='medication[amount]']").val(medication.amount)
   $(sel+" input[name='medication[date]']").val(moment().format(moment_fmt))
 
@@ -241,8 +277,12 @@ validate_medication_common = (sel) ->
   console.log "loading insulin"
   medication = data['medication']
 
-  $(sel+" input[name='medication[name]']").val(data.medication_name)
-  $(sel+" input[name='medication[medication_name]']").val(get_medication_label(data.medication_name))
+  if medication.medication_type_id
+    $(sel+" input[name='medication[name]']").val(data['medication_name'])
+    $(sel+" input[name='medication[medication_name]']").val(get_medication_label(data['medication_name']))
+  else if medication.custom_medication_type_id
+    $(".medication_insulin_name").val(data['medication_name'])
+    $(sel+" input[name='medication[medication_custom_name]']").val(data['medication_name'])
   $(sel+" input[name='medication[amount]']").val(medication.amount)
   $(sel+" input[name='medication[date]']").val(moment().format(moment_fmt))
 

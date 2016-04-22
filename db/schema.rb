@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407135037) do
+ActiveRecord::Schema.define(version: 20160421314939) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -86,6 +86,12 @@ ActiveRecord::Schema.define(version: 20160407135037) do
     t.string  "form_name"
     t.string  "image_name"
     t.string  "form_tag"
+  end
+
+  create_table "custom_medication_types", force: true do |t|
+    t.string "key"
+    t.string "category"
+    t.string "name"
   end
 
   create_table "delayed_jobs", force: true do |t|

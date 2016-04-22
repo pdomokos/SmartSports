@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     resources :lifestyles
     resources :diets
     resources :medications
+    resources :custom_medication_types
     resources :personal_records
     resources :family_records
     resources :genetics
