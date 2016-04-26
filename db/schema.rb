@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407135037) do
+ActiveRecord::Schema.define(version: 20160422132615) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -134,6 +134,13 @@ ActiveRecord::Schema.define(version: 20160407135037) do
   end
 
   add_index "family_records", ["user_id"], name: "index_family_records_on_user_id"
+
+  create_table "faqs", force: true do |t|
+    t.integer "sortcode"
+    t.string  "title"
+    t.text    "detail"
+    t.string  "lang"
+  end
 
   create_table "food_types", force: true do |t|
     t.string "name"

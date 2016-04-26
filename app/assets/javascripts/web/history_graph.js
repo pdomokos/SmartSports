@@ -29,7 +29,7 @@ function determineImage(point) {
         food: "foodType",
         smoke: "smokeType"
     };
-    ret = "";
+    var ret = "";
     if(point['kind']=="exercise") {
         ret = "exerciseType";
     }
@@ -47,7 +47,7 @@ function convertToHistory(data) {
     var result = [];
     if(data.length == 0) {
         var ret3 = {};
-        d = moment(new Date()).format(moment_datefmt);
+        var d = moment(new Date()).format(moment_datefmt);
         ret3['time'] = d;
         var hmap = {};
         hmap['kind'] = "start";
@@ -61,14 +61,17 @@ function convertToHistory(data) {
     }
     var adata = data.filter(function(d) {return d['evt_type']!= 'waist';});
     var amap = {};
-    var k = new Set(adata.map(function (p) {
-        return moment(p['dates'][0]).format(moment_datefmt)
-    }));
-    k.forEach(function (v) {
-        amap[v] = []
+    var k = {};
+    adata.map(function (p) {
+        return moment(p['dates'][0]).format(moment_datefmt);
+    }).forEach( function(it) {
+            k[it] = 1;
+    });
+    Object.keys(k).forEach(function (v) {
+        amap[v] = [];
     });
     adata.forEach(function (p) {
-        amap[moment(p['dates'][0]).format(moment_datefmt)].push(p)
+        amap[moment(p['dates'][0]).format(moment_datefmt)].push(p);
     });
     var dateKeys = Object.keys(amap);
     dateKeys.sort();
