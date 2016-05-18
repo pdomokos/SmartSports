@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   before_action :set_locale
   before_action :set_user_data
   before_action :set_db_version
-  before_filter :require_login, except: [:signin, :signup, :reset_password]
+  before_filter :require_login, except: [:signin, :signup, :reset_password, :eula]
   layout :which_layout
 
   @movesconn = nil
@@ -263,6 +263,10 @@ class PagesController < ApplicationController
 
   def friendship
     @friendship = Friendship.new
+  end
+
+  def eula
+    render 'shared/eula'
   end
 
 private

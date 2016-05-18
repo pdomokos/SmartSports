@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'errors/general'
   get 'errors/unauthorized'
+  get 'eula' => 'pages#eula'
 
   use_doorkeeper
 
