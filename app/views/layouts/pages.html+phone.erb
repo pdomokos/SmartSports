@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title><%= yield :title_text %></title>
+  <script type="text/javascript">window.url_prefix = "<%= root_path %>";</script>
+  <%= stylesheet_link_tag 'application_phone', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <%= csrf_meta_tags %>
+
+  <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <%= favicon_link_tag 'logo-login.png' %>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
+
+</head>
+<body class="nobgAnimation" id="pageTop">
+<input id="user-lang" value="<%=I18n.locale%>" type="hidden" />
+<input id="db-version" value="<%=@dbversion%>" type="hidden" />
+<input id="amount_values" value="<%=t :amount_values%>" type="hidden" />
+<%= render partial: 'shared/popups' %>
+<%= yield :background_style %>
+<%= yield :mobile_menu %>
+<!-- yield menu here if needed -->
+
+<div class="mainContainer">
+  <% if current_user %>
+      <input id="current-user-id" value="<%= current_user.id %>" type="hidden" >
+      <%= yield %>
+  <% end %>
+
+</div>
+
+</body>
+</html>

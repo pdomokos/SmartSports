@@ -55,6 +55,22 @@ class ApplicationController < ActionController::Base
     }
 
     @hidden_forms = false
+
+    detect_browser
+
+  end
+
+  def detect_browser
+    case request.user_agent
+      when /iPhone/i
+        request.variant = :phone
+      when /Android/i && /mobile/i
+        request.variant = :phone
+      when /Windows Phone/i
+        request.variant = :phone
+      else
+        request.variant = :desktop
+    end
   end
 
   def get_last_synced_date(user_id, source)

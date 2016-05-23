@@ -1,0 +1,101 @@
+
+
+.dataFormSeparator {
+  width: 0px;
+  height: 0px !important;
+}
+
+.canv {
+  visibility:hidden;
+}
+
+
+.app2Menu {
+  background: #2D3644;
+  position: fixed;
+  top: 0px;
+  width: 200px;
+  height: 100%;
+  z-index: 1000;
+}
+
+
+.app2Menu .inner {
+  padding-top: 5px;
+  background-color: #333333;
+  vertical-align:top;
+}
+
+
+.historyContainer {
+  padding-top: 0px;
+  margin-top: -110px;
+}
+
+.dietStyle .dataFormField {
+  width: 165px;
+}
+
+.exerciseStyle .dataFormField {
+  width: 165px;
+}
+
+.healthStyle .dataFormField {
+  width: 165px;
+}
+
+.wellbeingStyle .dataFormField {
+  width: 165px;
+}
+
+.medicationStyle .dataFormField {
+  width: 165px;
+};
+
+.geneticsStyle .dataFormField {
+  width: 165px;
+}
+
+.labresultStyle .dataFormField {
+  width: 165px;
+}
+
+.wellbeingStyle .dataFormTextArea {
+  width: 165px;
+}
+
+.labresultStyle .dataFormTextArea {
+  width: 165px;
+}
+
+.geneticsStyle .dataFormArea {
+  width: 165px;
+}
+
+.dietStyle.dataFormContainer {
+  width: 250px;
+}
+
+.exerciseStyle.dataFormContainer {
+  width: 250px;
+}
+
+.healthStyle.dataFormContainer {
+  width: 250px;
+}
+
+.wellbeingStyle.dataFormContainer {
+  width: 250px;
+}
+
+.medicationStyle.dataFormContainer {
+  width: 250px;
+};
+
+.geneticsStyle.dataFormContainer {
+  width: 250px;
+}
+
+.labresultStyle.dataFormContainer {
+  width: 250px;
+}

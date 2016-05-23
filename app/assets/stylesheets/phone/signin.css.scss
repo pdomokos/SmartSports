@@ -1,0 +1,110 @@
+.featuresDiv {
+  top: 500px;
+  width: 300px;
+  margin-left: -150px;
+  position: absolute;
+}
+
+.featuresDiv2 {
+  top: 540px;
+}
+
+.featureStyle {
+  padding-bottom: 10px;
+}
+
+.featuresDiv table {
+  table-layout:fixed;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  width: 250px;
+  display: block;
+}
+
+.featuresDiv table td {
+  width: 70px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.signinHeader {
+  top: 50px;
+}
+
+.loginDiv {
+  top: 250px;
+}
+
+.loginLogo {
+  padding-left: 10px;
+}
+
+.logoTitle {
+  margin-top: 50px;
+  font-size: 14px !important;
+  line-height: 30px;
+}
+
+.loginField2 {
+  width: 110px;
+}
+
+.settingsButton {
+  width: 130px;
+}
+
+.forgottenField {
+  width: 255px;
+  margin-left: 60px;
+}
+
+.welcomeMessage {
+  width: 255px;
+}
+
+.welcomeMessage2{
+  margin-top: 64px;
+  margin-left: 55px;
+}
+
+.signupHeader{
+  top: 60px;
+  width: 250px;
+}
+
+.signinDetail{
+  visibility: hidden;
+}
+
+.registerDiv {
+  width: 295px;
+}
+
+.signupField {
+  width: 230px;
+}
+
+.signupButton {
+  width: 230px;
+}
+
+.signupProfileHeader{
+  top:64px;
+  padding-left: 85px;
+}
+
+.signupProfileDiv {
+  width: 323px;
+  height: 128px;
+  color: grey;
+}
+
+.signupProfileDetail{
+  padding-top: 15px;
+}
+
+.signupProfileDetailFont{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+}

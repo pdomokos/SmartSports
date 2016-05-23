@@ -182,7 +182,7 @@ a.signupLink, a.signupLink:visited {
   border: solid 1px #4FBDF2;
   background: white;
   height: 40px;
-  width: 400px;
+  width: 360px;
   padding-left: 20px;
   padding-right: 50px;
   margin-bottom: 10px;
@@ -246,4 +246,26 @@ a.signupLink, a.signupLink:visited {
   text-align: center;
   color: white;
   padding-bottom: 20px;
+}
+
+.signupProfileHeader{
+  position:absolute;
+  left:47%;
+  margin-left:-240px;
+  top:100px;
+}
+
+.signupProfileDiv {
+  width: 600px;
+  height: 128px;
+  color: grey;
+}
+
+.signupProfileDetail{
+  padding-top: 15px;
+}
+
+.signupProfileDetailFont{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
 }

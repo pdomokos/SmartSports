@@ -1,0 +1,68 @@
+
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+
+    <%= render "mobile_navbar_header" %>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <div class="app2Menu">
+        <div class="inner">
+          <div class="menuitem mdProfile">
+            <a id="patients-link" class="menulink" href="<%= url_for( :action => 'md_patients', :locale => I18n.locale ) %>">
+              <%= t 'menu_patients' %>
+            </a>
+          </div>
+          <!--
+            <div class="menuitem c0 myprofile">
+              <a id="forms-link" class="menulink" href="<!%= url_for( :action => 'md_customforms', :locale => I18n.locale ) %>">
+                <!%= t 'menu_forms' %>
+              </a>
+            </div>
+         -->
+          <div class="menuitem c8 b8">
+            <a id="statistics-link" class="menulink" href="<%= url_for( :action => 'md_statistics', :locale => I18n.locale ) %>">
+              <%=t 'menu_statistics' %>
+            </a>
+          </div>
+
+          <div class="menuitem" style="padding-top: 10px; text-align: center; font-size: 11px; color: #ffffff;">
+            <p>© 2016 Larkbio</p>
+            <p class="eulalink"><a href="/eula" target="_blank">FELHASZNÁLÁSI ÉS ADATKEZELÉSI TÁJÉKOZTATÓ</a></p>
+          </div>
+          <div style="float: right;width: 50px;">
+
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+      </div>
+    </div><!-- /.nav-collapse -->
+
+  </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
+
+
+
+
+<div class="app2Menu">
+  <div class="inner ">
+    <div class="menuitem mdProfile">
+        <a id="patients-link" class="menulink" href="<%= url_for( :action => 'md_patients', :locale => I18n.locale ) %>">
+          <%= t 'menu_patients' %>
+        </a>
+    </div>
+<!--
+    <div class="menuitem c0 myprofile">
+      <a id="forms-link" class="menulink" href="<%= url_for( :action => 'md_customforms', :locale => I18n.locale ) %>">
+        <%= t 'menu_forms' %>
+      </a>
+    </div>
+-->
+    <div class="menuitem c8 b8">
+      <a id="statistics-link" class="menulink" href="<%= url_for( :action => 'md_statistics', :locale => I18n.locale ) %>">
+        <%=t 'menu_statistics' %>
+      </a>
+    </div>
+
+  </div>
+</div>

@@ -4,6 +4,7 @@
 
 @setTooltips = () ->
   $(".topBannerControl").tooltip({
+      placement: "bottom",
       show: {
         delay: 500
       }
@@ -11,13 +12,16 @@
   )
 
   $(".iconTooltip").tooltip({
+      placement: "bottom",
       show: {
         delay: 500
       }
     }
   )
 
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip({
+    placement: "bottom"
+  });
 
 @pages_menu = () ->
   self = this

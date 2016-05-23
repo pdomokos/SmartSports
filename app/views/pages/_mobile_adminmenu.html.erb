@@ -1,0 +1,45 @@
+
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+
+    <%= render "mobile_navbar_header" %>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <div class="app2Menu">
+        <div class="inner">
+          <% if not SmartSports::SHOW_DOCTOR or not current_user.doctor? %>
+              <div class="menuitem c0  b0">
+                <a id="dashboard-link" class="menulink" href="<%= url_for( :action => 'dashboard', :locale => I18n.locale ) %>">
+                  <%=t 'menu_dashboard' %>
+                </a>
+              </div>
+          <% end %>
+          <div class="menuitem c0 myprofile">
+            <a id="users-link" class="menulink menulink-selected" href="<%= url_for( :action => 'admin', :locale => I18n.locale ) %>">
+              <%= t 'menu_users' %>
+            </a>
+          </div>
+          <% if SmartSports::SHOW_DOCTOR %>
+              <div class="menuitem c0 myprofile">
+                <a id="doctors-link" class="menulink" href="<%= url_for( :action => 'admin_doctors', :locale => I18n.locale ) %>">
+                  <%= t 'menu_doctors' %>
+                </a>
+              </div>
+          <% end %>
+
+          <div class="menuitem" style="padding-top: 10px; text-align: center; font-size: 11px; color: #ffffff;">
+            <p>© 2016 Larkbio</p>
+            <p class="eulalink"><a href="/eula" target="_blank">FELHASZNÁLÁSI ÉS ADATKEZELÉSI TÁJÉKOZTATÓ</a></p>
+          </div>
+          <div style="float: right;width: 50px;">
+
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+      </div>
+    </div><!-- /.nav-collapse -->
+
+  </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
+

@@ -1,0 +1,51 @@
+
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= render "mobile_navbar_header" %>
+
+    <div id="navbar" class="collapse navbar-collapse">
+
+      <div class="app2Menu">
+        <div class="inner ">
+          <% if not SmartSports::SHOW_DOCTOR or not current_user.doctor? %>
+              <div class="menuitem c0  b0">
+                <a id="dashboard-link" class="menulink" href="<%= url_for( :action => 'dashboard', :locale => I18n.locale ) %>">
+                  <%=t 'menu_dashboard' %>
+                </a>
+              </div>
+          <% end %>
+          <% if SmartSports::SHOW_DOCTOR and current_user.doctor? %>
+              <div class="menuitem mdProfile">
+                <a id="patients-link" class="menulink" href="<%= url_for( :action => 'md_patients', :locale => I18n.locale ) %>">
+                  <%= t 'menu_patients' %>
+                </a>
+              </div>
+          <% end %>
+          <div class="menuitem c0 myprofile">
+            <a id="myprofile-link" class="menulink" href="<%= url_for( :action => 'profile', :locale => I18n.locale ) %>">
+              <%=t 'menu_profile' %>
+            </a>
+          </div>
+          <% if not SmartSports::SHOW_DOCTOR or not current_user.doctor? %>
+              <div class="menuitem c0 connections">
+                <a id="connections-link" class="menulink" href="<%= url_for( :action => 'connections', :locale => I18n.locale ) %>">
+                  <%=t 'menu_connections' %>
+                </a>
+              </div>
+          <% end %>
+
+          <div class="menuitem" style="padding-top: 10px; text-align: center; font-size: 11px; color: #ffffff;">
+            <p>© 2016 Larkbio</p>
+            <p class="eulalink"><a href="/eula" target="_blank">FELHASZNÁLÁSI ÉS ADATKEZELÉSI TÁJÉKOZTATÓ</a></p>
+          </div>
+          <div style="float: right;width: 50px;">
+
+          </div>
+          <div style="clear: both;"></div>
+
+        </div>
+      </div>
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
