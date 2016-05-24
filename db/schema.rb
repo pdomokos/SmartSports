@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160422132615) do
+ActiveRecord::Schema.define(version: 20160524092420) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -42,6 +42,17 @@ ActiveRecord::Schema.define(version: 20160422132615) do
     t.string "category"
     t.string "lang"
   end
+
+  create_table "adverses", force: true do |t|
+    t.integer  "user_id"
+    t.string   "effect_present"
+    t.text     "effect_detail"
+    t.datetime "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "adverses", ["user_id"], name: "index_adverses_on_user_id"
 
   create_table "click_records", force: true do |t|
     t.integer  "user_id"
@@ -81,11 +92,13 @@ ActiveRecord::Schema.define(version: 20160422132615) do
   end
 
   create_table "custom_forms", force: true do |t|
-    t.integer "user_id"
-    t.integer "order_index"
-    t.string  "form_name"
-    t.string  "image_name"
-    t.string  "form_tag"
+    t.integer  "user_id"
+    t.integer  "order_index"
+    t.string   "form_name"
+    t.string   "image_name"
+    t.string   "form_tag"
+    t.boolean  "favourite",   default: false
+    t.datetime "created_at"
   end
 
   create_table "delayed_jobs", force: true do |t|
@@ -454,6 +467,7 @@ ActiveRecord::Schema.define(version: 20160422132615) do
     t.datetime "avatar_updated_at"
     t.boolean  "doctor"
     t.string   "dev_token"
+    t.string   "web_token_ios"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

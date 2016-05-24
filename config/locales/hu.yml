@@ -42,6 +42,7 @@ hu:
 
   button_add:     "Hozzáad"
   history_link:   "Történet"
+  all_link:       "Mind"
   fav_link:       "Kedvencek"
 
   start:          "Kezdés"

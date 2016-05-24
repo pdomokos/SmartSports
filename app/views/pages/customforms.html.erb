@@ -1,4 +1,79 @@
-<%= render "cf" %>
+<input id="popup-messages" value="<%=@values%>" type="hidden" />
+
+<div id="addCustomModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Custom Form</h4>
+      </div>
+      <div class="modal-body">
+
+          <style>
+              <% for i in @icons %>
+              .iconselect_<%= i %> {
+                  background: url("/assets/custom/<%= i %>_gray.png"), url("/assets/downarrow.png");
+                  background-repeat: no-repeat, no-repeat;
+                  background-size: 30px, 30px, 30px, 30px;
+                  background-position: left, right;
+                  padding-left: 34px;
+              }
+              <% end %>
+          </style>
+          <%= form_tag( root_path+"users/#{current_user.id}/custom_forms", remote: true, id: "custom-create-form") do %>
+
+            <div class="form-group">
+              <label for="formNameInput">Form Name</label>
+              <input class="form-control" type="formNameInput" name="custom_form[form_name]" id="input-form_name" placeholder="<%=t 'add_custom_form_name_placeholder' %>">
+            </div>
+            <div class="form-group">
+              <label for="iconselect">Select Icon</label>
+              <input id="formicon" name="custom_form[image_name]" type="hidden" value="img_myForms">
+
+
+              <div id="iconselect">
+                <ul class="img-list cf">
+                  <% for i in @icons %>
+                      <li>
+                        <span class="iconsel" id="<%= i %>" style="background: no-repeat left url('/assets/custom/<%= i %>_gray.png');background-size: 30px 30px;"></span>
+                      </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="custom-block mainContent">
+  <input id="data-lang-custom" value="<%=I18n.locale%>" type="hidden" />
+  <div class="sectionTitle customBodyLogo customColor">
+    <%=t 'menu_custom' %>
+    <span class="right">
+      <button class="tableControl" data-toggle="modal" data-target="#addCustomModal">
+        <i class="fa fa-plus-square-o"></i>
+      </button>
+    </span>
+  </div>
+
+  <div class="sectionTitleNoicon">
+    <span class="hisTitle selected"><%=t 'all_link'%></span> | <span class="favTitle"><%=t 'fav_link'%></span>
+    <div class="right">
+    </div>
+  </div>
+
+  <table class="historyTable"  cellpadding="0" cellspacing="0">
+    <tbody id="recentResourcesTable">
+    </tbody>
+  </table>
+</div>
 
 <script>
     pages_menu();

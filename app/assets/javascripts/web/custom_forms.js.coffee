@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@custom_loaded = () ->
+@custom_loaded_old = () ->
   console.log "custom_loaded called, start initializing"
 
   @popup_messages = JSON.parse($("#popup-messages").val())
