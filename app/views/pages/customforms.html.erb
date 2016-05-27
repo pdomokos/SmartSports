@@ -20,7 +20,7 @@
               }
               <% end %>
           </style>
-          <%= form_tag( root_path+"users/#{current_user.id}/custom_forms", remote: true, id: "custom-create-form") do %>
+          <%= form_tag( root_path+"users/#{current_user.id}/custom_forms", id: "custom-create-form") do %>
 
             <div class="form-group">
               <label for="formNameInput">Form Name</label>
@@ -46,7 +46,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" id="save-custom-form" class="btn btn-primary">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

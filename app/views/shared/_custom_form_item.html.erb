@@ -18,19 +18,6 @@
 
   </td>
 
-  <td class="iconColumn">
-    <%= form_tag(root_path+"users/#{current_user.id}/custom_forms/#{custom_form_item.id}", id: "mod_cf_#{custom_form_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
-        <button id="fav-icon" class="tableControl">
-          <% if custom_form_item.favourite %>
-              <i class="fa fa-star fa-2x is-favorite iconTooltip" title="<%=t 'remove_from_fav'%>"></i>
-              <input type="hidden" name="custom_form[favourite]" value="false">
-          <% else %>
-              <i class="fa fa-star fa-2x no-favorite iconTooltip" title="<%=t 'add_to_fav'%>"></i>
-              <input type="hidden" name="custom_form[favourite]" value="true">
-          <% end %>
-        </button>
-    <% end %>
-  </td>
   <td class="iconColumn deleteCustomForm">
     <%= form_tag(root_path+"users/#{current_user.id}/custom_forms/#{custom_form_item.id}", id: "custom_form_item_#{custom_form_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">

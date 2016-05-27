@@ -158,6 +158,7 @@ hu:
     failed_to_add_data: "Nem sikerült rögzíteni az adatot."
     failed_to_update_data: "Nem sikerült frissíteni az adatot."
     failed_to_delete_data: "Nem sikerült törölni az adatot."
+    delete_data_success: "Sikeresen törölte az adatot."
     invalid_health_hr: "Kérem adjon meg érvényes pulzus vagy vérnyomás adatot"
     invalid_health_bg: "Kérem adjon meg érvényes vércukor adatot"
     invalid_health_wd: "Kérem adjon meg érvényes testsúly adatot"

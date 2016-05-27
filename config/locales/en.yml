@@ -179,6 +179,7 @@ en:
     failed_to_add_data: "Failed to save data"
     failed_to_update_data: "Failed to update data"
     failed_to_delete_data: "Failed to delete data"
+    delete_data_success: "Deleted successfully."
     invalid_health_hr: "Please fill in valid heart rate or blood pressure data"
     invalid_health_bg: "Please fill in valid blood glucose data"
     invalid_health_wd: "Please fill in valid weight data"
