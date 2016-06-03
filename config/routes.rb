@@ -104,6 +104,7 @@ Rails.application.routes.draw do
     get 'pages/labresult'
     get 'pages/explore'
     get 'pages/customforms'
+    get 'pages/customforms/:id' => 'pages#customform'
     get 'pages/traffic'
 
     get 'pages/profile'

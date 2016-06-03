@@ -9,17 +9,6 @@
       </div>
       <div class="modal-body">
 
-          <style>
-              <% for i in @icons %>
-              .iconselect_<%= i %> {
-                  background: url("/assets/custom/<%= i %>_gray.png"), url("/assets/downarrow.png");
-                  background-repeat: no-repeat, no-repeat;
-                  background-size: 30px, 30px, 30px, 30px;
-                  background-position: left, right;
-                  padding-left: 34px;
-              }
-              <% end %>
-          </style>
           <%= form_tag( root_path+"users/#{current_user.id}/custom_forms", id: "custom-create-form") do %>
 
             <div class="form-group">
@@ -35,7 +24,8 @@
                 <ul class="img-list cf">
                   <% for i in @icons %>
                       <li>
-                        <span class="iconsel" id="<%= i %>" style="background: no-repeat left url('/assets/custom/<%= i %>_gray.png');background-size: 30px 30px;"></span>
+                        <span class='<%= "iconSelect iconselect_"+i %>' id="<%= i %>"
+                              data-icon="<%= i %>"></span>
                       </li>
                   <% end %>
                 </ul>
@@ -62,23 +52,25 @@
       </button>
     </span>
   </div>
-
-  <div class="sectionTitleNoicon">
-    <span class="hisTitle selected"><%=t 'all_link'%></span> | <span class="favTitle"><%=t 'fav_link'%></span>
-    <div class="right">
-    </div>
+    <br/>
+  <div id="customFormSelect">
+    <ul class="img-list cf cfSelect">
+      <% for customForm in @custom_forms %>
+          <li>
+            <span class='<%= "iconselect_"+customForm.image_name %> cficon' data-customFormId="<%= customForm.id %>">
+            </span>
+            <div class='customFormSelectText'><%= customForm.form_name %></div>
+          </li>
+      <% end %>
+    </ul>
   </div>
-
-  <table class="historyTable"  cellpadding="0" cellspacing="0">
-    <tbody id="recentResourcesTable">
-    </tbody>
-  </table>
 </div>
 
 <script>
     pages_menu();
     custom_loaded();
 </script>
+
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>

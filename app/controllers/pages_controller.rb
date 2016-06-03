@@ -144,6 +144,10 @@ class PagesController < ApplicationController
     @hidden_forms = true
   end
 
+  def customform
+    @custom_form = current_user.custom_forms.find_by_id(params[:id])
+  end
+
   def md_patients
   end
 

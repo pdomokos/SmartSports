@@ -18,6 +18,10 @@
   margin-left: 0px !important;
 }
 
+.customFormSelectText {
+  max-width: 45px;
+  word-wrap: break-word;
+}
 
 .img-list {
   list-style: none;
@@ -25,9 +29,19 @@
   padding: 0;
   width: 310px;
 }
+
+.img-list.cfSelect {
+  width: 800px;
+}
+
 .img-list>li {
   float: left;
   width: 38px;
+
+}
+#customFormSelect .img-list>li {
+  width: 45px;
+
 }
 .img-list>li>span {
   box-sizing: border-box;
@@ -62,7 +76,6 @@
   content: '';
   display: table;
 }
-
 
 .customStyle .dataFormField {
   border: solid 1px grey !important;

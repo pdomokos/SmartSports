@@ -1,7 +1,7 @@
 function custom_loaded() {
     console.log("custom_loaded called, start initializing");
     popup_messages = JSON.parse($("#popup-messages").val())
-    loadCustomForms();
+
     registerCustomHandlers();
 }
 
@@ -26,10 +26,16 @@ function loadCustomForms() {
 }
 
 function registerCustomHandlers() {
-    $(".iconsel").click(function(e){
-        imgid = e.currentTarget.id
+    $(".cficon").click(function(e) {
+        var cfid = e.currentTarget.dataset.customformid;
+        location.href = 'customforms/'+cfid;
+    });
+
+    $(".iconSelect").click(function(e){
+        imgid = e.currentTarget.id;
         $("#iconselect ul li").removeClass("customiconselected");
         $("#"+imgid).parent('li').addClass("customiconselected");
+        console.log("datasel: "+ e.currentTarget.dataset.icon);
         $("#custom-create-form input[name='custom_form[image_name]']").val(imgid);
     });
 
