@@ -23,7 +23,7 @@ class Diet < ActiveRecord::Base
   belongs_to :user
   belongs_to :food_type
   validates :user_id, presence: true
-  validates_with DietValidator
+  # validates_with DietValidator
 
   def as_json(options={})
     super(options.merge({:methods => :diet_type}))

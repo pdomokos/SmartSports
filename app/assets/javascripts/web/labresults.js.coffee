@@ -58,7 +58,6 @@
       $("#control_txt").val(null)
       $(".notification_details").val(null)
       loadVisits()
-      popup_success("Notification "+popup_messages.saved_successfully, "labresultStyle")
     else
       popup_error(popup_messages.failed_to_add_data, "labresultStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
@@ -86,7 +85,6 @@
 
     if !category
       category = 'control'
-    popup_success(capitalize(category)+popup_messages.saved_successfully, "labresultStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     popup_error(popup_messages.failed_to_add_data, "labresultStyle")
@@ -275,9 +273,6 @@
 @load_labresult_ketone = (sel, data) ->
   console.log("load ketone: "+sel+" data:")
   labres = data['labresult']
-  console.log(labres)
-  console.log(labres.ketone)
-
   $(sel+" input[name='labresult[ketone]']").val(labres['ketone'])
   $(sel+" input[name='labresult[labresult_type_name]']").val(labres['labresult_type_name'])
   $(sel+" input[name='labresult[date]']").val(labres['date'])

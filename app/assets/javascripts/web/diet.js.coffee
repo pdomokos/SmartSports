@@ -16,28 +16,6 @@
     loadDiets()
   )
 
-  $("#smoke-create-form button").click ->
-    if(!smokeSelected)
-      val = $(".diet_smoke_type").val()
-      if !val
-        val = "empty item"
-      popup_error(popup_messages.failed_to_add_data)
-      smokeSelected = null
-      return false
-    smokeSelected = null
-    return true
-
-  $("#drink-create-form button").click ->
-    if(!drinkSelected)
-      val = $("#dinkname").val()
-      if !val
-        val = "empty item"
-      popup_error(popup_messages.failed_to_add_data)
-      drinkSelected = null
-      return false
-    drinkSelected = null
-    return true
-
   $("#recentResourcesTable").on("click", "td.dietItem", (e) ->
     data = JSON.parse(e.currentTarget.querySelector("input").value)
     diet = data['diet']
@@ -54,11 +32,7 @@
   $("form.resource-create-form.diet-form").on("ajax:success", (e, data, status, xhr) ->
     resetDiet()
     loadDietHistory()
-    popup_success(get_food_label(data['name'])+popup_messages.saved_successfully)
   ).on("ajax:error", (e, xhr, status, error) ->
-    $('#diet_type_id').val(null)
-    $('#diet_drink_type_id').val(null)
-    $('.diet_smoke_type').val(null)
     console.log xhr.responseText
     resp = JSON.parse(xhr.responseText)
     popup_error(resp.msg)
@@ -80,7 +54,16 @@
     $(".favTitle").addClass("selected")
 
   $(".diet_food-create-form button").click ->
-    validate_diet_food("#diet_forms .diet_food_elem")
+    validate_diet_form(".diet_food-create-form")
+
+  $(".diet_drink-create-form button").click ->
+    validate_diet_form(".diet_drink-create-form")
+
+  $(".diet_smoke-create-form button").click ->
+    validate_diet_form(".diet_smoke-create-form")
+
+  $(".diet_quick_calories-create-form button").click ->
+    validate_diet_form(".diet_quick_calories-create-form")
 
 @resetDiet = () ->
   amount_values = $("#amount_values").val().split(",")
@@ -96,10 +79,6 @@
   $(".diet_calories_datepicker").val(moment().format(moment_fmt))
   $(".diet_drink_datepicker").val(moment().format(moment_fmt))
   $(".diet_smoking_datepicker").val(moment().format(moment_fmt))
-
-  $("#diet_type_id").val(null)
-  $("#diet_drink_type_id").val(null)
-  $(".diet_smoke_type").val(null)
 
 @initDiet = () ->
   self = this
@@ -135,84 +114,26 @@
       event.target.parentElement.parentElement.querySelector("input.diet_drink_amount").value = ui.value
   })
 
-  foodSelected = null
-  $(".diet_food_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        foodkey = 'sd_foods_'+user_lang
-      else
-        foodkey = 'sd_foods_hu'
-      for element in getStored(foodkey)
+  user_lang = $("#user-lang")[0].value
+  diet_food_select = $(".diet_food_name")
+  diet_drink_select = $(".diet_drink_name")
+  diet_smoke_select = $(".diet_smoke_name")
+  if user_lang
+    foodkey = 'sd_foods_'+user_lang
+    drinkkey = 'sd_drinks_'+user_lang
+    smokekey = 'sd_smoke_'+user_lang
+  else
+    foodkey = 'sd_foods_hu'
+    drinkkey = 'sd_drinks_hu'
+    smokekey = 'sd_smoke_hu'
+  for element in getStored(foodkey)
+    diet_food_select.append($("<option />").val(element.id).text(element.label))
 
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".diet_type_name").val(ui.item.id)
-    create: (event, ui) ->
-      $(".diet_food_name").removeAttr("disabled")
-    change: (event, ui) ->
-      foodSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+  for element in getStored(drinkkey)
+    diet_drink_select.append($("<option />").val(element.id).text(element.label))
 
-  drinkSelected = null
-  $(".diet_drink_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        drinkkey = 'sd_drinks_'+user_lang
-      else
-        drinkkey = 'sd_drinks_hu'
-      for element in getStored(drinkkey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".diet_drink_type_id").val(ui.item.id)
-    create: (event, ui) ->
-      $(".diet_drink_name").removeAttr("disabled")
-    change: (event, ui) ->
-      drinkSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
-
-  smokeSelected = null
-  $(".diet_smoke_type").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        smokekey = 'sd_smoke_'+user_lang
-      else
-        smokekey = 'sd_smoke_hu'
-      for element in getStored(smokekey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".diet_smoke_type_id").val(ui.item.id)
-    create: (event, ui) ->
-      $(".diet_smoke_type").removeAttr("disabled")
-    change: (event, ui) ->
-      smokeSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+  for element in getStored(smokekey)
+    diet_smoke_select.append($("<option />").val(element.id).text(element.label))
 
 @loadDietHistory = () ->
   loadDiets()
@@ -355,36 +276,47 @@
     )
   return ret
 
-@validate_diet_food = (sel) ->
-  val = $(sel+" .diet_food_name").val()
+@validate_diet_form = (sel) ->
+  console.log sel
+  popup_messages = JSON.parse($("#popup-messages").val())
+  val = $(sel+" select[name='diet[name]']").val()
+  if !val
+     val = $(sel+" input[name='diet[name]']").val()
   if !val
     val = "empty item"
     popup_error(popup_messages.failed_to_add_data)
     return false
+  if val == 'calory'
+    if !$(sel+" input[name='diet[calories]']").val() && !$(sel+" input[name='diet[carbs]']").val()
+      popup_error(popup_messages.no_value)
+      return false
+    else if $(sel+" input[name='diet[calories]']").val() && ($(sel+" input[name='diet[calories]']").val() < 1 || $(sel+" input[name='diet[calories]']").val() > 4000)
+      popup_error(popup_messages.calory_range_error)
+      return false
+    else if $(sel+" input[name='diet[carbs]']").val() && ($(sel+" input[name='diet[carbs]']").val() < 0 || $(sel+" input[name='diet[carbs]']").val() > 200)
+      popup_error(popup_messages.carb_range_error)
+      return false
   return true
 
 @load_diet_food =  (sel, data) ->
   amount_values = $("#amount_values").val().split(",")
   diet = data['diet']
   console.log "load diet food to:"+sel+" diet: "+diet.name
-  $(sel+" input[name='diet[name]']").val(data['diet_name'])
-  $(sel+" .diet_food_name").val(get_food_label(data['diet_name']))
+  $(".diet_food_name").val(data['diet_name'])
   $(sel+" .diet_food_unit").html(amount_values[diet.amount])
   $(sel+" .diet_food_scale").slider({value: diet.amount})
   $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 
 @load_diet_drink =  (sel, data) ->
   diet = data['diet']
-  $(sel+" input[name='diet[name]']").val(data['diet_name'])
-  $(sel+" .diet_drink_name").val(get_food_label(data['diet_name']))
+  $(".diet_drink_name").val(data['diet_name'])
   $(sel+" .diet_drink_unit").html(diet.amount+" dl")
   $(sel+" .diet_drink_scale").slider({value: diet.amount})
   $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 
 @load_diet_smoke = (sel, data) ->
   diet = data['diet']
-  $(sel+" input[name='diet[name]']").val(data['diet_name'])
-  $(sel+" .diet_smoke_type").val(get_food_label(data['diet_name']))
+  $(".diet_smoke_name").val(data['diet_name'])
   $(sel+" input[name='diet[date]']").val(moment().format(moment_fmt))
 
 @load_diet_quick_calories = (sel, data) ->

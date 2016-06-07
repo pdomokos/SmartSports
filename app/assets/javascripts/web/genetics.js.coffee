@@ -22,7 +22,6 @@
     $("#"+form_id+" input.dataFormField").val("")
     $("#family_hist_note").val("")
     load_genetics()
-    popup_success(popup_messages.saved_successfully, "geneticsStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error(popup_messages.failed_to_add_data, "geneticsStyle")
   )
@@ -34,7 +33,6 @@
     $("#"+form_id+" input.dataFormField").val("")
     $("#personal_hist_note").val("")
     load_genetics()
-    popup_success(popup_messages.saved_successfully, "geneticsStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error(popup_messages.failed_to_add_data, "geneticsStyle")
   )
@@ -49,85 +47,40 @@
     popup_error(popup_messages.failed_to_delete_data, "geneticsStyle")
   )
 
+  $("#recentResourcesTable").on("click", "td.familyhistoryItem", (e) ->
+    data = JSON.parse(e.currentTarget.querySelector("input").value)
+    category = data['family_history_category']
+    console.log category
+    if category=='personal_record'
+      load_personal_record("#personal-history-create-form .genetics_personal_history", data['family_history'])
+    else if category=='family_record'
+      load_family_record("#family-history-create-form .genetics_family_history", data['family_history'])
+  )
+
 @init_genetics = () ->
   self = this
-  relSelected = null
-  $(".rel_type_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        genkey = 'sd_relatives_'+user_lang
-      else
-        genkey = 'sd_relatives_hu'
-      for element in getStored(genkey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".rel_type_id").val(ui.item.id)
-    create: (event, ui) ->
-      $(".rel_type_name").removeAttr("disabled")
-    change: (event, ui) ->
-      relSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+  user_lang = $("#user-lang")[0].value
+  gen_rel_select = $(".rel_type_name")
+  gen_diab_select = $(".diab_type_name")
+  gen_antibody_select = $(".antibody_type_name")
 
-  diabSelected = null
-  $(".diab_type_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        genkey = 'sd_diabetes_'+user_lang
-      else
-        genkey = 'sd_diabetes_hu'
-      for element in getStored(genkey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".diab_type_id").val(ui.item.id)
-    create: (event, ui) ->
-      $(".diab_type_name").removeAttr("disabled")
-    change: (event, ui) ->
-      diabSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+  if user_lang
+    relkey = 'sd_relatives_'+user_lang
+    diabkey = 'sd_diabetes_'+user_lang
+    antibodykey = 'sd_autoantibody_'+user_lang
+  else
+    relkey = 'sd_relatives_hu'
+    diabkey = 'sd_diabetes_hu'
+    antibodykey = 'sd_autoantibody_hu'
 
-  antibodySelected = null
-  $(".antibody_type_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        genkey = 'sd_autoantibody_'+user_lang
-      else
-        genkey = 'sd_autoantibody_hu'
-      for element in getStored(genkey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".antibody_type_id").val(ui.item.id)
-    create: (event, ui) ->
-      $(".antibody_type_name").removeAttr("disabled")
-    change: (event, ui) ->
-      antibodySelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+  for element in getStored(relkey)
+    gen_rel_select.append($("<option />").val(element.id).text(element.label))
+
+  for element in getStored(diabkey)
+    gen_diab_select.append($("<option />").val(element.id).text(element.label))
+
+  for element in getStored(antibodykey)
+    gen_antibody_select.append($("<option />").val(element.id).text(element.label))
 
 @load_genetics_types = (cb) ->
   self = this
@@ -222,3 +175,24 @@
     success: (data, textStatus, jqXHR) ->
       console.log "load recent personal_records hist  Successful AJAX call"
       console.log textStatus
+
+@load_personal_record =  (sel,data) ->
+  self = this
+  console.log "load personal record to:"+sel
+  console.log data
+  $(sel+" .diab_type_name").val(data['diabetes_key'])
+  $(sel+" .antibody_type_name").val(data['antibody_key'])
+  if data['antibody_kind'] == true
+    $("#antibody_pos").attr("checked",true)
+  else
+    $("#antibody_neg").attr("checked",true)
+  $(sel+" input[name='personal_record[antibody_value]']").val(data['antibody_value'])
+  $(sel+" #personal_hist_note").val(data['note'])
+
+@load_family_record =  (sel,data) ->
+  self = this
+  console.log "load family_record to:"+sel
+  $(sel+" .rel_type_name").val(data['relative_key'])
+  $(sel+" .diab_type_name").val(data['diabetes_key'])
+  $(sel+" #family_hist_note").val(data['note'])
+

@@ -19,7 +19,6 @@
 
     msg = data['category']
     resetLifesyleForms()
-    popup_success(popup_messages.save_success+" ("+resource_titles[msg]+")", "wellbeingStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error(popup_messages.failed_to_add_data, "lifestyleStyle")
     $("input[name='lifestyle[name]']").val(null)
@@ -31,13 +30,6 @@
   $("form.resource-create-form.lifestyle-form button").on('click', (evt) ->
     return validateLifestyleForm(evt.target.parentNode.parentNode.querySelector("form").id)
   )
-
-#  $("#recentResourcesTable").on("click", "td.lifestyleItem", (e) ->
-#    data = JSON.parse(e.currentTarget.querySelector("input").value)
-#    fn = window["load_lifestyle_"+data.lifestyle_type_name];
-#    if typeof fn == 'function'
-#      fn('#lifestyle_forms .lifestyle_'+data.lifestyle_type_name+"-create-form", data)
-#  )
 
   $("#recentResourcesTable").on("click", "td.lifestyleItem", (e) ->
     data = JSON.parse(e.currentTarget.querySelector("input").value)
@@ -81,40 +73,25 @@
 
   console.log("running initLifestyle")
 
-  illnessSelected = null
-  popup_messages = JSON.parse($("#popup-messages").val())
+  user_lang = $("#user-lang")[0].value
+  lifestyle_illness_select = $(".illness_name")
+  lifestyle_pain_select = $(".pain_type_name")
+  if user_lang
+    illnesskey = 'sd_illness_'+user_lang
+    painkey = 'sd_pains_'+user_lang
+  else
+    illnesskey = 'sd_illness_hu'
+    painkey = 'sd_pains_hu'
 
-  $(selector+'.illness_name').autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        illnesskey = 'sd_illness_'+user_lang
-      else
-        illnesskey = 'sd_illness_hu'
-      for element in getStored(illnesskey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(selector+'.illness_type_id').val(ui.item.id)
-    create: (event, ui) ->
-      event.target.parentElement.parentElement.querySelector('.illness_type_id').removeAttribute("disabled")
-    change: (event, ui) ->
-      if ui.item
-        $(selector+'.illness_type_id').value = ui.item.id
-      else
-        $(selector+'.illness_type_id').value = ""
-  }).focus ->
-    $(this).autocomplete("search")
+  for element in getStored(illnesskey)
+    lifestyle_illness_select.append($("<option />").val(element.id).text(element.label))
 
-  $(selector+'.sleep_start_datepicker').datetimepicker(timepicker_defaults)
-  $(selector+'.sleep_end_datepicker').datetimepicker(timepicker_defaults)
-  $(selector+".sleep_scale").slider({
+  for element in getStored(painkey)
+    lifestyle_pain_select.append($("<option />").val(element.id).text(element.label))
+
+  $(selector+' .sleep_start_datepicker').datetimepicker(timepicker_defaults)
+  $(selector+' .sleep_end_datepicker').datetimepicker(timepicker_defaults)
+  $(selector+" .sleep_scale").slider({
     min: 0,
     max: 3,
     value: 2
@@ -124,9 +101,9 @@
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".sleep_amount").value = ui.value
   })
-  $(selector+".sleep_amount").val(2)
+  $(selector+" .sleep_amount").val(2)
 
-  $(selector+".stress_scale").slider({
+  $(selector+" .stress_scale").slider({
     min: 0,
     max: 3,
     value: 1
@@ -136,13 +113,13 @@
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".stress_amount").value = ui.value
   })
-  $(selector+".stress_amount").val(1)
+  $(selector+" .stress_amount").val(1)
 
   user_lang = $("#user-lang")[0].value
   if !user_lang
     user_lang='hu'
 
-  $(selector+'.stress_datepicker').datetimepicker({
+  $(selector+' .stress_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
     lang: user_lang,
@@ -152,7 +129,7 @@
     todayButton: true
   })
 
-  $(selector+".illness_scale").slider({
+  $(selector+" .illness_scale").slider({
     min: 0,
     max: 4,
     value: 1
@@ -164,7 +141,7 @@
   })
   $(selector+".illness_amount").val(1)
 
-  $(selector+'.illness_start_datepicker').datetimepicker({
+  $(selector+' .illness_start_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
     lang: user_lang,
@@ -174,7 +151,7 @@
     todayButton: true
   })
 
-  $(selector+'.illness_end_datepicker').datetimepicker({
+  $(selector+' .illness_end_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
     lang: user_lang,
@@ -184,37 +161,10 @@
     todayButton: true
   })
 
-  $(selector+'.pain_start_datepicker').datetimepicker(timepicker_defaults)
-  $(selector+'.pain_end_datepicker').datetimepicker(timepicker_defaults)
-  $(selector+'.pain_type_name').autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        painkey = 'sd_pains_'+user_lang
-      else
-        painkey = 'sd_pains_hu'
-      for element in getStored(painkey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(selector+'.pain_type_id').val(ui.item.id)
-    create: (event, ui) ->
-      event.target.parentElement.parentElement.querySelector('.pain_type_id').removeAttribute("disabled")
-    change: (event, ui) ->
-      if ui.item
-        $(selector+'.pain_type_id').value = ui.item.id
-      else
-        $(selector+'.pain_type_id').value = ""
-  }).focus ->
-    $(this).autocomplete("search")
+  $(selector+' .pain_start_datepicker').datetimepicker(timepicker_defaults)
+  $(selector+' .pain_end_datepicker').datetimepicker(timepicker_defaults)
 
-  $(selector+".pain_scale").slider({
+  $(selector+" .pain_scale").slider({
     min: 0,
     max: 4,
     value: 1
@@ -224,10 +174,10 @@
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".pain_amount").value = ui.value
   })
-  $(selector+".pain_amount").val(1)
+  $(selector+" .pain_amount").val(1)
 
 
-  $(selector+'.period_start_datepicker').datetimepicker({
+  $(selector+' .period_start_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
     lang: user_lang,
@@ -237,7 +187,7 @@
     todayButton: true
   })
 
-  $(selector+'.period_end_datepicker').datetimepicker({
+  $(selector+' .period_end_datepicker').datetimepicker({
     format: 'Y-m-d',
     timepicker: false,
     lang: user_lang,
@@ -247,9 +197,9 @@
     todayButton: true
   })
 
-  $(selector+".period_amount").val(1)
-  $(selector+".period_volume_amount").val(1)
-  $(selector+".period_scale").slider({
+  $(selector+" .period_amount").val(1)
+  $(selector+" .period_volume_amount").val(1)
+  $(selector+" .period_scale").slider({
     min: 0,
     max: 4,
     value: 1
@@ -259,9 +209,9 @@
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".period_amount").value = ui.value
   })
-  $(selector+".period_amount").val(1)
+  $(selector+" .period_amount").val(1)
 
-  $(selector+".period_volume_scale").slider({
+  $(selector+" .period_volume_scale").slider({
     min: 0,
     max: 4,
     value: 1
@@ -284,14 +234,8 @@
   $(".pain_percent").html(illnessList[1])
   $(".default_datetime_picker").val(new moment().format(moment_fmt))
   $(".default_date_picker").val(new moment().format(moment_datefmt))
-  $(".illness_name").val("")
-  $(".illness_type_id").val("")
-  $(".pain_type_id").val("")
-  $(".pain_type_name").val("")
   $(".illness_details").val("")
   $(".pain_details").val("")
-  $(".lifestyle_illness-create-form input[name='lifestyle[name]']").val(null)
-  $(".lifestyle_pain-create-form input[name='lifestyle[name]']").val(null)
 
 @validateLifestyleForm = (formId) ->
   console.log "validate lifestyle: "+formId
@@ -380,10 +324,8 @@
 
 @load_lifestyle_illness = (sel, data) ->
   console.log "load illness"+sel
-  console.log data
   lifestyle = data['lifestyle']
-  $(sel+" .illness_name").val(get_lifestyle_label(data['lifestyle_name']))
-  $(sel+" .illness_type_id").val(data['lifestyle_name'])
+  $(sel+" .illness_name").val(data['lifestyle_name'])
   $(sel+" .illness_scale").slider({value: lifestyle.amount})
   $(sel+" .illness_percent").html(illnessList[lifestyle.amount])
   $(sel+" .illness_details").val(lifestyle.details)
@@ -392,10 +334,8 @@
 
 @load_lifestyle_pain = (sel, data) ->
   console.log "load pain"+sel
-  console.log data
   lifestyle = data['lifestyle']
-  $(sel+" .pain_type_name").val(get_lifestyle_label(data['lifestyle_name']))
-  $(sel+" .pain_type_id").val(data['lifestyle_name'])
+  $(sel+" .pain_type_name").val(data['lifestyle_name'])
   $(sel+" .pain_scale").slider({value: lifestyle.amount})
   $(sel+" .pain_percent").html(painList[lifestyle.amount])
   $(sel+" .pain_details").val(lifestyle.details)

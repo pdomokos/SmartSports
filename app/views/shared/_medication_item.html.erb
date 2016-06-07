@@ -32,19 +32,6 @@
     <br/><span> <%= medication_item.date.strftime("%F, %H:%M") if medication_item.date %></span>
   </td>
 
-  <td class="iconColumn">
-    <%= form_tag(root_path+"users/#{current_user.id}/medications/#{medication_item.id}", id: "mod_med_#{medication_item.id}", remote: true, method: "put", class: "resource-update-form") do %>
-        <button id="fav-icon" class="tableControl">
-          <% if medication_item.favourite %>
-              <i class="fa fa-star fa-2x is-favorite iconTooltip" title="<%=t 'remove_from_fav'%>"></i>
-              <input type="hidden" name="medication[favourite]" value="false" >
-          <% else %>
-              <i class="fa fa-star fa-2x no-favorite iconTooltip" title="<%=t 'add_to_fav'%>"></i>
-              <input type="hidden" name="medication[favourite]" value="true" >
-          <% end %>
-        </button>
-    <% end %>
-  </td>
   <td class="iconColumn deleteMedication">
     <%= form_tag(root_path+"users/#{current_user.id}/medications/#{medication_item.id}", id: "delete_med_#{medication_item.id}", remote: true, method: "delete", class: "resource-delete-form") do %>
         <button class="tableControl">

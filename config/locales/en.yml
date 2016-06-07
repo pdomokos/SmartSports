@@ -197,6 +197,9 @@ en:
     doctor_create_fail_email_exists: "Failed to add doctor, %{email} already exists."
     doctor_invited_msg: "Successfully invited: %{email}"
     password_change_success: "Password was successfully updated."
+    no_value: "No value"
+    calory_range_error: "Calories out of range 1-4000"
+    carb_range_error: "Carbs out of range 0-200"
 
 # dashboard
   today: "Today"

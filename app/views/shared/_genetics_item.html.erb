@@ -11,6 +11,11 @@
     <td class="historyTitle padded familyhistoryItem">
       <span>
         <% if genetics_item && genetics_item.class == PersonalRecord%>
+            <input id="family_history_data_<%= genetics_item.id %>" type="hidden" value="<%=
+                f = {'family_history' => genetics_item.as_json}
+                f.merge!({'family_history_category' => "personal_record"})
+                JSON.dump(f)
+            %>">
             <%if I18n.locale == :hu%>
                 <%= DB_HU_CONFIG['genetics']['diabetes'][genetics_item.diabetes_key] %>
             <%else%>
@@ -28,6 +33,11 @@
             <% end %>
             <%= genetics_item.antibody_value %>
         <%elsif genetics_item && genetics_item.class == FamilyRecord%>
+            <input id="family_history_data_<%= genetics_item.id %>" type="hidden" value="<%=
+                f = {'family_history' => genetics_item.as_json}
+                f.merge!({'family_history_category' => "family_record"})
+                JSON.dump(f)
+            %>">
             <%if I18n.locale == :hu%>
                 <%= DB_HU_CONFIG['genetics']['relatives'][genetics_item.relative_key] %>
             <%else%>

@@ -1,8 +1,7 @@
 <div class="dataForm wellbeing_illness <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="lifestyle[source]" value="<%= @default_source %>"/>
 
-  <input type="search" class="dataFormField illness_name" placeholder="<%=t 'illness_placeholder'%>">
-  <input class="illness_type_id" name="lifestyle[name]" type="hidden">
+  <select name="lifestyle[name]" class="dataFormField illness_name" readonly="true"></select>
 
   <label style="margin-left: 20px;"><%=t 'intensity'%></label>
   <br>

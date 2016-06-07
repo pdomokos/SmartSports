@@ -176,6 +176,9 @@ hu:
     doctor_create_fail_email_exists: "Sikertelen az orvos meghívása, %{email} már foglalt."
     doctor_invited_msg: "Meghívás sikeres: %{email}"
     password_change_success: "A jelszó beállítás sikeres."
+    no_value: "Nincs érték megadva"
+    calory_range_error: "Megadható kalória érték: 1-4000"
+    carb_range_error: "Megadható fehérje érték: 0-200"
 
 # dashboard
   today:  "Mai nap"

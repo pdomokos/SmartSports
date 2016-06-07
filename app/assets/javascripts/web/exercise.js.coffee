@@ -191,39 +191,14 @@
   $(selector+'.activity_regular_start_datepicker').datetimepicker(timepicker_defaults)
   $(selector+'.activity_regular_end_datepicker').datetimepicker(timepicker_defaults)
 
-  popup_messages = JSON.parse($("#popup-messages").val())
-  activitySelected = null
-  $(".activity_exercise_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        activity_key = 'sd_activities_'+user_lang
-      else
-        activity_key = 'sd_activities_hu'
-
-      for element in getStored(activity_key)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".activity_exercise_key").val(ui.item.id)
-      $(".activity_exercise_scale" ).slider({
-        value: "1"
-      })
-      $(".activity_exercise_percent").text(intensities[1])
-    create: (event, ui) ->
-      $(".activity_exercise_name").removeAttr("disabled")
-    change: (event, ui) ->
-      activitySelected = ui['item']
-      console.log "activity change"
-      console.log ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
+  user_lang = $("#user-lang")[0].value
+  activity_exercise_select = $(".activity_exercise_name")
+  if user_lang
+    exercisekey = 'sd_activities_'+user_lang
+  else
+    exercisekey = 'sd_activities_hu'
+  for element in getStored(exercisekey)
+    activity_exercise_select.append($("<option />").val(element.id).text(element.label))
 
 @loadExerciseHistory = () ->
   load_exercise()
@@ -320,8 +295,7 @@
   console.log "load activity, sel="+sel
   console.log(data)
   activity = data['activity']
-  $(sel+" .activity_exercise_key").val(data['activity_name'])
-  $(sel+" .activity_exercise_name").val(get_label(data['activity_name']))
+  $(sel+" .activity_exercise_name").val(data['activity_name'])
   $(sel+" input[name='activity[intensity]']").val(activity.intensity)
   $(sel+" .activity_exercise_percent").html(@intensities[activity.intensity])
   $(sel+" .activity_exercise_scale").slider({value: activity.intensity})

@@ -1,8 +1,7 @@
 <div class="dataForm diet_smoke <% if local_assigns.fetch(:locals, {})[:defaultHidden]%>hidden<% end %>">
   <input type="hidden" name="diet[source]" value="<%= @default_source %>">
 
-  <input type="search" class="dataFormField diet_smoke_type" placeholder="<%=t 'smoking_placeholder' %>">
-  <input class="diet_smoke_type_id" name="diet[name]" type="hidden">
+  <select name="diet[name]" class="dataFormField diet_smoke_name" readonly="true"></select>
 
   <input type='text' class="dataFormField diet_smoking_datepicker" name="diet[date]" value="<%= DateTime.current.strftime("%F %R") %>"/>
   <br/>

@@ -9,21 +9,102 @@
   visibility:hidden;
 }
 
-
-.app2Menu {
-  background: #2D3644;
-  position: fixed;
-  top: 0px;
-  width: 200px;
-  height: 100%;
-  z-index: 1000;
+.mobMenu .menuitem {
+  border-bottom: solid 2px #2D3644 !important;
+//  width: 200px;
+  height: 50px;
+//  float: left;
+  margin: auto;
+  width: 95%;
+  font-size: 20px;
+  border-right-style: solid;
+  border-right-width: 4px;
 }
 
+.mobMenu .menulink {
+  text-decoration: none;
+  display: block;
+//  width: 200px;
+  width: 95%;
+  padding-left: 56px;
+  line-height: 50px;
+  color: #ffffff;
+}
 
-.app2Menu .inner {
-  padding-top: 5px;
-  background-color: #333333;
-  vertical-align:top;
+.mobMenu .menulink-selected {
+  background: RGBA(143, 188, 227, 0.3);
+}
+
+.mobMenu .connections {
+  background: image-url("menu/tracker40.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+
+.mobMenu .dashboard {
+  background: image-url("dashboard.png") no-repeat 5px 5px;
+}
+
+.mobMenu .myprofile {
+  background: image-url("menu/profile40.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+
+.mobMenu .admin {
+  background: image-url("menu/admin60.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+
+.mobMenu .b0 {
+  background: image-url("dashboard_c40.png") no-repeat 5px 5px;
+  //  background-size: 40px 40px;
+}
+
+.mobMenu .b1 {
+  background: image-url("diet_c40.png") no-repeat 5px 5px;
+  //  background-size: 40px 40px;
+}
+
+.mobMenu .b2 {
+  background: image-url("exercise_c40.png") no-repeat 5px 5px;
+
+}
+
+.mobMenu .b3 {
+  background: image-url("health_c40.png") no-repeat 5px 5px;
+
+}
+
+.mobMenu .b4 {
+  background: image-url("wellbeing_c40.png") no-repeat 5px 5px;
+}
+
+.mobMenu .b5 {
+  background: image-url("medication_c40.png") no-repeat 5px 5px;
+}
+
+.mobMenu .b6 {
+  background: image-url("genetics_c40.png") no-repeat 5px 5px;
+
+}
+
+.mobMenu .b7 {
+  background: image-url("labResult_c40.png") no-repeat 5px 5px;
+
+}
+
+.mobMenu .b8 {
+  background: image-url("analytics60.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+
+.mobMenu .customIcon {
+  background: image-url("custom/img_myForms.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
+}
+
+.mobMenu .faqIcon {
+  background: image-url("guide40.png") no-repeat 5px 5px;
+  background-size: 40px 40px;
 }
 
 

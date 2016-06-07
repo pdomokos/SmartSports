@@ -21,7 +21,6 @@
     $('.defaultDatePicker').val(moment().format(moment_fmt))
 
     loadHealthHistory()
-    popup_success(popup_messages.save_success, "healthStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     console.log error

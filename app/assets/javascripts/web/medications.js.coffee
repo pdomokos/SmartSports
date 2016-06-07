@@ -19,7 +19,6 @@
 
     loadMedicationHistory()
     resetMedications()
-    popup_success(data['title']+popup_messages.saved_successfully, "medicationStyle")
   ).on("ajax:error", (e, xhr, status, error) ->
     $('#medname').val(null)
     $('#insname').val(null)

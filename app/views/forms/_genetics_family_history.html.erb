@@ -1,11 +1,9 @@
 <div class="dataForm genetics_family_history <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="family_record[source]" value="<%= @default_source %>">
 
-  <input id="gen_hist_relative" type="search" class="dataFormField rel_type_name" placeholder="<%= t 'relative' %>" disabled/>
-  <input class="rel_type_id" name="family_record[relative_key]" type="hidden">
+  <select name="family_record[relative_key]" class="dataFormField rel_type_name" readonly="true"></select>
 
-  <input id="gen_hist_diabetes" type="search" class="dataFormField diab_type_name" placeholder="<%= t 'diabetes' %>" disabled/>
-  <input class="diab_type_id" name="family_record[diabetes_key]" type="hidden">
+  <select name="family_record[diabetes_key]" class="dataFormField diab_type_name" readonly="true"></select>
 
   <textarea id="family_hist_note" type="text" name="family_record[note]" rows="5" class="dataFormArea" placeholder="<%= t 'genetics_history' %>"></textarea>
 </div>

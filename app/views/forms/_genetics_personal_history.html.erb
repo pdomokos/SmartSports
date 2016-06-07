@@ -1,18 +1,16 @@
 <div class="dataForm genetics_personal_history <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="personal_record[source]" value="<%= @default_source %>">
 
-  <input id="gen_hist_diabetes" type="search" class="dataFormField diab_type_name" placeholder="<%= t 'diabetes' %>" disabled/>
-  <input class="diab_type_id" name="personal_record[diabetes_key]" type="hidden">
+  <select name="personal_record[diabetes_key]" class="dataFormField diab_type_name" readonly="true"></select>
 
-  <input id="gen_hist_antibody" type="search" class="dataFormField antibody_type_name" placeholder="<%= t 'autoantibody_test' %>" disabled/>
-  <input class="antibody_type_id" name="personal_record[antibody_key]" type="hidden">
+  <select name="personal_record[antibody_key]" class="dataFormField antibody_type_name" readonly="true"></select>
 
   <div style="padding-left: 15px; padding-bottom: 10px; padding-top: 102px;">
-      <input type="radio" name="personal_record[antibody_kind]" value="true"/><span><%= t 'positive' %></span>
-      <input type="radio" name="personal_record[antibody_kind]" value="false"/><span><%= t 'negative' %></span>
+      <input id="antibody_pos" type="radio" name="personal_record[antibody_kind]" value="true"/><span><%= t 'positive' %></span>
+      <input id="antibody_neg" type="radio" name="personal_record[antibody_kind]" value="false"/><span><%= t 'negative' %></span>
   </div>
 
-  <input id="antibody_value" type="text" name="personal_record[antibody_value]" class="dataFormField" placeholder="<%=t 'autoantibody_value' %>"/>
+  <input id="antibody_value" type="number" step="0.1" name="personal_record[antibody_value]" class="dataFormField" placeholder="<%=t 'autoantibody_value' %>"/>
 
   <textarea id="personal_hist_note" type="text" name="personal_record[note]" rows="5" class="dataFormArea" placeholder="<%= t 'genetics_history' %>"></textarea>
 </div>
