@@ -23,6 +23,7 @@
   <div class="p10 cform-<%=custom_form.id%>">
 
     <% for cfe in custom_form.custom_form_elements %>
+        <% if @form_params && @form_params[cfe.property_code] %>
         <%= render "forms/element", locals: {
             :showButton => false,
             :elementName => cfe.property_code,
@@ -32,6 +33,7 @@
             :elementId => "#{cfe.property_code}__#{cfe.id}",
             :eid => "#{cfe.id}"
         }%>
+        <% end %>
         <script>
           var initfn_<%=cfe.property_code%>__<%=cfe.id%> = function ()
           {
