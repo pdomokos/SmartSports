@@ -118,7 +118,6 @@ class PagesController < ApplicationController
     faqLang = I18n.locale
     faqLang ||= 'en'
     @faqs = Faq.where(lang: faqLang)
-    puts @faqs
     # save_click_record(:success, nil, nil)
   end
 

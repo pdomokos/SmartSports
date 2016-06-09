@@ -25,7 +25,6 @@
 
 @pages_menu = () ->
   self = this
-  console.log "pages menu"
   define_globals()
   setTooltips()
 

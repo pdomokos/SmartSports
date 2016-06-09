@@ -273,8 +273,9 @@ ActiveRecord::Schema.define(version: 20160524092420) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "medication_type_id"
-    t.boolean  "favourite",            default: false
+    t.boolean  "favourite",                 default: false
     t.string   "medication_type_name"
+    t.integer  "custom_medication_type_id"
   end
 
   create_table "notifications", force: true do |t|

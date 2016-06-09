@@ -93,11 +93,6 @@ module MedicationsCommon
       return
     end
 
-    if !check_owner()
-      send_error_json(@medication.id, "Unauthorized", 403)
-      return
-    end
-
     # if @medication.custom_medication_type_id != nil
     #    cmt = CustomMedicationType.find(@medication.custom_medication_type_id)
     #    cmt.destroy

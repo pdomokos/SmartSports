@@ -73,7 +73,6 @@
 
   $("#profileForm").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
-    console.log "success "+form_id
 
     #    redir to main page
     document.location = urlPrefix()+data.locale+"/pages/dashboard"
@@ -96,13 +95,11 @@
 
 
 @signup_loaded = () ->
-  console.log "signup loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
   $('[data-toggle="tooltip"]').tooltip();
   $('#username_field').focus()
   $("#signupForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
-    console.log "success "+form_id
 
     if(data.ok == false)
       popup_error(data.responseJSON["msg"])
@@ -116,14 +113,12 @@
 
 
 @signin_loaded = () ->
-  console.log "signin loaded"
   popup_messages = JSON.parse($("#popup-messages").val())
   $('#username_field').focus()
 
   $(document).unbind("ajax:success.login")
   $(document).on("ajax:success.login", "#loginForm", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
-    console.log "success "+form_id
     #redir to main page
     document.location = urlPrefix()
   ).on("ajax:error", (e, xhr, status, error) ->
@@ -140,7 +135,6 @@
 
 
   $("#infoPopup").one( "click", ".infoButton", () ->
-    console.log document.location.href
     if document.location.pathname.indexOf("en") > -1
       lang = "en"
     else
@@ -149,7 +143,6 @@
   )
   $("#pwResetForm").on("ajax:success", (e, data, status, error) ->
     form_id = e.currentTarget.id
-    console.log "success "+form_id
     if data.ok
       popup_success(popup_messages.passwd_reset_success)
     else

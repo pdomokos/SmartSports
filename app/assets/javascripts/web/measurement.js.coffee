@@ -15,7 +15,6 @@
 
   $("form.resource-create-form.measurement-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
-    console.log "success "+form_id
 
     $("#"+form_id+" input.dataFormField").val("")
     $('.defaultDatePicker').val(moment().format(moment_fmt))
@@ -29,7 +28,6 @@
 
   $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.target
-    console.log "delete success "+form_item.id
     loadHealthHistory()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
@@ -43,9 +41,7 @@
     loadHealthHistory(true)
 
   $("#recentMeasTable").on("click", "td.measItem", (e) ->
-    console.log "loading measurement "+e.target
     data = JSON.parse(e.currentTarget.querySelector("input").value)
-    console.log data
     meas = data['measurement']
     if(meas.meas_type=="blood_pressure")
       load_measurement_blood_pressure(".measurement_blood_pressure_elem", data)
@@ -61,7 +57,6 @@
 
   $(document).unbind("click.showHealth")
   $(document).on("click.showHealth", "#health-show-table", (evt) ->
-    console.log "datatable clicked"
     get_table_row = (item ) ->
       if item.meas_type==null
         return null
@@ -128,7 +123,6 @@
 @validateMeasForm = (formId) ->
   formNode = document.getElementById(formId)
   formType = formNode.querySelector("input[name='measurement[meas_type]']").value
-  console.log "validate meas form: "+formId+", meas_type="+formType
   fn = {
     blood_pressure: ((node) ->
       if (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
@@ -164,7 +158,6 @@
   console.log "reset meas form"
 
 @initMeasurement = () ->
-  console.log "init meas"
 
   $('.defaultDatePicker').datetimepicker(timepicker_defaults)
 
@@ -198,11 +191,9 @@
 @loadHealthHistory = (fav=false) ->
   self = this
   current_user = $("#current-user-id")[0].value
-  console.log "calling load recent meas"
   lang = $("#data-lang-health")[0].value
   url = 'users/' + current_user + '/measurements.js?source='+window.default_source+'&order=desc&limit=20&lang='+lang
   if fav
-    console.log "loading favorites"
     url = url+"&favourites=true"
   $.ajax urlPrefix()+url,
     type: 'GET',
@@ -213,8 +204,6 @@
         $(".deleteMeas").addClass("hidden")
       else
         $(".deleteMeas").removeClass("hidden")
-      console.log "load recent measurements  Successful AJAX call"
-      console.log textStatus
 
   if fav
     $(".hisTitle").removeClass("selected")
@@ -225,7 +214,6 @@
 
 
 @load_measurement_blood_pressure = (sel, data) ->
-  console.log "load_meas_bp"
   meas = data['measurement']
   $(sel+" input[name='measurement[systolicbp]']").val(meas.systolicbp)
   $(sel+" input[name='measurement[diastolicbp]']").val(meas.diastolicbp)
@@ -233,8 +221,6 @@
   $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
 @load_measurement_blood_glucose = (sel, data) ->
-  console.log "load_meas_bg"
-  console.log data
   meas = data['measurement']
   stressList = $("#stressList").val().split(",")
   bgTimeList = $("#bgTimeList").val().split(",")
@@ -255,13 +241,11 @@
   $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
 @load_measurement_weight = (sel, data) ->
-  console.log "load_meas_weight"
   meas = data['measurement']
   $(sel+" input[name='measurement[weight]']").val(meas.weight)
   $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
 @load_measurement_waist= (sel, data) ->
-  console.log "load_meas_waist"
   meas = data['measurement']
   $(sel+" input[name='measurement[waist]']").val(meas.waist)
   $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))

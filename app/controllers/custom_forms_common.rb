@@ -22,7 +22,9 @@ module CustomFormsCommon
     @custom_form.order_index = n+1
 
     if @custom_form.save
-      redirect_to pages_customforms_path({:locale => I18n.locale})
+      send_success_json(@custom_form.id, { })
+    else
+      send_error_json(nil,  @custom_form.errors.full_messages.to_sentence, 400)
     end
   end
 

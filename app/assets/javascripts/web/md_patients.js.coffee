@@ -255,7 +255,6 @@
 
 
 @loadNotifications = (userId) ->
-  console.log "calling load notifications for: "+userId
   url = 'users/' + userId + '/notifications.js?order=desc&limit=10'
   $.ajax urlPrefix()+url,
     type: 'GET',

@@ -1,6 +1,4 @@
 @dashboard_loaded = () ->
-  console.log("dashboard loaded")
-
   $("div.app2Menu a.menulink").removeClass("selected")
   $("#dashboard-link").addClass("selected")
   uid = $("#current-user-id")[0].value
@@ -55,20 +53,16 @@
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load analysis_data AJAX Error: #{textStatus}"
     success: (data, textStatus, jqXHR) ->
-      console.log "load analysis_data AJAX success"
       histData = convertToHistory(data)
       addPoints("#canv", histData)
 
 @loadPatientNotifications = (userId) ->
   lang = $("#user-lang")[0].value
   url = 'users/' + userId + '/notifications.js?order=desc&limit=5&patient=true&active=true&lang='+lang
-  console.log "calling load notifications for: "+userId+" "+url
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "load recent notifications AJAX Error: #{textStatus}"
-    success: (data, textStatus, jqXHR) ->
-      console.log "load recent notifications Successful AJAX call"
 
 @loadForm = (evt) ->
   @popup_messages = JSON.parse($("#popup-messages").val())
@@ -90,7 +84,6 @@
       error: (jqXHR, textStatus, errorThrown) ->
         console.log "load custom form AJAX Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
-        console.log "load custom form Successful AJAX call"
         $("#currentForm").attr("data-notifid", notifId)
         $("#currentForm").removeClass("hidden")
         customPreload()
