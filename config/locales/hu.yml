@@ -85,7 +85,7 @@ hu:
   sign_up_text_part1: "Hozza létre SmartDiab fiókját."
   sign_up_text_part2: ""
   join_button: "Fiók létrehozása"
-  sign_up_info: "A SmartDiab fiók létrehozásával elfogadja a Felhasználási feltételek és Adatvédelmi szabályokat."
+  sign_up_info: "A SmartDiab fiók létrehozásával elfogadja a Felhasználási feltételeket és Adatvédelmi szabályokat. Levélszemét és kéretlen hírlevél nem érkezik tőlünk e-mail fiókjába."
   have_account: "Már van SmartDiab fiókom."
   email: "E-mail cím"
   your_email: "Adja meg e-mail címét"
@@ -248,8 +248,11 @@ hu:
   health:           "Egészség"
   blood_pressure:   "Vérnyomás"
   blood_glucose:    "Vércukor"
+  blood_sugar:    "Vércukor"
   body_weight:      "Testsúly"
+  weight:      "Testsúly"
   waist_circumfence: "Haskörfogat"
+  waist: "Haskörfogat"
 
   bp_systolic_placeholer: "Szisztolés, pl: 120"
   bp_diastolic_placeholer: "Diasztolés, pl: 70"
@@ -355,6 +358,8 @@ hu:
 
   intensities: "Alacsony Közepes Magas"
   header_values: "Dátum Megnevezés Intenzitás Időtartam Kalória"
+  meas_header_values: "Dátum Típus Érték"
+  meas_types: "Vérnyomás,Vércukor,Súly,Haskörfogat"
 
   time: "Időpont"
   daily_timeline: "Napi idővonal"

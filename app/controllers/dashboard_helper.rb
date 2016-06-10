@@ -73,7 +73,7 @@ module DashboardHelper
 
     bw = Measurement.where(user_id: current_user.id)
              .where("date between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day)
-             .where(meas_type: 'weight').order(date: :desc).last
+             .where(meas_type: 'weight').order(date: :desc).limit(1).last
     last2_bw = Measurement.where(user_id: current_user.id).where(meas_type: 'weight').order(date: :desc).limit(2)
 
     @show_weight_diff = false
@@ -84,7 +84,7 @@ module DashboardHelper
       @bw_today = bw.weight.round(1)
       if last2_bw.length==2
         @show_bw_diff = true
-        @bw_diff = last2_bw.last.weight-last2_bw.first.weight
+        @bw_diff = last2_bw.first.weight-last2_bw.last.weight
         @bw_arrow = "up"
         if @bw_diff<0
           @bw_arrow = "down"

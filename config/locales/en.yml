@@ -106,7 +106,7 @@ en:
   sign_up_text_part1: "Create your SmartDiab account"
   sign_up_text_part2: "Your Data. Your Problem. Solved!"
   join_button: "Join"
-  sign_up_info: "By joining SmartDiab, you agree to our Terms of Service and Privacy Policy."
+  sign_up_info: "By joining SmartDiab, you agree to our Terms of Service and Privacy Policy. No SPAM, no unwanted newsletters will be sent to your e-mail account."
   have_account: "I already have a SmartDiab account"
   email: "E-mail address"
   your_email: "Your email address"
@@ -269,8 +269,11 @@ en:
   health:           "Health"
   blood_pressure:   "Blood Pressure"
   blood_glucose:   "Blood Glucose"
+  blood_sugar:   "Blood Glucose"
   body_weight:      "Body Weight"
+  weight:      "Body Weight"
   waist_circumfence: "Waist Circumfence"
+  waist: "Waist Circumfence"
 
   bp_systolic_placeholer: "Systolic, eg: 120"
   bp_diastolic_placeholer: "Diastolic, eg: 70"
@@ -374,6 +377,8 @@ en:
 
   intensities: "Low Moderate High"
   header_values: "Date Name Intensity Duration Calories"
+  meas_header_values: "Date Type Value"
+  meas_types: "Blood Pressure,Blood Glucose,Body Weight,Waist Circumfence"
 
   time: "Time"
   daily_timeline: "Daily timeline"

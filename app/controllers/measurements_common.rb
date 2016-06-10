@@ -13,6 +13,11 @@ module MeasurementsCommon
     end
 
     if @measurement.save
+      if @measurement.meas_type == 'weight'
+        profile = Profile.where(user_id: current_user.id).first
+        update_hash = {:weight => @measurement.weight}
+        profile.update_attributes(update_hash)
+      end
       send_success_json(@measurement.id, {msg: create_success_message() } )
     else
       msg =  @measurement.errors.full_messages.to_sentence+"\n"

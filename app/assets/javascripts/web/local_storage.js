@@ -1,6 +1,5 @@
 
 function testDbVer(actualDbVersion, localItems) {
-    console.log("testdbver");
     if(typeof(Storage) != "undefined") {
         try {
             var storedDbVersion = JSON.parse(localStorage.getItem("db_version"));
@@ -19,7 +18,6 @@ function testDbVer(actualDbVersion, localItems) {
 }
 
 function getStored(key){
-    console.log("getst0red");
     if(typeof(Storage) != "undefined") {
         try {
             var store = JSON.parse(localStorage.getItem(key));

@@ -90,6 +90,12 @@
     lifestyle_pain_select.append($("<option />").val(element.id).text(element.label))
 
   $(selector+' .sleep_start_datepicker').datetimepicker(timepicker_defaults)
+  $(selector+' .sleep_start_datepicker').on("change.dp", (e) ->
+    starttime = $(selector+'.sleep_start_datepicker').val()
+    a = moment(starttime).add(8,'hours').format(moment_fmt)
+    $(selector+'.sleep_end_datepicker').val(a)
+  )
+
   $(selector+' .sleep_end_datepicker').datetimepicker(timepicker_defaults)
   $(selector+" .sleep_scale").slider({
     min: 0,

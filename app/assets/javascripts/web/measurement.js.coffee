@@ -61,7 +61,9 @@
       if item.meas_type==null
         return null
       value = ""
+      mType = ""
       if item.meas_type == 'blood_pressure'
+        mType = meas_types[0]
         if item.systolicbp
           value = item.systolicbp.toString()
         if value != ""
@@ -73,15 +75,21 @@
         if item.pulse
           value= value+item.pulse.toString()
       else if item.meas_type == 'blood_sugar'
+        mType = meas_types[1]
         value = item.blood_sugar
       else if item.meas_type == 'weight'
+        mType = meas_types[2]
         value = item.weight
       else if item.meas_type == 'waist'
+        mType = meas_types[3]
         value = item.waist
-      return ([item.id, moment(item.date).format("YYYY-MM-DD HH:MM"), item.meas_type, value])
+      return ([moment(item.date).format("YYYY-MM-DD HH:MM"), mType, value])
 
     current_user = $("#current-user-id")[0].value
-    url = 'users/' + current_user + '/measurements.json'
+    lang = $("#data-lang-health")[0].value
+    meas_header = $("#meas_header_values").val().split(" ")
+    meas_types = $("#meas_types").val().split(",")
+    url = 'users/' + current_user + '/measurements.json'+'?lang='+lang
     $.ajax urlPrefix()+url,
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
@@ -92,17 +100,41 @@
         ).filter( (v) ->
           return(v!=null)
         )
+        if lang == 'hu'
+          plugin = {
+            sEmptyTable: "Nincs rendelkezésre álló adat",
+            sInfo: "Találatok: _START_ - _END_ Összesen: _TOTAL_",
+            sInfoEmpty: "Nulla találat",
+            sInfoFiltered: "(_MAX_ összes rekord közül szűrve)",
+            sInfoPostFix: "",
+            sInfoThousands: " ",
+            sLengthMenu: "_MENU_ találat oldalanként",
+            sLoadingRecords: "Betöltés...",
+            sProcessing: "Feldolgozás...",
+            sSearch: "Keresés:",
+            sZeroRecords: "Nincs a keresésnek megfelelő találat",
+            oPaginate: {
+              sFirst: "Első",
+              sPrevious: "Előző",
+              sNext: "Következő",
+              sLast: "Utolsó"
+            },
+            oAria: {
+              sSortAscending: ": aktiválja a növekvő rendezéshez",
+              sSortDescending: ": aktiválja a csökkenő rendezéshez"
+            }
+          }
         $("#health-data-container").html("<table id=\"health-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
         $("#health-data").dataTable({
           "data": tblData,
           "columns": [
-            {"title": "id"},
-            {"title": "date"},
-            {"title": "type"},
-            {"title": "value"}
+            {"title": meas_header[0]},
+            {"title": meas_header[1]},
+            {"title": meas_header[2]}
           ],
           "order": [[1, "desc"]],
-          "lengthMenu": [10]
+          "lengthMenu": [10],
+          "language": plugin
         })
         location.href = "#openModal"
   )
@@ -110,7 +142,8 @@
   $(document).unbind("click.downloadHealth")
   $(document).on("click.downloadHealth", "#download-health-data", (evt) ->
     current_user = $("#current-user-id")[0].value
-    url = '/users/' + current_user + '/measurements.csv?order=desc'
+    lang = $("#data-lang-health")[0].value
+    url = '/users/' + current_user + '/measurements.csv?order=desc'+'&lang='+lang
     location.href = url
   )
 
@@ -249,3 +282,4 @@
   meas = data['measurement']
   $(sel+" input[name='measurement[waist]']").val(meas.waist)
   $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
+

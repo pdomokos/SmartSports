@@ -28,6 +28,7 @@ class MeasurementsController < ApplicationController
     order = params[:order]
     limit = params[:limit]
     favourites = params[:favourites]
+    lang = params[:lang]
 
     @measurements = user.measurements
     if start
@@ -113,7 +114,7 @@ class MeasurementsController < ApplicationController
       respond_to do |format|
         format.html
         format.json {render json: @measurements}
-        format.csv { send_data @measurements.to_csv}
+        format.csv { send_data @measurements.to_csv({}, lang)}
         format.js
       end
     end

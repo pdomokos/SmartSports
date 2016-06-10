@@ -28,6 +28,17 @@ class Measurement < ActiveRecord::Base
   # validates :SPO2, :numericality => true
   validates_with MeasValidator
 
+  @@meas_types = "meas_types"
+  @@header_values = "meas_header_values"
+
+  def self.meas_types
+    @@meas_types
+  end
+
+  def self.header_values
+    @@header_values
+  end
+
   def get_title
     result = self.meas_type
     if self.meas_type == 'blood_pressure'
@@ -49,9 +60,14 @@ class Measurement < ActiveRecord::Base
     return result
   end
 
-  def self.to_csv(options={})
+  def self.to_csv(options={}, lang = '')
     CSV.generate(options) do |csv|
-      csv << ['ID', 'date', 'type', 'value']
+      if lang == "hu"
+        csv << [((I18n.t @@header_values, :locale => :hu).split(' '))[0], ((I18n.t @@header_values, :locale => :hu).split(' '))[1], ((I18n.t @@header_values, :locale => :hu).split(' '))[2]]
+      elsif lang == "en"
+        csv << [((I18n.t @@header_values, :locale => :en).split(' '))[0], ((I18n.t @@header_values, :locale => :en).split(' '))[1], ((I18n.t @@header_values, :locale => :en).split(' '))[2]]
+      end
+
       all.each do |meas|
         if !meas.meas_type.nil?
           value = ''
@@ -78,7 +94,11 @@ class Measurement < ActiveRecord::Base
           elsif meas.meas_type == 'waist'
             value = meas.waist
           end
-          csv << [meas.id, meas.date.strftime("%Y-%m-%d %H:%M"), meas.meas_type, value]
+          if lang == "hu"
+            csv << [meas.date.strftime("%Y-%m-%d %H:%M"), (I18n.t meas.meas_type, :locale => :hu), value]
+          elsif lang == "en"
+            csv << [meas.date.strftime("%Y-%m-%d %H:%M"), (I18n.t meas.meas_type, :locale => :en), value]
+          end
         end
       end
     end

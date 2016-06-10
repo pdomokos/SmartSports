@@ -28,9 +28,9 @@ module ActivitiesCommon
       ages = Time.now.year - user.profile.year_of_birth
       durationInHour = @activity.duration/60.0
       if user.profile.sex == "female"
-        @activity.calories = (actType.kcal * 3.5/((655.0955+(1.8496 * user.profile.height)+(9.5634 * user.profile.weight)-(4.6756 * ages))/1440/5/user.profile.weight * 1000))*user.profile.weight*durationInHour
+        @activity.calories = ((actType.kcal * 3.5/((655.0955+(1.8496 * user.profile.height)+(9.5634 * user.profile.weight)-(4.6756 * ages))/1440/5/user.profile.weight * 1000))*user.profile.weight*durationInHour).round(2)
       elsif user.profile.sex == "male"
-        @activity.calories = (actType.kcal * 3.5/((66.4730+(5.0033 * user.profile.height)+(13.7516 * user.profile.weight)-(6.7550 * ages))/1440/5/user.profile.weight * 1000))*user.profile.weight*durationInHour
+        @activity.calories = ((actType.kcal * 3.5/((66.4730+(5.0033 * user.profile.height)+(13.7516 * user.profile.weight)-(6.7550 * ages))/1440/5/user.profile.weight * 1000))*user.profile.weight*durationInHour).round(2)
       end
     end
 

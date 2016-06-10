@@ -147,7 +147,7 @@
 @get_exercise_table_row = (item ) ->
   console.log item
   intensities = $("#intensity_values").val().split(" ")
-  ret = [moment(item.start_time).format("YYYY-MM-DD HH:MM"), item.name, intensities[Math.round(item.intensity)], item.duration, Math.round(item.calories * 100) / 100]
+  ret = [moment(item.start_time).format("YYYY-MM-DD HH:MM"), @get_label(item.name), intensities[Math.round(item.intensity)], item.duration, Math.round(item.calories * 100) / 100]
   if ret[2]==undefined
     ret[2] = ""
   return ret
@@ -186,6 +186,11 @@
   })
 
   $(selector+'.activity_exercise_start_datepicker').datetimepicker(timepicker_defaults)
+  $(selector+'.activity_exercise_start_datepicker').on("change.dp", (e) ->
+    starttime = $(selector+'.activity_exercise_start_datepicker').val()
+    a = moment(starttime).add(30,'minutes').format(moment_fmt)
+    $(selector+'.activity_exercise_end_datepicker').val(a)
+  )
   $(selector+'.activity_exercise_end_datepicker').datetimepicker(timepicker_defaults)
 
   $(selector+'.activity_regular_start_datepicker').datetimepicker(timepicker_defaults)

@@ -1,8 +1,11 @@
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
 <input id="stressList" type="hidden" value="<%=t :stressList %>">
 <input id="bgTimeList" type="hidden" value="<%=t :bgTimeList %>">
+<input id="meas_header_values" value="<%=t :meas_header_values%>" type="hidden" />
+<input id="meas_types" value="<%=t :meas_types%>" type="hidden" />
+
 <div class="health-block mainContent">
-    <input id="data-lang-health" value="<%=I18n.locale%>" type="hidden" />
+    <input id="data-lang-health" name="lang" value="<%=I18n.locale%>" type="hidden" />
     <div class="sectionTitle bl3 c3">
         <%=t 'health'%>
     </div>

@@ -18,8 +18,8 @@ class Activity < ActiveRecord::Base
   validates_with DateTimeValidator
 
 
-  @@intensity_values = [(I18n.t :activity_intensity_low), (I18n.t :activity_intensity_moderate), (I18n.t :activity_intensity_high)]
-  @@header_values = (I18n.t :header_values).split(" ")
+  @@intensity_values = ["activity_intensity_low", "activity_intensity_moderate", "activity_intensity_high"]
+  @@header_values = "header_values"
 
   def self.intensity_values
     @@intensity_values
@@ -52,21 +52,29 @@ class Activity < ActiveRecord::Base
 
   def self.to_csv(options={}, lang = '')
     CSV.generate(options) do |csv|
-      csv << [@@header_values[0], @@header_values[1], @@header_values[2], @@header_values[3]]
+      if lang == "hu"
+        csv << [((I18n.t @@header_values, :locale => :hu).split(' '))[0], ((I18n.t @@header_values, :locale => :hu).split(' '))[1], ((I18n.t @@header_values, :locale => :hu).split(' '))[2], ((I18n.t @@header_values, :locale => :hu).split(' '))[3], ((I18n.t @@header_values, :locale => :hu).split(' '))[4]]
+      elsif lang == "en"
+        csv << [((I18n.t @@header_values, :locale => :en).split(' '))[0], ((I18n.t @@header_values, :locale => :en).split(' '))[1], ((I18n.t @@header_values, :locale => :en).split(' '))[2], ((I18n.t @@header_values, :locale => :en).split(' '))[3], ((I18n.t @@header_values, :locale => :en).split(' '))[4]]
+      end
       all.each do |activity|
         if activity.activity_type
           if lang != ''
             if lang == "hu"
-              activity.activity = DB_HU_CONFIG['activities'][activity.activity_type.name]
+              name = DB_HU_CONFIG['activities'][activity.activity_type.name]
             elsif lang == "en"
-              activity.activity = DB_EN_CONFIG['activities'][activity.activity_type.name]
+              name = DB_EN_CONFIG['activities'][activity.activity_type.name]
             end
           else
-            activity.activity = activity.activity_type.name
+            name = activity.activity_type.name
           end
         end
-        if activity.activity_type && activity.intensity && activity.duration
-          csv << [activity.start_time.strftime("%Y-%m-%d %H:%M"), activity.activity, @@intensity_values[activity.intensity.to_i], activity.duration]
+        if activity.activity_type && activity.duration
+          if lang == "hu"
+            csv << [activity.start_time.strftime("%Y-%m-%d %H:%M"), name, (I18n.t @@intensity_values[activity.intensity.to_i], :locale => :hu), activity.duration, activity.calories]
+          elsif lang == "en"
+            csv << [activity.start_time.strftime("%Y-%m-%d %H:%M"), name, (I18n.t @@intensity_values[activity.intensity.to_i], :locale => :en), activity.duration, activity.calories]
+          end
         end
       end
     end
