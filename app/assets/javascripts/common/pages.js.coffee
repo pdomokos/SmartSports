@@ -335,7 +335,7 @@
     return $(sel).length==0 || $(sel).val()=="" || !isFinite($(sel).val())
   window.positive = (sel) ->
     val = $(sel).val()
-    return $(sel).length==0 || val=="" || (isFinite(val) && parseInt(val)>0)
+    return $(sel).length==0 || val=="" || (isFinite(val) && parseFloat(val)>0)
   window.notpositive = (sel) ->
     return !positive(sel)
   window.capitalize = (string) ->

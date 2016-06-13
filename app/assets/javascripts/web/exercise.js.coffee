@@ -17,17 +17,20 @@
   $("#exercise-create-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
     console.log "success "+form_id
+    @intensities = $("#intensity_values").val().split(" ")
 
     $("#"+form_id+" input.dataFormField").val("")
 
     $('.activity_exercise_scale').slider({value: 1})
+    $('.activity_exercise_percent').html(@intensities[1])
     $('.activity_exercise_start_datepicker').val(moment().subtract(30,'minutes').format(moment_fmt))
     $('.activity_exercise_end_datepicker').val(moment().format(moment_fmt))
     $('#activity_type_id').val(null)
 
     loadExerciseHistory()
     console.log data
-    popup_success(get_label(data['name'])+popup_messages.saved_successfully+'! ', "exerciseStyle", data['cal_message'])
+    if data['cal_message'] && data['cal_message'] != ""
+      popup_success(get_label(data['name'])+popup_messages.saved_successfully+'! ', "exerciseStyle", data['cal_message'])
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log(xhr)
     popup_error(popup_messages.failed_to_add+get_label(xhr.responseJSON.data)+' '+xhr.responseJSON.msg, "exerciseStyle")
@@ -44,7 +47,8 @@
 
     loadExerciseHistory()
     console.log data
-    popup_success(data['activity_name']+popup_messages.saved_successfully+'! ', "exerciseStyle", data['cal_message'])
+    if data['cal_message'] && data['cal_message'] != ""
+      popup_success(data['activity_name']+popup_messages.saved_successfully+'! ', "exerciseStyle", data['cal_message'])
   ).on("ajax:error", (e, xhr, status, error) ->
     popup_error(popup_messages.failed_to_add+$("#otheractivityname").val()+' '+xhr.responseJSON.msg, "exerciseStyle")
   )

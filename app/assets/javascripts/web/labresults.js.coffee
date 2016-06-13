@@ -42,7 +42,7 @@
     return true
   $("#ldlchol-create-form button").click ->
     if( isempty(".ldl_chol") || notpositive(".ldl_chol"))
-      popup_error(opup_messages.failed_to_create_LDL, "labresultStyle")
+      popup_error(popup_messages.failed_to_create_LDL, "labresultStyle")
       return false
     return true
   $("#egfrepi-create-form button").click ->
@@ -55,7 +55,7 @@
     console.log "notification created, ret = "
     console.log data
     if data.ok
-      $("#control_txt").val(null)
+      $("#nType").val(null)
       $(".notification_details").val(null)
       loadVisits()
     else
@@ -76,12 +76,11 @@
     if category
       loadLabresult()
 
-    $("#control_txt").val(null)
     $(".hba1c").val(null)
     $(".ldl_chol").val(null)
     $(".egfr_epi").val(null)
-    $(".ketone_name").val(null)
     $(".notification_details").val(null)
+
 
     if !category
       category = 'control'
@@ -115,48 +114,34 @@
     { label: doctorList[1], value: doctorList[1], intValue: 2}
   ]
 
-  controlSelected = null
-  notif_types = ['doctors_visit_general', 'doctors_visit_specialist']
-  $("#control_txt").autocomplete({
-    minLength: 0,
-    source: controlList,
-    change: (event, ui) ->
-      console.log ui.item
-      controlSelected = ui.item
-      $("#control").val(ui.item.intValue)
-      $("#nType").val(notif_types[ui.item.intValue-1])
-  }).focus ->
-    $(this).autocomplete("search")
-
-  ketoneSelected = null
-  $(".ketone_name").autocomplete({
-    minLength: 0,
-    source: (request, response) ->
-      matcher = new RegExp($.ui.autocomplete.escapeRegex(remove_accents(request.term), ""), "i")
-      result = []
-      cnt = 0
-      user_lang = $("#user-lang")[0].value
-      if user_lang
-        labkey = 'sd_labresult_'+user_lang
-      else
-        labkey = 'sd_labresult_hu'
-      for element in getStored(labkey)
-        if matcher.test(remove_accents(element.label))
-          result.push(element)
-          cnt += 1
-      response(result)
-    select: (event, ui) ->
-      $(".ketone_type_id").val(ui.item.id)
-    create: (event, ui) ->
-      $(".ketone_name").removeAttr("disabled")
-    change: (event, ui) ->
-      ketoneSelected = ui['item']
-  }).focus ->
-    $(this).autocomplete("search")
-
   user_lang = $("#user-lang")[0].value
   if !user_lang
     user_lang='hu'
+
+  labresult_control_select = $("#control_txt")
+  labresult_ketone_select = $(".ketone_name")
+
+  if user_lang
+    labkey = 'sd_labresult_'+user_lang
+  else
+    labkey = 'sd_labresult_hu'
+
+  for element in controlList
+    labresult_control_select.append($("<option />").val(element.value).text(element.label))
+  for element in getStored(labkey)
+    labresult_ketone_select.append($("<option />").val(element.label).text(element.label))
+
+  notif_types = ['doctors_visit_general', 'doctors_visit_specialist']
+  $("#nType").val(notif_types[0])
+  $(".ketone_type_id").val(get_ketone_value('Negative'))
+  $("#control_txt").on("change", (e) ->
+    $("#nType").val(notif_types[e.currentTarget.selectedIndex])
+  )
+
+  $(".ketone_name").on("change", (e) ->
+    val = get_ketone_value(e.currentTarget.options[e.currentTarget.selectedIndex].value)
+    $(".ketone_type_id").val(val)
+  )
 
   $('.hba1c_datepicker').datetimepicker({
     format: 'Y-m-d',
@@ -270,9 +255,23 @@
       console.log "load recent visits  Successful AJAX call"
       console.log textStatus
 
-@load_labresult_ketone = (sel, data) ->
-  console.log("load ketone: "+sel+" data:")
-  labres = data['labresult']
-  $(sel+" input[name='labresult[ketone]']").val(labres['ketone'])
-  $(sel+" input[name='labresult[labresult_type_name]']").val(labres['labresult_type_name'])
-  $(sel+" input[name='labresult[date]']").val(labres['date'])
+
+@get_ketone_value = (label) ->
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
+
+  if user_lang
+    labkey = 'sd_labresult_'+user_lang
+  else
+    labkey = 'sd_labresult_hu'
+
+  tmp = getStored(labkey).filter((d) ->
+    return d.label==label
+  )
+  if tmp.length!=0
+    value = tmp[0].id
+
+  if value==null
+    value = 'Unknown'
+  return value
