@@ -20,7 +20,6 @@
 
   <div class="tilesContainer">
 
-  <% if @show_bg %>
     <div class="dashboardT">
       <div class="tileTitle">
         <div class="tileImage">
@@ -34,7 +33,7 @@
       </div>
       <% if @show_day_bg %>
           <div class="tileBody">
-            <span class="tileContent <%=@day_bg_status%>"><%=@day_bg_min%>/<%=@day_bg_avg%>/<%=@day_bg_max%></span><br/><span class="tileUnit">mmol/L</span>
+            <span class="tileContent <%=@day_bg_status%>"><%=@day_bg_min%> / <%=@day_bg_avg%> / <%=@day_bg_max%></span><br/><span class="tileUnit">mmol/L</span>
           </div>
       <%else%>
           <div>
@@ -42,7 +41,6 @@
           </div>
       <%end%>
     </div>
-  <% end %>
 
     <% if @show_bw %>
         <div class="dashboardT">

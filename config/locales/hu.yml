@@ -78,7 +78,7 @@ hu:
   username: "Felhasználónév"
   forgotten_password: "Elfelejtettem a jelszavam"
   create_account_part1: "Még nincs SmartDiab fiókja?"
-  create_account_part2: "Hozzon létre egyet, gyűjtse és elemezze a cukorbetegségéhez kapcsolódó adatait."
+  create_account_part2: "Hozzon létre egyet, gyűjtse és elemezze a cukorbetegségéhez kapcsolódó adatait"
   password_restore_button: "Küldés"
   password_restore_text: "Kérjük adja meg e-mail címét és elküldjük az új jelszó megadásához és aktiválásához szükséges linket és tudnivalókat."
   welcome_message: "A vércukorszint megfelelő szinten tartása során figyelembe kell venni mindazokat a tényezőket, amelyek befolyásolják azt, így az elfogyasztott szénhidrát mennyiségét és a feldolgozásához szükséges inzulint, a már elvégzett és a tervezett testmozgást, valamint meg kell tanulni a testünk milyen választ ad a különböző körülményekre. A SmartDiab egy könnyen kezelhető felületet biztosít minden olyan fontos tényező követésére és elemzésére, amely hatással van a vércukorszintre és a közérzetre."
@@ -196,7 +196,7 @@ hu:
   exercise_calories: "Elhasznált kalória"
   exercise_time: "Edzés időtartama"
   min: "perc"
-  blood_glucose_today_html: "Vércukor szint<br/> (min/átlag/max)"
+  blood_glucose_today_html: "Napi vércukorszint<br/> (min / átlag / max)"
   sleep_amount_today: "Mai alvásidő"
   hours: "óra"
   body_weight: "Testsúly"
@@ -357,7 +357,7 @@ hu:
   statistics:         "Statisztika"
 
   intensities: "Alacsony Közepes Magas"
-  header_values: "Dátum Megnevezés Intenzitás Időtartam Kalória"
+  header_values: "Dátum,Megnevezés,Intenzitás,Időtartam (perc),Kalória (kCal)"
   meas_header_values: "Dátum Típus Érték"
   meas_types: "Vérnyomás,Vércukor,Súly,Haskörfogat"
 

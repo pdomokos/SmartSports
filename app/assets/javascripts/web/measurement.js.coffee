@@ -218,6 +218,7 @@
     change: (event, ui) ->
       event.target.parentElement.parentElement.querySelector(".bg_time_val").value = ui.value
   })
+  $(".bg_time_scale").slider({value: 0})
 
   $('.bp_sys').focus()
 

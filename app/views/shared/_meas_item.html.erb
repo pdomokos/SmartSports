@@ -20,7 +20,7 @@
             <strong><%=(t :blood_pressure)%>: <%= meas_item.systolicbp %> / <%= meas_item.diastolicbp %> / <%= meas_item.pulse %></strong>
           <%end%>
       <% elsif  meas_item.meas_type=='blood_sugar' %>
-          <strong><%=(t :blood_glucose)%>: <%= meas_item.blood_sugar.round(2) %> mmol/L</strong> <%if meas_item.stress_amount %><%=(t :stress_level)%>: <%= (t :stressList).split(",")[meas_item.stress_amount] %> <%end%><%if meas_item.blood_sugar_time %><%=(t :blood_sugar_time)%>: <%= (t :bgTimeList).split(",")[meas_item.blood_sugar_time]%><%end%>
+          <strong><%=(t :blood_glucose)%>: <%= meas_item.blood_sugar.round(2) %> mmol/L</strong> <%if meas_item.stress_amount %><%=(t :stress_level)%>: <%= (t :stressList).split(",")[meas_item.stress_amount] %>; <%end%><%if meas_item.blood_sugar_time %><%=(t :blood_sugar_time)%>: <%= (t :bgTimeList).split(",")[meas_item.blood_sugar_time]%><%end%>
       <% elsif  meas_item.meas_type=='weight' %>
           <strong><%=(t :body_weight)%>: <%= meas_item.weight %>kg</strong>
       <% elsif  meas_item.meas_type=='waist' %>

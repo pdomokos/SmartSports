@@ -65,10 +65,13 @@ class AnalysisDataController < ApplicationController
       activities_val_list = DB_EN_CONFIG['activities']
       food_val_list = DB_EN_CONFIG['diets']
     end
-    activities = user.activities
 
-    if f
-      activities = activities.where("start_time between ? and ?", f, t)
+    if dashboard
+      activities = user.activities.order("start_time DESC").limit(15)
+    end
+
+    if f && !dashboard
+      activities = user.activities.where("start_time between ? and ?", f, t)
     end
 
     result.concat(activities.collect{|act|
@@ -92,39 +95,11 @@ class AnalysisDataController < ApplicationController
                     item
                   })
 
-    diets = user.diets
-    if f
-      diets = diets.where("date between ? and ?", f, t)
+    if dashboard
+      measurements = user.measurements.order('date DESC').limit(15)
     end
-    result.concat(diets.collect{|diet|
-                    item = {
-                      id: diet.id,
-                      tooltip: diet.try(:food_type).try(:name),
-                      title: 'Diet',
-                      depth: 0,
-                      dates: [diet.date],
-                      kind: 'diet',
-                      evt_type: 'food',
-                      source: 'SmartDiab'
-                    }
-                    if diet.diet_type== 'Calory'
-                      item['tooltip'] = (I18n.t :quick_calories)
-                    else
-                      category = food_key_list.find_by_id(diet.food_type_id).try(:category)
-                      name = food_key_list.find_by_id(diet.food_type_id).try(:name)
-                      unless category.nil? || name.nil?
-                        item['tooltip'] = food_val_list[category][name]
-                        item['evt_type'] = category.downcase
-                      end
-                    end
-
-                    item
-                  })
-
-
-    measurements = user.measurements
-    if f
-      measurements = measurements.where("date between ? and ?", f, t)
+    if f && !dashboard
+      measurements = user.measurements.where("date between ? and ?", f, t)
     end
     meas_arr = []
     meas_arr.concat(measurements.collect do |measurement|
@@ -154,7 +129,68 @@ class AnalysisDataController < ApplicationController
     )
     result.concat(meas_arr)
 
+    if dashboard
+      medications = user.medications.order("date DESC").limit(15)
+    end
+    if f && !dashboard
+      medications = medications.where("date between ? and ?", f, t)
+    end
+    result.concat(medications.collect{|med|
+      item = {
+          id: med.id,
+          title: 'Medication',
+          depth: 0,
+          dates: [med.date],
+          kind: 'medication',
+          source: 'SmartDiab'
+      }
+      if med.medication_type.try(:category)=='oral'
+        item['evt_type'] = 'drug'
+        item['tooltip'] = get_medication_from_id(med.try(:medication_type).try(:name))+" : #{med.amount}"
+      elsif med.medication_type.try(:category)=='insulin'
+        item['evt_type'] = 'insulin'
+        item['tooltip'] = get_medication_from_id(med.try(:medication_type).try(:name))+" : #{med.amount}"
+      elsif med.custom_medication_type.try(:category)=='custom_drug'
+        item['evt_type'] = 'drug'
+        item['tooltip'] = med.try(:custom_medication_type).try(:name)+" : #{med.amount}"
+      elsif med.custom_medication_type.try(:category)=='custom_insulin'
+        item['evt_type'] = 'insulin'
+        item['tooltip'] = med.try(:custom_medication_type).try(:name)+" : #{med.amount}"
+      end
+      item
+    })
+
+
     if(!dashboard)
+      diets = user.diets
+      if f
+        diets = diets.where("date between ? and ?", f, t)
+      end
+      result.concat(diets.collect{|diet|
+        item = {
+            id: diet.id,
+            tooltip: diet.try(:food_type).try(:name),
+            title: 'Diet',
+            depth: 0,
+            dates: [diet.date],
+            kind: 'diet',
+            evt_type: 'food',
+            source: 'SmartDiab'
+        }
+        if diet.diet_type== 'Calory'
+          item['tooltip'] = (I18n.t :quick_calories)
+        else
+          category = food_key_list.find_by_id(diet.food_type_id).try(:category)
+          name = food_key_list.find_by_id(diet.food_type_id).try(:name)
+          unless category.nil? || name.nil?
+            item['tooltip'] = food_val_list[category][name]
+            item['evt_type'] = category.downcase
+          end
+        end
+
+        item
+      })
+
       lifestyles = user.lifestyles
       if f
         lifestyles = lifestyles.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t )
@@ -183,25 +219,6 @@ class AnalysisDataController < ApplicationController
       end
       )
       result.concat(lifes_arr)
-
-      medications = user.medications.where("date between ? and ?", f, t)
-      result.concat(medications.collect{|med|
-                      item = {
-                        id: med.id,
-                        tooltip: med.try(:medication_type).try(:name)+" : #{med.amount}",
-                        title: 'Medication',
-                        depth: 0,
-                        dates: [med.date],
-                        kind: 'medication',
-                        evt_type: 'drug',
-                        group: med.try(:medication_type).try(:group),
-                        source: 'SmartDiab'
-                      }
-                      if med.medication_type.try(:group)=='insulin'
-                        item['evt_type'] = 'insulin'
-                      end
-                      item
-                    })
 
       sensors = user.sensor_measurements.where("(start_time between ? and ?) OR (end_time between ? and ?)", f, t, f, t)
       for sens in sensors do
@@ -408,5 +425,9 @@ class AnalysisDataController < ApplicationController
                        evt_type: 'sensor',
                        source: 'SmartDiab'
                    }])
+  end
+
+  def get_medication_from_id(medication_type_id)
+    MedicationType.find(medication_type_id).title
   end
 end

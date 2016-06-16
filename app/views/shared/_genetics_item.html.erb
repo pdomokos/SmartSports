@@ -25,13 +25,15 @@
                 <%= DB_HU_CONFIG['genetics']['autoantibody'][genetics_item.antibody_key] %>
             <%else%>
                 <%= DB_EN_CONFIG['genetics']['autoantibody'][genetics_item.antibody_key] %>
-            <%end%>,
+            <%end%>
             <% if genetics_item.antibody_kind==true%>
-                <%=t :positive%>,
+                <%=(t :positive).downcase%>
             <% else %>
-                <%=t :negative%>,
+                <%=(t :negative).downcase%>
             <% end %>
-            <%= genetics_item.antibody_value %>
+            <% if genetics_item.antibody_value && genetics_item.antibody_value != '' %>
+                , <%= genetics_item.antibody_value %>
+            <% end %>
         <%elsif genetics_item && genetics_item.class == FamilyRecord%>
             <input id="family_history_data_<%= genetics_item.id %>" type="hidden" value="<%=
                 f = {'family_history' => genetics_item.as_json}
@@ -42,7 +44,7 @@
                 <%= DB_HU_CONFIG['genetics']['relatives'][genetics_item.relative_key] %>
             <%else%>
                 <%= DB_EN_CONFIG['genetics']['relatives'][genetics_item.relative_key] %>
-            <%end%>,
+            <%end%>
             <%if I18n.locale == :hu%>
                 <%= DB_HU_CONFIG['genetics']['diabetes'][genetics_item.diabetes_key] %>
             <%else%>

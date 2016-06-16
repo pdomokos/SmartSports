@@ -81,7 +81,7 @@
     console.log "datatable clicked"
     current_user = $("#current-user-id")[0].value
     lang = $("#user-lang")[0].value
-    header = $("#header_values").val().split(" ")
+    header = $("#header_values").val().split(",")
     url = 'users/' + current_user + '/activities.json'+'?lang='+lang
     console.log url
     $.ajax urlPrefix()+url,

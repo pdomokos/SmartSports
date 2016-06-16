@@ -53,9 +53,9 @@ class Activity < ActiveRecord::Base
   def self.to_csv(options={}, lang = '')
     CSV.generate(options) do |csv|
       if lang == "hu"
-        csv << [((I18n.t @@header_values, :locale => :hu).split(' '))[0], ((I18n.t @@header_values, :locale => :hu).split(' '))[1], ((I18n.t @@header_values, :locale => :hu).split(' '))[2], ((I18n.t @@header_values, :locale => :hu).split(' '))[3], ((I18n.t @@header_values, :locale => :hu).split(' '))[4]]
+        csv << [((I18n.t @@header_values, :locale => :hu).split(','))[0], ((I18n.t @@header_values, :locale => :hu).split(','))[1], ((I18n.t @@header_values, :locale => :hu).split(','))[2], ((I18n.t @@header_values, :locale => :hu).split(','))[3], ((I18n.t @@header_values, :locale => :hu).split(','))[4]]
       elsif lang == "en"
-        csv << [((I18n.t @@header_values, :locale => :en).split(' '))[0], ((I18n.t @@header_values, :locale => :en).split(' '))[1], ((I18n.t @@header_values, :locale => :en).split(' '))[2], ((I18n.t @@header_values, :locale => :en).split(' '))[3], ((I18n.t @@header_values, :locale => :en).split(' '))[4]]
+        csv << [((I18n.t @@header_values, :locale => :en).split(','))[0], ((I18n.t @@header_values, :locale => :en).split(','))[1], ((I18n.t @@header_values, :locale => :en).split(','))[2], ((I18n.t @@header_values, :locale => :en).split(','))[3], ((I18n.t @@header_values, :locale => :en).split(','))[4]]
       end
       all.each do |activity|
         if activity.activity_type

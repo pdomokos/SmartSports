@@ -97,9 +97,9 @@
     popup_error(popup_messages.failed_to_delete_data, "labresultStyle")
   )
 
-  $("#recentVisitsTable").on("ajax:success", (e, data, status, xhr) ->
+  $(".notificationTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.currentTarget
-    load_visits()
+    loadVisits()
   ).on("ajax:error", (e, xhr, status, error) ->
     console.log xhr.responseText
     popup_error(popup_messages.failed_to_delete_data, "labresultStyle")
@@ -245,7 +245,7 @@
   current_user = $("#current-user-id")[0].value
   console.log "calling load recent visits"
   lang = $("#data-lang-labresult")[0].value
-  url = 'users/' + current_user + '/notifications.js?upcoming=true&order=desc&limit=10&ntype=visits&lang='+lang
+  url = 'users/' + current_user + '/notifications.js?upcoming=true&order=desc&limit=10&ntype=visits&patient=true&lang='+lang
   console.log url
   $.ajax urlPrefix()+url,
     type: 'GET',

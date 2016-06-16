@@ -48,7 +48,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html
       format.json
-      format.csv { send_data @activities.to_csv({}, lang)}
+      format.csv { send_data @activities.to_csv({}, lang).encode("iso-8859-2"), :type => 'text/csv; charset=iso-8859-2; header=present' }
       format.js
     end
   end
