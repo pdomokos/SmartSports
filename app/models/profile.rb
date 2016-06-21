@@ -15,6 +15,16 @@ class ProfileValidator < ActiveModel::Validator
         record.errors[:base] << "error_profile_height_interval"
       end
     end
+    if record.blood_glucose_min
+      if record.blood_glucose_min < 0 or record.blood_glucose_min > 50
+        record.errors[:base] << "error_profile_bg"
+      end
+    end
+    if record.blood_glucose_max
+      if record.blood_glucose_max < 0 or record.blood_glucose_max > 50
+        record.errors[:base] << "error_profile_bg"
+      end
+    end
   end
 end
 

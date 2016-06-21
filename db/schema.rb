@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524092420) do
+ActiveRecord::Schema.define(version: 20160620140432) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -234,6 +234,12 @@ ActiveRecord::Schema.define(version: 20160524092420) do
   add_index "lifestyles", ["user_id"], name: "index_lifestyles_on_user_id"
   add_index "lifestyles", ["user_id"], name: "index_lifestyles_on_user_id_and_group"
 
+  create_table "measurement_types", force: true do |t|
+    t.string "name"
+    t.string "category"
+    t.string "lang"
+  end
+
   create_table "measurements", force: true do |t|
     t.integer  "user_id"
     t.string   "source"
@@ -251,6 +257,7 @@ ActiveRecord::Schema.define(version: 20160524092420) do
     t.boolean  "favourite",        default: false
     t.float    "stress_amount"
     t.integer  "blood_sugar_time"
+    t.string   "blood_glucose_note"
   end
 
   add_index "measurements", ["user_id", "created_at"], name: "index_measurements_on_user_id_and_created_at"
@@ -370,6 +377,9 @@ ActiveRecord::Schema.define(version: 20160524092420) do
     t.boolean  "insulin",       default: false
     t.string   "default_lang"
     t.integer  "year_of_birth"
+    t.float    "blood_glucose_min"
+    t.float    "blood_glucose_max"
+    t.string   "blood_glucose_unit", default: "mmol/L"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", unique: true

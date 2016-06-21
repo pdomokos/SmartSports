@@ -19,6 +19,7 @@ namespace :smartdiab do
     Rake::Task['smartdiab:init_food'].execute
     Rake::Task['smartdiab:init_labresult'].execute
     Rake::Task['smartdiab:init_lifestyle'].execute
+    Rake::Task['smartdiab:init_measurement'].execute
     updateVersion()
   end
 
@@ -102,4 +103,16 @@ namespace :smartdiab do
     puts 'LifestyleTypes loaded'
   end
 
+  task init_measurement: :environment do
+    if MeasurementType.all.size != 0
+      MeasurementType.all.delete_all
+    end
+
+    dirName = File.dirname(__FILE__)
+    csv_text = dirName + "/init_measurement.csv"
+    ret = SmarterCSV.process(csv_text, headers: true, col_sep: ";", chunk_size: 2000) do |chunk|
+      MeasurementType.create!(chunk)
+    end
+    puts 'MeasurementTypess loaded'
+  end
 end

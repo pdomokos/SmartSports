@@ -124,6 +124,7 @@ en:
   lastname: "Last name"
   skip: "Skip this step and go directly to SmartDiab"
   save: "Save"
+  cancel: "Cancel"
   fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to SmartDiab."
   height: "Height, eg: 180"
   date_of_birth: "Year of birth"
@@ -141,6 +142,7 @@ en:
   recommended_size: "Recommended size 160x160 px"
   yes_no_list: "Yes,No"
   gender_list: "Male,Female"
+  bg_unit: "Blood glucose unit"
 
 # erorrs
   back_home:      "Back"
@@ -151,7 +153,7 @@ en:
   error_profile_height_format: "Height must be a number!"
   error_profile_weight_interval: "Weight must be between 20-500kg!"
   error_profile_height_interval: "Height must be between 100-250cm!"
-  error_profile_year_interval: "Year of birth must be between 1900-2016"
+  error_profile_year_interval: "Year of birth must be between 1900-2016!"
   error_registration_password: "Password must be at least 4 characters!"
   error_registration_password_confirmation: "Please fill password confirmation field!"
   error_registration_password_confirmation2: "Passwords are different!"
@@ -160,6 +162,7 @@ en:
   error_login_password: "Invalid password"
   error_login_username: "Invalid username or password"
   error_end_time_greater: "End time should be greater than start time!"
+  error_profile_bg: "Blood glucose must be between 0.0-50.0mmol/L!"
 
   reg_succ: "Registration successful"
 
@@ -295,6 +298,8 @@ en:
   pulse: "Pulse"
   sysdias: "Systolic/Diastolic"
   sysdiaspulse: "Systolic/Diastolic/Pulse"
+  add_blood_glucose_note_title: "Specify your blood glucose measurement"
+  add_blood_glucose_note_form_title: "Please select a reason why your blood glucose out of usual interval!"
 
 # medication
   medication:           "Medication"

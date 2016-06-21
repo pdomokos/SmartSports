@@ -1,3 +1,25 @@
+<div id="addBgNoteModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%=t 'add_blood_glucose_note_title' %></h4>
+      </div>
+      <div class="modal-body" style="padding: 40px;">
+            <div class="form-group">
+              <label for="formNameInput"><%=t 'add_blood_glucose_note_form_title' %></label>
+              <select class="form-control dataFormField activity_exercise_name" style="width: 100px;" type="formNameInput" id="measNote" readonly="true"></select>
+              <input id="measIdToNote" type="hidden" value="" />
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%=t 'cancel'%></button>
+        <button type="button" id="save-bgnote-form" class="btn btn-primary"><%=t 'save'%></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <input id="popup-messages" value="<%=@values%>" type="hidden" />
 <input id="stressList" type="hidden" value="<%=t :stressList %>">
 <input id="bgTimeList" type="hidden" value="<%=t :bgTimeList %>">

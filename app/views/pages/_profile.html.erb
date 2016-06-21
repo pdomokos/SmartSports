@@ -149,12 +149,20 @@
               </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
+                  <%= t :date_of_birth %>
+                </td>
+                <td>
+                  <input id="weight_field" name="profile[year_of_birth]" type="number" class="loginField loginField2" value="<%= @profile.year_of_birth %>"/>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_year_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
                   <%= t :sex %>
                 </td>
                 <td>
                   <input type="radio" name="profile[sex]" value="male" <%= @profile.sex == "male" ? "checked" : "" %>/> <%= t 'male' %>
-                  <input type="radio" name="profile[sex]" value="female" <%= @profile.sex == "female" ? "checked" : "" %>
-                  "/> <%= t 'female' %>
+                  <input type="radio" name="profile[sex]" value="female" <%= @profile.sex == "female" ? "checked" : "" %>/> <%= t 'female' %>
                 </td>
                 <td>
                 </td>
@@ -164,7 +172,7 @@
                   <%= t :height %>
                 </td>
                 <td>
-                  <input id="height_field" name="profile[height]" type="text" class="loginField loginField2" value="<%= @profile.height %>"/>
+                  <input id="height_field" name="profile[height]" type="number" class="loginField loginField2" value="<%= @profile.height %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_height_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a>
                 </td>
                 <td>
@@ -175,7 +183,7 @@
                   <%= t :body_weight %>
                 </td>
                 <td>
-                  <input id="weight_field" name="profile[weight]" type="text" class="loginField loginField2" value="<%= @profile.weight %>"/>
+                  <input id="weight_field" name="profile[weight]" type="number" step="0.1" class="loginField loginField2" value="<%= @profile.weight %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_weight_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
                 <td>
@@ -203,14 +211,34 @@
               </tr>
               <tr>
                 <td style="width: 180px;height: 50px;">
-                  <%= t :date_of_birth %>
+                  <%= t :blood_glucose_min%>
                 </td>
                 <td>
-                  <input id="weight_field" name="profile[year_of_birth]" type="text" class="loginField loginField2" value="<%= @profile.year_of_birth %>"/>
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_year_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
+                  <input id="bg_min" name="profile[blood_glucose_min]" type="number" step="0.1" class="loginField loginField2" value="<%= @profile.blood_glucose_min %>"/>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_bg%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
               </tr>
               <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :blood_glucose_max %>
+                </td>
+                <td>
+                  <input id="bg_max" name="profile[blood_glucose_max]" type="number" step="0.1" class="loginField loginField2" value="<%= @profile.blood_glucose_max %>"/>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_bg%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
+                </td>
+              </tr>
+              <tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :bg_unit %>
+                </td>
+                <td>
+                  <input type="radio" name="profile[blood_glucose_unit]" value="mmol/L" <%= @profile.blood_glucose_unit == "mmol/L" ? "checked" : "" %>/> mmol/L
+                  <input type="radio" name="profile[blood_glucose_unit]" value="mg/dl" <%= @profile.blood_glucose_unit == "mg/dl" ? "checked" : "" %>/> mg/dl
+                </td>
+                <td>
+                </td>
+              </tr>
                 <td></td>
                 <td>
                   <button id="update-profile-button" class="settingsButton">

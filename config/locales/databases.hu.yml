@@ -106,3 +106,11 @@ hu:
       antibodytype4: "IA-2A - Tirozin-foszfatáz elleni antitest"
       antibodytype5: "ICA - Pancreas szigetsejt elleni antitest"
       antibodytype6: "ZnT8Ab"
+
+  measurement:
+    note:
+      meastype1: "étel"
+      meastype2: "mozgás"
+      meastype3: "diabétesz gyógyszer"
+      meastype4: "betegség"
+      meastype5: "bármi más"

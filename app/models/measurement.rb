@@ -88,11 +88,11 @@ class Measurement < ActiveRecord::Base
               value = value+meas.pulse.to_s
             end
           elsif meas.meas_type == 'blood_sugar'
-            value = meas.blood_sugar
+            value = meas.blood_sugar.to_s + " mmol/L"
           elsif meas.meas_type == 'weight'
-            value = meas.weight
+            value = meas.weight.to_s + " kg"
           elsif meas.meas_type == 'waist'
-            value = meas.waist
+            value = meas.waist.to_s + " cm"
           end
           if lang == "hu"
             csv << [meas.date.strftime("%Y-%m-%d %H:%M"), (I18n.t meas.meas_type, :locale => :hu), value]

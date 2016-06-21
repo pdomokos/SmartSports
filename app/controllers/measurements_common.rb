@@ -11,6 +11,9 @@ module MeasurementsCommon
     if @measurement.date.nil?
       @measurement.date = DateTime.now
     end
+    if current_user.profile.blood_glucose_unit != 'mmol/L' && @measurement.blood_sugar
+      @measurement.blood_sugar /= 18
+    end
 
     if @measurement.save
       if @measurement.meas_type == 'weight'
@@ -52,7 +55,11 @@ module MeasurementsCommon
         update_hash[:pulse] = params['measurement']['pulse'].to_i
       end
       if params['measurement']['blood_sugar']
-        update_hash[:blood_sugar] = params['measurement']['blood_sugar'].to_f
+        if current_user.profile.blood_glucose_unit == 'mg/dl'
+          update_hash[:blood_sugar] = params['measurement']['blood_sugar'].to_f / 18
+        else
+          update_hash[:blood_sugar] = params['measurement']['blood_sugar'].to_f
+        end
       end
       if params['measurement']['stress_amount']
         update_hash[:stress_amount] = params['measurement']['stress_amount'].to_f
@@ -65,6 +72,9 @@ module MeasurementsCommon
       end
       if params['measurement']['blood_sugar_time']
         update_hash[:blood_sugar_time] = params['measurement']['blood_sugar_time'].to_i
+      end
+      if params['measurement']['blood_glucose_note']
+        update_hash[:blood_glucose_note] = params['measurement']['blood_glucose_note'].to_s
       end
     end
 
@@ -99,7 +109,7 @@ module MeasurementsCommon
   end
 
   def measurement_params
-    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite, :stress_amount, :blood_sugar_time)
+    params.require(:measurement).permit(:source, :systolicbp, :diastolicbp, :pulse, :blood_sugar, :weight, :waist, :date, :meas_type, :favourite, :stress_amount, :blood_sugar_time, :blood_glucose_note)
   end
 
   def create_success_message()

@@ -107,3 +107,11 @@ en:
       antibodytype4: "Insulinoma-Associated-2 Autoantibodies"
       antibodytype5: "Islet Cell Cytoplasmic Autoantibodies"
       antibodytype6: "Zinc Transporter 8"
+
+  measurement:
+    note:
+      meastype1: "food"
+      meastype2: "activity"
+      meastype3: "diabetes medication"
+      meastype4: "illness"
+      meastype5: "anything else"

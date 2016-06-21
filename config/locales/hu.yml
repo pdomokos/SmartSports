@@ -103,6 +103,7 @@ hu:
   lastname: "Vezetéknév"
   skip: "Lépés kihagyása, tovább a SmartDiabra"
   save: "Mentés"
+  cancel: "Mégse"
   fill_personal_info: "Kérem adja meg az alábbi adatokat, melyek segítségével személyreszabott szolgáltatásokat tudunk nyújtani Önnek. Lehetősége van kihagyni ezt és azonnal elkezdheti használni a SmartDiab rendszert."
   height: "Magasság, pl: 180"
   date_of_birth: "Születési év"
@@ -120,6 +121,7 @@ hu:
   recommended_size: "Ajánlott méret 160x160 pixel"
   yes_no_list: "Igen,Nem"
   gender_list: "Férfi,Nő"
+  bg_unit: "Vércukorszint mértékegysége"
 
 # erorrs
   back_home:      "Vissza"
@@ -139,6 +141,7 @@ hu:
   error_login_password: "Helytelen jelszó"
   error_login_username: "Helytelen felasználónév vagy jelszó"
   error_end_time_greater: "A befejezés időpontjának a kezedti időpont után kell esnie!"
+  error_profile_bg: "A vércukorszint értéknek 0.0 és 50.0mmol/L között kell lennie!"
 
   reg_succ: "Sikeres regisztráció"
 
@@ -274,6 +277,8 @@ hu:
   pulse: "Pulzus"
   sysdias: "Szisztolés/Diasztolés"
   sysdiaspulse: "Szisztolés/Diasztolés/Pulzus"
+  add_blood_glucose_note_title: "Vércukorszint kiegészítő kérdőív"
+  add_blood_glucose_note_form_title: "Kérem válasszon egy lehetséges okot, hogy a vércukorszint miért esik a beállított normáltartományon kívül!"
 
 # medication
   medication:           "Gyógyszer"

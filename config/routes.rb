@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :food_types
       resources :activity_types
       resources :lifestyle_types
+      resources :measurement_types
       resources :labresult_types
       resources :genetics_record_types
       resources :faqs
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
   resources :food_types
   resources :activity_types
   resources :lifestyle_types
+  resources :measurement_types
   resources :labresult_types
   resources :genetics_record_types
   resources :family_record_types

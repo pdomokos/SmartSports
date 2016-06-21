@@ -1,9 +1,12 @@
 <div class="dataForm health_blood_glucose <% if local_assigns.fetch(:locals, {})[:defaultHidden] %>hidden<% end %>">
   <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
   <input type="hidden" name="measurement[meas_type]" value="blood_sugar" />
+  <input type="hidden" id="profile_glucose_min" value="<%= current_user.profile.blood_glucose_min %>" />
+  <input type="hidden" id="profile_glucose_max" value="<%= current_user.profile.blood_glucose_max %>" />
+
   <input id="glucose" type="number" step="0.1" name="measurement[blood_sugar]" class="dataFormField" placeholder="<%=t 'glucose_placeholder' %>"/>
 
-  <div class="dataFormFieldUnit">mmol/L</div>
+  <div class="dataFormFieldUnit"><%=current_user.profile.blood_glucose_unit%></div>
   <br/>
   <span style="margin-left: 20px; float: left;"><%=t 'stress_level'%></span>
   <br/>

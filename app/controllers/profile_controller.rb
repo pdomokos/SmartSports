@@ -51,7 +51,7 @@ class ProfileController < ApplicationController
     lang = params[:lang]
 
     respond_to do |format|
-      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :year_of_birth, :smoke, :insulin, :default_lang)
+      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :year_of_birth, :smoke, :insulin, :default_lang, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit)
       if par['default_lang']
         I18n.locale = par['default_lang']
       end
@@ -85,7 +85,7 @@ class ProfileController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :year_of_birth, :default_lang)
+      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :year_of_birth, :default_lang, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit)
     end
 
     def which_layout

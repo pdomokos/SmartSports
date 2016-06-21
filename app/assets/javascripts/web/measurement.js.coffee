@@ -6,8 +6,13 @@
   $("#health-link").css
     background: "rgba(137, 130, 200, 0.3)"
 
-  initMeasurement()
-  loadHealthHistory()
+  document.body.style.cursor = 'wait'
+  load_meas_types( () ->
+    console.log("measurementtypes loaded")
+    document.body.style.cursor = 'auto'
+    initMeasurement()
+    loadHealthHistory()
+  )
 
   $("form.resource-create-form.measurement-form button").on('click', (evt) ->
     return validateMeasForm(evt.target.parentNode.parentNode.querySelector("form").id)
@@ -15,6 +20,7 @@
 
   $("form.resource-create-form.measurement-form").on("ajax:success", (e, data, status, xhr) ->
     form_id = e.currentTarget.id
+    validateBgInterval(form_id, data["id"])
 
     $("#"+form_id+" input.dataFormField").val("")
     $('.defaultDatePicker').val(moment().format(moment_fmt))
@@ -25,6 +31,20 @@
     console.log error
     popup_error(popup_messages.failed_to_add_data, "healthStyle")
   )
+
+  $("#save-bgnote-form").click ->
+    current_meas = $("#measIdToNote")[0].value
+    current_user = $("#current-user-id")[0].value
+    meas_note = $("#measNote")[0].value
+    url = 'users/' + current_user + '/measurements/'+ current_meas
+    $.ajax urlPrefix()+url,
+      type: 'PUT',
+      data: {"id": current_meas, "measurement[blood_glucose_note]": meas_note}
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "update measurement AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        console.log "update measurement AJAX Success"
+    $('#addBgNoteModal').modal('hide')
 
   $("#recentMeasTable").on("ajax:success", (e, data, status, xhr) ->
     form_item = e.target
@@ -76,13 +96,13 @@
           value= value+item.pulse.toString()
       else if item.meas_type == 'blood_sugar'
         mType = meas_types[1]
-        value = item.blood_sugar
+        value = item.blood_sugar + " mmol/L"
       else if item.meas_type == 'weight'
         mType = meas_types[2]
-        value = item.weight
+        value = item.weight + " kg"
       else if item.meas_type == 'waist'
         mType = meas_types[3]
-        value = item.waist
+        value = item.waist + " cm"
       return ([moment(item.date).format("YYYY-MM-DD HH:MM"), mType, value])
 
     current_user = $("#current-user-id")[0].value
@@ -153,6 +173,22 @@
     location.href = "#close"
   )
 
+@validateBgInterval = (formId, measId) ->
+  formNode = document.getElementById(formId)
+  formType = formNode.querySelector("input[name='measurement[meas_type]']").value
+  fn = {
+    blood_sugar: ((node) ->
+      if (!isempty("#profile_glucose_min") && !isempty("#profile_glucose_max")) && ($("#glucose")[0].value < $("#profile_glucose_min")[0].value || $("#glucose")[0].value > $("#profile_glucose_max")[0].value)
+        $('#measIdToNote').val(measId)
+        $('#addBgNoteModal').modal('show')
+    )
+  }
+  if fn[formType]
+    return fn[formType](formNode)
+  else
+    console.log "WARN: missing validation function for "+formType
+    retrn true
+
 @validateMeasForm = (formId) ->
   formNode = document.getElementById(formId)
   formType = formNode.querySelector("input[name='measurement[meas_type]']").value
@@ -191,6 +227,12 @@
   console.log "reset meas form"
 
 @initMeasurement = () ->
+  user_lang = $("#user-lang")[0].value
+  if !user_lang
+    user_lang='hu'
+  measurement_note_select = $("#measNote")
+  for element in getStored('sd_meas_'+user_lang)
+    measurement_note_select.append($("<option />").val(element.id).text(element.label))
 
   $('.defaultDatePicker').datetimepicker(timepicker_defaults)
 
@@ -284,3 +326,47 @@
   $(sel+" input[name='measurement[waist]']").val(meas.waist)
   $(sel+" input[name='measurement[date]']").val(moment().format(moment_fmt))
 
+@load_meas_types = (cb) ->
+  self = this
+  current_user = $("#current-user-id")[0].value
+  console.log "calling load meas types"
+  user_lang = $("#user-lang")[0].value
+  db_version = $("#db-version")[0].value
+  if user_lang
+    measkey = 'sd_meas_'+user_lang
+  else
+    measkey = 'sd_meas_hu'
+  if getStored(measkey)==undefined || getStored(measkey).length==0 || testDbVer(db_version,['sd_meas_hu','sd_meas_en'])
+    ret = $.ajax '/measurement_types.json',
+      type: 'GET',
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "load measurement_types AJAX Error: #{textStatus}"
+      success: (data, textStatus, jqXHR) ->
+        console.log "load measurement_types  Successful AJAX call"
+
+        setStored('sd_meas_hu', data.filter( (d) ->
+          d['category'] == "note"
+        ).map( (d) ->
+          {
+          label: d['hu'],
+          id: d['name']
+          }))
+
+        setStored('sd_meas_en', data.filter( (d) ->
+          d['category'] == "note"
+        ).map( (d) ->
+          {
+          label: d['en'],
+          id: d['name']
+          }))
+
+        setStored('db_version', db_version)
+
+        cb()
+  else
+    ret = new Promise( (resolve, reject) ->
+      console.log "measurements already downloaded"
+      cb()
+      resolve("measurements cbs called")
+    )
+  return ret
