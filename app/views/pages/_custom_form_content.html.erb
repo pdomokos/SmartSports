@@ -1,0 +1,23 @@
+
+  <div class="p10 cform-<%=custom_form.id%>">
+    <ul>
+    <% for cfe in custom_form.custom_form_elements %>
+
+        <% if @form_params && @form_params[cfe.property_code] %>
+            <%= render "forms/element", locals: {
+                                              :showButton => false,
+                                              :elementName => cfe.property_code,
+                                              :style => "#{@form_params[cfe.property_code][1]}",
+                                              :title => "#{@form_params[cfe.property_code][2]}",
+                                              :img => "#{@form_params[cfe.property_code][0]}.png",
+                                              :elementId => "#{cfe.property_code}__#{cfe.id}",
+                                              :eid => "#{cfe.id}",
+                                              :separator => false,
+                                              :vertical => true
+                                      }%>
+        <% end %>
+
+    <% end %>
+    </ul>
+
+  </div>

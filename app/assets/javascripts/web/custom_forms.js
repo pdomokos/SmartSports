@@ -28,7 +28,7 @@ function loadCustomForms() {
 function registerCustomHandlers() {
     $(".cficon").click(function(e) {
         var cfid = e.currentTarget.dataset.customformid;
-        location.href = 'customforms/'+cfid;
+        location.href = location.href+"/"+cfid;
     });
 
     $(".iconSelect").click(function(e){

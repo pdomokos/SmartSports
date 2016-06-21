@@ -180,6 +180,13 @@
 
   @popup_messages = JSON.parse($("#popup-messages").val())
 
+@validate_labresult_form = (formSel) ->
+  formValue = $(formSel+" input[type=number]").val()
+  if isempty(formSel+" input[type=number]") || notpositive(formSel+" input[type=number]")
+    popup_error(popup_messages.failed_to_create_labresult, "labresultStyle")
+    return false
+  return true
+
 @load_labresult_types = (cb) ->
   self = this
   current_user = $("#current-user-id")[0].value

@@ -1,0 +1,7 @@
+$("#customFormElementList").html("");
+$("#customFormElementList").html("<%= escape_javascript(render( 'pages/custom_form_list', locals = {custom_form: @custom_form})) %>");
+
+$("#customFormContent").html("");
+$("#customFormContent").html("<%= escape_javascript(render( 'pages/custom_form_content', locals = {custom_form: @custom_form})) %>");
+
+$("#addFormButton")[0].dataset.elements = "<%= @custom_form.custom_form_elements.map{|v| v.id}.join(',') %>";

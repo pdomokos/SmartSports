@@ -157,6 +157,7 @@
   return ret
   
 @initActivity = (selector) ->
+  intensities = $("#intensity_values").val().split(" ")
   console.log "initActivity called, selector="+selector
   self = this
   if selector==null||selector==undefined

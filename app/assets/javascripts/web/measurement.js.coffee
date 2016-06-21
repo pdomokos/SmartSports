@@ -13,9 +13,9 @@
     initMeasurement()
     loadHealthHistory()
   )
-
+  
   $("form.resource-create-form.measurement-form button").on('click', (evt) ->
-    return validateMeasForm(evt.target.parentNode.parentNode.querySelector("form").id)
+    return validate_measurement_form("#"+evt.target.parentNode.parentNode.querySelector("form").id)
   )
 
   $("form.resource-create-form.measurement-form").on("ajax:success", (e, data, status, xhr) ->
@@ -187,11 +187,11 @@
     return fn[formType](formNode)
   else
     console.log "WARN: missing validation function for "+formType
-    retrn true
-
-@validateMeasForm = (formId) ->
-  formNode = document.getElementById(formId)
-  formType = formNode.querySelector("input[name='measurement[meas_type]']").value
+    return true
+    
+@validate_measurement_form = (formSel) ->
+  formNode = $(formSel)[0]
+  formType = $(formSel+" input[name='measurement[meas_type]']").val()
   fn = {
     blood_pressure: ((node) ->
       if (isempty("#bp_sys") && isempty("#bp_dia") && isempty("#bp_hr")) ||
@@ -200,21 +200,25 @@
       (notpositive("#bp_sys") || notpositive("#bp_dia") || notpositive("#bp_hr"))
         popup_error(popup_messages.invalid_health_hr, "healthStyle")
         return false
+      return true
     ),
     blood_sugar: ((node) ->
       if isempty("#glucose") || notpositive("#glucose")
         popup_error(popup_messages.invalid_health_bg, "healthStyle")
         return false
+      return true
     ),
     weight: ((node) ->
       if isempty("#weight") || notpositive("#weight")
         popup_error(popup_messages.invalid_health_wd, "healthStyle")
         return false
+      return true
     ),
     waist: ((node) ->
       if isempty("#waist") || notpositive("#waist")
         popup_error(popup_messages.invalid_health_cd, "healthStyle")
         return false
+      return true
     )
   }
   if fn[formType]

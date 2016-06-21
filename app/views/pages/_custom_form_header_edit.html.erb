@@ -1,0 +1,12 @@
+<div class="sectionTitleNoicon healthColor">
+  <span class="left iconselect iconselectHeader iconselect_<%=custom_form.image_name %>"></span>
+  <span class="left"><%= t custom_form.form_name %></span>
+  <div class="left pl10">
+    <%= form_tag(root_path+"users/#{current_user.id}/custom_forms/#{custom_form.id}",
+                 id: "delete_cf_#{custom_form.id}",
+                 remote: true, method: "delete", class: "deleteCustomFormIcon") do %>
+        <span class="glyphicon glyphicon-trash headerControlIcon deleteControl" aria-hidden="true"></span>
+    <% end %>
+  </div>
+</div>
+

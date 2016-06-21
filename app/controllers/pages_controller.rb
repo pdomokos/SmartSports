@@ -145,6 +145,8 @@ class PagesController < ApplicationController
 
   def customform
     @custom_form = current_user.custom_forms.find_by_id(params[:id])
+    @form_list = CustomForm.form_list
+    @form_params = CustomForm.form_params
   end
 
   def md_patients

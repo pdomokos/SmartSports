@@ -2,11 +2,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.listIcon {
+  width: 32px;
+  height: 32px;
+}
+.listContent {
+  color: black;
+}
+.listDeleteIcon {
+  color: red;
+  padding-top: 8px;
+  cursor: pointer;
+}
+
+.iconselectHeader {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-top: 16px;
+}
+
+.customFormField {
+  border: solid 1px #8980CA !important;
+  width: 270px !important;
+  background-color: white !important;
+}
 .customItemIcon {
   width: 40px;
   height: 40px;
 }
 
+.cfButton {
+  margin: 10px;
+}
 .add-custom-form {
   color: #db4437;
   //background: #F2F3F8;

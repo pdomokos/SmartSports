@@ -1,0 +1,10 @@
+<ul class="list-group">
+<% for cfe in custom_form.custom_form_elements %>
+    <li class="list-group-item">
+      <%= image_tag @form_params[cfe.property_code][0]+".png", class: "listIcon" %>
+      <span class="listContent"><%=t @form_params[cfe.property_code][2] %></span>
+      <span class="glyphicon glyphicon-remove-circle listDeleteIcon right btn-lg" aria-hidden="true"
+      data-formelementid="<%= cfe.id %>" data-formid="<%= custom_form.id %>"></span>
+    </li>
+<% end %>
+</ul>

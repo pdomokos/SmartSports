@@ -1,4 +1,89 @@
-<%= render 'custom_form', locals = {custom_form: @custom_form} %>
+<input id="popup-messages" value="<%=@values%>" type="hidden" />
+
+<input id="sleepList" type="hidden" value="<%=t :sleepList%>">
+<input id="stressList" type="hidden" value="<%=t :stressList %>">
+<input id="illnessList" type="hidden" value="<%=t :illnessList %>">
+<input id="painList" type="hidden" value="<%=t :painList %>">
+<input id="periodPainList" type="hidden" value="<%=t :periodPainList %>">
+<input id="periodVolumeList" type="hidden" value="<%=t :periodVolumeList %>">
+<input id="painTypeList" type="hidden" value="<%=t :painTypeList %>">
+<input id="intensity_values" value="<%=t :intensities%>" type="hidden" />
+<input id="resource_titles" value="<%= @titles %>" type="hidden" />
+<input id="bgTimeList" type="hidden" value="<%=t :bgTimeList %>">
+<input id="meas_header_values" value="<%=t :meas_header_values%>" type="hidden" />
+<input id="meas_types" value="<%=t :meas_types%>" type="hidden" />
+<input id="doctorList" value="<%= t 'doctorList'%>" type="hidden" />
+
+<div id="addFormModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Form</h4>
+      </div>
+      <div class="modal-body">
+
+        <%= form_tag( root_path+"users/#{current_user.id}/custom_forms",
+                      id: "form-add-form") do %>
+
+            <div class="form-group">
+              <label for="formNameInput">Form Name</label>
+              <input class="form-control" type="formNameInput" name="custom_form[form_name]" id="input-form_name" placeholder="<%=t 'add_custom_form_name_placeholder' %>">
+            </div>
+            <div class="form-group">
+              <label for="iconselect">Select Icon</label>
+              <input id="formicon" name="custom_form[image_name]" type="hidden" value="img_myForms">
+            </div>
+        <% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="save-custom-form" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div>
+
+    <div id="showFormGroup">
+      <%= render 'custom_form_header', locals = {custom_form: @custom_form} %>
+      <div id="customFormContent" class="contentBg33">
+        <%= render 'custom_form_content', locals = {custom_form: @custom_form} %>
+      </div>
+      <button type="submit" id="addFormButton"
+              class="btn btn-primary cfButton"
+              data-cform="<%= @custom_form.id%>"
+              data-elements="<%= @custom_form.custom_form_elements.collect{|c| c.id}.join(',')%>">Submit Data</button>
+    </div>
+
+    <div id="addFormGroup" class="hidden">
+      <%= render 'custom_form_header_edit', locals = {custom_form: @custom_form} %>
+      <div id="customFormElementList" class="contentBg33">
+        <%= render 'custom_form_list', locals = {custom_form: @custom_form} %>
+      </div>
+      <%= form_tag( "/users/#{current_user.id}/custom_forms/#{@custom_form.id}/custom_form_elements",
+                    id: "form-add-element", remote: true,
+                    data: {formid: @custom_form.id, userid: @custom_form.user_id}) do %>
+        <fieldset class="form-group">
+          <select name="custom_form_element[property_code]" class="form-control customFormField">
+            <% for f in @form_list %>
+                <option value="<%= f %>"><%= t( f ) %></option>
+            <% end %>
+          </select>
+        </fieldset>
+        <button type="button" id="cancelFormButton" class="btn btn-default">Back</button>
+        <button type="submit" id="addFormButton" class="btn btn-primary">Add Question</button>
+      <% end %>
+    </div>
+
+</div>
+
+<script>
+    pages_menu();
+    custom_item_loaded();
+</script>
 
 <% content_for :menu do %>
     <%= render "menu" %>

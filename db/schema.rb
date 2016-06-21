@@ -254,7 +254,7 @@ ActiveRecord::Schema.define(version: 20160620140432) do
     t.float    "weight"
     t.float    "waist"
     t.string   "meas_type"
-    t.boolean  "favourite",        default: false
+    t.boolean  "favourite",          default: false
     t.float    "stress_amount"
     t.integer  "blood_sugar_time"
     t.string   "blood_glucose_note"
@@ -373,8 +373,8 @@ ActiveRecord::Schema.define(version: 20160620140432) do
     t.string   "sex"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "smoke",         default: false
-    t.boolean  "insulin",       default: false
+    t.boolean  "smoke",              default: false
+    t.boolean  "insulin",            default: false
     t.string   "default_lang"
     t.integer  "year_of_birth"
     t.float    "blood_glucose_min"

@@ -190,6 +190,7 @@ en:
     failed_to_create_HBA1C: "Failed to create HBA1C"
     failed_to_create_LDL: "Failed to create LDL-CHOL"
     failed_to_create_EGFR: "Failed to create EGFR-EPI"
+    failed_to_create_labresult: "Failed to create labresult data"
     invalid_med_amount: "Enter a valid medication amount"
     invalid_dosage: "Enter valid dosage for insulin"
     illness_name_missing: "Illness name is missing"

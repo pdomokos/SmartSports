@@ -13,6 +13,7 @@
    initSelector = local_assigns.fetch(:locals, {})[:initSelector]
    customFormId = local_assigns.fetch(:locals, {})[:customFormId]
    resource = local_assigns.fetch(:locals, {})[:resource]
+   vertical = local_assigns.fetch(:locals, {})[:vertical]
    cfe = ""
    if eid!=nil
      cfe = "cfe-#{eid}"
@@ -23,6 +24,12 @@
    if buttonClass == nil
      buttonClass = ""
    end
+   if vertical == nil
+     vertical = false
+   else
+     vertical = true
+   end
+
    if resource == nil
      elNamePl = elementName.split('_')[0].pluralize
      elName = elementName.split('_')[0]
@@ -38,7 +45,10 @@
     <span><%=t title %></span>
   </div>
   <div class="clearBoth"></div>
-  <%= form_tag( root_path+"users/#{current_user.id}/#{elNamePl}", remote: true, class: "resource-create-form #{elName}-form "+elementName+"-create-form "+cfe, id: elementId) do %>
+  <%= form_tag( root_path+"users/#{current_user.id}/#{elNamePl}", remote: true,
+                class: "resource-create-form #{elName}-form "+elementName+"-create-form "+cfe,
+                id: elementId,
+                data: {formtype: elementName}) do %>
       <%= token_tag %>
       <%= render "forms/#{elementName}" %>
       <input type="hidden" name="elementName" value="<%= elementName %>">
@@ -52,6 +62,9 @@
 </div>
 <% if separator %>
 <div class="dataFormSeparator <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>"></div>
+<% end %>
+<% if vertical %>
+    <div class="clearBoth"></div>
 <% end %>
 <% if initFn!=nil %>
     <script>

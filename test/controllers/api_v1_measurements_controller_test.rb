@@ -28,7 +28,6 @@ module Api::V1
           pulse: 33,
           SPO2: 44}, format: :json
         json_result = JSON.parse(response.body)
-
         assert_equal json_result["ok"], true
         assert_not json_result["id"].nil?
       end

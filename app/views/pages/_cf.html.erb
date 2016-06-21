@@ -7,7 +7,7 @@
 
 <div class="diet-block mainContent">
   <input id="formlist" type="hidden" value="<%= @formlist.as_json %>">
-  <%= render partial: 'custom_form',  collection: @custom_forms %>
+  <%= render partial: 'custom_form_header',  collection: @custom_forms %>
 </div>
 
 <script>

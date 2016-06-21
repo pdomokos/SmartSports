@@ -11,13 +11,14 @@ module MeasurementsCommon
     if @measurement.date.nil?
       @measurement.date = DateTime.now
     end
-    if current_user.profile.blood_glucose_unit != 'mmol/L' && @measurement.blood_sugar
+    meas_owner = current_user || current_resource_owner
+    if meas_owner.profile.blood_glucose_unit != 'mmol/L' && @measurement.blood_sugar
       @measurement.blood_sugar /= 18
     end
 
     if @measurement.save
       if @measurement.meas_type == 'weight'
-        profile = Profile.where(user_id: current_user.id).first
+        profile = Profile.where(user_id: meas_owner.id).first
         update_hash = {:weight => @measurement.weight}
         profile.update_attributes(update_hash)
       end
@@ -55,7 +56,9 @@ module MeasurementsCommon
         update_hash[:pulse] = params['measurement']['pulse'].to_i
       end
       if params['measurement']['blood_sugar']
-        if current_user.profile.blood_glucose_unit == 'mg/dl'
+        meas_owner = current_user || current_resource_owner
+
+        if meas_owner.profile.blood_glucose_unit == 'mg/dl'
           update_hash[:blood_sugar] = params['measurement']['blood_sugar'].to_f / 18
         else
           update_hash[:blood_sugar] = params['measurement']['blood_sugar'].to_f

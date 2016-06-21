@@ -1,4 +1,4 @@
-$("#<%= @targetElementId %>").html("<%= escape_javascript(render partial: 'pages/custom_form', object: @customForm) %>")
+$("#<%= @targetElementId %>").html("<%= escape_javascript(render partial: 'pages/custom_form_header', object: @customForm) %>")
 $("#<%= @targetElementId %>").removeClass("hidden")
 
 window.load_custom_form_element_defaults = function() {

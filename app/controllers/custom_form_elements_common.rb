@@ -3,15 +3,14 @@ module CustomFormElementsCommon
   def index
     @user_id = params[:user_id].to_i
     user = User.find(@user_id)
-    if !check_owner()
-      send_error_json(@user_id, "Unauthorized", 403)
-    end
-    custom_form = user.custom_forms.where(:id => params[:custom_form_id].to_i).first
-    if !custom_form
+
+    @custom_form = user.custom_forms.where(:id => params[:custom_form_id].to_i).first
+    if !@custom_form
       send_error_json(params[:custom_form_id].to_i, "Invalid custom_form_id", 400)
       return
     end
-    @elements = custom_form.custom_form_elements
+    @elements = @custom_form.custom_form_elements
+    @form_params = CustomForm.form_params
   end
 
   def create
@@ -59,10 +58,7 @@ module CustomFormElementsCommon
   def destroy
     @user_id = params[:user_id].to_i
     user = User.find(@user_id)
-    if !check_owner()
-      send_error_json(@user_id, "Unauthorized", 403)
-      return
-    end
+
     cf = user.custom_forms.where(id: params[:custom_form_id].to_i).first
     if !cf
       send_error_json(params[:id].to_i, "custom_form missing", 400)

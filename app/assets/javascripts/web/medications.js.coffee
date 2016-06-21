@@ -252,6 +252,10 @@ validate_medication_common = (sel) ->
     return false
   return true
 
+@validate_medication_form = (sel) ->
+  console.log "validating drugs "+sel
+  validate_medication_common(sel)
+
 @validate_medication_drugs = (sel) ->
   console.log "validating drugs "+sel
   validate_medication_common(sel)
