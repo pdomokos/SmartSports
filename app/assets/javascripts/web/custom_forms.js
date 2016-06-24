@@ -3,6 +3,7 @@ function custom_loaded() {
     popup_messages = JSON.parse($("#popup-messages").val())
 
     registerCustomHandlers();
+    loadCustomForms();
 }
 
 
@@ -26,7 +27,7 @@ function loadCustomForms() {
 }
 
 function registerCustomHandlers() {
-    $(".cficon").click(function(e) {
+    $("#customFormIcons").on('click', '.cficon', function(e) {
         var cfid = e.currentTarget.dataset.customformid;
         location.href = location.href+"/"+cfid;
     });
@@ -40,18 +41,21 @@ function registerCustomHandlers() {
     });
 
     $("#save-custom-form").click(function () {
-        document.getElementById("custom-create-form").submit();
+
+        var current_user = $("#current-user-id")[0].value;
+        var url = '/users/' + current_user + '/custom_forms';
+
+        $.ajax({
+            url:  url,
+            type: 'POST',
+            data: $("#custom-create-form").serialize(),
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("load recent diets AJAX Error: " + textStatus);
+            },
+            success: function (data, textStatus, jqXHR) {
+                loadCustomForms();
+                $("#addCustomModal").modal('toggle');
+            }
+        });
     });
-
-    $("#recentResourcesTable").on("ajax:success", function(e, data, status, xhr) {
-            loadCustomForms();
-            //popup_success(popup_messages.delete_data_success);
-        }
-    ).on("ajax:error", function(e, xhr, status, error) {
-            msg = JSON.parse(xhr.responseText);
-            console.log(msg);
-            popup_error(popup_messages.failed_to_delete_data);
-        }
-    );
 }
-

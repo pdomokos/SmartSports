@@ -1,0 +1,7 @@
+<% for custom_form in @custom_forms %>
+<li>
+  <span class='<%= "iconselect_"+custom_form.image_name %> cficon' data-customFormId="<%= custom_form.id %>">
+  </span>
+  <div class='customFormSelectText'><%= custom_form.form_name %></div>
+</li>
+<% end %>

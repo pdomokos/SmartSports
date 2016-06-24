@@ -49,13 +49,16 @@
 
     <div id="showFormGroup">
       <%= render 'custom_form_header', locals = {custom_form: @custom_form} %>
-      <div id="customFormContent" class="contentBg33">
-        <%= render 'custom_form_content', locals = {custom_form: @custom_form} %>
-      </div>
-      <button type="submit" id="addFormButton"
-              class="btn btn-primary cfButton"
-              data-cform="<%= @custom_form.id%>"
-              data-elements="<%= @custom_form.custom_form_elements.collect{|c| c.id}.join(',')%>">Submit Data</button>
+      <% if @custom_form.custom_form_elements.size >0 %>
+          <div id="customFormContent" class="contentBg33">
+            <%= render 'custom_form_content', locals = {custom_form: @custom_form} %>
+          </div>
+
+          <button type="submit" id="addFormButton"
+                  class="btn btn-primary cfButton"
+                  data-cform="<%= @custom_form.id%>"
+                  data-elements="<%= @custom_form.custom_form_elements.collect{|c| c.id}.join(',')%>">Submit Data</button>
+      <% end %>
     </div>
 
     <div id="addFormGroup" class="hidden">

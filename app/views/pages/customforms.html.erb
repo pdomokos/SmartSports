@@ -54,14 +54,8 @@
   </div>
     <br/>
   <div id="customFormSelect">
-    <ul class="img-list cf cfSelect">
-      <% for customForm in @custom_forms %>
-          <li>
-            <span class='<%= "iconselect_"+customForm.image_name %> cficon' data-customFormId="<%= customForm.id %>">
-            </span>
-            <div class='customFormSelectText'><%= customForm.form_name %></div>
-          </li>
-      <% end %>
+    <ul id="customFormIcons" class="img-list cf cfSelect">
+
     </ul>
   </div>
 </div>

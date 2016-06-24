@@ -3,6 +3,7 @@ function custom_item_loaded() {
     popup_messages = JSON.parse($("#popup-messages").val());
 
     initForms();
+    registerCustomItemHandlers();
 }
 
 function initForms() {
@@ -14,7 +15,6 @@ function initForms() {
     initLifestyle();
     init_genetics();
     initLabresult();
-    registerCustomItemHandlers();
 }
 
 function refreshElements(userId, cfId, cb) {
@@ -81,8 +81,10 @@ function registerCustomItemHandlers() {
         var userId = $("#current-user-id").val();
         console.log(form_ids);
         var reqs = [];
-        for(var i in form_ids) {
-            var f = $("form.cfe-" + form_ids[i])[0];
+        var i;
+        var f;
+        for(i in form_ids) {
+            f = $("form.cfe-" + form_ids[i])[0];
             var validateName = "validate_"+f.dataset.formtype.split("_")[0]+"_form";
             var fn = window[validateName];
             if (typeof fn === "function") {
@@ -95,8 +97,8 @@ function registerCustomItemHandlers() {
                 console.log(validateName + " missing");
             }
         }
-        for(var i in form_ids) {
-            var f = $("form.cfe-" + form_ids[i])[0];
+        for(i in form_ids) {
+            f = $("form.cfe-" + form_ids[i])[0];
             var id = f.id;
             console.log(""+i+" = ");
             console.log(f);
