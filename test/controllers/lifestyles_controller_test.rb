@@ -11,7 +11,8 @@ class LifestylesControllerTest < ActionController::TestCase
     get :index, {user_id: @user, format: :json}
     assert_response :success
     json_result = JSON.parse(response.body)
-    assert_equal 'paintype1', json_result[0]['name']
-    assert_equal 'illnesstype1', json_result[1]['name']
+    puts json_result
+    assert_equal 2, json_result[0]['lifestyle_type_id']
+    assert_equal 1, json_result[1]['lifestyle_type_id']
   end
 end

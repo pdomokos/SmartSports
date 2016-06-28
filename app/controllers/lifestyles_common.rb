@@ -75,6 +75,9 @@ module LifestylesCommon
   def get_lifestyles()
     user_id = params[:user_id]
     user = User.find_by_id(user_id)
+    lang = params[:lang]
+    table = params[:table]
+
     @lifestyles = user.lifestyles
     if params[:source]
       @lifestyles = @lifestyles.where(source: params[:source])
@@ -82,6 +85,78 @@ module LifestylesCommon
     @lifestyles = @lifestyles.order("start_time desc, id desc")
     if params[:limit]
       @lifestyles = @lifestyles.limit( params[:limit].to_i )
+    end
+
+    if table
+      @lifestyles = get_table_data(@lifestyles, lang)
+    end
+
+  end
+
+  def get_table_data(data, lang)
+    tableData = []
+    if lang=='en'
+      illnessList = (I18n.t 'illnessList', :locale => :en).split(',')
+      sleepList = (I18n.t 'sleepList', :locale => :en).split(',')
+      stressList = (I18n.t 'stressList', :locale => :en).split(',')
+      painList = (I18n.t 'painList', :locale => :en).split(',')
+      periodPainList = (I18n.t 'periodPainList', :locale => :en).split(',')
+      periodVolumeList = (I18n.t 'periodVolumeList', :locale => :en).split(',')
+    else
+      illnessList = (I18n.t 'illnessList', :locale => :hu).split(',')
+      sleepList = (I18n.t 'sleepList', :locale => :hu).split(',')
+      stressList = (I18n.t 'stressList', :locale => :hu).split(',')
+      painList = (I18n.t 'painList', :locale => :hu).split(',')
+      periodPainList = (I18n.t 'periodPainList', :locale => :hu).split(',')
+      periodVolumeList = (I18n.t 'periodVolumeList', :locale => :hu).split(',')
+    end
+    for item in data
+      ltype = LifestyleType.find(item.lifestyle_type_id)
+
+      if lang=='en'
+        category = DB_EN_CONFIG['categories'][ltype.category]
+        name = DB_EN_CONFIG['lifestyle'][ltype.category][ltype.name]
+      else
+        category = DB_HU_CONFIG['categories'][ltype.category]
+        name = DB_HU_CONFIG['lifestyle'][ltype.category][ltype.name]
+      end
+      property1 = ""
+      property2 = ""
+      if ltype.category == 'illness'
+        property1 = illnessList[item.amount]
+        property2 = item.details
+      elsif ltype.category == 'pain'
+        property1 = painList[item.amount]
+        property2 = item.details
+      elsif ltype.category == 'period'
+        property1 = periodPainList[item.amount]
+        property2 = periodVolumeList[item.period_volume]
+        name = ""
+      elsif ltype.category == 'sleep'
+        property1 = sleepList[item.amount]
+        name = ""
+      elsif ltype.category == 'stress'
+        property1 = stressList[item.amount]
+        name = ""
+      end
+
+      row = {"id"=>item.id, "date"=>item.start_time, "category"=>category, "type"=>name ,"property1"=>property1, "property2"=>property2}
+      tableData.push(row)
+    end
+    return tableData
+  end
+
+  def to_csv(data, options={}, lang = '')
+    data=get_table_data(data,lang)
+    CSV.generate(options) do |csv|
+      if lang == "hu"
+        csv << [((I18n.t 'lifestyle_header_values', :locale => :hu).split(','))[0], ((I18n.t 'lifestyle_header_values', :locale => :hu).split(','))[1], ((I18n.t 'lifestyle_header_values', :locale => :hu).split(','))[2], ((I18n.t 'lifestyle_header_values', :locale => :hu).split(','))[3], ((I18n.t 'lifestyle_header_values', :locale => :hu).split(','))[4]]
+      elsif lang == "en"
+        csv << [((I18n.t 'lifestyle_header_values', :locale => :en).split(','))[0], ((I18n.t 'lifestyle_header_values', :locale => :en).split(','))[1], ((I18n.t 'lifestyle_header_values', :locale => :en).split(','))[2], ((I18n.t 'lifestyle_header_values', :locale => :en).split(','))[3], ((I18n.t 'lifestyle_header_values', :locale => :en).split(','))[4]]
+      end
+      data.each do |item|
+        csv << [item['date'].strftime("%Y-%m-%d %H:%M"),item['category'],item['type'], item['property1'], item['property2']]
+      end
     end
   end
 

@@ -2,15 +2,15 @@
   <input type="hidden" name="measurement[source]" value="<%= @default_source %>" />
   <input type="hidden" name="measurement[meas_type]" value="blood_pressure" />
 
-  <input id="bp_sys" type="number" name="measurement[systolicbp]" class="dataFormField" placeholder="<%=t 'bp_systolic_placeholer' %>"/>
+  <input id="bp_sys" type="number" min="0" name="measurement[systolicbp]" class="dataFormField" placeholder="<%=t 'bp_systolic_placeholer' %>"/>
 
   <div class="dataFormFieldUnit">mmHg</div>
   <br>
-  <input id="bp_dia" type="number" name="measurement[diastolicbp]" class="dataFormField" placeholder="<%=t 'bp_diastolic_placeholer' %>"/>
+  <input id="bp_dia" type="number" min="0" name="measurement[diastolicbp]" class="dataFormField" placeholder="<%=t 'bp_diastolic_placeholer' %>"/>
 
   <div class="dataFormFieldUnit">mmHg</div>
   <br>
-  <input id="bp_hr" type="number" name="measurement[pulse]" class="dataFormField" placeholder="<%=t 'bp_pulse_placeholer' %>"/>
+  <input id="bp_hr" type="number" min="0" name="measurement[pulse]" class="dataFormField" placeholder="<%=t 'bp_pulse_placeholer' %>"/>
 
   <div class="dataFormFieldUnit">1/min</div>
   <br>

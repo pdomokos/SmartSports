@@ -105,6 +105,29 @@
     popup_error(popup_messages.failed_to_delete_data, "labresultStyle")
   )
 
+  $(document).unbind("click.labresultShow")
+  $(document).on("click.labresultShow", "#labresult-show-table", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    labresult_header = $("#labresult_header_values").val().split(",")
+    url = 'users/' + current_user + '/labresults.json'+'?table=true&lang='+lang
+    show_table(url, lang, labresult_header, 'get_labresult_table_row', 'show_labresult_table')
+  )
+
+  $(document).unbind("click.downloadLabresult")
+  $(document).on("click.downloadLabresult", "#download-labresult-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    url = '/users/' + current_user + '/labresults.csv?order=desc&lang='+lang
+    location.href = url
+  )
+
+  $(document).unbind("click.closeLabresult")
+  $(document).on("click.closeLabresult", "#close-labresult-data", (evt) ->
+    $("#labresult-data-container").html("")
+    location.href = "#close"
+  )
+
 @initLabresult = () ->
   console.log "init labres"
   self = this

@@ -2,7 +2,7 @@
   <input type="hidden" name="measurement[source]" value="<%= @default_source %>">
   <input type="hidden" name="measurement[meas_type]" value="weight" />
 
-  <input id="weight" type="number" step="0.1" name="measurement[weight]" class="dataFormField"  placeholder="<%=t 'weight_placeholder' %>"/>
+  <input id="weight" type="number" step="0.1" min="0" name="measurement[weight]" class="dataFormField"  placeholder="<%=t 'weight_placeholder' %>"/>
 
   <div class="dataFormFieldUnit">kg</div>
   <br>

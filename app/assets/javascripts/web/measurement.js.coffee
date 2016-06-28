@@ -77,86 +77,11 @@
 
   $(document).unbind("click.showHealth")
   $(document).on("click.showHealth", "#health-show-table", (evt) ->
-    get_table_row = (item ) ->
-      if item.meas_type==null
-        return null
-      value = ""
-      mType = ""
-      if item.meas_type == 'blood_pressure'
-        mType = meas_types[0]
-        if item.systolicbp
-          value = item.systolicbp.toString()
-        if value != ""
-          value = value+"/"
-        if item.diastolicbp
-          value = value+item.diastolicbp.toString()
-        if value != ""
-          value = value+" "
-        if item.pulse
-          value= value+item.pulse.toString()
-      else if item.meas_type == 'blood_sugar'
-        mType = meas_types[1]
-        value = item.blood_sugar + " mmol/L"
-      else if item.meas_type == 'weight'
-        mType = meas_types[2]
-        value = item.weight + " kg"
-      else if item.meas_type == 'waist'
-        mType = meas_types[3]
-        value = item.waist + " cm"
-      return ([moment(item.date).format("YYYY-MM-DD HH:MM"), mType, value])
-
     current_user = $("#current-user-id")[0].value
     lang = $("#data-lang-health")[0].value
     meas_header = $("#meas_header_values").val().split(" ")
-    meas_types = $("#meas_types").val().split(",")
-    url = 'users/' + current_user + '/measurements.json'+'?lang='+lang
-    $.ajax urlPrefix()+url,
-      type: 'GET',
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log "datatable measurements AJAX Error: #{textStatus}"
-      success: (data, textStatus, jqXHR) ->
-        tblData = $.map(data, (item) ->
-          return([get_table_row(item)])
-        ).filter( (v) ->
-          return(v!=null)
-        )
-        if lang == 'hu'
-          plugin = {
-            sEmptyTable: "Nincs rendelkezésre álló adat",
-            sInfo: "Találatok: _START_ - _END_ Összesen: _TOTAL_",
-            sInfoEmpty: "Nulla találat",
-            sInfoFiltered: "(_MAX_ összes rekord közül szűrve)",
-            sInfoPostFix: "",
-            sInfoThousands: " ",
-            sLengthMenu: "_MENU_ találat oldalanként",
-            sLoadingRecords: "Betöltés...",
-            sProcessing: "Feldolgozás...",
-            sSearch: "Keresés:",
-            sZeroRecords: "Nincs a keresésnek megfelelő találat",
-            oPaginate: {
-              sFirst: "Első",
-              sPrevious: "Előző",
-              sNext: "Következő",
-              sLast: "Utolsó"
-            },
-            oAria: {
-              sSortAscending: ": aktiválja a növekvő rendezéshez",
-              sSortDescending: ": aktiválja a csökkenő rendezéshez"
-            }
-          }
-        $("#health-data-container").html("<table id=\"health-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
-        $("#health-data").dataTable({
-          "data": tblData,
-          "columns": [
-            {"title": meas_header[0]},
-            {"title": meas_header[1]},
-            {"title": meas_header[2]}
-          ],
-          "order": [[1, "desc"]],
-          "lengthMenu": [10],
-          "language": plugin
-        })
-        location.href = "#openModal"
+    url = 'users/' + current_user + '/measurements.json'+'?table=true&lang='+lang
+    show_table(url, lang, meas_header, 'get_measurement_table_row', 'show_measurement_table')
   )
 
   $(document).unbind("click.downloadHealth")

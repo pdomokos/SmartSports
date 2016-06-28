@@ -65,6 +65,29 @@
   $(".diet_quick_calories-create-form button").click ->
     validate_diet_form(".diet_quick_calories-create-form")
 
+  $(document).unbind("click.dietShow")
+  $(document).on("click.dietShow", "#diet-show-table", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    diet_header = $("#diet_header_values").val().split(",")
+    url = 'users/' + current_user + '/diets.json'+'?table=true&lang='+lang
+    show_table(url, lang, diet_header, 'get_diet_table_row', 'show_diet_table')
+  )
+
+  $(document).unbind("click.downloadDiet")
+  $(document).on("click.downloadDiet", "#download-diet-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    url = '/users/' + current_user + '/diets.csv?order=desc&lang='+lang
+    location.href = url
+  )
+
+  $(document).unbind("click.closeDiet")
+  $(document).on("click.closeDiet", "#close-diet-data", (evt) ->
+    $("#diet-data-container").html("")
+    location.href = "#close"
+  )
+
 @resetDiet = () ->
   amount_values = $("#amount_values").val().split(",")
   $("div.diet > input.dataFormField").val("")

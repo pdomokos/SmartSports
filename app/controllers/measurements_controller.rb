@@ -29,6 +29,7 @@ class MeasurementsController < ApplicationController
     limit = params[:limit]
     favourites = params[:favourites]
     lang = params[:lang]
+    table = params[:table]
 
     @measurements = user.measurements
     if start
@@ -53,7 +54,7 @@ class MeasurementsController < ApplicationController
     end
 
     if summary
-      daily_data = Hash.new { |h,k| h[k] = [] }
+      daily_data = Hash.new { |h, k| h[k] = [] }
       for m in @measurements
         if m.date
           k = m.date.strftime("%F")
@@ -65,12 +66,12 @@ class MeasurementsController < ApplicationController
       result = []
       for day in days
         daily = daily_data[day]
-        aggr = {"date" => day, "systolicbp"=>0, "diastolicbp"=>0, "pulse"=>0, "SPO2"=>0, "blood_sugar" => nil, "weight" => nil, "waist" => nil}
+        aggr = {"date" => day, "systolicbp" => 0, "diastolicbp" => 0, "pulse" => 0, "SPO2" => 0, "blood_sugar" => nil, "weight" => nil, "waist" => nil}
         for meas in ["systolicbp", "diastolicbp", "pulse", "SPO2", "blood_sugar", "weight", "waist"]
-          values = daily.select { |d| !d[meas].nil?}.map { |d| d[meas] }
+          values = daily.select { |d| !d[meas].nil? }.map { |d| d[meas] }
           num = values.length
           if num > 0
-            aggr[meas] = (values.inject {|sum, curr| sum+curr}.to_f/num)
+            aggr[meas] = (values.inject { |sum, curr| sum+curr }.to_f/num)
           else
             aggr[meas] = nil
           end
@@ -79,13 +80,13 @@ class MeasurementsController < ApplicationController
       end
 
       respond_to do |format|
-        format.json {render json: result}
+        format.json { render json: result }
       end
-    else if hourly
+    elsif hourly
       result = []
-      data = user.measurements.collect{|it| [it.date.hour, it[hourly]]}.select{|it| !it[1].nil?}
+      data = user.measurements.collect { |it| [it.date.hour, it[hourly]] }.select { |it| !it[1].nil? }
 
-      hash = Hash.new{ |h,k| h[k] = []}
+      hash = Hash.new { |h, k| h[k] = [] }
       data.each do |it|
         hash[it[0]] << it[1]
       end
@@ -108,16 +109,22 @@ class MeasurementsController < ApplicationController
         end
       end
       respond_to do |format|
-        format.json {render json: result}
+        format.json { render json: result }
       end
+    elsif table
+      @measurements = get_table_data(@measurements, lang)
+
+      respond_to do |format|
+        format.json { render json: @measurements }
+      end
+
     else
       respond_to do |format|
         format.html
-        format.json {render json: @measurements}
-        format.csv { send_data @measurements.to_csv({}, lang).encode("iso-8859-2"), :type => 'text/csv; charset=iso-8859-2; header=present'}
+        format.json { render json: @measurements }
+        format.csv { send_data to_csv(@measurements, {}, lang).encode("iso-8859-2"), :type => 'text/csv; charset=iso-8859-2; header=present' }
         format.js
       end
-    end
     end
   end
 
@@ -127,7 +134,7 @@ class MeasurementsController < ApplicationController
       return nil
     end
     result = {}
-    avg = arr.reduce{|c, s| c+s}/len.to_f
+    avg = arr.reduce { |c, s| c+s }/len.to_f
     result[:avg] = avg
     arr.sort!
     med_index = len/2
@@ -137,11 +144,66 @@ class MeasurementsController < ApplicationController
     result[:median] = arr[med_index]
     result[:lower] = arr[(len*0.25).floor()]
     result[:upper] = arr[(len*0.75).floor()]
-    result[:sd] = Math.sqrt(arr.reduce{|s, c| s+(c-avg)**2}/len.to_f)
+    result[:sd] = Math.sqrt(arr.reduce { |s, c| s+(c-avg)**2 }/len.to_f)
     return result
   end
 
   def show
+  end
+
+  private
+
+  def get_table_data(data, lang)
+    tableData = []
+    for item in data
+      if item.meas_type == 'blood_pressure'
+        if item.systolicbp
+          value = item.systolicbp.to_s
+        end
+        if value != ""
+          value = value + "/"
+        end
+        if item.diastolicbp
+          value = value + item.diastolicbp.to_s
+        end
+        if value != ""
+          value = value + " "
+        end
+        if item.pulse
+          value = value + item.pulse.to_s
+        end
+      elsif item.meas_type == 'blood_sugar'
+        value = item.blood_sugar.to_s + " mmol/L";
+      elsif item.meas_type == 'weight'
+        value = item.weight.to_s + " kg";
+      elsif item.meas_type == 'waist'
+        value = item.waist.to_s + " cm";
+      end
+
+      if lang=='en'
+        mType = ((I18n.t item.meas_type, :locale => :en))
+      else
+        mType = ((I18n.t item.meas_type, :locale => :hu))
+      end
+      row = {"date" => item.date, "type" => mType, "value" => value}
+      tableData.push(row)
+    end
+    return tableData
+  end
+
+
+  def to_csv(data, options={}, lang = '')
+    data=get_table_data(data, lang)
+    CSV.generate(options) do |csv|
+      if lang == "hu"
+        csv << [((I18n.t 'meas_header_values', :locale => :hu).split(','))[0], ((I18n.t 'meas_header_values', :locale => :hu).split(','))[1], ((I18n.t 'meas_header_values', :locale => :hu).split(','))[2]]
+      elsif lang == "en"
+        csv << [((I18n.t 'meas_header_values', :locale => :en).split(','))[0], ((I18n.t 'meas_header_values', :locale => :en).split(','))[1], ((I18n.t 'meas_header_values', :locale => :en).split(','))[2]]
+      end
+      data.each do |item|
+        csv << [item['date'].strftime("%Y-%m-%d %H:%M"), item['type'], item['value']]
+      end
+    end
   end
 
 end

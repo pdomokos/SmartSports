@@ -115,3 +115,18 @@ en:
       meastype3: "diabetes medication"
       meastype4: "illness"
       meastype5: "anything else"
+
+  categories:
+    Food: "Food"
+    Drink: "Drink"
+    Smoke: "Smoke"
+    Calory: "Calory"
+    illness: "Illness"
+    pain: "Pain"
+    period: "Period"
+    sleep: "Sleep"
+    stress: "Stress"
+    ketone: "Ketone"
+    relatives: "Relatives"
+    diabetes: "Diabetes"
+    autoantibody: "Autoantibody"

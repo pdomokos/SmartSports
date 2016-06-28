@@ -114,3 +114,18 @@ hu:
       meastype3: "diabétesz gyógyszer"
       meastype4: "betegség"
       meastype5: "bármi más"
+
+  categories:
+    Food: "Étel"
+    Drink: "Ital"
+    Smoke: "Dohányzás"
+    Calory: "Kalória bevitel"
+    illness: "Betegség"
+    pain: "Fájdalom"
+    period: "Menstruációs ciklus"
+    sleep: "Alvás"
+    stress: "Stressz"
+    ketone: "Keton"
+    relatives: "Rokon"
+    diabetes: "Cukorbetegség"
+    autoantibody: "Autoantitest"

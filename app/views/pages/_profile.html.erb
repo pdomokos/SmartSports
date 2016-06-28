@@ -152,7 +152,7 @@
                   <%= t :date_of_birth %>
                 </td>
                 <td>
-                  <input id="weight_field" name="profile[year_of_birth]" type="number" class="loginField loginField2" value="<%= @profile.year_of_birth %>"/>
+                  <input id="weight_field" name="profile[year_of_birth]" type="number" min="0" class="loginField loginField2" value="<%= @profile.year_of_birth %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_year_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
               </tr>
@@ -172,7 +172,7 @@
                   <%= t :height %>
                 </td>
                 <td>
-                  <input id="height_field" name="profile[height]" type="number" class="loginField loginField2" value="<%= @profile.height %>"/>
+                  <input id="height_field" name="profile[height]" type="number" min="0" class="loginField loginField2" value="<%= @profile.height %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_height_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a>
                 </td>
                 <td>
@@ -183,7 +183,7 @@
                   <%= t :body_weight %>
                 </td>
                 <td>
-                  <input id="weight_field" name="profile[weight]" type="number" step="0.1" class="loginField loginField2" value="<%= @profile.weight %>"/>
+                  <input id="weight_field" name="profile[weight]" type="number" step="0.1" min="0" class="loginField loginField2" value="<%= @profile.weight %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_weight_interval%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
                 <td>
@@ -214,7 +214,7 @@
                   <%= t :blood_glucose_min%>
                 </td>
                 <td>
-                  <input id="bg_min" name="profile[blood_glucose_min]" type="number" step="0.1" class="loginField loginField2" value="<%= @profile.blood_glucose_min %>"/>
+                  <input id="bg_min" name="profile[blood_glucose_min]" type="number" step="0.1" min="0" class="loginField loginField2" value="<%= @profile.blood_glucose_min %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_bg%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
               </tr>
@@ -223,7 +223,7 @@
                   <%= t :blood_glucose_max %>
                 </td>
                 <td>
-                  <input id="bg_max" name="profile[blood_glucose_max]" type="number" step="0.1" class="loginField loginField2" value="<%= @profile.blood_glucose_max %>"/>
+                  <input id="bg_max" name="profile[blood_glucose_max]" type="number" step="0.1" min="0" class="loginField loginField2" value="<%= @profile.blood_glucose_max %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_bg%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
               </tr>

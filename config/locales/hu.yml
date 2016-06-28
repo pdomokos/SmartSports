@@ -121,6 +121,8 @@ hu:
   recommended_size: "Ajánlott méret 160x160 pixel"
   yes_no_list: "Igen,Nem"
   gender_list: "Férfi,Nő"
+  blood_glucose_min: "Vércukorszint normál tartomány(min)"
+  blood_glucose_max: "Vércukorszint normál tartomány(max)"
   bg_unit: "Vércukorszint mértékegysége"
 
 # erorrs
@@ -229,6 +231,8 @@ hu:
   carbs:           "szénhidrát"
   fat:             "zsír"
   prot:            "fehérje"
+  diet_food_amounts: "Kevés,Átlagos,Sok"
+  diet_category_values: "Étel,Ital,Dohányzás,Kalóriabevitel"
 
 # activity
   activity:         "Testmozgás"
@@ -365,6 +369,11 @@ hu:
   intensities: "Alacsony Közepes Magas"
   header_values: "Dátum,Megnevezés,Intenzitás,Időtartam (perc),Kalória (kCal)"
   meas_header_values: "Dátum Típus Érték"
+  diet_header_values: "Dátum,Kategória,Típus,Mennyiség1,Mennyiség2"
+  medication_header_values: "Dátum,Típus,Név,Mennyiség"
+  lifestyle_header_values: "Dátum,Kategória,Név,Tulajdonság1,Tulajdonság2"
+  genetics_header_values: "Tulajdonság1,Tulajdonság2,Tulajdonság3,Tulajdonság4,Tulajdonság5,Tulajdonság6"
+  labresult_header_values: "Dátum,Kategória,Érték"
   meas_types: "Vérnyomás,Vércukor,Súly,Haskörfogat"
 
   time: "Időpont"

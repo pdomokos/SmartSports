@@ -142,6 +142,8 @@ en:
   recommended_size: "Recommended size 160x160 px"
   yes_no_list: "Yes,No"
   gender_list: "Male,Female"
+  blood_glucose_min: "Blood glucose normal level(min)"
+  blood_glucose_max: "Blood glucose normal level(max)"
   bg_unit: "Blood glucose unit"
 
 # erorrs
@@ -250,6 +252,8 @@ en:
   carbs:           "carbs"
   fat:             "fat"
   prot:            "prot"
+  diet_food_amounts: "Below average,Average,Above average"
+  diet_category_values: "Food,Drink,Smoke,Calory"
 
 # activity
   activity:         "Activity"
@@ -384,6 +388,11 @@ en:
   intensities: "Low Moderate High"
   header_values: "Date,Name,Intensity,Duration (min),Calories (kCal)"
   meas_header_values: "Date Type Value"
+  diet_header_values: "Date,Category,Type,Amount1,Amount2"
+  medication_header_values: "Date,Type,Name,Amount"
+  lifestyle_header_values: "Date,Category,Name,Property1,Property2"
+  genetics_header_values: "Property1,Property2,Property3,Property4,Property5,Porperty6"
+  labresult_header_values: "Date,Category,Value"
   meas_types: "Blood Pressure,Blood Glucose,Body Weight,Waist Circumfence"
 
   time: "Time"

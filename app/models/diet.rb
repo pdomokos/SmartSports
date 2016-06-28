@@ -1,15 +1,17 @@
+require 'csv'
+
 class DietValidator < ActiveModel::Validator
   def validate(record)
     if (record.diet_type == 'Food' || record.diet_type == 'Drink') && record.food_type_name == nil
       record.errors[:food_type_name] << 'No value'
     elsif record.diet_type == 'Calory'
-      if((record.calories == nil || record.calories == "") && (record.carbs == nil || record.carbs == ""))
+      if ((record.calories == nil || record.calories == "") && (record.carbs == nil || record.carbs == ""))
         record.errors[:calories] << 'No value'
       else
-        if(record.calories != nil && record.calories != "" && (record.calories < 1 || record.calories > 4000))
+        if (record.calories != nil && record.calories != "" && (record.calories < 1 || record.calories > 4000))
           record.errors[:calories] << 'Calories out of range 1-4000'
         end
-        if(record.carbs != nil && record.carbs != "" && (record.carbs < 0 || record.carbs > 200))
+        if (record.carbs != nil && record.carbs != "" && (record.carbs < 0 || record.carbs > 200))
           record.errors[:calories] << 'Carbs out of range 0-200'
         end
       end

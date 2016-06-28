@@ -57,6 +57,29 @@
       load_family_record("#family-history-create-form .genetics_family_history", data['family_history'])
   )
 
+  $(document).unbind("click.geneticsShow")
+  $(document).on("click.geneticsShow", "#genetics-show-table", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    genetics_header = $("#genetics_header_values").val().split(",")
+    url = 'users/' + current_user + '/genetics.json'+'?table=true&lang='+lang
+    show_table(url, lang, genetics_header, 'get_genetics_table_row', 'show_genetics_table')
+  )
+
+  $(document).unbind("click.downloadGenetics")
+  $(document).on("click.downloadGenetics", "#download-genetics-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    url = '/users/' + current_user + '/genetics.csv?order=desc&lang='+lang
+    location.href = url
+  )
+
+  $(document).unbind("click.closeGenetics")
+  $(document).on("click.closeGenetics", "#close-genetics-data", (evt) ->
+    $("#genetics-data-container").html("")
+    location.href = "#close"
+  )
+
 @init_genetics = () ->
   self = this
   user_lang = $("#user-lang")[0].value

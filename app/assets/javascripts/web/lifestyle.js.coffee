@@ -56,6 +56,29 @@
   $('.hisTitle').click ->
     loadLifestyles()
 
+  $(document).unbind("click.lifestyleShow")
+  $(document).on("click.lifestyleShow", "#lifestyle-show-table", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    lifestyle_header = $("#lifestyle_header_values").val().split(",")
+    url = 'users/' + current_user + '/lifestyles.json'+'?table=true&lang='+lang
+    show_table(url, lang, lifestyle_header, 'get_lifestyle_table_row', 'show_lifestyle_table')
+  )
+
+  $(document).unbind("click.downloadLifestyle")
+  $(document).on("click.downloadLifestyle", "#download-lifestyle-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    url = '/users/' + current_user + '/lifestyles.csv?order=desc&lang='+lang
+    location.href = url
+  )
+
+  $(document).unbind("click.closeLifestyle")
+  $(document).on("click.closeLifestyle", "#close-lifestyle-data", (evt) ->
+    $("#lifestyle-data-container").html("")
+    location.href = "#close"
+  )
+
 @initLifestyle = (selector) ->
   self = this
   if selector==null||selector==undefined

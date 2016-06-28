@@ -78,60 +78,11 @@
 
   $(document).unbind("click.exerciseShow")
   $(document).on("click.exerciseShow", "#exercise-show-table", (evt) ->
-    console.log "datatable clicked"
     current_user = $("#current-user-id")[0].value
     lang = $("#user-lang")[0].value
-    header = $("#header_values").val().split(",")
-    url = 'users/' + current_user + '/activities.json'+'?lang='+lang
-    console.log url
-    $.ajax urlPrefix()+url,
-      type: 'GET',
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log "datatable activity AJAX Error: #{textStatus}"
-      success: (data, textStatus, jqXHR) ->
-        tblData = $.map(data,(item,i) ->
-          return([get_exercise_table_row(item)])
-        )
-        console.log("tblData", tblData)
-        if lang == 'hu'
-          plugin = {
-            sEmptyTable: "Nincs rendelkezésre álló adat",
-            sInfo: "Találatok: _START_ - _END_ Összesen: _TOTAL_",
-            sInfoEmpty: "Nulla találat",
-            sInfoFiltered: "(_MAX_ összes rekord közül szűrve)",
-            sInfoPostFix: "",
-            sInfoThousands: " ",
-            sLengthMenu: "_MENU_ találat oldalanként",
-            sLoadingRecords: "Betöltés...",
-            sProcessing: "Feldolgozás...",
-            sSearch: "Keresés:",
-            sZeroRecords: "Nincs a keresésnek megfelelő találat",
-            oPaginate: {
-              sFirst: "Első",
-              sPrevious: "Előző",
-              sNext: "Következő",
-              sLast: "Utolsó"
-            },
-            oAria: {
-              sSortAscending: ": aktiválja a növekvő rendezéshez",
-              sSortDescending: ": aktiválja a csökkenő rendezéshez"
-            }
-          }
-        $("#exercise-data-container").html("<table id=\"exercise-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
-        $("#exercise-data").dataTable({
-          "data": tblData,
-          "columns": [
-            {"title": header[0]},
-            {"title": header[1]},
-            {"title": header[2]},
-            {"title": header[3]},
-            {"title": header[4]}
-          ],
-          "order": [[0, "desc"]],
-          "lengthMenu": [10],
-          "language": plugin
-        })
-        location.href = "#openModalEx"
+    exercise_header = $("#header_values").val().split(",")
+    url = 'users/' + current_user + '/activities.json'+'?table=true&lang='+lang
+    show_table(url, lang, exercise_header, 'get_exercise_table_row', 'show_exercise_table')
   )
 
   $(document).unbind("click.downloadExercise")
@@ -147,14 +98,6 @@
     $("#exercise-data-container").html("")
     location.href = "#close"
   )
-
-@get_exercise_table_row = (item ) ->
-  console.log item
-  intensities = $("#intensity_values").val().split(" ")
-  ret = [moment(item.start_time).format("YYYY-MM-DD HH:MM"), @get_label(item.name), intensities[Math.round(item.intensity)], item.duration, Math.round(item.calories * 100) / 100]
-  if ret[2]==undefined
-    ret[2] = ""
-  return ret
   
 @initActivity = (selector) ->
   intensities = $("#intensity_values").val().split(" ")
@@ -234,23 +177,6 @@
       else
         $(".deleteExercise").removeClass("hidden")
       console.log "load recent activities  Successful AJAX call"
-
-@get_label = (key) ->
-  user_lang = $("#user-lang")[0].value
-  if user_lang
-    activity_key = 'sd_activities_'+user_lang
-  else
-    activity_key = 'sd_activities_hu'
-
-  if getStored(activity_key)==undefined || getStored(activity_key).length==0
-    return "Unknown"
-  value = getStored(activity_key).filter((d) ->
-    return d.id==key;
-  )
-  if value.length==0
-    value = "Unknown"
-  else
-    value = value[0].label
 
 @loadActivityTypes = (cb) ->
   self = this

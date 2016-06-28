@@ -57,6 +57,29 @@
     $(".hisTitle").removeClass("selected")
     $(".favTitle").addClass("selected")
 
+  $(document).unbind("click.medicationShow")
+  $(document).on("click.medicationShow", "#medication-show-table", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#data-lang-medication")[0].value
+    medication_header = $("#medication_header_values").val().split(",")
+    url = 'users/' + current_user + '/medications.json'+'?table=true&lang='+lang
+    show_table(url, lang, medication_header, 'get_medication_table_row', 'show_medication_table')
+  )
+
+  $(document).unbind("click.downloadDiet")
+  $(document).on("click.downloadMedication", "#download-medication-data", (evt) ->
+    current_user = $("#current-user-id")[0].value
+    lang = $("#user-lang")[0].value
+    url = '/users/' + current_user + '/medications.csv?order=desc&lang='+lang
+    location.href = url
+  )
+
+  $(document).unbind("click.closeMedication")
+  $(document).on("click.closeMedication", "#close-medication-data", (evt) ->
+    $("#medication-data-container").html("")
+    location.href = "#close"
+  )
+
 @initMedication = (selector) ->
   console.log "initMedication, sel= "+selector
   self = this
