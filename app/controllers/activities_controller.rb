@@ -71,7 +71,7 @@ class ActivitiesController < ApplicationController
     activityTypeList = ActivityType.all
 
     for item in data
-      name_key = activityTypeList.where(id: item.activity_type_id).first.name
+      name_key = activityTypeList.where(id: item.activity_type_id).try(:first).try(:name)
 
       if lang=='en'
         name = DB_EN_CONFIG['activities'][name_key]
@@ -84,7 +84,7 @@ class ActivitiesController < ApplicationController
           intensities = ((I18n.t 'intensities', :locale => :hu).split(' '))[item.intensity]
         end
       end
-      row = {"date"=>item.start_time, "name"=>name, "intensity"=>intensities ,"duration"=>item.duration, "calories"=>item.calories.round(2)}
+      row = {"date"=>item.start_time, "name"=>name, "intensity"=>intensities ,"duration"=>item.duration, "calories"=>item.calories.try(:round, 2)}
       tableData.push(row)
     end
     return tableData

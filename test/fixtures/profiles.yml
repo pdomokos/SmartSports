@@ -11,6 +11,8 @@ pone:
   default_lang: en
   year_of_birth: 1977
   blood_glucose_unit: 'mmol/L'
+  blood_glucose_min: 0
+  blood_glucose_max: 10
 
 ptwo:
   id: 2
@@ -25,3 +27,5 @@ ptwo:
   default_lang: hu
   year_of_birth: 1975
   blood_glucose_unit: 'mmol/L'
+  blood_glucose_min: 0
+  blood_glucose_max: 10

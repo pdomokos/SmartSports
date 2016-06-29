@@ -68,7 +68,7 @@ class DietsController < ApplicationController
     for item in data
       amount1="-"
       amount2="-"
-      category = dietTypeList.where(id: item.food_type_id).first.category
+      category = dietTypeList.where(id: item.food_type_id).try(:first).try(:category)
       if category == 'Calory'
         if item.calories
           amount1 = item.calories.to_s+' kcal '+(I18n.t 'calories', :locale => lang)
@@ -86,13 +86,21 @@ class DietsController < ApplicationController
           amount1= ((I18n.t 'diet_food_amounts', :locale => :en).split(','))[item.amount]
         end
         cat = DB_EN_CONFIG['categories'][category]
-        name = DB_EN_CONFIG['diets'][category][dietTypeList.where(id: item.food_type_id).first.name]
+        nk = dietTypeList.where(id: item.food_type_id).first.try(:name)
+        name = ""
+        unless nk.nil?
+          name = DB_EN_CONFIG['diets'][category][nk]
+        end
       else
         if category == "Food"
           amount1= ((I18n.t 'diet_food_amounts', :locale => :hu).split(','))[item.amount]
         end
         cat = DB_HU_CONFIG['categories'][category]
-        name = DB_HU_CONFIG['diets'][category][dietTypeList.where(id: item.food_type_id).first.name]
+        nk = dietTypeList.where(id: item.food_type_id).first.try(:name)
+        name = ""
+        unless nk.nil?
+          name = DB_HU_CONFIG['diets'][category][nk]
+        end
       end
       row = {"date"=>item.date, "category"=>cat, "name"=>name ,"amount1"=>amount1 ,"amount2"=>amount2}
       tableData.push(row)

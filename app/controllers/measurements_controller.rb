@@ -185,8 +185,17 @@ class MeasurementsController < ApplicationController
         end
       elsif item.meas_type == 'blood_sugar'
         value = item.blood_sugar.to_s + " mmol/L"
-        bg_time = bgTimeList[item.blood_sugar_time]
-        stress = stressList[item.stress_amount]+' '+stress_str.downcase
+        if not item.blood_sugar_time.nil?
+          bg_time = bgTimeList[item.blood_sugar_time]
+        else
+          bg_time = ""
+        end
+        if not item.stress_amount.nil?
+          stress = stressList[item.stress_amount]+' '+stress_str.downcase
+        else
+          stress = ""
+        end
+
       elsif item.meas_type == 'weight'
         value = item.weight.to_s + " kg"
       elsif item.meas_type == 'waist'
