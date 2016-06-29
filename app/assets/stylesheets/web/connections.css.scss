@@ -21,7 +21,7 @@ td.deleteConn button {
 
 .addConnItem {
   padding-top: 6px;
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 
 .red {
@@ -31,7 +31,7 @@ td.deleteConn button {
 .addDeviceButton {
   background: #57C88A !important;
   border-color: #57C88A !important;
-  margin-top: 0px !important;
+  margin-top: 0 !important;
 }
 
 .connectionsSelect {
@@ -43,4 +43,37 @@ button.trashConn {
 }
 button.syncConnButton {
   cursor: pointer;
+}
+
+.connectionsFormField {
+  border: solid 1px #2ca25f !important;
+  width: 270px !important;
+  background-color: white !important;
+}
+.connectionsColor {
+  color: #2ca25f
+}
+.connectionsLogo {
+  background: image-url("menu/trackerColor.png") no-repeat 10px 10px;
+  background-size: 40px 40px;
+}
+
+.connectionSelectText {
+  max-width: 70px;
+  word-wrap: break-word;
+}
+
+#statConnectionModal i {
+  cursor: pointer;
+}
+
+i.green {
+  color: green;
+}
+
+#connectionIcons li {
+  cursor: pointer;
+}
+#connectionIcons li:hover {
+  background-color: lightgoldenrodyellow;
 }

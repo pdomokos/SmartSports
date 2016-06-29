@@ -1,0 +1,1 @@
+json.extract! @connection, :id, :name, :created_at, :synced_at, :sync_status

@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#customFormIcons li:hover {
+  background-color: lightgoldenrodyellow;
+}
 .contentBg33 {
   background: rgba(255, 255, 255, 1);
   color: #c8c9c3;
@@ -74,11 +77,12 @@
 .img-list>li {
   float: left;
   width: 38px;
-
+}
+.img-list.conn>li {
+  width: 70px;
 }
 #customFormSelect .img-list>li {
   width: 45px;
-
 }
 .img-list>li>span {
   box-sizing: border-box;

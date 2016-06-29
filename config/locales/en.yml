@@ -229,6 +229,14 @@ en:
   body_weight: "Body weight"
   connected_devices: "Connected devices"
 
+#connections
+  add_connection: "Add Device"
+  device_connection: "Device"
+  close_dialog: "Close"
+  last_synced: "Last Synced"
+  delete_conn: "Remove Device"
+  missing_date: "Missing Date"
+
 # diet
   food: "Meal"
   food_placeholer: "Select..."

@@ -1,2 +1,2 @@
-$("#recentResourcesTable").html("");
-$("#recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/connection_item', :collection=> @connections ) %>");
+$("#connectionIcons").html("");
+$("#connectionIcons").html("<%= escape_javascript(render :partial=> 'connections/connection_icons' ) %>");

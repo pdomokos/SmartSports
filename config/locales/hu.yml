@@ -208,6 +208,14 @@ hu:
   body_weight: "Testsúly"
   connected_devices: "Csatlakoztatott eszközök"
 
+#connections
+  add_connection: "Eszköz hozzáadása"
+  device_connection: "Eszköz"
+  close_dialog: "Bezárás"
+  last_synced: "Utolsó szinkronizálás"
+  delete_conn: "Eszköz törlése"
+  missing_date: "Nincs adat"
+
 # diet
   food:             "Étkezés"
   food_placeholer: "Válasszon..."

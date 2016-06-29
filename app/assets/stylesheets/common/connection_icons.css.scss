@@ -1,0 +1,45 @@
+.conn-img-list>li {
+  float: left;
+  width: 70px;
+
+}
+
+.iconselect_withings {
+    background: url("/assets/connections/withings.png");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 30px, 30px, 30px, 30px;
+    background-position: left, right;
+    padding-left: 34px;
+}
+
+.iconselect_fitbit {
+     background: url("/assets/connections/fitbit.png");
+     background-repeat: no-repeat, no-repeat;
+     background-size: 30px, 30px, 30px, 30px;
+     background-position: left, right;
+     padding-left: 34px;
+ }
+
+.iconselect_google {
+    background: url("/assets/connections/google.png");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 30px, 30px, 30px, 30px;
+    background-position: left, right;
+    padding-left: 34px;
+}
+
+.iconselect_misfit {
+    background: url("/assets/connections/misfit.png");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 30px, 30px, 30px, 30px;
+    background-position: left, right;
+    padding-left: 34px;
+}
+
+.iconselect_moves {
+    background: url("/assets/connections/moves.png");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 30px, 30px, 30px, 30px;
+    background-position: left, right;
+    padding-left: 34px;
+}

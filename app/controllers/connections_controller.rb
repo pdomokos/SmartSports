@@ -1,9 +1,13 @@
 
-class ConnectionsController < ActionController::Base
-  before_action :check_owner
+class ConnectionsController < ApplicationController
+  before_action :check_owner, except: [:misfitcb, :movescb, :withingscb, :fitbitcb, :googlecb]
 
   def index
     @connections = current_user.connections.all
+  end
+
+  def show
+    @connection = Connection.find_by_id(params[:id])
   end
 
   def destroy
@@ -60,6 +64,8 @@ class ConnectionsController < ActionController::Base
 
   def withingscb
     auth = request.env['omniauth.auth']
+    puts "AUTH="
+    puts auth
     if auth
       data = auth['credentials']
       data.merge!({"uid" => params[:userid]})

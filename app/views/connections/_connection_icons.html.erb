@@ -1,0 +1,9 @@
+<% for connection in @connections %>
+    <li title="<%= I18n.t( :last_synced ) %>: <%= get_date_or_missing(connection.synced_at) %>"
+        data-connectionid="<%= connection.id %>"
+        data-connectionname="<%= connection.name.capitalize %>"
+        data-connectionsync="<%= connection.synced_at %>">
+      <span class='<%= "iconselect_"+connection.name %> cficon'></span>
+      <div class='connectionSelectText'><%= connection.name.capitalize %></div>
+    </li>
+<% end %>

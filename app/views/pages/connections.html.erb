@@ -2,41 +2,75 @@
 <input id="addconn-message" class='hidden' value="<%=t('popupmessages.connection_added_html', :conn=> @add_conn.try(:capitalize))%>"/>
 <input id="synced-message" class='hidden' value="<%=t('popupmessages.connection_synced', :conn=> @add_conn.try(:capitalize))%>"/>
 
-<div id="conntitle" class="sectionTitle c0 hidden">
-  <%= t :title_connections %>
+<div id="addConnectionModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= t :add_connection %></h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag( root_path+"users/#{current_user.id}/connections", id: "connCreateForm") do %>
+            <div class="form-group">
+              <label for="formNameInput"><%= t :device_connection %></label>
+              <select class="form-control connectionsFormField connectionsSelect" name="connectionName">
+              </select>
+            </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t :close_dialog %></button>
+        <button type="button" class="btn btn-primary addConnButton"><%= t :add_connection %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="statConnectionModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span></span>
+        <h4 class="modal-title left"></h4>
+      </div>
+      <div class="modal-body">
+
+            <div class="form-group">
+              <label for="syncDate"><%= t :last_synced %></label>
+              <span id="syncDate" class="syncDate"></span>
+              <i class="fa fa-refresh" aria-hidden="true"></i>
+            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger pull-left deleteConnectionButton"
+                data-dismiss="modal"><%= t :delete_conn %></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t :close_dialog %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 </div>
-<div id="noconntitle" class="sectionTitle c0 hidden">
-  <%= t :title_no_connections %>
+
+<div class="mainContent">
+  <input id="data-lang-custom" value="<%=I18n.locale%>" type="hidden" />
+  <div class="sectionTitle connectionsLogo connectionsColor">
+    <%=t 'menu_connections' %>
+    <span class="right">
+      <button class="tableControl" data-toggle="modal" data-target="#addConnectionModal">
+        <i class="fa fa-plus-square-o"></i>
+      </button>
+    </span>
+  </div>
+  <br/>
+
+  <div>
+    <ul id="connectionIcons" class="img-list conn cfSelect">
+
+    </ul>
+  </div>
+
 </div>
-
-<input type="hidden" id="addconn" value="<%= @add_conn %>" />
-<div id="sectionConnections" class="menu-section">
-  <table class="historyTable"  cellpadding="0" cellspacing="0">
-    <tbody id="recentResourcesTable">
-
-    </tbody>
-  </table>
-</div>
-
-<table class="hidden">
-  <tbody id="template_addconn">
-  <tr class="bg">
-    <td style="width:40px;">
-    </td>
-
-    <td class="historyTitle addConnItem">
-      <button id="addDeviceButton" class="dataFormField addDeviceButton"><%= t :settings_add_device %></button>
-      <form id="addconnForm" class="hidden">
-          <select class="dataFormField connectionsSelect" name="connectionName">
-          </select>
-          <button class="tableControl addConnButton"><i class="fa fa-plus-square-o fa-2x"></i></button>
-      </form>
-    </td>
-    <td></td>
-    <td></td>
-  </tr>
-  </tbody>
-</table>
 
 <% content_for :menu do %>
     <%= render "settingsmenu" %>

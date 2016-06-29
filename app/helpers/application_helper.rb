@@ -111,4 +111,17 @@ module ApplicationHelper
       return 'fa-list'
     end
   end
+
+  def get_date_or_missing(value)
+    if not value.nil?
+      if value=='missing_date'
+        return I18n.t(:missing_date, :locale => I18n.locale)
+      else
+        return value.strftime("%F %R")
+      end
+    else
+      return I18n.t(:missing_date, :locale => I18n.locale)
+    end
+  end
+
 end
