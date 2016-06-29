@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620140432) do
+ActiveRecord::Schema.define(version: 20160629082803) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -380,6 +380,8 @@ ActiveRecord::Schema.define(version: 20160620140432) do
     t.float    "blood_glucose_min"
     t.float    "blood_glucose_max"
     t.string   "blood_glucose_unit", default: "mmol/L"
+    t.integer  "carb_min"
+    t.integer  "carb_max"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", unique: true

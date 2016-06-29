@@ -32,7 +32,7 @@
                 <%=(t :negative).downcase%>
             <% end %>
             <% if genetics_item.antibody_value && genetics_item.antibody_value != '' %>
-                , <%= genetics_item.antibody_value %>
+                 <%= genetics_item.antibody_value %>
             <% end %>
         <%elsif genetics_item && genetics_item.class == FamilyRecord%>
             <input id="family_history_data_<%= genetics_item.id %>" type="hidden" value="<%=

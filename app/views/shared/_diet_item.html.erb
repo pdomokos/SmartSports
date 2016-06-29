@@ -55,6 +55,9 @@
             <span> <%= diet_item.calories %>kcal</span>
         <% end %>
         <% if diet_item.carbs %>
+            <% if !diet_item.calories %>
+                <span class="itemTitle"><%= (t :quick_calories) %></span>
+            <% end %>
             <span> <%= (t :carbs) %>: <%= diet_item.carbs %>g</span>
         <% end %>
   <% elsif diet_item.food_type.category== "Drink" %>

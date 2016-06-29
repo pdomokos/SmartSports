@@ -56,9 +56,15 @@
           </div>
           <div class="tileBody">
             <% if @bw_today >0 %>
-            <span class="tileContent">&nbsp;<%=@bw_today%></span><span class="tileUnit">kg</span>
+                <span class="tileContent">&nbsp;<%=@bw_today%></span><span class="tileUnit">kg</span>
+                <% if @show_BMI %>
+                    <span class="tileUnit">BMI:</span><span class="tileContent">&nbsp;<%=@BMI%></span>
+                <%end%>
             <% else %>
                 <span class="tileContent">&nbsp;<%=@bw_last%></span><span class="tileUnit">kg</span>
+                <% if @show_BMI %>
+                    <span class="tileUnit">BMI:</span><span class="tileContent">&nbsp;<%=@BMI%></span>
+                <%end%>
             <% end %>
           </div>
           <div class="tileBody">
@@ -84,7 +90,7 @@
       </div>
       <% if @calories_taken > 0 %>
           <div class="tileBody">
-            <span class="tileContent">&nbsp;<%=@calories_taken%></span><span class="tileUnit">kcal</span>
+            <span class="tileContent">&nbsp;<%=@calories_taken%><span class="tileUnit">kcal</span> / <%=@carbs_taken%></span><span class="tileUnit">g</span>
           </div>
           <div class="tileBody">
             <% if @calories_diff_show %>

@@ -155,7 +155,18 @@ class MeasurementsController < ApplicationController
 
   def get_table_data(data, lang)
     tableData = []
+    if lang == 'en'
+      stressList = (I18n.t 'stressList', :locale => :en).split(',')
+      bgTimeList = (I18n.t 'bgTimeList', :locale => :en).split(',')
+      stress_str = (I18n.t 'stress', :locale => :en)
+    else
+      stressList = (I18n.t 'stressList', :locale => :hu).split(',')
+      bgTimeList = (I18n.t 'bgTimeList', :locale => :hu).split(',')
+      stress_str = (I18n.t 'stress', :locale => :hu)
+    end
     for item in data
+      bg_time=''
+      stress=''
       if item.meas_type == 'blood_pressure'
         if item.systolicbp
           value = item.systolicbp.to_s
@@ -173,11 +184,13 @@ class MeasurementsController < ApplicationController
           value = value + item.pulse.to_s
         end
       elsif item.meas_type == 'blood_sugar'
-        value = item.blood_sugar.to_s + " mmol/L";
+        value = item.blood_sugar.to_s + " mmol/L"
+        bg_time = bgTimeList[item.blood_sugar_time]
+        stress = stressList[item.stress_amount]+' '+stress_str.downcase
       elsif item.meas_type == 'weight'
-        value = item.weight.to_s + " kg";
+        value = item.weight.to_s + " kg"
       elsif item.meas_type == 'waist'
-        value = item.waist.to_s + " cm";
+        value = item.waist.to_s + " cm"
       end
 
       if lang=='en'
@@ -185,7 +198,7 @@ class MeasurementsController < ApplicationController
       else
         mType = ((I18n.t item.meas_type, :locale => :hu))
       end
-      row = {"date" => item.date, "type" => mType, "value" => value}
+      row = {"date" => item.date, "type" => mType, "value" => value, "property1" => bg_time, "property2" => stress}
       tableData.push(row)
     end
     return tableData
@@ -196,12 +209,12 @@ class MeasurementsController < ApplicationController
     data=get_table_data(data, lang)
     CSV.generate(options) do |csv|
       if lang == "hu"
-        csv << [((I18n.t 'meas_header_values', :locale => :hu).split(','))[0], ((I18n.t 'meas_header_values', :locale => :hu).split(','))[1], ((I18n.t 'meas_header_values', :locale => :hu).split(','))[2]]
+        csv << [((I18n.t 'meas_header_values', :locale => :hu).split(' '))[0], ((I18n.t 'meas_header_values', :locale => :hu).split(' '))[1], ((I18n.t 'meas_header_values', :locale => :hu).split(' '))[2], ((I18n.t 'meas_header_values', :locale => :hu).split(' '))[3], ((I18n.t 'meas_header_values', :locale => :hu).split(' '))[4]]
       elsif lang == "en"
-        csv << [((I18n.t 'meas_header_values', :locale => :en).split(','))[0], ((I18n.t 'meas_header_values', :locale => :en).split(','))[1], ((I18n.t 'meas_header_values', :locale => :en).split(','))[2]]
+        csv << [((I18n.t 'meas_header_values', :locale => :en).split(' '))[0], ((I18n.t 'meas_header_values', :locale => :en).split(' '))[1], ((I18n.t 'meas_header_values', :locale => :en).split(' '))[2], ((I18n.t 'meas_header_values', :locale => :en).split(' '))[3], ((I18n.t 'meas_header_values', :locale => :en).split(' '))[4]]
       end
       data.each do |item|
-        csv << [item['date'].strftime("%Y-%m-%d %H:%M"), item['type'], item['value']]
+        csv << [item['date'].strftime("%Y-%m-%d %H:%M"), item['type'], item['value'], item['property1'], item['property2']]
       end
     end
   end

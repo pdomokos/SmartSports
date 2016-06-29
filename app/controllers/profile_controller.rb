@@ -51,12 +51,18 @@ class ProfileController < ApplicationController
     lang = params[:lang]
 
     respond_to do |format|
-      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :year_of_birth, :smoke, :insulin, :default_lang, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit)
+      par = params.require(:profile).permit(:id, :user_id, :firstname, :lastname, :height, :weight, :sex, :year_of_birth, :smoke, :insulin, :default_lang, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit, :carb_min, :carb_max)
       if par['default_lang']
         I18n.locale = par['default_lang']
+      else
+        I18n.locale = @profile.default_lang
+      end
+      changed = false
+      if lang != I18n.locale.to_s
+        changed = true
       end
       if @profile.update(par)
-        format.json { render json: { :status => "OK", :default_lang_changed => lang!=par['default_lang'], :locale => par['default_lang'], :msg => "Updated successfully" } }
+        format.json { render json: { :status => "OK", :default_lang_changed => changed, :locale => I18n.locale, :msg => "Updated successfully" } }
       else
         key = @profile.errors.values[0]
         message = (I18n.translate(key))
@@ -85,7 +91,7 @@ class ProfileController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :year_of_birth, :default_lang, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit)
+      params.require(:profile).permit(:user_id, :firstname, :lastname, :weight, :height, :sex, :smoke, :insulin, :year_of_birth, :default_lang, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit, :carb_min, :carb_max)
     end
 
     def which_layout

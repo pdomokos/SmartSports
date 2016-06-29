@@ -75,6 +75,14 @@ module ApplicationHelper
     end
   end
 
+  def get_lifestyle_elem2(elem_str, lifestyle_item)
+    if lifestyle_item.amount
+      elem_str.split(",")[lifestyle_item.period_volume]
+    else
+      ""
+    end
+  end
+
   def get_lifestyle_time(lifestyle_time)
     if lifestyle_time
       lifestyle_time.strftime("%F %H:%M")
