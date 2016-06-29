@@ -142,8 +142,8 @@ en:
   recommended_size: "Recommended size 160x160 px"
   yes_no_list: "Yes,No"
   gender_list: "Male,Female"
-  blood_glucose_min: "Blood glucose normal level(min)"
-  blood_glucose_max: "Blood glucose normal level(max)"
+  blood_glucose_min: "Advised blood glucose(min,mmol/L)"
+  blood_glucose_max: "Advised blood glucose(max,mmol/L)"
   bg_unit: "Blood glucose unit"
 
 # erorrs
@@ -165,6 +165,7 @@ en:
   error_login_username: "Invalid username or password"
   error_end_time_greater: "End time should be greater than start time!"
   error_profile_bg: "Blood glucose must be between 0.0-50.0mmol/L!"
+  error_profile_carb: "Carb must be between 50-500g!"
 
   reg_succ: "Registration successful"
 
@@ -217,11 +218,11 @@ en:
   add_bg: "Click"
   no_bg_today_html: "No blood glucose for today. %{href} to add measurement."
 
-  calories_taken: "Daily calorie intake"
+  calories_taken: "Calorie / carb intake today"
   walking_today: "Walking today"
   cycling_today: "Cycling today"
-  exercise_calories: "Daily calories burned"
-  exercise_time: "Exercise time"
+  exercise_calories: "Calories burned by exercise today"
+  exercise_time: "Exercise time today"
   min: "min"
   blood_glucose_today_html: "Blood glucose today (min / avg / max)"
   sleep_amount_today: "Sleep amount today"
@@ -305,6 +306,8 @@ en:
   sysdiaspulse: "Systolic/Diastolic/Pulse"
   add_blood_glucose_note_title: "Specify your blood glucose measurement"
   add_blood_glucose_note_form_title: "Please select a reason why your blood glucose out of usual interval!"
+  carb_min: "Advised daily carbs intake(min,g)"
+  carb_max: "Advised daily carbs intake(max,g)"
 
 # medication
   medication:           "Medication"
@@ -386,8 +389,8 @@ en:
   statistics:         "Statistics"
 
   intensities: "Low Moderate High"
-  header_values: "Date,Name,Intensity,Duration (min),Calories (kCal)"
-  meas_header_values: "Date Type Value"
+  header_values: "Date,Name,Intensity,Duration (min),Calories (kcal)"
+  meas_header_values: "Date Type Value Property1 Property2"
   diet_header_values: "Date,Category,Type,Amount1,Amount2"
   medication_header_values: "Date,Type,Name,Amount"
   lifestyle_header_values: "Date,Category,Name,Property1,Property2"

@@ -33,7 +33,7 @@
         <% elsif  lifestyle_item.lifestyle_type.category=='illness' %>
             <span class="itemTitle"><%=(t :illness)%></span>
             <span>
-                <%=(t :intensity)%>: <%= get_lifestyle_elem((t :illnessList), lifestyle_item)%>,
+                <%= get_lifestyle_elem((t :illnessList), lifestyle_item)%>
                 <%if lifestyle_item.lifestyle_type.name%>
                     <%if I18n.locale == :hu%>
                         <%= DB_HU_CONFIG['lifestyle']['illness'][lifestyle_item.lifestyle_type.name]%>
@@ -64,7 +64,7 @@
             <%=t :duration %>: <% if mins < 60 %> <%=mins%><%=t :minute_abbr %> <%else%> <%=mins/60%><%=t :hours %> <%=mins%60%><%=t :minute_abbr %><%end%>
             </span>
         <% elsif  lifestyle_item.lifestyle_type.category=='period' %>
-            <span class="itemTitle"><%=(t :period)%></span> <span><%= get_lifestyle_elem((t :periodPainList), lifestyle_item)%>, <%= (t :amount) %>:<%=get_lifestyle_elem((t :periodVolumeList), lifestyle_item)%></span><br/>
+            <span class="itemTitle"><%=(t :period)%></span> <span><%= get_lifestyle_elem((t :periodPainList), lifestyle_item)%>, <%=get_lifestyle_elem2((t :periodVolumeList), lifestyle_item).downcase%></span><br/>
             <span><%=(t :start)%>: <%= get_lifestyle_date(lifestyle_item.start_time) %> <%=(t :end)%>: <%= get_lifestyle_date(lifestyle_item.end_time) %> </span>
         <% else %>
             <strong><%=(t :unknown)%></strong>

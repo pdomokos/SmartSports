@@ -12,6 +12,9 @@ module DashboardHelper
   def get_todays_summary()
     @calories_taken = Diet.where(user_id: current_user.id).where("date between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day)
                           .sum("calories").round
+    @carbs_taken = Diet.where(user_id: current_user.id).where("date between ? and ?", Time.zone.now.midnight, Time.zone.now.midnight+1.day)
+                          .sum("carbs").round
+
     if @calories_taken>0
       calories_yesterday = Diet.where(user_id: current_user.id).where("date between ? and ?", Time.zone.now.midnight-1.day, Time.zone.now.midnight)
                                .sum("calories").round
@@ -97,6 +100,19 @@ module DashboardHelper
         @show_bw = true
         @bw_last = last2_bw.last.weight.round(1)
         @bw_last_time = last2_bw.last.date.strftime("%F %H:%M")
+      end
+    end
+
+    @show_BMI = false
+    if @bw_today > 0 || @bw_last
+      if current_user.profile.height
+        @show_BMI = true
+        if @bw_today>0
+          weight = @bw_today
+        else
+          weight = @bw_last
+        end
+        @BMI = (weight / ((current_user.profile.height/100.0)**2)).round(2)
       end
     end
 

@@ -63,7 +63,7 @@ function get_exercise_table_row(item) {
 }
 
 function get_measurement_table_row(item) {
-    var ret = ([moment(item.date).format("YYYY-MM-DD HH:MM"), item.type, item.value]);
+    var ret = ([moment(item.date).format("YYYY-MM-DD HH:MM"), item.type, item.value, item.property1, item.property2]);
     return ret;
 }
 
@@ -116,7 +116,9 @@ function show_measurement_table(tblData, header, plugin) {
         columns: [
             {"title": header[0]},
             {"title": header[1]},
-            {"title": header[2]}
+            {"title": header[2]},
+            {"title": header[3]},
+            {"title": header[4]}
         ],
         order: [
             [0, "desc"]
