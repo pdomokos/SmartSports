@@ -22,7 +22,7 @@ TimelinePlot.prototype.draw = function(chartElementSelector) {
     }
 
     dataReceived = function(jsonData) {
-        if(jsonData.length==0) {
+        if(jsonData==null || jsonData.length==0) {
             self.showNoData();
         } else {
             data = self.dataAdapter(jsonData);

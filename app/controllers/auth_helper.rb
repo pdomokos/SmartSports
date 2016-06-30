@@ -29,8 +29,13 @@ module AuthHelper
   end
 
   def check_owner_or_doctor
-    logger.info("owner: #{owner?} doctor: #{doctor?}")
     unless owner? || doctor?
+      send_error_json(params[:id], "Unauthorized", 403)
+    end
+  end
+
+  def check_admin_or_doctor
+    unless admin? || doctor?
       send_error_json(params[:id], "Unauthorized", 403)
     end
   end

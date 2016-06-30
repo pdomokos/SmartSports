@@ -132,33 +132,36 @@ class AnalysisDataController < ApplicationController
     if dashboard
       medications = user.medications.order("date DESC").limit(15)
     end
-    if f && !dashboard
-      medications = medications.where("date between ? and ?", f, t)
-    end
-    result.concat(medications.collect{|med|
-      item = {
-          id: med.id,
-          title: 'Medication',
-          depth: 0,
-          dates: [med.date],
-          kind: 'medication',
-          source: 'SmartDiab'
-      }
-      if med.medication_type.try(:category)=='oral'
-        item['evt_type'] = 'drug'
-        item['tooltip'] = get_medication_from_id(med.try(:medication_type).try(:name))+" : #{med.amount}"
-      elsif med.medication_type.try(:category)=='insulin'
-        item['evt_type'] = 'insulin'
-        item['tooltip'] = get_medication_from_id(med.try(:medication_type).try(:name))+" : #{med.amount}"
-      elsif med.custom_medication_type.try(:category)=='custom_drug'
-        item['evt_type'] = 'drug'
-        item['tooltip'] = med.try(:custom_medication_type).try(:name)+" : #{med.amount}"
-      elsif med.custom_medication_type.try(:category)=='custom_insulin'
-        item['evt_type'] = 'insulin'
-        item['tooltip'] = med.try(:custom_medication_type).try(:name)+" : #{med.amount}"
+
+    unless medications.nil?
+      if f && !dashboard
+        medications = medications.where("date between ? and ?", f, t)
       end
-      item
-    })
+      result.concat(medications.collect{|med|
+        item = {
+            id: med.id,
+            title: 'Medication',
+            depth: 0,
+            dates: [med.date],
+            kind: 'medication',
+            source: 'SmartDiab'
+        }
+        if med.medication_type.try(:category)=='oral'
+          item['evt_type'] = 'drug'
+          item['tooltip'] = get_medication_from_id(med.try(:medication_type).try(:name))+" : #{med.amount}"
+        elsif med.medication_type.try(:category)=='insulin'
+          item['evt_type'] = 'insulin'
+          item['tooltip'] = get_medication_from_id(med.try(:medication_type).try(:name))+" : #{med.amount}"
+        elsif med.custom_medication_type.try(:category)=='custom_drug'
+          item['evt_type'] = 'drug'
+          item['tooltip'] = med.try(:custom_medication_type).try(:name)+" : #{med.amount}"
+        elsif med.custom_medication_type.try(:category)=='custom_insulin'
+          item['evt_type'] = 'insulin'
+          item['tooltip'] = med.try(:custom_medication_type).try(:name)+" : #{med.amount}"
+        end
+        item
+      })
+      end
 
 
     if(!dashboard)

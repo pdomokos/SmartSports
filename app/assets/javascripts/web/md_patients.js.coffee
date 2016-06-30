@@ -202,8 +202,6 @@
 
           uid = ui.item.obj.id
 
-          initFormElements("#openModalAddNotification div.formContents", false)
-
           registerShowPatientData(uid)
 
           dateToShow = moment().format(moment_datefmt)

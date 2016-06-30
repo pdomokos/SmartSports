@@ -1,14 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_filter :require_login, only: [:new, :create]
+  before_filter :check_admin_or_doctor, only: :index
 
   # GET /users
   # GET /users.json
   def index
-    unless current_user.admin? || current_user.doctor?
-      send_error_json(nil, "not authorized", 403)
-      return
-    end
+    puts "index"
     @users = User.all
     if(params[:doctors])
       @users = @users.where(doctor: true)
