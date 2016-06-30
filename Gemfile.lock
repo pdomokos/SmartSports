@@ -67,6 +67,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     daemons (1.2.3)
+    dalli (2.7.6)
     database_cleaner (1.5.1)
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
@@ -265,6 +266,7 @@ DEPENDENCIES
   chronic
   coffee-rails (~> 4.0.0)
   daemons
+  dalli
   database_cleaner
   delayed_job_active_record
   doorkeeper

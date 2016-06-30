@@ -90,3 +90,4 @@ group :test do
 end
 
 gem 'grocer'
+gem 'dalli'
