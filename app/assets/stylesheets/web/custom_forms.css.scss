@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.deleteControl {
+  cursor: pointer;
+}
 #customFormIcons li:hover {
   background-color: lightgoldenrodyellow;
 }
@@ -84,11 +87,15 @@
 #customFormSelect .img-list>li {
   width: 45px;
 }
+.img-list>li {
+  cursor: pointer;
+}
+
 .img-list>li>span {
   box-sizing: border-box;
   border: 0px solid transparent;
   //border-radius: 40px;
-  cursor: pointer;
+
   display: block;
   height: 30px;
   width: 38px;

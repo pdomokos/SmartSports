@@ -17,7 +17,7 @@ function loadCustomForms() {
         url: urlPrefix() + url,
         type: 'GET',
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("load recent diets AJAX Error: " + textStatus);
+            console.log("load recent diets AJAX Error: " +errorThrown);
         },
         success: function (data, textStatus, jqXHR) {
             $(".deleteDiet").removeClass("hidden");
@@ -27,7 +27,12 @@ function loadCustomForms() {
 }
 
 function registerCustomHandlers() {
-    $("#customFormIcons").on('click', '.cficon', function(e) {
+    $("#input-form_name").keypress(function(e) {
+       if(e.which==13) {
+           e.preventDefault();
+       }
+    });
+    $("#customFormIcons").on('click', 'li', function(e) {
         var cfid = e.currentTarget.dataset.customformid;
         location.href = location.href+"/"+cfid;
     });
@@ -50,7 +55,7 @@ function registerCustomHandlers() {
             type: 'POST',
             data: $("#custom-create-form").serialize(),
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("load recent diets AJAX Error: " + textStatus);
+                console.log("load recent diets AJAX Error: " +errorThrown);
             },
             success: function (data, textStatus, jqXHR) {
                 loadCustomForms();

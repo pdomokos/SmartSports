@@ -49,7 +49,7 @@
 
     <div id="showFormGroup">
       <%= render 'custom_form_header', locals = {custom_form: @custom_form} %>
-      <% if @custom_form.custom_form_elements.size >0 %>
+
           <div id="customFormContent" class="contentBg33">
             <%= render 'custom_form_content', locals = {custom_form: @custom_form} %>
           </div>
@@ -58,7 +58,7 @@
                   class="btn btn-primary cfButton"
                   data-cform="<%= @custom_form.id%>"
                   data-elements="<%= @custom_form.custom_form_elements.collect{|c| c.id}.join(',')%>">Submit Data</button>
-      <% end %>
+
     </div>
 
     <div id="addFormGroup" class="hidden">
@@ -76,8 +76,8 @@
             <% end %>
           </select>
         </fieldset>
-        <button type="button" id="cancelFormButton" class="btn btn-default">Back</button>
-        <button type="submit" id="addFormButton" class="btn btn-primary">Add Question</button>
+        <button type="button" id="cancelQuestionButton" class="btn btn-default">Back</button>
+        <button type="submit" id="addQuestionButton" class="btn btn-primary">Add Question</button>
       <% end %>
     </div>
 

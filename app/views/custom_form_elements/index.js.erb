@@ -4,4 +4,5 @@ $("#customFormElementList").html("<%= escape_javascript(render( 'pages/custom_fo
 $("#customFormContent").html("");
 $("#customFormContent").html("<%= escape_javascript(render( 'pages/custom_form_content', locals = {custom_form: @custom_form})) %>");
 
+$("#addQuestionButton")[0].dataset.elements = "<%= @custom_form.custom_form_elements.map{|v| v.id}.join(',') %>";
 $("#addFormButton")[0].dataset.elements = "<%= @custom_form.custom_form_elements.map{|v| v.id}.join(',') %>";

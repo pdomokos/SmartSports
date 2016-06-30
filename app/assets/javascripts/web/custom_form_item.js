@@ -22,7 +22,7 @@ function refreshElements(userId, cfId, cb) {
         url: "/users/"+userId+"/custom_forms/"+cfId+"/custom_form_elements.js",
         type: 'GET',
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("index cfe AJAX Error: " + textStatus);
+            console.log("index cfe AJAX Error: " +errorThrown);
         },
         success: function (data, textStatus, jqXHR) {
             console.log("index cfe success");
@@ -41,7 +41,7 @@ function registerCustomItemHandlers() {
             url: e.target.parentElement.action,
             type: 'DELETE',
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("delete cf AJAX Error: " + textStatus);
+                console.log("delete cf AJAX Error: " +errorThrown);
             },
             success: function (data, textStatus, jqXHR) {
                 location.href=getParent(document.location.href);
@@ -55,7 +55,7 @@ function registerCustomItemHandlers() {
         $("#showFormGroup").addClass('hidden');
     });
 
-    $("#cancelFormButton").click(function (e) {
+    $("#cancelQuestionButton").click(function (e) {
         console.log("cancel edit clicked, " + e.target.parentElement);
         $("#addFormGroup").addClass('hidden');
         $("#showFormGroup").removeClass('hidden');
@@ -76,8 +76,9 @@ function registerCustomItemHandlers() {
 
     $("#addFormButton").click(function () {
         console.log("addFormButton clicked");
-        var form_ids = $("#addFormButton")[0].dataset.elements.split(',');
-        var cfId = $("#addFormButton")[0].dataset.cform;
+        console.log($(this));
+        var form_ids = $(this)[0].dataset.elements.split(',');
+        var cfId = $(this)[0].dataset.cform;
         var userId = $("#current-user-id").val();
         console.log(form_ids);
         var reqs = [];
@@ -127,7 +128,7 @@ function registerCustomItemHandlers() {
             type: 'POST',
             data: $(this).serialize(),
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("delete cfe AJAX Error: " + textStatus);
+                console.log("delete cfe AJAX Error: " +errorThrown);
             },
             success: function (data, textStatus, jqXHR) {
                 refreshElements(userId, cfId);
@@ -146,7 +147,7 @@ function registerCustomItemHandlers() {
             url: url,
             type: 'DELETE',
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("delete cfe AJAX Error: " + textStatus);
+                console.log("delete cfe AJAX Error: " +errorThrown);
             },
             success: function (data, textStatus, jqXHR) {
                 refreshElements(userId, cfId);
