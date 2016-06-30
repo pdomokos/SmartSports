@@ -3,7 +3,6 @@
 
   define_globals()
   @popup_messages = JSON.parse($("#popup-messages").val())
-  customPreload()
 
   registerLogoutHandler()
   registerPopupHandler()

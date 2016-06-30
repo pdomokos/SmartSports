@@ -86,7 +86,7 @@
       success: (data, textStatus, jqXHR) ->
         $("#currentForm").attr("data-notifid", notifId)
         $("#currentForm").removeClass("hidden")
-        customPreload()
+
         if $(".notification_"+notifId+" .defaultData")
           fillElementDefaults(JSON.parse($(".notification_"+notifId+" .defaultData").val()))
 #        registerAddCustomForm( () ->

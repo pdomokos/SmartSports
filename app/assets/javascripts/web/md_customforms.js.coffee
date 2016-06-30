@@ -11,10 +11,7 @@
   @dateToShow = moment().format("YYYY-MM-DD")
 
   define_globals()
-  customPreload()
-  initCustomForms()
 
-  registerCustomFormHandlers()
 
 #  initDiet()
 #  initActivity()
