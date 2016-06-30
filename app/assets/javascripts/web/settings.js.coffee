@@ -74,7 +74,7 @@
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "AJAX Error: #{textStatus}"
+        console.log "AJAX Error: "+errorThrown
         $("#moves-sync-status").html(failure_message)
         $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
@@ -106,7 +106,7 @@
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "AJAX Error: #{textStatus}"
+        console.log "AJAX Error: "+errorThrown
         $("#withings-sync-status").html(failure_message)
         $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
@@ -139,7 +139,7 @@
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "AJAX Error: #{textStatus}"
+        console.log "AJAX Error: "+errorThrown
         $("#fitbit-sync-status").html(failure_message)
         $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
@@ -172,7 +172,7 @@
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "AJAX Error: #{textStatus}"
+        console.log "AJAX Error: "+errorThrown
         $("#misfit-sync-status").html(failure_message)
         $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->
@@ -205,7 +205,7 @@
       type: "GET"
       dataType: "json"
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "AJAX Error: #{textStatus}"
+        console.log "AJAX Error: "+errorThrown
         $("#google-sync-status").html(failure_message)
         $('body').removeClass('wait');
       success: (result, textStatus, jqXHR) ->

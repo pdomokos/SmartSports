@@ -41,7 +41,7 @@
       type: 'PUT',
       data: {"id": current_meas, "measurement[blood_glucose_note]": meas_note}
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "update measurement AJAX Error: #{textStatus}"
+        console.log "update measurement AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "update measurement AJAX Success"
     $('#addBgNoteModal').modal('hide')
@@ -203,7 +203,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent measurements AJAX Error: #{textStatus}"
+      console.log "load recent measurements AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       if fav
         $(".deleteMeas").addClass("hidden")
@@ -269,7 +269,7 @@
     ret = $.ajax '/measurement_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load measurement_types AJAX Error: #{textStatus}"
+        console.log "load measurement_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load measurement_types  Successful AJAX call"
 

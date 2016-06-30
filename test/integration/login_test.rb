@@ -63,4 +63,3 @@ class LoginTest < ActionDispatch::IntegrationTest
   end
 
 end
-

@@ -170,7 +170,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent activities AJAX Error: #{textStatus}"
+      console.log "load recent activities AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       if fav
         $(".deleteExercise").addClass("hidden")
@@ -195,7 +195,7 @@
     ret = $.ajax urlPrefix()+'activity_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load activity_types AJAX Error: #{textStatus}"
+        console.log "load activity_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load activity_types  Successful AJAX call"
 

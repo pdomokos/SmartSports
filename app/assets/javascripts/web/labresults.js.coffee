@@ -224,7 +224,7 @@
     ret = $.ajax '/labresult_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load labresult_types AJAX Error: #{textStatus}"
+        console.log "load labresult_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load labresult_types  Successful AJAX call"
 
@@ -265,7 +265,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent lab_results AJAX Error: #{textStatus}"
+      console.log "load recent lab_results AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "load recent lab_results  Successful AJAX call"
       console.log textStatus
@@ -280,7 +280,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent visits AJAX Error: #{textStatus}"
+      console.log "load recent visits AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "load recent visits  Successful AJAX call"
       console.log textStatus

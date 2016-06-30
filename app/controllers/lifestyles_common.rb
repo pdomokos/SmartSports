@@ -111,33 +111,40 @@ module LifestylesCommon
       periodVolumeList = (I18n.t 'periodVolumeList', :locale => :hu).split(',')
     end
     for item in data
-      ltype = LifestyleType.find(item.lifestyle_type_id)
+      ltype = LifestyleType.find_by_id(item.lifestyle_type_id)
 
-      if lang=='en'
-        category = DB_EN_CONFIG['categories'][ltype.category]
-        name = DB_EN_CONFIG['lifestyle'][ltype.category][ltype.name]
-      else
-        category = DB_HU_CONFIG['categories'][ltype.category]
-        name = DB_HU_CONFIG['lifestyle'][ltype.category][ltype.name]
-      end
+      category = ""
+      name = ""
       property1 = ""
       property2 = ""
-      if ltype.category == 'illness'
-        property1 = illnessList[item.amount]
-        property2 = item.details
-      elsif ltype.category == 'pain'
-        property1 = painList[item.amount]
-        property2 = item.details
-      elsif ltype.category == 'period'
-        property1 = periodPainList[item.amount]
-        property2 = periodVolumeList[item.period_volume]
-        name = ""
-      elsif ltype.category == 'sleep'
-        property1 = sleepList[item.amount]
-        name = ""
-      elsif ltype.category == 'stress'
-        property1 = stressList[item.amount]
-        name = ""
+
+      unless ltype.nil?
+        if lang=='en'
+          category = DB_EN_CONFIG['categories'][ltype.category]
+          name = DB_EN_CONFIG['lifestyle'][ltype.category][ltype.name]
+        else
+          category = DB_HU_CONFIG['categories'][ltype.category]
+          name = DB_HU_CONFIG['lifestyle'][ltype.category][ltype.name]
+        end
+
+        if ltype.category == 'illness'
+          property1 = illnessList[item.amount]
+          property2 = item.details
+        elsif ltype.category == 'pain'
+          property1 = painList[item.amount]
+          property2 = item.details
+        elsif ltype.category == 'period'
+          property1 = periodPainList[item.amount]
+          property2 = periodVolumeList[item.period_volume]
+          name = ""
+        elsif ltype.category == 'sleep'
+          property1 = sleepList[item.amount]
+          name = ""
+        elsif ltype.category == 'stress'
+          property1 = stressList[item.amount]
+          name = ""
+        end
+
       end
 
       row = {"id"=>item.id, "date"=>item.start_time, "category"=>category, "type"=>name ,"property1"=>property1, "property2"=>property2}

@@ -96,7 +96,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load custom medications AJAX Error: #{textStatus}"
+      console.log "load custom medications AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "load custom medications  Successful AJAX call"
       custom_medications = data
@@ -192,7 +192,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent medications AJAX Error: #{textStatus}"
+      console.log "load recent medications AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       if fav
         $(".deleteMedication").addClass("hidden")
@@ -218,7 +218,7 @@
     ret = $.ajax urlPrefix()+'medication_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load recent medication_types AJAX Error: #{textStatus}"
+        console.log "load recent medication_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load medication_types  Successful AJAX call"
         popup_messages = JSON.parse($("#popup-messages").val())

@@ -172,7 +172,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
+      console.log "load recent diets AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       $(".deleteDiet").removeClass("hidden")
 
@@ -214,7 +214,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
+      console.log "load recent diets AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       $(".deleteDiet").addClass("hidden")
 
@@ -234,7 +234,7 @@
     ret = $.ajax urlPrefix()+'food_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load recent food_types AJAX Error: #{textStatus}"
+        console.log "load recent food_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load food_types  Successful AJAX call"
 

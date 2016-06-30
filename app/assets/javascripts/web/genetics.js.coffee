@@ -119,7 +119,7 @@
     ret = $.ajax '/genetics_record_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load personal_record_types AJAX Error: #{textStatus}"
+        console.log "load personal_record_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load personal_record_types  Successful AJAX call"
 
@@ -194,7 +194,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent personal_records hist AJAX Error: #{textStatus}"
+      console.log "load recent personal_records hist AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "load recent personal_records hist  Successful AJAX call"
       console.log textStatus

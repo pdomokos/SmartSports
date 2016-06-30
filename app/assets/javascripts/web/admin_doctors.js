@@ -6,7 +6,7 @@ function load_doctors() {
         url: urlPrefix() + url,
         type: 'GET',
         error:  function(jqXHR, textStatus, errorThrown) {
-            console.log("load doctors AJAX Error: #{textStatus}");
+            console.log("load doctors AJAX Error: "+errorThrown);
         },
         success: function(data, textStatus, jqXHR) {
             console.log("load doctors AJAX success");

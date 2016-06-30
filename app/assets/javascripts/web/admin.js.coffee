@@ -13,7 +13,7 @@
     type: "GET"
     dataType: "json"
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "AJAX Error: #{textStatus}"
+      console.log "AJAX Error: "+errorThrown
     success: (result, textStatus, jqXHR) ->
       console.log "Successful AJAX call"
       if result['status'] == "OK"

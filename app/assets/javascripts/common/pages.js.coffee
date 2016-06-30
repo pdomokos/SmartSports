@@ -56,7 +56,7 @@
     $.ajax urlPrefix()+url,
       type: 'POST',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "set default lang AJAX Error: #{textStatus}"
+        console.log "set default lang AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         if location.pathname.startsWith("/en") ||location.pathname.startsWith("/hu")
           location.pathname = "/"+lang+location.pathname.substr(3)
@@ -365,7 +365,7 @@ load_friends = () ->
     type: 'GET'
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "AJAX Error: #{textStatus}"
+      console.log "AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "Successful friendship call"
 
@@ -412,7 +412,7 @@ load_friends = () ->
                 type: 'GET'
                 dataType: 'json'
                 error: (jqXHR, textStatus, errorThrown) ->
-                  console.log "AJAX Error: #{textStatus}"
+                  console.log "AJAX Error: "+errorThrown
                 success: (data, textStatus, jqXHR) ->
                   console.log "Successful activate call"
                   load_friends()
@@ -426,8 +426,6 @@ add_me = () ->
   $("#"+newid+" .friend-select-item-text").html("Me")
   friend_sel_id = "friend-sel-me"
   $("#"+newid+" .friend-select-item-text").attr("id", friend_sel_id)
-
-
 
   $("#"+friend_sel_id).click (evt) ->
     u = $("#browser-menu-tab a.browser-subnav-item.selected").attr("href")

@@ -26,7 +26,7 @@ function connections_loaded () {
                 setupPoll(url);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("sync conn AJAX Error: "+textStatus);
+                console.log("sync conn AJAX Error: "+errorThrown);
                 $("#statConnectionModal i").attr('class', 'fa fa-exclamation-triangle red');
             }
         });
@@ -47,7 +47,7 @@ function connections_loaded () {
                 loadConnections();
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("delete conn AJAX Error: "+textStatus);
+                console.log("delete conn AJAX Error: "+errorThrown);
 
                 popup_error("Failed to delete");
             }

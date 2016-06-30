@@ -96,7 +96,7 @@
       data: data
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "Addnotif AJAX Error: #{textStatus}"
+        console.log "Addnotif AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "Addnotif Successful AJAX call"
         location.href = "#close"
@@ -133,7 +133,7 @@
       data: {'notification[recurrence_data]': JSON.stringify(notifs)}
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "Dayselect clicked AJAX Error: #{textStatus}"
+        console.log "Dayselect clicked AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "Dayselect clicked Successful AJAX call"
   )
@@ -164,7 +164,7 @@
   $.ajax urlPrefix()+'users.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load patients AJAX Error: #{textStatus}"
+      console.log "load patients AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "load patients  Successful AJAX call"
       #      console.log data
@@ -259,7 +259,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent diets AJAX Error: #{textStatus}"
+      console.log "load recent diets AJAX Error: "+errorThrown
     success: (jqXHR, textStatus, errorThrown) ->
       console.log "render notifications done"
 
@@ -278,7 +278,7 @@
     $.ajax urlPrefix()+url,
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "datatable measurements AJAX Error: #{textStatus}"
+        console.log "datatable measurements AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         tblData = $.map(data, (item) ->
           return([get_table_row(item)])

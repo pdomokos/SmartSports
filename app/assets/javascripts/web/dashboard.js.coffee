@@ -51,7 +51,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load analysis_data AJAX Error: #{textStatus}"
+      console.log "load analysis_data AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       histData = convertToHistory(data)
       addPoints("#canv", histData)
@@ -62,7 +62,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent notifications AJAX Error: #{textStatus}"
+      console.log "load recent notifications AJAX Error: "+errorThrown
 
 @loadForm = (evt) ->
   @popup_messages = JSON.parse($("#popup-messages").val())
@@ -82,7 +82,7 @@
       data: {form_name: formName, target_element_selector: "#currentForm"},
       dataType: "script",
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load custom form AJAX Error: #{textStatus}"
+        console.log "load custom form AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         $("#currentForm").attr("data-notifid", notifId)
         $("#currentForm").removeClass("hidden")

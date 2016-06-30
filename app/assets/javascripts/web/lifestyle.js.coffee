@@ -279,7 +279,7 @@
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load recent lifestyles AJAX Error: #{textStatus}"
+      console.log "load recent lifestyles AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log textStatus
 
@@ -299,7 +299,7 @@
     ret = $.ajax urlPrefix()+'lifestyle_types.json',
       type: 'GET',
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log "load lifestyle_types AJAX Error: #{textStatus}"
+        console.log "load lifestyle_types AJAX Error: "+errorThrown
       success: (data, textStatus, jqXHR) ->
         console.log "load lifestyle_types  Successful AJAX call"
 

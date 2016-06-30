@@ -107,7 +107,7 @@
   $.ajax urlPrefix()+'users.json',
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log "load patients AJAX Error: #{textStatus}"
+      console.log "load patients AJAX Error: "+errorThrown
     success: (data, textStatus, jqXHR) ->
       console.log "load patients  Successful AJAX call"
       #      console.log data

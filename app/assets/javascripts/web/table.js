@@ -7,7 +7,7 @@ function show_table(url, lang, header, fnName, fnName2) {
         url: urlPrefix() + url,
         type: 'GET',
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("datatable activity AJAX Error: #{textStatus}");
+            console.log("datatable activity AJAX Error: "+errorThrown);
         },
         success: function (data, textStatus, jqXHR) {
             var get_table_row = window[fnName];
