@@ -33,7 +33,7 @@
   )
 
   $("#save-bgnote-form").click ->
-    current_meas = $("#measIdToNote")[0].value
+    current_meas = $(this)[0].dataset.measid
     current_user = $("#current-user-id")[0].value
     meas_note = $("#measNote")[0].value
     url = 'users/' + current_user + '/measurements/'+ current_meas
@@ -129,6 +129,7 @@
       if (!isempty("#profile_glucose_min") && !isempty("#profile_glucose_max")) && ($("#glucose")[0].value < $("#profile_glucose_min")[0].value || $("#glucose")[0].value > $("#profile_glucose_max")[0].value)
         $('#measIdToNote').val(measId)
         $('#addBgNoteModal').modal('show')
+        $('#save-bgnote-form')[0].dataset.measid = measId
     )
   }
   if fn[formType]
@@ -184,7 +185,7 @@
     user_lang='hu'
   measurement_note_select = $("#measNote")
   for element in getStored('sd_meas_'+user_lang)
-    measurement_note_select.append($("<option />").val(element.id).text(element.label))
+    measurement_note_select.append($("<option />").val(element.id).text(capitalize(element.label)))
 
   $('.defaultDatePicker').datetimepicker(timepicker_defaults)
 

@@ -7,7 +7,6 @@ class CustomForm < ActiveRecord::Base
   def self.form_list
     ret = %w(
       activity_exercise
-      activity_regular
       diet_drink
       diet_food
       diet_quick_calories
@@ -22,8 +21,6 @@ class CustomForm < ActiveRecord::Base
       labresult_ldlchol
       medication_drugs
       medication_insulin
-      notification_date
-      notification_visit
       lifestyle_illness
       lifestyle_pain
       lifestyle_period
@@ -35,7 +32,6 @@ class CustomForm < ActiveRecord::Base
   def self.form_params
     im = %w(
       bicycle40
-      regular40
       drink40
       food40
       food40
@@ -84,29 +80,26 @@ class CustomForm < ActiveRecord::Base
       wellbeingStyle
     )
     titles = %w(
-      exercise
-      regular_activity
-      drink
-      food
-      quick_calories
-      smoking
-      blood_glucose
-      blood_pressure
-      waist_circumfence
-      body_weight
+      activity_exercise
+      diet_drink
+      diet_food
+      diet_quick_calories
+      diet_smoke
+      measurement_blood_glucose
+      measurement_blood_pressure
+      measurement_waist
+      measurement_weight
       labresult_egfrepi
       labresult_hba1c
       labresult_ketone
       labresult_ldlchol
-      drugs
-      insulin
-      time
-      lab_results
-      illness
-      pain
-      period
-      sleep
-      stress
+      medication_drugs
+      medication_insulin
+      lifestyle_illness
+      lifestyle_pain
+      lifestyle_period
+      lifestyle_sleep
+      lifestyle_stress
     )
     ret = Hash[self.form_list.zip(im.zip(st, titles))]
     return ret

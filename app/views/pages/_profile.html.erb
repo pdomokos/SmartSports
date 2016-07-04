@@ -112,6 +112,27 @@
               <input name="lang" value="<%= I18n.locale %>" type="hidden"/>
               <tr>
                 <td style="width: 180px;height: 50px;">
+                  <%= t :insulin_question %>
+                </td>
+                <td>
+                  <%= check_box("profile", "insulin") %>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
+                  <%= t :bg_unit %>
+                </td>
+                <td>
+                  <input type="radio" name="profile[blood_glucose_unit]" value="mmol/L" <%= @profile.blood_glucose_unit == "mmol/L" ? "checked" : "" %>/> mmol/L
+                  <input type="radio" name="profile[blood_glucose_unit]" value="mg/dl" <%= @profile.blood_glucose_unit == "mg/dl" ? "checked" : "" %>/> mg/dl
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 180px;height: 50px;">
                   <%= t :blood_glucose_min%>
                 </td>
                 <td>
@@ -133,7 +154,7 @@
                   <%= t :carb_min%>
                 </td>
                 <td>
-                  <input id="carb_min" name="profile[carb_min]" type="number" step="1" min="50" max="500" class="loginField loginField2" value="<%= @profile.carb_min %>"/>
+                  <input id="carb_min" name="profile[carb_min]" type="number" step="1" min="5" max="500" class="loginField loginField2" value="<%= @profile.carb_min %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_carb%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
                 </td>
               </tr>
@@ -142,29 +163,8 @@
                   <%= t :carb_max %>
                 </td>
                 <td>
-                  <input id="carb_max" name="profile[carb_max]" type="number" step="1" min="50" max="500" class="loginField loginField2" value="<%= @profile.carb_max %>"/>
+                  <input id="carb_max" name="profile[carb_max]" type="number" step="1" min="5" max="500" class="loginField loginField2" value="<%= @profile.carb_max %>"/>
                   <a href="#" data-toggle="tooltip" data-placement="top" title="<%=t :error_profile_carb%>" tabindex="-1" class="tooltipUnit"><img src="<%= asset_path("question_mark_16.png")%>" border="0"></a> <br>
-                </td>
-              </tr>
-              <tr>
-                <td style="width: 180px;height: 50px;">
-                  <%= t :insulin_question %>
-                </td>
-                <td>
-                  <%= check_box("profile", "insulin") %>
-                </td>
-                <td>
-                </td>
-              </tr>
-              <tr>
-                <td style="width: 180px;height: 50px;">
-                  <%= t :bg_unit %>
-                </td>
-                <td>
-                  <input type="radio" name="profile[blood_glucose_unit]" value="mmol/L" <%= @profile.blood_glucose_unit == "mmol/L" ? "checked" : "" %>/> mmol/L
-                  <input type="radio" name="profile[blood_glucose_unit]" value="mg/dl" <%= @profile.blood_glucose_unit == "mg/dl" ? "checked" : "" %>/> mg/dl
-                </td>
-                <td>
                 </td>
               </tr>
               <tr>

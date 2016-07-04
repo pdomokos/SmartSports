@@ -121,10 +121,10 @@ hu:
   recommended_size: "Ajánlott méret 160x160 pixel"
   yes_no_list: "Igen,Nem"
   gender_list: "Férfi,Nő"
-  blood_glucose_min: "Ajánlott vércukortartomány(min,mmol/L)"
-  blood_glucose_max: "Ajánlott vércukortartomány(max,mmol/L)"
-  carb_min: "Ajánlott napi szénhidrát bevitel(min,g)"
-  carb_max: "Ajánlott napi szénhidrát bevitel(max,g)"
+  blood_glucose_min: "Ajánlott vércukortartomány (min,mmol/L)"
+  blood_glucose_max: "Ajánlott vércukortartomány (max,mmol/L)"
+  carb_min: "Ajánlott napi szénhidrát bevitel (min,g)"
+  carb_max: "Ajánlott napi szénhidrát bevitel (max,g)"
   bg_unit: "Vércukorszint mértékegysége"
 
 # erorrs
@@ -146,7 +146,7 @@ hu:
   error_login_username: "Helytelen felasználónév vagy jelszó"
   error_end_time_greater: "A befejezés időpontjának a kezedti időpont után kell esnie!"
   error_profile_bg: "A vércukorszint értéknek 0.0 és 50.0mmol/L között kell lennie!"
-  error_profile_carb: "A szénhidrát értéknek 50 és 500g között kell lennie!"
+  error_profile_carb: "A szénhidrát értéknek 5g és 500g között kell lennie!"
 
   reg_succ: "Sikeres regisztráció"
 
@@ -293,8 +293,9 @@ hu:
   pulse: "Pulzus"
   sysdias: "Szisztolés/Diasztolés"
   sysdiaspulse: "Szisztolés/Diasztolés/Pulzus"
-  add_blood_glucose_note_title: "Vércukorszint kiegészítő kérdőív"
-  add_blood_glucose_note_form_title: "Kérem válasszon egy lehetséges okot, hogy a vércukorszint miért esik a beállított normáltartományon kívül!"
+  add_blood_glucose_note_form_title: "Vércukorszint a normáltartományon kívül. Oka:"
+
+  cause: "Oka"
 
 # medication
   medication:           "Gyógyszer"
@@ -408,6 +409,27 @@ hu:
   add_custom_item: "Új elem hozzáadása"
   add_custom_item_title: "Elem"
   add_custom_item_type: "Válasszon egy elemet"
+
+  activity_exercise: "Testmozgás"
+  diet_drink: "Ital"
+  diet_food: "Étkezés"
+  diet_quick_calories: "Gyors kalória megadása"
+  diet_smoke: "Dohányzás"
+  measurement_blood_glucose: "Vércukor"
+  measurement_blood_pressure: "Vérnyomás"
+  measurement_waist: "Haskörfogat"
+  measurement_weight: "Testsúly"
+  labresult_egfrepi: "Labor: EGFR-EPI"
+  labresult_hba1c: "Labor: HBA1C"
+  labresult_ketone: "Labor: Ketone"
+  labresult_ldlchol: "Labor: LDL-CHOL"
+  medication_drugs: "Gyógyszer"
+  medication_insulin: "Inzulin"
+  lifestyle_illness: "Betegség"
+  lifestyle_pain: "Fájdalom"
+  lifestyle_period: "Menstruációs ciklus"
+  lifestyle_sleep: "Alvás"
+  lifestyle_stress: "Stressz"
 
 # notifications
   notification: "Értesítés"

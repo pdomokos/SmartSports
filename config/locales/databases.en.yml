@@ -112,7 +112,7 @@ en:
     note:
       meastype1: "food"
       meastype2: "activity"
-      meastype3: "diabetes medication"
+      meastype3: "insulin"
       meastype4: "illness"
       meastype5: "anything else"
 

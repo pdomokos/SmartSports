@@ -109,9 +109,9 @@ hu:
 
   measurement:
     note:
-      meastype1: "étel"
+      meastype1: "étkezés"
       meastype2: "mozgás"
-      meastype3: "diabétesz gyógyszer"
+      meastype3: "inzulin"
       meastype4: "betegség"
       meastype5: "bármi más"
 

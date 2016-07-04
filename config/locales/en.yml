@@ -142,8 +142,8 @@ en:
   recommended_size: "Recommended size 160x160 px"
   yes_no_list: "Yes,No"
   gender_list: "Male,Female"
-  blood_glucose_min: "Advised blood glucose(min,mmol/L)"
-  blood_glucose_max: "Advised blood glucose(max,mmol/L)"
+  blood_glucose_min: "Advised blood glucose (min,mmol/L)"
+  blood_glucose_max: "Advised blood glucose (max,mmol/L)"
   bg_unit: "Blood glucose unit"
 
 # erorrs
@@ -165,12 +165,13 @@ en:
   error_login_username: "Invalid username or password"
   error_end_time_greater: "End time should be greater than start time!"
   error_profile_bg: "Blood glucose must be between 0.0-50.0mmol/L!"
-  error_profile_carb: "Carb must be between 50-500g!"
+  error_profile_carb: "Carbs must be between 5-500g!"
 
   reg_succ: "Registration successful"
 
   done: "Done"
   failed: "Failed"
+
 #popup messages
   popupmessages:
     save_success: "Saved successfully."
@@ -312,11 +313,11 @@ en:
   pulse: "Pulse"
   sysdias: "Systolic/Diastolic"
   sysdiaspulse: "Systolic/Diastolic/Pulse"
-  add_blood_glucose_note_title: "Specify your blood glucose measurement"
-  add_blood_glucose_note_form_title: "Please select a reason why your blood glucose out of usual interval!"
-  carb_min: "Advised daily carbs intake(min,g)"
-  carb_max: "Advised daily carbs intake(max,g)"
+  add_blood_glucose_note_form_title: "Blood glucose out of usual interval. Cause:"
+  carb_min: "Advised daily carbs intake (min,g)"
+  carb_max: "Advised daily carbs intake (max,g)"
 
+  cause: "Cause"
 # medication
   medication:           "Medication"
   drugs:                "Drugs"
@@ -387,7 +388,6 @@ en:
   reminder:           "Reminder"
   select:             "Select..."
   doctorList:         "general practitioner;specialist"
-  labresult_ketone:   "Ketone"
 
   doctors_visit_general: "General Practitioner"
   doctors_visit_specialist: "Specialist"
@@ -428,6 +428,27 @@ en:
   add_custom_item: "Add a New Item"
   add_custom_item_title: "Item"
   add_custom_item_type: "Select item"
+
+  activity_exercise: "Exercise"
+  diet_drink: "Drink"
+  diet_food: "Food"
+  diet_quick_calories: "Quick Calories"
+  diet_smoke: "Smoking"
+  measurement_blood_glucose: "Blood Glucose"
+  measurement_blood_pressure: "Blood Pressure"
+  measurement_waist: "Waist"
+  measurement_weight: "Weight"
+  labresult_egfrepi: "EGFR-EPI"
+  labresult_hba1c: "HBA1C"
+  labresult_ketone: "Ketone"
+  labresult_ldlchol: "LDL-CHOL"
+  medication_drugs: "Drugs"
+  medication_insulin: "Insulin"
+  lifestyle_illness: "Illness"
+  lifestyle_pain: "Pain"
+  lifestyle_period: Period
+  lifestyle_sleep: "Sleep"
+  lifestyle_stress: "Stress"
 
 # notifications
   notification: "Notification"

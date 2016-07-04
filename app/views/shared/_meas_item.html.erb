@@ -25,7 +25,11 @@
           <% if unit!='mmol/L' %>
              <% val = val * 18 %>
           <% end %>
-          <strong><%=(t :blood_glucose)%>: <%= val.round(2) %> <%=unit%></strong> <%if meas_item.stress_amount %><%=(t :stress_level)%>: <%= (t :stressList).split(",")[meas_item.stress_amount] %>; <%end%><%if meas_item.blood_sugar_time %><%=(t :blood_sugar_time)%>: <%= (t :bgTimeList).split(",")[meas_item.blood_sugar_time]%><%end%>
+          <strong><%=(t :blood_glucose)%>: <%= val.round(2) %> <%=unit%></strong>
+            <%if meas_item.stress_amount %><%=(t :stress_level)%>: <%= (t :stressList).split(",")[meas_item.stress_amount] %><%end%>
+            <%if meas_item.blood_sugar_time %>; <%=(t :blood_sugar_time)%>: <%= (t :bgTimeList).split(",")[meas_item.blood_sugar_time]%><%end%>
+            <% unless meas_item.blood_glucose_note.nil? || CONFIG_PARAMS[I18n.locale].nil? ||CONFIG_PARAMS[I18n.locale]['measurement']['note'][meas_item.blood_glucose_note].nil?
+            %>; <%= t :cause %>: <%= CONFIG_PARAMS[I18n.locale]['measurement']['note'][meas_item.blood_glucose_note].mb_chars.capitalize.to_s %><% end %>
       <% elsif  meas_item.meas_type=='weight' %>
           <strong><%=(t :body_weight)%>: <%= meas_item.weight %>kg</strong>
       <% elsif  meas_item.meas_type=='waist' %>
