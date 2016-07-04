@@ -66,24 +66,25 @@ class DietsController < ApplicationController
     dietTypeList = FoodType.all
 
     for item in data
-      amount1="-"
-      amount2="-"
+      amount="-"
+      calories="-"
+      carbs="-"
       category = dietTypeList.where(id: item.food_type_id).try(:first).try(:category)
       if category == 'Calory'
         if item.calories
-          amount1 = item.calories.to_s+' kcal '+(I18n.t 'calories', :locale => lang)
+          calories = item.calories.to_s+' kcal'
         end
         if item.carbs
-          amount2 = item.carbs.to_s+' g '+(I18n.t 'carbs', :locale => lang)
+          carbs = item.carbs.to_s+' g'
         end
       elsif category == "Drink"
-        amount1= (0.25 + (0.25*item.amount)).to_s + ' dl'
+        amount= item.amount.to_s + ' dl'
       elsif category == "Smoke"
-        amount1 = 1
+        amount = 1
       end
       if lang=='en'
         if category == "Food"
-          amount1= ((I18n.t 'diet_food_amounts', :locale => :en).split(','))[item.amount]
+          amount= ((I18n.t 'diet_food_amounts', :locale => :en).split(','))[item.amount]
         end
         cat = DB_EN_CONFIG['categories'][category]
         nk = dietTypeList.where(id: item.food_type_id).first.try(:name)
@@ -93,7 +94,7 @@ class DietsController < ApplicationController
         end
       else
         if category == "Food"
-          amount1= ((I18n.t 'diet_food_amounts', :locale => :hu).split(','))[item.amount]
+          amount= ((I18n.t 'diet_food_amounts', :locale => :hu).split(','))[item.amount]
         end
         cat = DB_HU_CONFIG['categories'][category]
         nk = dietTypeList.where(id: item.food_type_id).first.try(:name)
@@ -102,7 +103,7 @@ class DietsController < ApplicationController
           name = DB_HU_CONFIG['diets'][category][nk]
         end
       end
-      row = {"date"=>item.date, "category"=>cat, "name"=>name ,"amount1"=>amount1 ,"amount2"=>amount2}
+      row = {"date"=>item.date, "category"=>cat, "name"=>name ,"amount"=>amount ,"calories"=>calories, "carbs" =>carbs}
       tableData.push(row)
     end
     return tableData

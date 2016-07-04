@@ -285,7 +285,8 @@ class AnalysisDataController < ApplicationController
                       start: diet.date,
                       end: nil,
                       evt_type: 'diet',
-                      group: diet.diet_type.downcase,
+                      group: diet.diet_type.try(:downcase),
+                      amount: diet.amount,
                       value1: diet.calories,
                       value2: diet.carbs
                   }})

@@ -147,7 +147,7 @@ function registerCustomItemHandlers() {
             url: url,
             type: 'DELETE',
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("delete cfe AJAX Error: " +errorThrown);
+                console.log("delete cfe AJAX Error: " + textStatus);
             },
             success: function (data, textStatus, jqXHR) {
                 refreshElements(userId, cfId);

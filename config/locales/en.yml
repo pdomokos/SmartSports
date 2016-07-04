@@ -399,7 +399,7 @@ en:
   intensities: "Low Moderate High"
   header_values: "Date,Name,Intensity,Duration (min),Calories (kcal)"
   meas_header_values: "Date Type Value Property1 Property2"
-  diet_header_values: "Date,Category,Type,Amount1,Amount2"
+  diet_header_values: "Date,Category,Type,Amount,Calories,Carbs"
   medication_header_values: "Date,Type,Name,Amount"
   lifestyle_header_values: "Date,Category,Name,Property1,Property2"
   genetics_header_values: "Property1,Property2,Property3,Property4,Property5,Porperty6"

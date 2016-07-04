@@ -184,7 +184,7 @@ class MeasurementsController < ApplicationController
           value = value + item.pulse.to_s
         end
       elsif item.meas_type == 'blood_sugar'
-        value = item.blood_sugar.to_s + " mmol/L"
+        value = item.blood_sugar.round(2).to_s + " mmol/L"
         if not item.blood_sugar_time.nil?
           bg_time = bgTimeList[item.blood_sugar_time]
         else

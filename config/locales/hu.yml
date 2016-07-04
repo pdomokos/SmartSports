@@ -380,7 +380,7 @@ hu:
   intensities: "Alacsony Közepes Magas"
   header_values: "Dátum,Megnevezés,Intenzitás,Időtartam (perc),Kalória (kcal)"
   meas_header_values: "Dátum Típus Érték Tulajdonság1 Tulajdonság2"
-  diet_header_values: "Dátum,Kategória,Típus,Mennyiség1,Mennyiség2"
+  diet_header_values: "Dátum,Kategória,Típus,Mennyiség,Kalória,Szénhidrát"
   medication_header_values: "Dátum,Típus,Név,Mennyiség"
   lifestyle_header_values: "Dátum,Kategória,Név,Tulajdonság1,Tulajdonság2"
   genetics_header_values: "Tulajdonság1,Tulajdonság2,Tulajdonság3,Tulajdonság4,Tulajdonság5,Tulajdonság6"

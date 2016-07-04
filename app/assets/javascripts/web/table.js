@@ -10,6 +10,7 @@ function show_table(url, lang, header, fnName, fnName2) {
             console.log("datatable activity AJAX Error: "+errorThrown);
         },
         success: function (data, textStatus, jqXHR) {
+            console.log(data);
             var get_table_row = window[fnName];
             if (typeof get_table_row === "function") {
                 var tblData = $.map(data, function (item, i) {
@@ -52,28 +53,18 @@ function show_table(url, lang, header, fnName, fnName2) {
     });
 }
 
-function get_diet_table_row(item) {
-    var ret = [moment(item.date).format("YYYY-MM-DD HH:MM"), item.category, item.name, item.amount1, item.amount2];
-    return ret;
-}
-
 function get_exercise_table_row(item) {
-    var ret = [moment(item.date).format("YYYY-MM-DD HH:MM"), item.name, item.intensity, item.duration, item.calories];
-    return ret;
-}
-
-function get_measurement_table_row(item) {
-    var ret = ([moment(item.date).format("YYYY-MM-DD HH:MM"), item.type, item.value, item.property1, item.property2]);
+    var ret = [moment(item.date).format(moment_fmt), item.name, item.intensity, item.duration, item.calories];
     return ret;
 }
 
 function get_medication_table_row(item) {
-    var ret = [moment(item.date).format("YYYY-MM-DD HH:MM"), item.category, item.name, item.amount];
+    var ret = [moment(item.date).format(moment_fmt), item.category, item.name, item.amount];
     return ret;
 }
 
 function get_lifestyle_table_row(item) {
-    var ret = [moment(item.date).format("YYYY-MM-DD HH:MM"), item.category, item.type, item.property1, item.property2];
+    var ret = [moment(item.date).format(moment_fmt), item.category, item.type, item.property1, item.property2];
     return ret;
 }
 
@@ -83,7 +74,7 @@ function get_genetics_table_row(item) {
 }
 
 function get_labresult_table_row(item) {
-    var ret = [moment(item.date).format("YYYY-MM-DD HH:MM"), item.category, item.value];
+    var ret = [moment(item.date).format(moment_fmt), item.category, item.value];
     return ret;
 }
 
@@ -105,48 +96,6 @@ function show_exercise_table(tblData, header, plugin) {
         language: plugin
     });
     location.href = "#openModalEx";
-}
-
-
-function show_measurement_table(tblData, header, plugin) {
-    console.log(header[0]);
-    $("#health-data-container").html("<table id=\"health-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>");
-    $("#health-data").dataTable({
-        data: tblData,
-        columns: [
-            {"title": header[0]},
-            {"title": header[1]},
-            {"title": header[2]},
-            {"title": header[3]},
-            {"title": header[4]}
-        ],
-        order: [
-            [0, "desc"]
-        ],
-        lengthMenu: [10],
-        language: plugin
-    });
-    location.href = "#openModal";
-}
-
-function show_diet_table(tblData, header, plugin) {
-    $("#diet-data-container").html("<table id=\"diet-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>");
-    $("#diet-data").dataTable({
-        data: tblData,
-        columns: [
-            {"title": header[0]},
-            {"title": header[1]},
-            {"title": header[2]},
-            {"title": header[3]},
-            {"title": header[4]}
-        ],
-        order: [
-            [0, "desc"]
-        ],
-        lengthMenu: [10],
-        language: plugin
-    });
-    location.href = "#openModalDiet";
 }
 
 function show_medication_table(tblData, header, plugin) {

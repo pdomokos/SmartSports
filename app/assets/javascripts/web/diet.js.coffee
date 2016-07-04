@@ -88,6 +88,30 @@
     location.href = "#close"
   )
 
+@get_diet_table_row = (item) ->
+  ret = [moment(item.date).format(moment_fmt), item.category, item.name, item.amount, item.calories, item.carbs]
+  return ret
+
+@show_diet_table = (tblData, header, plugin) ->
+  $("#diet-data-container").html("<table id=\"diet-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
+  $("#diet-data").dataTable({
+    data: tblData,
+    columns: [
+      {"title": header[0]},
+      {"title": header[1]},
+      {"title": header[2]},
+      {"title": header[3]},
+      {"title": header[4]},
+      {"title": header[5]}
+    ],
+    order: [
+      [0, "desc"]
+    ],
+    lengthMenu: [10],
+    language: plugin
+  })
+  location.href = "#openModalDiet"
+
 @resetDiet = () ->
   amount_values = $("#amount_values").val().split(",")
   $("div.diet > input.dataFormField").val("")

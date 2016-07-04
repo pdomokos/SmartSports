@@ -97,6 +97,29 @@
     $("#health-data-container").html("")
     location.href = "#close"
   )
+@get_measurement_table_row = (item) ->
+  ret = ([moment(item.date).format(moment_fmt), item.type, item.value, item.property1, item.property2])
+  return ret
+
+@show_measurement_table = (tblData, header, plugin) ->
+  console.log(header[0])
+  $("#health-data-container").html("<table id=\"health-data\" class=\"display\" cellspacing=\"0\" width=\"100%\"></table>")
+  $("#health-data").dataTable({
+    data: tblData,
+    columns: [
+      {"title": header[0]},
+      {"title": header[1]},
+      {"title": header[2]},
+      {"title": header[3]},
+      {"title": header[4]}
+    ],
+    order: [
+      [0, "desc"]
+    ],
+    lengthMenu: [10],
+    language: plugin
+  })
+  location.href = "#openModal"
 
 @validateBgInterval = (formId, measId) ->
   formNode = document.getElementById(formId)
