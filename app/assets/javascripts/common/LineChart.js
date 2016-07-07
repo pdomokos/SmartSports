@@ -39,7 +39,7 @@ function LineChart(chartElement, data, chartParams, min, max) {
     };
     console.log("colormap", this.colorMap);
 
-    this.baseR = 4;
+    this.baseR = 5;
     this.selectedR = 8;
     this.preprocCB = null;
 
@@ -151,8 +151,7 @@ function LineChart(chartElement, data, chartParams, min, max) {
                 .attr("y", this.rightScale(max))
                 .attr("width", this.width - this.margin.left - this.margin.right)
                 .attr("height", this.rightScale(min)-this.rightScale(max))
-                .attr("fill", "lightgreen")
-                .attr("fill-opacity", "0.5");
+                .attr("class", "normalRange");
         }
 
         var groups = Object.keys(this.chartData);
@@ -197,10 +196,18 @@ function LineChart(chartElement, data, chartParams, min, max) {
                 })
                 .attr("r", self.baseR)
                 .attr("class", function (d) {
+                    var cls = "normal";
+                    if(d.value > self.max) {
+                        cls = "high";
+                    }if(d.value < self.min) {
+                        cls = "low";
+                    }
+
                     if(d.group==undefined) {
                         d.group = 'Unspecified';
                     }
-                    return self.getElementClass([d.group], "Point")+" "+d.group.replace(" ", "")+"Data"
+                    return "health "+cls;
+                    //return self.getElementClass([d.group], "Point")+" "+d.group.replace(" ", "")+"Data"
                 })
                 .on("mouseover", function (d) {
                     if (self.cb_over)
