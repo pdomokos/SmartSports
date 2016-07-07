@@ -22,7 +22,8 @@ function analytics_loaded() {
         todayButton: true
     });
 
-    d3.json(urlPrefix() + "users/" + uid + "/measurements.json?meas_type=blood_sugar", draw_bg_data);
+    var start = moment().subtract(2, 'months').format(moment_fmt);
+    d3.json(urlPrefix() + "users/" + uid + "/measurements.json?meas_type=blood_sugar&start="+start, draw_bg_data);
 }
 
 function draw_bg_data(jsondata) {
@@ -44,6 +45,7 @@ function draw_bg_data(jsondata) {
     var chartElement = $("#bg-container")[0];
     var uid = chartElement.dataset.uid;
     bg_trend_chart = new LineChart("bg-container", data, chartParams, chartElement.dataset.bgmin, chartElement.dataset.bgmax);
+    bg_trend_chart.nolines = true;
     bg_trend_chart.cb_over = function (d, elem, chart) {
         d3.select(elem)
             .transition()

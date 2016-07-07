@@ -10,6 +10,7 @@ function LineChart(chartElement, data, chartParams, min, max) {
     this.chartParams = chartParams;
     this.min = min;
     this.max = max;
+    this.nolines = false;
 
     function getMap(data, colors) {
         var labelSet = new Set();
@@ -178,10 +179,13 @@ function LineChart(chartElement, data, chartParams, min, max) {
                 lineColor = self.getElementClass(grp, "Line");
             }
             console.log("ingroups.size",inGroups.size,"GRP:", grp, "LINECOLOR: ", lineColor);
+            if(self.nolines) {
+                lineColor = "noLine";
+            }
             canvas.append("path")
                 .datum(grpData)
                 //.attr("class", self.colorMap[grp].slice(0,3)+"Line"+" "+grp+"Data")
-                .attr("class", lineColor+" "+grp+"Data")
+                .attr("class", lineColor + " " + grp + "Data")
                 .attr("d", line);
 
             canvas.selectAll("circle."+grp+"Data")

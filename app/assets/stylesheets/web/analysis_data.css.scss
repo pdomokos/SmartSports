@@ -70,6 +70,11 @@ circle.timePointsAInner {
 .grayLine {
   stroke: #bfbfbf;
 }
+
+.noLine {
+  stroke: white;
+  stroke-opacity: 0;
+}
 .col1Point {
   fill: #f8756d;
 }
