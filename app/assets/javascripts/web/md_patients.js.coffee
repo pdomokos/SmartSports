@@ -206,7 +206,8 @@
 
           dateToShow = moment().format(moment_datefmt)
           console.log("----------- Timeline starts --------------")
-          self.timeline = new TimelinePlot(uid, "analysis_data", dateToShow, "Weekly timeline", {period: "weekly"})
+          self.timeline = new TimelinePlot(uid, "analysis_data", "Weekly timeline", {period: "weekly"})
+          self.timeline.date = dateToShow;
           self.timeline.draw("div.timelineChart")
 
           user_lang = $("#user-lang")[0].value

@@ -3,23 +3,27 @@ function TimelinePlot(uid, resource, date, title, params) {
     this.resource = resource;
     this.date = date;
     this.title = title;
-    if(!params) {
-        this.params = {period: "weekly"}
-    } else {
-        this.params = params;
-    }
     this.chartElementSelector = null;
 }
 
+TimelinePlot.prototype.createUrl = function() {
+    var url = "users/"+this.uid+"/"+this.resource+".json?";
+    if(this.f) {
+        url = url+"f="+this.f+"&t="+this.t;
+    }  else {
+        url = url + "date=" + this.date;
+        if (this.params && this.params["period"] == "weekly") {
+            url = url + "&weekly=true";
+        }
+    }
+    return url;
+}
 TimelinePlot.prototype.draw = function(chartElementSelector) {
     self = this;
     this.chartElementSelector = chartElementSelector;
     this.initUI();
 
-    url = "users/"+this.uid+"/"+this.resource+".json?date="+this.date;
-    if(this.params["period"]=="weekly") {
-        url = url+"&weekly=true";
-    }
+    var url = this.createUrl();
 
     dataReceived = function(jsonData) {
         if(jsonData==null || jsonData.length==0) {
@@ -33,11 +37,9 @@ TimelinePlot.prototype.draw = function(chartElementSelector) {
             self.initCanvas();
 
             var lines = $.grep(data, function(d) { return d.disp_type=="line"; });
-            console.log(lines);
             self.drawLines(lines);
 
-            var points = $.grep(data, function(d) { return d.disp_type=="point"; })
-            console.log(points);
+            var points = $.grep(data, function(d) { return d.disp_type=="point"; });
             self.drawPoints(points);
 
             self.initTooltips();
@@ -166,14 +168,14 @@ TimelinePlot.prototype.updatePeriod = function(period) {
 };
 
 TimelinePlot.prototype.dataAdapter = function(data) {
+    console.log("adapter:");
+    console.log(data);
     var result = [];
     var i;
     for(i = 0; i < data.length; ++i ) {
         var d = data[i];
         var dispType = "other";
-        var kinds = new Set();
-        kinds.add(["exercise", "medication", "diet"]);
-        if(kinds.has(d.kind)) {
+        if(d.kind==='medication' || d.kind==='diet') {
             dispType = "point";
         } else if(d.kind=="health"){
             dispType = "point";
@@ -193,6 +195,8 @@ TimelinePlot.prototype.dataAdapter = function(data) {
             }
         } else if(d.kind=="lifestyle") {
             dispType = "line";
+        } else if(d.kind=="exercise") {
+            dispType = "line";
         }
 
         if(d.dates.length>1) {
@@ -206,6 +210,7 @@ TimelinePlot.prototype.dataAdapter = function(data) {
         d["disp_type"] = dispType;
         result.push(d);
     }
+    console.log(result);
     return result;
 };
 
@@ -283,11 +288,12 @@ TimelinePlot.prototype.initTooltips = function() {
 
 TimelinePlot.prototype.initExtents = function(data) {
     var time_extent = d3.extent(data, function (d) {
-        return d.dates[0];
+        return d.dates[1];
     });
-    if ("period" in this.params && this.params.period == "weekly") {
+    time_extent[0] = moment(time_extent[0]).subtract(5, 'minutes');
+    if (this.params!=undefined && this.params.period === "weekly") {
         time_extent = [moment(this.date).startOf("week"), moment(this.date).endOf("week")];
-    } else if("period" in this.params && this.params.period == "daily"){
+    } else if(this.params!=undefined && this.params.period == "daily"){
         time_extent = [moment(this.date).startOf("day"), moment(this.date).endOf("day")];
     }
 

@@ -1,5 +1,5 @@
 "use strict";
-function LineChart(chartElement, data, chartParams) {
+function LineChart(chartElement, data, chartParams, min, max) {
     this.chartElement = chartElement;
     this.chartData = data;
     this.margin = {top: 40, right: 60, bottom: 40, left: 60};
@@ -8,6 +8,8 @@ function LineChart(chartElement, data, chartParams) {
     this.height = this.aspect * this.width - this.margin.top - this.margin.bottom;
     this.highlights = [];
     this.chartParams = chartParams;
+    this.min = min;
+    this.max = max;
 
     function getMap(data, colors) {
         var labelSet = new Set();
@@ -38,7 +40,7 @@ function LineChart(chartElement, data, chartParams) {
     console.log("colormap", this.colorMap);
 
     this.baseR = 4;
-    this.selected_R = 8;
+    this.selectedR = 8;
     this.preprocCB = null;
 
     this.tickUnit = d3.time.week;
@@ -143,6 +145,15 @@ function LineChart(chartElement, data, chartParams) {
             .attr("clip-path", "url(#clip)")
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
+        if(this.min != undefined) {
+            canvas.append("rect")
+                .attr("x", 0)
+                .attr("y", this.rightScale(max))
+                .attr("width", this.width - this.margin.left - this.margin.right)
+                .attr("height", this.rightScale(min)-this.rightScale(max))
+                .attr("fill", "lightgreen")
+                .attr("fill-opacity", "0.5");
+        }
 
         var groups = Object.keys(this.chartData);
         self = this;
@@ -186,19 +197,22 @@ function LineChart(chartElement, data, chartParams) {
                 })
                 .attr("r", self.baseR)
                 .attr("class", function (d) {
+                    if(d.group==undefined) {
+                        d.group = 'Unspecified';
+                    }
                     return self.getElementClass([d.group], "Point")+" "+d.group.replace(" ", "")+"Data"
                 })
                 .on("mouseover", function (d) {
                     if (self.cb_over)
-                        self.cb_over(d, this);
+                        self.cb_over(d, this, self);
                 })
                 .on("mouseout", function (d) {
                     if (self.cb_out)
-                        self.cb_out(d, this);
+                        self.cb_out(d, this, self);
                 })
                 .on("click", function (d) {
                     if (self.cb_click)
-                        self.cb_click(d, this);
+                        self.cb_click(d, this, self);
                 });
         });
     };

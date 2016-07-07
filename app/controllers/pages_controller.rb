@@ -123,9 +123,15 @@ class PagesController < ApplicationController
 
   def analytics
     save_click_record(:success, nil, nil)
-    if params[:user_id] && current_user.admin?
-      @selected_user = User.find_by_id(params[:user_id])
+    if params[:user_id] && (current_user.admin? || current_user.doctor?)
+      @user = User.find_by_id(params[:user_id])
+    else
+      @user = current_user
     end
+    @current_uid = current_user.id
+    @uid = @user.id
+    @bgmin = @user.profile.blood_glucose_min
+    @bgmax = @user.profile.blood_glucose_max
   end
 
   def md_statistics

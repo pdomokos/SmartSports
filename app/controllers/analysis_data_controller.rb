@@ -8,7 +8,11 @@ class AnalysisDataController < ApplicationController
 
     f=nil
     t=nil
-    if params[:date]
+    unless params[:f].nil?
+      f = Time.zone.parse(params[:f])
+      t = Time.zone.parse(params[:t])
+    else
+      if params[:date]
       date = params[:date]
       if params[:weekly]
         f = Time.zone.parse(date).at_beginning_of_week
@@ -17,7 +21,9 @@ class AnalysisDataController < ApplicationController
         f = Time.zone.parse(date).at_beginning_of_day
         t = Time.zone.parse(date).at_end_of_day
         end
+      end
     end
+
     lang = params[:lang]
     if !lang
       lang = 'hu'
@@ -129,9 +135,7 @@ class AnalysisDataController < ApplicationController
     )
     result.concat(meas_arr)
 
-    if dashboard
-      medications = user.medications.order("date DESC").limit(15)
-    end
+    medications = user.medications.order("date DESC").limit(15)
 
     unless medications.nil?
       if f && !dashboard
