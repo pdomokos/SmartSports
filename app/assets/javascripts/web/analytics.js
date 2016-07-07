@@ -63,12 +63,16 @@ function draw_bg_data(jsondata) {
         var timeline = new TimelinePlot(uid, "analysis_data", "Daily timeline", {period: "daily"});
         timeline.f = moment(d.date).subtract(8, 'hours').format(moment_fmt);
         timeline.t = moment(d.date).add(1, 'minutes').format(moment_fmt);
+        timeline.bgmin = chartElement.dataset.bgmin;
+        timeline.bgmax = chartElement.dataset.bgmax;
         timeline.draw("div.timelineChart");
     };
     bg_trend_chart.draw();
 
     var dateToShow = moment(bgdata[bgdata.length - 1].date).format(moment_datefmt);
     var timeline = new TimelinePlot(uid, "analysis_data", "Daily timeline", {period: "daily"});
+    timeline.bgmin = chartElement.dataset.bgmin;
+    timeline.bgmax = chartElement.dataset.bgmax;
     timeline.date = dateToShow;
     timeline.draw("div.timelineChart");
 }

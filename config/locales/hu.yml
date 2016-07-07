@@ -389,7 +389,7 @@ hu:
   meas_types: "Vérnyomás,Vércukor,Súly,Haskörfogat"
 
   time: "Időpont"
-  daily_timeline: "Napi idővonal"
+  daily_timeline: "Idővonal"
   heart_trend: "Szív adatok"
   activity_trend: "Mozgás adatok"
 

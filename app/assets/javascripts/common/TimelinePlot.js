@@ -4,6 +4,8 @@ function TimelinePlot(uid, resource, date, title, params) {
     this.date = date;
     this.title = title;
     this.chartElementSelector = null;
+    this.innerR = 3;
+    this.outerR = 6;
 }
 
 TimelinePlot.prototype.createUrl = function() {
@@ -17,8 +19,12 @@ TimelinePlot.prototype.createUrl = function() {
         }
     }
     return url;
-}
+};
+
 TimelinePlot.prototype.draw = function(chartElementSelector) {
+    console.log("bgminmax=");
+    console.log(this.bgmin);
+    console.log(this.bgmax);
     self = this;
     this.chartElementSelector = chartElementSelector;
     this.initUI();
@@ -79,6 +85,22 @@ TimelinePlot.prototype.scaleVal = function(dataPoint, defaultValue, idx) {
     return y_scale(value);
 };
 
+TimelinePlot.prototype.getClass = function(bgmin, bgmax, classes) {
+    return function(d) {
+        var bgAmount = "";
+        if (d.evt_type === "blood_sugar") {
+            bgAmount = " normal";
+            if (d.values[0] < bgmin) {
+                bgAmount = " low";
+            }
+            if (d.values[0] > bgmax) {
+                bgAmount = " high";
+            }
+        }
+        return d.kind + bgAmount + " timePoints" + classes;
+    }
+};
+
 TimelinePlot.prototype.drawPoints = function(data) {
     var self = this;
     var groups = self.canvas.selectAll("g.pointdata").data(data);
@@ -89,8 +111,8 @@ TimelinePlot.prototype.drawPoints = function(data) {
         .attr("data-title", function(d) {return d.title;})
         .attr("class", "pointdata");
 
-    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePoints timePointsA";});
-    groupsEnter.append("circle").attr("class", function(d) { return d.kind+" timePointsInner timePointsAInner";});
+    groupsEnter.append("circle").attr("class", this.getClass(this.bgmin, this.bgmax, " timePointsA"));
+    groupsEnter.append("circle").attr("class", this.getClass(this.bgmin, this.bgmax, " timePointsAInner"));
 
     groupsEnter.selectAll("circle.timePointsA")
         .attr("cx", function(d) {
@@ -98,9 +120,15 @@ TimelinePlot.prototype.drawPoints = function(data) {
             return time_scale(d.dates[0].getTime());
         })
         .attr("cy", function(d) {
-            return self.scaleVal(d, d.depth);
+            return self.middle;
         })
-        .attr("r", "5");
+        .attr("r", function(d) {
+            if(d.evt_type==='blood_sugar') {
+                return self.transforms.blood_sugar.scale(d.values[0]);
+            }else {
+                return self.outerR;
+            }
+        });
 
     groupsEnter.selectAll("circle.timePointsAInner")
         .attr("cx", function(d) {
@@ -108,9 +136,15 @@ TimelinePlot.prototype.drawPoints = function(data) {
             return time_scale(d.dates[0].getTime());
         })
         .attr("cy", function(d) {
-            return self.scaleVal(d, d.depth);
+            return self.middle;
         })
-        .attr("r", "2");
+        .attr("r",function(d) {
+            if(d.evt_type==='blood_sugar') {
+                return 0;
+            }else {
+                return self.innerR;
+            }
+        });
 };
 
 TimelinePlot.prototype.drawLines = function(data) {
@@ -132,29 +166,29 @@ TimelinePlot.prototype.drawLines = function(data) {
     var time_scale = self.transforms.time.scale;
     groupsEnter.select("line")
         .attr("x1", function(d){return time_scale(d.dates[0].getTime());})
-        .attr("y1", function(d) {return self.scaleVal(d, d.depth);})
+        .attr("y1", function(d) {return self.middle;})
         .attr("x2", function(d) {return time_scale(d.dates[1].getTime());})
-        .attr("y2", function(d) {return self.scaleVal(d, d.depth, 1);});
+        .attr("y2", function(d) {return self.middle;});
 
     groupsEnter.selectAll("circle.timePointsA")
         .attr("cx", function(d) {return time_scale(d.dates[0].getTime());})
-        .attr("cy", function(d) {return self.scaleVal(d, d.depth);})
-        .attr("r", "5");
+        .attr("cy", function(d) {return self.middle;})
+        .attr("r", self.outerR);
 
     groupsEnter.selectAll("circle.timePointsAInner")
         .attr("cx", function(d) {return time_scale(d.dates[0].getTime());})
-        .attr("cy", function(d) {return self.scaleVal(d, d.depth);})
-        .attr("r", "2");
+        .attr("cy", function(d) {return self.middle;})
+        .attr("r", self.innerR);
 
     groupsEnter.selectAll("circle.timePointsB")
         .attr("cx", function(d) {return time_scale(d.dates[1].getTime());})
-        .attr("cy", function(d) {return self.scaleVal(d, d.depth, 1);})
-        .attr("r", "5");
+        .attr("cy", function(d) {return self.middle;})
+        .attr("r", self.outerR);
 
     groupsEnter.selectAll("circle.timePointsBInner")
         .attr("cx", function(d) {return time_scale(d.dates[1].getTime());})
-        .attr("cy", function(d) {return self.scaleVal(d, d.depth, 1);})
-        .attr("r", "2");
+        .attr("cy", function(d) {return self.middle;})
+        .attr("r", self.innerR);
 };
 
 TimelinePlot.prototype.update = function(date) {
@@ -231,6 +265,7 @@ TimelinePlot.prototype.initUI = function() {
 
     this.width = $(this.chartElementSelector).width();
     this.height = aspect*this.width;
+    this.middle = (this.height-this.margin.top-this.margin.bottom)/2;
 
     this.svg
         .attr("width", this.width)
@@ -308,8 +343,8 @@ TimelinePlot.prototype.initExtents = function(data) {
     var bp_extent = [50, 200];
     var bp_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bp_extent);
 
-    var bg_extent = [0, 20];
-    var bg_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(bg_extent);
+    var bg_extent = [5, 20];
+    var bg_scale = d3.scale.linear().range([20,70]).domain(bg_extent);
 
     var weight_extent = [1, 200];
     var weight_scale = d3.scale.linear().range([self.height - self.margin.bottom- self.margin.top, 0]).domain(weight_extent);

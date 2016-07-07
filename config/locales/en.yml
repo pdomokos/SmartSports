@@ -407,7 +407,7 @@ en:
   meas_types: "Blood Pressure,Blood Glucose,Body Weight,Waist Circumfence"
 
   time: "Time"
-  daily_timeline: "Daily timeline"
+  daily_timeline: "Timeline"
   heart_trend: "Heart trend"
   activity_trend: "Activity trend"
 

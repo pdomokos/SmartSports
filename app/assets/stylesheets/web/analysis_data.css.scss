@@ -160,3 +160,18 @@
   float: none !important;
   margin-left: 0px !important;
 }
+
+circle.health.low {
+  fill: red;
+  stroke: red;
+}
+
+circle.health.normal {
+  fill: lightgreen;
+  stroke: lightgreen;
+}
+
+circle.health.high {
+  fill: #FFF123;
+  stroke: #FFF123;
+}
