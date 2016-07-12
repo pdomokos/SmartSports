@@ -3,7 +3,29 @@
 
   define_globals()
   @popup_messages = JSON.parse($("#popup-messages").val())
+  $("select.patientName").on("change", () ->
+    uid = $(this).val()
+    start = moment().subtract(2, 'months').format(moment_fmt)
+    url = "users/" + uid + "/measurements.json?meas_type=blood_sugar&start="+start
+    console.log "select patient: "+urlPrefix()+url
+    $("#bg-container svg").html("")
+    $("#timeline svg").html("")
+    d3.json(urlPrefix() + url, draw_bg_data)
+  )
 
+  uid = $("select.patientName").val()
+  start = moment().subtract(2, 'months').format(moment_fmt)
+  url = "users/" + uid + "/measurements.json?meas_type=blood_sugar&start="+start
+  console.log "select patient: "+urlPrefix()+url
+  $("#bg-container")[0].dataset.bgmin = $("select.patientName option:selected")[0].dataset.bgmin
+  $("#bg-container")[0].dataset.bgmax = $("select.patientName option:selected")[0].dataset.bgmax
+  $("#bg-container")[0].dataset.uid = uid
+#  chartElement = $("#bg-container")[0];
+#  chartElement.dataset.bgmin;
+
+  d3.json(urlPrefix() + url, draw_bg_data)
+
+@old = () ->
   registerLogoutHandler()
   registerPopupHandler()
   registerLangHandler()
@@ -176,71 +198,18 @@
           cnt = 0
           for element in data
             if matcher.test(remove_accents(element.name))
-              result.push({label: element.name, value: element.name, obj: element})
+              result.push({label: element.name, value: element.name, obj: element, id: element.id})
               cnt += 1
           response(result)
         select: (event, ui) ->
-          console.log "select patient"
 
-          $(".patientId").val(ui.item.id)
+          uid = ui.item.id
+          start = moment().subtract(2, 'months').format(moment_fmt)
+          $("#analytics-container").removeClass("hidden")
+          url = "users/" + uid + "/measurements.json?meas_type=blood_sugar&start="+start
 
-          $("#patientName").html( ui.item.label.trim() )
-          $("input[name=patientId]").val(ui.item.obj.id)
-
-          pic = ui.item.obj.avatar_url
-          if pic == "unknown.jpeg"
-            pic = "/assets/unknown.jpeg"
-          $("#headerItemAvatar").attr( "src", pic )
-          $("#patientHeader").removeClass("hidden")
-          $(".patientData").removeClass("hidden")
-          $(".patientData .patientDetails pre").html(JSON.stringify(ui.item.obj, null, '\t'))
-          loadNotifications(ui.item.obj.id)
-          $("#headerItemAvatar").tooltip({
-            items: "img",
-            content: '<img src="'+pic+'" />'
-          })
-
-          uid = ui.item.obj.id
-
-          registerShowPatientData(uid)
-
-          dateToShow = moment().format(moment_datefmt)
-          console.log("----------- Timeline starts --------------")
-          self.timeline = new TimelinePlot(uid, "analysis_data", "Weekly timeline", {period: "weekly"})
-          self.timeline.date = dateToShow;
-          self.timeline.draw("div.timelineChart")
-
-          user_lang = $("#user-lang")[0].value
-          if !user_lang
-            user_lang='hu'
-          $('#timeline_datepicker').datetimepicker({
-            format: 'Y-m-d',
-            timepicker: false,
-            lang: user_lang,
-            onSelectDate: (ct, input) ->
-              console.log("timeline date selected")
-              self.timeline.update(moment(ct).format(moment_datefmt))
-              input.datetimepicker('hide')
-            todayButton: true
-          })
-
-          plist = ["weekly", "daily"]
-          $("#timeline_period").autocomplete({
-            minLength: 0,
-            source: plist,
-            select: (event, ui) ->
-              self.timeline.updatePeriod(ui['item']['label'])
-          }).focus ->
-            $(this).autocomplete("search")
-
-          d3.json(urlPrefix()+"users/"+uid+"/measurements.json?meas_type=blood_sugar", draw_bg_data)
-
-          measStartDate = moment().subtract(6, 'months').format(moment_datefmt)
-          meas_summary_url = "users/" + uid + "/measurements.json?summary=true&start="+measStartDate
-          d3.json(urlPrefix()+meas_summary_url, draw_health_trend)
-
-          startDate = moment().subtract(12, 'months').format(moment_datefmt)
-          d3.json(urlPrefix()+"users/"+uid+"/summaries.json?bysource=true&start="+startDate, draw_patient_activity_data)
+          console.log "select patient: "+urlPrefix()+url
+          d3.json(urlPrefix() + url, draw_bg_data)
 
         create: (event, ui) ->
 #          document.body.style.cursor = 'auto'

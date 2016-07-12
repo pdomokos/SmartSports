@@ -1,61 +1,20 @@
-
 <div class="analytics-block mainContent" id="analytics-container">
-  <div class="sectionTitle analiticsBodyLogo analyticsColor">
-    <%=t 'analytics' %>
-    <% if @user.id != @current_uid %>
-        <span>for user: id=<%= @user.id%>, <%= @user.email %></span>
-    <% end %>
-  </div>
-  <div class="contentBg ">
-  </div>
-
-  <div class="columns">
-    <div id="bg-container" class="boxed-group connection-block" data-bgmin="<%= @bgmin%>" data-bgmax="<%= @bgmax%>" data-uid="<%= @uid%>">
-      <h3 class="noClickSelect">
-        <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-        <div class="training-type left"><%=t 'blood_glucose'%></div>
-        <div class="selected-meas legend-container right"></div>
-      </h3>
-
-      <div class="boxed-group-inner chart bloodglucose-chart">
-        <svg class="bg-chart-svg">
-        </svg>
-      </div>
-    </div>
-  </div>
-
-  <div class="columns">
-    <div   class="boxed-group connection-block">
-      <h3 class="noClickSelect">
-        <img src="<%= asset_path( "logo-login.png")%>" width="24px" height="24px" class="left">
-        <div class="training-type left chartTitle"><%=t 'daily_timeline'%></div>
-        <div class="selected-meas legend-container right">
-          <span id="timeline-date"><%= DateTime.current.strftime("%F") %></span>
-        </div>
-      </h3>
-
-      <div id="timeline" class="boxed-group-inner chart timelineChart">
-      </div>
-    </div>
-  </div>
-
-
+  <%= render "patients" %>
 </div>
-
-<% if false %>
-    <%= render "device_data" %>
-<%end %>
 
 <script>
     pages_menu();
     analytics_loaded();
 </script>
+
 <% content_for :menu do %>
     <%= render "menu" %>
 <% end %>
+
 <% content_for :mobile_menu do %>
     <%= render "mobile_menu" %>
 <% end %>
+
 <% content_for :title_text do %>
     <%=t :analytics %> | <%= t :project_name %>
 <% end %>

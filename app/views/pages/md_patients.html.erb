@@ -3,22 +3,63 @@
 <%= render "patient_select" %>
 
 <div id="sectionPatients" class="menu-section">
-  <%= render "patients" %>
-</div>
+  <div class="patientData" id="analytics-container">
+    <%= render "patients" %>
+  </div>
 
-<div id="openModal" class="modalDialog">
-  <div>
-    <div class="table-toolbar">
-      <span id="close-patient-data" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
-      <span id="download-patient-data" class="right page-control"><i class="fa fa-download fa-2x"></i></span>
-    </div>
-    <br/>
-    <br/>
-    <div id="patient-data-container">
-      <table id="patient-data" class="display" cellspacing="0" width="100%"></table>
+  <div id="openModalAddNotification" class="modalDialog">
+    <div class="customStyle notificationStyle">
+      <div class="table-toolbar">
+        <div class="modalTitle left"><%=t 'notification' %></div>
+        <span id="closeModalAddNotification" class="right page-control modalClose"><i class="fa fa-times fa-2x"></i></span>
+      </div>
+      <br/>
+      <br/>
+      <div id="notificationContainer">
+        <!--<div class="form_warning">Info</div>-->
+        <!--<h3 class="form_title"></h3>-->
+
+        <%= form_tag(root_path+"users/_/notifications", remote: true, id: "notificationCreateForm") do %>
+            <div class="dialogFormContainer">
+              <div id="dataform" class="dataForm">
+                <br/>
+                <br/>
+                <p class="dataFormRemark"><%=t 'add_notifications' %></p>
+                <input type="text" name="notification[title]" id="notifTitle" class="dataFormField" placeholder="<%=t 'notification_title' %>">
+                <i class="fa fa-exclamation-circle fa-2x formFailSign hidden"></i>
+                <br/>
+                  <textarea name="notification[detail]" class="dataFormField custom_textarea"
+                            placeholder="<%=t 'notification_details_part1' %> &#13;&#10;<%=t 'notification_details_part2' %>"></textarea>
+                <br/>
+                <label class="dataFormRemark" for="fillForm"><%=t 'notification_fill_form' %></label>
+                <input type="checkbox" id="fillForm">
+                <br/>
+                <input type="hidden" name="notification[created_by]" value="<%= current_user.id %>">
+                <div id="formDetails" class="hidden">
+                  <input type="search" name="elementName" id="elementName" class="dataFormField" placeholder="<%=t 'notification_form_to_fill' %>">
+
+                </div>
+
+                <!--<input type="text" name="notification[location]" class="dataFormField" placeholder="Location">-->
+                <!--<input type="text" name="notification[location_url]" class="dataFormField" placeholder="Location URL">-->
+
+                <button class="dataFormField add-notification-button" ><%=t 'add_notification' %></button>
+
+              </div>
+
+            </div>
+            <div class="dialogFormContainer formContents hidden">
+
+            </div>
+
+            <div class="clearBoth"></div>
+        <% end %>
+      </div>
     </div>
   </div>
+
 </div>
+
 
 <% content_for :menu do %>
     <%= render "mdmenu" %>

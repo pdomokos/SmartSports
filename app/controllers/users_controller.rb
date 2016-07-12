@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @users = User.all
     if(params[:doctors])
       @users = @users.where(doctor: true)
-    else
+    elsif(params[:patients])
       @users = @users.where(doctor: false)
     end
   end

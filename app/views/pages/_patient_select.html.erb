@@ -1,9 +1,16 @@
 <section class="patientSelect">
   <ul class="patientControl">
+    <li class="patientSelect left"><i class="fa fa-user fa-fw patientColor fa-2x"></i></li>
     <li class="patientSelect">
-        <i class="fa fa-user fa-fw patientColor"></i>
-        <input type="search" name="patient_name" class="patientName" placeholder="<%=t :select_patient_placeholder%>" disabled>
-        <input class="patientId" name="patientId" type="hidden">
+
+        <select name="patient_name" class="dataFormField patientName">
+          <% for p in @users %>
+              <option value="<%= p.id %>"
+                      data-bgmin="<%= p.profile.blood_glucose_min%>"
+                      data-bgmax="<%= p.profile.blood_glucose_max%>"
+              ><%= p.name %></option>
+          <% end %>
+        </select>
     </li>
     <li class="patientSelect">
       <%= image_tag "unknown.jpeg", id: "headerItemAvatar", class: "patientItemAvatar" %>

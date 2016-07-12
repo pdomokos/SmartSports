@@ -156,6 +156,7 @@ class PagesController < ApplicationController
   end
 
   def md_patients
+    @users = User.all
   end
 
   def md_customforms

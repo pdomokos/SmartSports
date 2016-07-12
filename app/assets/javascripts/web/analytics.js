@@ -27,6 +27,7 @@ function analytics_loaded() {
 }
 
 function draw_bg_data(jsondata) {
+    console.log(jsondata);
     var data = {};
     var grp_map = {};
     grp_map[48] = "Unspecified";
@@ -72,6 +73,7 @@ function draw_bg_data(jsondata) {
     bg_trend_chart.draw();
 
     var dateToShow = moment(bgdata[bgdata.length - 1].date).format(moment_datefmt);
+    $("#timeline-date").html(dateToShow);
     var timeline = new TimelinePlot(uid, "analysis_data", "Daily timeline", {period: "daily"});
     timeline.bgmin = chartElement.dataset.bgmin;
     timeline.bgmax = chartElement.dataset.bgmax;
