@@ -8,6 +8,10 @@
     start = moment().subtract(2, 'months').format(moment_fmt)
     url = "users/" + uid + "/measurements.json?meas_type=blood_sugar&start="+start
     console.log "select patient: "+urlPrefix()+url
+    chartElement = $("#bg-container")[0]
+    chartElement.dataset.uid = uid
+    chartElement.dataset.bgmin = $("select.patientName option:selected")[0].dataset.bgmin
+    chartElement.dataset.bgmax = $("select.patientName option:selected")[0].dataset.bgmax
     $("#bg-container svg").html("")
     $("#timeline svg").html("")
     d3.json(urlPrefix() + url, draw_bg_data)

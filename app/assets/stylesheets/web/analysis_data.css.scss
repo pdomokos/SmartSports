@@ -4,6 +4,9 @@
 
 @import "common/config";
 
+.dataFormField.patientName {
+  width: 300px;
+}
 .normalRange {
   fill: lightgray;
   fill-opacity:0.3;
