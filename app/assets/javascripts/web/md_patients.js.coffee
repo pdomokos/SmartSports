@@ -23,6 +23,12 @@
 #  chartElement = $("#bg-container")[0];
 #  chartElement.dataset.bgmin;
 
+  $(document).unbind("click.userDetails")
+  $(document).on("click.userDetails", "#headerItemAvatar", (evt) ->
+    if evt.altKey
+      $(".patientData .patientDetails").toggleClass("hidden")
+  )
+
   d3.json(urlPrefix() + url, draw_bg_data)
 
 @old = () ->

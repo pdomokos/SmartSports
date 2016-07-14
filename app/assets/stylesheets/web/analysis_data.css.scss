@@ -13,17 +13,20 @@ circle.health.low {
   fill: red;
   stroke: lightgray;
   stroke-width: 1;
+  fill-opacity: 0.8;
 }
 circle.health.normal {
   fill: lightgreen;
   stroke: lightgray;
   stroke-width: 1;
+  fill-opacity: 0.8;
 }
 
 circle.health.high {
   fill: #FFF123;
   stroke: lightgray;
   stroke-width: 1;
+  fill-opacity: 0.8;
 }
 
 circle.timePointsAInner {

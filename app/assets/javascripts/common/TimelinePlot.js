@@ -48,6 +48,7 @@ TimelinePlot.prototype.draw = function(chartElementSelector) {
             var points = $.grep(data, function(d) { return d.disp_type=="point"; });
             self.drawPoints(points);
 
+
             self.initTooltips();
         }
     };
@@ -166,28 +167,42 @@ TimelinePlot.prototype.drawLines = function(data) {
     var time_scale = self.transforms.time.scale;
     groupsEnter.select("line")
         .attr("x1", function(d){return time_scale(d.dates[0].getTime());})
-        .attr("y1", function(d) {return self.middle;})
+        .attr("y1", function(d) {
+            return self.middle;
+        }
+        )
         .attr("x2", function(d) {return time_scale(d.dates[1].getTime());})
-        .attr("y2", function(d) {return self.middle;});
+        .attr("y2", function(d) {
+            return self.middle;
+        }
+    );
 
     groupsEnter.selectAll("circle.timePointsA")
         .attr("cx", function(d) {return time_scale(d.dates[0].getTime());})
-        .attr("cy", function(d) {return self.middle;})
+        .attr("cy", function(d) {
+            return self.middle;
+        })
         .attr("r", self.outerR);
 
     groupsEnter.selectAll("circle.timePointsAInner")
         .attr("cx", function(d) {return time_scale(d.dates[0].getTime());})
-        .attr("cy", function(d) {return self.middle;})
+        .attr("cy", function(d) {
+            return self.middle;
+        })
         .attr("r", self.innerR);
 
     groupsEnter.selectAll("circle.timePointsB")
         .attr("cx", function(d) {return time_scale(d.dates[1].getTime());})
-        .attr("cy", function(d) {return self.middle;})
+        .attr("cy", function(d) {
+            return self.middle;
+        })
         .attr("r", self.outerR);
 
     groupsEnter.selectAll("circle.timePointsBInner")
         .attr("cx", function(d) {return time_scale(d.dates[1].getTime());})
-        .attr("cy", function(d) {return self.middle;})
+        .attr("cy", function(d) {
+            return self.middle;
+        })
         .attr("r", self.innerR);
 };
 
