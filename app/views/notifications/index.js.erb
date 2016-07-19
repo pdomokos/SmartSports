@@ -1,6 +1,6 @@
 $("table.notificationTable tbody.recentResourcesTable").html("");
 <% if @patient %>
-    $("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_patient_item', :collection=> @notifications ) %>");
+    $("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_patient_item', :collection=> @notifications, :locale => I18n.locale ) %>");
     <% if @notifications.size > 0 %>
         $("#notificationContainer").removeClass("hidden");
     <%end %>
@@ -8,5 +8,5 @@ $("table.notificationTable tbody.recentResourcesTable").html("");
         $("#notificationContainer").addClass("hidden");
     <%end %>
 <% else %>
-$("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_item', :collection=> @notifications ) %>");
+$("table.notificationTable tbody.recentResourcesTable").html("<%= escape_javascript(render :partial=> 'shared/notification_patient_item', :collection=> @notifications, :locale => I18n.locale ) %>");
 <% end %>

@@ -86,6 +86,5 @@ class ApplicationController < ActionController::Base
   include SaveClickRecord
   include ResponseHelper
 
-
 end
 

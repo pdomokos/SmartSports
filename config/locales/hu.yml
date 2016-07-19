@@ -4,6 +4,7 @@ hu:
   all: "Összes"
   site_traffic: "A weblap forgalma"
   invite_doctor: "Orvos meghívása"
+  form: "Kérdőív"
 
   tooltip_signedin: "Bejelentkezett felhasználó"
   tooltip_user_info: "Regisztrálás dátuma"

@@ -8,9 +8,14 @@ module NotificationsCommon
     end
     @notification = @user.notifications.new(par)
 
+    if @notification.date < Time.zone.now-5.minutes
+      send_error_json(@notification.id, "Notif time in the past", 400)
+      return
+    end
+
     respond_to do |format|
       if @notification.save
-        send_push(@notification)
+        @notification.send_push()
         # format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
         format.json { send_success_json(@notification.id, {msg: "created" } ) }
       else
@@ -64,51 +69,6 @@ module NotificationsCommon
     params.require(:notification).permit( :title, :detail, :notification_type, :notification_data, :date, :remind_at, :location, :location_url, :created_by, :recurrence_data, :default_data, :form_name)
   end
 
-  def send_push(notif)
-    user = notif.user
-    if not user.dev_token.nil?
-      pusher = Grocer.pusher(
-          certificate: CONNECTION_CONFIG["NOTIF_CERT"],      # required
-          passphrase:  CONNECTION_CONFIG["NOTIF_PASS"],                       # optional
-          gateway: "gateway.sandbox.push.apple.com",
-          port: 2195,
-          retries:     3                         # optional
-      )
 
-      msg = ""
-      if not notif.title.nil?
-        msg = msg + notif.title
-      end
-      if not notif.detail.nil?
-        msg = msg + " " + notif.detail
-      end
-      if msg==""
-        msg = "Empty message"
-      end
-
-      notif_data = {
-          user_name: user.username,
-          user_id: user.id,
-          notification_id: notif.id,
-          form_name: notif.form_name
-      }
-      logger.debug("Notif data:")
-      logger.debug(JSON.pretty_generate(notif_data))
-      notification = Grocer::Notification.new(
-          device_token:      user.dev_token.upcase,
-          alert:             msg,
-          badge:             42,
-          category:          "a category",         # optional; used for custom notification actions
-          sound:             "siren.aiff",         # optional
-          expiry:            Time.now + 60*60,     # optional; 0 is default, meaning the message is not stored
-          # identifier:        1234,                 # optional; must be an integer
-          content_available: true,                  # optional; any truthy value will set 'content-available' to 1
-          custom: notif_data
-      )
-
-      pusher.push(notification)
-
-    end
-  end
 
 end

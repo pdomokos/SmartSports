@@ -25,6 +25,7 @@ en:
   all: "All"
   site_traffic: "Site traffic"
   invite_doctor: "Invite doctor"
+  form: "Form"
 
   tooltip_signedin: "Signed in as"
   tooltip_user_info: "Registration date"

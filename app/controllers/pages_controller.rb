@@ -157,6 +157,8 @@ class PagesController < ApplicationController
 
   def md_patients
     @users = User.all
+    @form_list = CustomForm.form_list
+    @form_params = CustomForm.form_params
   end
 
   def md_customforms

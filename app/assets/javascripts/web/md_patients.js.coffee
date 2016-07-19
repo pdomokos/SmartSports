@@ -21,11 +21,10 @@
   start = moment().subtract(2, 'months').format(moment_fmt)
   url = "users/" + uid + "/measurements.json?meas_type=blood_sugar&start="+start
   console.log "select patient: "+urlPrefix()+url
-  $("#bg-container")[0].dataset.bgmin = $("select.patientName option:selected")[0].dataset.bgmin
-  $("#bg-container")[0].dataset.bgmax = $("select.patientName option:selected")[0].dataset.bgmax
-  $("#bg-container")[0].dataset.uid = uid
-#  chartElement = $("#bg-container")[0];
-#  chartElement.dataset.bgmin;
+  chartElement = $("#bg-container")[0]
+  chartElement.dataset.bgmin = $("select.patientName option:selected")[0].dataset.bgmin
+  chartElement.dataset.bgmax = $("select.patientName option:selected")[0].dataset.bgmax
+  chartElement.dataset.uid = uid
 
   $(document).unbind("click.userDetails")
   $(document).on("click.userDetails", "#headerItemAvatar", (evt) ->
@@ -34,6 +33,48 @@
   )
 
   d3.json(urlPrefix() + url, draw_bg_data)
+
+  loadNotifications(uid);
+
+  $(document).unbind("click.addNotif")
+  $(document).on("click.addNotif", "#addNotification", (evt) ->
+    $("#notifDate").val(moment().format(moment_fmt))
+    userid = $("input[name=patientId").val()
+    $("#notificationCreateForm").attr("action", "/users/"+userid+"/notifications")
+    $("#openModalAddNotification").modal('toggle')
+    $("#notifTime").datetimepicker(timepicker_defaults)
+    $("#notifTime").val(moment().format(moment_fmt))
+#    resetNotifForm()
+#    $("#notifTitle").focus()
+#    getFormElement("notification_date", "#openModalAddNotification div.formContents", false)
+  )
+  $(document).unbind("click.sendNotifButton")
+  $(document).on("click.sendNotifButton", "#openModalAddNotification .sendNotifButton", (evt) ->
+    chartElement = $("#bg-container")[0]
+    uid = chartElement.dataset.uid
+#    $("#notificationCreateForm").attr("action", "/user/"+uid+"/notifications")
+    defaultParams = paramsToHash($("#notificationCreateForm"))
+    if $("#notificationCreateForm button").hasClass('collapsed')
+      delete(defaultParams['notification[form_name]'])
+    console.log(defaultParams)
+    $.ajax "/users/"+uid+"/notifications",
+      type: 'POST',
+      data: defaultParams
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log "Addnotif AJAX Error: "+errorThrown
+      success: (data, textStatus, jqXHR) ->
+        console.log "Addnotif AJAX success: "+data
+        $("#openModalAddNotification").modal('toggle')
+        loadNotifications(uid)
+  )
+
+  $("table.notificationTable tbody.recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
+    console.log "delete success"
+    chartElement = $("#bg-container")[0]
+    uid = chartElement.dataset.uid
+    loadNotifications(uid)
+  )
 
 @old = () ->
   registerLogoutHandler()
@@ -142,11 +183,7 @@
     location.href = "#close"
   )
 
-  $("table.notificationTable tbody.recentResourcesTable").on("ajax:success", (e, data, status, xhr) ->
-    console.log "delete success"
-    userid = $("input[name=patientId").val()
-    loadNotifications(userid)
-  )
+
 
   $(document).unbind("click.tagDays")
   $(document).on("click.tagDays", "span.dayTag", (evt) ->
@@ -232,7 +269,8 @@
 
 
 @loadNotifications = (userId) ->
-  url = 'users/' + userId + '/notifications.js?order=desc&limit=10'
+  lang = $("#user-lang")[0].value
+  url = 'users/' + userId + '/notifications.js?order=desc&limit=10&active=true&locale='+lang
   $.ajax urlPrefix()+url,
     type: 'GET',
     error: (jqXHR, textStatus, errorThrown) ->

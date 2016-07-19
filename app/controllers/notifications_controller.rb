@@ -49,7 +49,6 @@ class NotificationsController < ApplicationController
   private
 
   def active_notifications(arr)
-    today = Time.zone.now.strftime("%F")
     day = Time.zone.now.strftime("%a").downcase
     result = arr.select do |notif|
       ret = false
@@ -61,7 +60,7 @@ class NotificationsController < ApplicationController
             ret = true
           end
         else
-          if notif.date.strftime("%F") == today
+          if notif.date >= Time.zone.now.beginning_of_minute
             if notif.dismissed_on.nil? || notif.dismissed_on<Time.zone.now.midnight
               ret = true
             end
