@@ -14,6 +14,7 @@
     chartElement.dataset.bgmax = $("select.patientName option:selected")[0].dataset.bgmax
     $("#bg-container svg").html("")
     $("#timeline svg").html("")
+    $("table.notificationTable tbody").html("")
     d3.json(urlPrefix() + url, draw_bg_data)
   )
 
