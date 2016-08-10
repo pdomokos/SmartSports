@@ -10,6 +10,8 @@ module Api::V1
       if current_resource_owner.profile
         prf =current_resource_owner.profile
         res[:profile] = true
+        res[:first_name] = prf.firstname
+        res[:last_name] = prf.lastname
         res[:weight] = prf.weight
         res[:height] = prf.height
         res[:sex] = prf.sex
@@ -23,13 +25,10 @@ module Api::V1
 
       if current_resource_owner.profile && current_resource_owner.profile.firstname && current_resource_owner.profile.lastname
         res[:full_name] = "#{current_resource_owner.profile.firstname} #{current_resource_owner.profile.lastname}"
-        res[:first_name] = current_resource_owner.profile.firstname
-        res[:last_name] = current_resource_owner.profile.lastname
       else
         res[:full_name] = current_resource_owner.name
-        res[:first_name] = ""
-        res[:last_name] = ""
       end
+
       if current_resource_owner.avatar
         res[:avatar_url] = current_resource_owner.avatar.url
       end
@@ -47,11 +46,10 @@ module Api::V1
       end
 
       respond_to do |format|
-        par = params.require(:profile).permit(:full_name, :height, :weight, :sex, :smoke, :insulin, :year_of_birth, :default_lang)
-        if par[:full_name]
-          user.name = par[:full_name]
+        par = params.require(:profile).permit(:firstname, :lastname, :height, :weight, :sex, :smoke, :insulin, :year_of_birth, :default_lang)
+        if par[:firstname] && par[:lastname]
+          user.name = par[:firstname]+" "+par[:lastname]
           user.save!
-          par.delete(:full_name)
         end
 
         if par['default_lang']

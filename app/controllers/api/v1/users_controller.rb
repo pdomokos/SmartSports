@@ -9,10 +9,17 @@ module Api::V1
 
       @user.username = @user.email.split("@")[0]
       @user.name = @user.username
+      if user_params[:device]
+        @user.device = user_params[:device]
+      else
+        @user.device = 10
+      end
       respond_to do |format|
         if @user.save
-          @user.profile = Profile.create()
-          @user.save!
+          @user.profile = Profile.new
+          @user.profile.firstname = profile_params[:firstname]
+          @user.profile.lastname = profile_params[:lastname]
+          @user.profile.save!
           mail_lang = params[:lang] || "en"
           Delayed::Job.enqueue InfoMailJob.new(:user_created_email, @user.email, mail_lang, {})
 
@@ -68,7 +75,12 @@ module Api::V1
     private
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar)
+      params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar, :device)
+
+    end
+
+    def profile_params
+      params.require(:profile).permit(:firstname, :lastname)
     end
 
   end

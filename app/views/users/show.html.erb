@@ -19,6 +19,11 @@
   <%= @user.email %>
 </p>
 
+<p>
+  <strong>Device:</strong>
+  <%= @user.device %>
+</p>
+
 <%= link_to 'Activities', user_activities_path(@user) %>
 <br/>
 <%= link_to 'Measurements', user_measurements_path(@user) %>

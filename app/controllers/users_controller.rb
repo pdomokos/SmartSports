@@ -35,6 +35,7 @@ class UsersController < ApplicationController
         @user = User.new(par)
         @user.username = @user.email.split("@")[0]
         @user.name = @user.username
+        @user.device = 0;
         @user.profile = Profile.new
 
         @user.save!

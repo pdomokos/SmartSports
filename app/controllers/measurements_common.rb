@@ -12,9 +12,6 @@ module MeasurementsCommon
       @measurement.date = DateTime.now
     end
     meas_owner = current_user || current_resource_owner
-    if meas_owner.profile.blood_glucose_unit != 'mmol/L' && @measurement.blood_sugar
-      @measurement.blood_sugar /= 18
-    end
 
     if @measurement.save
       if @measurement.meas_type == 'weight'
