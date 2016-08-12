@@ -47,20 +47,29 @@ module Api::V1
 
       respond_to do |format|
         par = params.require(:profile).permit(:firstname, :lastname, :height, :weight, :sex, :smoke, :insulin, :year_of_birth, :default_lang)
+        parUser = params.require(:user).permit(:password, :password_confirmation)
         if par[:firstname] && par[:lastname]
           user.name = par[:firstname]+" "+par[:lastname]
           user.save!
         end
-
-        if par['default_lang']
-          I18n.locale = par['default_lang']
-        end
-        if prf.update(par)
-          format.json { render json: { :ok => true, :msg => "save_success" } }
+        if parUser[:password] && !parUser[:password].empty? && parUser[:password_confirmation] && !parUser[:password_confirmation].empty?
+          if user.update(parUser)
+            format.json { render json: { :ok => true, :msg => "update_user_success" } }
+          else
+            keys = user.errors.full_messages().collect{|it| it.split()[-1]}
+            format.json { render json: { :ok => false, :msg => keys } }
+          end
         else
-          keys = prf.errors.full_messages().collect{|it| it.split()[-1]}
-          # message = (I18n.translate(key))
-          format.json { render json: { :ok => false, :msg => keys } }
+          if par['default_lang']
+            I18n.locale = par['default_lang']
+          end
+          if prf.update(par)
+            format.json { render json: { :ok => true, :msg => "update_profile_success" } }
+          else
+            keys = prf.errors.full_messages().collect{|it| it.split()[-1]}
+            # message = (I18n.translate(key))
+            format.json { render json: { :ok => false, :msg => keys } }
+          end
         end
       end
     end

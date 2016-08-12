@@ -19,8 +19,12 @@ module Api::V1
           @user.profile = Profile.new
           @user.profile.firstname = profile_params[:firstname]
           @user.profile.lastname = profile_params[:lastname]
+          @user.profile.default_lang = profile_params[:default_lang]
           @user.profile.save!
-          mail_lang = params[:lang] || "en"
+          mail_lang = profile_params[:default_lang]
+          if mail_lang != 'hu' && mail_lang != 'en'
+            mail_lang = 'en'
+          end
           Delayed::Job.enqueue InfoMailJob.new(:user_created_email, @user.email, mail_lang, {})
 
           save_click_record(:success, nil, "login", request.remote_ip)
@@ -80,7 +84,7 @@ module Api::V1
     end
 
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname)
+      params.require(:profile).permit(:firstname, :lastname, :default_lang)
     end
 
   end
