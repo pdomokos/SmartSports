@@ -15,7 +15,7 @@ module Api::V1
           code=SecureRandom.urlsafe_base64[0..5]
           @user.reset_password_code = code
           @user.save!
-          Delayed::Job.enqueue InfoMailJob.new(:reset_password_email_api, @user.email, I18n.locale, {reset_code: code})
+          Delayed::Job.enqueue InfoMailJob.new(:reset_password_email, @user.email, I18n.locale, {reset_code: code, api_call: true})
 
           render json: {:ok => true, :locale => I18n.locale}
         else
