@@ -456,7 +456,21 @@ hu:
 
     A SmartDiab csapata
 
+  user_created_email_api: |
+    A StartDiab üdvözli Önt!
+
+    A StartDiab a cukorbetegség kezeléséhez nyújt fontos segítséget. Az Ön által bevitt,
+    illetve a különböző aktivitásmérők és/vagy mobiltelefonos alkalmazások segítségével
+    gyűjtött adatok elemzésével segít Önnek egészségének megőrzésében.
+
+    Amennyiben Ön nem kezdeményezte egy StartDiab fiók létrehozását az e-mail címe megadásával,
+    tekintse levelünket tárgytalannak. Ha úgy gondolja, hogy visszaéltek az e-mail címével,
+    továbbítsa ezt az üzenetet a info@startdiab.com címre.
+
+    A StartDiab csapata
+
   user_created_email_subj: "SmartDiab felhasználó létrehozása"
+  user_created_email_subj_api: "StartDiab felhasználó létrehozása"
 
   reset_password_email: |
     Tisztelt %{email}
@@ -468,7 +482,19 @@ hu:
     Szép napot kívánunk!
     A SmartDiab csapata
 
+  reset_password_email_api: |
+    Tisztelt %{email}
+
+    Ön kezdeményezte jelszava helyreállítását.
+
+    Új jelszó megadásáshoz adja meg az alábbi kódot: %{code}.
+
+    Szép napot kívánunk!
+    A StartDiab csapata
+
   reset_password_email_subj: "SmartDiab jelszó visszaállítás"
+  reset_password_email_subj_api: "StartDiab jelszó visszaállítás"
+
   doctor_invite_email_subj: "Orvos meghívó a SmartDiab-ra"
   doctor_invite_email: |
       A SmartDiab üdvözli Önt!

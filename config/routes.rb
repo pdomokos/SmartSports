@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       put 'profile' => 'profile#update'
       post 'profile_image' => 'profile#profile_image'
       post 'reset_password' => 'password_resets#create'
+      post 'restore_password' => 'users#reset'
     end
   end
 

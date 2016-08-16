@@ -475,7 +475,21 @@ en:
 
     SmartDiab team
 
+  user_created_email_api: |
+    Welcome to StartDiab
+
+    StartDiab is a new service that helps you manage your diabetes smarter by providing actionable
+    insights based on the objective data gathered from you, your wearable devices (fitness trackes,
+    sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
+
+    If you have not requested to create a StartDiab account with your e-mail address,
+    please accept our apologies and disregard this e-mail. You may also forward this message
+    to info@startdiab.com.
+
+    StartDiab team
+
   user_created_email_subj: "SmartDiab user created"
+  user_created_email_subj_api: "StartDiab user created"
 
   reset_password_email: |
     Hello, %{email}
@@ -486,7 +500,18 @@ en:
 
     Have a great day!
 
+  reset_password_email_api: |
+    Hello, %{email}
+
+    You have requested to reset your password.
+
+    To choose a new password, just enter this code: %{code}.
+
+    Have a great day!
+
   reset_password_email_subj: "SmartDiab password reset"
+  reset_password_email_subj_api: "StartDiab password reset"
+
   doctor_invite_email_subj: "Join to SmartDiab as doctor"
   doctor_invite_email: |
       Welcome to SmartDiab,

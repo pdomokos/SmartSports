@@ -1,6 +1,6 @@
 module Api::V1
   class UsersController < ApiController
-    before_action :doorkeeper_authorize!, except: 'create'
+    before_action :doorkeeper_authorize!, except: [:create, :reset]
 
     # POST /users
     # POST /users.json
@@ -25,7 +25,7 @@ module Api::V1
           if mail_lang != 'hu' && mail_lang != 'en'
             mail_lang = 'en'
           end
-          Delayed::Job.enqueue InfoMailJob.new(:user_created_email, @user.email, mail_lang, {})
+          Delayed::Job.enqueue InfoMailJob.new(:user_created_email_api, @user.email, mail_lang, {})
 
           save_click_record(:success, nil, "login", request.remote_ip)
           format.json { render json: {:ok => true, :msg => 'reg_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
@@ -34,6 +34,37 @@ module Api::V1
           # message = (I18n.translate(key))
           format.json { render json: {ok: false, msg: keys} }
         end
+      end
+    end
+
+    def reset
+      @user = User.find_by_email(params[:user][:email])
+      begin
+        if @user
+          if(@user.reset_password_code && !@user.reset_password_code.empty? && @user.reset_password_code.to_s == params[:user][:reset_password_code].to_s)
+            if (user_params[:password] && !user_params[:password].empty?) || (user_params[:password_confirmation] && !user_params[:password_confirmation].empty?)
+              par = params.require(:user).permit(:email, :password, :password_confirmation, :reset_password_code)
+              par[:reset_password_code] = ""
+              if @user.update(par)
+                render json: { :ok => true, :msg => "reset_password_success", :pw_msg =>[]}
+              else
+                pw_keys = @user.errors.full_messages().collect{|it| it.split()[-1]}
+                render json: { :ok => false, :msg => "reset_password_error1", :pw_msg =>pw_keys}
+              end
+            else
+              render json: { :ok => false, :msg => "reset_password_error2", :pw_msg =>[]}
+            end
+          else
+            render json: { :ok => false, :msg => "reset_password_error3", :pw_msg =>[]}
+          end
+        else
+          render json: { :ok => false, :msg => "reset_password_error4", :pw_msg =>[]}
+        end
+      rescue => e
+        logger.info "Exception"
+        logger.error e
+        logger.error e.backtrace.join("\n")
+        render json: { :ok => false, :msg => "reset_password_error5", :pw_msg =>[]}
       end
     end
 
