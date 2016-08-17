@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816084953) do
+ActiveRecord::Schema.define(version: 20160817080342) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -382,6 +382,10 @@ ActiveRecord::Schema.define(version: 20160816084953) do
     t.string   "blood_glucose_unit", default: "mmol/L"
     t.integer  "carb_min",           default: 5
     t.integer  "carb_max",           default: 500
+    t.integer  "morning_start",      default: 6
+    t.integer  "noon_start",         default: 12
+    t.integer  "evening_start",      default: 18
+    t.integer  "night_start",        default: 22
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", unique: true

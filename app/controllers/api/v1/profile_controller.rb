@@ -19,6 +19,13 @@ module Api::V1
         res[:insulin] = prf.insulin
         res[:year_of_birth] = prf.year_of_birth
         res[:default_lang] = prf.default_lang
+        res[:blood_glucose_min] = prf.blood_glucose_min
+        res[:blood_glucose_max] = prf.blood_glucose_max
+        res[:blood_glucose_unit] = prf.blood_glucose_unit
+        res[:morning_start] = prf.morning_start
+        res[:noon_start] = prf.noon_start
+        res[:evening_start] = prf.evening_start
+        res[:night_start] = prf.night_start
       else
         res[:profile] = false
       end
@@ -48,7 +55,7 @@ module Api::V1
       pw_changed = false;
 
       respond_to do |format|
-        par = params.require(:profile).permit(:firstname, :lastname, :height, :weight, :sex, :smoke, :insulin, :year_of_birth, :default_lang)
+        par = params.require(:profile).permit(:firstname, :lastname, :height, :weight, :sex, :smoke, :insulin, :year_of_birth, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit, :morning_start, :noon_start, :evening_start, :night_start, :default_lang)
         parUser = params.require(:user).permit(:password, :password_confirmation)
 
         if (parUser[:password] && !parUser[:password].empty?) || (parUser[:password_confirmation] && !parUser[:password_confirmation].empty?)

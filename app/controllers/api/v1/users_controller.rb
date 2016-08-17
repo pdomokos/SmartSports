@@ -16,10 +16,7 @@ module Api::V1
       end
       respond_to do |format|
         if @user.save
-          @user.profile = Profile.new
-          @user.profile.firstname = profile_params[:firstname]
-          @user.profile.lastname = profile_params[:lastname]
-          @user.profile.default_lang = profile_params[:default_lang]
+          @user.profile = Profile.new(profile_params)
           @user.profile.save!
           mail_lang = profile_params[:default_lang]
           if mail_lang != 'hu' && mail_lang != 'en'
@@ -115,7 +112,7 @@ module Api::V1
     end
 
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :default_lang)
+      params.require(:profile).permit(:firstname, :lastname, :blood_glucose_min, :blood_glucose_max, :blood_glucose_unit, :morning_start, :noon_start, :evening_start, :night_start, :default_lang)
     end
 
   end
