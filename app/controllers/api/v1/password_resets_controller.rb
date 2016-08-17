@@ -1,10 +1,10 @@
 module Api::V1
   class PasswordResetsController < ApiController
-    before_action :doorkeeper_authorize!, except: 'create'
+    before_action :doorkeeper_authorize!, except: [:create, :get_reset_code]
+    include PasswordResetsCommon
 
-    require 'json'
 
-    def create
+    def get_reset_code
       @user = User.find_by_email(params[:email])
       begin
         if @user
