@@ -1,5 +1,6 @@
 module Api::V1
   class NotificationsController < ApiController
+    before_action :set_notification, only: [:update, :destroy]
     before_action :check_owner_or_doctor
     include NotificationsCommon
 
