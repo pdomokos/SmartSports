@@ -185,6 +185,7 @@ class PagesController < ApplicationController
 
     @users = User.all
     @profiles = Profile.all
+    @bgmeasurements = Measurement.where(meas_type: "blood_sugar").group('user_id').count
     # startTime=(DateTime.now+1.day).beginning_of_day-1.week
     # @clickrecords = ClickRecord.where("created_at >= :start_date", {start_date: startTime}).group('user_id').order('count_id desc').count('id')
     @clickrecords = ClickRecord.all.group('user_id').order('count_id desc').count('id')

@@ -21,6 +21,30 @@
   <td class="historyTitle padded dietItem">
     <span><%= user_item.id %></span>
   </td>
+  <td class="historyTitle padded dietItem">
+    <%if user_item.device == 11%>
+        <span><%="Iphone"%></span>
+    <%elsif user_item.device == 12%>
+        <span><%="Android"%></span>
+    <%elsif user_item.device == 10%>
+        <span><%="Other mobile"%></span>
+    <%elsif user_item.device == 0%>
+        <span><%="Web"%></span>
+    <% else %>
+        <span><%="Unknown"%></span>
+    <% end %>
+  </td>
+  <td class="historyTitle padded dietItem">
+    <span><%= user_item.created_at %></span>
+  </td>
+  <td class="historyTitle padded dietItem">
+    <% if @bgmeasurements.key?(user_item.id) %>
+        <% count = @bgmeasurements[user_item.id] %>
+    <% else %>
+        <% count = 0 %>
+    <% end %>
+    <span><%= count %></span>
+  </td>
 
   <td class="historyTitle padded dietItem tag">
 
