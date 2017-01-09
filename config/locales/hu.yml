@@ -469,8 +469,22 @@ hu:
 
     A StartDiab csapata
 
+  user_created_email_api_bpr: |
+     A StartBpr üdvözli Önt!
+
+     A StartBpr a vérnyomás kezeléséhez nyújt fontos segítséget. Az Ön által bevitt,
+     illetve a különböző aktivitásmérők és/vagy mobiltelefonos alkalmazások segítségével
+     gyűjtött adatok elemzésével segít Önnek egészségének megőrzésében.
+
+     Amennyiben Ön nem kezdeményezte egy StartBpr fiók létrehozását az e-mail címe megadásával,
+     tekintse levelünket tárgytalannak. Ha úgy gondolja, hogy visszaéltek az e-mail címével,
+     továbbítsa ezt az üzenetet a info@startdiab.com címre.
+
+     A StartDiab csapata
+
   user_created_email_subj: "SmartDiab felhasználó létrehozása"
   user_created_email_subj_api: "StartDiab felhasználó létrehozása"
+  user_created_email_subj_api_bpr: "StartBpr felhasználó létrehozása"
 
   reset_password_email: |
     Tisztelt %{email}
@@ -494,6 +508,7 @@ hu:
 
   reset_password_email_subj: "SmartDiab jelszó visszaállítás"
   reset_password_email_subj_api: "StartDiab jelszó visszaállítás"
+  reset_password_email_subj_api_bpr: "StartBpr jelszó visszaállítás"
 
   doctor_invite_email_subj: "Orvos meghívó a SmartDiab-ra"
   doctor_invite_email: |

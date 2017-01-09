@@ -488,8 +488,22 @@ en:
 
     StartDiab team
 
+  user_created_email_api_bpr: |
+      Welcome to StartBpr
+
+      StartBpr is a new service that helps you manage your blood pressure smarter by providing actionable
+      insights based on the objective data gathered from you, your wearable devices (fitness trackes,
+      sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
+
+      If you have not requested to create a StartBpr account with your e-mail address,
+      please accept our apologies and disregard this e-mail. You may also forward this message
+      to info@startdiab.com.
+
+      StartDiab team
+
   user_created_email_subj: "SmartDiab user created"
   user_created_email_subj_api: "StartDiab user created"
+  user_created_email_subj_api_bpr: "StartBpr user created"
 
   reset_password_email: |
     Hello, %{email}
@@ -511,6 +525,7 @@ en:
 
   reset_password_email_subj: "SmartDiab password reset"
   reset_password_email_subj_api: "StartDiab password reset"
+  reset_password_email_subj_api_bpr: "StartBpr password reset"
 
   doctor_invite_email_subj: "Join to SmartDiab as doctor"
   doctor_invite_email: |

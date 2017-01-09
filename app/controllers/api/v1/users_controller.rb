@@ -22,8 +22,11 @@ module Api::V1
           if mail_lang != 'hu' && mail_lang != 'en'
             mail_lang = 'en'
           end
-          Delayed::Job.enqueue InfoMailJob.new(:user_created_email_api, @user.email, mail_lang, {})
-
+          if @user.device == 13
+            Delayed::Job.enqueue InfoMailJob.new(:user_created_email_api_bpr, @user.email, mail_lang, {})
+          else
+            Delayed::Job.enqueue InfoMailJob.new(:user_created_email_api, @user.email, mail_lang, {})
+          end
           save_click_record(:success, nil, "login", request.remote_ip)
           format.json { render json: {:ok => true, :msg => 'reg_succ', :id => @user.id, :locale => I18n.locale, :profile => @user.has_profile} }
         else
