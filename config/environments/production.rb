@@ -122,12 +122,9 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
       :domain => 'smartdiab.com',
       :address              => MAIL_CONFIG['host'],
-      :port                 => 465,
-      :user_name            => MAIL_CONFIG['user'],
-      :password             => MAIL_CONFIG['password'],
-      :authentication       => :plain,
-      :ssl => true,
-      :openssl_verify_mode => 'none',
+      :port                 => 587,
+      :authentication       => :none,
+      :starttls => true,
   }
 
   Paperclip.options[:command_path] = "/usr/bin/"
