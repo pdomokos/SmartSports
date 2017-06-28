@@ -123,8 +123,7 @@ Rails.application.configure do
       :domain => 'smartdiab.com',
       :address              => MAIL_CONFIG['host'],
       :port                 => 587,
-      :authentication       => :none,
-      :starttls => true,
+      :enable_starttls_auto => true
   }
 
   Paperclip.options[:command_path] = "/usr/bin/"
