@@ -1,5 +1,6 @@
 body.bodyBg {
-  background: #9DCFFE;
+  //background: #9DCFFE;
+  background: #DFF0F5;
   font-family: Arial;
 }
 
@@ -44,7 +45,7 @@ body.bodyBg {
 
 .loginField {
   font-size: 14px;
-  border: solid 1px #4FBDF2;
+  border: solid 1px #DFF0F5;
   background: white;
   height: 40px;
   width: 260px;
@@ -57,7 +58,7 @@ body.bodyBg {
 
 fieldset.loginField {
   font-size: 14px;
-  border: solid 1px #4FBDF2;
+  border: solid 1px #DFF0F5;
   background: white;
   height: 120px;
   width: 260px;
@@ -72,7 +73,7 @@ fieldset.loginField {
 
 fieldset.profileField {
   font-size: 14px;
-  border: solid 1px #4FBDF2;
+  border: solid 1px #DFF0F5;
   background: white;
   height: 170px;
   width: 260px;
@@ -94,12 +95,12 @@ div.loginRow>input, div.loginRow>span {
 
 .loginButton {
   font-size: 14px;
-  border: solid 1px #4FBDF2;
+  border: solid 1px #DFF0F5;
   height: 40px;
   width: 260px;
   text-align: center;
-  background: #4FBDF2;
-  color: white;
+  background: #DFF0F5;
+  color: #AC007A;
 }
 
 .skipButton {
@@ -178,7 +179,7 @@ a.signupLink, a.signupLink:visited {
 
 .forgottenField {
   font-size: 14px;
-  border: solid 1px #4FBDF2;
+  border: solid 1px #DFF0F5;
   background: white;
   height: 40px;
   width: 360px;
@@ -193,12 +194,12 @@ a.signupLink, a.signupLink:visited {
 
 .forgottenButton {
   font-size: 14px;
-  border: solid 1px #4FBDF2;
+  border: solid 1px #DFF0F5;
   height: 40px;
   width: 70px;
   margin-left: -70px;
   text-align: center;
-  background: #4FBDF2;
+  background: #DFF0F5;
   color: white;
   float: left;
 }
@@ -230,7 +231,8 @@ a.signupLink, a.signupLink:visited {
 }
 
 .signinTitle {
-  color: white;
+  //color: white;
+  color: #AC007A;
 }
 .signinDetail {
   color: white;

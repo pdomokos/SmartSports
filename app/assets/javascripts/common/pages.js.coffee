@@ -106,8 +106,10 @@
 @colorIndex = 0
 @changeColor = () ->
   self = this
-  backgrounds = ['#9DCFFE', '#74CED7', '#ffd29b']
-  buttonBackgrounds = ['#4FBDF2', '#5DD09A', '#FE9A6C']
+  #backgrounds = ['#9DCFFE', '#74CED7', '#ffd29b']
+  #buttonBackgrounds = ['#4FBDF2', '#5DD09A', '#FE9A6C']
+  backgrounds = ['#DFF0F5', '#DFF0F5', '#DFF0F5']
+  buttonBackgrounds = ['#DFF0F5', '#DFF0F5', '#DFF0F5']
 
   if (self.colorIndex < 2)
     self.colorIndex++

@@ -59,7 +59,7 @@ gem 'chronic'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass', '~> 3.2.0.4'
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 

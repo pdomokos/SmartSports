@@ -20,8 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  project_name: "SmartDiab"
-  top_title: "SmartDiab - intelligent diabetes management"
+  project_name: "DOK-I"
+  top_title: "DOK-I - intelligent health management"
   all: "All"
   site_traffic: "Site traffic"
   invite_doctor: "Invite doctor"
@@ -95,20 +95,20 @@ en:
   remove_item: "Remove item"
 
 #login
-  sign_in: "Sign in to SmartDiab"
+  sign_in: "Sign in to DOK-I"
   login_button: "Login"
   username: "User name"
   forgotten_password: "Forgotten password"
   create_account_part1: "Don't have an account yet?"
-  create_account_part2: "Create yours now and start managing your diabetes-related data"
+  create_account_part2: "Create yours now and start managing your health-related data"
   password_restore_button: "Restore"
   password_restore_text: "Please enter your email address below and we will send you a link to restore your password."
-  welcome_message: "Controlling diabetes involves thinking about all the factors that impact on blood glucose, including the carbohydrate you eat, and the amount of insulin you need for it, the exercise you have recently done and the exercise you are planning to do, and learning how your body responds to different circumstances. SmartDiab offers you an easy-to-use interface to track and analyze all important factors that may impact the way you feel and your blood glucose level."
-  sign_up_text_part1: "Create your SmartDiab account"
+  welcome_message: "DOK-I offers you an easy-to-use interface to track and analyze all important factors that may impact the way you feel and your health."
+  sign_up_text_part1: "Create your DOK-I account"
   sign_up_text_part2: "Your Data. Your Problem. Solved!"
   join_button: "Join"
-  sign_up_info: "By joining SmartDiab, you agree to our Terms of Service and Privacy Policy. No SPAM, no unwanted newsletters will be sent to your e-mail account."
-  have_account: "I already have a SmartDiab account"
+  sign_up_info: "By joining DOK-I, you agree to our Terms of Service and Privacy Policy. No SPAM, no unwanted newsletters will be sent to your e-mail account."
+  have_account: "I already have a DOK-I account"
   email: "E-mail address"
   your_email: "Your email address"
   first_name: "First name"
@@ -123,10 +123,10 @@ en:
   name: "Name"
   firstname: "First name"
   lastname: "Last name"
-  skip: "Skip this step and go directly to SmartDiab"
+  skip: "Skip this step and go directly to DOK-I"
   save: "Save"
   cancel: "Cancel"
-  fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to SmartDiab."
+  fill_personal_info: "Please provide additional information about yourself. We collect these information to provide better services to all of our users. You can skip this step to continue right to DOK-I."
   height: "Height, eg: 180"
   date_of_birth: "Year of birth"
   date_of_birth_placeholder: "Year of birth, eg: 1970"
@@ -413,9 +413,9 @@ en:
   activity_trend: "Activity trend"
 
 # FAQ
-  faq_title_1: SmartDiab FAQ
+  faq_title_1: DOK-I FAQ
   faq_title_2: Frequently Asked Questions
-  faq_subtitle: This section contains information related to SmartDiab and about diabetes related health conditions. If you cannot find an answer to your question, make sure to contact us.
+  faq_subtitle: This section contains information related to DOK-I. If you cannot find an answer to your question, make sure to contact us.
 
 # custom
   add_custom_form: "Add Custom Form"
@@ -463,47 +463,47 @@ en:
   notofications: "Notifications"
 
   user_created_email: |
-    Welcome to SmartDiab
+    Welcome to DOK-I
 
-    SmartDiab is a new service that helps you manage your diabetes smarter by providing actionable
+    DOK-I is a new service that helps you manage your health smarter by providing actionable
     insights based on the objective data gathered from you, your wearable devices (fitness trackes,
     sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
 
-    If you have not requested to create a SmartDiab account with your e-mail address,
+    If you have not requested to create a DOK-I account with your e-mail address,
     please accept our apologies and disregard this e-mail. You may also forward this message
-    to info@smartdiab.com.
+    to info@dok-i.com.
 
-    SmartDiab team
+    DOK-I team
 
   user_created_email_api: |
-    Welcome to StartDiab
+    Welcome to DOK-I
 
-    StartDiab is a new service that helps you manage your diabetes smarter by providing actionable
+    DOK-I is a new service that helps you manage your health smarter by providing actionable
     insights based on the objective data gathered from you, your wearable devices (fitness trackes,
     sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
 
     If you have not requested to create a StartDiab account with your e-mail address,
     please accept our apologies and disregard this e-mail. You may also forward this message
-    to info@startdiab.com.
+    to info@dok-i.com.
 
-    StartDiab team
+    DOK-I team
 
   user_created_email_api_bpr: |
-      Welcome to StartBpr
+    Welcome to DOK-I
 
-      StartBpr is a new service that helps you manage your blood pressure smarter by providing actionable
-      insights based on the objective data gathered from you, your wearable devices (fitness trackes,
-      sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
+    DOK-I is a new service that helps you manage your health smarter by providing actionable
+    insights based on the objective data gathered from you, your wearable devices (fitness trackes,
+    sleep tracker, etc) and mobile apps that are installed on your phone and always with you.
 
-      If you have not requested to create a StartBpr account with your e-mail address,
-      please accept our apologies and disregard this e-mail. You may also forward this message
-      to info@startdiab.com.
+    If you have not requested to create a DOK-I account with your e-mail address,
+    please accept our apologies and disregard this e-mail. You may also forward this message
+    to info@dok-i.com.
 
-      StartDiab team
+    DOK-I team
 
-  user_created_email_subj: "SmartDiab user created"
-  user_created_email_subj_api: "StartDiab user created"
-  user_created_email_subj_api_bpr: "StartBpr user created"
+  user_created_email_subj: "DOK-I user created"
+  user_created_email_subj_api: "DOK-I user created"
+  user_created_email_subj_api_bpr: "DOK-I user created"
 
   reset_password_email: |
     Hello, %{email}
@@ -523,15 +523,15 @@ en:
 
     Have a great day!
 
-  reset_password_email_subj: "SmartDiab password reset"
-  reset_password_email_subj_api: "StartDiab password reset"
-  reset_password_email_subj_api_bpr: "StartBpr password reset"
+  reset_password_email_subj: "DOK-I password reset"
+  reset_password_email_subj_api: "DOK-I password reset"
+  reset_password_email_subj_api_bpr: "DOK-I password reset"
 
-  doctor_invite_email_subj: "Join to SmartDiab as doctor"
+  doctor_invite_email_subj: "Join to DOK-I as doctor"
   doctor_invite_email: |
-      Welcome to SmartDiab,
+      Welcome to DOK-I,
 
-      Join SmartDiab as a doctor! Click the following link to set your password: %{url}.
+      Join DOK-I as a doctor! Click the following link to set your password: %{url}.
 
       Have a great day!
 

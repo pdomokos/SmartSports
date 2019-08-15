@@ -1,6 +1,6 @@
 hu:
-  project_name: "SmartDiab"
-  top_title: "SmartDiab - intelligent diabetes management"
+  project_name: "DOK-I"
+  top_title: "DOK-I - intelligent health management"
   all: "Összes"
   site_traffic: "A weblap forgalma"
   invite_doctor: "Orvos meghívása"
@@ -74,20 +74,20 @@ hu:
   remove_item: "Elem törlése"
 
 #login
-  sign_in: "Jelentkezzen be a SmartDiab fiókjába"
+  sign_in: "Jelentkezzen be a DOK-I fiókjába"
   login_button: "Belépés"
   username: "Felhasználónév"
   forgotten_password: "Elfelejtettem a jelszavam"
-  create_account_part1: "Még nincs SmartDiab fiókja?"
-  create_account_part2: "Hozzon létre egyet, gyűjtse és elemezze a cukorbetegségéhez kapcsolódó adatait"
+  create_account_part1: "Még nincs DOK-I fiókja?"
+  create_account_part2: "Hozzon létre egyet, gyűjtse és elemezze egészségügyi adatait"
   password_restore_button: "Küldés"
   password_restore_text: "Kérjük adja meg e-mail címét és elküldjük az új jelszó megadásához és aktiválásához szükséges linket és tudnivalókat."
-  welcome_message: "A vércukorszint megfelelő szinten tartása során figyelembe kell venni mindazokat a tényezőket, amelyek befolyásolják azt, így az elfogyasztott szénhidrát mennyiségét és a feldolgozásához szükséges inzulint, a már elvégzett és a tervezett testmozgást, valamint meg kell tanulni a testünk milyen választ ad a különböző körülményekre. A SmartDiab egy könnyen kezelhető felületet biztosít minden olyan fontos tényező követésére és elemzésére, amely hatással van a vércukorszintre és a közérzetre."
-  sign_up_text_part1: "Hozza létre SmartDiab fiókját."
+  welcome_message: "A DOK-I egy könnyen kezelhető felületet biztosít sok fontos tényező követésére és elemzésére, amely hatással van az egészségre és a közérzetre."
+  sign_up_text_part1: "Hozza létre DOK-I fiókját."
   sign_up_text_part2: ""
   join_button: "Fiók létrehozása"
-  sign_up_info: "A SmartDiab fiók létrehozásával elfogadja a Felhasználási feltételeket és Adatvédelmi szabályokat. Levélszemét és kéretlen hírlevél nem érkezik tőlünk e-mail fiókjába."
-  have_account: "Már van SmartDiab fiókom."
+  sign_up_info: "A DOK-I fiók létrehozásával elfogadja a Felhasználási feltételeket és Adatvédelmi szabályokat. Levélszemét és kéretlen hírlevél nem érkezik tőlünk e-mail fiókjába."
+  have_account: "Már van DOK-I fiókom."
   email: "E-mail cím"
   your_email: "Adja meg e-mail címét"
   first_name: "Keresztnév"
@@ -102,10 +102,10 @@ hu:
   name: "Név"
   firstname: "Keresztnév"
   lastname: "Vezetéknév"
-  skip: "Lépés kihagyása, tovább a SmartDiabra"
+  skip: "Lépés kihagyása, tovább a DOK-I-ra"
   save: "Mentés"
   cancel: "Mégse"
-  fill_personal_info: "Kérem adja meg az alábbi adatokat, melyek segítségével személyreszabott szolgáltatásokat tudunk nyújtani Önnek. Lehetősége van kihagyni ezt és azonnal elkezdheti használni a SmartDiab rendszert."
+  fill_personal_info: "Kérem adja meg az alábbi adatokat, melyek segítségével személyreszabott szolgáltatásokat tudunk nyújtani Önnek. Lehetősége van kihagyni ezt és azonnal elkezdheti használni a DOK-I rendszert."
   height: "Magasság, pl: 180"
   date_of_birth: "Születési év"
   date_of_birth_placeholder: "Születési év, pl:1970"
@@ -397,7 +397,7 @@ hu:
 # FAQ
   faq_title_1: OKTATÓFAL
   faq_title_2:
-  faq_subtitle: Ez az oldal a cukorbetegséggel kapcsolatos információkat tartalmaz kérdés-felelet formában.
+  faq_subtitle: Az oldallal kapcsolatos információk kérdés-felelet formában.
 # custom
   add_custom_form: "Egyedi kérdőív hozzáadása"
   add_custom_form_info: "Itt összeállíthatja saját kérdőíveit a leggyakrabban használt elemekkel és alapértelmezett értékekkel."
@@ -444,47 +444,47 @@ hu:
   notofications: "Értesítések"
 
   user_created_email: |
-    A SmartDiab üdvözli Önt!
+    A DOK-I üdvözli Önt!
 
-    A SmartDiab a cukorbetegség kezeléséhez nyújt fontos segítséget. Az Ön által bevitt,
+    A DOK-I az egészség megőrzéséhez nyújt fontos segítséget. Az Ön által bevitt,
     illetve a különböző aktivitásmérők és/vagy mobiltelefonos alkalmazások segítségével
     gyűjtött adatok elemzésével segít Önnek egészségének megőrzésében.
 
-    Amennyiben Ön nem kezdeményezte egy SmartDiab fiók létrehozását az e-mail címe megadásával,
+    Amennyiben Ön nem kezdeményezte egy DOK-I fiók létrehozását az e-mail címe megadásával,
     tekintse levelünket tárgytalannak. Ha úgy gondolja, hogy visszaéltek az e-mail címével,
-    továbbítsa ezt az üzenetet a info@smartdiab.com címre.
+    továbbítsa ezt az üzenetet a info@dok-i.com címre.
 
-    A SmartDiab csapata
+    A DOK-I csapata
 
   user_created_email_api: |
-    A StartDiab üdvözli Önt!
+    A DOK-I üdvözli Önt!
 
-    A StartDiab a cukorbetegség kezeléséhez nyújt fontos segítséget. Az Ön által bevitt,
+    A DOK-I az egészség megőrzéséhez nyújt fontos segítséget. Az Ön által bevitt,
     illetve a különböző aktivitásmérők és/vagy mobiltelefonos alkalmazások segítségével
     gyűjtött adatok elemzésével segít Önnek egészségének megőrzésében.
 
-    Amennyiben Ön nem kezdeményezte egy StartDiab fiók létrehozását az e-mail címe megadásával,
+    Amennyiben Ön nem kezdeményezte egy DOK-I fiók létrehozását az e-mail címe megadásával,
     tekintse levelünket tárgytalannak. Ha úgy gondolja, hogy visszaéltek az e-mail címével,
-    továbbítsa ezt az üzenetet a info@startdiab.com címre.
+    továbbítsa ezt az üzenetet a info@dok-i.com címre.
 
-    A StartDiab csapata
+    A DOK-I csapata
 
   user_created_email_api_bpr: |
-     A StartBpr üdvözli Önt!
+     A DOK-I üdvözli Önt!
 
-     A StartBpr a vérnyomás kezeléséhez nyújt fontos segítséget. Az Ön által bevitt,
+     A DOK-I az egészség megőrzéséhez nyújt fontos segítséget. Az Ön által bevitt,
      illetve a különböző aktivitásmérők és/vagy mobiltelefonos alkalmazások segítségével
      gyűjtött adatok elemzésével segít Önnek egészségének megőrzésében.
 
-     Amennyiben Ön nem kezdeményezte egy StartBpr fiók létrehozását az e-mail címe megadásával,
+     Amennyiben Ön nem kezdeményezte egy DOK-I fiók létrehozását az e-mail címe megadásával,
      tekintse levelünket tárgytalannak. Ha úgy gondolja, hogy visszaéltek az e-mail címével,
-     továbbítsa ezt az üzenetet a info@startdiab.com címre.
+     továbbítsa ezt az üzenetet a info@dok-i.com címre.
 
-     A StartDiab csapata
+     A DOK-I csapata
 
-  user_created_email_subj: "SmartDiab felhasználó létrehozása"
-  user_created_email_subj_api: "StartDiab felhasználó létrehozása"
-  user_created_email_subj_api_bpr: "StartBpr felhasználó létrehozása"
+  user_created_email_subj: "DOK-I felhasználó létrehozása"
+  user_created_email_subj_api: "DOK-I felhasználó létrehozása"
+  user_created_email_subj_api_bpr: "DOK-I felhasználó létrehozása"
 
   reset_password_email: |
     Tisztelt %{email}
@@ -494,7 +494,7 @@ hu:
     Új jelszó megadásáshoz kattintson az alábbi linkre: %{url}.
 
     Szép napot kívánunk!
-    A SmartDiab csapata
+    A DOK-I csapata
 
   reset_password_email_api: |
     Tisztelt %{email}
@@ -504,17 +504,17 @@ hu:
     Új jelszó megadásáshoz adja meg az alábbi kódot: %{code}
 
     Szép napot kívánunk!
-    A StartDiab csapata
+    A DOK-I csapata
 
-  reset_password_email_subj: "SmartDiab jelszó visszaállítás"
-  reset_password_email_subj_api: "StartDiab jelszó visszaállítás"
-  reset_password_email_subj_api_bpr: "StartBpr jelszó visszaállítás"
+  reset_password_email_subj: "DOK-I jelszó visszaállítás"
+  reset_password_email_subj_api: "DOK-I jelszó visszaállítás"
+  reset_password_email_subj_api_bpr: "DOK-I jelszó visszaállítás"
 
-  doctor_invite_email_subj: "Orvos meghívó a SmartDiab-ra"
+  doctor_invite_email_subj: "Orvos meghívó a DOK-I-ra"
   doctor_invite_email: |
-      A SmartDiab üdvözli Önt!
+      A DOK-I üdvözli Önt!
 
-      Csatlakzzon orvosként a SmartDiab-hoz, a jelszó beállításához kövesse a linket: %{url}.
+      Csatlakzzon orvosként a DOK-I-hoz, a jelszó beállításához kövesse a linket: %{url}.
 
       Szép napot kívánunk!
-      A SmartDiab csapata
+      A DOK-I csapata

@@ -1,7 +1,7 @@
 class ProfileValidator < ActiveModel::Validator
   def validate(record)
     if record.year_of_birth
-      if record.year_of_birth < 1900 or record.year_of_birth > 2016
+      if record.year_of_birth < 1900 or record.year_of_birth > 2019
         record.errors[:base] << "error_profile_year_interval"
       end
     end

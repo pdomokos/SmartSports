@@ -43,17 +43,6 @@ ActiveRecord::Schema.define(version: 20160817080342) do
     t.string "lang"
   end
 
-  create_table "adverses", force: true do |t|
-    t.integer  "user_id"
-    t.string   "effect_present"
-    t.text     "effect_detail"
-    t.datetime "time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "adverses", ["user_id"], name: "index_adverses_on_user_id"
-
   create_table "click_records", force: true do |t|
     t.integer  "user_id"
     t.datetime "operation_time"
@@ -435,13 +424,13 @@ ActiveRecord::Schema.define(version: 20160817080342) do
     t.float    "distance"
     t.integer  "steps"
     t.float    "calories"
+    t.float    "elevation"
     t.datetime "synced_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "soft_duration"
     t.float    "moderate_duration"
     t.float    "hard_duration"
-    t.float    "elevation"
     t.boolean  "sync_final"
   end
 
@@ -479,7 +468,6 @@ ActiveRecord::Schema.define(version: 20160817080342) do
     t.string   "salt",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "connection_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
@@ -490,7 +478,6 @@ ActiveRecord::Schema.define(version: 20160817080342) do
     t.datetime "avatar_updated_at"
     t.boolean  "doctor",                          default: false
     t.string   "dev_token"
-    t.string   "web_token_ios"
     t.integer  "device",                          default: 0
     t.string   "reset_password_code"
   end
