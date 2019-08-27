@@ -60,11 +60,11 @@ button.dataFormField {
 
 
 .c0 {
-  color: #4FBDF2 !important;
+  color: #AC007A !important;
 }
 
 .c1, .dietColor {
-    color: #57C88A !important;
+    color: #AC007A !important;
 }
 .dietStyle .dataFormField {
   border: solid 1px #57C88A;
@@ -84,7 +84,7 @@ button.dataFormField {
 
 
 .c2, .exerciseColor {
-    color: #F09938 !important;;
+    color: #AC007A !important;;
 }
 .exerciseStyle .dataFormField {
   border: solid 1px #F09938 !important;
@@ -105,7 +105,7 @@ button.dataFormField {
 
 
 .c3, .healthColor {
-    color: #8980CA !important;;
+    color: #AC007A !important;;
 }
 .healthStyle .dataFormField {
   border: solid 1px #8980CA !important;
@@ -127,7 +127,7 @@ button.dataFormField {
 
 
 .c4, .wellbeingColor {
-    color: #EA70B5 !important;;
+    color: #AC007A !important;;
 }
 .wellbeingStyle .dataFormField {
   border: solid 1px #EA70B5 !important;
@@ -179,7 +179,7 @@ button.dataFormField {
 
 
 .c5, .medicationColor {
-    color: #6CC5CC !important;;
+    color: #AC007A !important;;
 }
 .medicationStyle .dataFormField {
   border: solid 1px #6CC5CC !important;
@@ -200,7 +200,7 @@ button.dataFormField {
 }
 
 .c6, .geneticsColor {
-    color: #2BC7EC !important;
+    color: #AC007A !important;
 }
 .geneticsStyle .dataFormField {
   border: solid 1px #2BC7EC !important;
@@ -233,7 +233,7 @@ button.dataFormField {
 }
 
 .c7, .labresultColor {
-  color: #EBAAAB !important;
+  color: #AC007A !important;
 }
 
 .labresultStyle .dataFormField {
@@ -271,12 +271,12 @@ button.dataFormField {
 
 
 .c8, .analyticsColor {
-  color: #f46d43 !important;
+  color: #AC007A !important;
 }
 
 .customColor {
   //color: white !important;
-  color: #f47e58;
+  color: #AC007A;
 }
 .customTitleColor {
   color: white !important;
@@ -289,7 +289,7 @@ button.dataFormField {
 }
 
 .faqColor {
-  color: #98CC00 !important;
+  color: #AC007A !important;
 }
 
 .faqTitleColor {
@@ -325,7 +325,7 @@ button.deleteForm {
 
 // ----------------------
 .app2Menu {
-  background: #2D3644;
+  background: #AC007A;
   position: fixed;
   top: 0px;
   width: 200px;
@@ -353,9 +353,10 @@ button.deleteForm {
 }
 
 .app2Menu .inner .menuitem {
-  border-bottom: solid 2px #2D3644 !important;
+  //border-bottom: solid 2px #2D3644 !important;
   width: 200px;
-  height: 50px;
+  //height: 50px;
+  height: 60px;
   float: left;
   font-size: 20px;
   border-right-style: solid;
@@ -398,56 +399,55 @@ button.deleteForm {
 }
 
 .app2Menu .b0 {
-  background: image-url("dashboard_c40.png") no-repeat 5px 5px;
+  background: image-url("dashboard_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 //  background-size: 40px 40px;
 }
 
 .app2Menu .b1 {
-  background: image-url("diet_c40.png") no-repeat 5px 5px;
-//  background-size: 40px 40px;
+  background: image-url("diet_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 }
 
 .app2Menu .b2 {
-  background: image-url("exercise_c40.png") no-repeat 5px 5px;
+  background: image-url("exercise_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 
 }
 
 .app2Menu .b3 {
-  background: image-url("health_c40.png") no-repeat 5px 5px;
+  background: image-url("health_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 
 }
 
 .app2Menu .b4 {
-  background: image-url("wellbeing_c40.png") no-repeat 5px 5px;
+  background: image-url("wellbeing_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 }
 
 .app2Menu .b5 {
-  background: image-url("medication_c40.png") no-repeat 5px 5px;
+  background: image-url("medication_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 }
 
 .app2Menu .b6 {
-  background: image-url("genetics_c40.png") no-repeat 5px 5px;
+  background: image-url("genetics_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 
 }
 
 .app2Menu .b7 {
-  background: image-url("labResult_c40.png") no-repeat 5px 5px;
+  background: image-url("labResult_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
 
 }
 
 .app2Menu .b8 {
-  background: image-url("analytics60.png") no-repeat 5px 5px;
+  background: image-url("analytics60.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
   background-size: 40px 40px;
 }
 
 .app2Menu .customIcon {
-  background: image-url("custom_c40.png") no-repeat 5px 5px;
-  background-size: 40px 40px;
+  background: image-url("custom_c40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
+  //background-size: 40px 40px;
 }
 
 .app2Menu .faqIcon {
-  background: image-url("guide40.png") no-repeat 5px 5px;
-  background-size: 40px 40px;
+  background: image-url("guide40.png") no-repeat 5px 5px, image-url("menuitem_background.png") no-repeat;
+  //background-size: 40px 40px;
 }
 
 // -----------------------------------------
