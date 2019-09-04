@@ -89,7 +89,7 @@ class AnalysisDataController < ApplicationController
                       dates: [act.start_time, act.end_time],
                       kind: 'exercise',
                       evt_type: 'exercise',
-                      source: 'SmartDiab'}
+                      source: 'dok-i'}
                     if act['activity_type_id']==6
                       item['evt_type']='cycling'
                     elsif act['activity_type_id']==60 || !act['steps'].nil? && act['steps']>0
@@ -117,7 +117,7 @@ class AnalysisDataController < ApplicationController
                           dates: [measurement.date],
                           kind: 'health',
                           evt_type: measurement.meas_type,
-                          source: 'SmartDiab'
+                          source: 'dok-i'
                       }
 
                       if measurement.meas_type=='blood_pressure'
@@ -148,7 +148,7 @@ class AnalysisDataController < ApplicationController
             depth: 0,
             dates: [med.date],
             kind: 'medication',
-            source: 'SmartDiab'
+            source: 'dok-i'
         }
         if med.medication_type.try(:category)=='oral'
           item['evt_type'] = 'drug'
@@ -182,7 +182,7 @@ class AnalysisDataController < ApplicationController
             dates: [diet.date],
             kind: 'diet',
             evt_type: 'food',
-            source: 'SmartDiab'
+            source: 'dok-i'
         }
         if diet.diet_type== 'Calory'
           item['tooltip'] = (I18n.t :quick_calories)

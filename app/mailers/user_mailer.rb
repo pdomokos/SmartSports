@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "info@smartdiab.com"
+  default from: "info@dok-i.hu"
 
   def reset_password_email_api(mail_job)
     logger.info(mail_job.as_json)

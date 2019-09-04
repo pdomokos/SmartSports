@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
       I18n.locale=lang
     end
 
-    @default_source = "smartdiab"
+    @default_source = "dok-i"
 
     @meas_map = {
         'blood_sugar' => 'bloodglucose',
